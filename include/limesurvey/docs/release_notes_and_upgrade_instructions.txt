@@ -1,0 +1,654 @@
+Welcome to LimeSurvey v1.71+!
+
+Warranty: This program is provided "as is" without warranties of any kind, either expressed or implied, 
+including, but not limited to, the implied warranties of merchantability and fitness for a particular 
+purpose. The entire risk as to the quality and performance of the program is with you. 
+Should the program prove defective, you assume the cost of all necessary servicing, repair or correction. 
+In no event will any copyright holder be liable to you for damages, including any general, special, 
+incidental or consequential damages arising out of the use or inability to use the program 
+(including but not limited to loss of data or data being rendered inaccurate or losses sustained 
+by you or third parties or a failure of the program to operate with any other programs).
+
+
+This release does have the following requirements:
+
+-One of these databases:  MySQL 4.1 or higher, Microsoft SQL Server 2000 or higher, Postgres 7 or higher 
+-PHP 4.3 or higher with mbstring library installed. (for localizations)
+
+
+HOW TO INSTALL
+---------------
+If you are doing a complete new installation please refer to the manual at
+http://docs.limesurvey.org
+
+
+
+=== UPGRADING=====
+
+HOW TO UPGRADE from earlier versions of LimeSurvey (<=1.08)
+-------------------------------------------------------------
+We are sorry but you can't upgrade from versions <= 1.0.8. Seriously! 
+The database structure has changed that much it wouldn't be feasible.
+However, you can import old survey structures from version 1.0 (when you create a new survey there is an option to do that).
+Just do a new installation as described on http://docs.limesurvey.org.
+
+
+HOW TO UPGRADE from LimeSurvey 1.45 or later (<=1.70)
+--------------------------------------------------------------------
+1. Make backups of your files and database.
+2. Backup your config.php.
+3. Delete all old files 
+4. Upload the new version to the same place
+5. Adjust the settings in config.php to the setting from the backup config.php. 
+   --Do NOT just copy over the old config.php over the new one.--
+6. Run the installer in /admin/install/index.php to update the database.
+7. Done.
+
+Special note for UPGRADING from 1.53 to 1.71(+)
+-----------------------------------------------
+After you upgraded please check the global user rights of each user. There was a 
+new superadmin right introduced. The upgrade script is guessing who to make 
+superadmin - so this is not perfect and has to be supervised by YOU. 
+
+HOW TO UPGRADE from a LimeSurvey 1.70(+) version to the latest 1.71(+)
+---------------------------------------------------------------------------
+1. Make backups of your files (especially config.php and config-ldap.php)
+   and database.
+2. Export all templates that have been edited
+3. Backup your limesurvey/upload resources directory
+4. Delete all old files 
+5. Upload the new version to the same place
+6. Have a look at the provided config.php in order to check if some new
+   required parameters have been added and add these to your previous
+   config.php file.
+7. Copy your backuped config.php file overwriting the one from the new release 
+8. Have a look to the config-defaults.php file for any new parameters that 
+   could suit your setup. If you need to change the default setting, copy the
+   parameter lines to your config.php file and adjust their values accordingly.
+9. Copy your previously backuped 'upload' directory to the new 
+   limesurvey/upload directory 
+10. Run the installer in /admin/install/index.php to update the database
+11. Import all your saved templates
+12. Done.
+
+Thank you to everyone who helped with this new release!
+
+Changes from 1.71+ Build 5048 to 5147 -  Legend:   + = New  # = Changed  - = Fix
+
+#Raised LimeSurvey requirement to at least PHP 4.3.2 installed (c_schmitz)
+#Added session regeneration after login to prevent Session Fixation attacks (c_schmitz)
+#Updated Basque Translation by inforbek13 --i-t-- eps -d-a-t- mondragon -d-a-t- edu 
+#Updated French translation by Wael Almoman walmoman -a-t- hemisa -d-o-z- com 
+#Updated German translations (c_schmitz)
+#Updated Spanish translation (kadejo)
+#Updated Persian translation by Hooman Mesgary  - mesgary -a-tt- gmail -d-o-tt- com
+#Updated Hungarian, Macedonian, Traditional Chinese (Taiwan), Italian, Croatian & Estonain Language Files
+#Renamed Farsi to Persian (c_schmitz)
+#Added another XSS filter. Now there are two XSS filters double-checking the input to prevent XSS attacks due to security flaws in the IE6 browser.  (c_schmitz)
+-Fixed #2117: Fixed two more "(other)" haven't been translated at browse.php (el-matador)
+-Fixed #1867: "Test this survey" loose lang code after 2nd page. (lemeur)
+-Fixed #2184: SQL Error when Reordering Label Set (lemeur)
+-Fixed #2134 and #1711 related to typos and better comments in config-ldap.php (lemeur)
+-Minor changes to ensure token integrity (c_schmitz)
+-Changes to original text changes to make it more compatible for translations - thanks to  Hooman Mesgary 
+-Fixed #02121: Problem with "exclude all others" question attribute - exclude_all_others didn't work when there was more than one question on page using attribute. Also fixed feature to disable other checkboxes when reloading a previously completed page. (jcleeland))
+-Fixed #2110: VVimport only works for UTF8 encoded files. Added "Character set" option to vvimport (lemeur)
+-Fixed #2082: AllowPresistence for token answers isn't working on All-In-One surveys (lemeur)
+-Fixed #2000: Changing an answer code of a labelset doesn't update conditions (lemeur)
+-Fixed #645: Labels defined as a simple image aren't displayed in Dropdown lists - at least the label code is shown now (c_schmitz)
+-Fixed #2088: max_answer javascript does not work when question has line breaks. (c_schmitz)
+(Needed to add strip_tags parameter to javascript_escape function since the processing order is important) (c_schmitz)
+-Fixed bug #02112: Pipe-Char of Semantic Differential breaks Excel Export - internal $seperator value doesn't have to be just a pipe (so far as I can see) (jcleeland)
+-Fixed bug #02107: other_replace_text truncated (fix supplied by ITEd) (jcleeland)
+-Fixed bug #02113: Add some details to Naming of Excel Export File (or is it a new feature).. anyway, it's done (minor change)  (jcleeland)
+-Fixed some minor html issues & the javascript escaping again (c_schmitz)
+-Fixed #2117: Browse Response: (other) isn't translated (c_schmitz)
+-Fixed #2091: Single and double quotes ( " and ') in a text field are prepended with slashes
+-Fixed a fatal error in template rights (c_schmitz)
+
+
+Changes from 1.71+ Build 5044 to 5048 -  Legend:   + = New  # = Changed  - = Fix
+-Fixed bug with "array_filter" question attribute, where if another question used the same ID in a different survey, the attribute would fail. Search for matching question name now restricts itself only to questions from the same survey. (jcleeland)
+-Fixed bug #02104: Can't choose labelset and other option isn't available (jcleeland)
+#Spanish translation updated. 100% now, hopefully ready for 1.71+. (kadejo)
+
+
+Changes from 1.71 to 1.71+ Build 5044 -   Legend:   + = New  # = Changed  - = Fix
++Added Icelandic translation kindly provided by Jóhann Friðriksson ( johannfr -i-t- arskoli -d-i-t- is )
++Added template preview to survey settings (c_schmitz)
++Added the ability to the template editor to edit a CSS file - where the CSS filename must be the same name as the template. (c_schmitz)
++Added Prefix & Suffix Question Attributes for Short Text, and Multiple Short Text (jcleeland)
++Added feature request #02065 - Prefix & Suffix Question Attributes for Numerical Input (jcleeland)
++Added new attribute "other_replace_text" to use alternative text to "Other" for question types that have this option (jcleeland)
+
+#Renamed css_only template to sherpa (c_schmitz)
+#Moved CSS to separate files for all templates (c_schmitz)
+#Added and updated calendar translations (c_schmitz)
+#Updated Chinese Traditional Language File by Mark Yeung
+#Updated Danish translation by Thomas Clausen 
+#Updated Korean translation submitted by the Korea National Police university translation team
+#Updated Latvian translation provided by Marcis Trapencieris (marcic -a-t- sociology -d-i-t- lv)
+#Updated Portuguese-Brazilian translation by Luiz Rafael Santos (lrsantos11 -i-t- gmail -d-o-a-t com)
+#Updated Spanish translation (kedajo)
+#Updated Portuguese Translation by Duarte Geraldes (duarte -it- roquettegeraldes -d-i-t- com)
+
+-Security Fixes - Separate Security advisory will be published soon
+-Fixed missing "other" option for List (flexible) question types. (jcleeland)
+-Fixed #2095: Error exporting a not public survey in spss format (awarren)
+-Fixed some English strings
+-Fixed several cases where mysql query procedures instead of adodb were used (c_schmitz)
+-Fixed #2064: Multiple Numerical Input total value calculator not working correctly when more than one on the page. Used arekbb's suggestion to make each div id unique per question (jcleeland)
+-Fixed #2084: Regenerate Question Codes always does straight - change in link so that query was via _POST rather than _GET broke this feature. (jcleeland)
+-Fixed #2068: max_answers function is not working because of html tags in question (c_schmitz)
+-Fixed #2090: Can't change user access right for templates. Removed SQL code in HTML comments (lemeur)
+-Fixed #2086: PDF Export fails on PHP 4 (stfreud)
+-Fixed issue with tokens (c_schmitz)
+-Fixed #2071: Problem deleting and adding new answers to a question (c_schmitz)
+-Fixed #2074: Reordering questions isn't working with "Place After" command. Also added "At beginning" as option. (jcleeland)
+-Fixed a small issue with html header(c_schmitz)
+-Fixed array_filter not working right in group-by-group mode on the same page(c_schmitz)
+-Fixed #2067: corrected topright_bord.gif - THX to moontan (el-matador)
+
+
+Changes from 1.70 to 1.71 (2008/06/02)
+
+New Features:
+-Standard sitename and sitemail when creating survey (lemeur)
+-Complete Korean translation submitted by Sehee Kim (cactusgrlkr -a-t- naver -dot-com) on behalf of the Korean Police School translation team. 
+-Added basic support for Right-to-Left languages 
+-Added Farsi translation stub by Laurent Giacobino 
+-Added Welsh translation
+-Added Indonesian translation by Lukas (c_schmitz)
+-Numerous translation updates kindly provided by the project translators and users out there. 
+-Include new pdf-features (stfreud)
+-Reworked the SPSS export to
+    a) remove redundant pass throughs of dataset (in DATA LIST build)
+    b) adjust DATA LIST column widths to account for data (uses tmpfile())
+    c) escape apostrophe's in a string to an html entity
+Note, this was only tested with SPSS 15, it's likely there are UTF-8 problems. (awarren)
+-Raised amount of tokens displayed on one page from 50 to 100 ((el-matador-69)
+-Added more detailed error message on invitation and reminder sending (c_schmitz)
+-Updated queXML-Export - Thx to Adam Zammit (el-matador-69)
+-Adding support for debian packaging (nbarcet)
+-Integrated table cell -> Radio button mapping (awarren)
+
+
+
+Bug fixes: 
+Lots of security fixes & Sanitizing the script (c_schmitz)
+Fixed #1807: Export to Excel on PHP4 creates empty .xls file. According warning message is shown in export window and export to excel to deactivated when iconv library in PHP4 is not installed. (c_schmitz)
+Fixed #1985: Exporting to SPSS shows 'SHOW COLUMNS ' error with non MySQL DB (awarren)
+Fixed #2032: Code errors when adding answers to question type List (Dropdown) (lemeur)
+Fixed #2031: Missing Replacement fields in the Rich Text editor (lemeur)
+Fixed #2002: group page is displayed even when no description (lemeur)
+Fixed #1812 - exclude_all_others attribute doesn't exclude the OTHER answer (jcleeland)
+Fixed #2003: The FCKeditor Filemanager (uploader) can't be reached in Emailsettings page (lemeur)
+Fixed #1935: Switching language and going back forgets token code (lemeur)
+Fixed #1737: No field type (A or N) was being produced for startdate, refurl, ipaddr. Switched fopen to use w+ (read and write with file purge) awarren)
+Fixed #1901: Pressing Enter While Filling Out Survey Opens "Resume Later" page(lemeur)
+Fixed #1936: Validation of the last question in a survey does not work(c_schmitz)
+Fixed #1982; Dual Scale answers are not conveniently labelled in export to xls/csv (joeschneider)
+Fixed #1960: Warning on Excel-Export with an open_basedir restriction leads to corrupted excel file (c_schmitz)
+Fixed #1963: force tokenify to begin with a non zero value or other hard to read characters (c_schmitz)
+Fixed #1982; fixed error with "Undefined index" (joeschneider)
+Fixed #1981: HTML mails have body text with HTML entities (lemeur)
+Fixed #1990: Public registration forget to add emailstatus=OK, thus email is displayed in red in the tokens table (lemeur)
+Fixed #1984 (corrupted survey URL in some emails): Applied a workaround in SurveyURL displayed in  invitation/registration emails so that bogus(?) email clients won't translate the GET parameter '& l a n g' to the '& l a n g ;' entity (lemeur)
+Fixed #1986: token link in browse results not displaying (c_schmitz)
+Fixed #1983: incorrect request in browse.php - patch by steph33560 (c_schmitz)
+Fixed #1967: correctly sets default email settings for new additionnal languages and set default email settings for survey base language. Takes Email format (html,text) into account (lemeur)
+Fixed #1931: answers are recorded as not-completed (not finalized) if last survey page was hidden due to condition (lemeur)
+Upload the latest version of queXML-Export (to fix output of type "L") - Thx to Adam Zammit (el-matador-69)
+Fixed #1959, added multiple numerical to printablesurvey.php. (Also tidied up the layout for multiple numerical and short text) (jcleeland)
+Fixed #1601 - question attribute hide_tip for multiple numerical input.  Added feature. (jcleeland)
+Fixed #1855 - Entering validation fields in multiple choice questions is fiddly. Validation now available on new/edit question for multiple numerical (jcleeland)
+Fixed #1971: correct a typo at token notification - thx to nosynack for reporting it (el-matador-69)
+Fixed #1929: When confirmation email is not defined, the hardcoded default email contains tags {XXX} that are not replaced (lemeur)
+Fixed #1927: Set all entries to 'No invitation sent' - not working if the translated confirmation text contains single quotes (lemeur)
+Fixed #1922: Multiple Numerical Input doesn't work with condition greater than or equal to (lemeur)
+Fixed a warning in index.php reported in bug #1921 (lemeur)
+Fixed #1938: edit response with "dual scale" (joeschneider)
+Fixed #1892: Rooturl is wrong when HTTP port is not the default (80) (c_schmitz)
+Fixed #1913: Hardcoded reference to limesurvey in action path in preview.php(c_schmitz)
+Fixed #1939: Question reorder does not work in all languages after importing the particular question using question import (c_schmitz)
+Fixed #1853: wrong characters in IE alert windows (lemeur)
+Fixed #1906: Problem of apostrophes in the some e-mail (lemeur)
+Fixed #1904 (workaround): IE: Opening LimeReplacementField-Window isn't possible - Javascript-Error (lemeur)
+Fixed #1905: Editing List (Radio) Answers - Code & Answer values are no longer mapped once new answer exceeds 9 (thanks to Endymion92)
+Fixed #1907: User unable to export a label set even though they have permision to (lemeur)
+Fixed #1902: Privacy Message: Always the same text "This is an anonymous survey" (lemeur)
+Fixed #1911: IE throws a nonsensical error when it receives an HTTP payload matching all of the following conditions:
+ a) Over SSL
+ b) with a Pragma: no-cache
+ c) a mime-type which is not known on the receiving system
+ d) User has the "Do not save encrypted pages to disk" option set
+        (this is the default)
+ So I've changed Pragma: no-cache to Pragma: cache, and/or inserted the
+ directive to places
+ where non standard mime types are used (application/download).  If this is
+ problematic, we
+ can change the mime type to text/plain for the CSV/VV exports. (awarren)
+Fixed #1866: Error at DataEntry for user with little rights (lemeur)
+Fixed #1878: Cannot send reminder e-mail [postgres] (c_schmitz)
+Fixed #1856: DB error when delete tokens table (Postgres) - Patch kindly provided by doc (c_schmitz)
+Fixed #1807: Can't export to excel when using certain question types and special chars (c_schmitz)
+Fixed #1836: Option deletenonvalues doesn't work on most cases (lemeur)
+Fixed #1891: Clear "no answer" when selecting second label using "dual scale" (joeschneider)
+Fixed #1833: incorrect columns displayed when "other" and "No answer" displayed. (jcleeland)
+Fixed #1863: Users unable to change their own password (c_schmitz)
+Fixed #1858: Group import results in PHP Parse error (el-matador-69)
+Ffixed output when no "header" is set for dualscale (joeschneider)
+Fixed #1857: Missing No Answer option for array questions and other issues in dataentry when using different languages in admin interface and survey. (c_schmitz)
+Fixed #1856: DB error when delete tokens table (Postgres) - Patch by doc (c_schmitz)
+Fixed #1861: Notice at importing LimeSurvey Sample Survey (c_schmitz)
+Fixed #1868: Double Tooltips at "Execute this Survey"-Button (lemeur)
+Fixed #1815: Unknown Menubar-Object "LimeReplacementFields"/"LimeFitWin" + some information about updates in config files and release-notes (lemeur)
+Fixed #1873: Changing answers codes doesn't update conditions (lemeur)
+Fixed #1797: Entered answers lost when Save All not clicked (lemeur)
+Fixed #1828: User unable to change password. A user is now able to modify his own information (name and password whatever his permissions). He is also able to delete himself if he's got the DELETE_USER permission (lemeur)
+Fixed #1831: Super User cannot change quotas for other users' surveys (lemeur)
+Fixed #1840: Translation error and accent issue in calendar in French (lemeur)
+Fixed #1830: User can Activate survey from the list survey section even though there are no questions (lemeur)
+Fixed #1828: Missing Parent name of current logged in user (lemeur)
+Fixed #1822: Missing http headers for on admin login page. (c_schmitz)
+Fixed attribute tag filtering being negligent of quotes (c_schmitz)
+Fixed #1835: List Surveys: Responses aren't shown for expired surveys (c_schmitz)
+Fixed #1843: Unable to re-order Question groups (c_schmitz)
+Fixed #1846: Make Tokens-Button should be available, also if survey is not active (c_schmitz)
+Fix issues with formattong LimeReplacementFields (persitent and inconsistent yellow formatting) (lemeur)
+Fixed #1844: Use of apostrophe in FCKeditor causes a series of slashes \\\\ (lemeur)
+Added back in missing privacy message (c_schmitz)
+Fixed #1842: IE Javascript error when clicking "Edit Current Survey" (c_schmitz)
+Fixed #1848: Empty survey gives notice on Import (c_schmitz)
+Added according text to mandatory message for multiple choice with other option (c_schmitz)
+Fixed #1845: Improve Accessibility for blind people: make menu icons readable (lemeur)
+Fixed #1845 again, making the fix switchable with new config parameter $addTitleToLinks (lemeur)
+Fixed #1732: {INSERTANS:SIDXGIDXQID} includes HTML tags (c_schmitz)
+Fixed a bug in upgrade script and mysql4 where the emailstatus field was not added due to size limitations - 2nd try (c_schmitz)
+Fixed #1808: Condition not implemented for the "other" answer // Fix for questions type List Radio/Dropdown (lemeur)
+Fixed #1805: Survey cannot be re-used without closing and reopening browser, even with cookies turned off (jcleeland)
+Fixed a bug in upgrade script and mysql4 where the emailstatus field was not added due to size limitations (c_schmitz)
+Fixed #1794: Errors showing when previewing question without answers in Flexible Array by Column Question Type (c_schmitz)
+Fixed #1802: "Resume Later" -> reloading saved survey starts at first page (c_schmitz)
+Fixed HTML entities showing up in Excel, CSV & SPSS export (c_schmitz)
+Fixed #1780: Java script error with dual scale
+Updated tokens and email validation to be able to use several email addresses separated by semikolon when sending an invitation (c_schmitz)
+Fixed SPSS & data export to filter out tags and html-encoded chars (c_schmitz)
+Fixed #1798: In reminder email (html format) surveyurl is displayed as HTML code in Outlook (c_schmitz)
+Fixed #1785: Upgrade script failed to add startdate column under certain circumstances  (c_schmitz)
+Fixed #1781: Errors when editing a survey response with dual scale question type questions  (c_schmitz)
+Fixed bug with assigning user rights and Superuser right (c_schmitz)
+Removed the {NOSID} message from default page since robot tools are looking for it  (c_schmitz)
+Fixed #1796: in HTML email, SURVEYURL text may be corrupted (lemeur)
+Fixed #1773: Error in userrighthandling.php + fixed usercontrol list with current user bolded instead of admin user (lemeur)
+Fixed #1782: Lines wrapping in plain text invite  (c_schmitz)
+Set default language for email error messages coming from PHPMailer (c_schmitz)
+Fixed #1723: Display error with statistics and "dual scale" question typ (joeschneider)
+Fixed #1746: Umlauts coming from {SURVEYDESCRIPTION} are not resolved in the confirmation email (c_schmitz)
+Changed 'Save Survey and Return' button caption to 'Resume Later' (c_schmitz)
+Fixed #1786: When using a non-equal condition the Logic Eliminator wasn't aware of it and dropped the value. After that a mandatory warning was raised. (c_schmitz)
+Fixed #1761: token emailstatus left NULL on upgrade (c_schmitz)
+Fixed Quotas are checked even if the survey is inactive. (c_schmitz)
+Fixed #1757: Encoding Problem of Confirmation Email(c_schmitz)
+Fixed #1754: Invalid HTML in Dual Scale Matrix causing Layout Problem with Hoover Effect in IE(c_schmitz)
+Fixed #1755: HTML entities in admin notification email(c_schmitz)
+Replaced html_entity_decode with a custom html_entity_decode_php4 function that is PHP4 and PHP5 compatible (lemeur)
+Fixed Use Default for html email doesn't replace end of lines with BR (lemeur)
+Fixed #1739:  Default button weren't working for HTML Email Settings (lemeur)
+Fixed #1555: Data submission on questions with radio buttons fails with Safari 2.0.4 and IE 5.2 on Mac OS X in question by question mode (c_schmitz)
+Fixed #1733: infinite loop in popup editor mode for Safari (c_schmitz)
+Updated Dutch Translation by Arno Fleming (a -dot- fleming -a-t-- stichtingdeombudsman -d-o-t- nl ) (c_schmitz)
+Fixed #1748: Row size too large error with MySQL - Multiple short text Question type used 255 chars per field. I changed this to TEXT fields in MySQL. (Do not do that for other DB systems since most other DB systems cannot select on TEXT fields which is important for statistics) (c_schmitz)
+Fixed #1728:Survey Import from prior LS versions was failing (c_schmitz)
+Fixed #1745: View summary of all available fields failed when survey contained a date question(c_schmitz)
+Fixed #1736: SQL error while printing user's answers and using Multiple Numerical Question Type(c_schmitz)
+Fixed numerous errors in HTML email handling (c_schmitz)
+Fixed #1744: CRSF possible on modify quota action (lemeur)
+Fixed #1742: Export queXML doesn't work for PHP5. Special Thanks for  Alexandre Alapetite (lemeur)
+Fixed #1713: Fatal error with 'randomkey' on setting up tokens (c_schmitz))
+Fixed strange warnings with html_entity_decode() and PHP 4 (c_schmitz)
+Fixed #1726: Pressing back button after submit produces "Fatal error: Call to undefined function createinsertquery()" (c_schmitz)
+Added some javascript to question type "Multiple choice with Comments" so unmarked boxes with comments aren't possible (c_schmitz)
+Fixed Quoting problem when XSS filter is off (c_schmitz)
+Fixed Quoting problem in emails when XSS filter is off (c_schmitz)
+Fixed a faulty link to FCKEditor config.php which resulted in uploades not working
+
+Changes from 1.52 to 1.70
+
+New Features / Feature Changes - Release Date: 2008/02/25
+
+[Survey at Runtime] INSERTANS for Question Type: Y, E, C (lemeur)
+[Import / Export] Automatic Translation of relative links (images) at Survey/Group/Question Import (lemeur)
+[Import / Export] Automatic Translation INSERTANS tags at Survey Import (lemeur)
+[Assessments] Valid generic (non-error) front page with list of available surveys. (jasebo)
+[Survey Design] Possibility to upload pictures to use in surveys (lemeur)
+[Installation] Postgresql support (c_schmitz)
+[Survey Design] FCKEditor integration for survey design (lemeur)
+[Survey Design] Wizard to insert tags (INSERTANS,...) as a plugin to FCKeditor (lemeur)
+[Survey Design] Quota Management (machaven)
+[Survey Design] timestamp at survey start (c_schmitz)
+[Survey Design] Dual Array Scale Question Type (Joesch)
+[Security] Super Administrator Right (lemeur)
+[Templates] Patch/Modification: Implement User Management to Template Access (patched by machaven)
+[Survey at Runtime] Resume an incomplete (and not saved) survey (lemeur)
+[Survey at Runtime] Prefilled Surveys (lemeur)
+[Security] Authorize the 'preview survey' to authenticated LS users only (lemeur)
+[Security] Implement Captcha for Survey-Access (with or without tokens) and makes Captcha switchable for Survey-Access/Registration/Load-and-Save (lemeur)
+[Security] Delegate authentication to the webserver (lemeur)
+[Survey at Runtime] Using a {LANGUAGECHANGER} tag integrates a select box in templates to change language on the fly (lazar)
+[Survey Design] Auto-incrementing answer codes (c_schmitz)
+[Tokens] Options to switch filter empty email field and filter duplicates in token import (c_schmitz)
+[Tokens] Emails can be sent as HTML (lemeur)
+[Survey at Runtime] Make Email Subjects of Admin Notifications Translateable (c_schmitz)
+[Survey Design] Move submit button to last question page (c_schmitz)
+[Survey at Runtime] Correct error message and further instructions, if user has disabled Cookies (c_schmitz)
+[Security] Protection against token code brute force attacks (lemeur)  
+[Survey at Runtime] Checkbox for Multiple Choice Other Option (c_schmitz)
+[Survey Design] Mass Logic Eliminator (lemeur)
+[Survey Design] New conditions operators on comparizons,regexp (dgeaperez)
+[Survey Design] Total sum validation for "Multiple ShortText" Questions (jasebo)
+[Survey Design] Randomize answers for Flexible arrays (jasebo)
+[Survey Design] Re-organized survey creation/edition interface (lemeur)
+[Survey at Runtime] Alternative presentation of Dates question (jasebo)
+[Survey at Runtime] Print answers after completing the survey (c_schmitz)
+[Survey Design] SSL for STMP emailing (Patched by c_schmitz)
+[Import / Export] QueXML Survey structure export (Patched by c_schmitz)
+[Survey Design] Usability improvement: Hover effect for matrix questions (El-Matador-69)
+[Survey Design] Display Label Set Name at Question Details (not only the Label Set ID) (c_schmitz)
+[Tokens] Increased token code entropy (c_schmitz)
+[Tokens] Moved Email settings from survey properties to "Tokens-Settings"-Menu (c_schmitz)
+[Survey Design] Change conditions designer so that full question & answer text are visible (jasebo)
+[Survey at Runtime] Attribute to disable/clear other checkboxes in Multiple Options question (jasebo)
+[Survey Design] Adding new questions to very large surveys, and question sorts (jasebo)
+[Survey Design] Question Attribute "display_columns" for Gender Question--Type (jasebo)
+[Survey Design] Implemented dropdown layout for Dual Scale Question Type (lemeur)
+[Language] Added Slovak translation provided by Juraj Zubán aka D4v1dZ ( d4v1dz -a-t- gmail -d-o-t- com)
+
+
+
+Changes from 1.50 to 1.52 - Release Date: 2007/08/19
+
+Features
+
+-Added a file extension check for the template editor (leochaton)
+-Added numercical input and max_chars within multiple short text (thanks to skrat) (leochaton)
+-Lots of security fixes regarding internal security - upgrade is highly recommended. (c_schmitz)
+-Hint is now shown if database exist (c_schmitz)
+-Added a warning message when the user did not change the 'password' Password (c_schmitz)
+-Updated and now complete SPanish Translation by Luis M. Martínez
+-Updated and now complete Polish Translation by Damian Kubiak
+
+
+Fixes:
+-The style of the "Ranking Question" is now adjusted to the new color scheme at DataEntry (c_schmitz)
+-Fixed notices in template editor at "Question Page", "Submit Page" and "Clear all page" (c_schmitz)
+-Fixed completed Date Field in token table being Too Short (c_schmitz)
+-Fixed Empty data on repeated submission in all-in-one mode (leochaton)	
+-Fixed problem with mandatory questions in all-in-one mode (leochaton)	
+-Fixed "Load unfinished survey" and "Save survey and return" buttons active even when the survey is not active (leochaton)	
+-Fixed question marks being shown instead if Cyrillic/chinese/greek/... characters when installing LImeSurvey into a non-UTF8 database (c_schmitz)
+-Fixed $accesscontrol isn´t working correctly - removed this obsolete setting (leochaton, c_schmitz)	
+-Fixed error clicking Browse button to view text box responses (leochaton)
+-Fixed Locale nl point to wrong images-directory (el-matador-69)
+-Fixed The saved control records were not deleted when the survey was deactivated. (leochaton)
+-Fixed statistics for free text questions (leochaton, c_schmitz)
+-Fixed a bug in the randomize function for answers (c_schmitz)
+-Numerous small fixes
+
+
+
+Changes from 1.01 to 1.50 - Release Date: 2007/08/06
+
+New General Features
+
+    * New design and new name
+    * Multi-lingual surveys - do the same survey in multiple languages at the same time
+    * Command line importer to import surveys (leochaton)
+    * Usage of {SAVED_ID} and {TOKEN} in the end URL to interact with other applications (leochaton)
+    * Separate installation directory that has to be removed on installation end
+    * Import Tokens using LDAP Query (lemeur)
+    * Check if the necessary requirements are fulfilled on installation and runtime (c_schmitz)
+    * Semantic differential scale questions - sponsored by a donation from tileca (c_schmitz)
+    * Preview question function (machaven)
+    * SPSS export re-worked (machaven)
+    * Reworked the token import to being more stable (machaven)
+    * Reworked the Excel export to be OpenOffice.org compatible
+    * Setting to config.php to manage the maximum session time & proper error message when taking a survey and the session is timing out for any reason (c_schmitz)
+    * Captcha feature to prevent automatic registering (machaven)
+    * Support for Microsoft SQL Server database (ferrisoxide)
+    * Moved the manual to online site (c_schmitz)
+    * New question attribute to limit the maximum number of answers in Multiple Options questions (attribute max_answers) (lemeur)
+    * New user authentication system with user right/roles & groups (moses)
+    * Re-ordering for groups and questions by up-down buttons instead of sorting by question/group name (c_schmitz/nkorfiatis)
+    * Some interfaces for editing answers where changed so you can save changes to all answers for all languages on one click. (machaven/c_schmitz)
+    * Added a new question type to change the survey language (c_schmitz)
+    * Completely overhauled interface icons. The basic style has been kindly created by Mitchell Butler.
+    * Added answer limiting based on a previous question for array question types (machaven)
+    * Added page-by-page saving of the answers (swales)
+    * Changed the translation system from language files to gettext system. That will make translations easier to handle and to update. Refer to the translation instructions here: How to translate LimeSurvey (c_schmitz)
+    * Graphical date picker to date question type and survey properties (c_schmitz)
+    * Overview of all surveys in addition to the existing combobox (nkorfiatis)
+    * Save the referring URL in survey results. Sposnored by Lawrence Weathers (docweathers) Coder: Richard Kavanagh (www.benbun.co.uk)
+    * Added feature to show custom attribute names in token interface
+    * Added random survey number generation to make guesses on the surveyid harder
+    * Moved admin interface styles to style sheets
+    * Fixed image links and included PNGFix in admin interface for crappy old IE6 browsers (nkorfiatis)
+    * Bubble hints on icons for FF (nkorfiatis)
+    * DB Versioning for easier updates to the DB in the future (c_schmitz))
+    * Removed experimental interface 
+
+
+New Languages
+
+    * Brazilian Portuguese by Anderson La‚cio Galindo Trindade
+    * Chinese Traditional (Area Hong Kong) by Mark Yeung
+    * Finnish by Matti Lassila
+    * Galician translation by Carlos Neira Cortizas
+    * Japanese translation by Hiroki Yoshino
+    * Polish by Maciej Zawado
+    * Serbian by Ivan Recevic
+    * Spanish by Carlos Juan Martín Pérez
+    * Vietnamese by Vinh Ngo 
+
+
+New Templates
+
+    * New default template
+    * New clear_logo template 
+
+
+
+
+
+
+Changes from 0.996 to 1.0
+
+-Added SMTP relay and authorization
+-Added Japanese translation kindly provided by Masaru Ryumae
+-Added Greek translation file kindly provided by Artemis Mendrinos
+-Added Romanian translation kindly provided by Bogdan Anastasiei
+-Added Swedish translation of administration kindly provided by Niklas Andersson
+-Updated spanish translation kindly provided by Juan Rafael Fern ndez
+-Updated russian translation by Alexander Shilov
+-Fixed an error message showing up when a survey was deleted but the token still was set to 'completed = yes'
+-Fixed bug #470: VVimport fails (reports that an active survey is not currently active) if dbprefix is set
+-Fixed bug #465: Error messages if a question has no answers
+-Fixed bug #463: Checkbox with conditions = JS error on Firefox in 'All in one' mode
+-Fixed bug #457: SQL syntax error when having changed a question type from a question with activated 'other' option to a question type with no 'other' option and then activating the survey.
+-Fixed bug #456: Emails using local server (Postfix) rather than remote mail server as specified in config file
+-Fixed bug #455: Losing ip-address when editing a cached survey
+-Fixed bug #435: Basic handling of session timeouts.
+-Fixed bug #458: Wrong path for 2 files in experimental interface
+-Removed a possible error in relation to dbprefix settings.
+-Removed a small warning notice regarding flush_cache_ob.
+-Fixed swedish language file
+-Fixed small antialiasing bug with JPGraph
+
+
+
+Changes from 0.995 to 0.996
+
+-Fixed bug #454: remote exploit where attacker was able to inject code into the log file using save.php and could execute the injected code and attached commands by a broken MySQL command.
+ This exploit is only working if the apache access.logs are made available (by mistake or a sloppy server configuration).
+-Updated french language files & instructions by S bastien Gaugry
+-Removed 'Header already sent messages' when sending notifications or test-submitting in question-by-question mode
+
+
+
+Changes from 0.993 to 0.995
+
+Fixed bug #397: [Translation] Updated swedish lang-file (c_schmitz)
+Fixed bug #398: [Security] shell_exec not only disabled in safe_mode (c_schmitz)
+Fixed bug #400: [Documentation] Requirements for limesurvey (c_schmitz)
+Fixed bug #348: [Import / Export] Failed to import survey dumps when using MySQL version 5.x (c_schmitz)
+Fixed bug #403: [Import / Export] SPSS export does not work properly in 0.993 (c_schmitz)
+Fixed bug #411: [Survey at Runtime] Patch: Options List (do_list_radio function) (c_schmitz)
+Fixed bug #415: [Import / Export] Infinite loop in resultsdump.php (c_schmitz)
+Fixed bug #427: [Survey at Runtime] Error finding question attributes (c_schmitz)
+Fixed bug #424: [Tokens] /// in invitation text (c_schmitz)
+Fixed bug #419: [Tokens] Importing Tokens with pre-set token id not usable without editing (c_schmitz)
+Fixed bug #416: [Survey at Runtime] bug saving partially completed surveys - Multiple Options/Array. (c_schmitz)
+Fixed bug #425: [Tokens] Reminder emails with nothing but Subject line (c_schmitz)
+Fixed bug #432: [Survey at Runtime] Error finding question attributes (c_schmitz)
+Fixed bug #423: [Import / Export] wrong Excel export "Full headings" for matrix questions (c_schmitz)
+Fixed bug #422: [Survey at Runtime] $shownoanswer=0 - 5 point choice question shows the "No answer" option (c_schmitz)
+Fixed bug #434: [Survey at Runtime] Columns in array type questions no longer line up (c_schmitz)
+Fixed bug #428: [Survey at Runtime] Problems with public registration (c_schmitz)
+Fixed bug #437: [Import / Export] Exporting Question/Answer Codes returns Question Texts, not their codes (c_schmitz)
+
+
+Changes from 0.992 to 0.993
+
+New features:
+Basic smtp email function can be configured in config.php now
+
+Bugfixes:
+- Resolved some serious issues with using tokens
+- Fixed copying of questions and conditions when using MySQL 5 server
+- Minor fixes und updates
+
+
+
+Changes from 0.991 to 0.992
+
+New features:
+
+Added croatian language file (submitted by Ivana Pavic)!
+Change survey sent/taken from "Y" to the date:
+	When reviewing the tokens display, the fields telling if the survey request was sent, 
+	and the survey taken, display a N or Y. This was changed to be the actual date this event took place. 
+	This is giving some siginificant additional information to the survey author. (Patch by Thomas Ringate / tringate!)
+New global option that allows the administrator to specify what is the minimum number of remaining answers 
+	in an 'array - flexible' question that must be remaining before repeating the question headings. This 
+	avoids that the headings of the question are repeated if only a few answers are remaining. (Patch by Kris Ven !)
+
+Changes:
+Moved admin CSS styles to separate CSS file
+Updated slovenian language file
+Updated dutch language file
+Updated french language file (by Pascal Bastien/pascal-gnu)
+Moved config.php and common.php from admin directory to main one. This allow easy configuration of permission on IIS (patch #326 by freddy77)
+Use extensively dirname and __FILE__ constants. This allow inclusion using full path names limiting some possible security issues. (patch #326 by freddy77)
+Added XPertmailer class wich helps alot when sending email dealing with all the linefeed issues. SMTP function will be available in the next version.
+
+Bug Fixes:
+
+Fixed bug #373: Setting Charset on MySQL connection
+Fixed bug #325: Spelling error in keyword fo SPSS export
+Fixed bug #331: Some conditions broken in 'All in one' survey mode
+Fixed bug #339: Input fields on "Register for survey "-page not constructed properly
+Fixed bug #339: Umlauts not showing up correctly in german formal language
+Fixed bug #348: Failed to import survey dumps when using MySQL version 5.x
+Fixed bug #345: Excel export reports "Use of undefined constant _IP_ADDRESS"
+Fixed bug #338: Message 'This survey is no longer available' if Expires: field is left empty when creating a survey by introducing a new field to the survey table since '0000-00-00' entries will be invalid under MySQL5 strict mode.
+Fixed bug #347: Invitation mail empty under certain server configurations
+Fixed bug 342: The "Export database" option exports all tables even if we use a prefix for tables
+Fixed bug #357: Error "Undefined index attribute..." in tokens.php when trying to export tokens
+Fixed bug #355: Save button on last page in group mode doesn't really make sense.
+Fixed bug #380: Can`t add a label with code 0
+Fixed bug #368: Conditionals on multiple option / checkbox question type was broken
+Fixed bug #372: Backup of entire database command does not create correct empty default values
+Fixed bug #374: Couldn't delete response record if using prefixed tables
+
+
+
+Changes from 0.98 to 0.99
+=========================
+
+1.) New question types
+
+* List type question divided into two question types - radio 
+button or drop down, so you can choose on a question by 
+question basis whether or not to have radio buttons or a 
+dropdown list.
+
+* New "flexible" list type question uses labelsets to make reusing 
+sets of answers easier - one radio and one dropdown type
+
+* New "Huge" text question allows for a _really big_ textarea
+
+2.) New features
+
+* UTF-8 conversion. Use any char of any language mixed together. 
+  The problems with mixed up charsets are gone now hopefully. 
+  READ THE STATEMENT AT THE BEGINNING OF THIS FILE!!!!
+
+* Question attributes, allows for better control over the display 
+and working of individual questions - for example:
+
+    - Have multiple choice or list questions display in multiple columns
+    - Set a maximum character length on text questions
+    - Adjust the width of  the input box in text questions
+    - Hide the tip "Please Choose One" of selected questions
+        - Allow the user to select the number of lines the text area will have with long free text and huge free text
+      Thank you very much to Shawn Wales (sf.net name: swales)!
+    - Allows the user to select the width of the text area with long free text and huge free text questions
+      Thank you very much to Shawn Wales (sf.net name: swales)!
+
+* New system option to set the table type in MySQL
+
+* New "assessments" feature which allows you to sum the 
+answers to groups of questions, or the total survey, and then 
+present an "assessment" when the users submits the survey.
+
+* New survey options, including:
+ - the capacity to set the "subject" of emails on a survey-by-survey basis
+ - hide the "<< prev" button so users can only go forwards through a survey
+ - Allow users to save a partially completed survey and come back to complete it later
+ - Automatically load the "URL" when the user has completed the survey
+
+* VV Import and VV Export
+ - A way of exporting and importing results directly to the responses table - which not only allows merging of survey 
+   responses run on different servers, but also the ability to add or remove questions to a survey while preserving the existing 
+   responses.
+
+* New sample survey 
+
+* Added W3C HTML 4.01 transitional and WAI 508 compliance (not yet finished)
+
+* Basic ability to integrate into other CMS - thank you to asmaloney
+
+
+3.) New language translations
+
+* COMPLETE French translation of the instructions and updated french language file 
+  kindly provided by S bastien GAUGRY !! (great work!)
+* COMPLETE Italian translation of the instructions and 
+  updated italian language file kindly provided by Mario Marani !! (great work!)
+* Bulgarian Language File kindly provided by Nikolay Tsanov <tsanov@tu...>
+* Added Portuguese language kindly provided by Rosaura Gazzola & Job Vieira L cio, Brazil
+* Updated german language files
+* Updated chinese language file thanks to Cha (sf.net name: cafetango)
+
+
+4.) New themes
+* Included "Blue Heaven" theme 
+* Included "BluenGrey" theme 
+* Included "Vallendar" theme 
+* Included "Business_Grey" theme 
+* Included "Eirenicon" theme 
+* Included "SoftGreenCurves" theme 
+
+
+... and tons of bugfixes - too many to write down here...
+

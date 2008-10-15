@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>Test Page for HTML_AJAX.replace()</title>
+	<script language="javascript" src="jsunit/app/jsUnitCore.js"></script>
+	<script language="javascript" src="data/server.php?client=all"></script>
+</head>
+<body>
+	<div id="target"></div>
+	<script language="javascript">
+		function testSimpleReplace() {
+			HTML_AJAX.replace('target','data/content.html');
+
+			// replace is async so testing this is a pain, do a sync grab on the same file to sleep
+			var grabbed = HTML_AJAX.grab('data/content.html');
+			assertEquals('Simple Replace',"Im Test Content\n", document.getElementById('target').innerHTML);
+		}
+	</script>
+</body>
+</html>

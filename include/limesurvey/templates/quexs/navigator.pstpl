@@ -1,0 +1,7 @@
+<table width='100%' align='center' bgcolor='#EEeeee'>
+	<tr>
+		<td align='center'>
+			{NAVIGATOR}
+		</td>
+	</tr>
+</table>

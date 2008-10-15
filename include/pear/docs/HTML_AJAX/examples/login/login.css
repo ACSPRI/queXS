@@ -1,0 +1,66 @@
+/* --------------------------------------------------------------------------------------------------
+	General styles
+------------------------------------------------------------------------------------------------- */
+body, table {
+	color: #000000;
+	font-size: 70%;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+
+table, fieldset {
+	font-size: 1em;
+}
+
+body, td, th {
+	line-height: 140%;
+}
+
+td, th {
+	vertical-align: top;
+}
+
+form, ul {
+	margin: 0;
+	padding: 0;
+}
+
+legend {
+	color: #0046D5;
+	font-weight: bold;
+	padding-right: 8px;
+	margin-bottom: 5px;
+}
+
+ol, ul {
+	margin-left: 6px;
+	padding-left: 15px;
+}
+
+/* --------------------------------------------------------------------------------------------------
+	Custom styles
+------------------------------------------------------------------------------------------------- */
+.errorbox {
+	padding: 8px;
+	border: 1px solid #ff0000;
+	display: none;
+}
+
+label {
+	color: #006fcc;
+	font-weight: bold;
+}
+
+label.error {
+	color: #ff0000;
+	font-weight: bold;
+}
+
+.AjaxLoading {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: red;
+	width: 80px;
+	padding: 4px;
+	display: none;
+}

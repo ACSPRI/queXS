@@ -1,0 +1,88 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>
+    How to use behavior.js
+  </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script src="../server.php?client=behavior" type="text/javascript"></script>
+<script type="text/javascript">
+Behavior.register(
+        ".alert",
+        function(element) {
+            element.onclick = function(){
+                alert('I alert on click');
+            }
+        }
+    );
+
+    Behavior.register(
+        ".annoy",
+        function(element) {
+            element.onmouseout = function(){
+                alert('I alert on mouseout, very annoying');
+            }
+        }
+    );
+
+    Behavior.register(
+        ".red",
+        function(element) {
+            element.onmouseover = function(){
+                element.style.backgroundColor = 'red';
+            }
+        }
+    );
+</script>
+</head>
+
+<body>
+    <p>
+      This file requires two javascript files to work properly.  They are behavior.js and css-Query-p.js and can be found in the js/behaviors folder.
+      The script allows you to apply behaviors to a css class, so you don't pollute your html with a ton of
+      inline javascript.  The example below uses the following script tag to apply the behaviors.
+      you can also link external javascript files to apply behaviors as well.
+      </p>
+<pre>
+Behavior.register(
+        ".alert",
+        function(element) {
+            element.onclick = function(){
+                alert('I alert on click');
+            }
+        }
+    );
+
+    Behavior.register(
+        ".annoy",
+        function(element) {
+            element.onmouseout = function(){
+                alert('I alert on mouseout, very annoying');
+            }
+        }
+    );
+
+    Behavior.register(
+        ".red",
+        function(element) {
+            element.onmouseover = function(){
+                element.style.backgroundColor = 'red';
+            }
+        }
+    );
+</pre>
+    <div style="border: 1px solid black; width: 50%; margin: 5em">
+    <div class="alert">
+    I am a div that alerts when you click on me - notice I just have class="alert" to make it work :)
+    </div>
+    <div class="annoy">
+    I am a div that alerts when you mouseout me - class="annoy" makes it work
+    </div>
+    <div class=" alert red">
+    I am a div that alerts when you click on me and the background turns red on mouseover - class="alert red"
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<table width='100%' align='center' cellspacing='0'>
+	<tr>
+		<td align='center' bgcolor='#EEEEEE'>
+			<font color='#328639'><strong>{SURVEYNAME}</strong></font>
+		</td>
+	</tr>
+	<tr>
+		<td align='center' bgcolor='#eeeeee'>
+			{PERCENTCOMPLETE}
+		</td>
+	</tr>
+</table>

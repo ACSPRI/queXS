@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>HTML_AJAX Test Suite</title>
+    <link rel="stylesheet" type="text/css" href="jsunit/css/jsUnitStyle.css">
+    <script language="JavaScript" type="text/javascript" src="jsunit/app/jsUnitCore.js"></script>
+    <script language="JavaScript" type="text/javascript">
+
+        function MainJS() {
+            var result = new top.jsUnitTestSuite();
+            result.addTestPage("Main.html");
+            return result;
+        }
+
+        function librariesSuite() {
+            var result = new top.jsUnitTestSuite();
+            result.addTestPage("tests/jsUnitMockTimeoutTest.html");
+            return result;
+        }
+
+        function suite() {
+            var newsuite = new top.jsUnitTestSuite();
+            newsuite.addTestSuite(MainJS());
+            return newsuite;
+        }
+    </script>
+</head>
+
+<body>
+<h1>HTML_AJAX Test Suite</h1>
+
+<p>This page contains a suite of tests for testing HTML_AJAX.</p>
+</body>
+</html>

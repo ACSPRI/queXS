@@ -1,0 +1,2438 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-20 09:00+0200\n"
+"PO-Revision-Date: 2008-06-22 13:46+0100\n"
+"Last-Translator: Carsten Schmitz <carsten.schmitz@limesurvey.org>\n"
+"Language-Team:  <anita@masit.org.mk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Macedonian\n"
+"X-Poedit-Country: MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF\n"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:45
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:174
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:203
+msgid "ERROR"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:46
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:204
+msgid "We are sorry but your session has expired."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:46
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:204
+msgid "Either you have been inactive for too long, you have cookies disabled for your browser, or there were problems with your connection."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:47
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:317
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:176
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:205
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:295
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:380
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:400
+#, php-format
+msgid "Please contact %s ( %s ) for further assistance."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:133
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:83
+msgid "PDF Export"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:142
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:282
+msgid "Survey Name (ID)"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:162
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:960
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:154
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:379
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:521
+msgid "Token ID"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:164
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:165
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:390
+msgid "Date Submitted"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:167
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:525
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1533
+msgid "Date Stamp"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:171
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:936
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:169
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:396
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/saved.php:85
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:529
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1534
+msgid "IP Address"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:175
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:578
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:579
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:942
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:173
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:400
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1535
+msgid "Referring URL"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:262
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:264
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:284
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1127
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:823
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:829
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:906
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:955
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:1044
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1869
+msgid "Question"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:262
+#: /srv/www/virtual/limesurvey.org/devSVN/printanswers.php:264
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:284
+msgid "Your Answer"
+msgstr "Ваш одговор"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:43
+msgid "Import Survey Resources"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:48
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:72
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:113
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:141
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:160
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:185
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:218
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:242
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:283
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:311
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:330
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:355
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:129
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:30
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:54
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:162
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:174
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:186
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:516
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:68
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:81
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:105
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:120
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dumpquestion.php:37
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/export_structure_csv.php:47
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dumpgroup.php:40
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/activate.php:218
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/activate.php:490
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deletesurvey.php:27
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:50
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:371
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:760
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:765
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:790
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:881
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:923
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:29
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:67
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:248
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:264
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:282
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:426
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:446
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:506
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:545
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/http_importsurvey.php:32
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/resetsurveylogic.php:28
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:31
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:96
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:106
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:239
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:280
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:396
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:445
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:470
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dumplabel.php:32
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:183
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:201
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:266
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:702
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:775
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:794
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1870
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:2145
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:2151
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/install/createdb.php:52
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/install/createdb.php:84
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:46
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:62
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:123
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:127
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:131
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:161
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:162
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:163
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2472
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/usercontrol.php:647
+#: /srv/www/virtual/limesurvey.org/devSVN/save.php:508
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:398
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1171
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:4303
+msgid "Error"
+msgstr "Грешка"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:49
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:219
+#, php-format
+msgid "Incorrect permissions in your %s folder."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:50
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:74
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:144
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:187
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:361
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/usercontrol.php:523
+msgid "Back"
+msgstr "Назад"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:66
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:134
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:236
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:304
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:137
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:42
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:200
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1212
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1240
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:54
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:651
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/http_importsurvey.php:40
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:68
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:495
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1741
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1788
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1875
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1971
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:2131
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:459
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1460
+msgid "Success"
+msgstr "Успех"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:67
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:237
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:138
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:43
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:55
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/http_importsurvey.php:41
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:69
+msgid "File upload succeeded."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:68
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:238
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:139
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:44
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/http_importsurvey.php:42
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:70
+msgid "Reading file.."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:73
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:243
+msgid "This file is not a valid ZIP file archive. Import failed."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:94
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:264
+msgid "Copy failed"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:103
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:273
+msgid "OK"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:113
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:283
+msgid "Forbidden Extension"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:137
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:156
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:307
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:326
+msgid "Imported Files List"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:142
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:312
+msgid "This ZIP archive contains no valid Resources files. Import failed."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:143
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:313
+msgid "Remember that we do not support subdirectories in ZIP Archive."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:151
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:321
+msgid "Partial"
+msgstr "Делумно"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:155
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:163
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:325
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:333
+msgid "Error Files List"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:166
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:336
+msgid "Imported Resources for"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:168
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:338
+msgid "Resources Import Summary"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:169
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:339
+msgid "Total Imported files"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:170
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:340
+msgid "Total Errors"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:174
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:180
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:344
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:350
+msgid "File"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:186
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:356
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:130
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:31
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:163
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:30
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/http_importsurvey.php:33
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:32
+#, php-format
+msgid "An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:213
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:23
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:195
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:202
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:214
+msgid "Import Label Set"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:220
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:244
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:314
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/import_resources_zip.php:357
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:32
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:164
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:176
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:188
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:71
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:84
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:108
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:122
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dumpquestion.php:38
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/export_structure_csv.php:50
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dumpgroup.php:41
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/activate.php:489
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deletesurvey.php:29
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deletesurvey.php:123
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/login_check.php:52
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:31
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:41
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:69
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:250
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:266
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/resetsurveylogic.php:30
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:34
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:45
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dumplabel.php:33
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:185
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:203
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:270
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:354
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:988
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:990
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:992
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1000
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/install/createdb.php:39
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/install/createdb.php:56
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/install/createdb.php:88
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deactivate.php:59
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deactivate.php:65
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deactivate.php:67
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deactivate.php:69
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deactivate.php:106
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deactivate.php:112
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deactivate.php:114
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:50
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:65
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2474
+msgid "Main Admin Screen"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:21
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:45
+msgid "ARMSCII-8 Armenian"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:22
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:46
+msgid "US ASCII"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:23
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:47
+msgid "Automatic"
+msgstr "Автоматски"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:24
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:48
+msgid "Big5 Traditional Chinese"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:25
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:49
+msgid "Binary pseudo charset"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:26
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:50
+msgid "Windows Central European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:27
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:51
+msgid "Windows Cyrillic"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:28
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:52
+msgid "Windows Arabic"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:29
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:53
+msgid "Windows Baltic"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:30
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:54
+msgid "DOS West European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:31
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:55
+msgid "DOS Central European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:32
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:56
+msgid "DOS Russian"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:33
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:57
+msgid "SJIS for Windows Japanese"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:34
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:58
+msgid "DEC West European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:35
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:59
+msgid "UJIS for Windows Japanese"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:36
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:60
+msgid "EUC-KR Korean"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:37
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:61
+msgid "GB2312 Simplified Chinese"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:38
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:62
+msgid "GBK Simplified Chinese"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:39
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:63
+msgid "GEOSTD8 Georgian"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:40
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:64
+msgid "ISO 8859-7 Greek"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:41
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:65
+msgid "ISO 8859-8 Hebrew"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:42
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:66
+msgid "HP West European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:43
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:67
+msgid "DOS Kamenicky Czech-Slovak"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:44
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:68
+msgid "KOI8-R Relcom Russian"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:45
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:69
+msgid "KOI8-U Ukrainian"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:46
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:70
+msgid "cp1252 West European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:47
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:71
+msgid "ISO 8859-2 Central European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:48
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:72
+msgid "ISO 8859-9 Turkish"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:49
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:73
+msgid "ISO 8859-13 Baltic"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:50
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:74
+msgid "Mac Central European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:51
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:75
+msgid "Mac West European"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:52
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:76
+msgid "Shift-JIS Japanese"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:53
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:77
+msgid "7bit Swedish"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:54
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:78
+msgid "TIS620 Thai"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:55
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:79
+msgid "UCS-2 Unicode"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:56
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:80
+msgid "EUC-JP Japanese"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:57
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:81
+msgid "UTF-8 Unicode"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:83
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1455
+msgid "Import a VV survey file"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:84
+msgid "File:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:85
+msgid "Survey ID:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:86
+msgid "Exclude record IDs?"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:88
+msgid "When an imported record matches an existing record ID:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:89
+msgid "Report an error (and skip the new record)."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:90
+msgid "Renumber the new record."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:91
+msgid "Ignore the new record."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:92
+msgid "Replace the existing record."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:94
+msgid "Import as not finalized answers?"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:95
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:2179
+msgid "Character set of the file:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:98
+msgid "Import"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:102
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:113
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:67
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/saved.php:121
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvexport.php:62
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:70
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:404
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:466
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1377
+msgid "Return to Survey Administration"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:111
+msgid "Cannot import the VVExport file."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:131
+msgid "Back to Response Import"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:258
+#, php-format
+msgid "Import Failed on Record %d because [%s]"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:271
+msgid "Important Note:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:271
+msgid "Do NOT refresh this page, as this will import the file again and produce duplicates"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:273
+msgid "Total records imported:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvimport.php:274
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:66
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:79
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:103
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:118
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:133
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:339
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:707
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1807
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:475
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:486
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1463
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1483
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1511
+msgid "Browse Responses"
+msgstr "Видете одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:63
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1229
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1254
+msgid "Assessments"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:76
+msgid "No SID Provided"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:88
+msgid "Scope"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:88
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:89
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:110
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:143
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:959
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2771
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:191
+msgid "Group"
+msgstr "Група"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:88
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1222
+msgid "Minimum"
+msgstr "Минимум"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:88
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1321
+msgid "Maximum"
+msgstr "Максимум"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:88
+msgid "Heading"
+msgstr "Наслов"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:88
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1082
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1305
+msgid "Message"
+msgstr "Порака"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:88
+msgid "URL"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:89
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:108
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:142
+msgid "Total"
+msgstr "Вкупно"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:96
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2191
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:159
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:176
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:594
+msgid "Add"
+msgstr "Додадете"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:119
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:156
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/saved.php:102
+msgid "Edit"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:127
+msgid "If you create any assessments in this page, for the currently selected survey, the assessment will be performed at the end of the survey after submission"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:132
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:857
+msgid "Actions"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:161
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:694
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2035
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/saved.php:101
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:446
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:527
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:916
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deletesurvey.php:62
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:869
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:621
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/resetsurveylogic.php:52
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1554
+msgid "Delete"
+msgstr "Избришете"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:161
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:293
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2035
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/saved.php:100
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:79
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:446
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:527
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:916
+msgid "Are you sure you want to delete this entry?"
+msgstr "Дали сте сигурни дека сакате да го избришете ова?"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:180
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2698
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:659
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:612
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:600
+msgid "Save"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/assessments.php:181
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:501
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:561
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1256
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:288
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/deletesurvey.php:60
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/resetsurveylogic.php:50
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:975
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1410
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:4630
+msgid "Cancel"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:55
+msgid "This file is not a LimeSurvey label set file. Import failed."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:56
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:212
+msgid "Return to Labels Admin"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:193
+msgid "There was a duplicate labelset, so this set was not imported. The duplicate will be used instead."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:201
+msgid "Label Set Import Summary"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:202
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1223
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1251
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:503
+msgid "Label Sets"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:203
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:282
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:668
+msgid "Labels"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:204
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:149
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1217
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1245
+msgid "Languages"
+msgstr "Јазици"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importlabel.php:211
+msgid "Import of Label Set is completed."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:42
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:309
+msgid "Survey List Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:43
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:256
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:257
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:272
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:362
+msgid "Welcome Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:44
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:331
+msgid "Question Page"
+msgstr "Страница со прашања"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:45
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:460
+msgid "Completed Page"
+msgstr "Завршена страница"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:46
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:439
+msgid "Clear All Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:47
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:372
+msgid "Register Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:48
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:418
+msgid "Load Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:49
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:397
+msgid "Save Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:50
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:471
+msgid "Print Answers Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:130
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:250
+#, php-format
+msgid "Failed to copy %s to new template directory."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:136
+#, php-format
+msgid "Directory with the name `%s` already exists - choose another name"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:138
+#, php-format
+msgid "Unable to create directory `%s`."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:138
+msgid "Please check the directory permissions."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:146
+#, php-format
+msgid "Directory could not be renamed to `%s`."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:146
+msgid "Maybe you don't have permission."
+msgstr "Можеби немате дозвола."
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:175
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:187
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:543
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:552
+msgid "This file type is not allowed to be uploaded."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:316
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:294
+msgid "You have not provided a survey identification number"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:318
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:296
+msgid "The following surveys are available:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:568
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:337
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:338
+msgid "Template Editor"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:574
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:256
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:257
+msgid "Default Administration Page"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:581
+msgid "Create new template called:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:581
+msgid "NewTemplate"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:582
+msgid "Create new template"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:584
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:595
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:859
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2245
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2909
+msgid "Template:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:602
+msgid "This template can be modified"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:605
+msgid "This template cannot be modified"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:616
+msgid "You can't edit the default template."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:621
+msgid "Rename this template to:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:623
+msgid "Rename this template"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:628
+msgid "Export Template"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:632
+msgid "Copy Template"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:633
+msgid "Make a copy of this template"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:633
+msgid "copy_of_"
+msgstr "копија_на_"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:639
+msgid "Screen:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:650
+msgid "File Control:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:660
+msgid "Standard Files:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:661
+msgid "Now editing:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:664
+msgid "Other Files:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:681
+msgid "Save Changes"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:683
+msgid "Changes cannot be saved to the default template."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:694
+msgid "Are you sure you want to delete this file?"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:696
+msgid "Files in the default template cannot be deleted."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:707
+msgid "Upload a File"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:708
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:2182
+msgid "Upload"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:730
+msgid "Preview:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/templates.php:864
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:739
+#, php-format
+msgid "%s %% complete"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:134
+msgid "Export Results"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:144
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvexport.php:58
+msgid "Export Responses"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:145
+msgid "Filtered from Statistics Script"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:146
+msgid "Single Response"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:159
+msgid "Columns"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:161
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1065
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:368
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1220
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1248
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:657
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:497
+msgid "Questions"
+msgstr "Прашања"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:166
+msgid "Abbreviated headings"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:169
+msgid "Full headings"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:172
+msgid "Question Codes"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:173
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvexport.php:51
+msgid "Filter incomplete answers"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:174
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:640
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvexport.php:53
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:720
+msgid "Enable"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:175
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:641
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/vvexport.php:54
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:721
+msgid "Disable"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:180
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:369
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1221
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1249
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:660
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importquestion.php:500
+msgid "Answers"
+msgstr "Одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:185
+msgid "Answer Codes"
+msgstr "Кодови на одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:188
+msgid "Full Answers"
+msgstr "Целосни одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:192
+msgid "Format"
+msgstr "Форматирање"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:197
+msgid "Microsoft Word (Latin charset)"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:205
+msgid "Microsoft Excel (All charsets)"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:208
+msgid "(Iconv Library not installed)"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:218
+msgid "CSV File (All charsets)"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:223
+msgid "PDF"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:232
+msgid "Export Data"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:267
+msgid "Column Control"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:272
+msgid "Choose Columns"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:276
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:282
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:333
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/admin.php:573
+msgid "Help"
+msgstr "Помош"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:277
+msgid "Your survey contains more than 255 columns of responses. Spreadsheet applications such as Excel are limited to loading no more than 255. Select the columns you wish to export in the list below."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:283
+msgid "Choose the columns you wish to export."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:323
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:181
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:199
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:212
+msgid "Token Control"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:328
+msgid "Choose Token Fields"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:334
+msgid "Your survey can export associated token data with each response. Select any additional fields you would like to export."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:337
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:533
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:534
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:945
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:184
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:808
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1597
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:2402
+msgid "First Name"
+msgstr "Име"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:339
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:528
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:529
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:948
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:187
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:812
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1603
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:2409
+msgid "Last Name"
+msgstr "Презиме"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:341
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:951
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:190
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:190
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:396
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:872
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/login_check.php:42
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:817
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1609
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/usercontrol.php:82
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/usercontrol.php:380
+msgid "Email"
+msgstr "Email адреса"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:343
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:543
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:544
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:957
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:379
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:495
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:827
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1628
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:521
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1532
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:1613
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:1736
+#: /srv/www/virtual/limesurvey.org/devSVN/index.php:1748
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1532
+msgid "Token"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:350
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:549
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:963
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2414
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3027
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:169
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:394
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:847
+msgid "Attribute 1"
+msgstr "Атрибут 1"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:352
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:554
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:966
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2416
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3028
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:170
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:395
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:851
+msgid "Attribute 2"
+msgstr "Атрибут 2"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:404
+msgid "General information in language: "
+msgstr "Општи информации на јазик:"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:538
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:539
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/saved.php:87
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:2416
+msgid "Email Address"
+msgstr "Email адреса"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:563
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:564
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:933
+msgid "Time Submitted"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:568
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:569
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:939
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:157
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:382
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:319
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1810
+msgid "Completed"
+msgstr "Завршено"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:573
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:574
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1571
+msgid "IP-Address"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:621
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1136
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:791
+msgid "Ranking"
+msgstr "Ранкирање"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:628
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:640
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:666
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1027
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1028
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1063
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1064
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:196
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:625
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1083
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1476
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1526
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1555
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1599
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:346
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:349
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:350
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:364
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:365
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:406
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:407
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:421
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:422
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:501
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:502
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:516
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:517
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:753
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:790
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1824
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1830
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1871
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1877
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1906
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1912
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2138
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2154
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2198
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:763
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:867
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:982
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:1045
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:1089
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:1177
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:1559
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:1782
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:1873
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1674
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1895
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1961
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1971
+msgid "Other"
+msgstr "Друго"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:863
+msgid "New Record"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:895
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:900
+msgid "NEW RECORD"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:954
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:135
+msgid "ID"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:969
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:832
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1640
+msgid "Language"
+msgstr "Јазик"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1097
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1098
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1144
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1145
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1166
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1167
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:902
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1392
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1401
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2273
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2285
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2297
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2309
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2325
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2346
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2358
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2370
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2423
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2475
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2499
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2524
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2550
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2564
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2930
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2939
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2947
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2955
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2973
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2987
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2999
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3008
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3033
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3067
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3074
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3081
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3088
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3095
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:135
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:613
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:619
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:631
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:637
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:386
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:528
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:109
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:119
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:306
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:318
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:540
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:558
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:377
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:484
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:768
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:777
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1409
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1452
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:233
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:245
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:249
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:288
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:337
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:367
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1100
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1338
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1514
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:168
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:186
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:621
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:624
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:700
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:706
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1120
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1181
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1622
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1640
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2221
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2278
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2436
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2761
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2807
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1682
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1688
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1704
+msgid "Yes"
+msgstr "Да"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1101
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1102
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1148
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1149
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1152
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1153
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1170
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1171
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:898
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1392
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1401
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2276
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2288
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2300
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2312
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2328
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2349
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2361
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2373
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2427
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2478
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2502
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2527
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2553
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2567
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2933
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2940
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2948
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2956
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2974
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2988
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3001
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3009
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3034
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3068
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3075
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3082
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3089
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:3096
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:136
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:632
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:638
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:388
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:529
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:111
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:121
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:309
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:321
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:543
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:561
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:380
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:490
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:769
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1410
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1453
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:235
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:250
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:338
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:369
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1101
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1339
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:1516
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:169
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:188
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:622
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:625
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:702
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:706
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1123
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1187
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1623
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1642
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2222
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2280
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2442
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2763
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2819
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1689
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1705
+msgid "No"
+msgstr "Не"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1105
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1106
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1122
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1123
+msgid "N/A"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1114
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1115
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:32
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:626
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:538
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:372
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:761
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1449
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:254
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:341
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:175
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:308
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:310
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:717
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1629
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1785
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2498
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1696
+msgid "Male"
+msgstr "Машки"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1118
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1119
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:33
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:625
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:537
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:369
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:760
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1448
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:255
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:342
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:176
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:307
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:310
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:714
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1630
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1784
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2486
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1697
+msgid "Female"
+msgstr "Женски"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1174
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1175
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:639
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:387
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:487
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1411
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:234
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:368
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:187
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:701
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:706
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1184
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1641
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2279
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2762
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2812
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1706
+msgid "Uncertain"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1182
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1183
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:644
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:391
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:519
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1422
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:238
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:360
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:194
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:725
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:730
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1661
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2298
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2983
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:3021
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1712
+msgid "Increase"
+msgstr "Зголеми"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1186
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1187
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:645
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:392
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:522
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1423
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:239
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:361
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:196
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:726
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:730
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1663
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2299
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2984
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:3026
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1714
+msgid "Same"
+msgstr "Без промена"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1190
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1191
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/spss.php:646
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/conditions.php:393
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:525
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:1424
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:240
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/results.php:362
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:195
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:727
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/printablesurvey.php:730
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1662
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:2300
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:2985
+#: /srv/www/virtual/limesurvey.org/devSVN/qanda.php:3032
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1713
+msgid "Decrease"
+msgstr "Намали"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1248
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/exportresults.php:1249
+msgid "Tokens problem - token table missing"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:69
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:47
+msgid "The defined LimeSurvey database does not exist"
+msgstr "Дефинираната база на податоци LimeSurvey не постои"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:70
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:48
+msgid "Either your selected database has not yet been created or there is a problem accessing it."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:82
+msgid "You have not selected a survey to browse."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:106
+msgid "This survey has not been activated. There are no results to browse."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:121
+msgid "There is no matching survey."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:163
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:388
+msgid "Date Started"
+msgstr "Почетен датум"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:164
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:389
+msgid "Date Last Action"
+msgstr "Датум на последна измена"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:192
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1931
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1912
+msgid "Comment"
+msgstr "Коментар"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:234
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:446
+msgid "1. scale"
+msgstr "1. скала"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:239
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:451
+msgid "2. scale"
+msgstr "2. скала"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:276
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:903
+msgid "View Response"
+msgstr "Видете одговор"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:283
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:136
+msgid "Edit this entry"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:292
+msgid "Delete this entry"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:296
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:297
+msgid "Export this Response"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:301
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:608
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:742
+msgid "Show previous..."
+msgstr "Покажете претходно..."
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:305
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:612
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:746
+msgid "Show next..."
+msgstr "Покажете следно..."
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:348
+msgid "Showing Filtered Results"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:349
+msgid "Close"
+msgstr "Затворете"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:600
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:734
+msgid "Data View Control"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:605
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:739
+msgid "Show start.."
+msgstr "Покажете почеток..."
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:615
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:749
+msgid "Show last..."
+msgstr "Покажете последно..."
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:637
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:763
+msgid "Records Displayed:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:638
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:764
+msgid "Starting From:"
+msgstr "Почнувајки со:"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:639
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/statistics.php:719
+msgid "Filter incomplete answers:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:643
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/tokens.php:765
+msgid "Show"
+msgstr "Покажете"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:669
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:469
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/dataentry.php:1462
+msgid "View This Record"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:684
+msgid "Edit this token"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:720
+msgid "responses for this survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:721
+msgid "full responses"
+msgstr "целосни одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/browse.php:722
+msgid "responses not completely filled out"
+msgstr "нецелосно пополнети одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:43
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:394
+msgid "Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:44
+msgid "Date Created"
+msgstr "Датум на создавање"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:45
+msgid "Owner"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:46
+msgid "Access"
+msgstr "Пристап"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:47
+msgid "Answer Privacy"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:48
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:316
+msgid "Status"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:49
+msgid "Full Responses"
+msgstr "Целосни одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:50
+msgid "Partial Responses"
+msgstr "Делумни одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:51
+msgid "Total Responses"
+msgstr "Вкупно одговори"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:63
+msgid "Anonymous"
+msgstr "Анонимно"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:65
+msgid "Not Anonymous"
+msgstr "Не е анонимно"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:70
+msgid "Closed-access"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:74
+msgid "Open-access"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:81
+msgid "Expired"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:83
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/quota.php:333
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:584
+msgid "Active"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:100
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:589
+msgid "Inactive"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:127
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:422
+msgid "This survey is active but expired."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:129
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:424
+msgid "This survey is active but expired"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:138
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:140
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:438
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:440
+msgid "De-activate this Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:144
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:147
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:429
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:431
+msgid "This survey is currently active"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:156
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:157
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:408
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:409
+msgid "Activate this Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:161
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:163
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:400
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:402
+msgid "This survey is not currently active"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:193
+msgid "No Surveys available - please create one."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:259
+msgid "LimeSurvey System Summary"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:265
+msgid "Database Name"
+msgstr "Име на базата на податоци"
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:272
+msgid "Default Language"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:280
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/login_check.php:109
+msgid "Current Language"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:296
+msgid "Preferred HTML editor mode"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:299
+msgid "Default HTML editor mode"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:300
+msgid "No HTML editor"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:301
+msgid "Inline HTML editor"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:302
+msgid "Popup HTML editor"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:310
+msgid "Users"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:317
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1214
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1242
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:366
+msgid "Surveys"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:324
+msgid "Active Surveys"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:331
+msgid "De-activated Surveys"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:338
+msgid "Active Token Tables"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:345
+msgid "De-activated Token Tables"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:355
+msgid "Show PHPInfo"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:414
+msgid "Survey cannot be activated. Either you have no permission or there are no questions."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:456
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:458
+msgid "Survey Security Settings"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:467
+msgid "Test This Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:471
+msgid "Execute This Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:496
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:556
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1251
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1405
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:4614
+msgid "Please select a language:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:513
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:514
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:524
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:525
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1424
+msgid "Dataentry Screen for Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:521
+msgid "This survey is not active, data entry is not allowed"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:535
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:536
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:545
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:546
+msgid "Printable Version of Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:575
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:576
+msgid "Edit Current Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:590
+msgid "Delete Current Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:605
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:613
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/resetsurveylogic.php:23
+msgid "Reset Survey Logic"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:610
+msgid "This survey's questions don't use conditions"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:613
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:998
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1167
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1205
+msgid "Disabled"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:627
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:628
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2757
+msgid "Change Group Order"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:640
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:641
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1921
+msgid "Export Survey Structure"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:654
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:655
+msgid "Set Assessment Rules"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:668
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:669
+msgid "Set Survey Quotas"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:682
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:683
+msgid "Browse Responses For This Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:690
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:691
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:1451
+msgid "View Saved but not submitted Responses"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:702
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:703
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:710
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:711
+msgid "Activate/Edit Tokens for this Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:707
+msgid "Adding/editing tokens is not possible because this survey is not activated."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:721
+msgid "Close this Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:729
+msgid "Show Details of this Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:731
+msgid "Hide Details of this Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:744
+msgid "Add New Group to Survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:747
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2072
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1219
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importsurvey.php:1247
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/importgroup.php:654
+msgid "Groups"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:757
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:593
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:867
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:892
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:935
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:3392
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:3431
+msgid "None"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:777
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1077
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2683
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2872
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/labels.php:308
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:44
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:140
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:156
+msgid "Title"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:781
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2465
+msgid "Answers to this survey are anonymized."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:782
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2464
+msgid "This survey is NOT anonymous."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:783
+msgid "It is presented question by question."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:784
+msgid "It is presented group by group."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:785
+msgid "It is presented on one single page."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:786
+msgid "Responses will be date stamped"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:787
+msgid "IP Addresses will be logged"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:788
+msgid "Referer-URL will be saved"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:789
+msgid "It uses cookies for access control."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:790
+msgid "If tokens are used, the public may register for this survey"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:791
+msgid "Participants can save partially finished surveys"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:795
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:825
+msgid "No email notification"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:798
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:826
+msgid "Basic email notification"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:801
+#: /srv/www/virtual/limesurvey.org/devSVN/common.php:827
+msgid "Detailed email notification with result codes"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:807
+msgid "Regenerate Question Codes:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:811
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:816
+msgid "Are you sure you want regenerate the question codes?"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:812
+msgid "Straight"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:817
+msgid "By Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:822
+msgid "Survey URL"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:827
+msgid "Survey URL For Language:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:827
+msgid "Flag"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:833
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1081
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2685
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2687
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2874
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2876
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:602
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/userrighthandling.php:624
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:46
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:48
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:143
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:145
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:159
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/grouphandling.php:161
+msgid "Description:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:838
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2689
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2691
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2878
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2880
+msgid "Welcome:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:841
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2212
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2882
+msgid "Administrator:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:844
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2218
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2888
+msgid "Fax To:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:848
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2350
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2989
+msgid "Expiry Date:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:863
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2167
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2857
+msgid "Base Language:"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:872
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:2172
+msgid "Additional Languages"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:888
+msgid "Exit Link"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:893
+msgid "Number of questions/groups"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:895
+msgid "Survey currently active"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:909
+msgid "Survey table name"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:912
+msgid "Hints"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:916
+msgid "Survey cannot be activated yet."
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:919
+msgid "You need to add groups"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:923
+msgid "You need to add questions"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:973
+msgid "Edit Current Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:986
+msgid "Deleting this group will also delete any questions and answers it contains. Are you sure you want to continue?"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:989
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:998
+msgid "Delete Current Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:995
+msgid "Impossible to delete this group because there is at least one question having a condition on its content"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1010
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1011
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/questionhandling.php:703
+msgid "Change Question Order"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1022
+msgid "Export Current Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1037
+msgid "Close this Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1045
+msgid "Show Details of this Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1048
+msgid "Hide Details of this Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1061
+msgid "Add New Question to Group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1088
+msgid "Questions with conditions to this group"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1140
+msgid "Edit Current Question"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1155
+msgid "Deleting this question will also delete any answers it includes. Are you sure you want to continue?"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1157
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1167
+msgid "Delete Current Question"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1164
+msgid "Impossible to delete this question because  there is at least one question having a condition on it"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1179
+msgid "Export this Question"
+msgstr ""
+
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1196
+#: /srv/www/virtual/limesurvey.org/devSVN/admin/html.php:1205
+msgid "Copy Current Question"
+msgstr ""
+
