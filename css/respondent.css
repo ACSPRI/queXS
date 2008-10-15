@@ -1,0 +1,16 @@
+#details {
+	display: none;
+}
+.labelclass{
+	width:20%;
+}
+.textclass {
+	width:70%;
+	height:80%;
+}
+.submitclass{
+	width:20%;
+}
+.addresp{
+	font-style:italic;
+}

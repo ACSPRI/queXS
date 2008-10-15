@@ -1,0 +1,22 @@
+.statusbutton {
+ padding: 1px 1px;
+ margin: 1px;
+ border: 1px solid #778;
+ text-decoration: none;
+ color: black;
+ text-align: center;
+ float: left;
+}
+.online {
+ background: #00FF00;
+}
+.offline {
+ background: #FF0000;
+}
+.tobecoded {
+ background: orange;
+}
+.text {
+ float: left;
+}
+

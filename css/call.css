@@ -1,0 +1,29 @@
+.label {
+	width:80%;
+}
+.radio {
+	float:right;
+}
+.status {
+	text-align:center;
+}
+.tclass th {
+	text-align:left;
+	border: 1px solid #aaa;
+}
+.tclass td {
+	border: 1px solid #aaa;
+}
+.labelclass{
+	width:20%;
+}
+.textclass {
+	width:70%;
+	height:80%;
+}
+.submitclass{
+	width:20%;
+}
+.addresp{
+	font-style:italic;
+}
