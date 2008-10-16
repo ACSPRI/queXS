@@ -152,12 +152,15 @@ if (isset($_POST['submit']))
 		$call_attempt_id = get_call_attempt($operator_id);
 		$respondent_id = get_respondent_id($call_attempt_id);
 		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id);
-		if (VOIP_ENABLED && $call_id)
+		if ($call_id)
 		{
-			include("functions/functions.voip.php");
-			$v = new voip();
-			$v->connect(VOIP_SERVER);
-			$v->dial(get_extension($operator_id),get_call_number($call_id));
+			if (VOIP_ENABLED)
+			{
+				include("functions/functions.voip.php");
+				$v = new voip();
+				$v->connect(VOIP_SERVER);
+				$v->dial(get_extension($operator_id),get_call_number($call_id));
+			}
 			if (is_respondent_selection($operator_id))
 				$btext = "onload='openParentObject(\"main-content\",\"rs_intro.php\"); top.close();'";
 			else
@@ -175,10 +178,10 @@ if (isset($_POST['submit']))
 			$v = new voip();
 			$v->connect(VOIP_SERVER);
 			$v->hangup(get_extension($operator_id));
-			//disable recording
-			$newtext = T_("Start REC");
-			xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); top.close();'");
 		}
+		//disable recording
+		$newtext = T_("Start REC");
+		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); top.close();'");
 	}
 	else
 	{
@@ -189,10 +192,11 @@ if (isset($_POST['submit']))
 			$v = new voip();
 			$v->connect(VOIP_SERVER);
 			$v->hangup(get_extension($operator_id));
-			//disable recording
-			$newtext = T_("Start REC");
-			xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); top.close();'");
 		}
+		//disable recording
+		$newtext = T_("Start REC");
+		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); top.close();'");
+
 	}
 
 	print "<p></p>"; //for XHTML
