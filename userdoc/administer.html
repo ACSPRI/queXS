@@ -1,0 +1,492 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.4  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Adam Zammit">
+	<META NAME="CREATED" CONTENT="20080804;11431300">
+	<META NAME="CHANGEDBY" CONTENT="Adam Zammit">
+	<META NAME="CHANGED" CONTENT="20080806;9502300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm }
+		H1 { margin-bottom: 0.21cm }
+		H1.western { font-family: "Arial", sans-serif; font-size: 20pt }
+		H1.cjk { font-family: "MS Mincho"; font-size: 16pt }
+		H1.ctl { font-family: "Tahoma"; font-size: 16pt }
+		H3 { margin-bottom: 0.21cm }
+		H3.western { font-family: "Arial", sans-serif }
+		H3.cjk { font-family: "MS Mincho" }
+		H4 { margin-bottom: 0.21cm }
+		H4.western { font-family: "Arial", sans-serif; font-size: 11pt; font-style: italic }
+		H4.cjk { font-family: "MS Mincho"; font-size: 11pt; font-style: italic }
+		H4.ctl { font-size: 11pt; font-style: italic }
+		TD P { margin-bottom: 0cm }
+		TH P { margin-bottom: 0cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Arial, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>queXS:
+Administration</B></FONT></FONT></P>
+<H1 CLASS="western">Questionnaire Creation and Management</H1>
+<H3 CLASS="western">Adding a questionnaire</H3>
+<P>queXS relies on the <A HREF="http://www.limesurvey.org/" NAME="LimeSurvey">LimeSurvey</A>
+system to administer the questionnaire to the operator. A patched
+version of <A HREF="http://www.limesurvey.org/" NAME="LimeSurvey">LimeSurvey</A>
+is included with queXS to aid in interoperability. 
+</P>
+<P>Keep in mind that a single questionnaire in LimeSurvey can be
+added to queXS multiple times if necessary (eg once for testing, once
+for the live run).</P>
+<H4 CLASS="western"><A NAME="Add questionnaire manually"></A>Add
+questionnaire manually</H4>
+<UL>
+	<LI><P>Go to the queXS administration page</P>
+	<LI><P>Click on the link: Administer questionnaires with LimeSurvey</P>
+	<LI><P>Enter the LimeSurvey username and password</P>
+	<UL>
+		<LI><P>By default the username is:admin and the password is:
+		password</P>
+	</UL>
+	<LI><P>Use the <A HREF="http://docs.limesurvey.org/tiki-index.php?page=Creating+a+New+Survey">LimeSurvey
+	documentation</A> to assist in creating a new questionnaire.</P>
+	<LI><P>The following settings must be adhered to to create a
+	successful questionnaire that is interoperable with queXS</P>
+	<UL>
+		<LI><P>Under &ldquo;Presentation and Navigation&rdquo;</P>
+		<UL>
+			<LI><P>Format must be &ldquo;Question by Question&rdquo;</P>
+			<LI><P>Template must be &ldquo;quexs&rdquo;</P>
+			<LI><P>End URL must be a link to the <B>rs_project_end.php</B>
+			file in your queXS installation directory, for example:
+			<A HREF="http://active.dcarf/quexs/rs_project_end.php">http://active.dcarf/quexs/rs_project_end.php</A></P>
+			<LI><P>Automatically load URL when survey completes must be &ldquo;Yes&rdquo;</P>
+		</UL>
+		<LI><P>Under &ldquo;Notification and Data Management&rdquo;</P>
+		<UL>
+			<LI><P>Anonymous answers must be &ldquo;No&rdquo;</P>
+			<LI><P>Enable Token-based answers persistence must be &ldquo;Yes&rdquo;</P>
+		</UL>
+	</UL>
+	<LI><P><A NAME="Tags"></A>Within the text of questions, the
+	following tags may be entered, which will be automatically filled at
+	run time by the queXS system.</P>
+	<UL>
+		<LI><P>{PeriodOfDay} &ndash; Either: morning, afternoon or evening</P>
+		<LI><P>{Operator:firstName} &ndash; The first name of the operator</P>
+		<LI><P>{Operator:lastName} &ndash; The last name of the operator</P>
+		<LI><P>{Respondent:firstName} &ndash; The first name of the
+		respondent</P>
+		<LI><P>{Respondent:lastName} &ndash; The last name of the
+		respondent</P>
+		<LI><P>{Sample:xxxx} &ndash; Where xxxx is the name of a column
+		within the provided sample file</P>
+	</UL>
+	<LI><P>Once the questionnaire is ready to run, it must be activated
+	within LimeSurvey.</P>
+	<LI><P>Also, a &ldquo;tokens table&rdquo; within LimeSurvey is
+	required to be created after activating the questionnaire.</P>
+</UL>
+<H4 CLASS="western">Add questionnaire from queXML</H4>
+<UL>
+	<LI><P>Use the <A HREF="https://dcarf.deakin.edu.au/quexmltools/">queXML
+	tools</A> website to convert your <A HREF="http://quexml.sourceforge.net/">queXML</A>
+	file in to a LimeSurvey import file</P>
+	<LI><P>Follow the instructions for &ldquo;Add a questionnaire from
+	an existing instrument in Limesurvey&rdquo;</P>
+</UL>
+<H4 CLASS="western">Add questionnaire from an existing instrument in
+LimeSurvey</H4>
+<UL>
+	<LI><P>When creating a new survey, use the &ldquo;Import&rdquo;
+	feature</P>
+	<LI><P>Import the LimeSurvey csv file produced by conversion from
+	queXML or from an existing installation of LimeSurvey</P>
+	<LI><P>Make sure the settings for the questionnaire match those from
+	the section above &ldquo;<A HREF="#Add questionnaire manually">Add
+	questionnaire manually</A>&rdquo;</P>
+</UL>
+<H4 CLASS="western">Add questionnaire to queXS 
+</H4>
+<UL>
+	<LI><P>Go to the &ldquo;Create a new questionnaire&rdquo; link in
+	queXS administration</P>
+	<LI><P>Enter a name for the questionnaire</P>
+	<LI><P>Select the questionnaire from the list &ldquo;Select creation
+	type&rdquo; 
+	</P>
+	<UL>
+		<LI><P>A questionnaire created in LimeSurvey should appear under
+		&ldquo;Existing questionnaire...&rdquo;</P>
+	</UL>
+	<LI><P>If the questionnaire is for testing, make sure to select the
+	&ldquo;Testing&rdquo; box. This will ensure that all calls can only
+	be made internally to operators &ndash; no matter what sample is
+	assigned to a questionnaire.</P>
+	<LI><P>If there is to be respondent selection for the questionnaire,
+	enter it in to the boxes. You may use the <A HREF="#Tags">tags
+	listed above</A></P>
+	<UL>
+		<LI><P>Respondent selection introduction is the first text read by
+		the operator to whoever answers the phone. This is used to find the
+		respondent you are after.</P>
+		<LI><P>Respondent selection project introduction is used to tell
+		the respondent about the project, and to illicit their cooperation</P>
+		<LI><P>Respondent selection callback (already started
+		questionnaire) is read to the respondent if they have already
+		started the questionnaire and are being called back. 
+		</P>
+		<LI><P>Message to leave on an answering machine is a message to
+		leave on the answering machine if allowed by the system.</P>
+	</UL>
+</UL>
+<H3 CLASS="western">Adding a sample</H3>
+<H4 CLASS="western">Sample list formatting</H4>
+<P>queXS requires sample lists to be in <A HREF="http://en.wikipedia.org/wiki/Comma-separated_values">CSV</A>
+form. The first row should contain the name of the column. Most
+statistical packages, and Microsoft Excel can export lists in CSV
+form. The minimum required for a sample file is a single column
+containing a phone number. A sample list containing the name of the
+respondent should be formatted with the first name and last name of
+the respondent is separate columns. For example:</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=64*>
+	<COL WIDTH=64*>
+	<COL WIDTH=64*>
+	<COL WIDTH=64*>
+	<TR VALIGN=TOP>
+		<TH WIDTH=25%>
+			<P>firstName</P>
+		</TH>
+		<TH WIDTH=25%>
+			<P>lastName</P>
+		</TH>
+		<TH WIDTH=25%>
+			<P>Number</P>
+		</TH>
+		<TH WIDTH=25%>
+			<P>Sex</P>
+		</TH>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P>Fred</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>Jones</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>03 1234 5678</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>M</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P>Mary</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>Jones</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>03 1234 5678</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>F</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<H4 CLASS="western">Add the sample</H4>
+<P>Once the sample list is saved in CSV form, it can be imported in
+to queXS</P>
+<UL>
+	<LI><P>Go to the page: Import a sample file (in CSV form)</P>
+	<LI><P>Browse for the file and give the sample file a descriptive
+	name</P>
+	<LI><P>Click on &ldquo;Submit&rdquo;</P>
+	<LI><P>A page will appear containing a list of all the columns in
+	the sample file, along with a checkbox indicating whether the column
+	should be imported, the name of the column and the &ldquo;type&rdquo;</P>
+	<LI><P>For each column, select whether it is to be imported, check
+	the name, and select the type of data contained in that column. For
+	example:</P>
+	<UL>
+		<LI><P>String: A field that should be imported &ldquo;as is&rdquo;
+		and not to be specifically used by queXS. (but will be available
+		when using the {Sample:xxxx} tag)</P>
+		<LI><P>Phone number: A phone number</P>
+		<LI><P>Primary phone number: The main phone number for this
+		respondent. This must be selected for one and only one column</P>
+		<LI><P>State: The state (currently only Australian states loaded,
+		either in abbreviated form such as: VIC, NSW or full such as
+		Victoria or New South Wales)</P>
+		<LI><P>Postcode: The postcode (only Australian postcodes loaded)</P>
+		<LI><P>Respondent first name: The first name of the respondent</P>
+		<LI><P>Respondent last name: The last name of the respondent</P>
+	</UL>
+	<LI><P>Then click on &ldquo;Submit query&rdquo;</P>
+	<LI><P>Only fields that have at least one phone number will be added
+	to the sample</P>
+	<UL>
+		<P></P>
+	</UL>
+</UL>
+<H3 CLASS="western">Assigning samples to questionnaires</H3>
+<P>Use the &ldquo;Assign samples to questionnaires&rdquo; link to
+assign a sample to a questionnaire.</P>
+<UL>
+	<LI><P>Select a questionnaire to operate on</P>
+	<LI><P>Select the sample to add from the list</P>
+	<LI><P>Choose from the following</P>
+	<UL>
+		<LI><P>Max calls (0 for unlimited): Maximum number of calls (a call
+		is a call to any number available in the sample)</P>
+		<LI><P>Max call attempts (0 for unlimited): A call attempt is a
+		chance an operator has to call any or all of the numbers for a
+		particular case</P>
+		<LI><P>Number of answering machine messages to leave per case (0
+		for never): How many answering machine messages to leave</P>
+		<LI><P>Select from sample randomly? (otherwise sequentially): The
+		method to select from the sample list when creating a case</P>
+	</UL>
+</UL>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<H3 CLASS="western">Assigning pre-filled questions</H3>
+<P>A pre-filled question is a question within the questionnaire that
+has data filled before the operator begins collecting data. The
+pre-filled data could be static (the same for each case within the
+questionnaire) or come from information already available in the
+sample.</P>
+<UL>
+	<LI><P>To pre-fill a question within the questionnaire, go to the
+	link: &ldquo;Set values in questionnaire to pre fill&rdquo;</P>
+	<LI><P>Select the questionnaire, then the question to pre fill</P>
+	<LI><P>Enter in either the static information, or sample information
+	using the <A HREF="#Tags">tags listed above</A></P>
+	<LI><P>To remove the pre-fill, simply click on it.</P>
+</UL>
+<H3 CLASS="western">Adding operators to the system</H3>
+<P>queXS relies on an underlying authentication system (such as
+Apache Basic Authentication) to handle authentication of users. Once
+they are authenticated, queXS uses the username of the operator to
+determine who the operator is, and therefore how to assign work to
+them. This means that queXS needs to know the authentication system
+username (username only, not password) of each operator on the system
+and some other details if using Voice over IP (VoIP).</P>
+<UL>
+	<LI><P>To add an operator to queXS, click on &ldquo;Add operators to
+	the system&rdquo;</P>
+	<LI><P>Enter the system username</P>
+	<LI><P>Enter the first name of the operator, and the last name of
+	the operator</P>
+	<LI><P>Enter the timezone where the operator is located in (<A HREF="http://twiki.org/cgi-bin/xtra/tzdatepick.html">this
+	list may help</A>) it should be in a format such as
+	&ldquo;Australia/Victoria&rdquo;</P>
+	<LI><P>The telephone extension number must be unique for each
+	operator, and is necessary if using VoIP. This is the extension to
+	log in as to the VoIP system. queXS will send the extension number
+	as the password when logging on.</P>
+	<LI><P>The normal interviewer, supervisor and refusal converter
+	checkboxes automatically assign skills to the operator. See the
+	<A HREF="#skills">Assigning skills to operators</A> section for a
+	description of operator skills</P>
+</UL>
+<H3 CLASS="western">Assigning operators to questionnaires</H3>
+<P>When an operator is assigned to a questionnaire they will be
+assigned work from that questionnaire. An operator can be added or
+removed from a questionnaire at any time.</P>
+<UL>
+	<LI><P>To assign an operator to a questionnaire, go to the link:
+	&ldquo;Assign operators to questionnaires&rdquo;</P>
+	<LI><P>Check the box for the operator and the questionnaire, then
+	click on &ldquo;Submit query&rdquo; to confirm it.</P>
+</UL>
+<P><BR><BR>
+</P>
+<H3 CLASS="western"><A NAME="skills"></A>Assigning skills to
+operators</H3>
+<P>Assigning skills to operators is done in a similar fashion to
+assigning operators to questionnaires. The following skills are
+available:</P>
+<UL>
+	<LI><P>Temporary outcomes</P>
+	<UL>
+		<LI><P>These are &ldquo;normal&rdquo; cases, such as ones that have
+		never been called, or have a previous outcome such as No answer</P>
+	</UL>
+	<LI><P>Supervisor outcomes</P>
+	<UL>
+		<LI><P>Where a case has been referred to the supervisor</P>
+	</UL>
+	<LI><P>Refusal outcomes</P>
+	<UL>
+		<LI><P>Where the case has been refused</P>
+	</UL>
+	<LI><P>Final outcomes</P>
+	<UL>
+		<LI><P>Where the case has a final outcome, such as complete, final
+		refusal, disconnected number</P>
+	</UL>
+	<LI><P>Appointments</P>
+	<UL>
+		<LI><P>Where an appointment has been made</P>
+	</UL>
+</UL>
+<P><BR><BR>
+</P>
+<P>Use the &ldquo;Modify operator skills&rdquo; tool to assign the
+appropriate skills to each operator. A &ldquo;normal&rdquo;
+interviewer has &ldquo;Temporary&rdquo; and &ldquo;Appointment&rdquo;
+assigned to them.</P>
+<P><BR><BR>
+</P>
+<H3 CLASS="western">Creating/modifying shifts for a questionnaires</H3>
+<P>queXS will usually only assign work to operators if they are
+assigned to the questionnaire, have the appropriate skill assigned to
+them, and finally that there is a shift available at the current time
+for the questionnaire. Defining shifts allows for appointments to be
+restricted to times when operators will be available, and to restrict
+work to specific hours.</P>
+<P>It is desirable to add as many shifts as you know will be run in
+advance so that operators will be able to schedule appointments in
+them. But conversely, remember not to add shifts if they will not be
+run, as appointments may be made for those times.</P>
+<P>The shifts listed by default are taken from the shift_template
+table, and can be modified by a system administrator.</P>
+<UL>
+	<LI><P>To assign shifts to questionnaires, use the &ldquo;Shift
+	management (add/remove)&rdquo; tool</P>
+	<LI><P>Select the questionnaire to create a shift for</P>
+	<LI><P>The current year and week of the year are selected, but these
+	may be changed to suit when the shifts need to be added</P>
+	<LI><P>Confirm  the shift start and end times, and dates, and select
+	the &ldquo;Use shift&rdquo; checkbox if you wish to include that
+	shift for this questionnaire 
+	</P>
+	<LI><P>Click on &ldquo;Submit changes&rdquo; to confirm your shift
+	selection</P>
+</UL>
+<P><BR><BR>
+</P>
+<P>Once you have completed all the steps in the &ldquo;Questionnaire
+Creation and Management&rdquo; section, the system should be ready to
+execute questionnaires. The following sections describe information
+about the progress of the questionnaire, and functions for the
+supervisor to modify erroneous outcomes or handle cases where the
+operator was unsure about what outcome to assign</P>
+<H1 CLASS="western">Questionnaire progress</H1>
+<H3 CLASS="western">Display future appointments</H3>
+<P>Clicking on this link will display a list of all appointments in
+the future.</P>
+<H3 CLASS="western">Questionnaire outcomes</H3>
+<P>By selecting a questionnaire, a list of <A HREF="http://www.aapor.org/">AAPOR</A>
+outcomes and rates will be listed.</P>
+<H3 CLASS="western">Operator performance</H3>
+<P>Performance of operators is split in to completions per hour and
+effectiveness. Effectiveness is the ratio of how often an operator is
+on a call while a case is assigned to them.</P>
+<H1 CLASS="western">Supervisor functions</H1>
+<H3 CLASS="western">Assigning outcomes to cases (and calls)</H3>
+<P>An operator may incorrectly assign an outcome to a call, or have
+assigned a case to be reviewed by a supervisor. A supervisor can then
+modify the outcome of a call and/or the outcome of the case.</P>
+<UL>
+	<LI><P>To modify the outcomes of calls or cases, go to the &ldquo;Assign
+	outcomes to cases&rdquo; link</P>
+	<LI><P>Select a case</P>
+	<UL>
+		<LI><P>If a drop down box is visible, there are cases assigned to
+		the supervisor in it that can be dealt with. If so, you can select
+		one of the cases from the drop down list</P>
+		<LI><P>A box to enter a case id is also available 
+		</P>
+	</UL>
+	<LI><P>Confirm that the project and sample is correct for the case
+	you are expecting</P>
+	<LI><P>A list of calls made for that case will be listed</P>
+	<UL>
+		<LI><P>Clicking &ldquo;Edit&rdquo; on the call list will allow you
+		to change the outcome of the call</P>
+		<LI><P>Please note that changing the outcome of the call will not
+		change the outcome of the case automatically</P>
+	</UL>
+	<LI><P>Notes are listed</P>
+	<UL>
+		<LI><P>It is recommended to add a note to the case if any changes
+		are made so the operators will not be confused about any possible
+		inconsistencies with the case</P>
+	</UL>
+	<LI><P>A case outcome can be set</P>
+	<UL>
+		<LI><P>This is the current outcome for the case. This determines
+		how cases are made available to operators</P>
+	</UL>
+</UL>
+<H3 CLASS="western">Creating shift reports</H3>
+<P>A shift report is filled in by the shift supervisor to detail any
+notes about a particular shift.</P>
+<H3 CLASS="western">Searching the sample</H3>
+<P>A supervisor can search the sample to find particular records to
+either remove from the sample, therefore not ever be selected as a
+case, or if a case has already been assigned &ndash; to be able to
+see what calls have been made to the case and modify the outcome if
+necessary (using the Assigning outcomes to cases tool).</P>
+<UL>
+	<LI><P>To search the sample, click on &ldquo;Search the sample&rdquo;</P>
+	<LI><P>Select the sample you wish to search within</P>
+	<LI><P>Enter the search term in the box and click &ldquo;Start
+	Search&rdquo;</P>
+	<LI><P>A list of matching searches will appear</P>
+	<UL>
+		<LI><P>If a sample record has already been assigned to a
+		questionnaire (become a case), then clicking the &ldquo;assigned to
+		questionnaire&rdquo; link will take you to the Assigning outcomes
+		to cases tool for viewing or modifying the outcome of the case</P>
+		<LI><P>If a sample record has not yet been assigned to any
+		questionnaire, then the link &ldquo;No cases yet assigned&rdquo;
+		will appear. By clicking this link, the record will be deleted from
+		the sample.</P>
+		<UL>
+			<LI><P>WARNING: You cannot recover a deleted record, so be
+			careful!</P>
+		</UL>
+		<LI><P>If nothing in the sample matches your search criteria, no
+		records will be returned</P>
+	</UL>
+</UL>
+<H1 CLASS="western">Client Management</H1>
+<P>A client view of the project is available in the client
+subdirectory of the queXS installation. If this URL is made available
+publicly, and each client is assigned a system username and password
+as for operators, then clients can be added to the system and
+assigned to questionnaires. Each client will then see a progress
+report of each questionnaire assigned to them when visiting the
+client page and entering in their credentials.</P>
+<H3 CLASS="western">Adding clients to the system</H3>
+<UL>
+	<LI><P>Follow the link &ldquo;Add clients to the system&rdquo;</P>
+	<LI><P>Enter in the system username of the client</P>
+	<LI><P>Enter their first name and last name</P>
+	<LI><P>Enter the timezone the client is in (or leave as default if
+	unknown)</P>
+	<LI><P>Click &ldquo;Add user&rdquo; to add the client to the system</P>
+</UL>
+<H3 CLASS="western">Assigning clients to questionnaires</H3>
+<UL>
+	<LI><P>Follow the link &ldquo;Assign clients to questionnaires&rdquo;</P>
+	<LI><P>Check the box that intersects the client's name and the
+	questionnaire 
+	</P>
+	<LI><P>Click on &ldquo;Submit query&rdquo; to confirm the assignment</P>
+</UL>
+</BODY>
+</HTML>

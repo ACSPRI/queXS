@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.4  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Adam Zammit">
+	<META NAME="CREATED" CONTENT="20080319;10474500">
+	<META NAME="CHANGEDBY" CONTENT="Adam Zammit">
+	<META NAME="CHANGED" CONTENT="20081017;10021600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm }
+		H1 { margin-bottom: 0.21cm }
+		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
+		H1.cjk { font-family: "MS Mincho"; font-size: 16pt }
+		H1.ctl { font-family: "Tahoma"; font-size: 16pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1 CLASS="western" ALIGN=CENTER><A HREF="http://quexs.sourceforge.net/">queXS</A>
+for Windows (using <A HREF="http://www.apachefriends.org/en/xampp.html">XAMPP</A>)</H1>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><A HREF="http://quexs.sourceforge.net/">queXS</A>
+for Windows is simply the <A HREF="http://quexs.sourceforge.net/">queXS</A>
+package with all the required executable files and configuration to
+run &ldquo;out of the box&rdquo;. This functionality is provided by
+the <A HREF="http://www.apachefriends.org/en/xampp.html">XAMPP</A>
+package. I have simply packaged <A HREF="http://quexs.sourceforge.net/">queXS</A>
+using <A HREF="http://www.apachefriends.org/en/xampp.html">XAMPP</A>,
+and added <A HREF="http://adodb.sourceforge.net/">ADOdb</A></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">It may be useful for
+testing and temporary use &ndash; but please note that <A HREF="http://www.apachefriends.org/en/xampp.html">XAMPP</A>
+is not necessarily secure, and may need to be modified for secure
+use.</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western">Installation:</H1>
+<OL>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Download the <A HREF="http://quexs.sourceforge.net/">queXS</A>
+	for Windows package from SourceForge</P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Execute the file to
+	extract it to a root directory (such as <A HREF="">c:\</A> ) or a
+	usb stick root directory (eg <A HREF="">e:\</A> ) - It is a <A HREF="http://www.7-zip.org/">7zip
+	compressed</A> self executable file</P>
+</OL>
+<UL>
+	<UL>
+		<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Please note you will
+		need at least 250Mb free</P>
+	</UL>
+</UL>
+<OL START=3>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Go to the directory:
+	xampplite</P>
+</OL>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western">Run:</H1>
+<OL>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Execute the file
+	&ldquo;mysql_start.bat&rdquo;</P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Execute the file
+	&ldquo;apache_start.bat&rdquo;</P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Go to:
+	<A HREF="http://localhost/forbidden/quexs/admin/">http://localhost/forbidden/quexs/admin/</A>
+	 in your browser</P>
+</OL>
+<UL>
+	<UL>
+		<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Note you will need to
+		use the default credentials of:</P>
+	</UL>
+</UL>
+<UL>
+	<UL>
+		<UL>
+			<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Username: adam</P>
+			<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Password: adam</P>
+		</UL>
+	</UL>
+</UL>
+<OL START=4>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Follow the queXS
+	administration documentation here:
+	<A HREF="http://quexs.sourceforge.net/documentation/administer.xhtml">http://quexs.sourceforge.net/documentation/administer.xhtml</A></P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Run queXS as a user by
+	browsing to: <A HREF="http://localhost/forbidden/quexs/">http://localhost/forbidden/quexs/</A></P>
+</OL>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western">Stop:</H1>
+<OL>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Execute the file
+	&ldquo;apache_stop.bat&rdquo;</P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Execute the file
+	&ldquo;mysql_stop.bat&rdquo;</P>
+</OL>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western">Modify permissions:</H1>
+<OL>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Edit the file
+	xampplite\htdocs\forbidden\.htpasswd and add usernames and passwords
+	in the format username:password</P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">Make sure to let queXS
+	know about the new users by going to:
+	<A HREF="http://localhost/forbidden/quexs/admin/">http://localhost/forbidden/quexs/admin/</A>
+	and updating the user list</P>
+</OL>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>

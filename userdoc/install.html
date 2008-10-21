@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.4  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Adam Zammit">
+	<META NAME="CREATED" CONTENT="20080804;11431300">
+	<META NAME="CHANGEDBY" CONTENT="Adam Zammit">
+	<META NAME="CHANGED" CONTENT="20081021;15342489">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm }
+		H3 { margin-bottom: 0.21cm }
+		H3.western { font-family: "Arial", sans-serif }
+		H3.cjk { font-family: "MS Mincho" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>queXS:
+Installation</B></FONT></P>
+<H3 CLASS="western">Requirements</H3>
+<UL>
+	<LI><P>Server</P>
+	<UL>
+		<LI><P>PHP version 5 or greater</P>
+		<LI><P>AdoDB</P>
+		<LI><P>MySQL version 5 or greater</P>
+	</UL>
+	<LI><P>Client</P>
+	<UL>
+		<LI><P>Firefox web browser</P>
+	</UL>
+</UL>
+<H3 CLASS="western">Requirements for VoIP integration</H3>
+<UL>
+	<LI><P>Server</P>
+	<UL>
+		<LI><P>Asterisk server (only tested with 1.4 or greater)</P>
+	</UL>
+	<LI><P>Client</P>
+	<UL>
+		<LI><P>SIP client with auto answer (I recommend pjsua)</P>
+	</UL>
+</UL>
+<H3 CLASS="western">Installation</H3>
+<OL>
+	<LI><P>Extract tar ball or zip file to a directory on your web
+	server</P>
+	<LI><P>Security warning:</P>
+</OL>
+<UL>
+	<UL>
+		<LI><P>queXS does not have any intrinsic security, so relies on the
+		web server for authentication</P>
+	</UL>
+</UL>
+<UL>
+	<UL>
+		<LI><P>Set up a form of authentication such as basic username
+		password authentication</P>
+	</UL>
+</UL>
+<UL>
+	<UL>
+		<LI><P>Make sure to secure the entire installation to trusted
+		users/operators</P>
+	</UL>
+</UL>
+<UL>
+	<UL>
+		<LI><P>Secure the /admin subdirectory to trusted administrators
+		only</P>
+	</UL>
+</UL>
+<OL START=3>
+	<LI><P>Create the database structure by using the database/quexs.sql
+	file on your mySQL database server.</P>
+</OL>
+<UL>
+	<UL>
+		<LI><P>It is recommended to create a database user with privileges
+		only to the queXS database</P>
+	</UL>
+</UL>
+<OL START=4>
+	<LI><P>Edit the config.inc.php file to point to your database and
+	your local web paths</P>
+	<LI><P>Edit the db.inc.php file to point to your AdoDB installation</P>
+	<LI><P>Edit the include/limesurvey/config.php file to point to your
+	database and local web paths</P>
+</OL>
+<UL>
+	<UL>
+		<LI><P>The limesurvey database can be the same as the queXS
+		database, as it will create tables with a prefix</P>
+		<LI><P>Make sure this database information is the same as in the
+		queXS config.inc.php file for the LIME_DB fields</P>
+	</UL>
+</UL>
+<OL START=7>
+	<LI><P>Open a web browser, and browse to the queXS installation
+	subdirectory include/limesurvey/admin/install</P>
+	<LI><P>Follow the on-screen instructions to install LimeSurvey</P>
+	<LI><P>Remove the include/limesurvey/admin/install directory from
+	the web server 
+	</P>
+	<LI><P>Browse to the admin directory of the queXS installation in a
+	web browser to begin administering the queXS system</P>
+</OL>
+</BODY>
+</HTML>
