@@ -1,0 +1,9 @@
+.selected {
+	font-weight:bold;
+	font-size:larger;
+}
+
+.warning {
+	background-color:red;
+	font-size:150%;
+}

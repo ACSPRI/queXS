@@ -129,23 +129,18 @@ if (isset($_POST['submit']))
 }
 
 
-xhtml_head(T_("Add shifts"),false,false,array("../js/window.js"));
+xhtml_head(T_("Add shifts"),true,array("../css/shifts.css"),array("../js/window.js"));
 
-?>
+/**
+ * Display warning if timezone data not installed
+ *
+ */
 
-<style type="text/css">
-.selected {
-	font-weight:bold;
-	font-size:larger;
-}
-</style>
+$sql = "SELECT CONVERT_TZ(NOW(),'Australia/Victoria','UTC') as t";
+$rs = $db->GetRow($sql);
 
-
-</head>
-<body>
-
-
-<?
+if (empty($rs) || !$rs || empty($rs['t']))
+	print "<div class='warning'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
 
 
 /**
@@ -257,6 +252,6 @@ if ($questionnaire_id != false)
 	<?
 }	
 	
-	xhtml_foot();
+xhtml_foot();
 	
 ?>
