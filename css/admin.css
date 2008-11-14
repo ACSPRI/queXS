@@ -6,6 +6,7 @@
   right : 0;
   bottom : auto;
   left : 0;
+  overflow: auto;  
   /*border-bottom: 1px solid #aaa;*/
 }
 #main {
