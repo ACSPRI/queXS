@@ -95,7 +95,7 @@ function create_limesurvey_questionnaire($title)
 		$isquery = "SELECT sid FROM ".db_table_name('surveys')." WHERE sid=$surveyid";
 		$isresult = $ldb->Execute($isquery);
 	}
-	while ($isresult->RecordCount()>0);
+	while (!empty($isresult) && $isresult->RecordCount() > 0);
 
 	$isquery = "INSERT INTO ". LIME_PREFIX ."surveys\n"
 	. "(sid, owner_id, admin, active, useexpiry, expires, "

@@ -62,8 +62,10 @@ function vq($operator_id,$outcome_type_id)
 
 	$vq = $db->Execute($sql);
 
-	return $vq->RecordCount();
-
+	if ($vq)
+		return $vq->RecordCount();
+	else
+		return 0;
 }
 
 /**

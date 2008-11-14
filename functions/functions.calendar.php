@@ -496,7 +496,7 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 						AND MONTH(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) = '{$Day->thisMonth()}'
 						AND YEAR(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) = '{$Day->thisYear()}'");
 
-			if ($rs->RecordCount() == 0)
+			if (!empty($rs) && $rs->RecordCount() == 0)
 			{
 			       echo ( "<td class=\"notavailable $today\">".$Day->thisDay()."</td>\n" );
 			}

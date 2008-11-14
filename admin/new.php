@@ -55,7 +55,7 @@ include("../functions/functions.input.php");
 global $ldb;
 global $db;
 
-xhtml_head(T_("New: Create new questionnaire"));
+xhtml_head(T_("New: Create new questionnaire"),true,false,array("../js/new.js"));
 
 if (isset($_POST['import_file']))
 {
@@ -139,13 +139,15 @@ foreach($surveys as $s)
 <p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
-<p><? echo T_("Use respondent selection text?"); ?> <input name="rs" type="checkbox" checked="checked"/></p>
-<p><? echo T_("Respondent selection introduction:"); ?> <input type="text" name="rs_intro"/></p>
-<p><? echo T_("Respondent selection project introduction:"); ?> <input type="text" name="rs_project_intro"/></p>
-<p><? echo T_("Respondent selection project end:"); ?> <input type="text" name="rs_project_end"/></p>
-<p><? echo T_("Respondent selection callback (already started questionnaire):"); ?> <input type="text" name="rs_callback"/></p>
-<p><? echo T_("Message to leave on an answering machine:"); ?> <input type="text" name="rs_answeringmachine"/></p>
-<p><input type="submit" name="import_file"/></p>
+<p><? echo T_("Use respondent selection text?"); ?> <input name="rs" id="rs" type="checkbox" checked="checked" onclick="showHide(this,'rstext');"/></p>
+<div id='rstext'>
+<p><? echo T_("Respondent selection introduction:"); ?> <textarea cols="40" rows="4" name="rs_intro"></textarea></p>
+<p><? echo T_("Respondent selection project introduction:"); ?> <textarea cols="40" rows="4" name="rs_project_intro"></textarea></p>
+<p><? echo T_("Respondent selection project end:"); ?> <textarea cols="40" rows="4" name="rs_project_end"></textarea></p>
+<p><? echo T_("Respondent selection callback (already started questionnaire):"); ?> <textarea cols="40" rows="4" name="rs_callback"></textarea></p>
+<p><? echo T_("Message to leave on an answering machine:"); ?> <textarea cols="40" rows="4" name="rs_answeringmachine"></textarea></p>
+</div>
+<p><input type="submit" name="import_file" value="<? echo T_("Create Questionnaire"); ?>"/></p>
 </form>
 <?
 xhtml_foot();
