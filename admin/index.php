@@ -46,37 +46,44 @@ include ("../functions/functions.xhtml.php");
 
 xhtml_head(T_("Administrative Tools"),true,array("../css/table.css","../css/admin.css"),array("../js/link.js"));
 
-print "<div id='menu'><h3>" . T_("Questionnaire creation and management") . "</h3>";
-print "<div><a href=\"javascript:link('mainobj','new.php');\">" . T_("Create a new questionnaire") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','" . LIME_URL . "admin/admin.php');\">" . T_("Administer questionnaires with Limesurvey") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','import.php');\">" . T_("Import a sample file (in CSV form)") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','assignsample.php');\">" . T_("Assign samples to questionnaires") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','questionnaireprefill.php');\">" . T_("Set values in questionnaire to pre fill") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','operators.php');\">" . T_("Add operators to the system") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','operatorquestionnaire.php');\">" . T_("Assign operators to questionnaires") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','operatorskill.php');\">" . T_("Modify operator skills") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','addshift.php');\">" . T_("Shift management (add/remove)") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','dataoutput.php');\">" . T_("Data output") . "</a></div>";
+print "<div id='menu'><ul class='navmenu'>";
 
-print "<h3>" . T_("Questionnaire progress") . "</h3>";
-print "<div><a href=\"javascript:link('mainobj','displayappointments.php');\">" . T_("Display all future appointments") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','outcomes.php');\">" . T_("Questionnaire outcomes") . "</a></div>";
+print "<li><h3>" . T_("Questionnaire creation and management") . "</h3>";
+print "<ul><li><a href=\"javascript:link('mainobj','new.php');\">" . T_("Create a new questionnaire") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','" . LIME_URL . "admin/admin.php');\">" . T_("Administer questionnaires with Limesurvey") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','import.php');\">" . T_("Import a sample file (in CSV form)") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','assignsample.php');\">" . T_("Assign samples to questionnaires") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','questionnaireprefill.php');\">" . T_("Set values in questionnaire to pre fill") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','operators.php');\">" . T_("Add operators to the system") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','operatorquestionnaire.php');\">" . T_("Assign operators to questionnaires") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','operatorskill.php');\">" . T_("Modify operator skills") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','addshift.php');\">" . T_("Shift management (add/remove)") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','dataoutput.php');\">" . T_("Data output") . "</a></li></ul></li>";
 
-print "<h3>" . T_("Performance") . "</h3>";
-print "<div><a href=\"javascript:link('mainobj','operatorperformance.php');\">" . T_("Operator performance") . "</a></div>";
+print "<li><h3>" . T_("Questionnaire progress") . "</h3>";
+print "<ul><li><a href=\"javascript:link('mainobj','displayappointments.php');\">" . T_("Display all future appointments") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','outcomes.php');\">" . T_("Questionnaire outcomes") . "</a></li></ul></li>";
 
-print "<h3>" . T_("Client management") . "</h3>";
-print "<div><a href=\"javascript:link('mainobj','clients.php');\">" . T_("Add clients to the system") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','clientquestionnaire.php');\">" . T_("Assign clients to questionnaires") . "</a></div>";
+print "<li><h3>" . T_("Performance") . "</h3>";
+print "<ul><li><a href=\"javascript:link('mainobj','operatorperformance.php');\">" . T_("Operator performance") . "</a></li></ul></li>";
 
-print "<h3>" . T_("Supervisor functions") . "</h3>";
-print "<div><a href=\"javascript:link('mainobj','supervisor.php');\">" . T_("Assign outcomes to cases") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','samplesearch.php');\">" . T_("Search the sample") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','callhistory.php');\">" . T_("Call history") . "</a></div>";
-print "<div><a href=\"javascript:link('mainobj','shiftreport.php');\">" . T_("Shift reports") . "</a></div>";
+print "<li><h3>" . T_("Client management") . "</h3>";
+print "<ul><li><a href=\"javascript:link('mainobj','clients.php');\">" . T_("Add clients to the system") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','clientquestionnaire.php');\">" . T_("Assign clients to questionnaires") . "</a></li></ul></li>";
+
+print "<li><h3>" . T_("Supervisor functions") . "</h3>";
+print "<ul><li><a href=\"javascript:link('mainobj','supervisor.php');\">" . T_("Assign outcomes to cases") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','samplesearch.php');\">" . T_("Search the sample") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','callhistory.php');\">" . T_("Call history") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','shiftreport.php');\">" . T_("Shift reports") . "</a></li></ul></li>";
+
+print "<li><h3>" . T_("System settings") . "</h3>";
+print "<ul><li><a href=\"javascript:link('mainobj','timezonetemplate.php');\">" . T_("Set default timezone list") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','shifttemplate.php');\">" . T_("Set default shift times") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','callrestrict.php');\">" . T_("Set call restriction times") . "</a></li></ul></li>";
 
 
-print "</div>";
+print "</ul></div>";
 
 
 print "<div id='main'><object class='embeddedobject' id='mainobj' data='new.php' standby='Loading panel...' type='application/xhtml+xml'><p>Error, try with Firefox</p></object></div>";
