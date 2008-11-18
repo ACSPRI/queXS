@@ -405,11 +405,9 @@ function get_case_id($operator_id, $create = true)
 	
 					$sql = "INSERT INTO respondent (case_id,firstName,lastName,Time_zone_name) 
 						SELECT $case_id as case_id, s1.val as firstName, s2.val as lastName, s3.Time_zone_name as Time_zone_name  
-						FROM sample_var as s1 
+						FROM sample as s3
 						LEFT JOIN sample_var as s2 on (s2.sample_id = '{$r3['sample_id']}' and s2.type = 7) 
-						LEFT JOIN sample as s3 on (s3.sample_id = '{$r3['sample_id']}') 
-						WHERE s1.sample_id = '{$r3['sample_id']}' and s1.type = 6  
-						AND (s1.val IS NOT NULL AND s2.val IS NOT NULL)";
+						LEFT JOIN sample_var as s1 on (s1.sample_id = '{$r3['sample_id']}' and s1.type = 6)  						   WHERE s3.sample_id = '{$r3['sample_id']}'";
 	
 					$db->Execute($sql);
 	
