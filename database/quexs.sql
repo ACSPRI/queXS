@@ -268,6 +268,27 @@ CREATE TABLE `contact_phone` (
 -- Dumping data for table `contact_phone`
 --
 
+--
+-- Table structure for table `day_of_week`
+--
+
+CREATE TABLE `day_of_week` (
+  `day_of_week` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`day_of_week`)
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+--
+-- Dumping data for table `day_of_week`
+--
+
+INSERT INTO `day_of_week` VALUES(1);
+INSERT INTO `day_of_week` VALUES(2);
+INSERT INTO `day_of_week` VALUES(3);
+INSERT INTO `day_of_week` VALUES(4);
+INSERT INTO `day_of_week` VALUES(5);
+INSERT INTO `day_of_week` VALUES(6);
+INSERT INTO `day_of_week` VALUES(7);
+
 
 -- --------------------------------------------------------
 
