@@ -209,7 +209,7 @@ if ($questionnaire_id != false)
 	
 	
 	$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W %d %M %Y') as dt, day_of_week - 1 as dow
-		FROM shift_template
+		FROM day_of_week 
 		GROUP BY dow";
 	
 	$daysofweek = $db->Execute($sql);
