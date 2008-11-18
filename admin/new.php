@@ -27,9 +27,6 @@
  * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
  * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
  *
- *
- * @todo Create from queXML
- * 
  */
 
 /**
@@ -85,17 +82,11 @@ if (isset($_POST['import_file']))
 		include("../functions/functions.limesurvey.php");
 
 		$lime_sid = create_limesurvey_questionnaire($name);
-		
-
-	}else if ($_POST['select'] == "quexml")
-	{
-		//create from queXML
-
-	}else
+	}
+	else
 	{
 		//use existing lime instrument
 		$lime_sid = bigintval($_POST['select']);
-
 	}
 
 	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing)
@@ -121,7 +112,7 @@ if (isset($_POST['import_file']))
 	<form enctype="multipart/form-data" action="" method="post">
 	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
 	<p><? echo T_("Name for questionnaire:"); ?> <input type="text" name="description"/></p>
-	<p><? echo T_("Select creation type:"); ?> <select name="select"><option value="quexml"><? echo T_("Create from queXML"); ?></option><option value="new"><? echo T_("Create new questionnaire in Limesurvey"); ?></option><?
+	<p><? echo T_("Select creation type:"); ?> <select name="select"><option value="new"><? echo T_("Create new questionnaire in Limesurvey"); ?></option><?
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
@@ -135,7 +126,6 @@ foreach($surveys as $s)
 }
 
 ?></select></p>
-<p><? echo T_("Choose the queXML file (if required):"); ?> <input name="file" type="file" /></p>
 <p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
