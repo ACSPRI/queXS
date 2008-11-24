@@ -54,11 +54,11 @@ function unhide()
 	</head>
 	<body>";
 
-print "<h1>" .T_("Work has ended. That is it") . "</h1>";
+print "<h1>" . T_("Work has ended. That is it") . "</h1>";
 
-print "<p><a href='news://turnoffvoip'>First: Turn VoIP off</a></p>";
+print "<p><a href='news://turnoffvoip'>" . T_("First: Turn VoIP off") . "</a></p>";
 
-print "<p id='cati'><a href='http://active.dcarf/work/'>    Go back to work screen</a></p>";
+print "<p id='cati'><a href='index.php'>" . T_("Go back to work") . "</a></p>";
 
 xhtml_foot();
 

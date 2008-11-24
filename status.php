@@ -75,7 +75,7 @@ if (VOIP_ENABLED)
 	if ($v->getExtensionStatus($ext))
 		print "<div class='online statusbutton'><a href='news://turnvoipoff/'>" . T_("VoIP On") . "</a></div>";
 	else
-		print "<div class='offline statusbutton'><a href='irc://$ext:$ext@asterisk.dcarf'>" . T_("VoIP Off") . "</a></div>";
+		print "<div class='offline statusbutton'><a href='irc://$ext:$ext@" . VOIP_SERVER . "'>" . T_("VoIP Off") . "</a></div>";
 }
 else
 	print "<div class='online statusbutton'>" . T_("No VoIP") . "</div>";
