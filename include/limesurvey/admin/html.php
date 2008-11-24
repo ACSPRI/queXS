@@ -2914,7 +2914,7 @@ if ($action == "newsurvey")
 			if ($_SESSION["loginID"] == 1 || $_SESSION['USER_RIGHT_MANAGE_TEMPLATE'] == 1 || hasTemplateManageRights($_SESSION["loginID"], $tname) == 1 )  {
 				$newsurvey .= "\t\t\t<option value='$tname'";
 				if (isset($esrow) && $esrow['template'] && $tname == $esrow['template']) {$newsurvey .= " selected='selected'";}
-				elseif ((!isset($esrow) || !$esrow['template']) && $tname == "default") {$newsurvey .= " selected='selected'";}
+				elseif ((!isset($esrow) || !$esrow['template']) && $tname == "quexs") {$newsurvey .= " selected='selected'";}
 				$newsurvey .= ">$tname</option>\n";
 			}
 			
@@ -2961,7 +2961,7 @@ if ($action == "newsurvey")
 		// End URL
 		$newsurvey .= ""
 		. "\t<div class='settingrow'><span class='settingcaption'>".$clang->gT("End URL:")."</span>\n"
-		. "\t\t<span class='settingentry'><input type='text' size='50' name='url' value='http://";
+		. "\t\t<span class='settingentry'><input type='text' size='50' name='url' value='../../rs_project_end.php'";
 		if (isset($esrow)) {$newsurvey .= $esrow['url'];}
 		$newsurvey .= "' /></span></div>\n"
 		. "\t<div class='settingrow'><span class='settingcaption'>".$clang->gT("URL Description:")."</span>\n"
@@ -2970,8 +2970,8 @@ if ($action == "newsurvey")
 		$newsurvey .= "' /></span></div>\n"
 		. "\t<div class='settingrow'><span class='settingcaption'>".$clang->gT("Automatically load URL when survey complete?")."</span>\n"
 		. "\t\t<span class='settingentry'><select name='autoredirect'>\n"
-		. "\t\t\t<option value='Y'>".$clang->gT("Yes")."</option>\n"
-		. "\t\t\t<option value='N' selected='selected'>".$clang->gT("No")."</option>\n"
+		. "\t\t\t<option value='Y' selected='selected'>".$clang->gT("Yes")."</option>\n"
+		. "\t\t\t<option value='N'>".$clang->gT("No")."</option>\n"
 		. "</select></span></div>";
 
 		// End Presention and navigation TAB
@@ -3015,11 +3015,11 @@ if ($action == "newsurvey")
         . "\t\t\t<option value='A'>".$clang->gT("Survey Access")." / ".$clang->gT("Registration")." / ".$clang->gT("Save & Load")."</option>\n"
         . "\t\t\t<option value='B'>".$clang->gT("Survey Access")." / ".$clang->gT("Registration")." / ---------</option>\n"
         . "\t\t\t<option value='C'>".$clang->gT("Survey Access")." / ------------ / ".$clang->gT("Save & Load")."</option>\n"
-        . "\t\t\t<option value='D' selected='selected'>------------- / ".$clang->gT("Registration")." / ".$clang->gT("Save & Load")."</option>\n"
+        . "\t\t\t<option value='D'>------------- / ".$clang->gT("Registration")." / ".$clang->gT("Save & Load")."</option>\n"
         . "\t\t\t<option value='X'>".$clang->gT("Survey Access")." / ------------ / ---------</option>\n"
         . "\t\t\t<option value='R'>------------- / ".$clang->gT("Registration")." / ---------</option>\n"
         . "\t\t\t<option value='S'>------------- / ------------ / ".$clang->gT("Save & Load")."</option>\n"
-        . "\t\t\t<option value='N'>------------- / ------------ / ---------</option>\n"
+        . "\t\t\t<option value='N' selected='selected'>------------- / ------------ / ---------</option>\n"
         . "\t\t</select></span>\n\t</div>\n";
 
 		// Token attributes names
@@ -3064,15 +3064,15 @@ if ($action == "newsurvey")
 		. "\t}"
 		. "\t//--></script></span>\n";
 		$newsurvey .= "\t\t<span class='settingentry'><select id='private' name='private' onchange='alertPrivacy();'>\n"
-		. "\t\t\t<option value='Y' selected='selected'>".$clang->gT("Yes")."</option>\n"
-		. "\t\t\t<option value='N'>".$clang->gT("No")."</option>\n"
+		. "\t\t\t<option value='Y'>".$clang->gT("Yes")."</option>\n"
+		. "\t\t\t<option value='N' selected='selected'>".$clang->gT("No")."</option>\n"
 		. "\t\t</select></span>\n\t</div>\n";
 
 		// Datestamp
 		$newsurvey .= "\t<div class='settingrow'><span class='settingcaption'>".$clang->gT("Date Stamp?")."</span>\n"
 		. "\t\t<span class='settingentry'><select id='datestamp' name='datestamp' onchange='alertPrivacy();'>\n"
-		. "\t\t\t<option value='Y'>".$clang->gT("Yes")."</option>\n"
-		. "\t\t\t<option value='N' selected='selected'>".$clang->gT("No")."</option>\n"
+		. "\t\t\t<option value='Y' selected='selected'>".$clang->gT("Yes")."</option>\n"
+		. "\t\t\t<option value='N'>".$clang->gT("No")."</option>\n"
 		. "\t\t</select></span>\n\t</div>\n";
 
 		// IP Address
@@ -3092,8 +3092,8 @@ if ($action == "newsurvey")
 		// Token answers persistence
 		$newsurvey .= "\t<div class='settingrow'><span class='settingcaption'>".$clang->gT("Enable Token-based answers persistence?")."</span>\n"
 		. "\t\t<span class='settingentry'><select name='tokenanswerspersistence'>\n" 
-        . "\t\t\t<option value='Y'>".$clang->gT("Yes")."</option>\n"
-		. "\t\t\t<option value='N' selected='selected'>".$clang->gT("No")."</option>\n"
+        . "\t\t\t<option value='Y'  selected='selected'>".$clang->gT("Yes")."</option>\n"
+		. "\t\t\t<option value='N'>".$clang->gT("No")."</option>\n"
 		. "\t\t</select></span>\n\t</div>\n";
 
 		// end of addnewsurvey form
