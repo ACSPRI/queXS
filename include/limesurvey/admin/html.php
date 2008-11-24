@@ -132,7 +132,7 @@ if ($action == "listsurveys")
 				{
 					if ($_SESSION['USER_RIGHT_SUPERADMIN'] ==1 || $sidsecurity['activate_survey'])
 					{
-						$listsurveys .= "<td><a href=\"#\" onclick=\"window.open('$scriptname?action=deactivate&amp;sid={$rows['sid']}', '_top')\""
+						$listsurveys .= "<td><a href=\"#\" onclick=\"window.open('$scriptname?action=deactivate&amp;sid={$rows['sid']}', '_self')\""
 						. "onmouseout=\"hideTooltip()\""
 						. "title=\"".$clang->gTview("De-activate this Survey")."\" "
 						. "onmouseover=\"showTooltip(event,'".$clang->gT("De-activate this Survey", "js")."');return false\">"
@@ -150,7 +150,7 @@ if ($action == "listsurveys")
 			} else {
 				if ( ($_SESSION['USER_RIGHT_SUPERADMIN'] ==1 || $sidsecurity['activate_survey']) && $questionsCount > 0)
 				{
-					$listsurveys .= "<td><a href=\"#\" onclick=\"window.open('$scriptname?action=activate&amp;sid={$rows['sid']}', '_top')\""
+					$listsurveys .= "<td><a href=\"#\" onclick=\"window.open('$scriptname?action=activate&amp;sid={$rows['sid']}', '_self')\""
 					. "onmouseout=\"hideTooltip()\""
 					. "title=\"".$clang->gTview("Activate this Survey")."\""
 					. "onmouseover=\"showTooltip(event,'".$clang->gT("Activate this Survey", "js")."');return false\">" .
@@ -402,7 +402,7 @@ if ($surveyid)
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("This survey is not currently active", "js")."');return false\" />\n";
 			if(($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['activate_survey']) && $sumcount3>0)
 			{
-				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=activate&amp;sid=$surveyid', '_top')\""
+				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=activate&amp;sid=$surveyid', '_self')\""
 				. "onmouseout=\"hideTooltip()\""
 				. "title=\"".$clang->gTview("Activate this Survey")."\""
 				. "onmouseover=\"showTooltip(event,'".$clang->gT("Activate this Survey", "js")."');return false\">" .
@@ -432,7 +432,7 @@ if ($surveyid)
 			}
 			if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['activate_survey'])
 			{
-				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=deactivate&amp;sid=$surveyid', '_top')\""
+				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=deactivate&amp;sid=$surveyid', '_self')\""
 				. "onmouseout=\"hideTooltip()\""
 				. "title=\"".$clang->gTview("De-activate this Survey")."\""
 				. "onmouseover=\"showTooltip(event,'".$clang->gT("De-activate this Survey", "js")."');return false\">" .
@@ -450,7 +450,7 @@ if ($surveyid)
 
 		if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $s1row['owner_id'] == $_SESSION['loginID'])
 		{
-			$surveysummary .= "\t\t\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=surveysecurity&amp;sid=$surveyid', '_top')\"" .
+			$surveysummary .= "\t\t\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=surveysecurity&amp;sid=$surveyid', '_self')\"" .
 			"onmouseout=\"hideTooltip()\"" .
 			"title=\"".$clang->gTview("Survey Security Settings")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Survey Security Settings", "js")."');return false\">" .
@@ -507,7 +507,7 @@ if ($surveyid)
 
 		if($activated == "Y" && ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['browse_response']))
 		{
-			$surveysummary .= "<a href=\"#\" onclick=\"window.open('".$homeurl."/".$scriptname."?action=dataentry&amp;sid=$surveyid', '_top')\""
+			$surveysummary .= "<a href=\"#\" onclick=\"window.open('".$homeurl."/".$scriptname."?action=dataentry&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Dataentry Screen for Survey")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Dataentry Screen for Survey", "js")."');return false\">"
@@ -569,7 +569,7 @@ if ($surveyid)
 
 		if($_SESSION['USER_RIGHT_SUPERADMIN'] ==1 || $sumrows5['edit_survey_property'])
 		{
-			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=editsurvey&amp;sid=$surveyid', '_top')\""
+			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=editsurvey&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Edit Current Survey")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Edit Current Survey", "js")."');return false\">" .
@@ -583,7 +583,7 @@ if ($surveyid)
 
 		if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1  || $sumrows5['delete_survey'])
 		{
-//			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=deletesurvey&amp;sid=$surveyid', '_top')\""
+//			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=deletesurvey&amp;sid=$surveyid', '_self')\""
 			$surveysummary .= "<a href=\"#\" onclick=\"".get2post("$scriptname?action=deletesurvey&amp;sid=$surveyid")."\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Delete Current Survey")."\""
@@ -598,7 +598,7 @@ if ($surveyid)
 		if ( $_SESSION['USER_RIGHT_SUPERADMIN'] == 1  || $sumrows5['define_questions'])
 		{
 			if ($sumcount6 > 0) {
-//				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=resetsurveylogic&amp;sid=$surveyid', '_top')\""
+//				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=resetsurveylogic&amp;sid=$surveyid', '_self')\""
 				$surveysummary .= "<a href=\"#\" onclick=\"".get2post("$scriptname?action=resetsurveylogic&amp;sid=$surveyid")."\""
 				. "onmouseout=\"hideTooltip()\""
 				. "title=\"".$clang->gTview("Reset Survey Logic")."\""
@@ -621,7 +621,7 @@ if ($surveyid)
 
 		if($activated!="Y" && getGroupSum($surveyid,$s1row['language'])>1 && ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['define_questions']))
 		{
-			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=ordergroups&amp;sid=$surveyid', '_top')\""
+			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=ordergroups&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Change Group Order")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Change Group Order", "js")."');return false\">" .
@@ -634,7 +634,7 @@ if ($surveyid)
 
 		if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['export'])
 		{
-			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=exportstructure&amp;sid=$surveyid', '_top')\""
+			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=exportstructure&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Export Survey Structure")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Export Survey Structure", "js")."');return false\">" .
@@ -648,7 +648,7 @@ if ($surveyid)
 		if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['edit_survey_property'])
 		{
 			$surveysummary .= "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='left' border='0' hspace='0' />\n"
-			. "<a href=\"#\" onclick=\"window.open('$scriptname?action=assessments&amp;sid=$surveyid', '_top')\""
+			. "<a href=\"#\" onclick=\"window.open('$scriptname?action=assessments&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Set Assessment Rules")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Set Assessment Rules", "js")."');return false\">" .
@@ -662,7 +662,7 @@ if ($surveyid)
 		if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['edit_survey_property'])
 		{
 			$surveysummary .= "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='left' border='0' hspace='0' />\n"
-			. "<a href=\"#\" onclick=\"window.open('$scriptname?action=quotas&amp;sid=$surveyid', '_top')\""
+			. "<a href=\"#\" onclick=\"window.open('$scriptname?action=quotas&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Set Survey Quotas")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Set Survey Quotas", "js")."');return false\">" .
@@ -676,7 +676,7 @@ if ($surveyid)
 		if ($activated == "Y" && ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['browse_response']))
 		{
 			$surveysummary .= "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='left' border='0' hspace='0' />\n"
-			. "<a href=\"#\" onclick=\"window.open('$scriptname?action=browse&amp;sid=$surveyid', '_top')\""
+			. "<a href=\"#\" onclick=\"window.open('$scriptname?action=browse&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Browse Responses For This Survey")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Browse Responses For This Survey", "js")."');return false\">" .
@@ -684,7 +684,7 @@ if ($surveyid)
 			. "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='left' border='0' hspace='0' />\n";
 			if ($s1row['allowsave'] == "Y")
 			{
-				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=saved&amp;sid=$surveyid', '_top')\""
+				$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=saved&amp;sid=$surveyid', '_self')\""
 				. "onmouseout=\"hideTooltip()\""
 				. "title=\"".$clang->gTview("View Saved but not submitted Responses")."\""
 				. "onmouseover=\"showTooltip(event,'".$clang->gT("View Saved but not submitted Responses", "js")."');return false\">"
@@ -696,7 +696,7 @@ if ($surveyid)
 		{
             if ($activated == "Y")
             {
-			    $surveysummary .="<a href=\"#\" onclick=\"window.open('$scriptname?action=tokens&amp;sid=$surveyid', '_top')\""
+			    $surveysummary .="<a href=\"#\" onclick=\"window.open('$scriptname?action=tokens&amp;sid=$surveyid', '_self')\""
 			    . "onmouseout=\"hideTooltip()\""
 			    . "title=\"".$clang->gTview("Activate/Edit Tokens for this Survey")."\""
 			    . "onmouseover=\"showTooltip(event,'".$clang->gT("Activate/Edit Tokens for this Survey", "js")."');return false\">" .
@@ -719,7 +719,7 @@ if ($surveyid)
 		if (!$gid)
 		{
 			$surveysummary .= "\t\t\t\t\t<input type='image' src='$imagefiles/close.gif' title='". $clang->gT("Close this Survey")."' alt='". $clang->gT("Close this Survey")."' align='right'  name='CloseSurveyWindow' "
-			. "onclick=\"window.open('$scriptname', '_top')\" />\n";
+			. "onclick=\"window.open('$scriptname', '_self')\" />\n";
 		}
 		else
 		{
@@ -738,7 +738,7 @@ if ($surveyid)
 		}
 		elseif($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['define_questions'])
 		{
-			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=addgroup&amp;sid=$surveyid', '_top')\""
+			$surveysummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=addgroup&amp;sid=$surveyid', '_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Add New Group to Survey")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Add New Group to Survey", "js")."');return false\"> " .
@@ -746,7 +746,7 @@ if ($surveyid)
 		}
 		$surveysummary .= "<font class=\"boxcaption\">".$clang->gT("Groups").":</font>"
 		. "\t\t<select name='groupselect' "
-		. "onchange=\"window.open(this.options[this.selectedIndex].value,'_top')\">\n";
+		. "onchange=\"self.location = this.options[this.selectedIndex].value;\">\n";
 
 		if (getgrouplistlang($gid, $baselang))
 		{
@@ -967,7 +967,7 @@ if ($surveyid && $gid )   // Show the group toolbar
 
 		if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $sumrows5['define_questions'])
 		{
-			$groupsummary .=  "<a href=\"#\" onclick=\"window.open('$scriptname?action=editgroup&amp;sid=$surveyid&amp;gid=$gid','_top')\""
+			$groupsummary .=  "<a href=\"#\" onclick=\"window.open('$scriptname?action=editgroup&amp;sid=$surveyid&amp;gid=$gid','_self')\""
 			. "onmouseout=\"hideTooltip()\""
 			. "title=\"".$clang->gTview("Edit Current Group")."\""
 			. "onmouseover=\"showTooltip(event,'".$clang->gT("Edit Current Group", "js")."');return false\">" .
@@ -1035,7 +1035,7 @@ if ($surveyid && $gid )   // Show the group toolbar
 		{
 			$groupsummary .= "\t\t\t\t\t<input type='image' src='$imagefiles/close.gif' title='"
 			. $clang->gT("Close this Group")."' alt='". $clang->gT("Close this Group")."' align='right'  name='CloseSurveyWindow' "
-			. "onclick=\"window.open('$scriptname?sid=$surveyid', '_top')\" />\n";
+			. "onclick=\"window.open('$scriptname?sid=$surveyid', '_self')\" />\n";
 		}
 		else
 		{
@@ -1060,10 +1060,10 @@ if ($surveyid && $gid )   // Show the group toolbar
 			."title=\"".$clang->gTview("Add New Question to Group")."\""
 			."onmouseover=\"showTooltip(event,'".$clang->gT("Add New Question to Group", "js")."');return false\">" .
 			"<img src='$imagefiles/add.png' title='' alt='' " .
-			"align='right' name='AddNewQuestion' onclick=\"window.open('', '_top')\" /></a>\n";
+			"align='right' name='AddNewQuestion' onclick=\"window.open('', '_self')\" /></a>\n";
 		}
 		$groupsummary .= "\t\t\t\t\t<font class=\"boxcaption\">".$clang->gT("Questions").":</font>&nbsp;<select class=\"listboxquestions\" name='qid' "
-		. "onchange=\"window.open(this.options[this.selectedIndex].value, '_top')\">\n"
+			. "onchange=\"self.location = this.options[this.selectedIndex].value;\">\n"
 		. getquestions($surveyid,$gid,$qid)
 		. "\t\t\t\t\t</select>\n"
 		. "\t\t\t\t</td></tr>\n"
@@ -1282,7 +1282,7 @@ if ($surveyid && $gid && $qid)  // Show the question toolbar
 		. "\t\t\t\t\t<td align='right' width='400' valign='top'>\n"
 		. "\t\t\t\t\t<input type='image' src='$imagefiles/close.gif' title='"
 		. $clang->gT("Close this Question")."' alt='". $clang->gT("Close this Question")."' align='right' name='CloseQuestionWindow' "
-		. "onclick=\"window.open('$scriptname?sid=$surveyid&amp;gid=$gid', '_top')\" />\n"
+		. "onclick=\"window.open('$scriptname?sid=$surveyid&amp;gid=$gid', '_self')\" />\n"
 		. "\t\t\t\t\t<input type='image' src='$imagefiles/plus.gif' title='"
 		. $clang->gT("Show Details of this Question")."'  alt='". $clang->gT("Show Details of this Question")."'align='right'  name='MaximiseQuestionWindow' "
 		. "onclick='document.getElementById(\"questiondetails\").style.display=\"\";' />"
@@ -1327,7 +1327,7 @@ if ($surveyid && $gid && $qid)  // Show the question toolbar
 			. $clang->gT("Warning").": ". $clang->gT("You need to add answers to this question")." "
 			. "<input align='top' type='image' src='$imagefiles/answerssmall.png' title='"
 			. $clang->gT("Edit/Add Answers for this Question")."' name='EditThisQuestionAnswers'"
-			. "onclick=\"window.open('".$scriptname."?sid=$surveyid&amp;gid=$gid&amp;qid=$qid&amp;viewanswer=Y', '_top')\" /></font></td></tr>\n";
+			. "onclick=\"window.open('".$scriptname."?sid=$surveyid&amp;gid=$gid&amp;qid=$qid&amp;viewanswer=Y', '_self')\" /></font></td></tr>\n";
 		}
 		
 		// For Labelset Questions show the label set and warn if there is no label set configured

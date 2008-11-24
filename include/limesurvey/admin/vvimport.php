@@ -128,7 +128,7 @@ else
 	{
 		$vvoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 		$vvoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$tempdir)."<br /><br />\n";
-		$vvoutput .= "<input type='submit' value='".$clang->gT("Back to Response Import")."' onclick=\"window.open('$scriptname?action=vvimport&sid=$surveyid', '_top')\">\n";
+		$vvoutput .= "<input type='submit' value='".$clang->gT("Back to Response Import")."' onclick=\"window.open('$scriptname?action=vvimport&sid=$surveyid', '_self')\">\n";
 		$vvoutput .= "</font></td></tr></table><br />&nbsp;\n";
 		return;
 	}

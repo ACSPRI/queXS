@@ -161,7 +161,7 @@ if ($action == "templateupload")
               if (!@move_uploaded_file($_FILES['the_file']['tmp_name'], $the_full_file_path)) {
                   echo "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
                   echo sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$tempdir)."<br /><br />\n";
-                  echo "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" />\n";
+                  echo "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" />\n";
                   echo "</td></tr></table>\n";
                   echo "</body>\n</html>\n";
                   exit;
@@ -173,7 +173,7 @@ if ($action == "templateupload")
               @unlink($_FILES['the_file']['tmp_name']);
               echo "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
               echo $clang->gT("This file type is not allowed to be uploaded.")."<br /><br />\n";
-              echo "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" />\n";
+              echo "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" />\n";
               echo "</td></tr></table>\n";
               echo "</body>\n</html>\n";
               exit;
@@ -185,7 +185,7 @@ if ($action == "templateupload")
           @unlink($_FILES['the_file']['tmp_name']);
           echo "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
           echo $clang->gT("This file type is not allowed to be uploaded.")."<br /><br />\n";
-          echo "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" />\n";
+          echo "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" />\n";
           echo "</td></tr></table>\n";
           echo "</body>\n</html>\n";
           exit;
@@ -529,7 +529,7 @@ $templatesoutput= "<script type='text/javascript'>\n"
 ."\tif (newtemplatename=window.prompt(text, defvalue))\n"
 ."\t\t{\n"
 //."\t\tvar url='admin.php?action=template'+action+'&newname='+newtemplatename+'&copydir='+copydirectory;\n"
-//."\t\twindow.open(url, '_top');\n"
+//."\t\twindow.open(url, '_self');\n"
 . "\t\t\tsendPost('admin.php','".$_SESSION['checksessionpost']."',new Array('action','newname','copydir'),new Array('template'+action,newtemplatename,copydirectory));\n"
 ."\t\t}\n"
 ."\t}\n"
@@ -582,7 +582,7 @@ $templatesoutput.= "<table width='100%' border='0' bgcolor='#DDDDDD'>\n"
 . " onmouseout=\"hideTooltip()\" title=\"".$clang->gTview("Create new template")."\" onmouseover=\"showTooltip(event,'".$clang->gT("Create new template", "js")."')\">" 
 . "<img src='$imagefiles/add.png' alt='' align='right' title='' /></a>\n"
 ."<font style='boxcaption'><strong>".$clang->gT("Template:")."</strong> </font>"
-."<select class=\"listboxtemplates\" name='templatedir' onchange='javascript: window.open(\"admin.php?action=templates&amp;editfile=$editfile&amp;screenname=".html_escape($screenname)."&amp;templatename=\"+this.value, \"_top\")'>\n"
+."<select class=\"listboxtemplates\" name='templatedir' onchange='javascript: window.open(\"admin.php?action=templates&amp;editfile=$editfile&amp;screenname=".html_escape($screenname)."&amp;templatename=\"+this.value, \"_self\")'>\n"
 .makeoptions($templates, "name", "name", $templatename)
 ."</select>\n"
 ."</td></tr></table>\n"
@@ -624,7 +624,7 @@ else
              " /></a>";
     }
 $templatesoutput.= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='20' height='10' border='0' hspace='0' align='left' />\n"
-."\t\t\t\t\t<a href='#' onclick='javascript:window.open(\"admin.php?action=templatezip&amp;editfile=$editfile&amp;screenname=".html_escape($screenname)."&amp;templatename=$templatename\", \"_top\")'".
+."\t\t\t\t\t<a href='#' onclick='javascript:window.open(\"admin.php?action=templatezip&amp;editfile=$editfile&amp;screenname=".html_escape($screenname)."&amp;templatename=$templatename\", \"_self\")'".
 		"onmouseout=\"hideTooltip()\" title=\"".$clang->gTview("Export Template")."\" onmouseover=\"showTooltip(event,'".$clang->gT("Export Template", "js")."')\">" .
 				"<img name='Export' src='$imagefiles/export.png' alt='' align='left' title='' /></a>\n"
 ."\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' border='0' hspace='0' align='left' />\n"
@@ -637,7 +637,7 @@ $templatesoutput.= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='20'
 ."<img src='$imagefiles/seperator.gif' align='right' alt='minimise' border='0' hspace='0' />"
 ."<img src='$imagefiles/blank.gif' width='35' align='right' alt='minimise' border='0' hspace='0' />"
 ."<font style='boxcaption'><strong>".$clang->gT("Screen:")."</strong> </font>"
-. "<select class=\"listboxtemplates\" name='screenname' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;editfile=$editfile&amp;screenname=\"+this.value, \"_top\")'>\n"
+. "<select class=\"listboxtemplates\" name='screenname' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;editfile=$editfile&amp;screenname=\"+this.value, \"_self\")'>\n"
 . makeoptions($screens, "name", "name", html_escape($screenname) )
 . "</select>&nbsp;\n"
 ."</td></tr></table>\n"
@@ -662,7 +662,7 @@ $templatesoutput.= "\t\t\t\t<table width='100%' border='0'>\n"
 if (trim($editfile)!='') {$templatesoutput.= " <i>$editfile</i>";}
 $templatesoutput.= "</strong></td>"
 ."<td align='right' ><strong>".$clang->gT("Other Files:")."</strong></td></tr>\n"
-."<tr><td valign='top'><select size='12' name='editfile' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;screenname=".html_escape($screenname)."&amp;editfile=\"+this.value, \"_top\")'>\n"
+."<tr><td valign='top'><select size='12' name='editfile' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;screenname=".html_escape($screenname)."&amp;editfile=\"+this.value, \"_self\")'>\n"
 .makeoptions($files, "name", "name", $editfile)
 ."</select>\n"
 ."\t\t\t\t\t\t</td>\n"

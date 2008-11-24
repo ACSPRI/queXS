@@ -81,13 +81,13 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 	."alt='". $clang->gT("Show Help")."' align='right'  /></a>"	
 	."\t<img src='$imagefiles/blank.gif' width='42' height='20' align='right' hspace='0' border='0'  alt='' />\n"
 	."\t<img src='$imagefiles/seperator.gif' align='right' hspace='0' border='0' alt='' />\n"
-	."<a href=\"#\" onclick=\"window.open('admin.php?action=newlabelset', '_top')\"" 
+	."<a href=\"#\" onclick=\"window.open('admin.php?action=newlabelset', '_self')\"" 
 	."onmouseout=\"hideTooltip()\"" 
 	."title=\"".$clang->gTview("Add New Label Set")."\"" 
 	."onmouseover=\"showTooltip(event,'".$clang->gT("Add New Label Set", "js")."');return false\">"
 	."<img src='$imagefiles/add.png' align='right' name='AddLabel' title='' alt='". $clang->gT("Add new label set")."' /></a>\n"	 
 	."\t<font class='boxcaption'>".$clang->gT("Labelsets").": </font>"
-	."\t<select onchange=\"window.open(this.options[this.selectedIndex].value,'_top')\">\n";
+	."\t<select onchange=\"window.open(this.options[this.selectedIndex].value,'_self')\">\n";
 	$labelsets=getlabelsets();
 	if (count($labelsets)>0)
 	{
@@ -124,7 +124,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 		."\t<tr>\n"
 		."<th>\n"
 		."<input type='image' src='$imagefiles/close.gif' align='right' "
-		."onclick=\"window.open('admin.php?action=labels&amp;lid=$lid', '_top')\" />\n";
+		."onclick=\"window.open('admin.php?action=labels&amp;lid=$lid', '_self')\" />\n";
 		if ($action == "newlabelset") {$labelsoutput.= $clang->gT("Create or Import New Label Set"); $langids="en"; $tabitem=$clang->gT("Create New Label Set");}
 		else {$labelsoutput.= $clang->gT("Edit Label Set"); $tabitem=$clang->gT("Edit Label Set");}
 		$langidsarray=explode(" ",trim($langids)); //Make an array of it
@@ -248,7 +248,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 			."\t<td>\n"
 			."\t<input type='image' src='$imagefiles/close.gif' title='"
 			.$clang->gT("Close Window")."' align='right' "
-			."onclick=\"window.open('admin.php?action=labels', '_top')\" />\n"
+			."onclick=\"window.open('admin.php?action=labels', '_self')\" />\n"
 			."\t<img src='$imagefiles/blank.gif' width='50' height='20' border='0' hspace='0' align='left' alt='' />\n"
 			."\t<img src='$imagefiles/seperator.gif' border='0' hspace='0' align='left' alt='' />\n"
 			."\t<a href='admin.php?action=editlabelset&amp;lid=$lid' onmouseout=\"hideTooltip()\" title=\"".$clang->gTview("Edit label set")."\" onmouseover=\"showTooltip(event,'".$clang->gT("Edit label set", "js")."');return false\">" .

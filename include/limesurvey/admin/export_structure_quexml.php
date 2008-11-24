@@ -33,7 +33,7 @@ if (!$surveyid)
 		._ERROR."</font></strong><br />\n"
 		._ES_NOSID."<br />\n"
 		."<br /><input type='submit' $btstyle value='"
-		._GO_ADMIN."' onClick=\"window.open('$scriptname', '_top')\">\n"
+		._GO_ADMIN."' onClick=\"window.open('$scriptname', '_self')\">\n"
 		."\t</td></tr>\n"
 		."</table>\n"
 		."</body></html>\n";

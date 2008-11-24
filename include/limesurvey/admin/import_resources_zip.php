@@ -47,7 +47,7 @@ if ($action == "importsurvresources" && $surveyid) {
 	{
 		$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 	    $importsurvresourcesoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_top')\">\n";
+		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
 		$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 		return;
 	}
@@ -71,7 +71,7 @@ if ($action == "importsurvresources" && $surveyid) {
 		{
 			$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 			$importsurvresourcesoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br /><br />\n";
-			$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_top')\">\n";
+			$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
 			$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 			return;
 		}
@@ -141,7 +141,7 @@ if ($action == "importsurvresources" && $surveyid) {
 			$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 			$importsurvresourcesoutput .= $clang->gT("This ZIP archive contains no valid Resources files. Import failed.")."<br /><br />\n";
 			$importsurvresourcesoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP Archive.")."<br /><br />\n";
-			$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_top')\">\n";
+			$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
 			$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 			return;
 			
@@ -184,12 +184,12 @@ if ($action == "importsurvresources" && $surveyid) {
 	{
 		$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 	    $importsurvresourcesoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_top')\">\n";
+		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
 		$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 		return;
 	}
 		// Final Back not needed if files have been imported
-//		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_top')\">\n";
+//		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
 		$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 }
 
@@ -217,7 +217,7 @@ if ($action == "importlabelresources" && $lid)
 	{
 		$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 	    $importlabelresourcesoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_top')\">\n";
+		$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
 		$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 		return;
 	}
@@ -241,7 +241,7 @@ if ($action == "importlabelresources" && $lid)
 		{
 			$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 			$importlabelresourcesoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br /><br />\n";
-			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_top')\">\n";
+			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
 			$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 			return;
 		}
@@ -311,7 +311,7 @@ if ($action == "importlabelresources" && $lid)
 			$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 			$importlabelresourcesoutput .= $clang->gT("This ZIP archive contains no valid Resources files. Import failed.")."<br /><br />\n";
 			$importlabelresourcesoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP Archive.")."<br /><br />\n";
-			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_top')\">\n";
+			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
 			$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 			return;
 			
@@ -354,11 +354,11 @@ if ($action == "importlabelresources" && $lid)
 	{
 		$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 	    $importlabelresourcesoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_top')\">\n";
+		$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
 		$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
 		return;
 	}
-			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_top')\">\n";
+			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
 }
 
 

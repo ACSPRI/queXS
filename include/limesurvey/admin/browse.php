@@ -68,7 +68,7 @@ if (!$database_exists) //DATABASE DOESN'T EXIST OR CAN'T CONNECT
 	."<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n"
 	. $clang->gT("The defined LimeSurvey database does not exist")."<br />\n"
 	. $clang->gT("Either your selected database has not yet been created or there is a problem accessing it.")."<br /><br />\n"
-	."<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" /><br />\n"
+	."<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" /><br />\n"
 	."</td></tr></table>\n"
 	."</body>\n</html>";
 	return;
@@ -81,7 +81,7 @@ if (!$surveyid && !$subaction) //NO SID OR ACTION PROVIDED
 	."<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n"
 	. $clang->gT("You have not selected a survey to browse.")."<br /><br />\n"
 	."<input type='submit' value='"
-	. $clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" /><br />\n"
+	. $clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" /><br />\n"
 	."</td></tr></table>\n";
 	return;
 }
@@ -105,7 +105,7 @@ if ($actcount > 0)
 			."<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n"
 			. $clang->gT("This survey has not been activated. There are no results to browse.")."<br /><br />\n"
 			."<input type='submit' value='"
-			. $clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?sid=$surveyid', '_top')\" /><br />\n"
+			. $clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?sid=$surveyid', '_self')\" /><br />\n"
 			."</td></tr></table>\n"
 			."</body>\n</html>";
 			return;
@@ -119,7 +119,7 @@ else //SURVEY MATCHING $surveyid DOESN'T EXIST
 	."\t<tr><td align='center'>\n"
 	."<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n"
 	. $clang->gT("There is no matching survey.")." ($surveyid)<br /><br />\n"
-	."<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" /><br />\n"
+	."<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" /><br />\n"
 	."</td></tr></table>\n"
 	."</body>\n</html>";
 	return;

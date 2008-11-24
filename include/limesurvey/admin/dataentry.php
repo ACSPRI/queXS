@@ -47,7 +47,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $actsurrows['browse_response'])
 		.$clang->gT("The defined LimeSurvey database does not exist")."<br />\n"
 		.$clang->gT("Either your selected database has not yet been created or there is a problem accessing it.")."<br /><br />\n"
 		."<input type='submit' value='"
-		.$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" /></font><br />\n"
+		.$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" /></font><br />\n"
 		."</td></tr></table>\n"
 		."</body>\n";
 		return;
@@ -62,7 +62,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $actsurrows['browse_response'])
 		."<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n"
 		.$clang->gT("You have not selected a survey for data-entry.")."<br /><br />\n"
 		."<input type='submit' value='"
-		.$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" /><br />\n"
+		.$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" /><br />\n"
 		."</font></td></tr></table>\n";
 		return;
 	}
@@ -2471,7 +2471,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $actsurrows['browse_response'])
 			$dataentryoutput .= "\t\t<td colspan='3' align='center'>\n";
 			$dataentryoutput .= "\t\t\t<font color='red'><strong>".$clang->gT("Error")."</strong></font><br />\n";
 			$dataentryoutput .= "\t\t\t".$clang->gT("The survey you selected does not exist")."</font><br /><br />\n";
-			$dataentryoutput .= "\t\t\t<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\" />\n";
+			$dataentryoutput .= "\t\t\t<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\" />\n";
 			$dataentryoutput .= "\t\t</td>\n";
 			$dataentryoutput .= "\t</tr>\n";
 			$dataentryoutput .= "</table>";

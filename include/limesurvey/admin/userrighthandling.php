@@ -51,7 +51,7 @@ if (($ugid && !$surveyid) || $action == "editusergroups" || $action == "adduserg
 
 	if($ugid && $grpresultcount > 0)
 	{
-		$usergroupsummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=mailusergroup&amp;ugid=$ugid', '_top')\""
+		$usergroupsummary .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=mailusergroup&amp;ugid=$ugid', '_self')\""
 		. "onmouseout=\"hideTooltip()\""
 		. "onmouseover=\"showTooltip(event,'".$clang->gT("Mail to all Members", "js")."');return false\"> " .
 		"<img src='$imagefiles/invite.png' title='' align='left' alt='' name='MailUserGroup' /></a>\n" ;
@@ -62,7 +62,7 @@ if (($ugid && !$surveyid) || $action == "editusergroups" || $action == "adduserg
 	if($ugid && $grpresultcount > 0 &&
 		$_SESSION['loginID'] == $grow['owner_id'])
 	{
-		$usergroupsummary .=  "<a href=\"#\" onclick=\"window.open('$scriptname?action=editusergroup&amp;ugid=$ugid','_top')\""
+		$usergroupsummary .=  "<a href=\"#\" onclick=\"window.open('$scriptname?action=editusergroup&amp;ugid=$ugid','_self')\""
 		. "onmouseout=\"hideTooltip()\""
 		. "onmouseover=\"showTooltip(event,'".$clang->gT("Edit Current User Group", "js")."');return false\">" .
 		"<img src='$imagefiles/edit.png' title='' alt='' name='EditUserGroup' align='left' /></a>\n" ;
@@ -98,10 +98,10 @@ if (($ugid && !$surveyid) || $action == "editusergroups" || $action == "adduserg
 		."onmouseout=\"hideTooltip()\""
 		."onmouseover=\"showTooltip(event,'".$clang->gT("Add New User Group", "js")."');return false\">" .
 		"<img src='$imagefiles/add.png' title='' alt='' " .
-		"align='right' name='AddNewUserGroup' onclick=\"window.open('', '_top')\" /></a>\n";
+		"align='right' name='AddNewUserGroup' onclick=\"window.open('', '_self')\" /></a>\n";
 	}
 	$usergroupsummary .= "\t\t\t\t\t<font class=\"boxcaption\">".$clang->gT("User Groups").":</font>&nbsp;<select name='ugid' "
-	. "onchange=\"window.open(this.options[this.selectedIndex].value, '_top')\">\n"
+	. "onchange=\"window.open(this.options[this.selectedIndex].value, '_self')\">\n"
 	. getusergrouplist()
 	. "\t\t\t\t\t</select>\n"
 	. "\t\t\t\t</td></tr>\n"

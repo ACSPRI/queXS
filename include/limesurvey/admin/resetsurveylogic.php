@@ -27,7 +27,7 @@ if (!isset($surveyid) || !$surveyid)
     $resetsurveylogicoutput .= "\t<tr ><td align='center'>\n";
 	$resetsurveylogicoutput .= "<br /><font color='red'><strong>".$clang->gT("Error")."</strong></font><br />\n";
 	$resetsurveylogicoutput .= $clang->gT("You have not selected a survey to delete")."<br /><br />\n";
-	$resetsurveylogicoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
+	$resetsurveylogicoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
 	$resetsurveylogicoutput .= "</td></tr></table>\n";
 	$resetsurveylogicoutput .= "</body>\n</html>";
 	return;
@@ -47,8 +47,8 @@ if (!isset($ok) || !$ok)
 	$resetsurveylogicoutput .= "\t</tr>\n";
 	$resetsurveylogicoutput .= "\t<tr>\n";
 	$resetsurveylogicoutput .= "\t\t<td align='center'><br />\n";
-	$resetsurveylogicoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Cancel")."' onclick=\"window.open('admin.php?sid=$surveyid', '_top')\" /><br />\n";
-//	$resetsurveylogicoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Delete")."' onclick=\"window.open('$scriptname?action=resetsurveylogic&amp;sid=$surveyid&amp;ok=Y','_top')\" />\n";
+	$resetsurveylogicoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Cancel")."' onclick=\"window.open('admin.php?sid=$surveyid', '_self')\" /><br />\n";
+//	$resetsurveylogicoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Delete")."' onclick=\"window.open('$scriptname?action=resetsurveylogic&amp;sid=$surveyid&amp;ok=Y','_self')\" />\n";
 	$resetsurveylogicoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Delete")."' onclick=\"".get2post("$scriptname?action=resetsurveylogic&amp;sid=$surveyid&amp;ok=Y")."\" />\n";
 	$resetsurveylogicoutput .= "\t\t</td>\n";
 	$resetsurveylogicoutput .= "\t</tr>\n";
@@ -66,7 +66,7 @@ else //delete conditions in the survey
 	$resetsurveylogicoutput .= "\t<tr>\n";
 	$resetsurveylogicoutput .= "\t\t<td align='center'><br />\n";
 	$resetsurveylogicoutput .= "\t\t\t<strong>".$clang->gT("All conditions in this survey have been deleted.")."<br /><br />\n";
-	$resetsurveylogicoutput .= "\t\t\t<input type='submit' value='".$clang->gT("Continue")."' onclick=\"window.open('$scriptname?sid=$surveyid', '_top')\" />\n";
+	$resetsurveylogicoutput .= "\t\t\t<input type='submit' value='".$clang->gT("Continue")."' onclick=\"window.open('$scriptname?sid=$surveyid', '_self')\" />\n";
 	$resetsurveylogicoutput .= "\t\t</strong></td>\n";
 	$resetsurveylogicoutput .= "\t</tr>\n";
 	$surveyid=false;

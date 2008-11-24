@@ -28,7 +28,7 @@ if (!@move_uploaded_file($_FILES['the_file']['tmp_name'], $the_full_file_path))
 {
 	$importgroup .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
     $importgroup .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$tempdir)."<br /><br />\n";
-	$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
+	$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
 	$importgroup .= "</td></tr></table>\n";
 	return;
 }
@@ -38,7 +38,7 @@ if (!returnglobal('sid'))
 {
     $importquestion .= $clang->gT("No SID (Survey) has been provided. Cannot import group.")."<br /><br />\n"
     ."<input type='submit' value='"
-    .$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n"
+    .$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n"
     ."</td></tr></table>\n";
     unlink($the_full_file_path);
     return;
@@ -66,7 +66,7 @@ if (substr($bigarray[0], 0, 23) != "# LimeSurvey Group Dump" && substr($bigarray
 {
 	$importgroup .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 	$importgroup .= $clang->gT("This file is not a LimeSurvey group file. Import failed.")."<br /><br />\n";
-	$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
+	$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
 	$importgroup .= "</td></tr></table>\n";
 	unlink($the_full_file_path);
 	return;
@@ -247,7 +247,7 @@ if (isset($grouparray))
 	{
 		$importgroup .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 		$importgroup .= $clang->gT("You can't import a group which doesn't support the current survey's base language.")."<br /><br />\n";
-		$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
+		$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
 		$importgroup .= "</td></tr></table>\n";
 		unlink($the_full_file_path);
 		return;
@@ -263,7 +263,7 @@ if (isset($questionarray))
 	{
 		$importgroup .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
 		$importgroup .= $clang->gT("You can't import a question which doesn't support the current survey's base language.")."<br /><br />\n";
-		$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
+		$importgroup .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
 		$importgroup .= "</td></tr></table>\n";
 		unlink($the_full_file_path);
 		return;
