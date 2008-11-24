@@ -23,18 +23,25 @@
 */
 
 
+
+/**
+ * queXS Configuration file - so you do not have to configure this file manually
+ */
+require_once(dirname(__FILE__).'/../../config.inc.php');
+
+
 // Basic Setup
 
 $databasetype       =   "mysql";       // ADOdb database driver - valid values are mysql, odbc_mssql or postgres
-$databaselocation   =   "database.dcarf";   // Network location of your Database - for odbc_mssql use the mssql servername, not localhost or IP
-$databasename       =   "quexs";  // The name of the database that we will create
-$databaseuser       =   "quexs";        // The name of a user with rights to create db (or if db already exists, then rights within that db)
-$databasepass       =   "quexs";            // Password of db user
-$dbprefix           =   "lime_";       // A global prefix that can be added to all LimeSurvey tables. Use this if you are sharing
+$databaselocation   =   LDB_HOST;   // Network location of your Database - for odbc_mssql use the mssql servername, not localhost or IP
+$databasename       =   LDB_NAME;  // The name of the database that we will create
+$databaseuser       =   LDB_USER;        // The name of a user with rights to create db (or if db already exists, then rights within that db)
+$databasepass       =   LDB_PASS;            // Password of db user
+$dbprefix           =   LIME_PREFIX;       // A global prefix that can be added to all LimeSurvey tables. Use this if you are sharing
                                        // a database with other applications. Suggested prefix is "lime_"
 
 // File Locations
-$rooturl            =   "http://{$_SERVER['HTTP_HOST']}/quexs/include/limesurvey"; //The root web url for your limesurvey installation (without a trailing slash).
+$rooturl            =   substr(LIME_URL,0,-1); //The root web url for your limesurvey installation (without a trailing slash).
 
 $rootdir            =   dirname(__FILE__); // This is the physical disk location for your limesurvey installation. Normally you don't have to touch this setting.
                                            // If you use IIS then you MUST enter the complete rootdir e.g. : $rootDir="C:\Inetpub\wwwroot\limesurvey"!
