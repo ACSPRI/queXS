@@ -82,6 +82,11 @@ print "<ul><li><a href=\"javascript:link('mainobj','timezonetemplate.php');\">" 
 print "<li><a href=\"javascript:link('mainobj','shifttemplate.php');\">" . T_("Set default shift times") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','callrestrict.php');\">" . T_("Set call restriction times") . "</a></li></ul></li>";
 
+if (VOIP_ENABLED)
+{
+	print "<li><h3>" . T_("VoIP") . "</h3>";
+	print "<ul><li><a href=\"javascript:link('mainobj','voipmonitor.php');\">" . T_("Start and monitor VoIP") . "</a></li></ul></li>";
+}
 
 print "</ul></div>";
 

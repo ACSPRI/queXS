@@ -347,13 +347,18 @@ class voipWatch extends voip {
 	 *
 	 *  
 	 */
-	function watch()
+	function watch($process_id = false)
 	{
 		/**
 		 * Database file
 		 */
 		include_once(dirname(__FILE__).'/../db.inc.php');
 
+		/**
+		 * Process file
+		 */
+		if ($process_id) include_once(dirname(__FILE__).'/../functions/functions.process.php');
+			
 		$line = "";
    
 		if ($this->socket === false)
@@ -481,6 +486,8 @@ class voipWatch extends voip {
 			
 
 			@flush();
+
+			if ($process_id) $this->keepWatching = !is_process_killed($process_id);
 
 		} while ($this->keepWatching);
 		

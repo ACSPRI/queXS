@@ -70,6 +70,16 @@ if (!defined('VOIP_ENABLED')) define('VOIP_ENABLED',false);
 if (!defined('VOIP_SERVER')) define('VOIP_SERVER','asterisk.dcarf');
 
 /**
+ * The Asterisk server username for the monitor interface
+ */
+if (!defined('VOIP_ADMIN_USER')) define('VOIP_ADMIN_USER','admin');
+
+/**
+ * The Asterisk server password for the monitor interface
+ */
+if (!defined('VOIP_ADMIN_PASS')) define('VOIP_ADMIN_PASS','amp111');
+
+/**
  * The meet me room id for the VOIP Server
  */
 if (!defined('MEET_ME_ROOM')) define('MEET_ME_ROOM','5000');
@@ -109,6 +119,12 @@ if (!defined('QUEXS_URL')) define('QUEXS_URL','http://' . $_SERVER['SERVER_NAME'
  */
 if (!defined('DEFAULT_LOCALE')) define('DEFAULT_LOCALE','en');
 
+
+/**
+ * PHP Executables (for forking when running background processes)
+ */
+if (!defined('WINDOWS_PHP_EXEC')) define('WINDOWS_PHP_EXEC', "start /b php");
+if (!defined('PHP_EXEC')) define('PHP_EXEC', "php");
 
 /**
  * Path to ADODB
