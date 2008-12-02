@@ -114,7 +114,7 @@ function start_process($filename)
 
 		//execute the process in the background - pass the process_id as the first argument
 		if (substr(PHP_OS, 0, 3) == 'WIN')
-			$proc = popen(WINDOWS_PHP_EXEC . ' "' . $filename . '" ' . $args, 'r');
+			$proc = popen(WINDOWS_PHP_EXEC . ' ' . $filename . ' ' . $args, 'r');
 		else
 			$proc = popen(PHP_EXEC . ' ' . $filename . ' ' . $args . ' &', 'r');
 	
