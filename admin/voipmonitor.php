@@ -65,7 +65,7 @@ if ($p)
 	if (isset($_GET['kill']))
 		kill_process($p);
 
-	xhtml_head(T_("Monitor VoIP Process"),true,false,false,false,10);
+	xhtml_head(T_("Monitor VoIP Process"),true,false,false,false,10,true);
 
 	print "<h1>" . T_("Running process:") . " $p</h1>";
 
@@ -81,7 +81,10 @@ if ($p)
 else
 {
 	xhtml_head(T_("Monitor VoIP Process"));
+	print "<h2>" . T_("Monitor VoIP Process") . "</h2>";
 	print "<p><a href='?watch=watch'>" . T_("Click here to begin monitoring the VoIP Process") . "</a></p>";
+	print "<h2>" . T_("Outcome of last process run (if any)") . "</h2>";
+	print process_get_last_data();
 }
 xhtml_foot();
 

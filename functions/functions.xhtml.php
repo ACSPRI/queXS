@@ -39,10 +39,11 @@
  * @param bool|array $javascript False for no Javascript otherwise array of Javascript include files
  * @param string $bodytext Space in the body element: good for onload='top.close()' to close validly
  * @param bool|int $refresh False or 0 for no refresh otherwise the number of seconds to refresh
+ * @param bool $clearrefresh False if we want to pass on any GET request in header, True to clear
  * 
  * @see xhtml_foot()
  */
-function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false)
+function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false,$clearrefresh=false)
 {
 ?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
@@ -55,9 +56,13 @@ function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=
 	if ($javascript)
 		foreach ($javascript as $j) print "<script type='text/javascript' src='$j'></script>";
 	if ($refresh)
+	{
 		print " <!--Set to refresh every $refresh seconds-->
 			<meta http-equiv='Cache-Control' content='no-cache'/>
-			<meta http-equiv='refresh' content='$refresh'/>";
+			<meta http-equiv='refresh' content='$refresh";
+		if ($clearrefresh) print ";url=?";
+		print "'/>";
+	}
 	if (!$body) return;
 ?>
 	</head>
