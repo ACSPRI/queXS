@@ -106,7 +106,7 @@ function start_process($filename)
 	if ($process == false)
 	{
 		$sql = "INSERT INTO `process` (`process_id`,`start`,`stop`,`kill`,`data`)
-			VALUES (NULL,NOW(),NULL,0,'')";
+			VALUES (NULL,CONVERT_TZ(NOW(),'System','UTC'),NULL,0,'')";
 
 		$rs = $db->Execute($sql);
 		$args = $db->Insert_ID();
@@ -165,7 +165,7 @@ function end_process($process_id)
 	global $db;
 
 	$sql = "UPDATE `process`
-		SET `stop` = NOW()
+		SET `stop` = CONVERT_TZ(NOW(),'System','UTC')
 		WHERE `process_id` = '$process_id'";
 
 	$db->Execute($sql);
