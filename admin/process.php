@@ -32,22 +32,22 @@
 /**
  * Configuration file
  */
-include ("../config.inc.php");
+include (dirname(__FILE__) . "/../config.inc.php");
 
 /**
  * Database file
  */
-include ("../db.inc.php");
+include (dirname(__FILE__) . "/../db.inc.php");
 
 /**
  * Process
  */
-include ("../functions/functions.process.php");
+include (dirname(__FILE__) . "/../functions/functions.process.php");
 
 /**
  * VoIP functions
  */
-include("../functions/functions.voip.php");
+include(dirname(__FILE__) . "/../functions/functions.voip.php");
 
 /**
  * Update the database with the new data from the running script
