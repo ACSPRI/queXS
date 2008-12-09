@@ -80,6 +80,11 @@ if (!defined('VOIP_ADMIN_USER')) define('VOIP_ADMIN_USER','admin');
 if (!defined('VOIP_ADMIN_PASS')) define('VOIP_ADMIN_PASS','amp111');
 
 /**
+ * The Asterisk server port for the monitor interface
+ */
+if (!defined('VOIP_PORT')) define('VOIP_PORT','5038');
+
+/**
  * The meet me room id for the VOIP Server
  */
 if (!defined('MEET_ME_ROOM')) define('MEET_ME_ROOM','5000');

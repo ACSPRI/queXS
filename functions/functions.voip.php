@@ -265,9 +265,9 @@ class voip {
 	 *
 	 *  @return bool True if connected successfully, else false
 	 */
-	function connect($ip,$user="admin",$pass="amp111",$events = false)
+	function connect($ip=VOIP_SERVER,$user=VOIP_ADMIN_USER,$pass=VOIP_ADMIN_PASS,$events = false)
 	{
-		$this->socket = fsockopen($ip,"5038",$errno,$errstr,1);
+		$this->socket = fsockopen($ip,VOIP_PORT,$errno,$errstr,1);
 		if (!$this->socket)
 		{
 			print "$errno: $errstr";
