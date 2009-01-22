@@ -1,1636 +1,1761 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-08-15 11:48+1000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-23 09:29+1000\n"
+"PO-Revision-Date: 2009-01-23 09:29+1000\n"
 "Last-Translator: Adam Zammit <adam.zammit@deakin.edu.au>\n"
 "Language-Team: DCARF <dcarf@deakin.edu.au>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Country: AUSTRALIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: T_\n"
-"X-Poedit-Basepath: /mnt/htdocsdev/quexs\n"
-"X-Poedit-SearchPath-0: /mnt/htdocsdev/quexs\n"
+"X-Poedit-Basepath: /misc/htdocsdev/quexs\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: admin\n"
+"X-Poedit-SearchPath-2: client\n"
+"X-Poedit-SearchPath-3: display\n"
+"X-Poedit-SearchPath-4: functions\n"
+"X-Poedit-SearchPath-5: voip\n"
 
-#: /mnt/htdocsdev/quexs/callhistory.php:52
+#: callhistory.php:52
 msgid "Case History List"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/callhistory.php:75
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:70
+#: callhistory.php:75
+#: admin/callhistory.php:70
 msgid "No calls ever made"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/callhistory.php:77
-#: /mnt/htdocsdev/quexs/calllist.php:76
-#: /mnt/htdocsdev/quexs/casenote.php:105
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:180
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:198
+#: callhistory.php:77
+#: calllist.php:76
+#: casenote.php:105
+#: admin/supervisor.php:180
+#: admin/supervisor.php:198
 msgid "Date/Time"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/callhistory.php:77
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:72
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: callhistory.php:77
+#: admin/callhistory.php:72
+#: admin/displayappointments.php:92
 msgid "Case ID"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/callhistory.php:77
-#: /mnt/htdocsdev/quexs/calllist.php:76
-#: /mnt/htdocsdev/quexs/appointmentlist.php:92
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:72
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:180
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:117
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:134
-#: /mnt/htdocsdev/quexs/client/index.php:91
-#: /mnt/htdocsdev/quexs/client/index.php:108
+#: callhistory.php:77
+#: calllist.php:76
+#: appointmentlist.php:92
+#: admin/callhistory.php:72
+#: admin/supervisor.php:180
+#: admin/outcomes.php:117
+#: admin/outcomes.php:134
+#: client/index.php:91
+#: client/index.php:108
 msgid "Outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/callhistory.php:77
-#: /mnt/htdocsdev/quexs/appointmentlist.php:92
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:72
+#: callhistory.php:77
+#: appointmentlist.php:92
+#: admin/callhistory.php:72
 msgid "Respondent"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/callhistory.php:80
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:75
+#: callhistory.php:80
+#: admin/callhistory.php:75
 msgid "No operator"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:58
+#: rs_intro.php:58
 msgid "Respondent Selection - Introduction"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:82
-#: /mnt/htdocsdev/quexs/rs_intro.php:86
-#: /mnt/htdocsdev/quexs/rs_project_intro.php:74
+#: rs_intro.php:82
+#: rs_intro.php:86
+#: rs_project_intro.php:74
 msgid "Yes - Continue"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:90
+#: rs_intro.php:90
 msgid "Business number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:91
+#: rs_intro.php:91
 msgid "Answering machine"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:92
+#: rs_intro.php:92
 msgid "End call with outcome: No answer (ring out or busy) "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:93
+#: rs_intro.php:93
 msgid "End call with outcome: Accidental hang up"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:94
+#: rs_intro.php:94
 msgid "End call with outcome: Refusal by unknown person"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:95
-#: /mnt/htdocsdev/quexs/rs_callback.php:80
-#: /mnt/htdocsdev/quexs/rs_project_intro.php:76
+#: rs_intro.php:95
+#: rs_callback.php:80
+#: rs_project_intro.php:76
 msgid "End call with outcome: Refusal by respondent"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:96
+#: rs_intro.php:96
 msgid "End call with outcome: No eligible respondent (person never available on this number)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:97
+#: rs_intro.php:97
 msgid "End call with outcome: Non contact (person not currently available on this number: no appointment made)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_intro.php:98
-#: /mnt/htdocsdev/quexs/rs_project_intro.php:78
+#: rs_intro.php:98
+#: rs_project_intro.php:78
 msgid "End call with outcome: Out of sample (already completed in another mode)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/performance.php:58
-#: /mnt/htdocsdev/quexs/index.php:136
-#: /mnt/htdocsdev/quexs/admin/index.php:65
+#: performance.php:58
+#: index.php:136
+#: admin/index.php:67
 msgid "Performance"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/performance.php:74
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:103
+#: performance.php:74
+#: admin/operatorperformance.php:103
 msgid "This shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/performance.php:75
-#: /mnt/htdocsdev/quexs/performance.php:82
-#: /mnt/htdocsdev/quexs/performance.php:88
-#: /mnt/htdocsdev/quexs/calllist.php:76
-#: /mnt/htdocsdev/quexs/appointmentlist.php:92
-#: /mnt/htdocsdev/quexs/casenote.php:105
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:72
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:71
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:72
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:82
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:83
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:104
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:180
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:198
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:105
+#: performance.php:75
+#: performance.php:82
+#: performance.php:88
+#: calllist.php:76
+#: appointmentlist.php:92
+#: casenote.php:105
+#: admin/callhistory.php:72
+#: admin/operatorperformance.php:71
+#: admin/operatorperformance.php:72
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:83
+#: admin/operatorperformance.php:104
+#: admin/supervisor.php:180
+#: admin/supervisor.php:198
+#: admin/shiftreport.php:105
 msgid "Operator"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/performance.php:75
-#: /mnt/htdocsdev/quexs/performance.php:82
-#: /mnt/htdocsdev/quexs/performance.php:88
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:71
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:82
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:104
+#: performance.php:75
+#: performance.php:82
+#: performance.php:88
+#: admin/operatorperformance.php:71
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:104
 msgid "Completions per hour"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/performance.php:81
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:81
+#: performance.php:81
+#: admin/operatorperformance.php:81
 msgid "This project"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/performance.php:87
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:70
+#: performance.php:87
+#: admin/operatorperformance.php:70
 msgid "Overall"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/calllist.php:52
+#: calllist.php:52
 msgid "Call List"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/calllist.php:74
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:178
+#: calllist.php:74
+#: admin/supervisor.php:178
 msgid "No calls made"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/calllist.php:76
+#: calllist.php:76
 msgid "Number called"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/calllist.php:79
-#: /mnt/htdocsdev/quexs/casenote.php:108
-#: /mnt/htdocsdev/quexs/status.php:113
+#: calllist.php:79
+#: casenote.php:108
+#: status.php:113
 msgid "No case"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_callback.php:57
+#: rs_callback.php:57
 msgid "Respondent Selection - Call back"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_callback.php:72
+#: rs_callback.php:72
 msgid "You are: "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_callback.php:72
+#: rs_callback.php:72
 #, php-format
 msgid "% complete"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_callback.php:79
+#: rs_callback.php:79
 msgid "Yes - Continue where we left off"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_callback.php:81
-#: /mnt/htdocsdev/quexs/rs_business.php:53
-#: /mnt/htdocsdev/quexs/rs_answeringmachine.php:84
-#: /mnt/htdocsdev/quexs/rs_project_intro.php:80
+#: rs_callback.php:81
+#: rs_business.php:53
+#: rs_answeringmachine.php:84
+#: rs_project_intro.php:80
 msgid "Go Back"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:131
-msgid "description"
-msgstr ""
-
-#: /mnt/htdocsdev/quexs/call.php:165
-#: /mnt/htdocsdev/quexs/call.php:180
-#: /mnt/htdocsdev/quexs/call.php:194
-#: /mnt/htdocsdev/quexs/call.php:222
+#: call.php:168
+#: call.php:184
+#: call.php:198
+#: call.php:226
 msgid "Call"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:179
-#: /mnt/htdocsdev/quexs/call.php:193
-#: /mnt/htdocsdev/quexs/record.php:73
-#: /mnt/htdocsdev/quexs/index.php:90
+#: call.php:183
+#: call.php:197
+#: record.php:73
+#: index.php:90
 msgid "Start REC"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:229
+#: call.php:233
 msgid "Not on a call"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:240
-#: /mnt/htdocsdev/quexs/call.php:242
-#: /mnt/htdocsdev/quexs/call.php:364
-#: /mnt/htdocsdev/quexs/call.php:369
-#: /mnt/htdocsdev/quexs/call.php:384
-#: /mnt/htdocsdev/quexs/call.php:390
+#: call.php:244
+#: call.php:246
+#: call.php:368
+#: call.php:373
+#: call.php:388
+#: call.php:394
 msgid "End work"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:241
-#: /mnt/htdocsdev/quexs/call.php:363
-#: /mnt/htdocsdev/quexs/call.php:368
-#: /mnt/htdocsdev/quexs/call.php:383
-#: /mnt/htdocsdev/quexs/call.php:389
+#: call.php:245
+#: call.php:367
+#: call.php:372
+#: call.php:387
+#: call.php:393
 msgid "End case"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:270
+#: call.php:274
 msgid "Press the call button to dial the number for this appointment:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:273
+#: call.php:277
 msgid "Number to call:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:277
-#: /mnt/htdocsdev/quexs/call.php:352
+#: call.php:281
+#: call.php:356
 msgid "Your VoIP extension is not enabled. Please close this window and enable VoIP by clicking once on the red button that says 'VoIP Off'"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:342
+#: call.php:346
 msgid "Select phone number to dial:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:357
-#: /mnt/htdocsdev/quexs/call.php:388
+#: call.php:361
+#: call.php:392
 msgid "The last call completed this call attempt"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:361
-#: /mnt/htdocsdev/quexs/call.php:382
+#: call.php:365
+#: call.php:386
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:396
+#: call.php:400
 msgid "Requesting call"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:397
-#: /mnt/htdocsdev/quexs/call.php:404
+#: call.php:401
+#: call.php:408
 msgid "Call Answered"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:400
-#: /mnt/htdocsdev/quexs/call.php:407
-#: /mnt/htdocsdev/quexs/call.php:414
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:451
+#: call.php:404
+#: call.php:411
+#: call.php:418
+#: functions/functions.voip.php:456
 msgid "Hangup"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:403
-#: /mnt/htdocsdev/quexs/status.php:97
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:419
+#: call.php:407
+#: status.php:97
+#: functions/functions.voip.php:424
 msgid "Ringing"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:410
-#: /mnt/htdocsdev/quexs/status.php:101
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:435
+#: call.php:414
+#: status.php:101
+#: functions/functions.voip.php:440
 msgid "Answered"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:411
+#: call.php:415
 msgid "Not Answered"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:417
+#: call.php:421
 msgid "Requires coding"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:420
+#: call.php:424
 msgid "Assign outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/call.php:424
+#: call.php:428
 msgid "Error: Close window"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_project_end.php:53
+#: rs_project_end.php:53
 msgid "Respondent Selection - Project End"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_project_end.php:70
+#: rs_project_end.php:70
 msgid "End call with outcome: Complete"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/info.php:47
+#: info.php:47
 msgid "Information"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/endwork.php:45
+#: endwork.php:45
 msgid "End of work"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/endwork.php:57
+#: endwork.php:57
 msgid "Work has ended. That is it"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/record.php:55
+#: endwork.php:59
+msgid "First: Turn VoIP off"
+msgstr ""
+
+#: endwork.php:61
+msgid "Go back to work"
+msgstr ""
+
+#: record.php:55
 msgid "Stop REC"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/record.php:56
-#: /mnt/htdocsdev/quexs/record.php:74
-#: /mnt/htdocsdev/quexs/record.php:91
+#: record.php:56
+#: record.php:74
+#: record.php:91
 msgid "Record"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/record.php:64
+#: record.php:64
 msgid "Beginning recording..."
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/record.php:68
+#: record.php:68
 msgid "Begin the manual recording now..."
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/record.php:81
+#: record.php:81
 msgid "Stopping recording..."
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/record.php:85
+#: record.php:85
 msgid "Stop the manual recording now..."
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/record.php:92
+#: record.php:92
 msgid "Not on a call, so not beginning a recording"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:54
+#: nocaseavailable.php:54
 msgid "No case available"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:59
+#: nocaseavailable.php:59
 msgid "There is no case currently available"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:60
+#: nocaseavailable.php:60
 msgid "Reasons:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:79
+#: nocaseavailable.php:79
 msgid "Assigned questionnaires:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:82
+#: nocaseavailable.php:82
 msgid "ID"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:82
+#: nocaseavailable.php:82
 msgid "Description"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:85
+#: nocaseavailable.php:85
 msgid "ERROR: No questionnaires assigned to you"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:103
+#: nocaseavailable.php:103
 msgid "Current shifts available:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:106
-#: /mnt/htdocsdev/quexs/shifts.php:99
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: nocaseavailable.php:106
+#: shifts.php:99
+#: admin/displayappointments.php:92
 msgid "Questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:106
+#: nocaseavailable.php:106
 msgid "Shift start"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:106
+#: nocaseavailable.php:106
 msgid "Shift end"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:109
+#: nocaseavailable.php:109
 msgid "ERROR: No shifts at this time"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:129
+#: nocaseavailable.php:129
 msgid "Call restrictions:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:133
+#: nocaseavailable.php:133
 msgid "ERROR: There are no cases available that fall within call restrictions"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:137
+#: nocaseavailable.php:137
 msgid "There are "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:137
+#: nocaseavailable.php:137
 msgid " unassigned case(s) available within the specified call restrictions"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:143
+#: nocaseavailable.php:143
 msgid "Limesurvey links:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:163
+#: nocaseavailable.php:163
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:163
+#: nocaseavailable.php:163
 msgid "from questionnaire:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:165
+#: nocaseavailable.php:165
 msgid "Tokens table exists for Limesurvey questionnaire:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/nocaseavailable.php:170
+#: nocaseavailable.php:170
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:67
+#: appointment.php:67
 msgid "Appointment error"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:68
+#: appointment.php:68
 msgid "You have not been assigned a case therefore cannot create an appointment"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:102
+#: appointment.php:102
 msgid "Appointment made"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:108
-#: /mnt/htdocsdev/quexs/index.php:87
+#: appointment.php:108
+#: index.php:87
 msgid "Appointment"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:111
+#: appointment.php:111
 msgid "Select a respondent"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:119
+#: appointment.php:119
 msgid "Create new respondent:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:122
+#: appointment.php:122
 msgid "Add this respondent"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:144
+#: appointment.php:144
 msgid "Select phone number:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:149
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:176
+#: appointment.php:149
+#: functions/functions.calendar.php:176
 msgid "None"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:158
+#: appointment.php:158
 msgid "Add new phone number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:169
+#: appointment.php:169
 msgid "Add new phone number (with area code, eg 0398761234):"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:172
+#: appointment.php:172
 msgid "Add this phone number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:191
+#: appointment.php:191
 msgid "Appointment:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:193
+#: appointment.php:193
 msgid "Accept appointment from "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:193
+#: appointment.php:193
 msgid " till "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:193
+#: appointment.php:193
 msgid " on "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointment.php:193
+#: appointment.php:193
 msgid "on"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointmentlist.php:53
+#: appointmentlist.php:53
 msgid "Appointment List"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointmentlist.php:64
-#: /mnt/htdocsdev/quexs/appointmentlist.php:73
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:82
+#: appointmentlist.php:64
+#: appointmentlist.php:73
+#: admin/displayappointments.php:82
 msgid "Not yet called"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointmentlist.php:86
+#: appointmentlist.php:86
 msgid "No appointments made"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointmentlist.php:88
+#: appointmentlist.php:88
 msgid "No future appointments scheduled"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointmentlist.php:92
-#: /mnt/htdocsdev/quexs/shifts.php:78
-#: /mnt/htdocsdev/quexs/shifts.php:99
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
-#: /mnt/htdocsdev/quexs/admin/addshift.php:228
+#: appointmentlist.php:92
+#: shifts.php:78
+#: shifts.php:99
+#: admin/displayappointments.php:92
+#: admin/addshift.php:223
+#: admin/shifttemplate.php:118
+#: admin/callrestrict.php:118
 msgid "Start"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/appointmentlist.php:92
-#: /mnt/htdocsdev/quexs/index.php:86
-#: /mnt/htdocsdev/quexs/shifts.php:78
-#: /mnt/htdocsdev/quexs/shifts.php:99
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
-#: /mnt/htdocsdev/quexs/admin/addshift.php:228
+#: appointmentlist.php:92
+#: index.php:86
+#: shifts.php:78
+#: shifts.php:99
+#: admin/displayappointments.php:92
+#: admin/addshift.php:223
+#: admin/shifttemplate.php:118
+#: admin/callrestrict.php:118
 msgid "End"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/supervisor.php:52
-#: /mnt/htdocsdev/quexs/index.php:89
+#: supervisor.php:52
+#: index.php:89
 msgid "Supervisor"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/supervisor.php:68
+#: supervisor.php:68
 msgid "Calling the supervisor, you may close this window"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/supervisor.php:73
+#: supervisor.php:73
 msgid "Currently Disabled: Please see your supervisor in person"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/supervisor.php:78
+#: supervisor.php:78
 msgid "Try calling the supervisor"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/supervisor.php:83
+#: supervisor.php:83
 msgid "Not on a call, so not calling the supervisor"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_business.php:47
+#: rs_business.php:47
 msgid "Respondent Selection - Business answers"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_business.php:50
+#: rs_business.php:50
 msgid "Sorry to bother you, I have called the wrong number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_business.php:52
+#: rs_business.php:52
 msgid "End call with outcome: Business number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/casenote.php:53
+#: casenote.php:53
 msgid "Case Notes"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/casenote.php:63
-#: /mnt/htdocsdev/quexs/casenote.php:100
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:205
+#: casenote.php:63
+#: casenote.php:100
+#: admin/supervisor.php:205
 msgid "Add note"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/casenote.php:66
-#: /mnt/htdocsdev/quexs/respondent.php:86
+#: casenote.php:66
+#: respondent.php:86
 msgid "Go back"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/casenote.php:103
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:196
+#: casenote.php:103
+#: admin/supervisor.php:196
 msgid "No notes"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/casenote.php:105
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:198
+#: casenote.php:105
+#: admin/supervisor.php:198
 msgid "Note"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:82
+#: index.php:82
 msgid "queXS"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:88
+#: index.php:88
 msgid "Call/Hangup"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:112
+#: index.php:112
 msgid "Notes"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:118
-#: /mnt/htdocsdev/quexs/admin/index.php:75
+#: index.php:118
+#: admin/index.php:77
 msgid "Call history"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:124
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:139
+#: index.php:124
+#: admin/outcomes.php:139
 msgid "Shifts"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:130
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:80
+#: index.php:130
+#: admin/displayappointments.php:80
 msgid "Appointments"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:141
+#: index.php:141
 msgid "Work history"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/index.php:147
+#: index.php:147
 msgid "Info"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_answeringmachine.php:57
+#: rs_answeringmachine.php:57
 msgid "Respondent Selection - Answering machine"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_answeringmachine.php:71
+#: rs_answeringmachine.php:71
 msgid "Do not leave a message, please hang up"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_answeringmachine.php:74
+#: rs_answeringmachine.php:74
 msgid "End call with outcome: Business answering machine"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_answeringmachine.php:79
+#: rs_answeringmachine.php:79
 msgid "End call with outcome: Answering machine Message left"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_answeringmachine.php:83
+#: rs_answeringmachine.php:83
 msgid "End call with outcome: Answering machine No message left"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:61
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:98
+#: status.php:61
+#: admin/outcomes.php:98
 msgid "Status"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:76
+#: status.php:76
 msgid "VoIP On"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:78
+#: status.php:78
 msgid "VoIP Off"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:81
+#: status.php:81
 msgid "No VoIP"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:85
+#: status.php:85
 msgid "No call"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:89
+#: status.php:89
 msgid "To be coded"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:93
+#: status.php:93
 msgid "Requesting"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:109
+#: status.php:109
 msgid "APPT"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/status.php:110
+#: status.php:110
 msgid "MISSED"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_project_intro.php:53
+#: rs_project_intro.php:53
 msgid "Respondent Selection - Project Introduction"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/rs_project_intro.php:77
+#: rs_project_intro.php:77
 msgid "End call with outcome: No eligible respondent (person not available on this number)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/shifts.php:53
+#: shifts.php:53
 msgid "Shift List"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/shifts.php:76
+#: shifts.php:76
 msgid "No shifts for this project"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/shifts.php:97
+#: shifts.php:97
 msgid "No future shifts scheduled"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/respondent.php:62
+#: respondent.php:62
 msgid "Respondent Selector"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/respondent.php:84
-#: /mnt/htdocsdev/quexs/respondent.php:120
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:187
+#: respondent.php:84
+#: respondent.php:120
+#: functions/functions.calendar.php:187
 msgid "Add respondent"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/respondent.php:92
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:91
+#: respondent.php:92
+#: admin/supervisor.php:91
 msgid "Case id:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/respondent.php:93
+#: respondent.php:93
 msgid "Respondent:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/respondent.php:144
+#: respondent.php:144
 msgid "Show details"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/respondent.php:148
+#: respondent.php:148
 msgid "Var"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/respondent.php:148
+#: respondent.php:148
 msgid "Value"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:52
+#: admin/callhistory.php:52
 msgid "Call History List"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:72
+#: admin/callhistory.php:72
 msgid "Date/Time call start"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/callhistory.php:72
+#: admin/callhistory.php:72
 msgid "Time end"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:95
+#: admin/questionnaireprefill.php:95
 msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:96
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:81
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:101
-#: /mnt/htdocsdev/quexs/admin/addshift.php:162
+#: admin/questionnaireprefill.php:96
+#: admin/outcomes.php:81
+#: admin/assignsample.php:101
+#: admin/addshift.php:157
 msgid "Select a questionnaire from the list below"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:105
+#: admin/questionnaireprefill.php:105
 msgid "Current pre fills (click to delete)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:115
+#: admin/questionnaireprefill.php:115
 msgid "Currently no pre fills"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:127
+#: admin/questionnaireprefill.php:127
 msgid "Select a question to pre fill"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:150
+#: admin/questionnaireprefill.php:150
 msgid "Enter a value to pre fill this question with:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:152
+#: admin/questionnaireprefill.php:152
 msgid "Possible uses:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:154
+#: admin/questionnaireprefill.php:154
 msgid "{Respondent:firstName} First name of the respondent"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:155
+#: admin/questionnaireprefill.php:155
 msgid "{Respondent:lastName} Last name of the respondent"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:156
+#: admin/questionnaireprefill.php:156
 msgid "{Sample:var} A record from the sample where the column name is 'var'"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/questionnaireprefill.php:161
+#: admin/questionnaireprefill.php:161
 msgid "The value to pre fill"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clientquestionnaire.php:144
-#: /mnt/htdocsdev/quexs/admin/index.php:70
+#: admin/clientquestionnaire.php:146
+#: admin/index.php:72
 msgid "Assign clients to questionnaires"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:53
+#: admin/process.php:90
+msgid "Cannot connect to VoIP Server"
+msgstr ""
+
+#: admin/import.php:53
 msgid "Import: Validating and uploading"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:69
+#: admin/import.php:69
 msgid "Successfully imported file"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:73
+#: admin/import.php:73
 msgid "Error importing file. Please try again"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:77
+#: admin/import.php:77
 msgid "Error:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:77
+#: admin/import.php:77
 msgid "Please go back in your browser and fix the problem"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:89
+#: admin/import.php:89
 msgid "Import: Select columns to import"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:114
+#: admin/import.php:114
 msgid "Import: Select file to upload"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:119
+#: admin/import.php:119
 msgid "Choose the CSV sample file to upload:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/import.php:120
+#: admin/import.php:120
 msgid "Description for file:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:108
-#: /mnt/htdocsdev/quexs/admin/operators.php:117
+#: admin/timezonetemplate.php:87
+msgid "Add/Remove Timezones"
+msgstr ""
+
+#: admin/timezonetemplate.php:88
+msgid "Click to remove a Timezone from the default list"
+msgstr ""
+
+#: admin/timezonetemplate.php:100
+msgid "Add a Timezone:"
+msgstr ""
+
+#: admin/timezonetemplate.php:103
+msgid "Timezone: "
+msgstr ""
+
+#: admin/operators.php:108
+#: admin/operators.php:117
 msgid "Add an operator"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:118
+#: admin/operators.php:118
 msgid "Adding an operator here will give the user the ability to call cases"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:118
+#: admin/operators.php:118
 msgid "Assign Operator to Questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:118
+#: admin/operators.php:118
 msgid "tool"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:119
-#: /mnt/htdocsdev/quexs/admin/clients.php:87
+#: admin/operators.php:119
+#: admin/clients.php:87
 msgid "Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:121
+#: admin/operators.php:121
 msgid "Enter the username of an operator to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:122
+#: admin/operators.php:122
 msgid "Enter the first name of an operator to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:123
+#: admin/operators.php:123
 msgid "Enter the surname of an operator to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:124
+#: admin/operators.php:124
 msgid "Enter the Time Zone of an operator to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:125
+#: admin/operators.php:125
 msgid "Enter the telephone extension number:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:126
+#: admin/operators.php:126
 msgid "Is the operator a normal interviewer?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:127
+#: admin/operators.php:127
 msgid "Is the operator a supervisor?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:128
+#: admin/operators.php:128
 msgid "Is the operator a refusal converter?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operators.php:129
+#: admin/operators.php:129
 msgid "Add user"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:67
+#: admin/operatorperformance.php:67
 msgid "Operator Performance"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:71
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:82
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:104
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:163
+#: admin/operatorperformance.php:71
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:104
+#: admin/outcomes.php:163
 msgid "Completions"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:71
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:82
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:104
+#: admin/operatorperformance.php:71
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:104
 msgid "Total time"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:72
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:83
+#: admin/operatorperformance.php:72
+#: admin/operatorperformance.php:83
 msgid "Effectiveness (proportion of time on a call in a case)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operatorperformance.php:90
+#: admin/operatorperformance.php:90
 msgid "till"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:70
-#: /mnt/htdocsdev/quexs/admin/index.php:72
+#: admin/voipmonitor.php:68
+#: admin/voipmonitor.php:83
+#: admin/voipmonitor.php:84
+msgid "Monitor VoIP Process"
+msgstr ""
+
+#: admin/voipmonitor.php:70
+msgid "Running process:"
+msgstr ""
+
+#: admin/voipmonitor.php:72
+msgid "Note: This page will automatically refresh every 10 seconds"
+msgstr ""
+
+#: admin/voipmonitor.php:75
+msgid "Kill signal sent: Please wait... (Note: Process will be stalled until there is activity on the VoIP Server)"
+msgstr ""
+
+#: admin/voipmonitor.php:77
+msgid "Kill the running process"
+msgstr ""
+
+#: admin/voipmonitor.php:77
+msgid "(requires activity on the VoIP Server to take effect)"
+msgstr ""
+
+#: admin/voipmonitor.php:85
+msgid "Click here to begin monitoring the VoIP Process"
+msgstr ""
+
+#: admin/voipmonitor.php:86
+msgid "Outcome of last process run (if any)"
+msgstr ""
+
+#: admin/supervisor.php:70
+#: admin/index.php:74
 msgid "Supervisor functions"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:72
+#: admin/supervisor.php:72
 msgid "Enter a case id or select a case from the list below:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:83
+#: admin/supervisor.php:83
 msgid "Select case from list of cases referred to the supervisor:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:92
+#: admin/supervisor.php:92
 msgid "Select case"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:109
+#: admin/supervisor.php:109
 msgid "Set an outcome for this call"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:120
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:222
+#: admin/supervisor.php:120
+#: admin/supervisor.php:222
 msgid "Set outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:160
+#: admin/supervisor.php:160
 msgid "Project"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:161
+#: admin/supervisor.php:161
 msgid "Sample"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:163
+#: admin/supervisor.php:163
 msgid "Current outcome:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:168
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:97
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:105
+#: admin/supervisor.php:168
+#: admin/shiftreport.php:97
+#: admin/shiftreport.php:105
 msgid "Edit"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:176
+#: admin/supervisor.php:176
 msgid "Call list"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:180
+#: admin/supervisor.php:180
 msgid "Phone number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:180
+#: admin/supervisor.php:180
 msgid "Change outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:193
+#: admin/supervisor.php:193
 msgid "Case notes"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:211
+#: admin/supervisor.php:211
 msgid "Set a case outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/supervisor.php:228
+#: admin/supervisor.php:228
 msgid "Case does not exist"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:67
+#: admin/displayappointments.php:67
 msgid "Now modify case outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:69
+#: admin/displayappointments.php:69
 msgid "The appointment has been deleted. Now you must modify the case outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:70
+#: admin/displayappointments.php:70
 msgid "Modify case outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:78
+#: admin/displayappointments.php:78
 msgid "Display Appointments"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:80
+#: admin/displayappointments.php:80
 msgid "All appointments (with times displayed in your time zone)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:82
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: admin/displayappointments.php:82
+#: admin/displayappointments.php:92
 msgid "Delete"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: admin/displayappointments.php:92
 msgid "Operator Name"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: admin/displayappointments.php:92
 msgid "Respondent Name"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: admin/displayappointments.php:92
 msgid "Surname"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: admin/displayappointments.php:92
 msgid "Current outcome"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:92
+#: admin/displayappointments.php:92
 msgid "Operator who called"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/displayappointments.php:94
+#: admin/displayappointments.php:94
 msgid "No appointments in the future"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operatorquestionnaire.php:144
-#: /mnt/htdocsdev/quexs/admin/index.php:56
+#: admin/operatorquestionnaire.php:146
+#: admin/index.php:58
 msgid "Assign operators to questionnaires"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:58
+#: admin/new.php:55
 msgid "New: Create new questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:123
+#: admin/new.php:114
 msgid "Name for questionnaire:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:124
+#: admin/new.php:115
 msgid "Select creation type:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:124
-msgid "Create from queXML"
-msgstr ""
-
-#: /mnt/htdocsdev/quexs/admin/new.php:124
+#: admin/new.php:115
 msgid "Create new questionnaire in Limesurvey"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:134
+#: admin/new.php:125
 msgid "Existing questionnaire:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:138
-msgid "Choose the queXML file (if required):"
-msgstr ""
-
-#: /mnt/htdocsdev/quexs/admin/new.php:139
+#: admin/new.php:129
 msgid "Restrict appointments to shifts?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:140
+#: admin/new.php:130
 msgid "Restrict work to shifts?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:141
+#: admin/new.php:131
 msgid "Questionnaire for testing only?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:142
+#: admin/new.php:132
 msgid "Use respondent selection text?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:143
+#: admin/new.php:134
 msgid "Respondent selection introduction:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:144
+#: admin/new.php:135
 msgid "Respondent selection project introduction:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:145
+#: admin/new.php:136
 msgid "Respondent selection project end:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:146
+#: admin/new.php:137
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/new.php:147
+#: admin/new.php:138
 msgid "Message to leave on an answering machine:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/dataoutput.php:118
-#: /mnt/htdocsdev/quexs/admin/index.php:59
+#: admin/new.php:140
+msgid "Create Questionnaire"
+msgstr ""
+
+#: admin/dataoutput.php:118
+#: admin/index.php:61
 msgid "Data output"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:78
-#: /mnt/htdocsdev/quexs/client/index.php:60
+#: admin/outcomes.php:78
+#: client/index.php:60
 msgid "Questionnaire Outcomes"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:87
+#: admin/outcomes.php:87
 msgid "Outcomes"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:89
+#: admin/outcomes.php:89
 msgid "Sample status"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:91
+#: admin/outcomes.php:91
 msgid "Drawn from sample"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:91
+#: admin/outcomes.php:91
 msgid "Remain in sample"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:98
+#: admin/outcomes.php:98
 msgid "Number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:104
+#: admin/outcomes.php:104
 msgid "Average time on a completed questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:104
+#: admin/outcomes.php:104
 msgid "Min"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:104
+#: admin/outcomes.php:104
 msgid "Secs"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:117
-#: /mnt/htdocsdev/quexs/client/index.php:91
+#: admin/outcomes.php:117
+#: client/index.php:91
 msgid "Rate"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:118
-#: /mnt/htdocsdev/quexs/client/index.php:92
+#: admin/outcomes.php:118
+#: client/index.php:92
 msgid "Response Rate 1"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:119
-#: /mnt/htdocsdev/quexs/client/index.php:93
+#: admin/outcomes.php:119
+#: client/index.php:93
 msgid "Refusal Rate 1"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:120
-#: /mnt/htdocsdev/quexs/client/index.php:94
+#: admin/outcomes.php:120
+#: client/index.php:94
 msgid "Cooperation Rate 1"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:121
-#: /mnt/htdocsdev/quexs/client/index.php:95
+#: admin/outcomes.php:121
+#: client/index.php:95
 msgid "Contact Rate 1"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:134
-#: /mnt/htdocsdev/quexs/client/index.php:108
+#: admin/outcomes.php:134
+#: client/index.php:108
 msgid "Count"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:136
-#: /mnt/htdocsdev/quexs/client/index.php:110
+#: admin/outcomes.php:136
+#: client/index.php:110
 msgid "No outcomes recorded for this questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:142
+#: admin/outcomes.php:142
 msgid "No shift reports: Add report"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:142
+#: admin/outcomes.php:142
 msgid "View shift reports"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:142
+#: admin/outcomes.php:142
 msgid "View operator performance"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:161
+#: admin/outcomes.php:161
 msgid "No shifts defined for this questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:163
+#: admin/outcomes.php:163
 msgid "Shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:163
+#: admin/outcomes.php:163
 msgid "Shift report"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/outcomes.php:163
-#: /mnt/htdocsdev/quexs/admin/index.php:66
+#: admin/outcomes.php:163
+#: admin/index.php:68
 msgid "Operator performance"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:47
+#: admin/index.php:47
 msgid "Administrative Tools"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:49
+#: admin/index.php:51
 msgid "Questionnaire creation and management"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:50
+#: admin/index.php:52
 msgid "Create a new questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:51
+#: admin/index.php:53
 msgid "Administer questionnaires with Limesurvey"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:52
+#: admin/index.php:54
 msgid "Import a sample file (in CSV form)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:53
+#: admin/index.php:55
 msgid "Assign samples to questionnaires"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:54
+#: admin/index.php:56
 msgid "Set values in questionnaire to pre fill"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:55
+#: admin/index.php:57
 msgid "Add operators to the system"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:57
+#: admin/index.php:59
 msgid "Modify operator skills"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:58
+#: admin/index.php:60
 msgid "Shift management (add/remove)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:61
+#: admin/index.php:63
 msgid "Questionnaire progress"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:62
+#: admin/index.php:64
 msgid "Display all future appointments"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:63
+#: admin/index.php:65
 msgid "Questionnaire outcomes"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:68
+#: admin/index.php:70
 msgid "Client management"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:69
+#: admin/index.php:71
 msgid "Add clients to the system"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:73
+#: admin/index.php:75
 msgid "Assign outcomes to cases"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:74
+#: admin/index.php:76
 msgid "Search the sample"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/index.php:76
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:62
+#: admin/index.php:78
+#: admin/shiftreport.php:62
 msgid "Shift reports"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:71
+#: admin/index.php:80
+msgid "System settings"
+msgstr ""
+
+#: admin/index.php:81
+msgid "Set default timezone list"
+msgstr ""
+
+#: admin/index.php:82
+msgid "Set default shift times"
+msgstr ""
+
+#: admin/index.php:83
+msgid "Set call restriction times"
+msgstr ""
+
+#: admin/index.php:87
+msgid "VoIP"
+msgstr ""
+
+#: admin/index.php:88
+msgid "Start and monitor VoIP"
+msgstr ""
+
+#: admin/clients.php:71
 msgid "Could not add"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:71
+#: admin/clients.php:71
 msgid "There may already be an client of this name"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:76
-#: /mnt/htdocsdev/quexs/admin/clients.php:85
+#: admin/clients.php:76
+#: admin/clients.php:85
 msgid "Add a client"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:86
+#: admin/clients.php:86
 msgid "Adding a client here will allow them to access project information in the client subdirectory. You can assign a client to a particular project using the"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:86
+#: admin/clients.php:86
 msgid "Assign client to Questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:86
+#: admin/clients.php:86
 msgid "tool."
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:89
+#: admin/clients.php:89
 msgid "Enter the username of an client to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:90
+#: admin/clients.php:90
 msgid "Enter the first name of an client to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:91
+#: admin/clients.php:91
 msgid "Enter the surname of an client to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/clients.php:92
+#: admin/clients.php:92
 msgid "Enter the Time Zone of an client to add:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:100
+#: admin/assignsample.php:100
 msgid "Assign Sample: Select sample to assign"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:107
+#: admin/assignsample.php:107
 msgid "Samples selected for this questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:118
+#: admin/assignsample.php:118
 msgid "Sequentially selected"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:119
+#: admin/assignsample.php:119
 msgid "Randomly selected"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:120
+#: admin/assignsample.php:120
 msgid "Max calls:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:120
+#: admin/assignsample.php:120
 msgid "Max call attempts:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:120
+#: admin/assignsample.php:120
 msgid "Click to unassign"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:135
+#: admin/assignsample.php:135
 msgid "Add a sample to this questionnaire:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:138
+#: admin/assignsample.php:138
 msgid "Select sample:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:148
+#: admin/assignsample.php:148
 msgid "Max calls (0 for unlimited)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:149
+#: admin/assignsample.php:149
 msgid "Max call attempts (0 for unlimited)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:150
+#: admin/assignsample.php:150
 msgid "Number of answering machine messages to leave per case (0 for never)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/assignsample.php:151
+#: admin/assignsample.php:151
 msgid "Select from sample randomly? (otherwise sequentially)"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/addshift.php:132
+#: admin/addshift.php:132
 msgid "Add shifts"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/addshift.php:160
+#: admin/addshift.php:143
+#: admin/shifttemplate.php:93
+#: admin/callrestrict.php:93
+msgid "Your database does not have timezones installed, please see here for details"
+msgstr ""
+
+#: admin/addshift.php:155
 msgid "Add shifts in your Time Zone"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/addshift.php:228
+#: admin/addshift.php:223
+#: admin/shifttemplate.php:118
+#: admin/callrestrict.php:118
 msgid "Day"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/addshift.php:228
+#: admin/addshift.php:223
 msgid "Use shift?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:66
+#: admin/shiftreport.php:66
 msgid "Please select a questionnaire"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:73
+#: admin/shiftreport.php:73
 msgid "Please select a shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:93
+#: admin/shiftreport.php:93
 msgid "Reports for this shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:105
+#: admin/shiftreport.php:105
 msgid "Date"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:105
+#: admin/shiftreport.php:105
 msgid "Report"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:108
+#: admin/shiftreport.php:108
 msgid "Create new report for this shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:114
+#: admin/shiftreport.php:114
 msgid "Enter report for this shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:118
+#: admin/shiftreport.php:118
 msgid "Add report"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:154
+#: admin/shiftreport.php:154
 msgid "This report does not exist in the database"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:159
+#: admin/shiftreport.php:159
 msgid "Edit report for this shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/shiftreport.php:164
+#: admin/shiftreport.php:164
 msgid "Modify report"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:83
+#: admin/samplesearch.php:83
 msgid "Search sample"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:84
+#: admin/samplesearch.php:84
 msgid "Select a sample from the list below"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:100
+#: admin/samplesearch.php:100
 msgid "No cases yet assigned: Delete this sample record"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:100
+#: admin/samplesearch.php:100
 msgid "Assigned to questionnaire: "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:109
+#: admin/samplesearch.php:109
 msgid "No records in this sample match this search criteria"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:120
+#: admin/samplesearch.php:120
 msgid "Sample id"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:129
+#: admin/samplesearch.php:129
 msgid "Link"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:148
+#: admin/samplesearch.php:148
 msgid "Search within this sample"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:150
+#: admin/samplesearch.php:150
 #, php-format
 msgid "Use the % character as a wildcard"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:155
+#: admin/samplesearch.php:155
 msgid "Search for:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/samplesearch.php:157
+#: admin/samplesearch.php:157
 msgid "Start search"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/admin/operatorskill.php:143
+#: admin/operatorskill.php:145
 msgid "Assign operators to Skills"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/client/index.php:72
+#: admin/shifttemplate.php:82
+msgid "Modify shift template"
+msgstr ""
+
+#: admin/shifttemplate.php:96
+msgid "Enter standard shift start and end times for each day of the week in local time"
+msgstr ""
+
+#: admin/shifttemplate.php:131
+#: admin/callrestrict.php:131
+msgid "Add row"
+msgstr ""
+
+#: admin/shifttemplate.php:132
+msgid "Save changes to shifts"
+msgstr ""
+
+#: admin/callrestrict.php:82
+msgid "Modify call restriction times"
+msgstr ""
+
+#: admin/callrestrict.php:96
+msgid "Enter the start and end times for each day of the week to restrict calls within"
+msgstr ""
+
+#: admin/callrestrict.php:132
+msgid "Save changes to restriction times"
+msgstr ""
+
+#: client/index.php:72
 msgid "There are no questionnaires assigned to you"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/client/index.php:120
+#: client/index.php:120
 msgid "You are not a valid client"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:395
+#: functions/functions.voip.php:400
 msgid "Extension: "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:395
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:419
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:435
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:451
+#: functions/functions.voip.php:400
+#: functions/functions.voip.php:424
+#: functions/functions.voip.php:440
+#: functions/functions.voip.php:456
 msgid " UniqueID "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.voip.php:395
+#: functions/functions.voip.php:400
 msgid " Sequence "
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.import.php:89
+#: functions/functions.import.php:89
 msgid "Duplicate name"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.import.php:111
+#: functions/functions.import.php:111
 msgid "You must select one and one only Primary Phone number"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.import.php:127
+#: functions/functions.import.php:127
 msgid "Import?"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.import.php:127
+#: functions/functions.import.php:127
 msgid "Name"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.import.php:127
+#: functions/functions.import.php:127
 msgid "Type"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:236
+#: functions/functions.calendar.php:236
 msgid "First name:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:237
+#: functions/functions.calendar.php:237
 msgid "Last  name:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:242
+#: functions/functions.calendar.php:242
 msgid "Time Zone:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:285
+#: functions/functions.calendar.php:285
 msgid "Shift from:"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:292
+#: functions/functions.calendar.php:292
 msgid "Start Time"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.calendar.php:342
+#: functions/functions.calendar.php:342
 msgid "End Time"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.operator.php:68
+#: functions/functions.operator.php:68
 msgid "morning"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.operator.php:69
+#: functions/functions.operator.php:69
 msgid "afternoon"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.operator.php:70
+#: functions/functions.operator.php:70
 msgid "evening"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:257
+#: functions/functions.performance.php:257
 msgid "No shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:280
+#: functions/functions.performance.php:280
 msgid "Total completions"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:309
+#: functions/functions.performance.php:309
 msgid "Completions this shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:332
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:378
+#: functions/functions.performance.php:332
+#: functions/functions.performance.php:378
 msgid "No previous shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:352
+#: functions/functions.performance.php:352
 msgid "Completions on the previous shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:399
+#: functions/functions.performance.php:399
 msgid "Completions this time on the previous shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:417
+#: functions/functions.performance.php:417
 msgid "No calls made for this shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:419
+#: functions/functions.performance.php:419
 msgid "Top CPH for this shift"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:436
+#: functions/functions.performance.php:436
 msgid "No calls made for this project"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/functions/functions.performance.php:438
+#: functions/functions.performance.php:438
 msgid "Top CPH"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/include/php-gettext-1.0.7/examples/pigs_fallback.php:74
-#: /mnt/htdocsdev/quexs/include/php-gettext-1.0.7/examples/pigs_dropin.php:75
+#: include/php-gettext-1.0.7/examples/pigs_fallback.php:74
+#: include/php-gettext-1.0.7/examples/pigs_dropin.php:75
 msgid ""
 "This is how the story goes.\n"
 "\n"
 msgstr ""
 
-#: /mnt/htdocsdev/quexs/display/index.php:111
+#: display/index.php:111
 msgid "Display"
 msgstr ""
 
