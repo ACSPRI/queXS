@@ -59,4 +59,6 @@ $siteadminemail     =   "your@email.org"; // The default email address of the si
 $siteadminbounce    =   "your@email.org"; // The default email address used for error notification of sent messages for the site administrator (Return-Path)
 $siteadminname      =   "Your Name";      // The name of the site administrator
 
+$defaultlang = DEFAULT_LOCALE;
+
 ?>
