@@ -1,6 +1,6 @@
 <?
 /**
- * Display a list of respondents for this case, and the ability to add them if necessary
+ * Record calls using Asterisk (if enabled)
  *
  *
  *	This file is part of queXS
