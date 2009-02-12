@@ -105,7 +105,7 @@ function create_limesurvey_questionnaire($title)
 	. "VALUES ($surveyid, 1,\n"
 	. "'', 'N', \n"
 	. "'N','1980-01-01', '', 'N',\n"
-	. "'', 'G', 'quexs', '" . QUEXS_URL . "rs_project_end.php',\n"
+	. "'', 'S', 'quexs', '" . QUEXS_URL . "rs_project_end.php',\n"
 	. "'en', 'Y', 'N', 'N',\n"
 	. "'N', '0', 'Y',\n"
 	. "'att1', 'att2', \n"

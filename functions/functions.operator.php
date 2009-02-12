@@ -520,6 +520,12 @@ function get_extension($operator_id)
  */
 function get_operator_id()
 {
+	if (!isset($_SERVER['PHP_AUTH_USER']))
+	{
+		print "<p>" . T_("ERROR: You do not have server side authentication enabled therefore queXS cannot determine which user is accessing the system.") . "</p>";
+		return false;
+	}
+
 	global $db;
 
 	$sql = "SELECT operator_id
