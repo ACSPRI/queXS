@@ -23,7 +23,8 @@
   bottom : auto;
   left : 0;
   overflow: auto;  
-  /*border-bottom: 1px solid #aaa;*/
+  font-size: 0.8em;
+/*border-bottom: 1px solid #aaa;*/
 }
 #main {
   position : fixed;
