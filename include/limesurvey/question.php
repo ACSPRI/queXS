@@ -71,7 +71,7 @@ if ($surveyexists <1)
 if (!isset($_SESSION['step']) || !$_SESSION['step'])
 {
 	$totalquestions = buildsurveysession();
-	sendcacheheaders();
+/*	sendcacheheaders();
 	doHeader();
 
 	echo templatereplace(file_get_contents("$thistpl/startpage.pstpl"));
@@ -96,7 +96,8 @@ if (!isset($_SESSION['step']) || !$_SESSION['step'])
 	echo "\n</form>\n";
 	echo templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
 	doFooter();
-	exit;
+	exit;*/
+	$_SESSION['step'] = 1;
 }
 
 //******************************************************************************************************

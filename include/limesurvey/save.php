@@ -267,6 +267,7 @@ function savedcontrol()
 			"startlanguage"=>GetBaseLanguageFromSurveyID($surveyid),
 			"refurl"=>getenv("HTTP_REFERER"),
 			"token"=>$_POST['token']);
+
 			//One of the strengths of ADOdb's AutoExecute() is that only valid field names for $table are updated
 			if ($connect->AutoExecute($thissurvey['tablename'], $sdata,'INSERT'))    // Checked    
 			{
@@ -407,8 +408,11 @@ function createinsertquery()
                 echo submitfailed();
                 exit;
             }
-           		
-		     	
+           	
+
+			if (isset($_POST['token']) && in_array('token',$colnames))
+				$values[array_search('token',$colnames)] = $_POST['token'];
+
 			// INSERT NEW ROW
 			$query = "INSERT INTO ".db_quote_id($thissurvey['tablename'])."\n"
 			."(".implode(', ', array_map('db_quote_id',$colnames));
@@ -430,7 +434,7 @@ function createinsertquery()
 			{
 				$query .= ",".db_quote_id('submitdate'); 
 			}
-			if (isset($_POST['token']))
+			if (isset($_POST['token']) && !in_array('token',$colnames))
 				$query .= ",".db_quote_id('token');
 			$query .=") ";
 			$query .="VALUES (".implode(", ", $values);
@@ -453,7 +457,7 @@ function createinsertquery()
                 // is if a ALL-IN-ONE survey, we don't set the submit date before the data is validated
 				$query .= ", ".$connect->DBDate($mysubmitdate);
 			}
-			if (isset($_POST['token']))
+			if (isset($_POST['token']) && !in_array('token',$colnames))
 				$query .= ",'".$_POST['token']."'";
 			$query .=")";
 		}
