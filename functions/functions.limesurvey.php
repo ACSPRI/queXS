@@ -518,11 +518,15 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 		if ($sample_import_id == false)
 		{
 			$sql .= " AND (";
+			$ccount = count($r);
+			$ccounter = 0;
 			foreach($r as $row)
 			{
 				$token = $row['case_id'];
+				$ccounter++;
 				$sql .= " token = '$token'";
-				if (next($r)) $sql .= " or ";
+				if ($ccounter < $ccount)
+					$sql .= " or ";
 			}
 			$sql .= ")";
 		}
@@ -539,11 +543,15 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 			if (!empty($r))
 			{
 				$sql .= " AND (";
+				$ccount = count($r);
+				$ccounter = 0;
 				foreach($r as $row)
 				{
 					$token = $row['case_id'];
+					$ccounter++;
 					$sql .= " token = '$token'";
-					if (next($r)) $sql .= " or ";
+					if ($ccounter < $ccount)
+						$sql .= " or ";
 				}
 				$sql .= ")";
 			}
@@ -551,7 +559,7 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 		}
 
 		$r = $ldb->GetAll($sql);
-		
+	
 		foreach($r as $Row)
 		{
 			foreach ($varwidth as $var => $width)
