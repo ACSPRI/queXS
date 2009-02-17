@@ -141,6 +141,7 @@ function display_outcomes($contacted,$ca,$case_id)
 
 global $db;
 
+$db->StartTrans();
 
 $operator_id = get_operator_id();
 
@@ -201,6 +202,7 @@ if (isset($_POST['submit']))
 
 	print "<p></p>"; //for XHTML
 	xhtml_foot();
+	$db->CompleteTrans();
 	exit();
 }
 
@@ -432,6 +434,6 @@ switch($state)
 
 
 xhtml_foot();
-
+$db->CompleteTrans();
 
 ?>

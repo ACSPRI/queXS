@@ -49,6 +49,8 @@ $operator_id = get_operator_id();
 
 if (isset($_GET['endwork']))
 {
+	$db->StartTrans();
+	
 	if (isset($_GET['note']))
 	{
 		$case_id = get_case_id($operator_id);
@@ -59,6 +61,9 @@ if (isset($_GET['endwork']))
 	}
 	end_call_attempt($operator_id);
 	end_case($operator_id);
+	
+	$db->CompleteTrans();
+
 	include("endwork.php");
 	exit();
 }
@@ -66,6 +71,8 @@ if (isset($_GET['endwork']))
 
 if (isset($_GET['endcase']))
 {
+	$db->StartTrans();
+
 	if (isset($_GET['note']))
 	{
 		$case_id = get_case_id($operator_id);
@@ -76,8 +83,11 @@ if (isset($_GET['endcase']))
 	}
 	end_call_attempt($operator_id);
 	end_case($operator_id);
+
+	$db->CompleteTrans();
 }
 
+$db->StartTrans();
 
 xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css") , array("js/popup.js","js/tabber.js"));
 ?>
@@ -157,6 +167,6 @@ xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css") , array("j
 <?
 
 xhtml_foot();
-
+$db->CompleteTrans();
 
 ?>
