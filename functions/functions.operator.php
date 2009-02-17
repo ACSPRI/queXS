@@ -209,6 +209,8 @@ function is_respondent_selection($operator_id)
 {
 	global $db;
 
+	$db->StartTrans();
+
 	$questionnaire_id = get_questionnaire_id($operator_id);
 
 	if (!$questionnaire_id) return false;
@@ -218,6 +220,9 @@ function is_respondent_selection($operator_id)
 		WHERE questionnaire_id = '$questionnaire_id'";
 	
 	$rs = $db->GetRow($sql);
+
+	if (!$db->CompleteTrans())
+		return false;
 
 	if (!$rs) return false;
 	if ($rs['respondent_selection'] == 1) return true;
@@ -638,8 +643,13 @@ function get_questionnaire_id($operator_id)
 function is_on_shift($operator_id)
 {
 	global $db;
+	
+	$db->StartTrans();
 
 	$case_id = get_case_id($operator_id,false);
+
+	$shift_id = false;
+
 	if ($case_id)
 	{
 		$sql = "SELECT s.shift_id
@@ -651,11 +661,14 @@ function is_on_shift($operator_id)
 	
 		$row = $db->GetRow($sql);
 	
-		if (empty($row)) return false;
-		return $row['shift_id'];
+		if (!empty($row))
+			$shift_id = $row['shift_id'];
 	}
-	else
-		return false;
+	
+	if ($db->CompleteTrans())
+		return $shift_id;
+		
+	return false;
 
 }
 
@@ -672,7 +685,12 @@ function is_on_call($operator_id)
 {
 	global $db;
 
+	$db->StartTrans();
+
 	$case_id = get_case_id($operator_id,false);
+
+	$call_state_id = false;
+
 	if ($case_id)
 	{
 		$ca = get_call_attempt($operator_id);
@@ -686,11 +704,14 @@ function is_on_call($operator_id)
 	
 		$row = $db->GetRow($sql);
 	
-		if (empty($row)) return false;
-		return $row['state'];
+		if (!empty($row))
+			$call_state_id = $row['state'];
 	}
-	else
-		return false;
+	
+	if ($db->CompleteTrans())
+		return $call_state_id;
+	
+	return false;
 }
 
 
@@ -706,7 +727,11 @@ function is_on_call_attempt($operator_id)
 {
 	global $db;
 
+	$db->StartTrans();
+
 	$case_id = get_case_id($operator_id,false);
+
+	$return = false;
 
 	if ($case_id)
 	{
@@ -718,11 +743,14 @@ function is_on_call_attempt($operator_id)
 	
 		$row = $db->GetRow($sql);
 	
-		if (empty($row)) return false;
-		return true;
+		if (!empty($row))
+			$return = true;
 	}
-		return false;
 
+	if ($db->CompleteTrans())
+		return $return;
+
+	return false;
 }
 
 
@@ -741,14 +769,15 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "")
 {
 	global $db;
 
+	$db->StartTrans();
+
 	$case_id = get_case_id($operator_id,false);
 	$ca = get_call_attempt($operator_id);
 
+	$id = false;
+
 	if ($case_id && $ca)
 	{
-
-		$db->StartTrans();
-
 		$sql = "SELECT call_id
 			FROM `call`
 			WHERE case_id = '$case_id'
@@ -775,16 +804,13 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "")
 		{
 			$id = $row['call_id'];
 		}
-
 		
-		$db->CompleteTrans();
-		return $id;
-	}
-	else
-	{
-		return false;
 	}
 
+	if ($db->CompleteTrans())
+		return $id;
+
+	return $false;
 }
 
 
@@ -800,29 +826,34 @@ function get_limesurvey_url($operator_id)
 {
 	global $db;
 
+	$db->StartTrans();
+
+	$url = "nocaseavailable.php";
+
 	$case_id = get_case_id($operator_id);
+
 	if ($case_id)
 	{
 		$sid = get_limesurvey_id($operator_id);
 		$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$case_id&amp;lang=en";
 		$questionnaire_id = get_questionnaire_id($operator_id);
+		
 		//get prefills
 		$sql = "SELECT lime_sgqa,value
 			FROM questionnaire_prefill
 			WHERE questionnaire_id = '$questionnaire_id'";
 		$pf = $db->GetAll($sql);
+	
 		if (!empty($pf))
 		{
 			foreach ($pf as $p)
 				$url .= "&amp;" . $p['lime_sgqa'] . "=" . template_replace($p['value'],$operator_id,$case_id);
 		}
-		return $url;
 	}
-	else
-	{
-		//no cases currently available
-		return "nocaseavailable.php";
-	}
+
+	$db->CompleteTrans();
+
+	return $url;
 }
 
 
@@ -925,20 +956,20 @@ function end_case($operator_id)
 {
 	global $db;
 
+	$db->StartTrans();
+
 	$case_id = get_case_id($operator_id,false);
+
+	$return = false;
 
 	if ($case_id)
 	{
-		$db->StartTrans();
-
 		//determine current final outcome code
 		//Look over all calls, for each phone number that is to be tried again
 		//Calculate outcome based on 
 			//If no phone number is to be tried again, use the outcome from the last call
 		//If one phone number is to be tried again, use: "Differences in Response Rates using Most recent versus Final dispositions in Telephone Surveys" by Christopher McCarty
 		//
-
-
 
 		//Look for any calls where none should be tried again (this should be a final outcome)
 		$sql = "SELECT c.call_id, c.outcome_id
@@ -1034,15 +1065,16 @@ function end_case($operator_id)
 			WHERE case_id = '$case_id'";
 
 		$o = $db->Execute($sql);
-		$db->CompleteTrans();
 
-		return $o;
+		$return = true;
 	}
 	else
-	{
-		return false;
-	}
+		$return = false;
 
+	if ($db->CompleteTrans())
+		return $return;
+
+	return false;
 }
 
 /**
@@ -1070,57 +1102,6 @@ function outcome_description($outcome_id)
 
 
 /**
- * Determine the outcome for this call attempt
- *
- * @param int $call_attempt The call attempt
- * @return int The outcome_id for this call attempt
- 
- function determine_outcome($call_attempt,$update = false)
-{
-	global $db;
-
-	//determine outcome code (for now select the last one)
-	$sql = "SELECT c.outcome_id as outcome_id,c.call_id
-		FROM `call` as c
-		LEFT JOIN `outcome` as o on (o.outcome_id = c.outcome_id)
-		WHERE c.call_attempt_id = '$call_attempt'
-		ORDER BY o.outcome_type_id ASC, o.default_delay_minutes ASC";
-
-	$r = $db->GetRow($sql);
-
-	$sql = "SELECT appointment_id
-		FROM appointment
-		WHERE call_attempt_id = '$call_attempt'";
-
-	$a = $db->GetRow($sql);
-
-	$outcome = 1; //default outcome is 1 - not attempted
-	if (!empty($r))
-	{
-		$outcome = $r['outcome_id'];
-		$call = $r['call_id'];
-
-		$a = is_on_appointment($call_attempt); //if we were on an appointment, complete it
-		if ($update && $a)
-		{
-			$sql = "UPDATE appointment
-				SET completed_call_id = '$call'
-				WHERE appointment_id = '$a'";
-			$db->Execute($sql);
-		}
-	}
-	else
-	{
-		if (!empty($a)) //made an appointment without making a call
-			$outcome = 20;
-	}
-
-	return $outcome;
-}
- */
-
-
-/**
  * End the current call attempt
  *
  * @param int $operator_id The operator
@@ -1130,6 +1111,10 @@ function outcome_description($outcome_id)
 function end_call_attempt($operator_id)
 {
 	global $db;
+
+	$db->StartTrans();
+
+	$return = false;
 
 	$ca = get_call_attempt($operator_id);
 
@@ -1143,15 +1128,13 @@ function end_call_attempt($operator_id)
 
 		$o = $db->Execute($sql);
 
-		$db->CompleteTrans();
-
-		return $o;
+		$return = true;
 	}
-	else
-	{
-		return false;
-	}
+	
+	if ($db->CompleteTrans())
+		return $return;
 
+	return $false;
 }
 
 /**
@@ -1189,12 +1172,14 @@ function get_call_attempt($operator_id)
 {
 	global $db;
 
+	$db->StartTrans();
+	
 	$case_id = get_case_id($operator_id,false);
+
+	$id = false;
 
 	if ($case_id)
 	{
-		$db->StartTrans();
-
 		$sql = "SELECT call_attempt_id
 			FROM `call_attempt`
 			WHERE case_id = '$case_id'
@@ -1229,16 +1214,12 @@ function get_call_attempt($operator_id)
 		{
 			$id = $row['call_attempt_id'];
 		}
+	}
 
-		
-		$db->CompleteTrans();
+	if ($db->CompleteTrans())
 		return $id;
-	}
-	else
-	{
-		return false;
-	}
-
+	
+	return false;
 }
 
 /**
@@ -1256,6 +1237,10 @@ function get_call_attempt($operator_id)
 function end_call($operator_id,$outcome_id,$state = 5)
 {
 	global $db;
+
+	$db->StartTrans();
+
+	$o = false;
 
 	$ca = get_call($operator_id);
 
@@ -1278,15 +1263,13 @@ function end_call($operator_id,$outcome_id,$state = 5)
 			SET end = CONVERT_TZ(NOW(),'System','UTC'), outcome_id = '$outcome_id', state = '$state'
 			WHERE call_id = '$ca'";
 
-		$o = $db->Execute($sql);
+		$db->Execute($sql);
+	}
 
+	if ($db->CompleteTrans())
 		return $o;
-	}
-	else
-	{
-		return false;
-	}
 
+	return false;
 }
 
 /**
@@ -1312,7 +1295,8 @@ function get_limesurvey_id($operator_id)
 
 	$rs = $db->GetRow($sql);
 
-	if (empty($rs)) return false;
+	if (empty($rs))
+		return false;
 
 	return $rs['lime_sid'];
 
