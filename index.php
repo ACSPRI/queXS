@@ -45,11 +45,12 @@ include ("functions/functions.xhtml.php");
  */
 include("functions/functions.operator.php");
 
+$db->StartTrans();
+
 $operator_id = get_operator_id();
 
 if (isset($_GET['endwork']))
 {
-	$db->StartTrans();
 	
 	if (isset($_GET['note']))
 	{
@@ -72,7 +73,6 @@ if (isset($_GET['endwork']))
 
 if (isset($_GET['endcase']))
 {
-	$db->StartTrans();
 
 	if (isset($_GET['note']))
 	{
@@ -86,10 +86,7 @@ if (isset($_GET['endcase']))
 	end_case($operator_id);
 
 	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
-	$db->CompleteTrans();
 }
-
-$db->StartTrans();
 
 xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css") , array("js/popup.js","js/tabber.js"));
 ?>

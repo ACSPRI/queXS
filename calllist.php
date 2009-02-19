@@ -55,6 +55,8 @@ xhtml_head(T_("Call List"),true,array("css/table.css"),false,false,15);
 // display in respondent time so that the operator will be able to
 // quote verbatim to the respondent if necessary
 
+$db->StartTrans();
+
 $case_id = get_case_id(get_operator_id());
 
 if ($case_id)
@@ -80,5 +82,6 @@ else
 
 xhtml_foot();
 
+$db->CompleteTrans();
 
 ?>

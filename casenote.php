@@ -70,7 +70,9 @@ if (isset($_GET['add']))
 else
 {
 	global $db;
-	
+
+	$db->StartTrans();
+
 	$operator_id = get_operator_id();
 	$case_id = get_case_id($operator_id);
 	
@@ -106,6 +108,8 @@ else
 	}
 	else
 		print "<p>" . T_("No case") . "</p>";
+
+	$db->CompleteTrans();
 }	
 
 xhtml_foot();

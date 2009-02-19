@@ -68,6 +68,8 @@ xhtml_head(T_("Respondent Selector"),true,array("css/table.css","css/respondent.
 
 global $db;
 
+$db->StartTrans();
+
 $operator_id = get_operator_id();
 $call_attempt_id = get_call_attempt($operator_id);
 $case_id = get_case_id($operator_id);
@@ -153,5 +155,5 @@ else
 
 xhtml_foot();
 
-
+$db->CompleteTrans();
 ?>

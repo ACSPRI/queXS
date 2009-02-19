@@ -59,6 +59,8 @@ include("functions/functions.operator.php");
  */
 include("functions/functions.input.php");
 
+$db->StartTrans();
+
 $operator_id = get_operator_id(); 
 $questionnaire_id = get_questionnaire_id($operator_id);
 $case_id = get_case_id($operator_id);
@@ -67,6 +69,7 @@ if (!$case_id){
 	xhtml_head(T_("Appointment error"));
 	print("<div>" . T_("You have not been assigned a case therefore cannot create an appointment") . "</div>");
 	xhtml_foot();
+	$db->CompleteTrans();
 	exit();
 }
 
@@ -99,8 +102,11 @@ if(isset($_POST['start']) && isset($_POST['end']) && isset($_POST['day']) && iss
 
 	make_appointment($respondent_id,$case_id,$contact_phone_id,$call_attempt_id,$day,$month,$year,$start,$end);
 
+	$db->CompleteTrans();
+
 	xhtml_head(T_("Appointment made"),true,false,false,"onload='top.close()'");
 	xhtml_foot();
+	exit();
 }
 
 
@@ -218,6 +224,6 @@ else if(isset($_GET['respondent_id']))
 
 xhtml_foot();
 
-
+$db->CompleteTrans();
 
 ?>
