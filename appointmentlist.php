@@ -56,6 +56,8 @@ xhtml_head(T_("Appointment List"),true,array("css/table.css"),false,false,15);
 // display in respondent time so that the operator will be able to
 // quote verbatim to the respondent if necessary
 
+$db->StartTrans();
+
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
 
@@ -94,6 +96,6 @@ else
 		
 
 xhtml_foot();
-
+$db->CompleteTrans();
 
 ?>
