@@ -57,11 +57,16 @@ if (is_on_call($operator_id) == 3)
 		if (VOIP_ENABLED)
 		{
 			$call_id = get_call($operator_id);
-			include("functions/functions.voip.php");
-			$v = new voip();
-			$v->connect(VOIP_SERVER);
-			$v->beginRecord(get_extension($operator_id),"$case_id-$call_id-$operator_id-" . get_operator_time($operator_id,$format = "%Y-%m-%d-%H-%i-%S"));
-			print "<p>" . T_("Beginning recording...") .  "</p>";
+			if ($call_id)
+			{
+				include("functions/functions.voip.php");
+				$v = new voip();
+				$v->connect(VOIP_SERVER);
+				$v->beginRecord(get_extension($operator_id),"$case_id-$call_id-$operator_id-" . get_operator_time($operator_id,$format = "%Y-%m-%d-%H-%i-%S"));
+				print "<p>" . T_("Beginning recording...") .  "</p>";
+			}
+			else
+				print "<p>" . T_("Not on a call, so not beginning a recording") . "</p>";
 		}
 		else
 		{
