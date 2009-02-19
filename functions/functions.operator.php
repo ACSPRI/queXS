@@ -158,7 +158,7 @@ function get_respondent_variable($variable,$respondent_id)
  */
 function template_replace($string,$operator_id,$case_id)
 {
-	$respondent_id = get_respondent_id(get_call_attempt($operator_id));
+	$respondent_id = get_respondent_id(get_call_attempt($operator_id,false));
 
 	while (stripos($string, "{Respondent:") !== false)
 	{
@@ -239,7 +239,7 @@ function is_respondent_selection($operator_id)
  * @param bool $create True if a case can be created
  * @return bool|int False if no case available else the case_id
  */
-function get_case_id($operator_id, $create = true)
+function get_case_id($operator_id, $create = false)
 {
 
 	global $db;
@@ -772,17 +772,18 @@ function is_on_call_attempt($operator_id)
  * @param int $operator_id The operator
  * @param string|int $respondent_id The respondent
  * @param string|int $contact_phone_id The number to contact the respondent on
+ * @param bool $create Whether or not to create a call
  * @return bool|int False if no call exists or can be created otherwise the call_id
  *
  */
-function get_call($operator_id,$respondent_id = "",$contact_phone_id = "")
+function get_call($operator_id,$respondent_id = "",$contact_phone_id = "",$create = false)
 {
 	global $db;
 
 	$db->StartTrans();
 
 	$case_id = get_case_id($operator_id,false);
-	$ca = get_call_attempt($operator_id);
+	$ca = get_call_attempt($operator_id,false);
 
 	$id = false;
 
@@ -798,7 +799,7 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "")
 		$row = $db->GetRow($sql);
 		if (empty($row))
 		{
-			if (!empty($respondent_id) && !empty($contact_phone_id))
+			if (!empty($respondent_id) && !empty($contact_phone_id) && $create)
 			{
 				$sql = "INSERT INTO `call` (call_id,operator_id,case_id,call_attempt_id,start,end,respondent_id,contact_phone_id,outcome_id,state)
 				VALUES (NULL,'$operator_id','$case_id','$ca',CONVERT_TZ(NOW(),'System','UTC'),NULL,'$respondent_id','$contact_phone_id','0','1')";
@@ -841,7 +842,7 @@ function get_limesurvey_url($operator_id)
 
 	$url = "nocaseavailable.php";
 
-	$case_id = get_case_id($operator_id);
+	$case_id = get_case_id($operator_id,false);
 
 	if ($case_id)
 	{
@@ -1187,7 +1188,7 @@ function get_respondent_id($call_attempt_id)
  * @return bool|int False if no case otherwise the call_attempt_id
  *
  */
-function get_call_attempt($operator_id,$create = true)
+function get_call_attempt($operator_id,$create = false)
 {
 	global $db;
 

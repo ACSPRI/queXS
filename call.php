@@ -150,9 +150,9 @@ if (isset($_POST['submit']))
 	if (isset($_POST['contact_phone']))
 	{
 		$contact_phone_id = bigintval($_POST['contact_phone']);
-		$call_attempt_id = get_call_attempt($operator_id);
+		$call_attempt_id = get_call_attempt($operator_id,false);
 		$respondent_id = get_respondent_id($call_attempt_id);
-		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id);
+		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
 		if ($call_id)
 		{
 			if (VOIP_ENABLED)
@@ -206,7 +206,7 @@ if (isset($_POST['submit']))
 	exit();
 }
 
-$call_attempt_id = get_call_attempt($operator_id);
+$call_attempt_id = get_call_attempt($operator_id.false);
 $case_id = get_case_id($operator_id);
 
 /**

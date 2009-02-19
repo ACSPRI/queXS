@@ -102,7 +102,7 @@ else if ($state == 3)
 }
 
 
-$ca = get_call_attempt($operator_id);
+$ca = get_call_attempt($operator_id,false);
 if ($ca)
 {
 	print "<div class='text'>" . get_respondent_time(get_respondent_id($ca),"%h:%i%p") ."</div>";

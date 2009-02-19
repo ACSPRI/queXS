@@ -98,7 +98,7 @@ if(isset($_POST['start']) && isset($_POST['end']) && isset($_POST['day']) && iss
 	$contact_phone_id = bigintval($_POST['contact_phone_id']);
 	$start = $_POST['start'];
 	$end = $_POST['end'];
-	$call_attempt_id = get_call_attempt($operator_id);
+	$call_attempt_id = get_call_attempt($operator_id,false);
 
 	make_appointment($respondent_id,$case_id,$contact_phone_id,$call_attempt_id,$day,$month,$year,$start,$end);
 

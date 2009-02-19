@@ -71,7 +71,7 @@ global $db;
 $db->StartTrans();
 
 $operator_id = get_operator_id();
-$call_attempt_id = get_call_attempt($operator_id);
+$call_attempt_id = get_call_attempt($operator_id,false);
 $case_id = get_case_id($operator_id);
 
 if (isset($_POST['submit']))

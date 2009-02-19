@@ -100,7 +100,7 @@ xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css") , array("j
 </div>
 
 <div id="content">
-<object class="embeddedobject" id="main-content" data="<? get_case_id($operator_id); get_call_attempt($operator_id); if (!is_respondent_selection($operator_id)) print(get_limesurvey_url($operator_id)); else print "rs_intro.php"; ?>" standby="Loading questionnaire..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+<object class="embeddedobject" id="main-content" data="<? get_case_id($operator_id,true); get_call_attempt($operator_id,true); if (!is_respondent_selection($operator_id)) print(get_limesurvey_url($operator_id)); else print "rs_intro.php"; ?>" standby="Loading questionnaire..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
 </div>
 
 <div id="respondent">
