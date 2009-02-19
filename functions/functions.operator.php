@@ -698,19 +698,22 @@ function is_on_call($operator_id)
 
 	if ($case_id)
 	{
-		$ca = get_call_attempt($operator_id);
+		$ca = get_call_attempt($operator_id,false);
 	
-		$sql = "SELECT call_id,state
-			FROM `call`
-			WHERE case_id = '$case_id'
-			AND operator_id = '$operator_id'
-			AND call_attempt_id = '$ca'
-			AND outcome_id = '0'";
-	
-		$row = $db->GetRow($sql);
-	
-		if (!empty($row))
-			$call_state_id = $row['state'];
+		if ($ca)
+		{
+			$sql = "SELECT call_id,state
+				FROM `call`
+				WHERE case_id = '$case_id'
+				AND operator_id = '$operator_id'
+				AND call_attempt_id = '$ca'
+				AND outcome_id = '0'";
+		
+			$row = $db->GetRow($sql);
+		
+			if (!empty($row))
+				$call_state_id = $row['state'];
+		}
 	}
 	
 	//if ($db->HasFailedTrans()) { print "FAILED in is_on_call"; exit; }
@@ -1132,7 +1135,7 @@ function end_call_attempt($operator_id)
 
 	$return = false;
 
-	$ca = get_call_attempt($operator_id);
+	$ca = get_call_attempt($operator_id,false);
 
 	if ($ca)
 	{
@@ -1180,10 +1183,11 @@ function get_respondent_id($call_attempt_id)
  * Return the call attempt of the given operator
  *
  * @param int $operator_id The oeprator
+ * @param bool $create If true, will create a call attempt if none exists
  * @return bool|int False if no case otherwise the call_attempt_id
  *
  */
-function get_call_attempt($operator_id)
+function get_call_attempt($operator_id,$create = true)
 {
 	global $db;
 
@@ -1203,27 +1207,28 @@ function get_call_attempt($operator_id)
 
 		$row = $db->GetRow($sql);
 
-		$id = false;
-			
 		/**
 		 * If no call_attempt, create one
 		 */
 		if (empty($row))
 		{
-			$sql = "SELECT respondent_id
-				FROM respondent
-				WHERE case_id = '$case_id'";
-
-			$row2 = $db->GetRow($sql);
-
-			$respondent_id = 0;
-			if (!empty($row2)) $respondent_id = $row2['respondent_id'];
-
-			$sql = "INSERT INTO `call_attempt` (call_attempt_id,operator_id,case_id,respondent_id,start,end)
-				VALUES (NULL,'$operator_id','$case_id','$respondent_id',CONVERT_TZ(NOW(),'System','UTC'),NULL)";
-
-			$db->Execute($sql);
-			$id = $db->Insert_Id();
+			if ($create)
+			{
+				$sql = "SELECT respondent_id
+					FROM respondent
+					WHERE case_id = '$case_id'";
+	
+				$row2 = $db->GetRow($sql);
+	
+				$respondent_id = 0;
+				if (!empty($row2)) $respondent_id = $row2['respondent_id'];
+	
+				$sql = "INSERT INTO `call_attempt` (call_attempt_id,operator_id,case_id,respondent_id,start,end)
+					VALUES (NULL,'$operator_id','$case_id','$respondent_id',CONVERT_TZ(NOW(),'System','UTC'),NULL)";
+	
+				$db->Execute($sql);
+				$id = $db->Insert_Id();
+			}
 		}
 		else
 		{
@@ -1262,7 +1267,7 @@ function end_call($operator_id,$outcome_id,$state = 5)
 
 	if ($ca)
 	{
-		$c = get_call_attempt($operator_id);
+		$c = get_call_attempt($operator_id,false);
 		if ($c)
 		{
 			$a = is_on_appointment($c); //if we were on an appointment, complete it with this call
