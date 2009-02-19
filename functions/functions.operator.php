@@ -818,7 +818,7 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "")
 	if ($db->CompleteTrans())
 		return $id;
 
-	return $false;
+	return false;
 }
 
 
@@ -973,6 +973,12 @@ function end_case($operator_id)
 
 	if ($case_id)
 	{
+		//End all calls (with not attempted or worked if there is a call);
+		end_call($operator_id,1);
+
+		//Make sure to end call attempts
+		end_call_attempt($operator_id);
+
 		//determine current final outcome code
 		//Look over all calls, for each phone number that is to be tried again
 		//Calculate outcome based on 
@@ -1143,7 +1149,7 @@ function end_call_attempt($operator_id)
 	if ($db->CompleteTrans())
 		return $return;
 
-	return $false;
+	return false;
 }
 
 /**
