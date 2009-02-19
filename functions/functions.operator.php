@@ -221,6 +221,9 @@ function is_respondent_selection($operator_id)
 	
 	$rs = $db->GetRow($sql);
 
+	
+	//if ($db->HasFailedTrans()) { print "FAILED in is_respondent_selection"; exit; }
+
 	if (!$db->CompleteTrans())
 		return false;
 
@@ -462,6 +465,7 @@ function get_case_id($operator_id, $create = true)
 	
 	}
 
+	//if ($db->HasFailedTrans()) { print "FAILED in get_case_id"; exit; }
 	$db->CompleteTrans();
 
 	/**
@@ -665,6 +669,7 @@ function is_on_shift($operator_id)
 			$shift_id = $row['shift_id'];
 	}
 	
+	//if ($db->HasFailedTrans()) { print "FAILED in is_on_shift"; exit; }
 	if ($db->CompleteTrans())
 		return $shift_id;
 		
@@ -708,6 +713,7 @@ function is_on_call($operator_id)
 			$call_state_id = $row['state'];
 	}
 	
+	//if ($db->HasFailedTrans()) { print "FAILED in is_on_call"; exit; }
 	if ($db->CompleteTrans())
 		return $call_state_id;
 	
@@ -747,6 +753,7 @@ function is_on_call_attempt($operator_id)
 			$return = true;
 	}
 
+	//if ($db->HasFailedTrans()) { print "FAILED in is_on_call_attempt"; exit; }
 	if ($db->CompleteTrans())
 		return $return;
 
@@ -807,6 +814,7 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "")
 		
 	}
 
+	//if ($db->HasFailedTrans()) { print "FAILED in get_call"; exit; }
 	if ($db->CompleteTrans())
 		return $id;
 
@@ -851,6 +859,7 @@ function get_limesurvey_url($operator_id)
 		}
 	}
 
+	//if ($db->HasFailedTrans()) { print "FAILED in get_limesurvey_url"; exit; }
 	$db->CompleteTrans();
 
 	return $url;
@@ -1071,6 +1080,7 @@ function end_case($operator_id)
 	else
 		$return = false;
 
+	//if ($db->HasFailedTrans()) { print "FAILED in end_case"; exit; }
 	if ($db->CompleteTrans())
 		return $return;
 
@@ -1120,8 +1130,6 @@ function end_call_attempt($operator_id)
 
 	if ($ca)
 	{
-		$db->StartTrans();
-		
 		$sql = "UPDATE `call_attempt`
 			SET end = CONVERT_TZ(NOW(),'System','UTC')
 			WHERE call_attempt_id = '$ca'";
@@ -1131,6 +1139,7 @@ function end_call_attempt($operator_id)
 		$return = true;
 	}
 	
+	//if ($db->HasFailedTrans()) { print "FAILED in end_call_attempt"; exit; }
 	if ($db->CompleteTrans())
 		return $return;
 
@@ -1216,6 +1225,7 @@ function get_call_attempt($operator_id)
 		}
 	}
 
+	//if ($db->HasFailedTrans()) { print "FAILED in get_call_attempt"; exit; }
 	if ($db->CompleteTrans())
 		return $id;
 	
@@ -1266,6 +1276,7 @@ function end_call($operator_id,$outcome_id,$state = 5)
 		$db->Execute($sql);
 	}
 
+	//if ($db->HasFailedTrans()) { print "FAILED in end_call"; exit; }
 	if ($db->CompleteTrans())
 		return $o;
 

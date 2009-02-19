@@ -53,7 +53,7 @@ if (isset($_GET['endwork']))
 	
 	if (isset($_GET['note']))
 	{
-		$case_id = get_case_id($operator_id);
+		$case_id = get_case_id($operator_id,false);
 		$note = $db->qstr($_GET['note']);
 		$sql = "INSERT INTO `case_note` (case_note_id,case_id,operator_id,note,datetime)
 			VALUES (NULL,'$case_id','$operator_id',$note,CONVERT_TZ(NOW(),'System','UTC'))";
@@ -61,7 +61,8 @@ if (isset($_GET['endwork']))
 	}
 	end_call_attempt($operator_id);
 	end_case($operator_id);
-	
+
+	//if ($db->HasFailedTrans()){ print "<p>FAILED AT ENDWORK</p>";  exit();}
 	$db->CompleteTrans();
 
 	include("endwork.php");
@@ -75,7 +76,7 @@ if (isset($_GET['endcase']))
 
 	if (isset($_GET['note']))
 	{
-		$case_id = get_case_id($operator_id);
+		$case_id = get_case_id($operator_id,false);
 		$note = $db->qstr($_GET['note']);
 		$sql = "INSERT INTO `case_note` (case_note_id,case_id,operator_id,note,datetime)
 			VALUES (NULL,'$case_id','$operator_id',$note,CONVERT_TZ(NOW(),'System','UTC'))";
@@ -84,6 +85,7 @@ if (isset($_GET['endcase']))
 	end_call_attempt($operator_id);
 	end_case($operator_id);
 
+	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
 	$db->CompleteTrans();
 }
 
@@ -167,6 +169,9 @@ xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css") , array("j
 <?
 
 xhtml_foot();
+
+
+	//if ($db->HasFailedTrans()){ print "<p>FAILED AT END of index</p>"; exit();}
 $db->CompleteTrans();
 
 ?>
