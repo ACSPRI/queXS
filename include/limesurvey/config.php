@@ -61,4 +61,23 @@ $siteadminname      =   "Your Name";      // The name of the site administrator
 
 $defaultlang = DEFAULT_LOCALE;
 
+$useWebserverAuth = true;
+
+$WebserverAuth_autocreateUser = true;
+
+$WebserverAuth_autouserprofile = Array(
+					'full_name' => 'autouser',
+					'email' => $siteadminemail,
+					'lang' => DEFAULT_LOCALE,
+					'htmleditormode' => $defaulthtmleditormode,
+					'templatelist' => 'default,basic',
+					'create_survey' => 1,
+					'create_user' => 1,
+					'delete_user' => 1,
+					'superadmin' => 1,
+					'configurator' => 1,
+					'manage_template' => 1,
+					'manage_label' => 1);
+
+
 ?>
