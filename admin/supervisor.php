@@ -216,8 +216,10 @@ if ($case_id != false)
 
 		$sid = get_lime_sid($case_id);
 		$id = get_lime_id($case_id);
-		print "<h3><a href='" . LIME_URL . "admin/admin.php?action=dataentry&amp;sid=$sid&amp;subaction=edit&amp;id=$id'>" . T_("Modify responses for this case") . "</a></h3>";
-
+		if ($id)
+			print "<h3><a href='" . LIME_URL . "admin/admin.php?action=dataentry&amp;sid=$sid&amp;subaction=edit&amp;id=$id'>" . T_("Modify responses for this case") . "</a></h3>";
+		else
+			print "<h3>" . T_("Case not yet started in Limesurvey") .  "</h3>";
 
 		//set an outcome
 
