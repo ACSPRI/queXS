@@ -51,6 +51,11 @@ include("../functions/functions.xhtml.php");
 include("../functions/functions.display.php");
 
 /**
+ * Limesurvey functions
+ */
+include("../functions/functions.limesurvey.php");
+
+/**
  * Operator functions
  */
 include("../functions/functions.operator.php");
@@ -206,6 +211,14 @@ if ($case_id != false)
 			</p>
 		</form>
 		<?
+		
+		//Modify the case in Limesurvey
+
+		$sid = get_lime_sid($case_id);
+		$id = get_lime_id($case_id);
+		print "<h3><a href='" . LIME_URL . "admin/admin.php?action=dataentry&amp;sid=$sid&amp;subaction=edit&amp;id=$id'>" . T_("Modify responses for this case") . "</a></h3>";
+
+
 		//set an outcome
 
 		print "<h3>" . T_("Set a case outcome") . "</h3>";

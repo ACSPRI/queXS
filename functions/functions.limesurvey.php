@@ -134,7 +134,62 @@ function create_limesurvey_questionnaire($title)
 }
 
 
+/**
+ * Return the limesurvey id given the case_id
+ *
+ * @param int $case_id The case id
+ * @return bool|int False if no lime_id otherwise the lime_id
+ *
+ */
+function get_lime_id($case_id)
+{
+	global $ldb;
 
+	$lime_sid = get_lime_sid($case_id);
+	if ($lime_sid == false) return false;
+
+	$sql = "SELECT id
+		FROM " . LIME_PREFIX . "survey_$lime_sid 
+		WHERE token = '$case_id'";
+	
+	$r = $ldb->GetRow($sql);
+
+	if (!empty($r) && isset($r['id']))
+		return $r['id'];
+
+	return false;
+
+
+}
+
+
+/**
+ * Return the limesurvey tid given the case_id
+ *
+ * @param int $case_id The case id
+ * @return bool|int False if no lime_tid otherwise the lime_tid
+ *
+ */
+function get_lime_tid($case_id)
+{
+	global $ldb;
+
+	$lime_sid = get_lime_sid($case_id);
+	if ($lime_sid == false) return false;
+
+	$sql = "SELECT tid
+		FROM " . LIME_PREFIX . "tokens_$lime_sid 
+		WHERE token = '$case_id'";
+	
+	$r = $ldb->GetRow($sql);
+
+	if (!empty($r) && isset($r['tid']))
+		return $r['tid'];
+
+	return false;
+
+
+}
 
 /**
  * Return the lime_sid given the case_id
