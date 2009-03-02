@@ -102,7 +102,7 @@ if ($sample_import_id != false)
 			JOIN (sample as s) ON (s.import_id = '$sample_import_id' and sv.sample_id = s.sample_id)
 			LEFT JOIN (`case` AS c, questionnaire AS q) ON ( c.sample_id = sv.sample_id AND q.questionnaire_id = c.questionnaire_id )
 			WHERE sv.val LIKE $search
-			GROUP BY s.sample_id";
+			GROUP BY s.sample_id,c.case_id";
 
 		$r = $db->GetAll($sql);
 
