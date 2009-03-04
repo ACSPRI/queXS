@@ -85,6 +85,9 @@ if (isset($_GET['endcase']))
 	end_call_attempt($operator_id);
 	end_case($operator_id);
 
+	$db->CompleteTrans(); //need to complete here otherwise getting the case later will fail
+
+	$db->StartTrans();
 	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
 }
 
