@@ -109,7 +109,11 @@ function convert_time($time)
 	$m = substr($time,3,2);
 	$s = intval(substr($time,5,2));
 
-	if ($h > 12)
+	if ($h == 12)
+		return "12:$m"."pm";
+	else if ($h == 0)
+		return "12:$m"."am";
+	else if ($h > 12)
 		return $h - 12 . ":$m"."pm";
 	else
 		return $h . ":$m"."am";
