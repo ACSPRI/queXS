@@ -168,7 +168,28 @@ if ($case_id != false)
 		print "<h2>". T_("Current outcome:") ." {$rs['description']}</h2>";
 
 		$current_outcome_id = $rs['outcome_id'];
-		
+
+
+		print "<h3>" . T_("Appointments")."</h3>";
+
+		//View appointments
+		$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . T_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". T_("Delete") . "</a>') as link
+		FROM appointment as a
+		JOIN (`case` as c, respondent as r, questionnaire as q, operator as o, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
+		LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id)
+		WHERE c.case_id = '$case_id'
+		GROUP BY a.appointment_id
+		ORDER BY a.start ASC";
+	
+		$rs = $db->GetAll($sql);
+	
+		if (!empty($rs))
+			xhtml_table($rs,array("description","start","end","makerName","firstName","lastName","outcome","callerName","link"),array(T_("Questionnaire"),T_("Start"),T_("End"),T_("Operator Name"),T_("Respondent Name"),T_("Surname"),T_("Current outcome"),T_("Operator who called"),T_("Delete")));
+		else
+			print "<p>" . T_("No appointments for this case") . "</p>";
+
+
+
 		//view calls and outcomes
 		$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',r.Time_zone_name),'".DATE_TIME_FORMAT."') as start,CONVERT_TZ(c.end,'UTC',r.Time_zone_name) as end, op.firstName, op.lastName, o.description as des, CONCAT('<a href=\'?case_id=$case_id&amp;call_id=', c.call_id, '\'>". T_("Edit") . "</a>') as link, cp.phone as phone
 			FROM `call` as c

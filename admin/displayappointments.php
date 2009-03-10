@@ -56,18 +56,39 @@ include ("../functions/functions.input.php");
 
 if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 {
-	$appointment_id = bigintval($_GET['appointment_id']);
-	$case_id = bigintval($_GET['case_id']);
+	if (isset($_GET['delete']))
+	{
+		$appointment_id = bigintval($_GET['appointment_id']);
+		$case_id = bigintval($_GET['case_id']);
+	
+		$sql = "DELETE FROM appointment
+			WHERE appointment_id = '$appointment_id'";
+	
+		$db->Execute($sql);
+	
+		xhtml_head(T_("Now modify case outcome"));
+	
+		print "<p>" . T_("The appointment has been deleted. Now you must modify the case outcome") . "</p>";
+		print "<p><a href='supervisor.php?case_id=$case_id'>" . T_("Modify case outcome") . "</a></p>";
+	}
+	else if (isset($_GET['start']))
+	{
+		//Edit this appointment in the database
+			
 
-	$sql = "DELETE FROM appointment
-		WHERE appointment_id = '$appointment_id'";
+	}
+	else
+	{
+		//Display an edit form
+		xhtml_head(T_("Edit appointment"));
+		
 
-	$db->Execute($sql);
 
-	xhtml_head(T_("Now modify case outcome"));
+	}
+}
+else if (isset($_GET['new']))
+{
 
-	print "<p>" . T_("The appointment has been deleted. Now you must modify the case outcome") . "</p>";
-	print "<p><a href='supervisor.php?case_id=$case_id'>" . T_("Modify case outcome") . "</a></p>";
 
 }
 else
@@ -79,7 +100,7 @@ else
 	
 	print "<h1>" . T_("Appointments") . "</h1><h2>" . T_("All appointments (with times displayed in your time zone)") . "</h2>";
 	
-	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . T_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'>". T_("Delete") . "</a>') as link
+	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . T_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". T_("Delete") . "</a>') as link
 		FROM appointment as a
 		JOIN (`case` as c, respondent as r, questionnaire as q, operator as o, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and o.operator_id = '$operator_id' and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
 		LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id)
