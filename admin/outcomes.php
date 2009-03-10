@@ -135,6 +135,60 @@ if ($questionnaire_id != false)
 	else
 		print "<p>" . T_("No outcomes recorded for this questionnaire") . "</p>";
 
+
+	$sample_import_id = false;
+	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']); 
+
+	//display a list of samples
+	$sql = "SELECT s.sample_import_id as value,s.description, CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+		FROM sample_import as s, questionnaire_sample as q
+		WHERE s.sample_import_id = q.sample_import_id
+		AND q.questionnaire_id = '$questionnaire_id'";
+
+	$r = $db->GetAll($sql);
+
+	
+	print "<h2>" . T_("Sample") . ": " . "</h2>";
+	if(!empty($r))
+		display_chooser($r,"sample_import_id","sample_import_id",true,"questionnaire_id=$questionnaire_id");
+
+
+	if ($sample_import_id != false)
+	{
+		print "<p>" . T_("Sample status") . "</p>";
+
+		$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . T_("Drawn from sample") . "' ELSE '" . T_("Remain in sample") . "' END as drawn,
+				count(*) as count
+			FROM sample as s
+			JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
+			LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
+			WHERE s.import_id = '$sample_import_id'
+			GROUP BY (c.sample_id is not null)";
+
+		xhtml_table($db->GetAll($sql),array("drawn","count"),array(T_("Status"),T_("Number")));
+
+
+		print "<p>" . T_("Outcomes") . "</p>";
+
+
+		$sql = "SELECT o.description as des, o.outcome_id, count( c.case_id ) as count
+			FROM `case` AS c, `outcome` AS o, sample as s
+			WHERE c.questionnaire_id = '$questionnaire_id'
+			AND c.sample_id = s.sample_id
+			AND s.import_id = '$sample_import_id'
+			AND c.current_outcome_id = o.outcome_id
+			GROUP BY o.outcome_id";
+	
+		$rs = $db->GetAll($sql);
+		
+		if (!empty($rs))
+			xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"));
+		else
+			print "<p>" . T_("No outcomes recorded for this sample") . "</p>";
+	}
+	
+
+
 	//display a list of shifts with completions and a link to either add a report or view reports
 	print "<h2>" . T_("Shifts") . "</h2>";
 
