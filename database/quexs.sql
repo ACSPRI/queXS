@@ -501,6 +501,23 @@ CREATE TABLE `questionnaire_sample` (
 -- Dumping data for table `questionnaire_sample`
 --
 
+--
+-- Table structure for table `questionnaire_sample_quota`
+--
+
+CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota` (
+  `questionnaire_sample_quota_id` bigint(20) NOT NULL auto_increment,
+  `questionnaire_id` bigint(20) NOT NULL,
+  `sample_import_id` bigint(20) NOT NULL,
+  `lime_sgqa` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `value` varchar(2048) collate utf8_unicode_ci NOT NULL,
+  `comparison` varchar(15) collate utf8_unicode_ci NOT NULL default 'LIKE',
+  `completions` int(11) NOT NULL,
+  `quota_reached` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`questionnaire_sample_quota_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 
 -- --------------------------------------------------------
 

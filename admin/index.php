@@ -54,6 +54,7 @@ print "<li><a href=\"javascript:link('mainobj','" . LIME_URL . "admin/admin.php'
 print "<li><a href=\"javascript:link('mainobj','import.php');\">" . T_("Import a sample file (in CSV form)") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','assignsample.php');\">" . T_("Assign samples to questionnaires") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','questionnaireprefill.php');\">" . T_("Set values in questionnaire to pre fill") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','quota.php');\">" . T_("Quota management") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','operators.php');\">" . T_("Add operators to the system") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','operatorquestionnaire.php');\">" . T_("Assign operators to questionnaires") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','operatorskill.php');\">" . T_("Modify operator skills") . "</a></li>";

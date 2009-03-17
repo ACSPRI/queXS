@@ -43,6 +43,66 @@ include_once(dirname(__FILE__).'/../config.inc.php');
 include_once(dirname(__FILE__).'/../db.inc.php');
 
 
+/**
+ * Return the number of completions for a given
+ * questionnaire, where the given question has
+ * the given value
+ *
+ * @param string $lime_sgqa The limesurvey SGQA
+ * @param int $lime_sid The limesurvey survey id 
+ * @param int $questionnaire_id The questionnaire ID
+ * @param int $sample_import_id The sample import ID
+ * @param string $value The value to compare
+ * @param string $comparison The type of comparison
+ * @return bool|int False if failed, otherwise the number of completions
+ * 
+ */
+function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sample_import_id,$value,$comparison)
+{
+	global $ldb;
+	global $db;
+
+	$sql = "SELECT count(*) as c
+		FROM " . LIME_PREFIX . "survey_$lime_sid 
+		WHERE submitdate IS NOT NULL
+		AND `$lime_sgqa` $comparison '$value'";
+
+	$sqm = "SELECT c.case_id as case_id
+		FROM `case` as c, `sample` as s
+		WHERE c.questionnaire_id = '$questionnaire_id'
+		AND c.sample_id = s.sample_id
+		AND s.import_id = '$sample_import_id'";
+	
+	$r = $db->GetAll($sqm);
+	
+	if (!empty($r))
+	{
+		$sql .= " AND (";
+		$ccount = count($r);
+		$ccounter = 0;
+		foreach($r as $row)
+		{
+			$token = $row['case_id'];
+			$ccounter++;
+			$sql .= " token = '$token'";
+			if ($ccounter < $ccount)
+				$sql .= " or ";
+		}
+		$sql .= ")";
+	}
+	else
+		return false;
+
+
+	$rs = $ldb->GetRow($sql);
+
+	if (isset($rs) && !empty($rs))
+		return $rs['c'];
+	
+	return false;
+}
+
+
 /** 
  * Taken from common.php in the LimeSurvey package
  * Add a prefix to a database name

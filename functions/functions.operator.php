@@ -275,6 +275,7 @@ function get_case_id($operator_id, $create = false)
 			 *    If restricted to shift times to work, make sure we are in those
 			 *    If restricted to respondent call times, make sure we are in those
 			 *    Only assign if outcome type is assigned to the operator
+			 *    Has not reached the quota
 			 *
 			 *    
 			 *   THINGS TO ADD:
@@ -300,6 +301,7 @@ function get_case_id($operator_id, $create = false)
 				AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND os.outcome_type_id != 2)
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
+				AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
 				ORDER BY apn.start DESC, a.start ASC
 				LIMIT 1";
 	
@@ -333,6 +335,7 @@ function get_case_id($operator_id, $create = false)
 					WHERE c.case_id is NULL
 					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
 					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
+					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
 					ORDER BY rand() * qs.random_select, s.sample_id
 					LIMIT 1";
 				
@@ -955,6 +958,49 @@ function missed_appointment($call_attempt_id)
 
 }
 
+/**
+ * Check if any quotas apply to this questionnaire
+ * and if so, update them
+ *
+ * @param int $questionnaire_id The questionnaire id
+ *
+ */
+function update_quotas($questionnaire_id)
+{
+	global $db;
+
+	$sql = "SELECT questionnaire_sample_quota_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid
+		FROM questionnaire_sample_quota as qsq, questionnaire as q
+		WHERE qsq.questionnaire_id = '$questionnaire_id'
+		AND q.questionnaire_id = '$questionnaire_id'";
+	
+	$rs = $db->GetAll($sql);
+
+	if (isset($rs) && !empty($rs))
+	{
+		//include limesurvey functions
+		include_once(dirname(__FILE__).'/functions.limesurvey.php');
+
+		//update all quotas for this questionnaire
+		foreach($rs as $r)
+		{
+			$completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
+			
+			if ($completions >= $r['completions'])
+			{
+				//set quota to reached
+				$sql = "UPDATE questionnaire_sample_quota
+					SET quota_reached = '1'
+					WHERE questionnaire_sample_quota_id = {$r['questionnaire_sample_quota_id']}";
+
+				$db->Execute($sql);
+			}
+		}
+	}
+
+	return false;
+}
+
 
 
 /**
@@ -963,7 +1009,6 @@ function missed_appointment($call_attempt_id)
  * @param int $operator_id The operator to end the case for
  *
  * @see get_case()
- * @todo implement session handling to decrease database requests 
  */
 function end_case($operator_id)
 {
@@ -972,6 +1017,7 @@ function end_case($operator_id)
 	$db->StartTrans();
 
 	$case_id = get_case_id($operator_id,false);
+	$questionnaire_id = get_questionnaire_id($operator_id);
 
 	$return = false;
 
@@ -1077,6 +1123,10 @@ function end_case($operator_id)
 			//the last call is the call with the final otucome
 			$outcome = $a['outcome_id'];
 			$lastcall = $a['call_id'];
+
+			//if the outcome is complete, then update the quota's for this questionnaire (if any)
+			if ($outcome == 10)
+				update_quotas($questionnaire_id);
 		}
 		
 		$sql = "UPDATE `case`
@@ -1114,7 +1164,7 @@ function outcome_description($outcome_id)
 	$r = $db->CacheGetRow($sql);
 
 	if (!empty($r))
-		return $r['description'];
+		return T_($r['description']);
 	else
 		return "";
 
