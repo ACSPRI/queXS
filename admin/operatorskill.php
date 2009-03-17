@@ -240,7 +240,7 @@ print "<form action=\"\" method=\"post\"><table>";
 print "<tr><th></th>";
 foreach($outcome_types as $q)
 {
-	print "<th><a href=\"javascript:checkQid({$q['outcome_type_id']})\">{$q['description']}</a></th>";
+	print "<th><a href=\"javascript:checkQid({$q['outcome_type_id']})\">" . T_($q['description']) . "</a></th>";
 }
 print "</tr>";
 
@@ -263,7 +263,7 @@ foreach($operators as $v)
 }
 
 
-print "</table><p><input type=\"submit\" name=\"submit\"/></p></form>";
+print "</table><p><input type=\"submit\" name=\"submit\" value=\"" . T_("Modify operator skills") ."\"/></p></form>";
 
 
 xhtml_foot();

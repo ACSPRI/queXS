@@ -120,7 +120,9 @@ if (isset($_GET['call_id']))
 				FROM outcome as o, `call` as c
 				WHERE c.call_id = '$call_id'";
 		
-			display_chooser($db->GetAll($sql), "set_outcome_id", "set_outcome_id",true,false,false);
+			$rs2 = $db->GetAll($sql);
+			translate_array($rs2,array("description"));
+			display_chooser($rs2, "set_outcome_id", "set_outcome_id",true,false,false);
 		?>
 		<p><input type="hidden" name="call_id" value="<? echo $call_id;?>"/><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Set outcome"); ?>"/></p>
 		</form>
@@ -165,7 +167,7 @@ if ($case_id != false)
 		print "<h1>" . T_("Project") . ": {$rs['qd']}</h1>";
 		print "<h1>" . T_("Sample") . ": {$rs['sd']}</h1>";
 
-		print "<h2>". T_("Current outcome:") ." {$rs['description']}</h2>";
+		print "<h2>". T_("Current outcome:") ." " . T_($rs['description']) . "</h2>";
 
 		$current_outcome_id = $rs['outcome_id'];
 
@@ -184,7 +186,10 @@ if ($case_id != false)
 		$rs = $db->GetAll($sql);
 	
 		if (!empty($rs))
+		{
+			translate_array($rs,array("outcome"));
 			xhtml_table($rs,array("description","start","end","makerName","firstName","lastName","outcome","callerName","link"),array(T_("Questionnaire"),T_("Start"),T_("End"),T_("Operator Name"),T_("Respondent Name"),T_("Surname"),T_("Current outcome"),T_("Operator who called"),T_("Delete")));
+		}
 		else
 			print "<p>" . T_("No appointments for this case") . "</p>";
 
@@ -203,8 +208,10 @@ if ($case_id != false)
 		if (empty($rs))
 			print "<p>" . T_("No calls made") . "</p>";
 		else
+		{
+			translate_array($rs,array("des"));
 			xhtml_table($rs,array("start","des","phone","link","firstName"),array(T_("Date/Time"),T_("Outcome"),T_("Phone number"),T_("Change outcome"),T_("Operator")));
-	
+		}
 	
 		//view notes
 		$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.datetime,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as time, op.firstName, op.lastName, c.note as note
@@ -251,8 +258,10 @@ if ($case_id != false)
 		<?              
 			$sql = "SELECT outcome_id as value,description, CASE WHEN outcome_id = '$current_outcome_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM outcome";
-		
-			display_chooser($db->GetAll($sql), "outcome_id", "outcome_id",true,false,false);
+	
+			$rs2 = $db->GetAll($sql);
+			translate_array($rs2,array("description"));
+			display_chooser($rs2, "outcome_id", "outcome_id",true,false,false);
 	
 		?>
 		<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Set outcome"); ?>"/></p>

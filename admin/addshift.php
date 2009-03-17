@@ -244,7 +244,7 @@ if ($questionnaire_id != false)
 		<!--<tr><td/><td/><td/><td>Select all</td></tr>-->
 		</table>
 		<!--<p><input type="submit" name="addshift" value="Add Shift"/></p>-->
-		<p><input type="submit" name="submit" value="Submit changes"/></p>
+		<p><input type="submit" name="submit" value="<? echo T_("Submit changes"); ?>"/></p>
 		<p><input type="hidden" name="year" value="<? echo $year; ?>"/></p>
 		<p><input type="hidden" name="woy" value="<? echo $woy; ?>"/></p>
 		<p><input type="hidden" name="qid" value="<? echo $questionnaire_id; ?>"/></p>

@@ -90,7 +90,7 @@ if ($a)
 	<p><? echo T_("Enter the first name of an client to add:"); ?> <input name="firstname" type="text"/></p>
 	<p><? echo T_("Enter the surname of an client to add:"); ?> <input name="lastname" type="text"/></p>
 	<p><? echo T_("Enter the Time Zone of an client to add:"); ?> <input name="Time_zone_name" type="text" value="<? echo DEFAULT_TIME_ZONE; ?>"/></p>
-	<p><input type="submit" value="Add user" /></p>
+	<p><input type="submit" value="<? echo T_("Add user"); ?>" /></p>
 </form>
 
 <?

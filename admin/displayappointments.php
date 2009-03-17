@@ -110,7 +110,10 @@ else
 	$rs = $db->GetAll($sql);
 	
 	if (!empty($rs))
+	{
+		translate_array($rs,array("outcome"));
 		xhtml_table($rs,array("description","case_id","start","end","makerName","firstName","lastName","outcome","callerName","link"),array(T_("Questionnaire"),T_("Case ID"),T_("Start"),T_("End"),T_("Operator Name"),T_("Respondent Name"),T_("Surname"),T_("Current outcome"),T_("Operator who called"),T_("Delete")));
+	}
 	else
 		print "<p>" . T_("No appointments in the future") . "</p>";
 	

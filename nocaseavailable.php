@@ -51,6 +51,11 @@ include ("functions/functions.xhtml.php");
  */
 include ("functions/functions.operator.php");
 
+/**
+ * Limesurvey functions
+ */
+include ("functions/functions.limesurvey.php");
+
 xhtml_head(T_("No case available"),true,array("css/table.css"));
 
 $operator_id = get_operator_id();
@@ -146,7 +151,7 @@ else
 //no link to limesurvey
 $sql = "SELECT q.lime_sid, q.description
 	FROM questionnaire as q, operator_questionnaire as oq
-	WHERE oq.operator_id = '1'
+	WHERE oq.operator_id = '$operator_id'
 	AND q.questionnaire_id = oq.questionnaire_id";
 
 $rs = $db->GetAll($sql);
@@ -168,6 +173,28 @@ if (!empty($rs))
 }
 else
 	print "<p class='error'>" . T_("ERROR: Cannot find questionnaires with LimeSurvey ID's") . "</p>";
+
+
+
+//quota's full
+$sql = "SELECT questionnaire_sample_quota_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid
+	FROM questionnaire_sample_quota as qsq, questionnaire as q, operator_questionnaire as oq
+	WHERE oq.operator_id = '$operator_id'
+	AND qsq.questionnaire_id = oq.questionnaire_id
+	AND q.questionnaire_id = oq.questionnaire_id";
+	
+$rs = $db->GetAll($sql);
+
+if (isset($rs) && !empty($rs))
+{
+	foreach($rs as $r)
+	{
+		if ($r['quota_reached'] == 1)
+		{
+			print "<p class='error'>" . T_("ERROR: Quota reached for this question") . " - " . $r['lime_sgqa'];
+		}
+	}
+}
 
 
 //no tokens table associated with questionnaire in limesurvey

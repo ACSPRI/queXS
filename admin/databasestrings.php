@@ -65,6 +65,12 @@ T_("Supervisor Outcomes (referred to supervisor)");
 T_("Refusal Outcomes (respondent refused)");
 T_("Final Outcomes (completed, final refusal, etc)");
 T_("Appointments");
-
+T_("Monday");
+T_("Tuesday");
+T_("Wednesday");
+T_("Thursday");
+T_("Friday");
+T_("Saturday");
+T_("Sunday");
 
 ?>

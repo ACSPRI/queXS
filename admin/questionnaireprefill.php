@@ -161,7 +161,7 @@ if ($questionnaire_id != false)
 		<label for="value"><? echo T_("The value to pre fill"); ?> </label><input type="text" name="value" id="value"/>		<br/>
 		<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
 		<input type="hidden" name="sgqa" value="<? print($sgqa); ?>"/>
-		<input type="submit" name="add_prefill" value="Add pre fill"/></p>
+		<input type="submit" name="add_prefill" value="<? print(T_("Add pre fill")); ?>"/></p>
 		</form>
 		<?
 	}

@@ -91,6 +91,7 @@ if (empty($rs))
 }
 else
 {
+	translate_array($rs,array("des"));
 	xhtml_table($rs,array("start","end","respname","des","firstName"),array(T_("Start"),T_("End"),T_("Respondent"),T_("Outcome"),T_("Operator")));
 }
 		

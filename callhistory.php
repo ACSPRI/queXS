@@ -74,7 +74,10 @@ if ($operator_id)
 	if (empty($rs))
 		print "<p>" . T_("No calls ever made") . "</p>";
 	else
+	{
+		translate_array($rs,array("des"));
 		xhtml_table($rs,array("start","case_id","des","firstName"),array(T_("Date/Time"),T_("Case ID"),T_("Outcome"),T_("Respondent")));
+	}
 }
 else
 	print "<p>" . T_("No operator") . "</p>";

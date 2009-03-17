@@ -118,7 +118,7 @@ else
 	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
 	<p><? echo T_("Choose the CSV sample file to upload:"); ?><input name="file" type="file" /></p>
 	<p><? echo T_("Description for file:"); ?><input name="description" type="text" /></p>
-	<p><input type="submit" name="import_file"/></p>
+	<p><input type="submit" name="import_file" value="<? echo T_("Add sample"); ?>"/></p>
 	</form>
 
 	<?

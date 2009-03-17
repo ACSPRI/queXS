@@ -75,7 +75,10 @@ if ($case_id)
 	if (empty($rs))
 		print "<p>" . T_("No calls made") . "</p>";
 	else
+	{
+		translate_array($rs,array("des"));
 		xhtml_table($rs,array("start","des","cphone","firstName"),array(T_("Date/Time"),T_("Outcome"),T_("Number called"),T_("Operator")));
+	}
 }
 else
 	print "<p>" . T_("No case") . "</p>";

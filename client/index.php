@@ -105,7 +105,10 @@ if ($client_id)
 			$rs = $db->GetAll($sql);
 			
 			if (!empty($rs))
+			{
+				translate_array($rs,array("des"));
 				xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"));
+			}
 			else
 				print "<p>" . T_("No outcomes recorded for this questionnaire") . "</p>";
 		

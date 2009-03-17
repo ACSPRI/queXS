@@ -119,7 +119,7 @@ $daysofweek = $db->Execute($sql);
 	$count = 0;
 	foreach($shifts as $shift)
 	{
-		print "<tr id='row-$count' class='row_to_clone'><td>" . $daysofweek->GetMenu("day[$count]",$shift['dt']) . "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td></tr>";
+		print "<tr id='row-$count' class='row_to_clone'><td>" . $daysofweek->GetMenu("day[$count]",T_($shift['dt'])) . "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td></tr>";
 		$daysofweek->MoveFirst();
 		$count++;
 	}

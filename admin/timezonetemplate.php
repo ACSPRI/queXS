@@ -101,7 +101,7 @@ $sql = "SELECT Time_zone_name
 		?>
 		<form action="" method="get"><p>
 		<label for="time_zone"><? echo T_("Timezone: "); ?></label><input type="text" name="time_zone" id="time_zone" value="<? echo DEFAULT_TIME_ZONE; ?>"/>
-		<input type="submit" name="add_timezone" value="Add Timezone"/></p>
+		<input type="submit" name="add_timezone" value="<? echo T_("Add Timezone"); ?>"/></p>
 		</form>
 		<?
 xhtml_foot();
