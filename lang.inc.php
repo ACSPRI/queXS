@@ -45,7 +45,7 @@ function translate_array(&$a,$b)
 {
 	foreach ($a as &$row)
 		foreach($b as $el)
-			$row[$el] = T_($row[$el]);
+			if (isset($row[$el])) $row[$el] = T_($row[$el]);
 }
 
 
