@@ -850,7 +850,7 @@ function get_limesurvey_url($operator_id)
 	if ($case_id)
 	{
 		$sid = get_limesurvey_id($operator_id);
-		$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$case_id&amp;lang=en";
+		$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$case_id&amp;lang=" . DEFAULT_LOCALE;
 		$questionnaire_id = get_questionnaire_id($operator_id);
 		
 		//get prefills
