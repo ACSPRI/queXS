@@ -34,7 +34,7 @@
 /**
  * Language file
  */
-include ("lang.inc.php");
+include_once("lang.inc.php");
 
 
 /**
