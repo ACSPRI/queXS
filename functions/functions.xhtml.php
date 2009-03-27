@@ -135,11 +135,13 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
  * @param bool $useblank Add a blank element to the start of the list
  * @param string|bool $pass Anything to pass along in the return string (remember to separate with &amp;)
  * @param bool $js Whether to use JS or not
+ * @param bool $indiv Whether to display in a div or not
  *
  */
-function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true)
+function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true)
 {
-	print "<div><select id='$selectid' name='$selectid' ";
+	if ($indiv) print "<div>";
+	print "<select id='$selectid' name='$selectid' ";
 	if ($js) print "onchange=\"LinkUp('$selectid')\"";
 	print ">";
 	if ($useblank)
@@ -166,8 +168,8 @@ function display_chooser($elements, $selectid, $var, $useblank = true, $pass = f
 		if (isset($e['selected'])) print $e['selected']; 
 		print ">".$e['description']."</option>";
 	}
-	print "</select></div>";
-
+	print "</select>";
+	if ($indiv) print "</div>";
 }
 
 

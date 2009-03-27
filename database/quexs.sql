@@ -518,6 +518,27 @@ CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+--
+-- Table structure for table `questionnaire_sample_quota_row`
+--
+
+CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota_row` (
+  `questionnaire_sample_quota_row_id` bigint(20) NOT NULL auto_increment,
+  `questionnaire_id` bigint(20) NOT NULL,
+  `sample_import_id` bigint(20) NOT NULL,
+  `lime_sgqa` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `value` varchar(2048) collate utf8_unicode_ci NOT NULL,
+  `comparison` varchar(15) collate utf8_unicode_ci NOT NULL default 'LIKE',
+  `completions` int(11) NOT NULL,
+  `exclude_var` char(128) collate utf8_unicode_ci NOT NULL,
+  `exclude_val` varchar(256) collate utf8_unicode_ci NOT NULL,
+  `quota_reached` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`questionnaire_sample_quota_row_id`),
+  KEY `questionnaire_id` (`questionnaire_id`),
+  KEY `sample_import_id` (`sample_import_id`),
+  KEY `exclude_var` (`exclude_var`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 -- --------------------------------------------------------
 

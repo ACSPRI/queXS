@@ -302,6 +302,7 @@ function get_case_id($operator_id, $create = false)
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
 				AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+				AND (SELECT count(*) FROM `questionnaire_sample_quota_row` as qsqr, sample_var as sv WHERE qsqr.questionnaire_id = c.questionnaire_id AND qsqr.sample_import_id = s.import_id AND qsqr.quota_reached = 1 and sv.sample_id = s.sample_id AND sv.var = qsqr.exclude_var AND qsqr.exclude_val LIKE sv.val) = 0
 				ORDER BY apn.start DESC, a.start ASC
 				LIMIT 1";
 	
@@ -336,6 +337,7 @@ function get_case_id($operator_id, $create = false)
 					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
 					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+					AND (SELECT count(*) FROM `questionnaire_sample_quota_row` as qsqr, sample_var as sv WHERE qsqr.questionnaire_id = qs.questionnaire_id AND qsqr.sample_import_id = s.import_id AND qsqr.quota_reached = 1 AND sv.sample_id = s.sample_id AND sv.var = qsqr.exclude_var AND qsqr.exclude_val LIKE sv.val) = 0
 					ORDER BY rand() * qs.random_select, s.sample_id
 					LIMIT 1";
 				
@@ -959,13 +961,11 @@ function missed_appointment($call_attempt_id)
 }
 
 /**
- * Check if any quotas apply to this questionnaire
- * and if so, update them
+ * Update the quota table (sample wide)
  *
- * @param int $questionnaire_id The questionnaire id
- *
+ * @param int $questionnaire_id The questionnaire ID to update
  */
-function update_quotas($questionnaire_id)
+function update_quota($questionnaire_id)
 {
 	global $db;
 
@@ -999,6 +999,63 @@ function update_quotas($questionnaire_id)
 	}
 
 	return false;
+
+}
+
+
+/**
+ * Update the row quota table
+ *
+ * @param int $questionnaire_id The questionnaire ID to update
+ */
+function update_row_quota($questionnaire_id)
+{
+	global $db;
+
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid
+		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
+		WHERE qsq.questionnaire_id = '$questionnaire_id'
+		AND q.questionnaire_id = '$questionnaire_id'";
+	
+	$rs = $db->GetAll($sql);
+
+	if (isset($rs) && !empty($rs))
+	{
+		//include limesurvey functions
+		include_once(dirname(__FILE__).'/functions.limesurvey.php');
+
+		//update all row quotas for this questionnaire
+		foreach($rs as $r)
+		{
+			$completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
+			
+			if ($completions >= $r['completions'])
+			{
+				//set row quota to reached
+				$sql = "UPDATE questionnaire_sample_quota_row
+					SET quota_reached = '1'
+					WHERE questionnaire_sample_quota_row_id = {$r['questionnaire_sample_quota_row_id']}";
+
+				$db->Execute($sql);
+			}
+		}
+	}
+
+	return false;
+
+}
+
+/**
+ * Check if any quotas apply to this questionnaire
+ * and if so, update them
+ *
+ * @param int $questionnaire_id The questionnaire id
+ *
+ */
+function update_quotas($questionnaire_id)
+{
+	update_quota($questionnaire_id);
+	update_row_quota($questionnaire_id);
 }
 
 
