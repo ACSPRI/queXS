@@ -235,7 +235,7 @@ if ($questionnaire_id != false)
 				
 				$sql = "SELECT sv.val as value, sv.val as description, ''  AS selected
 					FROM sample_var AS sv, sample AS s
-					WHERE s.import_id = 6
+					WHERE s.import_id = $sample_import_id
 					AND s.sample_id = sv.sample_id
 					AND sv.var = '$sample_var'
 					GROUP BY sv.val";
