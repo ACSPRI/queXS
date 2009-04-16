@@ -103,12 +103,13 @@ $sql = "SELECT DATE_FORMAT( STR_TO_DATE( CONCAT( '$year', ' ', '$woy', ' ', day_
 	FROM shift_template";	
 		
 $shifts = $db->GetAll($sql);
+translate_array($shifts,array("dt"));		
 	
-	
-$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as dt, day_of_week as dow
+$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as description, day_of_week as value, '' as selected 
 	FROM day_of_week";
 	
-$daysofweek = $db->Execute($sql);
+$daysofweek = $db->GetAll($sql);
+translate_array($daysofweek,array("description"));	
 
 ?>
 	<form method="post" action="">
@@ -118,11 +119,14 @@ $daysofweek = $db->Execute($sql);
 	$count = 0;
 	foreach($shifts as $shift)
 	{
-		print "<tr id='row-$count' class='row_to_clone'><td>" . $daysofweek->GetMenu("day[$count]",T_($shift['dt'])) . "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td></tr>";
-		$daysofweek->MoveFirst();
+		print "<tr id='row-$count' class='row_to_clone'><td>";
+		display_chooser($daysofweek, "day[$count]", false, true, false, false, false, array("description",$shift['dt']));
+		print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td></tr>";
 		$count++;
 	}
-	print "<tr class='row_to_clone' id='row-$count'><td>" . $daysofweek->GetMenu("day[$count]") . "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"00:00:00\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"00:00:00\"/></td></tr>";
+	print "<tr class='row_to_clone' id='row-$count'><td>"; 
+	display_chooser($daysofweek, "day[$count]", false, true, false, false, false, false);
+	print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"00:00:00\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"00:00:00\"/></td></tr>";
 
 
 ?>

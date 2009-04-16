@@ -184,7 +184,7 @@ if ($questionnaire_id != false)
 	$sql = "SELECT shift_id, dt, dta,start,end
 		FROM (
 			(
-			SELECT shift_id, DATE_FORMAT( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) , '%W %d %M %Y' ) AS dt,
+			SELECT shift_id, DATE_FORMAT( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) , '%W %d %m %Y' ) AS dt,
 				DATE( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) ) AS dta,
 				TIME( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) ) AS start,
 				TIME( CONVERT_TZ( s.end, 'UTC', o.Time_zone_name ) ) AS end
@@ -196,7 +196,7 @@ if ($questionnaire_id != false)
 			) 
 		UNION (
 			SELECT NULL AS shift_id,
-				DATE_FORMAT( STR_TO_DATE( CONCAT( '$year', ' ', '$woy', ' ', day_of_week -1 ) , '%x %v %w' ) , '%W %d %M %Y' ) AS dt,
+				DATE_FORMAT( STR_TO_DATE( CONCAT( '$year', ' ', '$woy', ' ', day_of_week -1 ) , '%x %v %w' ) , '%W %d %m %Y' ) AS dt,
 		       		STR_TO_DATE( CONCAT( '$year', ' ', '$woy', ' ', day_of_week -1 ) , '%x %v %w' ) AS dta,
 				start,end
 			FROM shift_template
@@ -208,13 +208,17 @@ if ($questionnaire_id != false)
 	$shifts = $db->GetAll($sql);
 	
 	
-	$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W %d %M %Y') as dt, day_of_week - 1 as dow
+	$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W %d %m %Y') as dt,
+		       DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as dtd,
+		       DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%d %m %Y') as dto,
+		       day_of_week - 1 as value
 		FROM day_of_week 
-		GROUP BY dow";
+		GROUP BY value";
 	
-	$daysofweek = $db->Execute($sql);
-	
-	
+	$daysofweek = $db->GetAll($sql);
+	translate_array($daysofweek,array("dtd"));
+	foreach($daysofweek as $key => $val)
+		$daysofweek[$key]['description'] = $val['dtd'] . " " . $val['dto'];
 	
 	?>
 		<form method="post" action="">
@@ -236,8 +240,9 @@ if ($questionnaire_id != false)
 				$shift_id = $count;
 				$prefix = "NEW_";
 			}
-			print "<tr><td>" . $daysofweek->GetMenu($prefix . "dow_$shift_id",$shift['dt']) . "</td><td><input size=\"8\" name=\"" . $prefix ."start_$shift_id\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"" . $prefix ."end_$shift_id\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td><td><input name=\"" . $prefix ."use_$shift_id\" type=\"checkbox\" $checked/></td></tr>";
-			$daysofweek->MoveFirst();
+			print "<tr><td>";
+			display_chooser($daysofweek, $prefix . "dow_$shift_id", false, true, false, false, false, array("dt",$shift['dt']));
+			print "</td><td><input size=\"8\" name=\"" . $prefix ."start_$shift_id\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"" . $prefix ."end_$shift_id\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td><td><input name=\"" . $prefix ."use_$shift_id\" type=\"checkbox\" $checked/></td></tr>";
 			$count++;
 		}
 	?>

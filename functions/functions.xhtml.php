@@ -136,9 +136,10 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
  * @param string|bool $pass Anything to pass along in the return string (remember to separate with &amp;)
  * @param bool $js Whether to use JS or not
  * @param bool $indiv Whether to display in a div or not
+ * @param array|bool $select The element to select manually (element,string) (not using selected=\'selected\' in array)
  *
  */
-function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true)
+function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false)
 {
 	if ($indiv) print "<div>";
 	print "<select id='$selectid' name='$selectid' ";
@@ -165,7 +166,15 @@ function display_chooser($elements, $selectid, $var, $useblank = true, $pass = f
 		{
 			print "<option value='{$e['value']}' ";
 		}
-		if (isset($e['selected'])) print $e['selected']; 
+
+		if ($selected == false)
+		{
+			if (isset($e['selected']))
+				print $e['selected']; 
+		}
+		else
+			if (strcmp($selected[1],$e[$selected[0]]) == 0) print "selected='selected'";
+
 		print ">".$e['description']."</option>";
 	}
 	print "</select>";
