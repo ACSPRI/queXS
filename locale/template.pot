@@ -1,16 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 10:09+1000\n"
+"POT-Creation-Date: 2009-04-16 13:09+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@deakin.edu.au>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: T_\n"
-"X-Poedit-Basepath: /misc/htdocsdev/quexs/\n"
+"X-Poedit-Basepath: /misc/htdocsactive/quexs/\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: callhistory.php:52
@@ -281,6 +282,10 @@ msgstr ""
 
 #: endwork.php:61
 msgid "Go back to work"
+msgstr ""
+
+#: endwork.php:63
+msgid "Finish or take a break"
 msgstr ""
 
 #: record.php:55
@@ -705,12 +710,105 @@ msgstr ""
 msgid "Time end"
 msgstr ""
 
-#: admin/questionnaireprefill.php:95
-msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
+#: admin/quotarow.php:112
+msgid "Quota row management"
 msgstr ""
 
+#: admin/quotarow.php:113
 #: admin/questionnaireprefill.php:96
 msgid "Select a questionnaire from the list below"
+msgstr ""
+
+#: admin/quotarow.php:125
+msgid "Select a sample from the list below"
+msgstr ""
+
+#: admin/quotarow.php:136
+msgid "Current row quotas (click to delete)"
+msgstr ""
+
+#: admin/quotarow.php:148
+msgid "Currently no row quotas"
+msgstr ""
+
+#: admin/quotarow.php:154
+msgid "Stop calling"
+msgstr ""
+
+#: admin/quotarow.php:154
+msgid "like"
+msgstr ""
+
+#: admin/quotarow.php:154
+msgid "rows from this sample when:"
+msgstr ""
+
+#: admin/quotarow.php:154
+msgid "for"
+msgstr ""
+
+#: admin/quotarow.php:154
+msgid "completions"
+msgstr ""
+
+#: admin/quotarow.php:157
+msgid "Row quota reached"
+msgstr ""
+
+#: admin/quotarow.php:159
+msgid "Row quota not yet reached"
+msgstr ""
+
+#: admin/quotarow.php:161
+msgid "Current completions: "
+msgstr ""
+
+#: admin/quotarow.php:169
+msgid "Select a question for the row quota"
+msgstr ""
+
+#: admin/quotarow.php:196
+msgid "Select the sample variable to exclude"
+msgstr ""
+
+#: admin/quotarow.php:208
+msgid "Enter the details for creating the row quota:"
+msgstr ""
+
+#: admin/quotarow.php:209
+msgid "Pre defined values for this question:"
+msgstr ""
+
+#: admin/quotarow.php:222
+msgid "No labels defined for this question"
+msgstr ""
+
+#: admin/quotarow.php:224
+msgid "Code value"
+msgstr ""
+
+#: admin/quotarow.php:230
+msgid "The code value to compare"
+msgstr ""
+
+#: admin/quotarow.php:231
+msgid "The type of comparison"
+msgstr ""
+
+#: admin/quotarow.php:232
+msgid "The number of completions to stop calling at"
+msgstr ""
+
+#: admin/quotarow.php:233
+msgid "Exclude from the sample where the value is like"
+msgstr ""
+
+#: admin/quotarow.php:251
+msgid "Add row quota"
+msgstr ""
+
+#: admin/questionnaireprefill.php:95
+msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
 msgstr ""
 
 #: admin/questionnaireprefill.php:105
@@ -1110,7 +1208,7 @@ msgid "Outcome of last process run (if any)"
 msgstr ""
 
 #: admin/supervisor.php:75
-#: admin/index.php:75
+#: admin/index.php:76
 msgid "Supervisor functions"
 msgstr ""
 
@@ -1185,8 +1283,6 @@ msgid "No appointments for this case"
 msgstr ""
 
 #: admin/supervisor.php:199
-#: admin/shiftreport.php:97
-#: admin/shiftreport.php:105
 msgid "Edit"
 msgstr ""
 
@@ -1252,7 +1348,7 @@ msgstr ""
 
 #: admin/operatorquestionnaire.php:146
 #: admin/operatorquestionnaire.php:267
-#: admin/index.php:59
+#: admin/index.php:60
 msgid "Assign operators to questionnaires"
 msgstr ""
 
@@ -1317,12 +1413,11 @@ msgid "Create Questionnaire"
 msgstr ""
 
 #: admin/dataoutput.php:118
-#: admin/index.php:62
+#: admin/index.php:63
 msgid "Data output"
 msgstr ""
 
 #: admin/dataoutput.php:120
-#: admin/shiftreport.php:66
 msgid "Please select a questionnaire"
 msgstr ""
 
@@ -1437,7 +1532,7 @@ msgid "Shift report"
 msgstr ""
 
 #: admin/outcomes.php:223
-#: admin/index.php:69
+#: admin/index.php:70
 msgid "Operator performance"
 msgstr ""
 
@@ -1474,72 +1569,71 @@ msgstr ""
 msgid "Quota management"
 msgstr ""
 
-#: admin/index.php:58
+#: admin/index.php:59
 msgid "Add operators to the system"
 msgstr ""
 
-#: admin/index.php:60
+#: admin/index.php:61
 msgid "Modify operator skills"
 msgstr ""
 
-#: admin/index.php:61
+#: admin/index.php:62
 msgid "Shift management (add/remove)"
 msgstr ""
 
-#: admin/index.php:64
+#: admin/index.php:65
 msgid "Questionnaire progress"
 msgstr ""
 
-#: admin/index.php:65
+#: admin/index.php:66
 msgid "Display all future appointments"
 msgstr ""
 
-#: admin/index.php:66
+#: admin/index.php:67
 msgid "Questionnaire outcomes"
 msgstr ""
 
-#: admin/index.php:71
+#: admin/index.php:72
 msgid "Client management"
 msgstr ""
 
-#: admin/index.php:72
+#: admin/index.php:73
 msgid "Add clients to the system"
 msgstr ""
 
-#: admin/index.php:76
+#: admin/index.php:77
 msgid "Assign outcomes to cases"
 msgstr ""
 
-#: admin/index.php:77
+#: admin/index.php:78
 msgid "Search the sample"
 msgstr ""
 
-#: admin/index.php:79
-#: admin/shiftreport.php:62
+#: admin/index.php:80
 msgid "Shift reports"
 msgstr ""
 
-#: admin/index.php:81
+#: admin/index.php:82
 msgid "System settings"
 msgstr ""
 
-#: admin/index.php:82
+#: admin/index.php:83
 msgid "Set default timezone list"
 msgstr ""
 
-#: admin/index.php:83
+#: admin/index.php:84
 msgid "Set default shift times"
 msgstr ""
 
-#: admin/index.php:84
+#: admin/index.php:85
 msgid "Set call restriction times"
 msgstr ""
 
-#: admin/index.php:88
+#: admin/index.php:89
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:89
+#: admin/index.php:90
 msgid "Start and monitor VoIP"
 msgstr ""
 
@@ -1648,20 +1742,16 @@ msgstr ""
 msgid "Add shifts in your Time Zone"
 msgstr ""
 
-#: admin/addshift.php:223
+#: admin/addshift.php:227
 msgid "Day"
 msgstr ""
 
-#: admin/addshift.php:223
+#: admin/addshift.php:227
 msgid "Use shift?"
 msgstr ""
 
-#: admin/addshift.php:247
+#: admin/addshift.php:252
 msgid "Submit changes"
-msgstr ""
-
-#: admin/quota.php:122
-msgid "Select a sample from the list below"
 msgstr ""
 
 #: admin/quota.php:133
@@ -1676,14 +1766,6 @@ msgstr ""
 msgid "Stop calling this sample when:"
 msgstr ""
 
-#: admin/quota.php:151
-msgid "for"
-msgstr ""
-
-#: admin/quota.php:151
-msgid "completions"
-msgstr ""
-
 #: admin/quota.php:154
 msgid "Quota reached"
 msgstr ""
@@ -1692,40 +1774,12 @@ msgstr ""
 msgid "Quota not yet reached"
 msgstr ""
 
-#: admin/quota.php:158
-msgid "Current completions: "
-msgstr ""
-
 #: admin/quota.php:166
 msgid "Select a question for the quota"
 msgstr ""
 
 #: admin/quota.php:189
 msgid "Enter the details for creating the quota:"
-msgstr ""
-
-#: admin/quota.php:190
-msgid "Pre defined values for this question:"
-msgstr ""
-
-#: admin/quota.php:203
-msgid "No labels defined for this question"
-msgstr ""
-
-#: admin/quota.php:205
-msgid "Code value"
-msgstr ""
-
-#: admin/quota.php:211
-msgid "The code value to compare"
-msgstr ""
-
-#: admin/quota.php:212
-msgid "The type of comparison"
-msgstr ""
-
-#: admin/quota.php:213
-msgid "The number of completions to stop calling at"
 msgstr ""
 
 #: admin/quota.php:217
@@ -1825,12 +1879,12 @@ msgstr ""
 msgid "Enter standard shift start and end times for each day of the week in local time"
 msgstr ""
 
-#: admin/shifttemplate.php:130
-#: admin/callrestrict.php:131
+#: admin/shifttemplate.php:134
+#: admin/callrestrict.php:134
 msgid "Add row"
 msgstr ""
 
-#: admin/shifttemplate.php:131
+#: admin/shifttemplate.php:135
 msgid "Save changes to shifts"
 msgstr ""
 
@@ -1842,7 +1896,7 @@ msgstr ""
 msgid "Enter the start and end times for each day of the week to restrict calls within"
 msgstr ""
 
-#: admin/callrestrict.php:132
+#: admin/callrestrict.php:135
 msgid "Save changes to restriction times"
 msgstr ""
 
@@ -1850,7 +1904,7 @@ msgstr ""
 msgid "There are no questionnaires assigned to you"
 msgstr ""
 
-#: client/index.php:120
+#: client/index.php:123
 msgid "You are not a valid client"
 msgstr ""
 
@@ -1925,7 +1979,7 @@ msgstr ""
 msgid "evening"
 msgstr ""
 
-#: functions/functions.operator.php:537
+#: functions/functions.operator.php:539
 msgid "ERROR: You do not have server side authentication enabled therefore queXS cannot determine which user is accessing the system."
 msgstr ""
 
