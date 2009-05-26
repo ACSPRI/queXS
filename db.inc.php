@@ -52,6 +52,16 @@ if (!(include_once(ADODB_PATH . 'session/adodb-session2.php')))
 	print "<p>ERROR: Please modify config.inc.php for ADODB_PATH to point to your ADODb installation</p>";
 }
 
+define('ADODB_OUTP',"outputDebug");
+
+/**
+ * Output for debugging
+ */
+function outputDebug($text,$newline)
+{
+	error_log($text,0);	
+}
+
 //if PEAR not installed:
 set_include_path("."); //TEMP ONLY
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__).'/include/pear/');
@@ -60,13 +70,13 @@ set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__).'/inclu
 $db = newADOConnection(DB_TYPE);
 $db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
-
+if (DEBUG == true) $db->debug = true;
 
 //global database variable for limesurvey
 $ldb = newADOConnection(LDB_TYPE);
 $ldb->Connect(LDB_HOST, LDB_USER, LDB_PASS, LDB_NAME);
 $ldb->SetFetchMode(ADODB_FETCH_ASSOC);
-
+if (DEBUG == true) $ldb->debug = true;
 
 //store session in database (see sessions2 table)
 ADOdb_Session::config(DB_TYPE, DB_HOST, DB_USER, DB_PASS, DB_NAME,$options=false);

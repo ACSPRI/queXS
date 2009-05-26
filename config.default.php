@@ -159,5 +159,9 @@ if (!defined('LDB_HOST')) define('LDB_HOST', DB_HOST);
 if (!defined('LDB_NAME')) define('LDB_NAME', DB_NAME);
 if (!defined('LDB_TYPE')) define('LDB_TYPE', DB_TYPE);
 
+/**
+ * Debugging
+ */
+if (!defined('DEBUG')) define('DEBUG',false);
 
 ?>
