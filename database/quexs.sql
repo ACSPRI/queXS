@@ -543,6 +543,23 @@ CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota_row` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `questionnaire_sample_quota_row_exclude`
+--
+
+CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota_row_exclude` (
+  `questionnaire_sample_quota_row_id` bigint(20) NOT NULL,
+  `questionnaire_id` bigint(20) NOT NULL,
+  `sample_id` bigint(20) NOT NULL,
+  PRIMARY KEY  (`questionnaire_sample_quota_row_id`,`questionnaire_id`,`sample_id`),
+  KEY `questionnaire_id` (`questionnaire_id`),
+  KEY `sample_id` (`sample_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `respondent`
 --
 

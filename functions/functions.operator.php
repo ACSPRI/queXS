@@ -293,16 +293,17 @@ function get_case_id($operator_id, $create = false)
 				LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
 				LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
 				LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+				LEFT JOIN questionnaire_sample_quota_row_exclude AS qsqre ON (qsqre.questionnaire_id = c.questionnaire_id AND qsqre.sample_id = c.sample_id)
 				JOIN operator_skill as os on (os.operator_id = op.operator_id and os.outcome_type_id = ou.outcome_type_id)
 				WHERE c.current_operator_id IS NULL
 				AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
 				AND ap.case_id is NULL
+				AND qsqre.questionnaire_id is NULL
 				AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL AND os.outcome_type_id != 2)
 				AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND os.outcome_type_id != 2)
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
 				AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-				AND (SELECT count(*) FROM `questionnaire_sample_quota_row` as qsqr, sample_var as sv WHERE qsqr.questionnaire_id = c.questionnaire_id AND qsqr.sample_import_id = s.import_id AND qsqr.quota_reached = 1 and sv.sample_id = s.sample_id AND sv.var = qsqr.exclude_var AND qsqr.exclude_val LIKE sv.val) = 0
 				ORDER BY apn.start DESC, a.start ASC
 				LIMIT 1";
 	
@@ -333,11 +334,13 @@ function get_case_id($operator_id, $create = false)
 					LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
 					LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
 					LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
+					LEFT JOIN questionnaire_sample_quota_row_exclude AS qsqre ON (qsqre.questionnaire_id = qs.questionnaire_id AND qsqre.sample_id = s.sample_id)
+
 					WHERE c.case_id is NULL
+					AND qsqre.questionnaire_id IS NULL
 					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
 					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-					AND (SELECT count(*) FROM `questionnaire_sample_quota_row` as qsqr, sample_var as sv WHERE qsqr.questionnaire_id = qs.questionnaire_id AND qsqr.sample_import_id = s.import_id AND qsqr.quota_reached = 1 AND sv.sample_id = s.sample_id AND sv.var = qsqr.exclude_var AND qsqr.exclude_val LIKE sv.val) = 0
 					ORDER BY rand() * qs.random_select, s.sample_id
 					LIMIT 1";
 				
@@ -974,7 +977,8 @@ function update_quota($questionnaire_id)
 	$sql = "SELECT questionnaire_sample_quota_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid
 		FROM questionnaire_sample_quota as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
-		AND q.questionnaire_id = '$questionnaire_id'";
+		AND q.questionnaire_id = '$questionnaire_id'
+		and qsq.quota_reached != '1'";
 	
 	$rs = $db->GetAll($sql);
 
@@ -1014,10 +1018,13 @@ function update_row_quota($questionnaire_id)
 {
 	global $db;
 
-	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid
+	$db->StartTrans();
+
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
-		AND q.questionnaire_id = '$questionnaire_id'";
+		AND q.questionnaire_id = '$questionnaire_id'
+		AND qsq.quota_reached != '1'";
 	
 	$rs = $db->GetAll($sql);
 
@@ -1039,9 +1046,35 @@ function update_row_quota($questionnaire_id)
 					WHERE questionnaire_sample_quota_row_id = {$r['questionnaire_sample_quota_row_id']}";
 
 				$db->Execute($sql);
+
+				
+				//only insert where we have to
+				$sql = "SELECT count(*) as c
+					FROM questionnaire_sample_quota_row_exclude
+					WHERE questionnaire_sample_quota_row_id = '{$r['questionnaire_sample_quota_row_id']}'";
+
+				$coun = $db->GetRow($sql);
+
+				if (isset($coun['c']) && $coun['c'] == 0)
+				{
+					//store list of sample records to exclude
+					$sql = "INSERT INTO questionnaire_sample_quota_row_exclude (questionnaire_sample_quota_row_id,questionnaire_id,sample_id)
+						SELECT {$r['questionnaire_sample_quota_row_id']},'$questionnaire_id',s.sample_id
+						FROM sample as s, sample_var as sv
+						WHERE s.import_id = '{$r['sample_import_id']}'
+						AND s.sample_id = sv.sample_id
+						AND sv.var = '{$r['exclude_var']}'
+						AND '{$r['exclude_val']}' LIKE sv.val";
+
+					$db->Execute($sql);
+				}
+
 			}
+
 		}
 	}
+
+	$db->CompleteTrans();
 
 	return false;
 

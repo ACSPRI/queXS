@@ -99,10 +99,19 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_sample_quota_
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$questionnaire_sample_quota_row_id = bigintval($_GET['questionnaire_sample_quota_row_id']);
 
+	$db->StartTrans();
+
 	$sql = "DELETE FROM questionnaire_sample_quota_row
 		WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
 
 	$db->Execute($sql);
+
+	$sql = "DELETE FROM questionnaire_sample_quota_row_exclude
+		WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
+
+	$db->Execute($sql);
+
+	$db->CompleteTrans();
 
 }
 
