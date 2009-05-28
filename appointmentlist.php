@@ -60,6 +60,7 @@ $db->StartTrans();
 
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
+$rs = "";
 
 if ($case_id)
 {
@@ -69,19 +70,9 @@ if ($case_id)
 		LEFT JOIN (`call` as ca, outcome as o, operator as ou) on (ca.call_id = c.completed_call_id and ca.outcome_id = o.outcome_id and ou.operator_id = ca.operator_id)
 		WHERE c.case_id = '$case_id'
 		ORDER BY c.start DESC";
+	
+	$rs = $db->GetAll($sql);
 }
-else
-{
-	$sql = "SELECT q.description, DATE_FORMAT(CONVERT_TZ(c.start,'UTC',r.Time_zone_name),'".DATE_TIME_FORMAT."') as start,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',r.Time_zone_name),'".TIME_FORMAT."') as end, c.completed_call_id, IFNULL(ou.firstName,'" . T_("Not yet called") . "') as firstName, r.firstName as rname, r.lastName as rsname, IFNULL(o.description,'" . T_("Not yet called") . "') as des
-		FROM `appointment` as c
-		JOIN respondent as r on  (r.respondent_id = c.respondent_id)
-		JOIN `case` as cas on (cas.case_id = c.case_id)
-		LEFT JOIN (`call` as ca, outcome as o, operator as ou) on (ca.call_id = c.completed_call_id and ca.outcome_id = o.outcome_id and ou.operator_id = ca.operator_id)
-		WHERE oq.operator_id = '$operator_id'
-		AND ca.questionnaire_id = oq.questionnaire_id
-		ORDER BY c.start DESC";
-}
-$rs = $db->GetAll($sql);
 if (empty($rs))
 {
 	if ($case_id)
