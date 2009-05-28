@@ -428,21 +428,23 @@ function get_case_id($operator_id, $create = false)
 					//add resopndent to Lime Survey token table for this questionnaire
 	
 					//first we need to get the limesurvey survey id 
-	
-					$lime_sid = get_limesurvey_id($operator_id);
-	
-					if ($lime_sid)
+
+					if (!$db->HasFailedTrans()) //if the transaction hasn't failed
 					{
-						$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,attribute_1,attribute_2,mpid)
-						VALUES (NULL,'','','',$case_id,'en','N','N','','',NULL)";
-	
-						if (!$ldb->Execute($sql)) //if we cannot insert
+						$lime_sid = get_limesurvey_id($operator_id);
+		
+						if ($lime_sid)
 						{
-							$db->FailTrans();
-							$case_id = false;
+							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,attribute_1,attribute_2,mpid)
+							VALUES (NULL,'','','',$case_id,'en','N','N','','',NULL)";
+		
+							if (!$ldb->Execute($sql)) //if we cannot insert
+							{
+								$db->FailTrans();
+								$case_id = false;
+							}
 						}
 					}
-	
 				}
 			}
 			else
@@ -470,12 +472,12 @@ function get_case_id($operator_id, $create = false)
 	
 	}
 
-	//if ($db->HasFailedTrans()) { print "FAILED in get_case_id"; exit; }
+	if ($db->HasFailedTrans()) 
+	{ 
+		error_log("FAILED in get_case_id for case $case_id",0);
+		$case_id = false;  //make sure we aren't returning an invalid case id
+	}
 	$db->CompleteTrans();
-
-	/**
-	 * @todo should re return some sort of status? Like "on appointment" "refusal" "supervisor"?
-	 */
 
 	return $case_id;
 
