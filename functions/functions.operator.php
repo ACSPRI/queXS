@@ -456,9 +456,10 @@ function get_case_id($operator_id, $create = false)
 	
 				$sql = "UPDATE `case`
 					SET current_operator_id = '$operator_id'
-					WHERE case_id = '$case_id'";
+					WHERE current_operator_id IS NULL
+					AND case_id = '$case_id'";
 	
-	
+				//should fail transaction if already assigned to another case	
 				$db->Execute($sql);
 		
 	
