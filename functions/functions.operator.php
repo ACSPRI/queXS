@@ -213,7 +213,8 @@ function is_respondent_selection($operator_id)
 
 	$questionnaire_id = get_questionnaire_id($operator_id);
 
-	if (!$questionnaire_id) return false;
+	if (!$questionnaire_id)
+		return false;
 
 	$sql = "SELECT respondent_selection
 		FROM questionnaire 
@@ -454,9 +455,13 @@ function get_case_id($operator_id, $create = false)
 					WHERE current_operator_id IS NULL
 					AND case_id = '$case_id'";
 	
-				//should fail transaction if already assigned to another case	
 				$db->Execute($sql);
 		
+				//should fail transaction if already assigned to another case	
+				if ($db->Affected_Rows() != 1)
+				{
+					$db->FailTrans();
+				}
 	
 			}
 		}
