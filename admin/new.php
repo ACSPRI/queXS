@@ -49,7 +49,6 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.input.php");
 
-global $ldb;
 global $db;
 
 xhtml_head(T_("New: Create new questionnaire"),true,false,array("../js/new.js"));
@@ -119,7 +118,7 @@ $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	AND sl.surveyls_language = 'en' )
 	WHERE s.active = 'Y'";
 
-$surveys = $ldb->GetAll($sql);
+$surveys = $db->GetAll($sql);
 foreach($surveys as $s)
 {
 	print "<option value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";

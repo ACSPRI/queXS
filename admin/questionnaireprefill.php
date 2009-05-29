@@ -143,7 +143,7 @@ if ($questionnaire_id != false)
 		WHERE q.sid = '$lime_sid'";
 
 
-	display_chooser($ldb->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id");
+	display_chooser($db->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id");
 
 	if ($sgqa != false)
 	{

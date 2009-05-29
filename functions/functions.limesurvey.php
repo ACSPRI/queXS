@@ -59,42 +59,17 @@ include_once(dirname(__FILE__).'/../db.inc.php');
  */
 function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sample_import_id,$value,$comparison)
 {
-	global $ldb;
 	global $db;
 
 	$sql = "SELECT count(*) as c
-		FROM " . LIME_PREFIX . "survey_$lime_sid 
-		WHERE submitdate IS NOT NULL
-		AND `$lime_sgqa` $comparison '$value'";
+		FROM " . LIME_PREFIX . "survey_$lime_sid as s
+		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
+		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
+		WHERE s.submitdate IS NOT NULL
+		AND s.token = c.case_id
+		AND s.`$lime_sgqa` $comparison '$value'";
 
-	$sqm = "SELECT c.case_id as case_id
-		FROM `case` as c, `sample` as s
-		WHERE c.questionnaire_id = '$questionnaire_id'
-		AND c.sample_id = s.sample_id
-		AND s.import_id = '$sample_import_id'";
-	
-	$r = $db->GetAll($sqm);
-	
-	if (!empty($r))
-	{
-		$sql .= " AND (";
-		$ccount = count($r);
-		$ccounter = 0;
-		foreach($r as $row)
-		{
-			$token = $row['case_id'];
-			$ccounter++;
-			$sql .= " token = '$token'";
-			if ($ccounter < $ccount)
-				$sql .= " or ";
-		}
-		$sql .= ")";
-	}
-	else
-		return false;
-
-
-	$rs = $ldb->GetRow($sql);
+	$rs = $db->GetRow($sql);
 
 	if (isset($rs) && !empty($rs))
 		return $rs['c'];
@@ -146,14 +121,14 @@ function getRandomID()
  */
 function create_limesurvey_questionnaire($title)
 {
-	global $ldb;
+	global $db;
 
 	// Get random ids until one is found that is not used
 	do
 	{
 		$surveyid = getRandomID();
 		$isquery = "SELECT sid FROM ".db_table_name('surveys')." WHERE sid=$surveyid";
-		$isresult = $ldb->Execute($isquery);
+		$isresult = $db->Execute($isquery);
 	}
 	while (!empty($isresult) && $isresult->RecordCount() > 0);
 
@@ -170,7 +145,7 @@ function create_limesurvey_questionnaire($title)
 	. "'N', '0', 'Y',\n"
 	. "'att1', 'att2', \n"
 	. "'Y', 'Y', 'Y','".date("Y-m-d")."','Y')";
-	$isresult = $ldb->Execute($isquery);
+	$isresult = $db->Execute($isquery);
 
 	// insert base language into surveys_language_settings
 	$isquery = "INSERT INTO ".db_table_name('surveys_languagesettings')
@@ -184,11 +159,11 @@ function create_limesurvey_questionnaire($title)
 	. "'', '',\n"
 	. "'', '',\n"
 	. "'')";
-	$isresult = $ldb->Execute($isquery);
+	$isresult = $db->Execute($isquery);
 
 	// Insert into survey_rights
 	$isrquery = "INSERT INTO ". LIME_PREFIX . "surveys_rights VALUES($surveyid,1,1,1,1,1,1,1)";
-	$isrresult = $ldb->Execute($isrquery) or die ($isrquery."<br />".$ldb->ErrorMsg());
+	$isrresult = $db->Execute($isrquery) or die ($isrquery."<br />".$db->ErrorMsg());
 
 	return $surveyid;
 }
@@ -203,7 +178,7 @@ function create_limesurvey_questionnaire($title)
  */
 function get_lime_id($case_id)
 {
-	global $ldb;
+	global $db;
 
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
@@ -212,7 +187,7 @@ function get_lime_id($case_id)
 		FROM " . LIME_PREFIX . "survey_$lime_sid 
 		WHERE token = '$case_id'";
 	
-	$r = $ldb->GetRow($sql);
+	$r = $db->GetRow($sql);
 
 	if (!empty($r) && isset($r['id']))
 		return $r['id'];
@@ -232,7 +207,7 @@ function get_lime_id($case_id)
  */
 function get_lime_tid($case_id)
 {
-	global $ldb;
+	global $db;
 
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
@@ -241,7 +216,7 @@ function get_lime_tid($case_id)
 		FROM " . LIME_PREFIX . "tokens_$lime_sid 
 		WHERE token = '$case_id'";
 	
-	$r = $ldb->GetRow($sql);
+	$r = $db->GetRow($sql);
 
 	if (!empty($r) && isset($r['tid']))
 		return $r['tid'];
@@ -284,7 +259,7 @@ function get_lime_sid($case_id)
  */
 function limesurvey_is_completed($case_id)
 {
-	global $ldb;
+	global $db;
 
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
@@ -293,7 +268,7 @@ function limesurvey_is_completed($case_id)
 		FROM " . LIME_PREFIX . "tokens_$lime_sid 
 		WHERE token = '$case_id'";
 	
-	$r = $ldb->GetRow($sql);
+	$r = $db->GetRow($sql);
 
 	if (!empty($r))
 		if ($r['completed'] != 'N') return true;
@@ -314,13 +289,13 @@ function limesurvey_is_completed($case_id)
  */
 function limesurvey_get_numberofquestions($lime_sid)
 {
-	global $ldb;
+	global $db;
 
 	$sql = "SELECT count(qid) as c
 		FROM " . LIME_PREFIX . "questions
 		WHERE sid = '$lime_sid'";
 
-	$r = $ldb->GetRow($sql);
+	$r = $db->GetRow($sql);
 
 	if (!empty($r))
 		return $r['c'];
@@ -337,7 +312,7 @@ function limesurvey_get_numberofquestions($lime_sid)
  */
 function limesurvey_percent_complete($case_id)
 {
-	global $ldb;
+	global $db;
 
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
@@ -347,7 +322,7 @@ function limesurvey_percent_complete($case_id)
 		WHERE sid = '$lime_sid'
 		AND identifier = '$case_id'";
 
-	$r = $ldb->GetRow($sql);
+	$r = $db->GetRow($sql);
 
 	if (!empty($r))
 	{
@@ -363,10 +338,10 @@ function limesurvey_percent_complete($case_id)
 
 function limesurvey_get_width($qid,$default)
 {
-	global $ldb;
+	global $db;
 
 	$sql = "SELECT value FROM ".LIME_PREFIX."question_attributes WHERE qid = '$qid' and attribute = 'maximum_chars'";
-	$r = $ldb->GetRow($sql);
+	$r = $db->GetRow($sql);
 
 	if (!empty($r))
 		$default = $r['value'];
@@ -378,10 +353,10 @@ function limesurvey_get_width($qid,$default)
 
 function limesurvey_fixed_width($lid)
 {
-	global $ldb;
+	global $db;
 
 	$sql = "SELECT MAX(LENGTH(code)) as c FROM ".LIME_PREFIX."labels WHERE lid = $lid";
-	$r = $ldb->GetRow($sql);
+	$r = $db->GetRow($sql);
 
 	$val = 1;
 
@@ -393,14 +368,14 @@ function limesurvey_fixed_width($lid)
 
 function limesurvey_create_multi(&$varwidth,&$vartype,$qid,$varname,$length,$type)
 {
-	global $ldb;
+	global $db;
 
 	$sql = "SELECT *
 		FROM ".LIME_PREFIX."answers
 		WHERE qid = $qid
 		ORDER BY sortorder ASC";
 
-	$r = $ldb->GetAll($sql);
+	$r = $db->GetAll($sql);
 
 	foreach($r as $Row)
 	{
@@ -471,7 +446,6 @@ function all_ascii( $stringIn ){
  */
 function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = false)
 {
-	global $ldb;
 	global $db;
 
 	//array of varname and width
@@ -496,7 +470,7 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 		AND type NOT LIKE 'X'
 		ORDER BY gid,question_order ASC";
 
-	$r = $ldb->GetAll($sql);
+	$r = $db->GetAll($sql);
 	foreach ($r as $RowQ)
 	{
 		$type = $RowQ['type'];
@@ -673,7 +647,7 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 	
 		}
 
-		$r = $ldb->GetAll($sql);
+		$r = $db->GetAll($sql);
 	
 		foreach($r as $Row)
 		{

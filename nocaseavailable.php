@@ -162,7 +162,7 @@ if (!empty($rs))
 	{
 		$sql = "SELECT count(*)
 			FROM " . LIME_PREFIX ."tokens_{$r['lime_sid']}";
-		$rs2 = $ldb->GetRow($sql);
+		$rs2 = $db->GetRow($sql);
 
 		if (empty($rs2))
 			print "<p class='error'>" . T_("ERROR: No tokens table defined for LimeSurvey questionnaire") . " {$r['lime_sid']} " . T_("from questionnaire:") . " {$r['description']}</p>";

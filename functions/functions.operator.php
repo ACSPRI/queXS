@@ -243,7 +243,6 @@ function get_case_id($operator_id, $create = false)
 {
 
 	global $db;
-	global $ldb;
 
 	$db->StartTrans();
 
@@ -441,11 +440,7 @@ function get_case_id($operator_id, $create = false)
 							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,attribute_1,attribute_2,mpid)
 							VALUES (NULL,'','','',$case_id,'en','N','N','','',NULL)";
 		
-							if (!$ldb->Execute($sql)) //if we cannot insert
-							{
-								$db->FailTrans();
-								$case_id = false;
-							}
+							$db->Execute($sql);
 						}
 					}
 				}

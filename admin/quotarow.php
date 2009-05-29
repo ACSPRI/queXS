@@ -194,7 +194,7 @@ if ($questionnaire_id != false)
 			WHERE q.sid = '$lime_sid'";
 	
 	
-		display_chooser($ldb->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
+		display_chooser($db->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
 	
 		if ($sgqa != false)
 		{
@@ -225,7 +225,7 @@ if ($questionnaire_id != false)
 					WHERE q.qid = '$qid'
 					AND l.lid = q.lid";
 	
-				$rs = $ldb->GetAll($sql);
+				$rs = $db->GetAll($sql);
 	
 				if (!isset($rs) || empty($rs))
 					print "<p>" . T_("No labels defined for this question") ."</p>";

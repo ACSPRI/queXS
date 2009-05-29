@@ -72,12 +72,6 @@ $db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
 if (DEBUG == true) $db->debug = true;
 
-//global database variable for limesurvey
-$ldb = newADOConnection(LDB_TYPE);
-$ldb->Connect(LDB_HOST, LDB_USER, LDB_PASS, LDB_NAME);
-$ldb->SetFetchMode(ADODB_FETCH_ASSOC);
-if (DEBUG == true) $ldb->debug = true;
-
 //store session in database (see sessions2 table)
 ADOdb_Session::config(DB_TYPE, DB_HOST, DB_USER, DB_PASS, DB_NAME,$options=false);
 
