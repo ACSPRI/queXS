@@ -54,8 +54,9 @@ xhtml_head(T_("Supervisor"));
 //display introduction text
 
 $operator_id = get_operator_id();
+$callstatus = is_on_call($operator_id);
 
-if (is_on_call($operator_id) == 3)
+if ($callstatus == 3) //On a call
 {
 	if (VOIP_ENABLED)
 	{
@@ -64,13 +65,12 @@ if (is_on_call($operator_id) == 3)
 			include("functions/functions.voip.php");
 			$v = new voip();
 			$v->connect(VOIP_SERVER);
-			$v->addParty($operator_id,SUPERVISOR_EXTENSION);
+			$v->addParty(get_extension($operator_id),SUPERVISOR_EXTENSION);
 			print "<p>" . T_("Calling the supervisor, you may close this window") .  "</p>";
 		}
 		else
 		{
-			//print "<p><a href='?callsupervisor=callsupervisor'>" . T_("Click here to call the supervisor's phone. Otherwise close this window") . "</a></p>";
-			print "<p>" . T_("Currently Disabled: Please see your supervisor in person") . "</p>";
+			print "<p><a href='?callsupervisor=callsupervisor'>" . T_("Click here to call the supervisor's phone. A conference call will be created with the respondent, yourself and the supervisor. Otherwise close this window") . "</a></p>";
 		}
 	}
 	else
@@ -78,9 +78,33 @@ if (is_on_call($operator_id) == 3)
 		print "<p>" . T_("Try calling the supervisor") .  "</p>";
 	}
 }
-else
+else if ($callstatus == 0 || $callstatus == 4 || $callstatus == 5)
 {
-	print "<p>" . T_("Not on a call, so not calling the supervisor") . "</p>";
+        if (VOIP_ENABLED)
+        {
+                if (isset($_GET['callsupervisor']))
+                {
+                        include("functions/functions.voip.php");
+                        $v = new voip();
+                        $v->connect(VOIP_SERVER);
+                        $v->dial(get_extension($operator_id),SUPERVISOR_EXTENSION);
+                        print "<p>" . T_("Calling the supervisor, you may close this window") .  "</p>";
+                }
+                else
+                {
+                        print "<p><a href='?callsupervisor=callsupervisor'>" . T_("Click here to call the supervisor's phone. Otherwise close this window") . "</a></p>";
+                }
+        }
+        else
+        {
+                print "<p>" . T_("Try calling the supervisor") .  "</p>";
+        }
+
+
+}
+else if ($callstatus == 2)
+{
+	print "<p>" . T_("Please wait for this call to answer before attempting to call the supervisor") . "</p>";
 }
 
 xhtml_foot();
