@@ -72,9 +72,9 @@ class voip {
 		$chans = array();
 		foreach ($c as $s)
 		{
-			if(eregi("Event: Status.*Channel: SIP/([0-9a-zA-Z-]+).*Link: ([/0-9a-zA-Z-]+)",$s,$regs))
+			if(eregi("Event: Status.*Channel: SIP/([0-9a-zA-Z-]+).*BridgedChannel: ([/0-9a-zA-Z-]+)",$s,$regs))
 			{
-				//print T_("Channel: SIP/") . $regs[1] . " Link " . $regs[2] . "\n";
+				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
 				$chan = substr($regs[1],0,4);
 				$chans[$chan] = array("SIP/" . $regs[1],$regs[2]);
 			}
@@ -133,12 +133,13 @@ class voip {
 
 			//if so:
 			// 1. call the supervisor to the room
-			$q = "Action: Originate\r\nChannel: Local/$number@from-internal\r\nPriority: 1\r\nContext: default\r\nApplication: MeetMe\r\nData: " . MEET_ME_ROOM . "|d\r\n\r\n";
+			$q = "Action: Originate\r\nChannel: Local/$number@from-internal\r\nPriority: 1\r\nContext: default\r\nApplication: MeetMe\r\nData: " . MEET_ME_ROOM . ",d\r\n\r\n";
 			$r = $this->query($q,"Meetme");
 
 				
 			// 2. transfer the current call to the room
-			$r = $this->query("Action: Redirect\r\nChannel: $channel\r\nExtraChannel: $link\r\nExten: " . MEET_ME_ROOM . "\r\nPriority: 1\r\nContext: from-internal-xfer\r\n\r\n","Response");
+			$r = $this->query("Action: Redirect\r\nChannel: $channel\r\nExten: " . MEET_ME_ROOM . "\r\nPriority: 1\r\n\r\n","Response");
+			$r = $this->query("Action: Redirect\r\nChannel: $link\r\nExten: " . MEET_ME_ROOM . "\r\nContext: from-internal-xfer\r\nPriority: 1\r\n\r\n","Response");
 
 			
 		}
@@ -338,8 +339,63 @@ class voip {
  */
 class voipWatch extends voip {
 
-
 	var $keepWatching = true;
+
+
+	function dbReconnect()
+	{
+		global $db;
+		
+		//keep reconnecting to the db so it doesn't time out
+		$db = newADOConnection(DB_TYPE);
+		$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$db->SetFetchMode(ADODB_FETCH_ASSOC);
+	
+	}
+
+	/**
+	 * Get the call_id based on the extension
+	 *
+	 * @param int $ext the extension
+	 * @return int The call_id
+	 */	
+	function getCallId($ext)
+	{	
+		global $db;
+	
+		$sql = "SELECT l.call_id
+                        FROM operator AS o
+                        JOIN (`case` AS c, `call_attempt` AS ca, `call` AS l) ON
+                                                      ( c.current_operator_id = o.operator_id
+                                                        AND c.case_id = ca.case_id
+                                                        AND ca.operator_id = o.operator_id
+                                                        AND ca.end IS NULL
+                                                        AND l.call_attempt_id = ca.call_attempt_id
+                        	                        AND l.outcome_id =0 )
+                        WHERE o.extension = '$ext'";
+
+		$rs = $db->GetRow($sql);
+		$call_id =0;
+		if (!empty($rs))
+			$call_id =$rs['call_id'];
+
+		return $call_id;	
+	}
+
+
+	function setState($call_id,$state,$checkOutcome = false)
+	{
+		global $db;
+
+
+		$sql = "UPDATE `call`
+			SET state = '$state'
+			WHERE call_id = '$call_id'";
+
+		if ($checkOutcome) $sql .= " AND outcome_id = 0";
+
+		$db->Execute($sql);	
+	}
 
 	/**
 	 *  Watch for Asterisk events and make changes to the queXS databse if
@@ -350,37 +406,18 @@ class voipWatch extends voip {
 	function watch($process_id = false)
 	{
 		/**
-		 * Database file
-		 */
-		include_once(dirname(__FILE__).'/../db.inc.php');
-
-		/**
 		 * Process file
 		 */
 		if ($process_id) include_once(dirname(__FILE__).'/../functions/functions.process.php');
-			
+	
+	
 		$line = "";
    
 		if ($this->socket === false)
 		     return false;
 
-		/**
-		 * Array key: Asterisk unique ID, value: queXS call id
-		 */
-		$e = array();
-
-		/**
-		 * Array key: Asterisk unique ID, value: Asterisk sequence number
-		 */
-		$f = array();
-
 		do
 		{
-			//keep reconnecting to the db so it doesn't time out
-			$db = newADOConnection(DB_TYPE);
-			$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-			$db->SetFetchMode(ADODB_FETCH_ASSOC);
-
 			$in = fgets($this->socket, 4096);
 
 			//print "IN: $in\n";
@@ -393,83 +430,28 @@ class voipWatch extends voip {
 			{
 				//print "PROCESS: ";
 				/**
-				 * New channel, assign Asterisk unique id to queXF call id
-				 */
-				if(eregi("Event: Newchannel.*Channel: SIP/([0-9]+).*Uniqueid: ([0-9]+)\.([0-9]+)",$line,$regs))
-				{
-					print T_("Extension: ") . $regs[1] . T_(" UniqueID ") . $regs[2] . T_(" Sequence ") . $regs[3] . "\n";
-					$sql = "SELECT l.call_id
-						FROM operator AS o
-						JOIN (`case` AS c, `call_attempt` AS ca, `call` AS l) ON 
-							( c.current_operator_id = o.operator_id
-							AND c.case_id = ca.case_id
-							AND ca.operator_id = o.operator_id
-							AND ca.end IS NULL
-							AND l.call_attempt_id = ca.call_attempt_id
-							AND l.outcome_id =0 )
-						WHERE o.extension = '{$regs[1]}'";
-	
-					$rs = $db->GetRow($sql);
-					if (!empty($rs))
-					{
-						$e[$regs[2]] = $rs['call_id']; //set call id
-						$f[$regs[2]] = $regs[3]; //set sequence
-					}
-				}
-				/**
 				 * The call is ringing
 				 */
-				else if (eregi("Event: Dial.*SrcUniqueid: ([0-9]+)",$line,$regs))
+				if (eregi("Event: Dial.*SubEvent: Begin.*Channel: SIP/([0-9]+)",$line,$regs))
 				{
-					print T_("Ringing") . T_(" UniqueID ") . $regs[1] . "\n"; 
-					if (isset($e[$regs[1]])) //if we know the call of this unique id
-					{
-						$call_id = $e[$regs[1]];
-						$sql = "UPDATE `call`
-							SET state = 2
-							WHERE call_id = '$call_id'";
-						$db->Execute($sql);
-						//print $sql;
-					}
+					print T_("Ringing") . T_(" Extension ") . $regs[1] . "\n"; 
+					$this->setState($this->getCallId($regs[1]),2);
 				}
 				/**
 				 * The call has been answered
 				 */
-				else if (eregi("Event: Link.*Uniqueid1: ([0-9]+)",$line,$regs))
+				else if (eregi("Event: Bridge.*Channel1: SIP/([0-9]+)",$line,$regs))
 				{
-					print T_("Answered") . T_(" UniqueID ") . $regs[1] .  "\n";
-					if (isset($e[$regs[1]])) //if we know the call of this unique id
-					{
-						$call_id = $e[$regs[1]];
-						$sql = "UPDATE `call`
-							SET state = 3
-							WHERE call_id = '$call_id'";
-						$db->Execute($sql);
-					//	print $sql;
-					}
+					print T_("Answered") . T_(" Extension ") . $regs[1] .  "\n";
+					$this->setState($this->getCallId($regs[1]),3);
 				}
 				/**
 				 * The call has been hung up
 				 */
-				else if (eregi("Event: Hangup.*Uniqueid: ([0-9]+)\.([0-9]+)",$line,$regs))
+				else if (eregi("Event: Hangup.*Channel: SIP/([0-9]+)",$line,$regs))
 				{
-					print T_("Hangup") . T_(" UniqueID ") . $regs[1] . "\n";
-				       // print_r($e);	
-					if (isset($e[$regs[1]]) && $f[$regs[1]] == $regs[2]) //if we know the call and it is the same line hangingup
-					{
-						$call_id = $e[$regs[1]];
-						$sql = "UPDATE `call`
-							SET state = 4
-							WHERE call_id = '$call_id'
-							AND outcome_id = '0'";
-						$db->Execute($sql); //don't update if already coded outcome
-
-					//	print $sql;
-
-						//unset the variables
-						unset($e[$regs[1]]);
-						unset($f[$regs[1]]);
-					}
+					print T_("Hangup") . T_(" Extension ") . $regs[1] . "\n";
+					$this->setState($this->getCallId($regs[1]),4,true);
 				}
 
 				//print $line . "\n\n";
@@ -487,7 +469,11 @@ class voipWatch extends voip {
 
 			@flush();
 
-			if ($process_id) $this->keepWatching = !is_process_killed($process_id);
+			if ($process_id)
+			{
+				$this->dbReconnect();
+				$this->keepWatching = !is_process_killed($process_id);
+			}
 
 		} while ($this->keepWatching);
 		
