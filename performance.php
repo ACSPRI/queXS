@@ -72,20 +72,20 @@ if ($questionnaire_id)
 		 */
 		$rs = get_CPH_by_shift($questionnaire_id,$shift_id);
 		print "<div>" . T_("This shift") . "</div>";
-		xhtml_table($rs,array("firstName","CPH"),array(T_("Operator"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
+		xhtml_table($rs,array("firstName","completions","CPH"),array(T_("Operator"),T_("Completions"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
 	}
 
 
 	
 	$rs = get_CPH_by_questionnaire($questionnaire_id);
 	print "<div>" . T_("This project") . "</div>";
-	xhtml_table($rs,array("firstName","CPH"),array(T_("Operator"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
+	xhtml_table($rs,array("firstName","completions","CPH"),array(T_("Operator"),T_("Completions"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
 }
 
 
 $rs = get_CPH();
 print "<div>" . T_("Overall") . "</div>";
-xhtml_table($rs,array("firstName","CPH"),array(T_("Operator"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
+xhtml_table($rs,array("firstName","completions","CPH"),array(T_("Operator"),T_("Completions"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
 
 xhtml_foot();
 
