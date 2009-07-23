@@ -464,11 +464,12 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 		return;
 
 	//foreach question
-	$sql = "SELECT * 
-		FROM ".LIME_PREFIX."questions
-		WHERE sid=$surveyid
-		AND type NOT LIKE 'X'
-		ORDER BY gid,question_order ASC";
+	$sql = "SELECT q.* 
+		FROM ".LIME_PREFIX."questions as q, ".LIME_PREFIX."groups as g
+		WHERE q.sid=$surveyid
+		AND q.type NOT LIKE 'X'
+		AND g.gid = q.gid
+		ORDER BY g.group_order ASC,q.question_order ASC";
 
 	$r = $db->GetAll($sql);
 	foreach ($r as $RowQ)
