@@ -176,7 +176,7 @@ function display_chooser($elements, $selectid, $var, $useblank = true, $pass = f
 		else
 			if (strcmp($selected[1],$e[$selected[0]]) == 0) print "selected='selected'";
 
-		print ">".$e['description']."</option>";
+		print ">".strip_tags($e['description'])."</option>";
 	}
 	print "</select>";
 	if ($indiv) print "</div>";
