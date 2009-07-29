@@ -63,7 +63,12 @@ $p = is_process_running();
 if ($p)
 {
 	if (isset($_GET['kill']))
-		kill_process($p);
+	{
+		if ($_GET['kill'] == "force")
+			end_process($p);
+		else
+			kill_process($p);
+	}
 
 	xhtml_head(T_("Monitor VoIP Process"),true,false,false,false,10,true);
 
@@ -72,9 +77,14 @@ if ($p)
 	print "<h2>" . T_("Note: This page will automatically refresh every 10 seconds") . "</h2>";
 
 	if (is_process_killed($p))
+	{
 		print "<h3>" . T_("Kill signal sent: Please wait... (Note: Process will be stalled until there is activity on the VoIP Server)") . "</h3>";
+		print "<p><a href='?kill=force'>" . T_("Process is already closed (eg. server was rebooted) - click here to confirm") . "</a></p>";
+	}
 	else
+	{
 		print "<p><a href='?kill=kill'>" . T_("Kill the running process") . "</a> ". T_("(requires activity on the VoIP Server to take effect)") . "</p>";
+	}
 
 	print process_get_data($p);
 }
