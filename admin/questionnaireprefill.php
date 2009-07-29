@@ -65,7 +65,11 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['va
 
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$value = $db->quote($_GET['value']);
+	$svar = $db->quote($_GET['svar']);
 	$sgqa = $db->quote($_GET['sgqa']);
+
+	if (!empty($_GET['svar']) && empty($_GET['value']))
+		$value = $svar;
 
 	$sql = "INSERT INTO questionnaire_prefill(questionnaire_id,lime_sgqa,value)
 		VALUES('$questionnaire_id',$sgqa,$value)";
@@ -137,7 +141,7 @@ if ($questionnaire_id != false)
 	$sgqa = false;
 	if (isset($_GET['sgqa'])) 	$sgqa = $_GET['sgqa'];
 
-	$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) AS value, CONCAT(q.question, ': ', IFNULL(a.answer,'')) as description, CASE WHEN CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
+	$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) AS value, SUBSTR(CONCAT(q.question, ': ', IFNULL(a.answer,'')),1,100) as description, CASE WHEN CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM `" . LIME_PREFIX . "questions` AS q
 		LEFT JOIN `" . LIME_PREFIX . "answers` AS a ON ( a.qid = q.qid )
 		WHERE q.sid = '$lime_sid'";
@@ -154,12 +158,24 @@ if ($questionnaire_id != false)
 		print "<li>" . T_("{Respondent:firstName} First name of the respondent") . "</li>";
 		print "<li>" . T_("{Respondent:lastName} Last name of the respondent") . "</li>";
 		print "<li>" . T_("{Sample:var} A record from the sample where the column name is 'var'") . "</li>";	
-		print "</ul>";
+		
+		$sql = "SELECT sv.var as description, CONCAT('{Sample:', sv.var, '}') as value
+			FROM `sample` AS s, sample_var AS sv, questionnaire_sample as qs
+			WHERE qs.questionnaire_id = '$questionnaire_id' 
+			AND s.import_id = qs.sample_import_id
+			AND s.sample_id = sv.sample_id
+			GROUP BY sv.var";
+
+				print "</ul>";
 		?>
 		<form action="" method="get">
 		<p>
 		<label for="value"><? echo T_("The value to pre fill"); ?> </label><input type="text" name="value" id="value"/>		<br/>
-		<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
+		<label for="svar"><? echo T_("or: Select pre fill from sample list"); ?> </label>
+<?	//display a list of possible sample variables for this questionnaire
+		display_chooser($db->GetAll($sql),"svar","svar",true,false,false,false,false);
+?>		<br/>
+	<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
 		<input type="hidden" name="sgqa" value="<? print($sgqa); ?>"/>
 		<input type="submit" name="add_prefill" value="<? print(T_("Add pre fill")); ?>"/></p>
 		</form>
