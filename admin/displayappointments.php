@@ -191,10 +191,10 @@ if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 
 			print "</form></p>";
 			print "<p><a href='?'>" . T_("Cancel edit") . "</a></p>";
+			print "<p><a href='?delete=delete&amp;appointment_id=$appointment_id&amp;case_id=$case_id'>" . T_("Delete this appointment") . "</a></p>";
 		}
 	}
 }
-
 else
 {
 
