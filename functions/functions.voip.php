@@ -434,24 +434,36 @@ class voipWatch extends voip {
 				 */
 				if (eregi("Event: Dial.*SubEvent: Begin.*Channel: SIP/([0-9]+)",$line,$regs))
 				{
-					print T_("Ringing") . T_(" Extension ") . $regs[1] . "\n"; 
-					$this->setState($this->getCallId($regs[1]),2);
+					$call_id = $this->getCallId($regs[1]);
+					if ($call_id != 0)
+					{
+						print T_("Ringing") . T_(" Extension ") . $regs[1] . "\n"; 
+						$this->setState($call_id,2);	
+					}
 				}
 				/**
 				 * The call has been answered
 				 */
 				else if (eregi("Event: Bridge.*Channel1: SIP/([0-9]+)",$line,$regs))
 				{
-					print T_("Answered") . T_(" Extension ") . $regs[1] .  "\n";
-					$this->setState($this->getCallId($regs[1]),3);
+					$call_id = $this->getCallId($regs[1]);
+					if ($call_id != 0)
+					{
+						print T_("Answered") . T_(" Extension ") . $regs[1] .  "\n";
+						$this->setState($call_id,3);
+					}
 				}
 				/**
 				 * The call has been hung up
 				 */
 				else if (eregi("Event: Hangup.*Channel: SIP/([0-9]+)",$line,$regs))
 				{
-					print T_("Hangup") . T_(" Extension ") . $regs[1] . "\n";
-					$this->setState($this->getCallId($regs[1]),4,true);
+					$call_id = $this->getCallId($regs[1]);
+					if ($call_id != 0)
+					{
+						print T_("Hangup") . T_(" Extension ") . $regs[1] . "\n";
+						$this->setState($call_id,4,true);
+					}
 				}
 
 				//print $line . "\n\n";
