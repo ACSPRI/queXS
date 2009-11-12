@@ -155,7 +155,7 @@ if (isset($_POST['submit']))
 		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
 		if ($call_id)
 		{
-			if (VOIP_ENABLED)
+			if (is_voip_enabled($operator_id))
 			{
 				include("functions/functions.voip.php");
 				$v = new voip();
@@ -173,7 +173,7 @@ if (isset($_POST['submit']))
 	{
 		$outcome_id = bigintval($_POST['outcome']);
 		end_call($operator_id,$outcome_id);
-		if (VOIP_ENABLED)
+		if (is_voip_enabled($operator_id))
 		{
 			include("functions/functions.voip.php");
 			$v = new voip();
@@ -187,7 +187,7 @@ if (isset($_POST['submit']))
 	else
 	{
 		//if no outcome selected, just hang up the call
-		if (VOIP_ENABLED)
+		if (is_voip_enabled($operator_id))
 		{
 			include("functions/functions.voip.php");
 			$v = new voip();
@@ -251,7 +251,7 @@ switch($state)
 			{
 				//determine whether to begin calling based on extension status
 				$es = 1;
-				if (VOIP_ENABLED)
+				if (is_voip_enabled($operator_id))
 				{
 					include("functions/functions.voip.php");
 					$v = new voip();
@@ -331,7 +331,7 @@ switch($state)
 				{
 					//determine whether to begin calling based on extension status
 					$es = 1;
-					if (VOIP_ENABLED)
+					if (is_voip_enabled($operator_id))
 					{
 						include("functions/functions.voip.php");
 						$v = new voip();

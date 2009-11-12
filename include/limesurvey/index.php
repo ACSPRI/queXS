@@ -2094,7 +2094,7 @@ UpdateSessionGroupList($_SESSION['s_lang']);
 		    {
 			    if (isset($_GET[$field]))
 			    {
-				    $_SESSION[$field]=$_GET[$field];
+				    $_SESSION[$field]=urldecode($_GET[$field]);
 			    }
 		    }
 		}

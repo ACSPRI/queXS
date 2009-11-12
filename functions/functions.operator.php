@@ -45,6 +45,32 @@ include_once(dirname(__FILE__).'/../db.inc.php');
 
 
 /**
+ * Return if VOIP is enabled on an operator by operator basis
+ * Will always return false if VOIP is globally disabled
+ *
+ * @param int $operator_id the operator id
+ * @return bool True if enabled, false if not
+ */
+function is_voip_enabled($operator_id)
+{
+	if (VOIP_ENABLED == false)
+		return false;
+
+	global $db;
+
+	$sql = "SELECT voip
+		FROM operator
+		WHERE operator_id = '$operator_id'";
+
+	$rs = $db->GetRow($sql);
+
+	if ($rs['voip'] == '1')
+		return true;
+
+	return false;
+}
+
+/**
  * Return the period of the day for the respondent
  *
  * @param int $respondent_id The respondent id

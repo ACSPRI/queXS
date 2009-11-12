@@ -304,6 +304,7 @@ CREATE TABLE `operator` (
   `extension` varchar(10) NOT NULL,
   `Time_zone_name` char(64) NOT NULL,
   `enabled` tinyint(1) NOT NULL default '1',
+  `voip` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`operator_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `extension` (`extension`)

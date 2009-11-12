@@ -54,7 +54,7 @@ if (is_on_call($operator_id) == 3)
 	{
 		$newtext = T_("Stop REC");
 		xhtml_head(T_("Record"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?stop=stop\",\"online\")'");
-		if (VOIP_ENABLED)
+		if (is_voip_enabled($operator_id))
 		{
 			$call_id = get_call($operator_id);
 			if ($call_id)
@@ -77,7 +77,7 @@ if (is_on_call($operator_id) == 3)
 	{
 		$newtext = T_("Start REC");
 		xhtml_head(T_("Record"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\")'");
-		if (VOIP_ENABLED)
+		if (is_voip_enabled($operator_id))
 		{
 			include("functions/functions.voip.php");
 			$v = new voip();

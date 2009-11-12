@@ -58,19 +58,28 @@ $callstatus = is_on_call($operator_id);
 
 if ($callstatus == 3) //On a call
 {
-	if (VOIP_ENABLED)
+	if (is_voip_enabled($operator_id))
 	{
 		if (isset($_GET['callsupervisor']))
 		{
 			include("functions/functions.voip.php");
 			$v = new voip();
 			$v->connect(VOIP_SERVER);
-			$v->addParty(get_extension($operator_id),SUPERVISOR_EXTENSION);
-			print "<p>" . T_("Calling the supervisor, you may close this window") .  "</p>";
+			if (strcmp($_GET['callsupervisor'],"hangup") == 0)
+			{
+				$v->hangup(get_extension($operator_id));
+				print "<p>" . T_("You may now close this window") . "</p>";
+			}
+			else
+			{
+				$v->addParty(get_extension($operator_id),SUPERVISOR_EXTENSION);
+				print "<p>" . T_("Calling the supervisor, you may close this window") .  "</p>";
+			}		
 		}
 		else
 		{
 			print "<p><a href='?callsupervisor=callsupervisor'>" . T_("Click here to call the supervisor's phone. A conference call will be created with the respondent, yourself and the supervisor. Otherwise close this window") . "</a></p>";
+//			print "<p><a href='?callsupervisor=hangup'>" . T_("Hangup when calling the supervisor") . "</a></p>";
 		}
 	}
 	else
@@ -80,19 +89,28 @@ if ($callstatus == 3) //On a call
 }
 else if ($callstatus == 0 || $callstatus == 4 || $callstatus == 5)
 {
-        if (VOIP_ENABLED)
+        if (is_voip_enabled($operator_id))
         {
                 if (isset($_GET['callsupervisor']))
                 {
                         include("functions/functions.voip.php");
                         $v = new voip();
                         $v->connect(VOIP_SERVER);
-                        $v->dial(get_extension($operator_id),SUPERVISOR_EXTENSION);
-                        print "<p>" . T_("Calling the supervisor, you may close this window") .  "</p>";
+        		if (strcmp($_GET['callsupervisor'],"hangup") == 0)
+			{
+				$v->hangup(get_extension($operator_id));
+				print "<p>" . T_("You may now close this window") . "</p>";
+			}
+			else
+			{
+				$v->dial(get_extension($operator_id),SUPERVISOR_EXTENSION);
+                        	print "<p>" . T_("Calling the supervisor, you may close this window") .  "</p>";
+			}
                 }
                 else
                 {
                         print "<p><a href='?callsupervisor=callsupervisor'>" . T_("Click here to call the supervisor's phone. Otherwise close this window") . "</a></p>";
+//			print "<p><a href='?callsupervisor=hangup'>" . T_("Hangup when calling the supervisor") . "</a></p>";
                 }
         }
         else

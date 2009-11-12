@@ -58,7 +58,7 @@ $btext = false;
 if ($state == 4 && AUTO_POPUP)
 	$btext = "onload=\"poptastic('call.php')\"";
 
-xhtml_head(T_("Status"),true,array("css/status.css"),array("js/popupkeep.js"),$btext,5);
+xhtml_head(T_("Status"),true,array("css/status.css"),array("js/popupkeep.js"),$btext,10);
 
 print "<div class='text'>" . get_operator_time($operator_id,"%a %d %b %h:%i%p") ."</div>";
 
@@ -66,16 +66,16 @@ print "<div class='text'>" . get_operator_time($operator_id,"%a %d %b %h:%i%p") 
 
 //Then confirm whether or not they are on a call (or use the database table, call to determine)
 
-if (VOIP_ENABLED)
+if (is_voip_enabled($operator_id))
 {
 	include("functions/functions.voip.php");
 	$v = new voip();
 	$v->connect(VOIP_SERVER);
 	$ext = get_extension($operator_id);
 	if ($v->getExtensionStatus($ext))
-		print "<div class='online statusbutton'><a href='news://turnvoipoff/'>" . T_("VoIP On") . "</a></div>";
+		print "<div class='online statusbutton'>" . T_("VoIP On") . "</div>";
 	else
-		print "<div class='offline statusbutton'><a href='irc://$ext:$ext@" . VOIP_SERVER . "'>" . T_("VoIP Off") . "</a></div>";
+		print "<div class='offline statusbutton'>" . T_("VoIP Off") . "</div>";
 }
 else
 	print "<div class='online statusbutton'>" . T_("No VoIP") . "</div>";

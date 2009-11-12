@@ -62,14 +62,16 @@ if (isset($_POST['operator']))
 	$supervisor = 0;
 	$temporary = 0;
 	$refusal = 0;
+	$voip = 0;
 	if (isset($_POST['supervisor']) && $_POST['supervisor'] == "on") $supervisor = 1;
 	if (isset($_POST['refusal']) && $_POST['refusal'] == "on") $refusal = 1;
 	if (isset($_POST['temporary']) && $_POST['temporary'] == "on") $temporary = 1;	
+	if (isset($_POST['voip']) && $_POST['voip'] == "on") $voip = 1;	
 	if (!empty($_POST['operator']))
 	{
 		$sql = "INSERT INTO operator
-			(`operator_id` ,`username` ,`firstName` ,`lastName`, `extension`, `Time_zone_name`)
-			VALUES (NULL , $operator, $firstname , $lastname, $extension, $time_zone_name);";
+			(`operator_id` ,`username` ,`firstName` ,`lastName`, `extension`, `Time_zone_name`,`voip`)
+			VALUES (NULL , $operator, $firstname , $lastname, $extension, $time_zone_name, $voip);";
 	
 		if ($db->Execute($sql))
 		{
@@ -123,6 +125,7 @@ if ($a)
 	<p><? echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
 	<p><? echo T_("Enter the Time Zone of an operator to add:"); ?> <input name="Time_zone_name" type="text" value="<? echo DEFAULT_TIME_ZONE; ?>"/></p>
 	<p><? echo T_("Enter the telephone extension number:"); ?> <input name="extension" type="text"/></p>
+	<p><? echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
 	<p><? echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
 	<p><? echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>
 	<p><? echo T_("Is the operator a refusal converter?"); ?> <input name="refusal" type="checkbox"/></p>
@@ -134,4 +137,3 @@ if ($a)
 xhtml_foot();
 
 ?>
-
