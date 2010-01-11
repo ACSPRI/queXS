@@ -72,17 +72,17 @@ class voip {
 		$chans = array();
 		foreach ($c as $s)
 		{
-			if(eregi("Event: Status.*Channel: SIP/([0-9a-zA-Z-]+).*BridgedChannel: ([/0-9a-zA-Z-]+)",$s,$regs))
+			if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*BridgedChannel: ([/0-9a-zA-Z-]+)",$s,$regs))
 			{
 				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
 				$chan = substr($regs[1],0,4);
-				$chans[$chan] = array("SIP/" . $regs[1],$regs[2]);
+				$chans[$chan] = array($regs[1],$regs[2]);
 			}
-			else if(eregi("Event: Status.*Channel: SIP/([0-9a-zA-Z-]+).*",$s,$regs))
+			else if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*",$s,$regs))
 			{
 				//print T_("Channel: ") . $regs[1] .  "\n";
 				$chan = substr($regs[1],0,4);
-				$chans[$chan] = array("SIP/".$regs[1],false);
+				$chans[$chan] = array($regs[1],false);
 			}
 		}
 		return $chans;
@@ -155,7 +155,7 @@ class voip {
 	 */
 	function dial($ext,$number)
 	{
-		$r = $this->query("Action: Originate\r\nChannel: SIP/$ext\r\nExten: $number\r\nPriority: 1\r\nCallerid: $ext\r\n\r\n","Response");
+		$r = $this->query("Action: Originate\r\nChannel: $ext\r\nExten: $number\r\nPriority: 1\r\nCallerid: $ext\r\n\r\n","Response");
 	}
 
 
@@ -224,6 +224,10 @@ class voip {
 	{
 		if($ext)
 		{
+			$exts = explode('/', $ext, 2);
+			if (isset($exts[1]))
+				$ext = $exts[1];
+				
 			$ret = $this->query("Action: ExtensionState\r\nContext: default\r\nExten: $ext\r\nActionID: 1\r\n\r\n","Status:");
 			if(eregi("Status: ([0-9]+)",$ret,$regs))
 			{
@@ -432,7 +436,7 @@ class voipWatch extends voip {
 				/**
 				 * The call is ringing
 				 */
-				if (eregi("Event: Dial.*SubEvent: Begin.*Channel: SIP/([0-9]+)",$line,$regs))
+				if (eregi("Event: Dial.*SubEvent: Begin.*Channel: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
 				{
 					$call_id = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -444,7 +448,7 @@ class voipWatch extends voip {
 				/**
 				 * The call has been answered
 				 */
-				else if (eregi("Event: Bridge.*Channel1: SIP/([0-9]+)",$line,$regs))
+				else if (eregi("Event: Bridge.*Channel1: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
 				{
 					$call_id = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -456,7 +460,7 @@ class voipWatch extends voip {
 				/**
 				 * The call has been hung up
 				 */
-				else if (eregi("Event: Hangup.*Channel: SIP/([0-9]+)",$line,$regs))
+				else if (eregi("Event: Hangup.*Channel: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
 				{
 					$call_id = $this->getCallId($regs[1]);
 					if ($call_id != 0)
