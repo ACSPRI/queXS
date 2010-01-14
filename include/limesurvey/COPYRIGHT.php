@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: COPYRIGHT.php 4381 2008-02-29 22:51:41Z c_schmitz $
+* $Id: COPYRIGHT.php 5431 2008-08-16 21:05:52Z c_schmitz $
 */
 
 // no direct access
@@ -85,12 +85,17 @@ Copyright:	2001 - 2003  Brent R. Matzelle
 License:	GNU Lesser General Public License (LGPL)
 
 Sanitize Library
----
+----
 Copyright:  2002,2003 Free Software Foundation
 License:	GNU General Public License (GPL)
 
 TCPDF Class
----
-Copyright: 2006 Nicola Asuni
-License: GNU Lesser General Public License (LGPL)
+----
+Copyright:  2006 Nicola Asuni
+License:    GNU Lesser General Public License (LGPL)
 
+mint_idea Template
+----
+Copyright:  David Kohout http://www.davidkohout.cz
+License:	GNU General Public License (GPL)
+ 

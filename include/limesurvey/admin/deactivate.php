@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: deactivate.php 4916 2008-05-25 17:25:33Z c_schmitz $
+* $Id: deactivate.php 6976 2009-05-30 00:53:41Z c_schmitz $
 */
 
 include_once("login_check.php");  //Login Check dies also if the script is started directly
@@ -21,30 +21,18 @@ $date = date('YmdHis'); //'Hi' adds 24hours+minutes to name to allow multiple de
 $deactivateoutput='';
 if (!isset($_POST['ok']) || !$_POST['ok'])
 {
-	$deactivateoutput .= "<br />\n<table class='alertbox'>\n";
-	$deactivateoutput .= "\t\t\t\t<tr ><td height='4'><strong>".$clang->gT("Deactivate Survey")." ($surveyid)</strong></td></tr>\n";
-	$deactivateoutput .= "\t<tr>\n";
-	$deactivateoutput .= "\t\t<td align='center' bgcolor='#FFEEEE'>\n";
-	$deactivateoutput .= "\t\t\t<font color='red'><strong>";
+	$deactivateoutput .= "<br />\n<div class='messagebox'>\n";
+	$deactivateoutput .= "\t\t\t\t<div class='header'>".$clang->gT("Deactivate Survey")." ($surveyid)</div>\n";
+	$deactivateoutput .= "\t<div class='warningheader'>\n";
 	$deactivateoutput .= $clang->gT("Warning")."<br />".$clang->gT("READ THIS CAREFULLY BEFORE PROCEEDING");
-	$deactivateoutput .= "\t\t</strong></font></td>\n";
-	$deactivateoutput .= "\t</tr>\n";
-	$deactivateoutput .= "\t<tr>";
-	$deactivateoutput .= "\t\t<td>\n";
+	$deactivateoutput .= "\t\t</div>\n";
 	$deactivateoutput .= "\t\t\t".$clang->gT("In an active survey, a table is created to store all the data-entry records.")."\n";
 	$deactivateoutput .= "\t\t\t<p>".$clang->gT("When you deactivate a survey all the data entered in the original table will be moved elsewhere, and when you activate the survey again, the table will be empty. You will not be able to access this data using LimeSurvey any more.")."</p>\n";
 	$deactivateoutput .= "\t\t\t<p>".$clang->gT("Deactivated survey data can only be accessed by system administrators using a Database data access tool like phpmyadmin. If your survey uses tokens, this table will also be renamed and will only be accessible by system administrators.")."</p>\n";
 	$deactivateoutput .= "\t\t\t<p>".$clang->gT("Your responses table will be renamed to:")." {$dbprefix}old_{$_GET['sid']}_{$date}</p>\n";
 	$deactivateoutput .= "\t\t\t<p>".$clang->gT("Also you should export your responses before deactivating.")."</p>\n";
-	$deactivateoutput .= "\t\t</td>\n";
-	$deactivateoutput .= "\t</tr>\n";
-	$deactivateoutput .= "\t<tr>\n";
-	$deactivateoutput .= "\t\t<td align='center'>\n";
-//	$deactivateoutput .= "\t\t\t<input type='submit' value='".$clang->gT("Deactivate Survey")."' onclick=\"window.open('$scriptname?action=deactivate&amp;ok=Y&amp;sid={$_GET['sid']}', '_self')\">\n";
-	$deactivateoutput .= "\t\t\t<input type='submit' value='".$clang->gT("Deactivate Survey")."' onclick=\"".get2post("$scriptname?action=deactivate&amp;ok=Y&amp;sid={$_GET['sid']}")."\">\n";
-	$deactivateoutput .= "\t\t<br />&nbsp;</td>\n";
-	$deactivateoutput .= "\t</tr>\n";
-	$deactivateoutput .= "</table><br />&nbsp;\n";
+	$deactivateoutput .= "\t\t\t<input type='submit' value='".$clang->gT("Deactivate Survey")."' onclick=\"".get2post("$scriptname?action=deactivate&amp;ok=Y&amp;sid={$_GET['sid']}")."\" />\n";
+	$deactivateoutput .= "</div><br />\n";
 }
 
 else

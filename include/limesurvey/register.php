@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: register.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: register.php 6942 2009-05-26 16:25:16Z c_schmitz $
 */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB 
@@ -19,7 +19,6 @@ require_once(dirname(__FILE__).'/classes/core/startup.php');    // Since this fi
 require_once(dirname(__FILE__).'/config-defaults.php');
 require_once(dirname(__FILE__).'/common.php');
 require_once($rootdir.'/classes/core/language.php');
-require_once(dirname(__FILE__).'/classes/core/html_entity_decode_php4.php');
 
 $surveyid=returnglobal('sid');
 $postlang=returnglobal('lang');
@@ -54,7 +53,7 @@ if (function_exists("ImageCreate") && captcha_enabled('registrationscreen',$this
 		!isset($_SESSION['secanswer']) ||
 		$_POST['loadsecurity'] != $_SESSION['secanswer'])
     {
-	    $register_errormsg .= $clang->gT("The answer to the security question is incorrect")."<br />\n";
+	    $register_errormsg .= $clang->gT("The answer to the security question is incorrect.")."<br />\n";
     }
 }
 
@@ -92,20 +91,19 @@ while ($mayinsert != true)
 
 $postfirstname=sanitize_xss_string(strip_tags(returnglobal('register_firstname')));   
 $postlastname=sanitize_xss_string(strip_tags(returnglobal('register_lastname')));   
-$postattribute1=sanitize_xss_string(strip_tags(returnglobal('register_attribute1')));   
-$postattribute2=sanitize_xss_string(strip_tags(returnglobal('register_attribute2')));   
+/*$postattribute1=sanitize_xss_string(strip_tags(returnglobal('register_attribute1')));   
+$postattribute2=sanitize_xss_string(strip_tags(returnglobal('register_attribute2')));   */
 
 //Insert new entry into tokens db
 $query = "INSERT INTO {$dbprefix}tokens_$surveyid\n"
-. "(firstname, lastname, email, emailstatus, token, attribute_1, attribute_2)\n"
-. "VALUES (?, ?, ?, ?, ?, ?, ?)";
+. "(firstname, lastname, email, emailstatus, token)\n"
+. "VALUES (?, ?, ?, ?, ?)";
 $result = $connect->Execute($query, array($postfirstname, 
                                           $postlastname,
                                           returnglobal('register_email'), 
                                           'OK', 
-                                          $newtoken,
-                                          $postattribute1, 
-                                          $postattribute2)
+                                          $newtoken)
+                                          //                             $postattribute1,   $postattribute2)
 ) or safe_die ($query."<br />".$connect->ErrorMsg());  //Checked - According to adodb docs the bound variables are quoted automatically
 $tid=$connect->Insert_ID("{$dbprefix}tokens_$surveyid","tid");
 
@@ -116,8 +114,9 @@ $fieldsarray["{SURVEYNAME}"]=$thissurvey['name'];
 $fieldsarray["{SURVEYDESCRIPTION}"]=$thissurvey['description'];
 $fieldsarray["{FIRSTNAME}"]=$postfirstname;
 $fieldsarray["{LASTNAME}"]=$postlastname;
-$fieldsarray["{ATTRIBUTE_1}"]=$postattribute1;
-$fieldsarray["{ATTRIBUTE_2}"]=$postattribute2;
+$fieldsarray["{EXPIRY}"]=$thissurvey["expiry"];
+$fieldsarray["{EXPIRY-DMY}"]=date("d-m-Y",strtotime($thissurvey["expiry"]));
+$fieldsarray["{EXPIRY-MDY}"]=date("m-d-Y",strtotime($thissurvey["expiry"]));
 
 $message=$thissurvey['email_register'];
 $subject=$thissurvey['email_register_subj'];

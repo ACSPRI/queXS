@@ -1,4 +1,20 @@
 		</td>
 	</tr>
 </table>
+<script type="text/javascript">
+$(document).ready(
+    function()
+    {
+	$("input[type=checkbox]"+
+	  ", input[type=radio]").each(function(ndx)
+		    {
+			label = $(document.createElement("LABEL"));
+			label.attr("htmlFor", this.id);
+			label.addClass("kbd-access");
+			label.append("["+ (ndx + 1) +"]")
+			$(this).before(label);
+			return (ndx < 9);
+		    });
+    });
+</script>
 </body>

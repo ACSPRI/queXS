@@ -10,13 +10,12 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: resetsurveylogic.php 3571 2007-11-02 20:43:25Z leochaton $
+* $Id: resetsurveylogic.php 6853 2009-05-15 12:51:09Z c_schmitz $
 */
 
 //Ensure script is not run directly, avoid path disclosure
 include_once("login_check.php");
-if (isset($_GET['sid'])) {$surveyid = $_GET['sid'];}
-if (isset($_GET['ok'])) {$ok = $_GET['ok'];}
+$ok = returnglobal('ok');
 
 $resetsurveylogicoutput = "<br />\n";
 $resetsurveylogicoutput .= "<table class='alertbox' >\n";
@@ -60,7 +59,7 @@ else //delete conditions in the survey
 	$tablelist = $connect->MetaTables();
 	$dict = NewDataDictionary($connect);
 
-	$resetlogicquery = "DELETE c.* FROM {$dbprefix}conditions as c, {$dbprefix}questions as q WHERE c.qid=q.qid AND q.sid=$surveyid";
+	$resetlogicquery = "DELETE FROM {$dbprefix}conditions WHERE qid in (select qid from {$dbprefix}questions where sid=$surveyid)";
 	$resetlogicresult = $connect->Execute($resetlogicquery) or safe_die ("Couldn't delete conditions<br />$resetlogicquery<br />".$connect->ErrorMsg());
 
 	$resetsurveylogicoutput .= "\t<tr>\n";

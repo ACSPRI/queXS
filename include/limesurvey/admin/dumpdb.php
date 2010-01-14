@@ -10,12 +10,12 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: dumpdb.php 4727 2008-04-29 04:31:51Z jcleeland $
+* $Id: dumpdb.php 7519 2009-08-23 21:55:32Z c_schmitz $
 */
 
 include_once("login_check.php");  //Login Check dies also if the script is started directly
 
-if ($database_exists && $databasetype=='mysql') {
+if ($database_exists && ($databasetype=='mysql' || $databasetype=='mysqli') && $demoModeOnly != true) {
 
 	$tables = $connect->MetaTables();
 	
@@ -77,7 +77,7 @@ if ($database_exists && $databasetype=='mysql') {
 			if ($row["Extra"] != "") $def .= " $row[Extra]";
 			$def .= ",\n";
 		}
-		$def = ereg_replace(",\n$","", $def);
+		$def = preg_replace("#,\n$#","", $def);
 	
 		$result = db_execute_assoc("SHOW KEYS FROM $tablename");
 		while($row = $result->FetchRow())
@@ -116,9 +116,17 @@ if ($database_exists && $databasetype=='mysql') {
 			@set_time_limit(5);
 			$result .= "INSERT INTO ".$table." VALUES(";
 			for($j=0; $j<$num_fields; $j++) {
-				$row[$j] = addslashes($row[$j]);
-				$row[$j] = ereg_replace("\n","\\n",$row[$j]);
-				if (isset($row[$j])) $result .= "\"$row[$j]\"" ; else $result .= "\"\"";
+				if (isset($row[$j]) && !is_null($row[$j]))
+                {
+                    $row[$j] = addslashes($row[$j]);
+                    $row[$j] = preg_replace("#\n#","\\n",$row[$j]);
+                    $result .= "\"$row[$j]\"";
+                }
+                else 
+                {
+                    $result .= "NULL";
+                }
+                
 				if ($j<($num_fields-1)) $result .= ",";
 			}
 			$result .= ");\n";

@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: deletesurvey.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: deletesurvey.php 7503 2009-08-21 00:30:44Z jcleeland $
 */
 
 //Ensure script is not run directly, avoid path disclosure
@@ -58,7 +58,7 @@ if (!isset($deleteok) || !$deleteok)
 	$deletesurveyoutput .= "\t<tr>\n";
 	$deletesurveyoutput .= "\t\t<td align='center'><br />\n";
 	$deletesurveyoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Cancel")."' onclick=\"window.open('admin.php?sid=$surveyid', '_self')\" /><br />\n";
-//	$deletesurveyoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Delete")."' onclick=\"window.open('$scriptname?action=deletesurvey&amp;sid=$surveyid&amp;ok=Y','_self')\" />\n";
+//	$deletesurveyoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Delete")."' onclick=\"window.open('$scriptname?action=deletesurvey&amp;sid=$surveyid&amp;ok=Y','_top')\" />\n";
 	$deletesurveyoutput .= "\t\t\t<input type='submit'  value='".$clang->gT("Delete")."' onclick=\"".get2post("$scriptname?action=deletesurvey&amp;sid=$surveyid&amp;deleteok=Y")."\" />\n";
 	$deletesurveyoutput .= "\t\t</td>\n";
 	$deletesurveyoutput .= "\t</tr>\n";
@@ -116,7 +116,15 @@ else //delete the survey
 	$sdel = "DELETE FROM {$dbprefix}surveys WHERE sid=$surveyid";
 	$sres = $connect->Execute($sdel);
 
+	$sdel = "DELETE {$dbprefix}quota_languagesettings FROM {$dbprefix}quota_languagesettings, {$dbprefix}quota WHERE {$dbprefix}quota_languagesettings.quotals_quota_id={$dbprefix}quota.id and sid=$surveyid";
+	$sres = $connect->Execute($sdel);
 
+	$sdel = "DELETE FROM {$dbprefix}quota WHERE sid=$surveyid";
+	$sres = $connect->Execute($sdel);
+	
+	$sdel = "DELETE FROM {$dbprefix}quota_members WHERE sid=$surveyid;";
+	$sres = $connect->Execute($sdel);
+	
 	$deletesurveyoutput .= "\t<tr>\n";
 	$deletesurveyoutput .= "\t\t<td align='center'><br />\n";
 	$deletesurveyoutput .= "\t\t\t<strong>".$clang->gT("This survey has been deleted.")."<br /><br />\n";

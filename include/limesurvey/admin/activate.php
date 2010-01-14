@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: activate.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: activate.php 7453 2009-08-12 14:41:09Z c_schmitz $
 */
 
 
@@ -58,6 +58,19 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 		$query = "UPDATE {$dbprefix}answers SET qid=$newqid WHERE qid=$oldqid";
 		$result = $connect->Execute($query) or safe_die($query."<br />".$connect->ErrorMsg());
 	}
+
+	$baselang = GetBaseLanguageFromSurveyID($postsid);
+	$groupquery = "SELECT g.gid,g.group_name,count(q.qid) as count from {$dbprefix}questions as q RIGHT JOIN {$dbprefix}groups as g ON q.gid=g.gid WHERE g.sid=$postsid AND g.language='$baselang' AND q.language='$baselang' group by g.gid,g.group_name;";
+	$groupresult=db_execute_assoc($groupquery) or safe_die($groupquery."<br />".$connect->ErrorMsg());
+	while ($row=$groupresult->FetchRow())
+	{ //TIBO
+		if ($row['count'] == 0)
+		{
+			$failedgroupcheck[]=array($row['gid'], $row['group_name'], ": ".$clang->gT("This group does not contain any question(s)."));
+		}
+	}
+	
+
 	//CHECK TO MAKE SURE ALL QUESTION TYPES THAT REQUIRE ANSWERS HAVE ACTUALLY GOT ANSWERS
 	//THESE QUESTION TYPES ARE:
 	//	# "L" -> LIST
@@ -68,11 +81,13 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 	//  # "R" -> RANKING
 	//  # "U" -> FILE CSV MORE
 	//  # "I" -> FILE CSV ONE
+	//  # ":" -> Array Multi Flexi Numbers
+	//  # ";" -> Array Multi Flexi Text
 	//  # "1" -> MULTI SCALE
 	
 
 
-	$chkquery = "SELECT qid, question, gid FROM {$dbprefix}questions WHERE sid={$_GET['sid']} AND type IN ('L', 'O', 'M', 'P', 'A', 'B', 'C', 'E', 'F', 'R', 'J', '!', '^', '1')";
+	$chkquery = "SELECT qid, question, gid FROM {$dbprefix}questions WHERE sid={$_GET['sid']} AND type IN ('L', 'O', 'M', 'P', 'A', 'B', 'C', 'E', 'F', 'R', 'J', '!', '^', ':', '1')";
 	$chkresult = db_execute_assoc($chkquery) or safe_die ("Couldn't get list of questions<br />$chkquery<br />".$connect->ErrorMsg());
 	while ($chkrow = $chkresult->FetchRow())
 	{
@@ -97,7 +112,7 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 	
 
 	//CHECK THAT FLEXIBLE LABEL TYPE QUESTIONS HAVE AN "LID" SET
-	$chkquery = "SELECT qid, question, gid FROM {$dbprefix}questions WHERE sid={$_GET['sid']} AND type IN ('F', 'H', 'W', 'Z', '1') AND (lid = 0 OR lid is null)";
+	$chkquery = "SELECT qid, question, gid FROM {$dbprefix}questions WHERE sid={$_GET['sid']} AND type IN ('F', 'H', 'W', 'Z', ':', '1') AND (lid = 0 OR lid is null)";
 	$chkresult = db_execute_assoc($chkquery) or safe_die ("Couldn't check questions for missing LIDs<br />$chkquery<br />".$connect->ErrorMsg());
 	while($chkrow = $chkresult->FetchRow()){
 		$failedcheck[]=array($chkrow['qid'], $chkrow['question'], ": ".$clang->gT("This question requires a Labelset, but none is set."), $chkrow['gid']);
@@ -112,7 +127,7 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 	
 	
 	//NOW check that all used labelsets have all necessary languages
-	$chkquery = "SELECT qid, question, gid, lid FROM {$dbprefix}questions WHERE sid={$_GET['sid']} AND type IN ('F', 'H', 'W', 'Z', '1') AND (lid > 0) AND (lid is not null)";
+	$chkquery = "SELECT qid, question, gid, lid FROM {$dbprefix}questions WHERE sid={$_GET['sid']} AND type IN ('F', 'H', 'W', 'Z', ':', '1') AND (lid > 0) AND (lid is not null)";
 	$chkresult = db_execute_assoc($chkquery) or safe_die ("Couldn't check questions for missing LID languages<br />$chkquery<br />".$connect->ErrorMsg());
 	$slangs = GetAdditionalLanguagesFromSurveyID($surveyid); 
 	$baselang = GetBaseLanguageFromSurveyID($surveyid);
@@ -209,7 +224,7 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 	}
 
 	//IF ANY OF THE CHECKS FAILED, PRESENT THIS SCREEN
-	if (isset($failedcheck) && $failedcheck)
+	if ((isset($failedcheck) && $failedcheck) || (isset($failedgroupcheck) && $failedgroupcheck))
 	{
 		$activateoutput .= "<br />\n<table bgcolor='#FFFFFF' width='500' align='center' style='border: 1px solid #555555' cellpadding='6' cellspacing='0'>\n";
 		$activateoutput .= "\t\t\t\t<tr bgcolor='#555555'><td height='4'><font size='1' face='verdana' color='white'><strong>".$clang->gT("Activate Survey")." ($surveyid)</strong></font></td></tr>\n";
@@ -227,6 +242,10 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 		{
 			$activateoutput .= "\t\t\t\t<li> Question qid-{$fc[0]} (\"<a href='$scriptname?sid=$surveyid&amp;gid=$fc[3]&amp;qid=$fc[0]'>{$fc[1]}</a>\"){$fc[2]}</li>\n";
 		}
+		foreach ($failedgroupcheck as $fg)
+		{
+			$activateoutput .= "\t\t\t\t<li> Group gid-{$fg[0]} (\"<a href='$scriptname?sid=$surveyid&amp;gid=$fg[0]'>{$fg[1]}</a>\"){$fg[2]}</li>\n";
+		}
 		$activateoutput .= "\t\t\t</ul>\n";
 		$activateoutput .= "\t\t\t".$clang->gT("The survey cannot be activated until these problems have been resolved.")."\n";
 		$activateoutput .= "\t\t</td>\n";
@@ -236,30 +255,18 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 		return;
 	}
 
-	$activateoutput .= "<br />\n<table class='alertbox'>\n";
-	$activateoutput .= "\t\t\t\t<tr><td height='4'><strong>".$clang->gT("Activate Survey")." ($surveyid)</strong></td></tr>\n";
-	$activateoutput .= "\t<tr>\n";
-	$activateoutput .= "\t\t<td align='center' bgcolor='#ffeeee'>\n";
-	$activateoutput .= "\t\t\t<font color='red'><strong>".$clang->gT("Warning")."</strong><br />\n";
-	$activateoutput .= "\t\t\t".$clang->gT("READ THIS CAREFULLY BEFORE PROCEEDING")."\n";
-	$activateoutput .= "\t\t\t</font>\n";
-	$activateoutput .= "\t\t</td>\n";
-	$activateoutput .= "\t</tr>\n";
-	$activateoutput .= "\t<tr>\n";
-	$activateoutput .= "\t\t<td>\n";
+	$activateoutput .= "<br />\n<div class='messagebox'>\n";
+	$activateoutput .= "\t\t\t\t<div class='header'>".$clang->gT("Activate Survey")." ($surveyid)</div>\n";
+	$activateoutput .= "\t\t<div class='warningheader'>\n";
+	$activateoutput .= $clang->gT("Warning")."<br />\n";
+	$activateoutput .= $clang->gT("READ THIS CAREFULLY BEFORE PROCEEDING")."\n";
+	$activateoutput .= "\t\t\t</div>\n";
 	$activateoutput .= $clang->gT("You should only activate a survey when you are absolutely certain that your survey setup is finished and will not need changing.")."<br /><br />\n";
 	$activateoutput .= $clang->gT("Once a survey is activated you can no longer:")."<ul><li>".$clang->gT("Add or delete groups")."</li><li>".$clang->gT("Add or remove answers to Multiple Answer questions")."</li><li>".$clang->gT("Add or delete questions")."</li></ul>\n";
 	$activateoutput .= $clang->gT("However you can still:")."<ul><li>".$clang->gT("Edit (change) your questions code, text or type")."</li><li>".$clang->gT("Edit (change) your group names")."</li><li>".$clang->gT("Add, Remove or Edit pre-defined question answers (except for Multi-answer questions)")."</li><li>".$clang->gT("Change survey name or description")."</li></ul>\n";
 	$activateoutput .= $clang->gT("Once data has been entered into this survey, if you want to add or remove groups or questions, you will need to de-activate this survey, which will move all data that has already been entered into a separate archived table.")."<br /><br />\n";
-	$activateoutput .= "\t\t</td>\n";
-	$activateoutput .= "\t</tr>\n";
-	$activateoutput .= "\t<tr>\n";
-	$activateoutput .= "\t\t<td align='center'>\n";
-//	$activateoutput .= "\t\t\t<input type='submit' value=\"".$clang->gT("Activate Survey")."\" onclick=\"window.open('$scriptname?action=activate&amp;ok=Y&amp;sid={$_GET['sid']}', '_self')\" />\n";
 	$activateoutput .= "\t\t\t<input type='submit' value=\"".$clang->gT("Activate Survey")."\" onclick=\"".get2post("$scriptname?action=activate&amp;ok=Y&amp;sid={$_GET['sid']}")."\" />\n";
-	$activateoutput .= "\t\t<br />&nbsp;</td>\n";
-	$activateoutput .= "\t</tr>\n";
-	$activateoutput .= "</table><br />&nbsp;\n";
+	$activateoutput .= "</div><br />&nbsp;\n";
 
 }
 else
@@ -303,7 +310,7 @@ else
 	." AND ".db_table_name('questions').".sid={$postsid} "
 	." AND ".db_table_name('groups').".language='".GetbaseLanguageFromSurveyid($postsid). "' "
 	." AND ".db_table_name('questions').".language='".GetbaseLanguageFromSurveyid($postsid). "' "
-	." ORDER BY ".db_table_name('groups').".group_order, title";
+	." ORDER BY group_order, question_order";
 	$aresult = db_execute_assoc($aquery);
 	while ($arow=$aresult->FetchRow()) //With each question, create the appropriate field(s)
 	{
@@ -313,16 +320,17 @@ else
 		$arow['type'] != "C" && $arow['type'] != "E" && $arow['type'] != "F" &&
 		$arow['type'] != "H" && $arow['type'] != "P" && $arow['type'] != "R" &&
 		$arow['type'] != "Q" && $arow['type'] != "^" && $arow['type'] != "J" &&
-		$arow['type'] != "K" && $arow['type'] != "1")
+		$arow['type'] != "K" && $arow['type'] != ":" && $arow['type'] != ";" &&
+		$arow['type'] != "1")
 		{
 			$createsurvey .= "  `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}`";
 			switch($arow['type'])
 			{
 				case "N":  //NUMERICAL
-				$createsurvey .= " C(20)";
+				$createsurvey .= " F";
 				break;
 				case "S":  //SHORT TEXT
-				if ($databasetype=='mysql')	{$createsurvey .= " X";}
+				if ($databasetype=='mysql' || $databasetype=='mysqli')	{$createsurvey .= " X";}
 				   else  {$createsurvey .= " C(255)";}
 				break;
 				case "L":  //LIST (RADIO)
@@ -380,12 +388,42 @@ else
 			}
 			if ((isset($alsoother) && $alsoother=="Y") && ($arow['type']=="M" || $arow['type']=="P"  || $arow['type']=="1")) //Sc: check!
 			{
-				$createsurvey .= " `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}other` C(255),\n";
+				$createsurvey .= " `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}other` X,\n";
 				if ($arow['type']=="P")
 				{
 					$createsurvey .= " `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}othercomment` X,\n";
 				}
 			}
+		}
+		elseif ($arow['type'] == ":" || $arow['type'] == ";")
+		{
+			//MULTI ENTRY
+			$abquery = "SELECT a.*, q.other FROM {$dbprefix}answers as a, {$dbprefix}questions as q"
+                       ." WHERE a.qid=q.qid AND sid={$postsid} AND q.qid={$arow['qid']} "
+                       ." AND a.language='".GetbaseLanguageFromSurveyid($postsid). "' "
+                       ." AND q.language='".GetbaseLanguageFromSurveyid($postsid). "' "
+                       ." ORDER BY a.sortorder, a.answer";
+			$abresult=db_execute_assoc($abquery) or die ("Couldn't get perform answers query<br />$abquery<br />".$connect->ErrorMsg());
+			$ab2query = "SELECT ".db_table_name('labels').".*
+			             FROM ".db_table_name('questions').", ".db_table_name('labels')."
+			             WHERE sid=$surveyid 
+						 AND ".db_table_name('labels').".lid=".db_table_name('questions').".lid
+						 AND ".db_table_name('labels').".language='".GetbaseLanguageFromSurveyid($postsid)."' 
+			             AND ".db_table_name('questions').".qid=".$arow['qid']."
+			             ORDER BY ".db_table_name('labels').".sortorder, ".db_table_name('labels').".title";
+			$ab2result=db_execute_assoc($ab2query) or die("Couldn't get list of labels in createFieldMap function (case :)<br />$ab2query<br />".htmlspecialchars($connection->ErrorMsg()));
+			while($ab2row=$ab2result->FetchRow())
+			{
+			    $lset[]=$ab2row;
+			}
+			while ($abrow=$abresult->FetchRow())
+			{
+			    foreach($lset as $ls)
+			    {
+				    $createsurvey .= "  `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}_{$ls['code']}` X,\n";
+				}
+			}
+			unset($lset);
 		}
 		elseif ($arow['type'] == "Q")
 		{
@@ -397,7 +435,7 @@ else
 			while ($abrow = $abresult->FetchRow())
 			{
 				$createsurvey .= "  `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}`";
-                if ($databasetype=='mysql')    
+                if ($databasetype=='mysql' || $databasetype=='mysqli')    
                 {
                     $createsurvey .= " X";
                 }
@@ -418,7 +456,7 @@ else
 			$abresult=db_execute_assoc($abquery) or safe_die ("Couldn't get perform answers query<br />$abquery<br />".$connect->ErrorMsg());
 			while ($abrow = $abresult->FetchRow())
 			{
-				$createsurvey .= "  `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}` C(20),\n";
+				$createsurvey .= "  `{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}` F,\n";
 			}
 		} //End if ($arow['type'] == "K")
 /*		elseif ($arow['type'] == "J")
@@ -476,7 +514,8 @@ else
 	$createsurvey = rtrim($createsurvey, ",\n")."\n"; // Does nothing if not ending with a comma
 	$tabname = "{$dbprefix}survey_{$postsid}"; # not using db_table_name as it quotes the table name (as does CreateTableSQL)
 
-	$taboptarray = array('mysql' => 'TYPE='.$databasetabletype.'  CHARACTER SET utf8 COLLATE utf8_unicode_ci');
+	$taboptarray = array('mysql' => 'ENGINE='.$databasetabletype.'  CHARACTER SET utf8 COLLATE utf8_unicode_ci',
+                         'mysqli'=> 'ENGINE='.$databasetabletype.'  CHARACTER SET utf8 COLLATE utf8_unicode_ci');
 	$dict = NewDataDictionary($connect);
 	$sqlarray = $dict->CreateTableSQL($tabname, $createsurvey, $taboptarray);
 	$execresult=$dict->ExecuteSQLArray($sqlarray,1);
@@ -532,15 +571,14 @@ else
 		if (isset($surveyallowsregistration) && $surveyallowsregistration == "TRUE")
 		{
 			$activateoutput .= $clang->gT("This survey allows public registration. A token table must also be created.")."<br /><br />\n";
-//			$activateoutput .= "<input type='submit' value='".$clang->gT("Initialise Tokens")."' onclick=\"window.open('$scriptname?action=tokens&amp;sid={$_GET['sid']}&amp;createtable=Y', '_self')\" />\n";
 			$activateoutput .= "<input type='submit' value='".$clang->gT("Initialise Tokens")."' onclick=\"".get2post("$scriptname?action=tokens&amp;sid={$postsid}&amp;createtable=Y")."\" />\n";
 		}
 		else
 		{
 			$activateoutput .= $clang->gT("This survey is now active, and responses can be recorded.")."<br /><br />\n";
 			$activateoutput .= "<strong>".$clang->gT("Open-access mode").":</strong> ".$clang->gT("No invitation code is needed to complete the survey.")."<br />".$clang->gT("You can switch to the closed-access mode by initialising a token table with the button below.")."<br /><br />\n";
-//			$activateoutput .= $clang->gT("Optional").": <input type='submit' value='".$clang->gT("Switch to closed-access mode")."' onclick=\"window.open('$scriptname?action=tokens&amp;sid={$_GET['sid']}&amp;createtable=Y', '_self')\" />\n";
-			$activateoutput .= $clang->gT("Optional").": <input type='submit' value='".$clang->gT("Switch to closed-access mode")."' onclick=\"".get2post("$scriptname?action=tokens&amp;sid={$postsid}&amp;createtable=Y")."\" />\n";
+			$activateoutput .= "<input type='submit' value='".$clang->gT("Switch to closed-access mode")."' onclick=\"".get2post("$scriptname?action=tokens&amp;sid={$postsid}&amp;createtable=Y")."\" />\n";
+            $activateoutput .= "<input type='submit' value='".$clang->gT("No, thanks.")."' onclick=\"".get2post("$scriptname?sid={$postsid}")."\" />\n";
 		}
 		$activateoutput .= "\t\t\t\t</font></font></td></tr></table><br />&nbsp;\n";
 	}

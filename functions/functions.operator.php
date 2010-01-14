@@ -464,8 +464,8 @@ function get_case_id($operator_id, $create = false)
 		
 						if ($lime_sid)
 						{
-							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,attribute_1,attribute_2,mpid)
-							VALUES (NULL,'','','',$case_id,'en','N','N','','',NULL)";
+							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
+							VALUES (NULL,'','','',$case_id,'en','N','N',NULL)";
 		
 							$db->Execute($sql);
 						}
@@ -1035,6 +1035,98 @@ function update_quota($questionnaire_id)
 
 }
 
+/**
+ * "Open" a row quota (allow to access)
+ *
+ * @param int $questionnaire_sample_quota_row_id The qsqri
+ */
+function open_row_quota($questionnaire_sample_quota_row_id,$delete = true)
+{
+	global $db;
+
+	$db->StartTrans();
+
+	if ($delete)
+	{
+		$sql = "DELETE FROM questionnaire_sample_quota_row
+			WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
+
+		$db->Execute($sql);
+	}
+
+	$sql = "DELETE FROM questionnaire_sample_quota_row_exclude
+		WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
+
+	$db->Execute($sql);
+
+	$db->CompleteTrans();
+}
+
+/**
+ * "Close" a row quota (set to completed)
+ *
+ *
+ */
+function close_row_quota($questionnaire_sample_quota_row_id)
+{	
+	global $db;
+
+	$db->StartTrans();
+		
+	//only insert where we have to
+	$sql = "SELECT count(*) as c
+		FROM questionnaire_sample_quota_row_exclude
+		WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
+
+	$coun = $db->GetRow($sql);
+
+	if (isset($coun['c']) && $coun['c'] == 0)
+	{
+		//store list of sample records to exclude
+		$sql = "INSERT INTO questionnaire_sample_quota_row_exclude (questionnaire_sample_quota_row_id,questionnaire_id,sample_id)
+			SELECT $questionnaire_sample_quota_row_id,qs.questionnaire_id,s.sample_id
+			FROM sample as s, sample_var as sv, questionnaire_sample_quota_row as qs
+			WHERE s.import_id = qs.sample_import_id
+			AND qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id
+			AND s.sample_id = sv.sample_id
+			AND sv.var = qs.exclude_var
+			AND qs.exclude_val LIKE sv.val";
+
+		$db->Execute($sql);
+	}
+
+	$db->CompleteTrans();
+}
+
+
+/**
+ * Copy row quotas from one sample to another
+ * Set quota_reached to 0 by default
+ *
+ * @param int $questionnaire_id
+ * @param int $sample_import_id
+ * @param int $copy_sample_import_id The sample_import_id to copy to
+ */
+function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_id)
+{
+	global $db;
+
+	$db->StartTrans();
+
+	//Set quota_reached to 0 always
+
+	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description)
+		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions,exclude_var,exclude_val,0,description
+		FROM questionnaire_sample_quota_row
+		WHERE questionnaire_id = '$questionnaire_id'
+		AND sample_import_id = '$sample_import_id'";
+	
+	$db->Execute($sql);
+
+	update_quotas($questionnaire_id);
+
+	$db->CompleteTrans();
+}
 
 /**
  * Update the row quota table
@@ -1051,7 +1143,8 @@ function update_row_quota($questionnaire_id)
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
-		AND qsq.quota_reached != '1'";
+		AND qsq.quota_reached != '1'
+		AND qsq.lime_sgqa != -1";
 	
 	$rs = $db->GetAll($sql);
 
@@ -1074,28 +1167,7 @@ function update_row_quota($questionnaire_id)
 
 				$db->Execute($sql);
 
-				
-				//only insert where we have to
-				$sql = "SELECT count(*) as c
-					FROM questionnaire_sample_quota_row_exclude
-					WHERE questionnaire_sample_quota_row_id = '{$r['questionnaire_sample_quota_row_id']}'";
-
-				$coun = $db->GetRow($sql);
-
-				if (isset($coun['c']) && $coun['c'] == 0)
-				{
-					//store list of sample records to exclude
-					$sql = "INSERT INTO questionnaire_sample_quota_row_exclude (questionnaire_sample_quota_row_id,questionnaire_id,sample_id)
-						SELECT {$r['questionnaire_sample_quota_row_id']},'$questionnaire_id',s.sample_id
-						FROM sample as s, sample_var as sv
-						WHERE s.import_id = '{$r['sample_import_id']}'
-						AND s.sample_id = sv.sample_id
-						AND sv.var = '{$r['exclude_var']}'
-						AND '{$r['exclude_val']}' LIKE sv.val";
-
-					$db->Execute($sql);
-				}
-
+				close_row_quota($r['questionnaire_sample_quota_row_id']);
 			}
 
 		}

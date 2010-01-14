@@ -9,10 +9,12 @@
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
+* 
+* $Id: printanswers.php 7420 2009-08-08 22:52:30Z paraya $
+* 
 */
 
 //Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
-
 require_once(dirname(__FILE__).'/classes/core/startup.php');   
 require_once(dirname(__FILE__).'/config-defaults.php');
 require_once(dirname(__FILE__).'/common.php');
@@ -21,9 +23,10 @@ if(isset($usepdfexport) && $usepdfexport == 1)
     require_once(dirname(__FILE__).$pdfexportdir."/extensiontcpdf.php");
 }
 
+
 //DEFAULT SETTINGS FOR TEMPLATES
 if (!$publicdir) {$publicdir=".";}
-$tpldir="$publicdir/templates";
+$templaterootdir="$publicdir/templates";
 
 @session_start();
 if (isset($_SESSION['sid'])) {$surveyid=$_SESSION['sid'];}  else die(); 
@@ -37,17 +40,18 @@ if (!isset($_SESSION['finished']) || !isset($_SESSION['srid']))
 	$baselang = GetBaseLanguageFromSurveyID($surveyid);
 	$clang = new limesurvey_lang($baselang);
 	//A nice exit
+
 	sendcacheheaders();
 	doHeader();
 
-	echo templatereplace(file_get_contents("$tpldir/default/startpage.pstpl"));
+	echo templatereplace(file_get_contents("$templaterootdir/default/startpage.pstpl"));
 	echo "\t\t<center><br />\n"
 	."\t\t\t<font color='RED'><strong>".$clang->gT("ERROR")."</strong></font><br />\n"
 	."\t\t\t".$clang->gT("We are sorry but your session has expired.")."<br />".$clang->gT("Either you have been inactive for too long, you have cookies disabled for your browser, or there were problems with your connection.")."<br />\n"
     ."\t\t\t".sprintf($clang->gT("Please contact %s ( %s ) for further assistance."),$siteadminname,$siteadminemail)."\n"
 	."\t\t</center><br />\n";
 
-	echo templatereplace(file_get_contents("$tpldir/default/endpage.pstpl"));
+	echo templatereplace(file_get_contents("$templaterootdir/default/endpage.pstpl"));
 	doFooter();
 	exit;
 };
@@ -91,8 +95,8 @@ $result = db_execute_assoc($query) or safe_die("Error selecting language: <br />
 $language = GetBaseLanguageFromSurveyID($surveyid);
 $thissurvey = getSurveyInfo($surveyid);
 //SET THE TEMPLATE DIRECTORY
-if (!$thissurvey['templatedir']) {$thistpl=$tpldir."/default";} else {$thistpl=$tpldir."/{$thissurvey['templatedir']}";}
-if (!is_dir($thistpl)) {$thistpl=$tpldir."/default";}
+if (!$thissurvey['templatedir']) {$thistpl=$templaterootdir."/default";} else {$thistpl=$templaterootdir."/{$thissurvey['templatedir']}";}
+if (!is_dir($thistpl)) {$thistpl=$templaterootdir."/default";}
 
 if ($thissurvey['printanswers']=='N') die();  //Die quietly if print answers is not permitted
 
@@ -122,6 +126,7 @@ require_once($rootdir.'/classes/core/language.php');  // has been secured
 if (isset($_SESSION['s_lang']))
 {
     $clang = SetSurveyLanguage( $surveyid, $_SESSION['s_lang']);
+    $language = $_SESSION['s_lang'];
 } else {
     $baselang = GetBaseLanguageFromSurveyID($surveyid);
     $clang = SetSurveyLanguage( $surveyid, $baselang);
@@ -130,11 +135,11 @@ if (isset($_SESSION['s_lang']))
     $printoutput = '';
     if(isset($usepdfexport) && $usepdfexport == 1)
     {
-        $printoutput .= "<form action='printanswers.php' method='post'>\n<center><input type='submit' value='".$clang->gT("PDF Export")."'id=\"exportbutton\"/><input type='hidden' name='printableexport' /></center></form>";
+        $printoutput .= "<form action='printanswers.php?printableexport=pdf' method='post'>\n<center><input type='submit' value='".$clang->gT("PDF Export")."'id=\"exportbutton\"/><input type='hidden' name='printableexport' /></center></form>";
     }
     if(isset($_POST['printableexport']))
     {
-        $pdf = new PDF('P');
+        $pdf = new PDF($pdforientation);
         $pdf->SetFont($pdfdefaultfont,'',$pdffontsize);
         $pdf->AddPage(); 
         $pdf->titleintopdf("Survey Name: ".$surveyname,"SurveyID: ".$surveyid);
@@ -161,7 +166,10 @@ if (isset($_SESSION['s_lang']))
 	{
 		$fnames[] = array("token", "token", $clang->gT("Token ID"));
 	}
-	$fnames[] = array("submitdate", "submitdate", $clang->gT("Date Submitted"));
+	//The "submitdate" field shouldn't show. If there is a datestamp being recorded, that's covered in "datestamp".
+	//The submitdate field is an internal field and always filled out, but sometimes is not actually the date the 
+	//survey is submitted (in anonymous surveys, the datestamp is always unix epoch)
+	//$fnames[] = array("submitdate", "submitdate", $clang->gT("Date Submitted"));
 	if ($datestamp == "Y") //add datetime to list if survey is datestamped
 	{
 		$fnames[] = array("datestamp", "datestamp", $clang->gT("Date Stamp"));
@@ -174,79 +182,128 @@ if (isset($_SESSION['s_lang']))
 	{
 		$fnames[] = array("refurl", "refurl", $clang->gT("Referring URL"));
 	}
+	
 	foreach ($fnrows as $fnrow)
 	{
 		$field = "{$fnrow['sid']}X{$fnrow['gid']}X{$fnrow['qid']}";
 		$ftitle = "Grp{$fnrow['gid']}Qst{$fnrow['title']}";
 		$fquestion = $fnrow['question'];
-		if ($fnrow['type'] == "Q" || $fnrow['type'] == "M" ||
-		$fnrow['type'] == "A" || $fnrow['type'] == "B" ||
-		$fnrow['type'] == "C" || $fnrow['type'] == "E" ||
-		$fnrow['type'] == "F" || $fnrow['type'] == "H" ||
-		$fnrow['type'] == "J" || $fnrow['type'] == "K" ||     
-		$fnrow['type'] == "P" || $fnrow['type'] == "^")
-		{
-			$fnrquery = "SELECT * FROM ".db_table_name("answers")." WHERE qid={$fnrow['qid']} AND	language='{$language}' ORDER BY sortorder, answer";
-			$fnrresult = db_execute_assoc($fnrquery);  //Checked   
-			while ($fnrrow = $fnrresult->FetchRow())
-			{
+		if ($printanswershonorsconditions == 1 && checkquestionfordisplay($fnrow['qid'],null))
+				{
+
+
+				if ($fnrow['type'] == "Q" || $fnrow['type'] == "M" ||
+					$fnrow['type'] == "A" || $fnrow['type'] == "B" ||
+					$fnrow['type'] == "C" || $fnrow['type'] == "E" ||
+					$fnrow['type'] == "F" || $fnrow['type'] == "H" ||
+					$fnrow['type'] == "J" || $fnrow['type'] == "K" ||     
+					$fnrow['type'] == "P" || $fnrow['type'] == "^")
+				{
+
+				$fnrquery = "SELECT * FROM ".db_table_name("answers")." WHERE qid={$fnrow['qid']} AND	language='{$language}' ORDER BY sortorder, answer";
+				$fnrresult = db_execute_assoc($fnrquery);  //Checked   
+				while ($fnrrow = $fnrresult->FetchRow())
+				{
 				$fnames[] = array("$field{$fnrrow['code']}", "$ftitle ({$fnrrow['code']})", "{$fnrow['question']} ({$fnrrow['answer']})");
 				if ($fnrow['type'] == "P") {$fnames[] = array("$field{$fnrrow['code']}"."comment", "$ftitle"."comment", "{$fnrow['question']} (comment)");}
-			}
-			if ($fnrow['other'] == "Y" and ($fnrow['type']=="!" or $fnrow['type']=="L" or $fnrow['type']=="M" or $fnrow['type']=="P"))
-			{
-				$fnames[] = array("$field"."other", "$ftitle"."other", "{$fnrow['question']}(other)");
-			}
-		}
-		elseif ($fnrow['type'] == "R")
-		{
-			$fnrquery = "SELECT * FROM ".db_table_name("answers")." WHERE qid={$fnrow['qid']} AND
-			language='{$language}'
-			ORDER BY sortorder, answer";
-			$fnrresult = $connect->Execute($fnrquery); //Checked   
-			$fnrcount = $fnrresult->RecordCount();
-			for ($i=1; $i<=$fnrcount; $i++)
-			{
-				$fnames[] = array("$field$i", "$ftitle ($i)", "{$fnrow['question']} ($i)");
-			}
-		}
-        elseif ($fnrow['type'] == "1") //Multi Scale
-        {
-            $field = "{$fnrow['sid']}X{$fnrow['gid']}X{$fnrow['qid']}";
-            $ftitle = "Grp{$fnrow['gid']}Qst{$fnrow['title']}";
-            $fquestion = $fnrow['question'];
+				}
+				if ($fnrow['other'] == "Y" and ($fnrow['type']=="!" or $fnrow['type']=="L" or $fnrow['type']=="M" or $fnrow['type']=="P"))
+				{
+					$fnames[] = array("$field"."other", "$ftitle"."other", "{$fnrow['question']}(other)");
+					if ($fnrow['type'] == "P" and $fnrow['other'] == "Y")
+					{
+						$fnames[] = array("$field"."othercomment", "$ftitle"."othercomment", "{$fnrow['question']}(other comment)");
+					}
+				}
+				}
+				elseif ($fnrow['type'] == ":" || $fnrow['type'] == ";") //MultiFlexi Numbers or Text
+				{
+                    $lset=array();
+					$fnrquery = "SELECT *
+						FROM ".db_table_name('answers')." 
+						WHERE qid={$fnrow['qid']}
+					AND language='{$language}' 
+						ORDER BY sortorder, answer";
+					$fnrresult = db_execute_assoc($fnrquery);
+					$fnr2query = "SELECT *
+						FROM ".db_table_name('labels')."
+						WHERE lid={$fnrow['lid']}
+					AND language = '{$language}'
+						ORDER BY sortorder, title";
+					$fnr2result = db_execute_assoc($fnr2query);
+					while( $fnr2row = $fnr2result->FetchRow())
+					{
+						$lset[]=$fnr2row;
+					}
+					while ($fnrrow = $fnrresult->FetchRow())
+					{
+						foreach($lset as $ls)
+						{
+							$fnames[] = array("$field{$fnrrow['code']}_{$ls['code']}", "$ftitle ({$fnrrow['code']})", "{$fnrow['question']} ({$fnrrow['answer']}: {$ls['title']})");
+						}
+					}
+				}
+				elseif ($fnrow['type'] == "R")
+				{
+					$fnrquery = "SELECT * FROM ".db_table_name("answers")." WHERE qid={$fnrow['qid']} AND
+						language='{$language}'
+						ORDER BY sortorder, answer";
+					$fnrresult = $connect->Execute($fnrquery); //Checked   
+					$fnrcount = $fnrresult->RecordCount();
+					for ($i=1; $i<=$fnrcount; $i++)
+					{
+						$fnames[] = array("$field$i", "$ftitle ($i)", "{$fnrow['question']} ($i)");
+					}
+				}
+				elseif ($fnrow['type'] == "1") //Dual Scale
+				{
+					$qidattributes=getQuestionAttributes($fnrow['qid']);
+					$field = "{$fnrow['sid']}X{$fnrow['gid']}X{$fnrow['qid']}";
+					$ftitle = "Grp{$fnrow['gid']}Qst{$fnrow['title']}";
+					$fquestion = $fnrow['question'];
 
-            $aquery="SELECT * "
-                ."FROM {$dbprefix}answers "
-                ."WHERE qid={$fnrow['qid']} "
-                ."AND {$dbprefix}answers.language='".GetBaseLanguageFromSurveyID($surveyid)."' "
-                ."ORDER BY sortorder, "
-                ."answer";
-            $aresult=db_execute_assoc($aquery) or safe_die ("Couldn't get answers to Array questions<br />$aquery<br />".$connect->ErrorMsg()); //Checked   
-        
-            while ($arows = $aresult->FetchRow())
-            {
-                $fnames[] = array("{$fnrow['sid']}X{$fnrow['gid']}X{$fnrow['qid']}{$arows['code']}#0", "$ftitle ", "{$fnrow['question']} {$arows['answer']}");                
-                $fnames[] = array("{$fnrow['sid']}X{$fnrow['gid']}X{$fnrow['qid']}{$arows['code']}#1", "$ftitle ", "{$fnrow['question']} {$arows['answer']}");
-            } //while
-        }
-        
-		elseif ($fnrow['type'] == "O")
-		{
-			$fnames[] = array("$field", "$ftitle", "{$fnrow['question']}");
-			$field2 = $field."comment";
-			$ftitle2 = $ftitle."[Comment]";
-			$longtitle = "{$fnrow['question']}<br />[Comment]";
-			$fnames[] = array("$field2", "$ftitle2", "$longtitle");
-		}
-		else
-		{
-			$fnames[] = array("$field", "$ftitle", "{$fnrow['question']}");
-			if (($fnrow['type'] == "L" || $fnrow['type'] == "!") && $fnrow['other'] == "Y")
-			{
-				$fnames[] = array("$field"."other", "$ftitle"."other", "{$fnrow['question']}(other)");
-			}
-		}
+					$aquery="SELECT * "
+						."FROM {$dbprefix}answers "
+						."WHERE qid={$fnrow['qid']} "
+						."AND {$dbprefix}answers.language='".GetBaseLanguageFromSurveyID($surveyid)."' "
+						."ORDER BY sortorder, "
+						."answer";
+					$aresult=db_execute_assoc($aquery) or safe_die ("Couldn't get answers to Array questions<br />$aquery<br />".$connect->ErrorMsg()); //Checked   
+					$header1=$clang->gT('First Scale');
+					$header2=$clang->gT('Second Scale');
+					if ($thisheader=arraySearchByKey("dualscale_headerA", $qidattributes, "attribute", 1))      
+					{
+						$header1=$thisheader['value'];
+					}
+					if ($thisheader=arraySearchByKey("dualscale_headerB", $qidattributes, "attribute", 1))      
+					{
+						$header2=$thisheader['value'];
+					}
+					while ($arows = $aresult->FetchRow())
+					{
+						$fnames[] = array("{$fnrow['sid']}X{$fnrow['gid']}X{$fnrow['qid']}{$arows['code']}#0", "$ftitle ", "{$fnrow['question']} {$arows['answer']} - ".$header1);                
+						$fnames[] = array("{$fnrow['sid']}X{$fnrow['gid']}X{$fnrow['qid']}{$arows['code']}#1", "$ftitle ", "{$fnrow['question']} {$arows['answer']} - ".$header2);
+					} //while
+				}
+
+				elseif ($fnrow['type'] == "O")
+				{
+					$fnames[] = array("$field", "$ftitle", "{$fnrow['question']}");
+					$field2 = $field."comment";
+					$ftitle2 = $ftitle."[Comment]";
+					$longtitle = "{$fnrow['question']}<br />[Comment]";
+					$fnames[] = array("$field2", "$ftitle2", "$longtitle");
+				}
+				else
+				{
+					$fnames[] = array("$field", "$ftitle", "{$fnrow['question']}");
+					if (($fnrow['type'] == "L" || $fnrow['type'] == "!") && $fnrow['other'] == "Y")
+					{
+						$fnames[] = array("$field"."other", "$ftitle"."other", "{$fnrow['question']}(other)");
+					}
+				}
+				} // End If checkquestionfordisplay
+
 	}
 
 	$nfncount = count($fnames)-1;
@@ -285,15 +342,75 @@ if (isset($_SESSION['s_lang']))
     $printoutput .= "</table>\n";
     if(isset($_POST['printableexport']))
     {
-        $pdf->write_out($clang->gT($surveyname)." ".$surveyid.".pdf");
+    	// IE6 Header-Cache fix
+		// Wenn der IE 6 das pdf file nicht erkennt, liegts am IE6 Nutzer
+		//(zu doof, der Browser kennt keine pdf's oder kein reader ist installiert) 
+		// oder daran das man multipleIE verwendet.
+		
+//		header('Cache-Control: no-cache, must-revalidate'); //Adjust maxage appropriately
+//		header('Pragma: public');
+//	
+//		// Wir werden eine PDF Datei ausgeben 
+//		// \n\n bewirkt eine korrektes erkennen des Content-type im IE
+//		
+//		header('Content-Disposition: attachment; filename="'.$clang->gT($surveyname).'-'.$surveyid.'.pdf"');
+//		header('Content-type: application/pdf');
+//	
+//		header('Content-Transfer-Encoding: binary');
+//		//header('Content-Length: '. filesize($filename)); 
+
+		
+	    //session_cache_limiter('private');
+		header("Pragma: public");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		
+		if (preg_match("/MSIE/i", $_SERVER["HTTP_USER_AGENT"]))
+		{
+			/*
+			 *  $dateiname = $InternalReferenceNumber.'.pdf'; 
+				$pdf->Output($dateiname, 'F'); 
+				header('Content-type: application/pdf'); 
+				header('Content-Disposition: attachment; filename="'.basename($dateiname).'"'); 
+				readfile($dateiname);
+			 */
+			
+			header("Content-type: application/pdf");
+			header("Content-Transfer-Encoding: binary");
+			
+			
+			header("Content-Disposition: Attachment; filename=\"". $clang->gT($surveyname)."-".$surveyid.".pdf\"");
+			
+			$pdf->Output("tmp/".$clang->gT($surveyname)."-".$surveyid.".pdf", "F");
+			header("Content-Length: ". filesize("tmp/".$clang->gT($surveyname)."-".$surveyid.".pdf"));
+			readfile("tmp/".$clang->gT($surveyname)."-".$surveyid.".pdf");
+			unlink("tmp/".$clang->gT($surveyname)."-".$surveyid.".pdf");
+			//$pdf->write_out($clang->gT($surveyname)."-".$surveyid.".pdf");
+		}
+		else
+		{
+			
+			header("Content-Type: application/pdf");
+			//header("Content-Length: ". $size);
+			$pdf->write_out($clang->gT($surveyname)."-".$surveyid.".pdf");
+		}
+		
+		
+		
+		
+		
+        
     }
 
 
 //tadaaaaaaaaaaa : display the page with the answers of user
-sendcacheheaders();
-doHeader();
-echo templatereplace(file_get_contents("$thistpl/startpage.pstpl"));
-echo templatereplace(file_get_contents("$thistpl/printanswers.pstpl"));
-echo templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
-echo "</html>";
+    if(!isset($_POST['printableexport']))
+    {
+		sendcacheheaders();
+		doHeader();
+    
+		echo templatereplace(file_get_contents("$thistpl/startpage.pstpl"));
+		echo templatereplace(file_get_contents("$thistpl/printanswers.pstpl"));
+		echo templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
+		echo "</body></html>";
+    }
 ?>

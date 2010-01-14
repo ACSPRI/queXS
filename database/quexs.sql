@@ -405,6 +405,7 @@ INSERT INTO `outcome` VALUES(28, '2.332', 'Respondent language problem', 0, 4, 0
 INSERT INTO `outcome` VALUES(29, '3.14', 'Answering machine - Not a household', 0, 4, 1, 1, 0, 0, 0, 'UH');
 INSERT INTO `outcome` VALUES(30, '4.10', 'Out of sample', 0, 4, 0, 1, 0, 0, 0, '');
 INSERT INTO `outcome` VALUES(31, '2.20', 'Non contact', 180, 1, 1, 1, 1, 1, 0, 'NC');
+INSERT INTO `outcome` VALUES(32, '4.80', 'Quota filled', 0, 4, 0, 1, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -534,6 +535,7 @@ CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota_row` (
   `exclude_var` char(128) collate utf8_unicode_ci NOT NULL,
   `exclude_val` varchar(256) collate utf8_unicode_ci NOT NULL,
   `quota_reached` tinyint(1) NOT NULL default '0',
+  `description` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`questionnaire_sample_quota_row_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
   KEY `sample_import_id` (`sample_import_id`),

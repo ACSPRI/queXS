@@ -83,6 +83,12 @@ function display_outcomes($contacted,$ca,$case_id)
 			FROM outcome
 			WHERE outcome_id = 10";
 	}
+	else if (limesurvey_is_quota_full($case_id))
+	{
+		$sql = "SELECT outcome_id,description
+			FROM outcome
+			WHERE outcome_id = 32";
+	}
 	else
 	{
 		//see if we have made an appointment on this call attempt

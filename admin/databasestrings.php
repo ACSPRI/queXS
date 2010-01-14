@@ -72,5 +72,6 @@ T_("Thursday");
 T_("Friday");
 T_("Saturday");
 T_("Sunday");
+T_("Quota filled");
 
 ?>

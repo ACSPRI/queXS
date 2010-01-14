@@ -22,6 +22,7 @@ CREATE TABLE prefix_answers (
     answer text NOT NULL,
     default_value character(1) DEFAULT 'N'::bpchar NOT NULL,
     sortorder integer NOT NULL,
+    assessment_value integer DEFAULT 0 NOT NULL,
     "language" character varying(20) DEFAULT 'en'::character varying NOT NULL
 );
 
@@ -41,7 +42,7 @@ CREATE TABLE prefix_assessments (
     minimum character varying(50) DEFAULT ''::character varying NOT NULL,
     maximum character varying(50) DEFAULT ''::character varying NOT NULL,
     message text NOT NULL,
-    link text NOT NULL
+    language character(20) DEFAULT 'en'::bpchar NOT NULL
 );
 
 
@@ -54,6 +55,7 @@ CREATE TABLE prefix_assessments (
 CREATE TABLE prefix_conditions (
     cid serial,
     qid integer DEFAULT 0 NOT NULL,
+    scenario integer DEFAULT 1 NOT NULL,
     cqid integer DEFAULT 0 NOT NULL,
     cfieldname character varying(50) DEFAULT ''::character varying NOT NULL,
     method character(2) DEFAULT ''::bpchar NOT NULL,
@@ -87,6 +89,7 @@ CREATE TABLE prefix_labels (
     code character varying(5) DEFAULT ''::character varying NOT NULL,
     title text,
     sortorder integer NOT NULL,
+    assessment_value integer DEFAULT 0 NOT NULL,
     "language" character varying(20) DEFAULT 'en'::character varying NOT NULL
 );
 
@@ -115,7 +118,7 @@ CREATE TABLE prefix_question_attributes (
     qaid serial NOT NULL,
     qid integer DEFAULT 0 NOT NULL,
     attribute character varying(50),
-    value character varying(20)
+    value text NULL
 );
 
 -- 
@@ -128,20 +131,33 @@ CREATE TABLE prefix_quota (
   name character varying(255),
   qlimit integer,
   "action" integer,
-  "active" integer NOT NULL default '1'
+  "active" integer NOT NULL default '1',
+  autoload_url integer NOT NULL DEFAULT 0
 );
 
 ALTER TABLE ONLY prefix_quota
     ADD CONSTRAINT prefix_quota_pkey PRIMARY KEY (id);
 
+CREATE TABLE prefix_quota_languagesettings
+(
+  quotals_id serial NOT NULL,
+  quotals_quota_id integer NOT NULL DEFAULT 0,
+  quotals_language character varying(45) NOT NULL DEFAULT 'en'::character varying,
+  quotals_name character varying(200),
+  quotals_message text NOT NULL,
+  quotals_url character varying(255),
+  quotals_urldescrip character varying(255)
+);
 
+ALTER TABLE ONLY prefix_quota_languagesettings
+  ADD CONSTRAINT prefix_quota_languagesettings_pkey PRIMARY KEY (quotals_id);
 
 CREATE TABLE prefix_quota_members (
   id serial,
   sid integer,
   qid integer,
   quota_id integer,
-  code character varying(5)
+  code character varying(11)
 );
 
 ALTER TABLE ONLY prefix_quota_members
@@ -213,36 +229,37 @@ CREATE TABLE prefix_surveys (
     owner_id integer NOT NULL,
     "admin" character varying(50),
     active character(1) DEFAULT 'N'::bpchar NOT NULL,
+    startdate date,
     expires date,
     adminemail character varying(320) NOT NULL,
     private character(1),
     faxto character varying(20),
     format character(1),
     "template" character varying(100) DEFAULT 'default'::character varying,
-    url character varying(255),
     "language" character varying(50),
     additional_languages character varying(255),
     datestamp character(1) DEFAULT 'N'::bpchar,
     usecookie character(1) DEFAULT 'N'::bpchar,
     notification character(1) DEFAULT '0'::bpchar,
     allowregister character(1) DEFAULT 'N'::bpchar,
-    attribute1 character varying(255),
-    attribute2 character varying(255),
     allowsave character(1) DEFAULT 'Y'::bpchar,
     printanswers character(1) DEFAULT 'N'::bpchar,
     autonumber_start integer DEFAULT 0,
     autoredirect character(1) DEFAULT 'N'::bpchar,
     allowprev character(1) DEFAULT 'Y'::bpchar,
     ipaddr character(1) DEFAULT 'N'::bpchar,
-    useexpiry character(1) DEFAULT 'N'::bpchar NOT NULL,
     refurl character(1) DEFAULT 'N'::bpchar,
     datecreated date,
     listpublic character(1) DEFAULT 'N'::bpchar,
+    publicstatistics character(1) DEFAULT 'N'::bpchar,
+    publicgraphs character(1) DEFAULT 'N'::bpchar,
     htmlemail character(1) DEFAULT 'N'::bpchar,
     tokenanswerspersistence character(1) DEFAULT 'N'::bpchar,
+    assessments character(1) DEFAULT 'N'::bpchar,
     usecaptcha character(1) DEFAULT 'N'::bpchar,
-    "bounce_email" character varying(320) NOT NULL
-    
+    usetokens character(1) DEFAULT 'N'::bpchar,
+    "bounce_email" character varying(320) NOT NULL,
+    attributedescriptions text
 );
 
 
@@ -258,7 +275,9 @@ CREATE TABLE prefix_surveys_languagesettings (
     surveyls_title character varying(200) NOT NULL,
     surveyls_description text,
     surveyls_welcometext text,
+    surveyls_url character varying(255),
     surveyls_urldescription character varying(255),
+    surveyls_endtext text,
     surveyls_email_invite_subj character varying(255),
     surveyls_email_invite text,
     surveyls_email_remind_subj character varying(255),
@@ -266,7 +285,8 @@ CREATE TABLE prefix_surveys_languagesettings (
     surveyls_email_register_subj character varying(255),
     surveyls_email_register text,
     surveyls_email_confirm_subj character varying(255),
-    surveyls_email_confirm text
+    surveyls_email_confirm text,
+    surveyls_dateformat integer DEFAULT 1 NOT NULL
 );
 
 
@@ -310,8 +330,8 @@ CREATE TABLE prefix_user_in_groups (
 --
 
 CREATE TABLE prefix_users (
-    uid serial NOT NULL,
-    users_name character varying(64) DEFAULT ''::character varying NOT NULL,
+    uid serial PRIMARY KEY NOT NULL,
+    users_name character varying(64) DEFAULT ''::character varying UNIQUE NOT NULL,
     "password" bytea NOT NULL,
     full_name character varying(50) NOT NULL,
     parent_id integer NOT NULL,
@@ -324,9 +344,10 @@ CREATE TABLE prefix_users (
     configurator integer DEFAULT 0 NOT NULL,
     manage_template integer DEFAULT 0 NOT NULL,
     manage_label integer DEFAULT 0 NOT NULL,
-    htmleditormode character(7) DEFAULT 'default'::bpchar
+    htmleditormode character(7) DEFAULT 'default'::bpchar,
+	one_time_pw bytea,
+    "dateformat" integer DEFAULT 1 NOT NULL
 );
-
 
 CREATE TABLE prefix_templates_rights (
   "uid" integer NOT NULL,
@@ -364,7 +385,7 @@ ALTER TABLE ONLY prefix_answers
 --
 
 ALTER TABLE ONLY prefix_assessments
-    ADD CONSTRAINT prefix_assessments_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT prefix_assessments_pkey PRIMARY KEY (id,language);
 
 
 --
@@ -489,11 +510,29 @@ CREATE INDEX prefix_labels_ixcode_idx ON prefix_labels USING btree (code);
 -- Table `settings_global`
 --
 
-INSERT INTO prefix_settings_global VALUES ('DBVersion', '126');
+INSERT INTO prefix_settings_global VALUES ('DBVersion', '138');
 INSERT INTO prefix_settings_global VALUES ('SessionName', '$sessionname');
 
+
+
 --
--- Table `users`
+-- indexes 
+--
+create index assessments_idx2 on prefix_assessments (sid);
+create index assessments_idx3 on prefix_assessments (gid);
+create index conditions_idx2 on prefix_conditions (qid);
+create index groups_idx2 on prefix_groups (sid);
+create index question_attributes_idx2 on prefix_question_attributes (qid);
+create index questions_idx2 on prefix_questions (sid);
+create index questions_idx3 on prefix_questions (gid);
+create index quota_idx2 on prefix_quota (sid);
+create index saved_control_idx2 on prefix_saved_control (sid);
+create index user_in_groups_idx1 on prefix_user_in_groups  (ugid, uid);
+
+
+
+--
+-- Create admin user
 --
 
 INSERT INTO prefix_users(
@@ -501,4 +540,8 @@ INSERT INTO prefix_users(
             create_survey, create_user, delete_user, superadmin, configurator, 
             manage_template, manage_label,htmleditormode)
             VALUES ('$defaultuser', '$defaultpass', '$siteadminname', 0, '$defaultlang', '$siteadminemail',1,1,1,1,1,1,1,'default');
+
+
+
+
 

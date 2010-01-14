@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: config-ldap.php 5121 2008-06-19 16:13:15Z lemeur $
+* $Id: config-ldap.php 5188 2008-06-27 19:39:58Z lemeur $
 */
 
 
@@ -50,6 +50,12 @@ $ldap_server[$serverId]['encrypt'] = "ldaps";
 // Define the referral option
 // 'false' is recommended for ActiveDirectory servers
 $ldap_server[$serverId]['referrals'] = false;
+
+// Define the encoding used by the Ldap directory
+// You may omit this parameter (let it commented out)
+// as the default value, 'utf-8', should work for most installations.
+// However, Active Directory in West Europe may use 'cp850'.
+// $ldap_server[$serverId]['encoding'] = 'utf-8';
 
 // Define the authentication used to bind to the directory
 // We currently support simple authentication

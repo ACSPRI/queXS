@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 *
-* $Id: importquestion.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: importquestion.php 7382 2009-08-01 19:48:15Z c_schmitz $
 */
 
 //Ensure script is not run directly, avoid path disclosure
@@ -100,16 +100,6 @@ else    // unknown file - show error message
       unlink($the_full_file_path);
       return;
   }
-
-if ($importversion != $dbversionnumber)
-{
-    $importquestion .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-    $importquestion .= $clang->gT("Sorry, importing questions is limited to the same version. Import failed.")."<br /><br />\n";
-    $importquestion .= "</font></td></tr></table>\n";
-    $importquestion .= "</body>\n</html>\n";
-    unlink($the_full_file_path);
-    return;
-}
 
 for ($i=0; $i<9; $i++) //skipping the first lines that are not needed
 {
@@ -326,11 +316,16 @@ if (isset($labelsetsarray) && $labelsetsarray) {
                 // Combine into one array with keys and values since its easier to handle
                  $labelrowdata=array_combine($lfieldorders,$lfieldcontents);
                 $labellid=$labelrowdata['lid'];
+                if ($importversion<=132)
+                {
+                   $labelrowdata["assessment_value"]=(int)$labelrowdata["code"];
+                }
+                
                 if ($labellid == $oldlid) {
                     $labelrowdata['lid']=$newlid;
 
-			// translate internal links
-			$labelrowdata['title']=translink('label', $oldlid, $newlid, $labelrowdata['title']);
+			        // translate internal links
+			        $labelrowdata['title']=translink('label', $oldlid, $newlid, $labelrowdata['title']);
 
                     $newvalues=array_values($labelrowdata);
                     $newvalues=array_map(array(&$connect, "qstr"),$newvalues); // quote everything accordingly
@@ -342,7 +337,7 @@ if (isset($labelsetsarray) && $labelsetsarray) {
 
         //CHECK FOR DUPLICATE LABELSETS
         $thisset="";
-        $query2 = "SELECT code, title, sortorder, language
+        $query2 = "SELECT code, title, sortorder, language, assessment_value  
                    FROM {$dbprefix}labels
                    WHERE lid=".$newlid."
                    ORDER BY language, sortorder, code";    
@@ -420,13 +415,18 @@ if (isset($questionarray) && $questionarray) {
             
             // Now we will fix up the label id 
 		    $type = $questionrowdata["type"]; //Get the type
-		    if ($type == "F" || $type == "H" || $type == "W" || $type == "Z") 
+			if ($type == "F" || $type == "H" || $type == "W" || 
+			    $type == "Z" || $type == "1" || $type == ":" ||
+				$type == ";" ) 
                 {//IF this is a flexible label array, update the lid entry
 			    if (isset($labelreplacements)) {
 				    foreach ($labelreplacements as $lrp) {
 					    if ($lrp[0] == $questionrowdata["lid"]) {
 						    $questionrowdata["lid"]=$lrp[1];
 					       }
+                        if ($lrp[0] == $questionrowdata["lid1"]) {
+                            $questionrowdata["lid1"]=$lrp[1];
+                           }
 				        }
 			         }
                 }
@@ -455,18 +455,25 @@ if (isset($questionarray) && $questionarray) {
         foreach ($answerarray as $aa) {
             $answerfieldcontents=convertCSVRowToArray($aa,',','"');
             $answerrowdata=array_combine($answerfieldnames,$answerfieldcontents);
+            if ($answerrowdata===false)
+            {
+              $importquestion.='<br />'.$clang->gT("Faulty line in import - fields and data don't match").":".implode(',',$answerfieldcontents);
+            }
             if (isset($languagesSupported[$answerrowdata["language"]]))
             {
                 $code=$answerrowdata["code"];
                 $thisqid=$answerrowdata["qid"];
                 $answerrowdata["qid"]=$newqid;
 
-			// translate internal links
-			$answerrowdata['answer']=translink('survey', $oldsid, $newsid, $answerrowdata['answer']);
-
-                        $newvalues=array_values($answerrowdata);
-                        $newvalues=array_map(array(&$connect, "qstr"),$newvalues); // quote everything accordingly
-                        $ainsert = "INSERT INTO {$dbprefix}answers (".implode(',',array_keys($answerrowdata)).") VALUES (".implode(',',$newvalues).")"; 
+			    // translate internal links
+			    $answerrowdata['answer']=translink('survey', $oldsid, $newsid, $answerrowdata['answer']);
+                if ($importversion<=132)
+                {
+                   $answerrowdata["assessment_value"]=(int)$answerrowdata["code"];
+                }
+                $newvalues=array_values($answerrowdata);
+                $newvalues=array_map(array(&$connect, "qstr"),$newvalues); // quote everything accordingly
+                $ainsert = "INSERT INTO {$dbprefix}answers (".implode(',',array_keys($answerrowdata)).") VALUES (".implode(',',$newvalues).")"; 
                 $ares = $connect->Execute($ainsert) or safe_die ($clang->gT("Error").": Failed to insert answer<br />\n$ainsert<br />\n".$connect->ErrorMsg());
             }
         }
@@ -509,8 +516,9 @@ $importquestion .= "\t<li>".$clang->gT("Question Attributes:");
 if (isset($countquestion_attributes)) {$importquestion .= $countquestion_attributes;}
 $importquestion .= "</li></ul><br />\n";
 
-$importquestion .= "<strong>".$clang->gT("Question import is complete.")."</strong><br />&nbsp;\n"
-."</td></tr></table><br/>\n";
+$importquestion .= "<strong>".$clang->gT("Question import is complete.")."</strong><br />&nbsp;\n";
+$importquestion .= "<a href='$scriptname?sid=$newsid&amp;gid=$newgid&amp;qid=$newqid'>".$clang->gT("Go to question")."</a><br />\n";
+$importquestion .= "</td></tr></table><br/>\n";
 
 
 unlink($the_full_file_path);

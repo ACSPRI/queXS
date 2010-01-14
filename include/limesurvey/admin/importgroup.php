@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: importgroup.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: importgroup.php 7382 2009-08-01 19:48:15Z c_schmitz $
 */
 
 include_once("login_check.php");
@@ -70,6 +70,10 @@ if (substr($bigarray[0], 0, 23) != "# LimeSurvey Group Dump" && substr($bigarray
 	$importgroup .= "</td></tr></table>\n";
 	unlink($the_full_file_path);
 	return;
+}
+else
+{
+    $importversion=(int)trim(substr($bigarray[1],12));
 }
 
 for ($i=0; $i<9; $i++)
@@ -322,13 +326,17 @@ if (isset($labelsetsarray) && $labelsetsarray) {
                 if ($count==0) {$count++; continue;}
                 
                 // Combine into one array with keys and values since its easier to handle
-                 $labelrowdata=array_combine($lfieldorders,$lfieldcontents);
+                $labelrowdata=array_combine($lfieldorders,$lfieldcontents);
                 $labellid=$labelrowdata['lid'];
+                if ($importversion<=132)
+                {
+                   $labelrowdata["assessment_value"]=(int)$labelrowdata["code"];
+                }
                 if ($labellid == $oldlid) {
                     $labelrowdata['lid']=$newlid;
 
-		// translate internal links
-		$labelrowdata['title']=translink('label', $oldlid, $newlid, $labelrowdata['title']);
+                    // translate internal links
+                    $labelrowdata['title']=translink('label', $oldlid, $newlid, $labelrowdata['title']);
 
                     $newvalues=array_values($labelrowdata);
                     $newvalues=array_map(array(&$connect, "qstr"),$newvalues); // quote everything accordingly
@@ -341,7 +349,7 @@ if (isset($labelsetsarray) && $labelsetsarray) {
 
         //CHECK FOR DUPLICATE LABELSETS
         $thisset="";
-        $query2 = "SELECT code, title, sortorder, language
+        $query2 = "SELECT code, title, sortorder, language, assessment_value  
                    FROM {$dbprefix}labels
                    WHERE lid=".$newlid."
                    ORDER BY language, sortorder, code";    
@@ -483,12 +491,19 @@ if (isset($grouparray) && $grouparray)
                 unset($questionrowdata['qid']);
             
             // replace the lid for the new one (if there is no new lid in the $newlids array it mean that was not imported -> error, skip this record)
-            if (in_array($questionrowdata["type"], array("F","H","W","Z")))      // only fot the questions that uses a label set.
+            if (in_array($questionrowdata["type"], array("F","H","W","Z", "1", ":", ";")))      // only fot the questions that uses a label set.
                 if (isset($newlids[$questionrowdata["lid"]]))
+                {
                     $questionrowdata["lid"] = $newlids[$questionrowdata["lid"]];
-                else
-                    continue; // a problem with this question record -> don't consider 
-                
+                    if(isset($newlids[$questionrowdata["lid1"]]))
+					{
+					    $questionrowdata["lid1"] = $newlids[$questionrowdata["lid1"]];
+				    }
+				}
+				else
+                {
+				    continue; // a problem with this question record -> don't consider 
+                }
 //            $other = $questionrowdata["other"]; //Get 'other' field value
 //            $oldlid = $questionrowdata['lid'];
 
@@ -532,6 +547,12 @@ if (isset($grouparray) && $grouparray)
                 $answerrowdata["qid"] = $newqids[$answerrowdata["qid"]];
             else
                 continue; // a problem with this answer record -> don't consider
+
+            if ($importversion<=132)
+            {
+               $answerrowdata["assessment_value"]=(int)$answerrowdata["code"];
+            }
+
                 
             // Everything set - now insert it     
             $answerrowdata = array_map('convertCsvreturn2return', $answerrowdata);
@@ -556,7 +577,7 @@ if (isset($grouparray) && $grouparray)
    $gres = db_execute_assoc($gquery);
    while ($grow = $gres->FetchRow()) 
         {
-        fixsortorderQuestions(0,$grow['gid']);
+        fixsortorderQuestions($grow['gid'], $surveyid);
         }
    } 
     
@@ -619,7 +640,14 @@ if (isset($grouparray) && $grouparray)
             unset($conditionrowdata["cid"]); 
             
             // recreate the cfieldname with the new IDs
-            $newcfieldname = $newsid . "X" . $newgid . "X" . $conditionrowdata["cqid"] .substr($oldqidanscode,strlen($oldcgid));
+	    if (preg_match("/^\+/",$oldcsid))
+	    {
+		    $newcfieldname = '+'.$newsid . "X" . $newgid . "X" . $conditionrowdata["cqid"] .substr($oldqidanscode,strlen($oldqid));
+	    }
+	    else
+	    {
+		    $newcfieldname = $newsid . "X" . $newgid . "X" . $conditionrowdata["cqid"] .substr($oldqidanscode,strlen($oldqid));
+	    }
             
             $conditionrowdata["cfieldname"] = $newcfieldname;
             if (!isset($conditionrowdata["method"]) || trim($conditionrowdata["method"])=='') 
@@ -651,7 +679,7 @@ else
     $importgroup .= "<br />\n<strong><font class='successtitle'>".$clang->gT("Success")."</font></strong><br />\n";
 }
 $importgroup .="<strong><u>".$clang->gT("Group Import Summary")."</u></strong><br />\n"
-."<ul>\n\t<li>".$clang->gT("Groups").": ";
+."<ul>\n\t<li>".$clang->gT("Groups:");
 if (isset($countgroups)) {$importgroup .= $countgroups;}
 $importgroup .= "</li>\n"
     ."\t<li>".$clang->gT("Questions").": ";
@@ -671,8 +699,9 @@ $importgroup .= ")</li>\n";
 $importgroup .= "\t<li>".$clang->gT("Question Attributes: ");
 $importgroup .= $countquestion_attributes;
 $importgroup .= "</li>\n</ul>\n";
-$importgroup .= "<strong>".$clang->gT("Import of group is completed.")."</strong><br />&nbsp;\n"
-."</td></tr></table><br />&nbsp;\n";
+$importgroup .= "<strong>".$clang->gT("Import of group is completed.")."</strong><br />&nbsp;\n";
+$importgroup .= "<a href='$scriptname?sid=$newsid&amp;gid=$newgid'>".$clang->gT("Go to group")."</a><br />\n";
+$importgroup .= "</td></tr></table><br />&nbsp;\n";
 
 
 unlink($the_full_file_path);

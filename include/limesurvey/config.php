@@ -61,6 +61,8 @@ $siteadminname      =   "Your Name";      // The name of the site administrator
 
 $defaultlang = DEFAULT_LOCALE;
 
+$defaulttemplate = "quexs";
+
 $useWebserverAuth = true;
 
 $WebserverAuth_autocreateUser = true;

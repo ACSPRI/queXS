@@ -42,6 +42,40 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
 
+/**
+ * Return the number of completions for a given
+ * questionnaire, where the given sample var has
+ * the given sample value
+ *
+ * @param int $lime_sid The limesurvey survey id 
+ * @param int $questionnaire_id The questionnaire ID
+ * @param int $sample_import_id The sample import ID
+ * @param string $val The value to compare
+ * @param string $var The variable to compare
+ * @return bool|int False if failed, otherwise the number of completions
+ * 
+ */
+function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sample_import_id,$val,$var)
+{
+	global $db;
+
+	$sql = "SELECT count(*) as c
+		FROM " . LIME_PREFIX . "survey_$lime_sid as s
+		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
+		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
+		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
+		WHERE s.submitdate IS NOT NULL
+		AND s.token = c.case_id";
+
+	$rs = $db->GetRow($sql);
+
+	if (isset($rs) && !empty($rs))
+		return $rs['c'];
+	
+	return false;
+}
+
+
 
 /**
  * Return the number of completions for a given
@@ -77,6 +111,71 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
 	return false;
 }
 
+/**
+ * Get information on limesurvey quota's
+ * Based on GetQuotaInformation() from common.php in Limesurvey
+ *
+ * @param int $lime_quota_id The quota id to get information on
+ * @param string $baselang The base language for getting information from questions
+ * @return array An array containing the question information for comparison
+ */
+function get_limesurvey_quota_info($lime_quota_id,$baselang = DEFAULT_LOCALE)
+{
+	global $db;
+
+	$ret = array();
+
+	$sql = "SELECT *
+		FROM ".LIME_PREFIX."quota_members
+		WHERE quota_id='$lime_quota_id'";
+	
+	$rs = $db->GetAll($sql);
+
+	foreach($rs as $quota_entry)
+	{
+		$lime_qid = $quota_entry['qid'];
+		$surveyid = $quota_entry['sid'];
+
+		$sql = "SELECT type, title,gid
+			FROM ".LIME_PREFIX."questions
+			WHERE qid='$lime_qid' 
+			AND language='$baselang'";
+
+		$qtype = $db->GetRow($sql);
+	
+		$fieldnames = "0";
+		
+		if ($qtype['type'] == "I" || $qtype['type'] == "G" || $qtype['type'] == "Y")
+		{
+			$fieldnames= ($surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
+			$value = $quota_entry['code'];
+		}
+		
+		if($qtype['type'] == "L" || $qtype['type'] == "O" || $qtype['type'] =="!") 
+		{
+		    $fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
+		    $value = $quota_entry['code'];
+		}
+
+		if($qtype['type'] == "M")
+		{
+			$fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$quota_entry['code']);
+			$value = "Y";
+		}
+		
+		if($qtype['type'] == "A" || $qtype['type'] == "B")
+		{
+			$temp = explode('-',$quota_entry['code']);
+			$fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$temp[0]);
+			$value = $temp[1];
+		}
+		
+
+		$ret[] = array('code' => $quota_entry['code'], 'value' => $value, 'qid' => $quota_entry['qid'], 'fieldname' => $fieldnames);
+	}
+
+	return $ret;
+}
 
 /** 
  * Taken from common.php in the LimeSurvey package
@@ -133,33 +232,33 @@ function create_limesurvey_questionnaire($title)
 	while (!empty($isresult) && $isresult->RecordCount() > 0);
 
 	$isquery = "INSERT INTO ". LIME_PREFIX ."surveys\n"
-	. "(sid, owner_id, admin, active, useexpiry, expires, "
-	. "adminemail, private, faxto, format, template, url, "
-	. "language, datestamp, ipaddr, refurl, usecookie, notification, allowregister, attribute1, attribute2, "
+	. "(sid, owner_id, admin, active, expires, "
+	. "adminemail, private, faxto, format, template, "
+	. "language, datestamp, ipaddr, refurl, usecookie, notification, allowregister, "
 	. "allowsave, autoredirect, allowprev,datecreated,tokenanswerspersistence)\n"
 	. "VALUES ($surveyid, 1,\n"
 	. "'', 'N', \n"
-	. "'N','1980-01-01', '', 'N',\n"
-	. "'', 'S', 'quexs', '" . QUEXS_URL . "rs_project_end.php',\n"
-	. "'en', 'Y', 'N', 'N',\n"
+	. "NULL, '', 'N',\n"
+	. "'', 'S', 'quexs',\n"
+	. "'" . DEFAULT_LOCALE . "', 'Y', 'N', 'N',\n"
 	. "'N', '0', 'Y',\n"
-	. "'att1', 'att2', \n"
 	. "'Y', 'Y', 'Y','".date("Y-m-d")."','Y')";
-	$isresult = $db->Execute($isquery);
+	$isresult = $db->Execute($isquery) or die ($isquery."<br/>".$db->ErrorMsg());
 
 	// insert base language into surveys_language_settings
 	$isquery = "INSERT INTO ".db_table_name('surveys_languagesettings')
 	. "(surveyls_survey_id, surveyls_language, surveyls_title, surveyls_description, surveyls_welcometext, surveyls_urldescription, "
 	. "surveyls_email_invite_subj, surveyls_email_invite, surveyls_email_remind_subj, surveyls_email_remind, "
-	. "surveyls_email_register_subj, surveyls_email_register, surveyls_email_confirm_subj, surveyls_email_confirm)\n"
-	. "VALUES ($surveyid, 'en', $title, $title,\n"
+	. "surveyls_email_register_subj, surveyls_email_register, surveyls_email_confirm_subj, surveyls_email_confirm,surveyls_url)\n"
+	. "VALUES ($surveyid, '" . DEFAULT_LOCALE . "', $title, $title,\n"
 	. "'',\n"
 	. "'', '',\n"
 	. "'', '',\n"
 	. "'', '',\n"
 	. "'', '',\n"
-	. "'')";
-	$isresult = $db->Execute($isquery);
+	. "'', '" . QUEXS_URL . "rs_project_end.php')";
+	$isresult = $db->Execute($isquery) or die ($isquery."<br/>".$db->ErrorMsg());
+
 
 	// Insert into survey_rights
 	$isrquery = "INSERT INTO ". LIME_PREFIX . "surveys_rights VALUES($surveyid,1,1,1,1,1,1,1)";
@@ -249,6 +348,32 @@ function get_lime_sid($case_id)
 	return $l['lime_sid'];
 }
 
+/**
+ * Check if LimeSurvey has marked a questionnaire as quota filled
+ *
+ * @param int $case_id The case id
+ * @return bool True if complete, false if not or unknown
+ *
+ */
+function limesurvey_is_quota_full($case_id)
+{
+	global $db;
+
+	$lime_sid = get_lime_sid($case_id);
+	if ($lime_sid == false) return false;
+
+	$sql = "SELECT completed
+		FROM " . LIME_PREFIX . "tokens_$lime_sid 
+		WHERE token = '$case_id'";
+	
+	$r = $db->GetRow($sql);
+
+	if (!empty($r))
+		if ($r['completed'] == 'Q') return true;
+
+	return false;
+}
+
 
 /**
  * Check if LimeSurvey has marked a questionnaire as complete
@@ -271,12 +396,9 @@ function limesurvey_is_completed($case_id)
 	$r = $db->GetRow($sql);
 
 	if (!empty($r))
-		if ($r['completed'] != 'N') return true;
+		if ($r['completed'] != 'N' && $r['completed'] != 'Q') return true;
 
 	return false;
-
-
-
 }
 
 

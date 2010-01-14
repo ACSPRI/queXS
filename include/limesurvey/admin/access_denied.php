@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: access_denied.php 4247 2008-02-16 00:24:07Z lemeur $
+* $Id: access_denied.php 7140 2009-06-18 06:56:20Z mennodekker $
 */
 
 

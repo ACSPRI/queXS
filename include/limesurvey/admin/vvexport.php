@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: vvexport.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: vvexport.php 7039 2009-06-07 13:56:16Z jcleeland $
 */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
@@ -29,43 +29,61 @@ if ($sumrows5['export'] != "1")
 }
 if (!$subaction == "export")
 {
-	if (incompleteAnsFilterstate() === true)
+	if(incompleteAnsFilterstate() == "inc")
+	{
+	    $selecthide="";
+	    $selectshow="";
+	    $selectinc="selected='selected'";
+	}
+	elseif (incompleteAnsFilterstate() == "filter")
 	{
 		$selecthide="selected='selected'";
 		$selectshow="";
+		$selectinc="";
 	}
 	else
 	{
 		$selecthide="";
 		$selectshow="selected='selected'";
+		$selectinc="";
 	}
 
 	$vvoutput = "<br /><form method='post' action='admin.php?action=vvexport&sid=$surveyid'>"
     	."<table align='center' class='outlinetable'>"
-        ."<tr><th colspan='2'>".$clang->gT("Export a VV survey file")."</th></tr>"
         ."<tr>"
-        ."<td align='right'>".$clang->gT("Export Survey").":</td>"
-        ."<td><input type='text' size='10' value='$surveyid' name='sid' readonly='readonly' /></td>"
-        ."</tr>"
-	."<tr>"
-	."<td align='right'>".$clang->gT("Filter incomplete answers")." </td>"
-	."<td><select name='filterinc'>\n"
-	."\t<option value='filter' $selecthide>".$clang->gT("Enable")."</option>\n"
-	."\t<option value='show' $selectshow>".$clang->gT("Disable")."</option>\n"
-	."</select></td>\n"
+		." <th colspan='2'>".$clang->gT("Export a VV survey file")."</th>"
+		."</tr>"
         ."<tr>"
-        ."<td colspan='2' align='center'>"
-        ."<input type='submit' value='".$clang->gT("Export Responses")."' />&nbsp;"
-        ."<input type='hidden' name='subaction' value='export' />"
-        ."</td>"
+        ." <td align='right'>".$clang->gT("Export Survey").":</td>"
+        ." <td><input type='text' size='10' value='$surveyid' name='sid' readonly='readonly' /></td>"
         ."</tr>"
+    	."<tr>"
+	    ." <td align='right'>".$clang->gT("Export").":</td>"
+	    ." <td><select name='filterinc'>\n"
+		."  <option value='filter' $selecthide>".$clang->gT("Completed Records Only")."</option>\n"
+		."  <option value='show' $selectshow>".$clang->gT("All Records")."</option>\n"
+		."  <option value='incomplete' $selectinc>".$clang->gT("Incomplete Records Only")."</option>\n"
+		." </select></td>\n"
+		."</tr>"
+		."<tr>"
+		." <td align='right'>".$clang->gT("File Extension").": </td>\n"
+		." <td><input type='text' name='extension' size='3' value='csv'><span style='font-size: 7pt'>*</span></td>\n"
+		."</tr>\n"
+        ."<tr>"
+        ." <td colspan='2' align='center'>"
+        ."  <input type='submit' value='".$clang->gT("Export Responses")."' />&nbsp;"
+        ."  <input type='hidden' name='subaction' value='export' />"
+        ." </td>"
+        ."</tr>"
+        ."<tr><td colspan='2' align='center' style='padding: 10px 0 10px 5px'><span style='font-size: 7pt'>* ".$clang->gT("For easy opening in MS Excel, change the extension to 'tab' or 'txt'")."</span></td></tr>\n"
         ."<tr><td colspan='2' align='center'>[<a href='$scriptname?action=browse&amp;sid=$surveyid'>".$clang->gT("Return to Survey Administration")."</a>]</td></tr>"
         ."</table>";
 }
 elseif (isset($surveyid) && $surveyid)
 {
 	//Export is happening
-	header("Content-Disposition: attachment; filename=vvexport_$surveyid.csv");
+	$extension=sanitize_paranoid_string(returnglobal('extension'));
+	header("Content-Disposition: attachment; filename=vvexport_$surveyid.".$extension);
 	header("Content-type: text/comma-separated-values; charset=UTF-8");
 	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	header("Pragma: cache");
@@ -95,9 +113,13 @@ elseif (isset($surveyid) && $surveyid)
 	$vvoutput = $firstline."\n";
 	$vvoutput .= $secondline."\n";
 	$query = "SELECT * FROM $surveytable";
-	if (incompleteAnsFilterstate() === true)
+	if (incompleteAnsFilterstate() == "inc") 
 	{
-		$query .= " WHERE submitdate is not null ";
+	    $query .= " WHERE submitdate IS NULL ";
+	}
+    elseif (incompleteAnsFilterstate() == "filter")
+	{
+		$query .= " WHERE submitdate >= ".$connect->DBDate('1980-01-01'). " ";
 	}
 	$result = db_execute_assoc($query) or safe_die("Error:<br />$query<br />".$connect->ErrorMsg()); //Checked
 
@@ -126,6 +148,7 @@ elseif (isset($surveyid) && $surveyid)
 			// for us.
 			$value=preg_replace('/^"/','{quote}',$value);
 			// yay!  that nasty soab won't hurt us now!
+			if($field == "submitdate" && !$value) {$value = "NULL";}
 			$sun[]=$value;
 		}
 		$beach=implode($s, $sun);

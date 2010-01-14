@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: templates.php 3685 2007-11-22 04:53:18Z jcleeland $
+* $Id: export_resources_zip.php 6853 2009-05-15 12:51:09Z c_schmitz $
 */
 
 

@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: load.php 4975 2008-06-01 14:20:30Z lemeur $
+* $Id: load.php 6805 2009-05-09 12:38:49Z c_schmitz $
 */
 
 //Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
@@ -43,8 +43,8 @@ foreach(file("$thistpl/load.pstpl") as $op)
 //PRESENT OPTIONS SCREEN (Replace with Template Later)
 //END
 //echo "<input type='hidden' name='PHPSESSID' value='".session_id()."'>\n";
-echo "<input type='hidden' name='sid' value='$surveyid'>\n";
-echo "<input type='hidden' name='loadall' value='reload'>\n";
+echo "<input type='hidden' name='sid' value='$surveyid' />\n";
+echo "<input type='hidden' name='loadall' value='reload' />\n";
 echo "</form>";
 
 foreach(file("$thistpl/endpage.pstpl") as $op)

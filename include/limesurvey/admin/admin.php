@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: admin.php 4945 2008-05-29 17:01:48Z c_schmitz $
+* $Id: admin.php 7156 2009-06-22 15:51:06Z lemeur $
 */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
@@ -18,17 +18,16 @@
 require_once(dirname(__FILE__).'/../classes/core/startup.php');
 
 // XML code for LS1.70 is based on the experimental PHP4 domxml
-// extension. PHP5 uses the PHP5/dom extension.
+// extension. PHP5 uses the PHP5/dom extension unless the old domxml is activated
 // the following file is a wrapper to use PHP4/domxml scripts 
 // with PHP5/dom or PHP6/dom
 // see http://alexandre.alapetite.net/doc-alex/domxml-php4-php5/index.en.html#licence
-if (version_compare(PHP_VERSION,'5','>='))
+if (version_compare(PHP_VERSION,'5','>=')&& !(function_exists('domxml_new_doc')))
 {
     require_once(dirname(__FILE__).'/classes/core/domxml-php4-to-php5.php');
 }
 require_once(dirname(__FILE__).'/../config-defaults.php');  
 require_once(dirname(__FILE__).'/../common.php');
-require_once($rootdir.'/classes/core/html_entity_decode_php4.php');  // has been secured
 
 
 require_once('htmleditor-functions.php');
@@ -49,38 +48,47 @@ if (!isset($action)) {$action=returnglobal('action');}          //Desired action
 if (!isset($subaction)) {$subaction=returnglobal('subaction');} //Desired subaction
 if (!isset($editedaction)) {$editedaction=returnglobal('editedaction');} // for html editor integration
 
-if ($action != "showprintablesurvey")
+
+
+if ($action != 'showprintablesurvey')
 {
   $adminoutput = helpscreenscript();
   $adminoutput .= "<table width='100%' border='0' cellpadding='0' cellspacing='0' >\n"
   ."\t<tr>\n"
   ."\t\t<td valign='top' align='center' bgcolor='#F8F8FF'>\n";
 } else {$adminoutput='';}
-include_once("login_check.php");
 
+if($casEnabled)
+{
+	include_once("login_check_cas.php");
+}
+else
+{
+	include_once('login_check.php');
+}
 
 if ( $action == 'CSRFwarn')
 {
-	include("access_denied.php");
+	include('access_denied.php');
 }
 
 if ( $action == 'FakeGET')
 {
-	include("access_denied.php");
+	include('access_denied.php');
 }
 
 if(isset($_SESSION['loginID']) && $action!='login')
 {
   //VARIOUS DATABASE OPTIONS/ACTIONS PERFORMED HERE
-  if ($action == "delsurvey"         || $action == "delgroup"       || $action == "delgroupall"       ||
-      $action == "delquestion"       || $action == "delquestionall" || $action == "insertnewsurvey"   ||
-      $action == "copynewquestion"   || $action == "insertnewgroup" || $action == "insertCSV"         ||
-      $action == "insertnewquestion" || $action == "updatesurvey"   || $action == "updatesurvey2"     || 
-      $action == "updategroup"       || $action == "deactivate"     ||
-      $action == "updatequestion"    || $action == "modanswer"      || $action == "renumberquestions" ||
-      $action == "delattribute"      || $action == "addattribute"   || $action == "editattribute")
+  if ($action == 'delsurvey'         || $action == 'delgroup'       || 
+      $action == 'delquestion'       || $action == 'insertnewsurvey'||
+      $action == 'copynewquestion'   || $action == 'insertnewgroup' || $action == 'insertCSV'         ||
+      $action == 'insertnewquestion' || $action == 'updatesurvey'   || $action == 'updatesurvey2'     || 
+      $action == 'updategroup'       || $action == 'deactivate'     || $action == 'savepersonalsettings' ||
+      $action == 'updatequestion'    || $action == 'modanswer'      || $action == 'renumberquestions' ||
+      $action == 'delattribute'      || $action == 'addattribute'   || $action == 'editattribute')
   {
-      include("database.php");
+      include('database.php');
   }
 
 sendcacheheaders();
@@ -96,44 +104,44 @@ sendcacheheaders();
     `superadmin`
 */
     
-if ($action == "importsurvey") 
+if ($action == 'importsurvey') 
   { 
-      if ($_SESSION['USER_RIGHT_CREATE_SURVEY']==1)	{include("http_importsurvey.php");}
-	    else { include("access_denied.php");}
+      if ($_SESSION['USER_RIGHT_CREATE_SURVEY']==1)	{include('http_importsurvey.php');}
+	    else { include('access_denied.php');}
   }      
-elseif ($action == "dumpdb") 
+elseif ($action == 'dumpdb') 
   { 
-      if ($_SESSION['USER_RIGHT_CONFIGURATOR']==1)  {include("dumpdb.php");}
-        else { include("access_denied.php");}
+      if ($_SESSION['USER_RIGHT_CONFIGURATOR']==1)  {include('dumpdb.php');}
+        else { include('access_denied.php');}
   }      
-elseif ($action == "dumplabel") 
+elseif ($action == 'dumplabel') 
   { 
-      if ($_SESSION['USER_RIGHT_MANAGE_LABEL']==1)  {include("dumplabel.php");}
-        else { include("access_denied.php");}
+      if ($_SESSION['USER_RIGHT_MANAGE_LABEL']==1)  {include('dumplabel.php');}
+        else { include('access_denied.php');}
   }      
-elseif ($action == "exportlabelresources") 
+elseif ($action == 'exportlabelresources') 
   { 
-      if ($_SESSION['USER_RIGHT_MANAGE_TEMPLATE']==1)  {$_SESSION['FileManagerContext']="edit:label:$lid"; include("export_resources_zip.php");}
-        else { include("access_denied.php");}
+      if ($_SESSION['USER_RIGHT_MANAGE_TEMPLATE']==1)  {$_SESSION['FileManagerContext']="edit:label:$lid"; include('export_resources_zip.php');}
+        else { include('access_denied.php');}
   }      
-elseif ($action == "checkintegrity") 
+elseif ($action == 'checkintegrity') 
   { 
-      if ($_SESSION['USER_RIGHT_CONFIGURATOR']==1)  {include("integritycheck.php");}
-        else { include("access_denied.php");}
+      if ($_SESSION['USER_RIGHT_CONFIGURATOR']==1)  {include('integritycheck.php');}
+        else { include('access_denied.php');}
   }      
-elseif ($action=="labels" || $action=="newlabelset" || $action=="insertlabelset" ||
-        $action=="deletelabelset" || $action=="editlabelset" || $action=="modlabelsetanswers" || 
-        $action=="updateset" || $action=="importlabels" ||$action == "importlabelresources")
+elseif ($action=='labels' || $action=='newlabelset' || $action=='insertlabelset' ||
+        $action=='deletelabelset' || $action=='editlabelset' || $action=='modlabelsetanswers' || 
+        $action=='updateset' || $action=='importlabels' ||$action == 'importlabelresources')
   { 
-      if ($_SESSION['USER_RIGHT_MANAGE_LABEL']==1)  {$_SESSION['FileManagerContext']="edit:label:$lid"; include("labels.php");}
-        else { include("access_denied.php");}
+      if ($_SESSION['USER_RIGHT_MANAGE_LABEL']==1)  {$_SESSION['FileManagerContext']="edit:label:$lid"; include('labels.php');}
+        else { include('access_denied.php');}
   }      
-elseif ($action=="templates" || $action=="templatecopy" || $action=="templatesavechanges" || 
-        $action=="templaterename" || $action=="templateupload" || $action=="templatefiledelete" || 
-        $action=="templatezip"  || $action=="templaterefresh")
+elseif ($action=='templates' || $action=='templatecopy' || $action=='templatesavechanges' || 
+        $action=='templaterename' || $action=='templateuploadfile' || $action=='templatefiledelete' || 
+        $action=='templatezip'  || $action=='templaterefresh' || $action=='templateupload')
   { 
-      if ($_SESSION['USER_RIGHT_MANAGE_TEMPLATE']==1)  {include("templates.php");}
-        else { include("access_denied.php");}
+      if ($_SESSION['USER_RIGHT_MANAGE_TEMPLATE']==1)  {include('templates.php');}
+        else { include('access_denied.php');}
   }      
 
   
@@ -155,251 +163,300 @@ $surresult = db_execute_assoc($surquery);
 $surrows = $surresult->FetchRow();
 }
 
-if ($action == "activate")
+if ($action == 'activate')
     {
-    if($surrows['activate_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("activate.php");}
-        else { include("access_denied.php");}    
+    if($surrows['activate_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('activate.php');}
+        else { include('access_denied.php');}    
     }
-elseif ($action == "conditions")
+elseif ($action == 'conditions')
 {
-    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("conditions.php");}
-        else { include("access_denied.php");}    
+    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('conditionshandling.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "importsurvresources") 
+elseif ($action == 'importsurvresources') 
   { 
-      if ($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)	{$_SESSION['FileManagerContext']="edit:survey:$surveyid";include("import_resources_zip.php");}
-	    else { include("access_denied.php");}
+      if ($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)	{$_SESSION['FileManagerContext']="edit:survey:$surveyid";include('import_resources_zip.php');}
+	    else { include('access_denied.php');}
   }      
-elseif ($action == "exportstructurecsv")
+elseif ($action == 'exportstructurecsv')
     {
-    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("export_structure_csv.php");}
-        else { include("access_denied.php");}    
-    }    
-elseif ($action == "exportstructurequexml")
-    {
-    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("export_structure_quexml.php");}
-        else { include("access_denied.php");}    
-    }    
-elseif ($action == "exportsurvresources")
-    {
-    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:survey:$surveyid";include("export_resources_zip.php");}
-        else { include("access_denied.php");}    
-    }    
-elseif ($action == "dumpquestion")
-    {
-    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("dumpquestion.php");}
-        else { include("access_denied.php");}    
-    }    
-elseif ($action == "dumpgroup")
-    {
-    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("dumpgroup.php");}
-        else { include("access_denied.php");}    
-    }    
-elseif ($action == "deactivate")
-    {
-    if($surrows['activate_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("deactivate.php");}
-        else { include("access_denied.php");}    
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('export_structure_csv.php');}
+        else { include('access_denied.php');}    
     }
-elseif ($action == "deletesurvey")
+elseif ($action == 'exportstructureLsrcCsv')
     {
-    if($surrows['delete_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("deletesurvey.php");}
-        else { include("access_denied.php");}    
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('export_structure_lsrc.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "resetsurveylogic")
+elseif ($action == 'exportstructurequexml')
     {
-    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("resetsurveylogic.php");}
-        else { include("access_denied.php");}    
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('export_structure_quexml.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "importgroup")
+elseif ($action == 'exportsurvresources')
     {
-    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("importgroup.php");}
-        else { include("access_denied.php");}    
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:survey:$surveyid";include('export_resources_zip.php');}
+        else { include('access_denied.php');}    
+    }    
+elseif ($action == 'dumpquestion')
+    {
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('dumpquestion.php');}
+        else { include('access_denied.php');}    
+    }    
+elseif ($action == 'dumpgroup')
+    {
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('dumpgroup.php');}
+        else { include('access_denied.php');}    
+    }    
+elseif ($action == 'deactivate')
+    {
+    if($surrows['activate_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('deactivate.php');}
+        else { include('access_denied.php');}    
     }
-elseif ($action == "importquestion")
+elseif ($action == 'deletesurvey')
     {
-    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("importquestion.php");}
-        else { include("access_denied.php");}    
+    if($surrows['delete_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('deletesurvey.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "listcolumn")
+elseif ($action == 'resetsurveylogic')
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("listcolumn.php");}
-        else { include("access_denied.php");}    
+    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('resetsurveylogic.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "previewquestion")
+elseif ($action == 'importgroup')
     {
-    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("preview.php");}
-        else { include("access_denied.php");}    
+    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('importgroup.php');}
+        else { include('access_denied.php');}    
     }
-elseif ($action=="addgroup" || $action=="editgroup")        
+elseif ($action == 'importquestion')
     {
-    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:group:$surveyid"; include("grouphandling.php");}
-        else { include("access_denied.php");}    
+    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('importquestion.php');}
+        else { include('access_denied.php');}    
+    }    
+elseif ($action == 'listcolumn')
+    {
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('listcolumn.php');}
+        else { include('access_denied.php');}    
+    }    
+elseif ($action == 'previewquestion')
+    {
+    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('preview.php');}
+        else { include('access_denied.php');}    
     }
-elseif ($action == "vvexport")
+elseif ($action=='addgroup' || $action=='editgroup')        
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("vvexport.php");}
-        else { include("access_denied.php");}    
-    }    
-elseif ($action == "vvimport")
+    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:group:$surveyid"; include('grouphandling.php');}
+        else { include('access_denied.php');}    
+    }
+elseif ($action == 'vvexport')
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("vvimport.php");}
-        else { include("access_denied.php");}    
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('vvexport.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "importoldresponses")
+elseif ($action == 'vvimport')
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("importoldresponses.php");}
-        else { include("access_denied.php");}    
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('vvimport.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "saved")
+elseif ($action == 'importoldresponses')
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("saved.php");}
-        else { include("access_denied.php");}    
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('importoldresponses.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "exportresults")
+elseif ($action == 'saved')
     {
-    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("exportresults.php");}
-        else { include("access_denied.php");}    
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('saved.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "exportspss")
+elseif ($action == 'exportresults')
     {
-    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("spss.php");}
-        else { include("access_denied.php");}    
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('exportresults.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "statistics")
+elseif ($action == 'exportspss')
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("statistics.php");}
-        else { include("access_denied.php");}    
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('export_data_spss.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "dataentry")
+elseif ($action == 'exportr')
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("dataentry.php");}
-        else { include("access_denied.php");}    
+    if($surrows['export'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('export_data_r.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "browse")
+elseif ($action == 'statistics')
     {
-    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("browse.php");}               
-        else { include("access_denied.php");}    
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('statistics.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "tokens")
+elseif ($action == 'dataentry')
     {
-    if($surrows['activate_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:emailsettings:$surveyid"; include("tokens.php");}               
-        else { include("access_denied.php"); }    
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('dataentry.php');}
+        else { include('access_denied.php');}    
     }    
-elseif ($action=="showprintablesurvey")  
+elseif ($action == 'browse')
+    {
+    if($surrows['browse_response'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('browse.php');}               
+        else { include('access_denied.php');}    
+    }    
+elseif ($action == 'tokens')
+    {
+    if($surrows['activate_survey'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:emailsettings:$surveyid"; include('tokens.php');}               
+        else { include('access_denied.php'); }    
+    }    
+elseif ($action == 'iteratesurvey')
+    {
+    if( ($surrows['browse_response'] && $surrows['activate_survey']) || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('iterate_survey.php');}               
+        else { include('access_denied.php');}    
+    }    
+elseif ($action=='showprintablesurvey')  
     { 
-        include("printablesurvey.php"); //No special right needed to show the printable survey
+        include('printablesurvey.php'); //No special right needed to show the printable survey
     } 
-elseif ($action=="assessments" || $action=="assessmentdelete" || $action=="assessmentedit" || $action=="assessmentadd" || $action=="assessmentupdate")
+elseif ($action=='assessments' || $action=='assessmentdelete' || $action=='assessmentedit' || $action=='assessmentadd' || $action=='assessmentupdate')
     {
-    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include("assessments.php");}
-        else { include("access_denied.php");}    
+    if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {
+	$_SESSION['FileManagerContext']="edit:assessments:$surveyid";
+        include('assessments.php');
+    }
+        else { include('access_denied.php');}    
     }    
-elseif ($action == "replacementfields")
+elseif ($action == 'replacementfields')
     {
 	switch ($editedaction)
 	{
 		case 'labels':
 			if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL']==1)
 			{
-				include("fck_LimeReplacementFields.php");exit;
+				$_SESSION['FileManagerContext']="edit:label:$lid";
+				include('fck_LimeReplacementFields.php');exit;
 			}
 			else
 			{
-				include("access_denied.php");
+				include('access_denied.php');
 			}
 		break;
 		case 'newsurvey':
 			if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_CREATE_SURVEY'] == 1)
 			{
-				include("fck_LimeReplacementFields.php");exit;
+				include('fck_LimeReplacementFields.php');exit;
 			}
 			else
 			{
-				include("access_denied.php");
+				include('access_denied.php');
 			}
 		break;	
 		case 'updatesurvey':
 			if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $surrows['edit_survey_property'])
 			{
-				include("fck_LimeReplacementFields.php");exit;
+				$_SESSION['FileManagerContext']="edit:survey:$surveyid";
+				include('fck_LimeReplacementFields.php');exit;
 			}
 			else
 			{
-				include("access_denied.php");
+				include('access_denied.php');
 			}
 		break;
 		case 'tokens': // email
 			if ( $_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $surrows['activate_survey'])
 			{
-				include("fck_LimeReplacementFields.php");exit;
+				$_SESSION['FileManagerContext']="edit:emailsettings:$surveyid";
+				include('fck_LimeReplacementFields.php');exit;
 			}
 			else
 			{
-				include("access_denied.php");
+				include('access_denied.php');
 			}
+		break;
 		case 'editquestion':
 		case 'copyquestion':
-		case 'editgroup':
 		case 'addquestion':
+			if ( $_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $surrows['define_questions'])
+			{
+				$_SESSION['FileManagerContext']="edit:question:$surveyid";
+				include('fck_LimeReplacementFields.php');exit;
+			}
+			else
+			{
+				include('access_denied.php');
+			}
+		break;
+		case 'editgroup':
 		case 'addgroup':
+			if ( $_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $surrows['define_questions'])
+			{
+				$_SESSION['FileManagerContext']="edit:group:$surveyid";
+				include('fck_LimeReplacementFields.php');exit;
+			}
+			else
+			{
+				include('access_denied.php');
+			}
+		break;
 		case 'editanswer':
 			if ( $_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $surrows['define_questions'])
 			{
-				include("fck_LimeReplacementFields.php");exit;
+				$_SESSION['FileManagerContext']="edit:answer:$surveyid";
+				include('fck_LimeReplacementFields.php');exit;
 			}
 			else
 			{
-				include("access_denied.php");
+				include('access_denied.php');
 			}
+		break;
+		case 'assessments':
+		case 'assessmentedit':
+			if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {
+				$_SESSION['FileManagerContext']="edit:assessments:$surveyid";
+				include('fck_LimeReplacementFields.php');
+			}
+			else { include('access_denied.php');}    
 		break;
 		default:
 		break;
 	}
     }    
-
-
     
  if (!isset($assessmentsoutput) && !isset($statisticsoutput) && !isset($browseoutput) && !isset($savedsurveyoutput) && !isset( $listcolumnoutput  ) &&         
-     !isset($dataentryoutput) && !isset($conditionsoutput) && !isset($importoldresponsesoutput) && 
-     !isset($vvoutput) && !isset($tokenoutput) && !isset($exportoutput) && !isset($templatesoutput) &&    
-     (isset($surveyid) || $action=="listurveys" || $action=="changelang" ||  $action=="changehtmleditormode" || $action=="checksettings" ||       //Still to check
-      $action=="editsurvey" || $action=="updatesurvey" || $action=="ordergroups"  ||
-      $action=="newsurvey" || $action=="listsurveys" ||   
-      $action=="surveyrights" || $action=="quotas") )
+     !isset($dataentryoutput) && !isset($conditionsoutput) && !isset($importoldresponsesoutput) && !isset($exportspssoutput) && !isset($exportroutput) &&
+     !isset($vvoutput) && !isset($tokenoutput) && !isset($exportoutput) && !isset($templatesoutput) &&  !isset($iteratesurveyoutput) && 
+     (isset($surveyid) || $action=='listurveys' || $action=='personalsettings' || $action=='checksettings' ||       //Still to check
+      $action=='editsurvey' || $action=='updatesurvey' || $action=='ordergroups'  ||
+      $action=='newsurvey' || $action=='listsurveys' ||   
+      $action=='surveyrights' || $action=='quotas') )
 {
-	if ($action=="editsurvey" || $action=="updatesurvey")
+	if ($action=='editsurvey' || $action=='updatesurvey')
 	{
 		 $_SESSION['FileManagerContext']="edit:survey:$surveyid";
 	}
-	include("html.php");
+	include('html.php');
 }
 
- if ($action=="addquestion" || $action=="copyquestion" || $action=="editquestion" || 
-     $action=="orderquestions" || $action=="editattribute" || $action=="delattribute" || 
-     $action=="addattribute" )
-    {if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:question:$surveyid";include("questionhandling.php");}
-        else { include("access_denied.php");}    
+ if ($action=='addquestion' || $action=='copyquestion' || $action=='editquestion' || 
+     $action=='orderquestions' || $action=='editattribute' || $action=='delattribute' || 
+     $action=='addattribute' )
+    {if($surrows['define_questions'] || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {$_SESSION['FileManagerContext']="edit:question:$surveyid";include('questionhandling.php');}
+        else { include('access_denied.php');}    
     }    
 
       
- if ($action=="adduser" || $action=="deluser" || $action=="moduser" || $action=="setusertemplates" || $action=="usertemplates" ||                                        //Still to check 
-     $action=="userrights" || $action=="modifyuser" || $action=="editusers" || 
-     $action=="addusergroup" || $action=="editusergroup" || $action=="mailusergroup" ||
-     $action=="delusergroup" || $action=="usergroupindb" || $action=="mailsendusergroup" || 
-     $action=="editusergroupindb" || $action=="editusergroups" || $action=="deleteuserfromgroup" ||
-     $action=="addusertogroup" || $action=="setuserrights" || $action=="setasadminchild") 
+ if ($action=='adduser' || $action=='deluser' || $action=='moduser' || $action=='setusertemplates' || $action=='usertemplates' ||                                        //Still to check 
+     $action=='userrights' || $action=='modifyuser' || $action=='editusers' || 
+     $action=='addusergroup' || $action=='editusergroup' || $action=='mailusergroup' ||
+     $action=='delusergroup' || $action=='usergroupindb' || $action=='mailsendusergroup' || 
+     $action=='editusergroupindb' || $action=='editusergroups' || $action=='deleteuserfromgroup' ||
+     $action=='addusertogroup' || $action=='setuserrights' || $action=='setasadminchild') 
  
  {
-     include ("userrighthandling.php");
+     include ('userrighthandling.php');
  }
 
   
   // For some output we dont want to have the standard admin menu bar
   if (!isset($labelsoutput)  && !isset($templatesoutput) && !isset($printablesurveyoutput) && 
-      !isset($assessmentsoutput) && !isset($tokenoutput) && !isset($browseoutput) &&
+      !isset($assessmentsoutput) && !isset($tokenoutput) && !isset($browseoutput) && !isset($exportspssoutput) &&  !isset($exportroutput) &&
       !isset($dataentryoutput) && !isset($statisticsoutput)&& !isset($savedsurveyoutput) &&
       !isset($exportoutput) && !isset($importoldresponsesoutput) && !isset($conditionsoutput) &&
-      !isset($vvoutput) && !isset($listcolumnoutput) && !isset($importlabelresources)) 
+      !isset($vvoutput) && !isset($listcolumnoutput) && !isset($importlabelresources) && !isset($iteratesurveyoutput)) 
       {
         $adminoutput.= showadminmenu();
       }
@@ -447,6 +504,7 @@ elseif ($action == "replacementfields")
   if (isset($deactivateoutput)) {$adminoutput.= $deactivateoutput;} 	
   if (isset($tokenoutput)) {$adminoutput.= $tokenoutput;} 	
   if (isset($browseoutput)) {$adminoutput.= $browseoutput;} 	
+  if (isset($iteratesurveyoutput)) {$adminoutput.= $iteratesurveyoutput;} 	
   if (isset($dataentryoutput)) {$adminoutput.= $dataentryoutput;} 	
   if (isset($statisticsoutput)) {$adminoutput.= $statisticsoutput;} 	
   if (isset($exportoutput)) {$adminoutput.= $exportoutput;} 	
@@ -456,7 +514,9 @@ elseif ($action == "replacementfields")
   if (isset($deletesurveyoutput)) {$adminoutput.= $deletesurveyoutput;} 	
   if (isset($resetsurveylogicoutput)) {$adminoutput.= $resetsurveylogicoutput;} 	
   if (isset($vvoutput)) {$adminoutput.= $vvoutput;} 	
-  if (isset($dumpdboutput)) {$adminoutput.= $dumpdboutput;}     
+  if (isset($dumpdboutput)) {$adminoutput.= $dumpdboutput;}  
+  if (isset($exportspssoutput)) {$adminoutput.= $exportspssoutput;}  
+  if (isset($exportroutput)) {$adminoutput.= $exportroutput;}  
                                                                         
   
   if (!isset($printablesurveyoutput) && ($subaction!='export'))
@@ -468,12 +528,12 @@ elseif ($action == "replacementfields")
   $adminoutput.= "\t\t</td>\n".helpscreen()
               . "\t</tr>\n"
               . "</table>\n";
-
+	if(!isset($_SESSION['checksessionpost']))
+		$_SESSION['checksessionpost'] = '';
 	$adminoutput .= "<script type=\"text/javascript\">\n"
 	. "<!--\n"
 	. "\tfor(i=0; i<document.forms.length; i++)\n"
 	. "\t{\n"
-//	. "\t\talert('TIBO formname=' + document.forms[i].name + '\\nformaction=' + document.forms[i].action);\n"
 	. "\t\tvar el = document.createElement('input');\n"
 	. "\t\tel.type = 'hidden';\n"
 	. "\t\tel.name = 'checksessionbypost';\n"
@@ -508,8 +568,7 @@ elseif ($action == "replacementfields")
 	. "//-->\n"
 	. "</script>\n";
 
-	$adminoutput .= ""
-              . getAdminFooter("http://docs.limesurvey.org", $clang->gT("LimeSurvey Online Manual"));
+	$adminoutput .= "".getAdminFooter("http://docs.limesurvey.org", $clang->gT("LimeSurvey Online Manual"));
   }
   
 }
@@ -564,23 +623,23 @@ else
   	global $homeurl, $langdir,  $imagefiles;
   	global $surveyid, $gid, $qid, $action, $clang;
 
-    $helpoutput="\t\t<td id='help' width='200' valign='top' style='display: none' bgcolor='#CCCCCC'>\n"
+    $helpoutput="\t\t<td id='help' width='200' valign='top' style='display: none' bgcolor='#F8F8FF'>\n"
   	."\t\t\t<table width='100%'><tr><td>"
   	."<table width='100%' align='center' cellspacing='0'>\n"
   	."\t\t\t\t<tr>\n"
-  	."\t\t\t\t\t<td bgcolor='#555555' height='8'>\n"
-  	."\t\t\t\t\t\t<font color='white' size='1'><strong>"
+  	."\t\t\t\t\t<td bgcolor='#D2E0F2' height='8'>\n"
+  	."\t\t\t\t\t\t<font size='1'><strong>"
   	.$clang->gT("Help")."</strong>\n"
   	."\t\t\t\t\t</font></td>\n"
   	."\t\t\t\t</tr>\n"
   	."\t\t\t\t<tr>\n"
-  	."\t\t\t\t\t<td align='center' bgcolor='#AAAAAA' style='border-style: solid; border-width: 1px; border-color: #555555'>\n"
+  	."\t\t\t\t\t<td align='center' bgcolor='#EEF6FF' style='border-style: solid; border-width: 1px; border-color: #D2E0F2'>\n"
   	."\t\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='20' hspace='0' border='0' align='left' />\n"
   	."\t\t\t\t\t\t<input type='image' src='$imagefiles/close.gif' name='CloseHelp' align='right' onclick=\"showhelp('hide')\" />\n"
   	."\t\t\t\t\t</td>\n"
   	."\t\t\t\t</tr>\n"
   	."\t\t\t\t<tr>\n"
-  	."\t\t\t\t\t<td bgcolor='silver' height='100%' style='border-style: solid; border-width: 1px; border-color: #333333'>\n";
+  	."\t\t\t\t\t<td bgcolor='#EEF6FF' height='100%' style='border-width: 0px;'>\n";
   	//determine which help document to show
   	if (!$surveyid && $action != "editusers")
   	{
@@ -640,7 +699,6 @@ function get2post($url)
 	foreach ($aqueryitems as $queryitem)
 	{
 		list($paramname, $value) = explode ('=', $queryitem);
-		//error_log("TIBO URL=$url Form Action=$calledscript, param=$paramname, value=$value");
 		$arrayParam[] = "'".$paramname."'";
 		$arrayVal[] = "'".$value."'";
 	}
@@ -649,7 +707,6 @@ function get2post($url)
 	$Paramlist = "new Array(" . implode(",",$arrayParam) . ")";
 	$Valuelist = "new Array(" . implode(",",$arrayVal) . ")";
 	$callscript = "sendPost('$calledscript','".$_SESSION['checksessionpost']."',$Paramlist,$Valuelist);";
-	//error_log("TIBO = $callscript");
 	return $callscript;
 }
   

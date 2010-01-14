@@ -94,10 +94,12 @@ function xhtml_foot()
  * @param bool|array $head False if no header otherwise array of header titles
  * @param string $class Table CSS class
  * @param bool|array $highlight False if nothing to highlight else an array containing the field to highlight
+ * @param bool|array $total False if nothing to total else an array containing the fields to total
  * 
  */
-function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight=false)
+function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight=false,$total=false)
 {
+	$tot = array();
 	print "<table class='$class'>";
 	if ($head)
 	{
@@ -114,8 +116,23 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 			print "<tr>";
 
 		foreach ($fields as $e)
+		{
 			print "<td>{$row[$e]}</td>";
-		
+			if ($total && in_array($e,$total))
+				$tot[$e] += $row[$e];
+		}
+		print "</tr>";
+	}
+	if ($total)
+	{
+		print "<tr>";
+		foreach ($fields as $e)
+		{
+			print "<td>";
+			if (in_array($e,$total))
+				print $tot[$e];
+			print "</td>";
+		}
 		print "</tr>";
 	}
 	print "</table>";

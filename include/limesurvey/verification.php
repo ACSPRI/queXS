@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: verification.php 4945 2008-05-29 17:01:48Z c_schmitz $
+* $Id: verification.php 6840 2009-05-13 17:11:27Z c_schmitz $
 */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
@@ -18,6 +18,7 @@
 // make sure you include this file only if the ImageCreate function does exist since it is an optional library
 // Lets get into the session
 session_start();
+require_once(dirname(__FILE__).'/config-defaults.php');    
 
 // header for png
 Header("Content-Type: image/png");
@@ -59,12 +60,12 @@ if ($font_c_rand == 1)
 $font_rand = rand(1,3);
 if ($font_rand == 1)
 {
-	$font = "fonts/verabd.ttf";
+	$font = $rootdir."/fonts/verabd.ttf";
 } else if ($font_rand == 2) {
-	$font = "fonts/vera.ttf";
+	$font = $rootdir."/fonts/vera.ttf";
 } else if ($font_rand == 3)
 {
-	$font = "fonts/verait.ttf";
+	$font = $rootdir."/fonts/verait.ttf";
 }
 
 $line_rand = rand(1,3);

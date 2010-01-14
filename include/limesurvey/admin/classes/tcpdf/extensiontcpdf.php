@@ -1,19 +1,12 @@
 <?php
 
-require_once('checkphpversion.php');
+require_once('tcpdf.php');      
 
 class PDF extends TCPDF
 {    
     function PDF($orientation='L', $unit='mm', $format='A4')
     {
-        if (version_compare(PHP_VERSION, '5.0.0', '<') && version_compare(PHP_VERSION, '4.0.0', '>'))
-        {
-          parent::TCPDF($orientation,$unit,$format);
-        }
-        else if(version_compare(PHP_VERSION, '5.0.0', '>'))
-        {
-          parent::__construct($orientation,$unit,$format);
-        }
+        parent::__construct($orientation,$unit,$format);
         $this->SetAutoPageBreak(true,10); 
         $this->AliasNbPages();
         
@@ -21,6 +14,7 @@ class PDF extends TCPDF
         
     function intopdf($text,$format='')
     {
+        $text = $this->delete_html($text);
         $oldformat = $this->FontStyle;
         $this->SetFont('',$format,$this->FontSizePt);
         $this->Write(5,$text);
@@ -31,7 +25,7 @@ class PDF extends TCPDF
     {
         $oldsize = $this->FontSizePt;
         $this->SetFontSize($oldsize-2);
-        $this->Write(5,$text);
+        $this->Write(5,$this->delete_html($text));
         $this->ln(5);
         $this->SetFontSize($oldsize);
     }   
@@ -39,6 +33,7 @@ class PDF extends TCPDF
     {
         if(!empty($title))
         {
+            $title = $this->delete_html($title);
             $oldsize = $this->FontSizePt;
             $this->SetFontSize($oldsize+4);
             $this->Line(5,$this->y,($this->w-5),$this->y);
@@ -46,6 +41,7 @@ class PDF extends TCPDF
             $this->MultiCell('','',$title,'','C',0);
             if(!empty($description) && isset($description))
             {
+                $description = $this->delete_html($description);
                 $this->ln(7);
                 $this->SetFontSize($oldsize+2);
                 $this->MultiCell('','',$description,'','C',0);
@@ -68,7 +64,7 @@ class PDF extends TCPDF
         {
             for($b=0;$b<sizeof($array[$a]);$b++)
             {
-                $this->Cell($maxwidth[$b]*($this->FontSize),4,$array[$a][$b],0,0,'C');
+                $this->Cell($maxwidth[$b]*($this->FontSize),4,$this->delete_html($array[$a][$b]),0,0,'C');
             }
             $this->ln();
         }
@@ -98,6 +94,12 @@ class PDF extends TCPDF
     function write_out($name)
     {      
         $this->Output($name,"D");
+    }
+    
+    function delete_html($text)
+    {
+       $text = html_entity_decode($text);
+       return strip_tags($text);
     }
 }    
 ?>

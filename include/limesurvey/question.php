@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: question.php 5106 2008-06-18 16:24:37Z c_schmitz $
+* $Id: question.php 7363 2009-07-29 12:28:38Z c_schmitz $
 */
 
 //Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB       
@@ -21,13 +21,19 @@ if (!isset($homedir) || isset($_REQUEST['$homedir'])) {die("Cannot run this scri
 if (!isset($_SESSION['step'])) {$_SESSION['step']=0;}
 if (!isset($_SESSION['totalsteps'])) {$_SESSION['totalsteps']=0;}
 if (!isset($_POST['newgroupondisplay'])) {$_POST['newgroupondisplay'] = "";}
-if (isset($move) && $move == "moveprev" && !$_POST['newgroupondisplay']) {$_SESSION['step'] = $thisstep-1;}
-elseif (isset($move) && $move == "moveprev" && $_POST['newgroupondisplay'] == "Y") {$_SESSION['step'] = $thisstep;}
-if (isset($move) && $move == "movenext") {$_SESSION['step'] = $thisstep+1;}
+if (isset($move) && $move == "moveprev" && !$_POST['newgroupondisplay'] && $thissurvey['allowprev']=='Y') {$_SESSION['step'] = $thisstep-1;}
+elseif (isset($move) && $move == "moveprev" && $_POST['newgroupondisplay'] == "Y" && $thissurvey['allowprev']=='Y') {$_SESSION['step'] = $thisstep;}
+if (isset($move) && $move == "movenext") 
+{
+    if ($_SESSION['step']==$thisstep)
+    $_SESSION['step'] = $thisstep+1;
+}
 
-// This prevents the user from going back to the question pages and keeps him on the final page
-// That way his session can be kept so he can still print his answers until he closes the browser
-if (isset($_SESSION['finished'])) {$move="movesubmit"; }
+
+// We do not keep the participant session anymore when the same browser is used to answer a second time a survey (let's think of a library PC for instance).
+// Previously we used to keep the session and redirect the user to the 
+// submit page.
+//if (isset($_SESSION['finished'])) {$move="movesubmit"; }
 
 //CHECK IF ALL MANDATORY QUESTIONS HAVE BEEN ANSWERED ############################################
 //First, see if we are moving backwards or doing a Save so far, and its OK not to check:
@@ -71,7 +77,8 @@ if ($surveyexists <1)
 if (!isset($_SESSION['step']) || !$_SESSION['step'])
 {
 	$totalquestions = buildsurveysession();
-/*	sendcacheheaders();
+	/*
+	sendcacheheaders();
 	doHeader();
 
 	echo templatereplace(file_get_contents("$thistpl/startpage.pstpl"));
@@ -96,7 +103,8 @@ if (!isset($_SESSION['step']) || !$_SESSION['step'])
 	echo "\n</form>\n";
 	echo templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
 	doFooter();
-	exit;*/
+	exit;
+	*/
 	$_SESSION['step'] = 1;
 }
 
@@ -117,118 +125,14 @@ list($newgroup, $gid, $groupname, $groupdescription, $gl)=checkIfNewGroup($ia);
 $conditionforthisquestion=$ia[7];
 $questionsSkipped=0;
 while ($conditionforthisquestion == "Y") //IF CONDITIONAL, CHECK IF CONDITIONS ARE MET
-{
-	$cquery="SELECT distinct cqid FROM {$dbprefix}conditions WHERE qid={$ia[0]}";
-	$cresult=db_execute_assoc($cquery) or safe_die("Couldn't count cqids<br />$cquery<br />".$connect->ErrorMsg());  //Checked
-	$cqidcount=$cresult->RecordCount();
-	$cqidmatches=0;
-	while ($crows=$cresult->FetchRow())//Go through each condition for this current question
-	{
-		//Check if the condition is multiple type
-		$ccquery="SELECT type FROM {$dbprefix}questions WHERE qid={$crows['cqid']} AND language='".$_SESSION['s_lang']."' ";
-		$ccresult=db_execute_assoc($ccquery) or safe_die ("Coudn't get type from questions<br />$ccquery<br />".$connect->ErrorMsg());   //Checked
-		while($ccrows=$ccresult->FetchRow())
-		{
-			$thistype=$ccrows['type'];
-		}
-		// In case thistype = Q or K, then multiple conditions are ANDed
-		// and thus  must match
-		// ==> increase $cqidcount to the number of conditions
-		// avoiding the 'distinct' keyword in the SQL above
-		// (which is used for type M or P questions whose conditions
-		//  are ORed)
-		if ($thistype =="Q" || $thistype =="K")
-		{
-			$cquery2="SELECT cqid FROM {$dbprefix}conditions WHERE qid={$ia[0]} AND cqid={$crows['cqid']}";
-			$cresult2=db_execute_assoc($cquery2) or safe_die("Couldn't count cqids<br />$cquery<br />".$connect->ErrorMsg()); //Checked
-			$cqidcount2=$cresult2->RecordCount();
-			$cqidcount += $cqidcount2 - 1; // substract 1 as it has been already counted once by $cquery
-		}
-		$cqquery = "SELECT cfieldname, value, cqid, method FROM {$dbprefix}conditions WHERE qid={$ia[0]} AND cqid={$crows['cqid']}";
-		$cqresult = db_execute_assoc($cqquery) or safe_die("Couldn't get conditions for this question/cqid<br />$cquery<br />".$connect->ErrorMsg()); //Checked
-		$amatchhasbeenfound="N";
-		while ($cqrows=$cqresult->FetchRow()) //Check each condition
-		{
-			$currentcqid=$cqrows['cqid'];
-			$conditionfieldname=$cqrows['cfieldname'];
-			if (!$cqrows['value'] || $cqrows['value'] == ' ')
-			{
-				$conditionvalue="NULL";
-			} 
-			else
-			{
-				$conditionvalue=$cqrows['value'];
-			}
-			if ($thistype == "M" || $thistype == "P") //Adjust conditionfieldname for multiple option type questions
-			{
-				$conditionfieldname .= $conditionvalue;
-				$conditionvalue = "Y";
-			}
-			// If condition value is @SIDXGIDXQID[aid]@ field
-			if (ereg('^@([0-9]+X[0-9]+X[^@]+)@',$conditionvalue, $targetconditionfieldname))
-			{
-				$conditionvalue = $_SESSION[$targetconditionfieldname[1]];
-			}
-			if (trim($cqrows['method'])=='') {$cqrows['method']='==';}
-			if (!isset($_SESSION[$conditionfieldname]) || 
-				$_SESSION[$conditionfieldname] == '' || 
-				$_SESSION[$conditionfieldname] == ' ')
-			{
-			    if($thistype == "K")
-			    {
-			      $currentvalue = 0;
-			    } else {
-				  $currentvalue="NULL";
-				}
-			} 
-			else 
-			{
-				$currentvalue=$_SESSION[$conditionfieldname];
-			}
-
-			if ( $cqrows['method'] != 'RX')
-			{
-			
-				if (eval('if ($currentvalue'. $cqrows['method'].'$conditionvalue) return true; else return false;'))
-				{
-					$amatchhasbeenfound="Y";
-				}
-			}
-			else
-			{
-				if (ereg($conditionvalue,$currentvalue))
-				{
-					$amatchhasbeenfound="Y";
-				}
-			}
-			if ( ($thistype =="Q" || $thistype =="K") &&
-				$amatchhasbeenfound=="Y")
-			{ 
-				// For type Q/K questions each match is counted
-				// because this is an AND condition
-				$cqidmatches++;
-				// then we reset matchfound switch in order
-				// to check the next condition
-				$amatchhasbeenfound="N";
-			}
-		}
-		if ($amatchhasbeenfound == "Y" && 
-			($thistype !="Q" && $thistype !="K") )
-		{
-			// For all other question type than Q and K, 
-			// conditions on same Question are ORed (type M or P)
-			// so increment counter at least one of the conditions matches
-			$cqidmatches++;
-		}
-	}
-	if ($cqidmatches == $cqidcount)
-	{
-		//a match has been found in ALL distinct cqids. The question WILL be displayed
-		$conditionforthisquestion="N";
-	}
-	else
-	{
-		//matches have not been found in ALL distinct cqids. The question WILL NOT be displayed
+{ // this is a while, not an IF because if we skip the question we loop on the next question, see below
+    if (checkquestionfordisplay($ia[0]) === true)
+    { // question will be displayed
+	// we set conditionforthisquestion to N here because it is used later to select style=display:'' for the question
+	$conditionforthisquestion="N";
+    }
+    else
+    {
 		$questionsSkipped++;
 		if (returnglobal('move') == "movenext")
 		{
@@ -237,13 +141,13 @@ while ($conditionforthisquestion == "Y") //IF CONDITIONAL, CHECK IF CONDITIONS A
 			{
 				$ia=$_SESSION['fieldarray'][$currentquestion];
 			}
-            if ($_SESSION['step']>=$_SESSION['totalsteps']) 
-            {
-                $move="movesubmit"; 
-		submitanswer(); // complete this answer (submitdate)
-                break;       
-            }
-            $_SESSION['step']++;
+			if ($_SESSION['step']>=$_SESSION['totalsteps']) 
+			{
+				$move="movesubmit"; 
+				submitanswer(); // complete this answer (submitdate)
+				break;       
+			}
+			$_SESSION['step']++;
 			foreach ($_SESSION['grouplist'] as $gl)
 			{
 				if ($gl[0] == $ia[5])
@@ -261,9 +165,11 @@ while ($conditionforthisquestion == "Y") //IF CONDITIONAL, CHECK IF CONDITIONS A
 			$ia=$_SESSION['fieldarray'][$currentquestion];
 			$_SESSION['step']--;
 		}
+		// because we skip this question, we need to loop on the same condition 'check-block'
+		//  with the new question (we have overwritten $ia)
 		$conditionforthisquestion=$ia[7];
-	}
-}
+    }
+} // End of while conditionforthisquestion=="Y"
 
 //SUBMIT
 if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notanswered)  && (!isset($notvalidated) || !$notvalidated ))   
@@ -281,47 +187,75 @@ if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notan
     //COMMIT CHANGES TO DATABASE
     if ($thissurvey['active'] != "Y")
     {
+    	//if($thissurvey['printanswers'] != 'Y' && $thissurvey['usecookie'] != 'Y' && $tokensexist !=1)
+        if ($thissurvey['assessments']== "Y") 
+        {
+            $assessments = doAssessment($surveyid);
+        }
+
+    	if($thissurvey['printanswers'] != 'Y')
+    	{
+    		killSession();
+    	}    
+
         sendcacheheaders();
         doHeader();
         echo templatereplace(file_get_contents("$thistpl/startpage.pstpl"));
 
         //Check for assessments
-        $assessments = doAssessment($surveyid);
-        if ($assessments)
+        if ($thissurvey['assessments']== "Y" && $assessments)
         {
-            echo templatereplace(file_get_contents("$thistpl/assessment.pstpl"));
+                echo templatereplace(file_get_contents("$thistpl/assessment.pstpl"));
         }
 
-        $completed = "<br /><strong><font size='2' color='red'>".$clang->gT("Did Not Save")."</font></strong><br /><br />\n\n";
+        $completed = $thissurvey['surveyls_endtext'];            
+        $completed .= "<br /><strong><font size='2' color='red'>".$clang->gT("Did Not Save")."</font></strong><br /><br />\n\n";
         $completed .= $clang->gT("Your survey responses have not been recorded. This survey is not yet active.")."<br /><br />\n";
-        $completed .= "<a href='".$_SERVER['PHP_SELF']."?sid=$surveyid&amp;move=clearall'>".$clang->gT("Clear Responses")."</a><br /><br />\n";
+
+    	if ($thissurvey['printanswers'] == 'Y')
+    	{
+    		// ClearAll link is only relevant for survey with printanswers enabled
+    		// in other cases the session is cleared at submit time
+            	$completed .= "<a href='".$_SERVER['PHP_SELF']."?sid=$surveyid&amp;move=clearall'>".$clang->gT("Clear Responses")."</a><br /><br />\n";
+    	}
+
     }
-    else
+    else //THE FOLLOWING DEALS WITH SUBMITTING ANSWERS AND COMPLETING AN ACTIVE SURVEY
     {
-
-
         if ($thissurvey['usecookie'] == "Y" && $tokensexist != 1) //don't use cookies if tokens are being used
         {
             $cookiename="PHPSID".returnglobal('sid')."STATUS";
-            setcookie("$cookiename", "COMPLETE", time() + 31536000);
+            setcookie("$cookiename", "COMPLETE", time() + 31536000); //Cookie will expire in 365 days
         }
 
+        //Before doing the "templatereplace()" function, check the $thissurvey['url']
+        //field for limereplace stuff, and do transformations!
+        $thissurvey['surveyls_url']=insertansReplace($thissurvey['surveyls_url']);
+		$thissurvey['surveyls_url']=passthruReplace($thissurvey['surveyls_url'], $thissurvey);
 
         $content='';
         $content .= templatereplace(file_get_contents("$thistpl/startpage.pstpl"));
 
         //Check for assessments
-        $assessments = doAssessment($surveyid);
-        if ($assessments)
+        if ($thissurvey['assessments']== "Y") 
         {
-            $content .= templatereplace(file_get_contents("$thistpl/assessment.pstpl"));
+            $assessments = doAssessment($surveyid);
+            if ($assessments)
+            {
+                $content .= templatereplace(file_get_contents("$thistpl/assessment.pstpl"));
+            }
         }
 
-        $completed = "<br /><font size='2'><font color='green'><strong>"
-        .$clang->gT("Thank you")."</strong></font><br /><br />\n\n"
-        .$clang->gT("Your survey responses have been recorded.")."<br />\n"
-        ."<a href='javascript:window.close()'>"
-        .$clang->gT("Close this Window")."</a></font><br /><br />\n";
+        
+        if (FlattenText($thissurvey['surveyls_endtext'])=='')
+        {
+            $completed = "<br /><span class='success'>".$clang->gT("Thank you!")."</span><br /><br />\n\n"
+                        . $clang->gT("Your survey responses have been recorded.")."<br /><br />\n";           
+        }
+        else
+        {
+            $completed = $thissurvey['surveyls_endtext'];
+        }        
 
         // Link to Print Answer Preview  **********
         if ($thissurvey['printanswers']=='Y')
@@ -332,6 +266,19 @@ if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notan
             ."</a><br />\n";
          }
         //*****************************************
+
+        if ($thissurvey['publicstatistics']=='Y' && $thissurvey['printanswers']=='Y') {$completed .='<br />'.$clang->gT("or");}
+
+         // Link to Public statistics  **********
+         if ($thissurvey['publicstatistics']=='Y')
+         {
+            $completed .= "<br /><br />"
+            ."<a class='publicstatisticslink' href='statistics_user.php?sid=$surveyid' target='_blank'>"
+            .$clang->gT("View the statistics for this survey.")
+            ."</a><br />\n";
+         }
+        //*****************************************        
+
 
         //Update the token if needed and send a confirmation email
         if (isset($clienttoken) && $clienttoken)
@@ -348,16 +295,24 @@ if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notan
         $_SESSION['finished']=true;
         $_SESSION['sid']=$surveyid;
 
-        if (isset($thissurvey['autoredirect']) && $thissurvey['autoredirect'] == "Y" && $thissurvey['url'])
+        if (isset($thissurvey['autoredirect']) && $thissurvey['autoredirect'] == "Y" && $thissurvey['surveyls_url'])
         {
             //Automatically redirect the page to the "url" setting for the survey
-            $url = $thissurvey['url'];
-            $url=str_replace("{SAVEDID}",$saved_id, $url);    // to activate the SAVEDID in the END URL
-            $url=str_replace("{TOKEN}",$clienttoken, $url);   // to activate the TOKEN in the END URL
-            $url=str_replace("{SID}", $surveyid, $url);       // to activate the SID in the RND URL
+            $url = insertansReplace($thissurvey['surveyls_url']);
+            $url = passthruReplace($url, $thissurvey);
+            $url=str_replace("{SAVEDID}",$saved_id, $url);           // to activate the SAVEDID in the END URL
+            $url=str_replace("{TOKEN}",$clienttoken, $url);          // to activate the TOKEN in the END URL
+            $url=str_replace("{SID}", $surveyid, $url);              // to activate the SID in the END URL
+            $url=str_replace("{LANG}", $clang->getlangcode(), $url); // to activate the LANG in the END URL
 
             header("Location: {$url}");
         }
+
+	//if($thissurvey['printanswers'] != 'Y' && $thissurvey['usecookie'] != 'Y' && $tokensexist !=1)
+	if($thissurvey['printanswers'] != 'Y')
+	{
+		killSession();
+	}    
 
         doHeader();
         if (isset($content)) {echo $content;}
@@ -369,11 +324,6 @@ if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notan
     echo "\n<br />\n";
     echo templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
     doFooter();
-	if($thissurvey['printanswers'] != 'Y' && $thissurvey['usecookie'] != 'Y' && $tokensexist !=1)
-    {
-      session_unset();
-      session_destroy();
-    }    
     exit;
 }
 
@@ -412,6 +362,8 @@ $inputnames=array();
 list($plus_qanda, $plus_inputnames)=retrieveAnswers($ia);
 if ($plus_qanda)
 {
+	$plus_qanda[] = $ia[4];
+	$plus_qanda[] = $ia[6]; // adds madatory identifyer for adding mandatory class to question wrapping div
 	$qanda[]=$plus_qanda;
 }
 if ($plus_inputnames && !$bIsGroupDescrPage)
@@ -446,7 +398,6 @@ if ($pluscon !== null)
 	$conmandatorys=addtoarray_single($conmandatorys, $plus_conman);
 	$conmandatoryfns=addtoarray_single($conmandatoryfns, $plus_conmanfns);
 }
-
 //Build an array containing the conditions that apply for this page
 $plus_conditions=retrieveConditionInfo($ia); //Returns false if no conditions
 if ($plus_conditions)
@@ -473,45 +424,6 @@ echo "\n\n<!-- INPUT NAMES -->\n";
 echo "\t<input type='hidden' name='fieldnames' value='";
 echo implode("|", $inputnames);
 echo "' id='fieldnames'  />\n";
-echo "\n\n<!-- JAVASCRIPT FOR MODIFIED QUESTIONS -->\n";
-echo "\t<script type='text/javascript'>\n";
-echo "\t<!--\n";
-echo "\t\t\t\tfunction ValidDate(oObject)\n";
-echo "\t\t\t\t{// Regular expression used to check if date is in correct format\n";
-echo "\t\t\t\t\tvar str_regexp = /[1-9][0-9]{3}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])/;\n";
-echo "\t\t\t\t\tvar pattern = new RegExp(str_regexp);\n";
-echo "\t\t\t\t\tif ((oObject.value.match(pattern)!=null))\n";
-echo "\t\t\t\t\t{var date_array = oObject.value.split('-');\n";
-echo "\t\t\t\t\t\tvar day = date_array[2];\n";
-echo "\t\t\t\t\t\tvar month = date_array[1];\n";
-echo "\t\t\t\t\t\tvar year = date_array[0];\n";
-echo "\t\t\t\t\t\tstr_regexp = /1|3|5|7|8|10|12/;\n";
-echo "\t\t\t\t\t\tpattern = new RegExp(str_regexp);\n";
-echo "\t\t\t\t\t\tif ( day <= 31 && (month.match(pattern)!=null))\n";
-echo "\t\t\t\t\t\t{ return true;\n";
-echo "\t\t\t\t\t\t}\n";
-echo "\t\t\t\t\t\tstr_regexp = /4|6|9|11/;\n";
-echo "\t\t\t\t\t\tpattern = new RegExp(str_regexp);\n";
-echo "\t\t\t\t\t\tif ( day <= 30 && (month.match(pattern)!=null))\n";
-echo "\t\t\t\t\t\t{ return true;\n";
-echo "\t\t\t\t\t\t}\n";
-echo "\t\t\t\t\t\tif (day == 29 && month == 2 && (year % 4 == 0))\n";
-echo "\t\t\t\t\t\t{ return true;\n";
-echo "\t\t\t\t\t\t}\n";
-echo "\t\t\t\t\t\tif (day <= 28 && month == 2)\n";
-echo "\t\t\t\t\t\t{ return true;\n";
-echo "\t\t\t\t\t\t}        \n";
-echo "\t\t\t\t\t}\n";
-echo "\t\t\t\t\twindow.alert('".$clang->gT("Date is not valid!")."');\n";
-echo "\t\t\t\t\toObject.focus();\n";
-echo "\t\t\t\t\toObject.select();\n";
-echo "\t\t\t\t\treturn false;\n";
-echo "\t\t\t\t}\n";
-//echo "\t\t}\n";
-echo "\t//-->\n";
-echo "\t</script>\n\n";
-// <-- END NEW FEATURE - SAVE
-
 echo "\n\n<!-- START THE SURVEY -->\n";
 echo templatereplace(file_get_contents("$thistpl/survey.pstpl"));
 
@@ -563,20 +475,55 @@ else
 	echo "\t//-->\n";
 	echo "\t</script>\n\n";
 
+	//Display the "mandatory" message on page if necessary
+	if (isset($showpopups) && $showpopups == 0 && isset($notanswered) && $notanswered == true)
+	{
+		echo "<p><span class='errormandatory'>" . $clang->gT("One or more mandatory questions have not been answered. You cannot proceed until these have been completed.") . "</span></p>";
+	}
+
+	//Display the "validation" message on page if necessary
+	if (isset($showpopups) && $showpopups == 0 && isset($notvalidated) && $notvalidated == true)
+	{
+		echo "<p><span class='errormandatory'>" . $clang->gT("One or more questions have not been answered in a valid manner. You cannot proceed until these answers are valid.") . "</span></p>";
+	}
+
 	echo "\n\n<!-- PRESENT THE QUESTIONS -->\n";
 	if (is_array($qanda))
 	{
 		foreach ($qanda as $qa)
 		{
-			echo "\n\t<!-- NEW QUESTION -->\n";
-			echo "\n\t<!-- QUESTION TYPE ".$qa[5]."-->\n";
-			echo "\t\t\t\t<div id='question$qa[4]'>";
-			$question="<label for='$ia[7]'>" . $qa[0] . "</label>";
+			$q_class = question_class($qa[8]); // render question class (see common.php)
+
+			if ($qa[9] == 'Y')
+			{
+				$man_class = ' mandatory';
+			}
+			else
+			{
+				$man_class = '';
+			}
+
+// Fixed by lemeur: can't rely on javascript checkconditions with 
+// question-by-question display to hide/show conditionnal questions 
+// as conditions are evaluated with php code
+// Let's use result from previous condition eval instead 
+// (note there is only 1 question, $conditionforthisquestion is the result from
+// condition eval in php)
+//			if ($qa[3] != 'Y') {$n_q_display = '';} else { $n_q_display = ' style="display: none;"';}
+			if ($conditionforthisquestion != 'Y') {$n_q_display = '';} else { $n_q_display = ' style="display: none;"';}
+
+			echo '
+	<!-- NEW QUESTION -->
+				<div id="question'.$qa[4].'" class="'.$q_class.$man_class.'"'.$n_q_display.'>
+';
+			$question= $qa[0];
 			$answer=$qa[1];
 			$help=$qa[2];
 			$questioncode=$qa[5];
 			echo templatereplace(file_get_contents("$thistpl/question.pstpl"));
-			echo "\t\t\t\t</div>\n";
+			echo '
+				</div>
+';
 		}
 	}
 	echo "\n\n<!-- END THE GROUP -->\n";
@@ -664,7 +611,7 @@ function checkIfNewGroup($ia)
 			{
 				$newgroup = "N";
 			}
-			if (!isset($_POST['lastgroupname'])) {$newgroup="Y";}
+			if (!isset($_POST['lastgroupname']) && isset($move)) {$newgroup="Y";}
 		}
 	}
 	return array($newgroup, $gid, $groupname, $groupdescription, $gl);

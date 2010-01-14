@@ -69,7 +69,7 @@ include ("../functions/functions.operator.php");
  */
 include("../functions/functions.input.php");
 
-$operator_id = get_operator_id();
+$admin_operator_id = get_operator_id();
 
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
@@ -122,7 +122,7 @@ if ($questionnaire_id != false)
 	print "</table>";
 	
 	
-	$sql = "SELECT o.description as des, o.outcome_id, count( c.case_id ) as count
+	$sql = "SELECT o.description as des, o.outcome_id, count( c.case_id ) as count, ROUND((count(c.case_id) / (SELECT count(case_id) FROM `case` WHERE questionnaire_id = '$questionnaire_id')) * 100,2) as perc
 		FROM `case` AS c, `outcome` AS o
 		WHERE c.questionnaire_id = '$questionnaire_id'
 		AND c.current_outcome_id = o.outcome_id
@@ -133,66 +133,102 @@ if ($questionnaire_id != false)
 	if (!empty($rs))
 	{
 		translate_array($rs,array("des"));
-		xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"));
+		xhtml_table($rs,array("des","count","perc"),array(T_("Outcome"),T_("Count"),T_("%")),"tclass",array("des" => "Complete"),array("count","perc"));
+
+		$operator_id = false;
+		if (isset($_GET['operator_id'])) $operator_id = bigintval($_GET['operator_id']); 
+
+		//display a list of operators
+		$sql = "SELECT s.operator_id as value,s.firstname as description, CASE WHEN s.operator_id = '$operator_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+			FROM operator as s, operator_questionnaire as q
+			WHERE s.operator_id = q.operator_id
+			AND q.questionnaire_id = '$questionnaire_id'";
+
+		$r = $db->GetAll($sql);
+
+		print "<h2>" . T_("Operator") . ": " . "</h2>";
+		if(!empty($r))
+			display_chooser($r,"operator_id","operator_id",true,"questionnaire_id=$questionnaire_id");
+
+		if ($operator_id != false)
+		{
+			print "<p>" . T_("Operator call outcomes") . "</p>";
+		
+			$sql = "SELECT o.description as des, o.outcome_id, count( c.call_id ) as count, ROUND((count(c.call_id) / (SELECT count(call.call_id) FROM `call` JOIN `case` ON (call.case_id = `case`.case_id AND `case`.questionnaire_id = $questionnaire_id ) WHERE call.operator_id = '$operator_id')) * 100,2) as perc
+				FROM `call` AS c, `case` as ca, `outcome` AS o
+				WHERE ca.questionnaire_id = '$questionnaire_id'
+				AND ca.case_id = c.case_id
+				AND c.operator_id = '$operator_id'
+				AND c.outcome_id = o.outcome_id
+				GROUP BY o.outcome_id";
+			
+			$rs = $db->GetAll($sql);
+		
+			if (!empty($rs))
+			{
+				translate_array($rs,array("des"));
+				xhtml_table($rs,array("des","count","perc"),array(T_("Outcome"),T_("Count"),T_("%")),"tclass",array("des" => "Complete"),array("count","perc"));
+			}
+		}
+
+		$sample_import_id = false;
+		if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']); 
+
+		//display a list of samples
+		$sql = "SELECT s.sample_import_id as value,s.description, CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+			FROM sample_import as s, questionnaire_sample as q
+			WHERE s.sample_import_id = q.sample_import_id
+			AND q.questionnaire_id = '$questionnaire_id'";
+
+		$r = $db->GetAll($sql);
+
+		
+		print "<h2>" . T_("Sample") . ": " . "</h2>";
+		if(!empty($r))
+			display_chooser($r,"sample_import_id","sample_import_id",true,"questionnaire_id=$questionnaire_id");
+
+
+		if ($sample_import_id != false)
+		{
+			print "<p>" . T_("Sample status") . "</p>";
+
+			$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . T_("Drawn from sample") . "' ELSE '" . T_("Remain in sample") . "' END as drawn,
+					count(*) as count
+				FROM sample as s
+				JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
+				LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
+				WHERE s.import_id = '$sample_import_id'
+				GROUP BY (c.sample_id is not null)";
+
+			xhtml_table($db->GetAll($sql),array("drawn","count"),array(T_("Status"),T_("Number")));
+
+
+			print "<p>" . T_("Outcomes") . "</p>";
+
+
+			$sql = "SELECT o.description as des, o.outcome_id, count( c.case_id ) as count,ROUND(count(c.case_id) / (SELECT count(case_id) FROM `case` JOIN sample ON (`case`.sample_id = sample.sample_id AND sample.import_id = '$sample_import_id') WHERE questionnaire_id = '$questionnaire_id' ) * 100,2) as perc
+
+				FROM `case` AS c, `outcome` AS o, sample as s
+				WHERE c.questionnaire_id = '$questionnaire_id'
+				AND c.sample_id = s.sample_id
+				AND s.import_id = '$sample_import_id'
+				AND c.current_outcome_id = o.outcome_id
+				GROUP BY o.outcome_id";
+		
+			$rs = $db->GetAll($sql);
+			
+			if (!empty($rs))
+			{
+				translate_array($rs,array("des"));
+				xhtml_table($rs,array("des","count","perc"),array(T_("Outcome"),T_("Count"),T_("%")),"tclass",array("des" => "Complete"),array("count","perc"));
+			}
+			else
+				print "<p>" . T_("No outcomes recorded for this sample") . "</p>";
+		}
+	
 	}
 	else
 		print "<p>" . T_("No outcomes recorded for this questionnaire") . "</p>";
-
-
-	$sample_import_id = false;
-	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']); 
-
-	//display a list of samples
-	$sql = "SELECT s.sample_import_id as value,s.description, CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-		FROM sample_import as s, questionnaire_sample as q
-		WHERE s.sample_import_id = q.sample_import_id
-		AND q.questionnaire_id = '$questionnaire_id'";
-
-	$r = $db->GetAll($sql);
-
-	
-	print "<h2>" . T_("Sample") . ": " . "</h2>";
-	if(!empty($r))
-		display_chooser($r,"sample_import_id","sample_import_id",true,"questionnaire_id=$questionnaire_id");
-
-
-	if ($sample_import_id != false)
-	{
-		print "<p>" . T_("Sample status") . "</p>";
-
-		$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . T_("Drawn from sample") . "' ELSE '" . T_("Remain in sample") . "' END as drawn,
-				count(*) as count
-			FROM sample as s
-			JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
-			LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
-			WHERE s.import_id = '$sample_import_id'
-			GROUP BY (c.sample_id is not null)";
-
-		xhtml_table($db->GetAll($sql),array("drawn","count"),array(T_("Status"),T_("Number")));
-
-
-		print "<p>" . T_("Outcomes") . "</p>";
-
-
-		$sql = "SELECT o.description as des, o.outcome_id, count( c.case_id ) as count
-			FROM `case` AS c, `outcome` AS o, sample as s
-			WHERE c.questionnaire_id = '$questionnaire_id'
-			AND c.sample_id = s.sample_id
-			AND s.import_id = '$sample_import_id'
-			AND c.current_outcome_id = o.outcome_id
-			GROUP BY o.outcome_id";
-	
-		$rs = $db->GetAll($sql);
-		
-		if (!empty($rs))
-		{
-			translate_array($rs,array("des"));
-			xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"));
-		}
-		else
-			print "<p>" . T_("No outcomes recorded for this sample") . "</p>";
-	}
-	
 
 
 	//display a list of shifts with completions and a link to either add a report or view reports
@@ -201,7 +237,7 @@ if ($questionnaire_id != false)
 	$sql = "SELECT s.shift_id, CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . DATE_TIME_FORMAT ."'), ' - ', DATE_FORMAT(CONVERT_TZ(s.end,'UTC',o.Time_zone_name),'" . DATE_TIME_FORMAT ."')) as description,
 		CASE WHEN sr.shift_id IS NULL THEN CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '&amp;createnewreport=yes\'>" . T_("No shift reports: Add report") . "</a>') ELSE CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\'>" . T_("View shift reports") . "</a>') END AS link, c.completions as completions, CONCAT('<a href=\'operatorperformance.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\'>" . T_("View operator performance") . "</a>') as operform
 		FROM `shift` as s
-		JOIN operator as o on (o.operator_id = '$operator_id')
+		JOIN operator as o on (o.operator_id = '$admin_operator_id')
 		LEFT JOIN shift_report as sr on (sr.shift_id = s.shift_id)
 		LEFT JOIN (  SELECT count(*) as completions,sh.shift_id
 			FROM `call` as a, `case` as b, shift as sh

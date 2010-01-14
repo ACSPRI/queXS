@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: htmleditor-popup.php 5074 2008-06-15 11:56:13Z c_schmitz $
+* $Id: htmleditor-popup.php 6853 2009-05-15 12:51:09Z c_schmitz $
 */
 
 //Ensure script is not run directly, avoid path disclosure
@@ -46,8 +46,8 @@ if (!isset($_GET['fieldname']) || !isset($_GET['fieldtext']))
 		</div>
 		<hr />
 		
-		<tr><td align="center"><br /><font color="red"><strong>	
-		</strong></font><br />
+		<tr><td align="center"><br /><span style="color:red;"><strong>	
+		</strong></span><br />
 		</table>
 		<form  onsubmit="self.close()">
 			<input type="submit" value="'.$clang->gT("Close Editor").'" />

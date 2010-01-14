@@ -10,38 +10,32 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: common.php 5142 2008-06-22 10:16:13Z c_schmitz $
+* $Id: common.php 7491 2009-08-19 11:14:03Z c_schmitz $
 */
 
 //Security Checked: POST, GET, SESSION, DB, REQUEST, returnglobal
 
 //Ensure script is not run directly, avoid path disclosure
 if (!isset($dbprefix) || isset($_REQUEST['dbprefix'])) {safe_die("Cannot run this script directly");}
-$versionnumber = "1.71+";
-$dbversionnumber = 126;
-$buildnumber = "5147";
 
+##################################################################################
 
+$versionnumber = "1.85+";
+$dbversionnumber = 138;
+$buildnumber = "7523";
 
-if ($debug>0) {
-        error_reporting(E_ALL); //For debug purposes - switch on in config.phh  
-        }
+##################################################################################
 
-if (ini_get("max_execution_time")<120) @set_time_limit(120); // Maximum execution time - works only if safe_mode is off
-@ini_set("memory_limit",$memorylimit); // Set Memory Limit for big surveys 
-
+// Check for most necessary requirements
 // Now check for PHP & db version
 // Do not localize/translate this!
 $ver = explode( '.', PHP_VERSION );
 $ver_num = $ver[0] . $ver[1] . $ver[2];
-$dieoutput='';
-$maildebug='';
-
-if ( $ver_num < 432 )
+$dieoutput='';     
+if ( $ver_num < 500 )
 {
-    $dieoutput .= 'This script needs PHP 4.3.2 or above! Your version: '.phpversion().'<br />';
+    $dieoutput .= 'This script can only be run on PHP version 5.x or later! Your version: '.phpversion().'<br />';
 }
-
 if (!function_exists('mb_convert_encoding'))
 {
     $dieoutput .= "This script needs the PHP Multibyte String Functions library installed: See <a href='http://docs.limesurvey.org/tiki-index.php?page=Installation+FAQ'>FAQ</a> and <a href='http://de.php.net/manual/en/ref.mbstring.php'>PHP documentation</a><br />";
@@ -49,25 +43,70 @@ if (!function_exists('mb_convert_encoding'))
 if ($dieoutput!='') die($dieoutput);
 
 
+if ($debug>0) {//For debug purposes - switch on in config.php
+        @ini_set("display_errors", 1);
+        error_reporting(E_ALL); 
+}
+
+if ($debug>2) {//For debug purposes - switch on in config.php
+        error_reporting(E_ALL | E_STRICT); 
+}
+
+ 
 
 
+if (ini_get("max_execution_time")<600) @set_time_limit(600); // Maximum execution time - works only if safe_mode is off
+@ini_set("memory_limit",$memorylimit); // Set Memory Limit for big surveys 
+
+$maildebug='';
+                  
+
+// The following function (when called) includes FireBug Lite if true 
+define('FIREBUG' , $use_firebug_lite);
+
+define('ADODB_ASSOC_CASE', 2); // needed to set proper upper/lower casing for mssql
+
 ##################################################################################
-## DO NOT EDIT BELOW HERE
-##################################################################################
+
 require_once ($rootdir.'/classes/adodb/adodb.inc.php');
+require_once ($rootdir.'/classes/datetimeconverter/class.datetimeconverter.php');
 require_once ($rootdir.'/classes/phpmailer/class.phpmailer.php');
 require_once ($rootdir.'/classes/php-gettext/gettextinc.php');
 require_once ($rootdir.'/classes/core/surveytranslator.php');
 require_once ($rootdir.'/classes/core/sanitize.php');
 
-$dbprefix=strtolower($dbprefix);
-define("_PHPVERSION", phpversion());
 
-if($_SERVER['SERVER_SOFTWARE'] == "Xitami") //Deal with Xitami Issue
+$dbprefix=strtolower($dbprefix);
+define("_PHPVERSION", phpversion()); // This is the same as the server defined 'PHP_VERSION'
+
+
+//Deal with Xitami server issues 
+//Todo: find out if this still is an issue with the latest Xitami server version
+if(isset($_SERVER['SERVER_SOFTWARE']) && $_SERVER['SERVER_SOFTWARE'] == "Xitami") 
 {
 	$_SERVER['PHP_SELF'] = substr($_SERVER['SERVER_URL'], 0, -1) .$_SERVER['SCRIPT_NAME'];
 }
 
+// Deal with server systems having not set a default time zone
+if(function_exists("date_default_timezone_set") and function_exists("date_default_timezone_get"))
+@date_default_timezone_set(@date_default_timezone_get());
+
+
+//Every 50th time clean up the temp directory of old files (older than 1 day)
+//depending on the load the  probability might be set higher or lower
+if (rand(1,50)==1) 
+{
+    cleanTempDirectory();   
+}
+
+// Array of JS and CSS scripts to include in client header
+$js_header_includes = array();
+$css_header_includes =  array();
+ 
+// JS scripts and CSS to include in admin header
+// updated by admin scripts
+$js_adminheader_includes = array();   
+$css_adminheader_includes = array();   
 
 /*
 * $sourcefrom variable checks the location of the current script against
@@ -84,8 +123,8 @@ $slashlesshome=str_replace(array("\\", "/"), "", $homedir);
 // Uncomment the following line for debug purposes
 // echo $slashlesspath." - ".$slashlesshome;
 
-if (eregi($slashlesshome, $slashlesspath) || eregi("dump", $_SERVER['PHP_SELF'])) {
-	if (!eregi($slashlesshome."install", $slashlesspath))
+if (strcasecmp($slashlesshome, $slashlesspath) == 0) {
+    if (strcasecmp($slashlesshome."install", $slashlesspath) != 0)
 	{
 		$sourcefrom="admin";
 	}
@@ -110,30 +149,53 @@ if ($sourcefrom == "admin")
 
 //BEFORE SESSIONCONTOL BECAUSE OF THE CONNECTION
 //CACHE DATA
-$connect=&ADONewConnection($databasetype);
+$connect=ADONewConnection($databasetype);
 $database_exists = FALSE;
 switch ($databasetype)
 {
-	case "mysql"     :if ($databaseport!="default") {$dbport="$databaselocation:$databaseport";}
-		 			 	 else {$dbport=$databaselocation;}
+    case "postgres":    
+    case "mysqli":    
+  	case "mysql": if ($databaseport!="default") {$dbhost="$databaselocation:$databaseport";}
+		 			 	 else {$dbhost=$databaselocation;}
 	break;
-	case "odbc_mssql": $dbport="Driver={SQL Server};Server=$databaselocation;Database=".$databasename;
+    case "mssql_n": 
+    case "mssql": if ($databaseport!="default") {$dbhost="$databaselocation,$databaseport";}
+                           else {$dbhost=$databaselocation;}
+    break;                             
+	case "odbc_mssql": $dbhost="Driver={SQL Server};Server=$databaselocation;Database=".$databasename;
 	break;
-	case "postgres": if ($databaseport!="default") {$dbport="$databaselocation:$databaseport";}
-		 			 	 else {$dbport=$databaselocation;}
-	break;
+
 	default: safe_die("Unknown database type");
 }
 // Now try connecting to the database
-if (@$connect->Connect($dbport, $databaseuser, $databasepass, $databasename))
-{ $database_exists = TRUE;}
-else {
- // If that doesnt work try connection without database-name
-	$connect->database = '';
-	if ($databasetype=='odbc_mssql') {$dbport="Driver={SQL Server};Server=$databaselocation;";}
-	if (!@$connect->Connect($dbport, $databaseuser, $databasepass))
-    {
-       safe_die("Can't connect to LimeSurvey database. Reason: ".$connect->ErrorMsg());
+if ($databasepersistent==true)
+{
+    if (@$connect->PConnect($dbhost, $databaseuser, $databasepass, $databasename))
+    { 
+        $database_exists = TRUE;
+    }
+    else {
+     // If that doesnt work try connection without database-name
+    	$connect->database = '';
+    	if (!@$connect->PConnect($dbhost, $databaseuser, $databasepass))
+        {
+           safe_die("Can't connect to LimeSurvey database. Reason: ".$connect->ErrorMsg());
+        }
+    }
+}
+else
+{
+    if (@$connect->Connect($dbhost, $databaseuser, $databasepass, $databasename))
+    { 
+        $database_exists = TRUE;
+    }
+    else {
+     // If that doesnt work try connection without database-name
+    	$connect->database = '';
+    	if (!@$connect->Connect($dbhost, $databaseuser, $databasepass))
+        {
+           safe_die("Can't connect to LimeSurvey database. Reason: ".$connect->ErrorMsg());
+        }
     }
 }
 
@@ -145,19 +207,20 @@ $dbexistsbutempty=($database_exists && checkifemptydb());
 
 
 
-if ($databasetype=='mysql') {
+if ($databasetype=='mysql' || $databasetype=='mysqli') {
     if ($debug>1) { @$connect->Execute("SET SESSION SQL_MODE='STRICT_ALL_TABLES,ANSI'"); } //for development - use mysql in the strictest mode  //Checked
     $infoarray=$connect->ServerInfo();
     if (version_compare ($infoarray['version'],'4.1','<'))
     {
-      safe_die ("<br />Error: You need at least MySQL version 4.1 to run LimeSurvey");
+      safe_die ("<br />Error: You need at least MySQL version 4.1 to run LimeSurvey. Your version:".$infoarray['version']);
     }
     @$connect->Execute("SET CHARACTER SET 'utf8'");  //Checked    
 }
 
 // Setting dateformat for mssql driver. It seems if you don't do that the in- and output format could be different
-if ($databasetype=='odbc_mssql') {
-   @$connect->Execute('SET DATEFORMAT ymd;');     //Checked    
+if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {
+   @$connect->Execute('SET DATEFORMAT ymd;');     //Checked   
+   @$connect->Execute('SET QUOTED_IDENTIFIER ON;');     //Checked   
 }
 
 
@@ -172,7 +235,7 @@ If ($dbexistsbutempty && $sourcefrom=='admin') {
 If (!$dbexistsbutempty && $sourcefrom=='admin')
 {
     $usquery = "SELECT stg_value FROM ".db_table_name("settings_global")." where stg_name='DBVersion'"; 
-    $usresult = db_execute_assoc($usquery,'',true); //checked
+    $usresult = db_execute_assoc($usquery,'',false); //checked
     if (!$usresult)
     {
      die ("<br />The configured LimeSurvey database does not seem to exist and the LimeSurvey tables weren't found. <br />Please check the <a href='http://docs.limesurvey.org'>online manual</a> for installation instructions.<br />If you already edited config.php please run the <a href='$homeurl/install/index.php'>installation script</a>.");
@@ -195,7 +258,7 @@ If (!$dbexistsbutempty && $sourcefrom=='admin')
 //IF THIS IS AN ADMIN SCRIPT, RUN THE SESSIONCONTROL SCRIPT
 if ($sourcefrom == "admin")
 {
-	include(dirname(__FILE__)."/admin/sessioncontrol.php");
+	include($homedir."/sessioncontrol.php");
 	/**
     * @param string $htmlheader
     * This is the html header text for all administration pages
@@ -217,15 +280,19 @@ if ($sourcefrom == "admin")
 }
 
 //SET LOCAL TIME
-if (substr($timeadjust,1,1)!='-' && substr($timeadjust,1,1)!='+') {$timeadjust='+'.$timeadjust.' hours';}
+if (substr($timeadjust,0,1)!='-' && substr($timeadjust,0,1)!='+') {$timeadjust='+'.$timeadjust;}
+if (strpos($timeadjust,'hours')===false && strpos($timeadjust,'minutes')===false && strpos($timeadjust,'days')===false)
+{
+  $timeadjust=$timeadjust.' hours';  
+}
 
 // SITE STYLES
 $setfont = "<font size='2' face='verdana'>";
-
 $singleborderstyle = "style='border: 1px solid #111111'";
 
 /**
      * showadminmenu() function returns html text for the administration button bar
+ * 
      * @global string $homedir
      * @global string $scriptname
      * @global string $surveyid
@@ -235,51 +302,52 @@ $singleborderstyle = "style='border: 1px solid #111111'";
      */
     function showadminmenu()
         {
-        global $homedir, $scriptname, $surveyid, $setfont, $imagefiles, $clang, $debug;
-        $adminmenu  = "<table class='menubar'>\n";
-        if  ($_SESSION['pw_notify'] && $debug<2)  {$adminmenu .="<tr><td align='center'><font color='red'>".$clang->gT("Warning: You are still using the default password ('password'). Please change your password and re-login again.")."</font></td></tr>";}
-        $adminmenu  .="\t<tr>\n"
-                    . "\t\t<td>\n"
-                    . "\t\t\t<table class='menubar'>\n"
-                    . "\t\t\t<tr>\n"
-                    . "\t\t\t\t<td colspan='2' height='8' align='left'>\n"
-                    . "\t\t\t\t<strong>".$clang->gT("Administration")."</strong>";
+        global $homedir, $scriptname, $surveyid, $setfont, $imagefiles, $clang, $debug, $action;
+    
+        $adminmenu  = "<div class='menubar'>\n";
+        if  ($_SESSION['pw_notify'] && $debug<2)  {$adminmenu .="<div class='alert'>".$clang->gT("Warning: You are still using the default password ('password'). Please change your password and re-login again.")."</div>";}
+        $adminmenu  .="\t<div class='menubar-title'>\n"
+                    . "\t\t<strong>".$clang->gT("Administration")."</strong>";
 		if(isset($_SESSION['loginID']))
 			{
-			$adminmenu  .= " --  ".$clang->gT("Logged in as"). ": <strong>". $_SESSION['user'] ."</strong>"."\n";
+			$adminmenu  .= " --  ".$clang->gT("Logged in as:"). " <strong>"
+                        . "<a href=\"#\" onclick=\"window.open('$scriptname?action=personalsettings', '_self')\" title=\"".$clang->gTview("Edit your personal preferences")."\" "
+                        . "onmouseout=\"hideTooltip()\""
+                        . "onmouseover=\"showTooltip(event,'".$clang->gT("Edit your personal preferences", "js")."');return false\">"
+                        . $_SESSION['user']." <img src='$imagefiles/profile_edit.png' name='ProfileEdit' alt='".$clang->gT("Edit your personal preferences")."' "
+                        . "title='' /></a>"
+                        . "</strong>\n";
 			}
-       	$adminmenu .= "\t\t\t\t</td>\n"
-                    . "\t\t\t</tr>\n"
-                    . "\t\t\t<tr>\n"
-                    . "\t\t\t\t<td>\n"
+       	$adminmenu .= "\t\t</div>\n"
+                    . "\t\t\t<div class='menubar-main'>\n"
+                    . "\t\t\t\t<div class='menubar-left'>\n"
                     . "\t\t\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname', '_self')\" title=\"".$clang->gTview("Default Administration Page")."\"" .
                      "onmouseout=\"hideTooltip()\" onmouseover=\"showTooltip(event,'".$clang->gT("Default Administration Page", "js")."');return false\">" .
                      "<img src='$imagefiles/home.png' name='HomeButton' alt='".$clang->gT("Default Administration Page")."' "
-                    ."title=''" ."align='left' /></a>\n";
+                    ."title=''" ." /></a>\n";
 
-		$adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='11'  align='left' />\n"
-                    . "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt=''  align='left' />\n";
+		$adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='11'   />\n"
+                    . "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt=''  />\n";
 
 		// edit users
 		$adminmenu .= "\t\t\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=editusers', '_self')\" title=\"".$clang->gTview("Create/Edit Users")."\" " .
 					"onmouseout=\"hideTooltip()\""
 					. "onmouseover=\"showTooltip(event,'".$clang->gT("Create/Edit Users", "js")."');return false\">" .
 					 "<img src='$imagefiles/security.png' name='AdminSecurity'"
-					." title='' alt='".$clang->gT("Create/Edit Users")."'  align='left' /></a>";
+					." title='' alt='".$clang->gT("Create/Edit Users")."' /></a>";
 
 		$adminmenu .="<a href=\"#\" onclick=\"window.open('$scriptname?action=editusergroups', '_self')\" title=\"".$clang->gTview("Create/Edit Groups")."\" "
 					. "onmouseout=\"hideTooltip()\""
 					. "onmouseover=\"showTooltip(event,'".$clang->gT("Create/Edit Groups", "js")."');return false\">" .
-					"<img src='$imagefiles/usergroup.png' title='' align='left' alt='".$clang->gT("Create/Edit Groups")."' /></a>\n" ;
+					"<img src='$imagefiles/usergroup.png' title=''  alt='".$clang->gT("Create/Edit Groups")."' /></a>\n" ;
 
 		// check settings
-        //"\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='34'  align='left'>\n".
 						$adminmenu .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=checksettings', '_self')\" title=\"".$clang->gTview("Show System Summary")."\" "
 					    . "onmouseout=\"hideTooltip()\""
                       	. "onmouseover=\"showTooltip(event,'".$clang->gT("Show System Summary", "js")."');return false\">"
 						. "\t\t\t\t\t<img src='$imagefiles/summary.png' name='CheckSettings' title='"
-						. "' alt='". $clang->gT("Show System Summary")."' align='left' /></a>"
-						. "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='left' border='0' hspace='0' />\n";
+						. "' alt='". $clang->gT("Show System Summary")."'/></a>"
+						. "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt=''  border='0' hspace='0' />\n";
 
 		// check data cosistency
         if($_SESSION['USER_RIGHT_CONFIGURATOR'] == 1)
@@ -287,11 +355,11 @@ $singleborderstyle = "style='border: 1px solid #111111'";
 			$adminmenu .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=checkintegrity', '_self')\" title=\"".$clang->gTview("Check Data Integrity")."\" ".
 						   "onmouseout=\"hideTooltip()\""
 						  ."onmouseover=\"showTooltip(event,'".$clang->gT("Check Data Integrity", "js")."');return false\">".
-						"<img src='$imagefiles/checkdb.png' name='CheckDataINtegrity' title=''  alt='".$clang->gT("Check Data Integrity")."' align='left' /></a>\n";
+						"<img src='$imagefiles/checkdb.png' name='CheckDataINtegrity' title=''  alt='".$clang->gT("Check Data Integrity")."'  /></a>\n";
 			}
 		else
 			{
-			$adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='40'  align='left' />\n";
+			$adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='40'  />\n";
 			}
 
 		// list surveys
@@ -299,7 +367,7 @@ $singleborderstyle = "style='border: 1px solid #111111'";
 		 			."onmouseout=\"hideTooltip()\""
                     ."onmouseover=\"showTooltip(event,'".$clang->gT("List Surveys", "js")."');return false\">\n"
 		 			."<img src='$imagefiles/surveylist.png' name='ListSurveys' title=''"
-		 			."  alt='".$clang->gT("List Surveys")."' align='left' onclick=\"window.open('$scriptname?action=listsurveys', '_self')\" />"
+		 			."  alt='".$clang->gT("List Surveys")."'  onclick=\"window.open('$scriptname?action=listsurveys', '_self')\" />"
                     ."</a>" ;
 
 		// db backup & label editor
@@ -309,25 +377,25 @@ $singleborderstyle = "style='border: 1px solid #111111'";
 						. "onclick=\"window.open('$scriptname?action=dumpdb', '_self')\""
 						. "onmouseout=\"hideTooltip()\""
 						. "onmouseover=\"showTooltip(event,'".$clang->gT("Backup Entire Database", "js")."');return false\">"
-						."<img src='$imagefiles/backup.png' name='ExportDB' title='' alt='". $clang->gT("Backup Entire Database")."($surveyid)' align='left' />"
+						."<img src='$imagefiles/backup.png' name='ExportDB' title='' alt='". $clang->gT("Backup Entire Database")."($surveyid)'  />"
 						."</a>\n"
-						. "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='left' border='0' hspace='0' />\n";
+						. "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt=''  border='0' hspace='0' />\n";
 			}
 		else
 			{
-			  $adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='40'  align='left' />\n";
+			  $adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='40'   />\n";
 			}
 		if($_SESSION['USER_RIGHT_MANAGE_LABEL'] == 1)
 			{
 			$adminmenu  .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=labels', '_self')\" title=\"".$clang->gTview("Edit/Add Label Sets")."\" "
 						. "onmouseout=\"hideTooltip()\""
 						. "onmouseover=\"showTooltip(event,'".$clang->gT("Edit/Add Label Sets", "js")."');return false\">" .
-						 "<img src='$imagefiles/labels.png' align='left' name='LabelsEditor' title='' alt='". $clang->gT("Edit/Add Label Sets")."' /></a>\n"
-						. "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='left' border='0' hspace='0' />\n";
+						 "<img src='$imagefiles/labels.png'  name='LabelsEditor' title='' alt='". $clang->gT("Edit/Add Label Sets")."' /></a>\n"
+						. "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt=''  border='0' hspace='0' />\n";
            	}
 		else
 			{
-			  $adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='40'  align='left' />\n";
+			  $adminmenu .= "\t\t\t\t\t<img src='$imagefiles/blank.gif' alt='' width='40'   />\n";
 			}
         if($_SESSION['USER_RIGHT_MANAGE_TEMPLATE'] == 1)
 			{
@@ -335,45 +403,57 @@ $singleborderstyle = "style='border: 1px solid #111111'";
 	        			  "onclick=\"window.open('$scriptname?action=templates', '_self')\" title=\"".$clang->gTview("Template Editor")."\" "
 	                    . "onmouseout=\"hideTooltip()\""
 	                    . "onmouseover=\"showTooltip(event,'".$clang->gT("Template Editor", "js")."');return false\">" .
-	                    "<img src='$imagefiles/templates.png' name='EditTemplates' title='' alt='". $clang->gT("Template Editor")."' align='left' /></a>\n"
-	                    . "\t\t\t\t</td>\n";
+	                    "<img src='$imagefiles/templates.png' name='EditTemplates' title='' alt='". $clang->gT("Template Editor")."'  /></a>\n";
             }
-        if(isset($_SESSION['loginID'])) //ADDED by Moses to prevent errors by reading db while not logged in.
-	        {
-	        $adminmenu .= "\t\t\t\t<td align='right' width='430'>\n"
-	                    . "<a href=\"#\" onclick=\"showhelp('show')\""
-	                    . "title=\"".$clang->gTview("Show Help")."\" "
-	                    . "onmouseout=\"hideTooltip()\""
-	                    . "onmouseover=\"showTooltip(event,'".$clang->gT("Show Help", "js")."');return false\">"
-	                    . "<img src='$imagefiles/showhelp.png' name='ShowHelp' title=''"
-	                    . "alt='". $clang->gT("Show Help")."' align='right'  /></a>"
-		                . "\t\t\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=logout', '_self')\""
+            // survey select box
+            $adminmenu .= "\t\t\t\t\t</div><div class='menubar-right'><font class=\"boxcaption\">".$clang->gT("Surveys").":</font>"
+                        . "\t\t\t\t\t<select onchange=\"window.open(this.options[this.selectedIndex].value,'_self')\">\n"
+                        . getsurveylist()
+                        . "\t\t\t\t\t</select>\n";
+            
+            if($_SESSION['USER_RIGHT_CREATE_SURVEY'] == 1)
+                {
+            $adminmenu .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=newsurvey', '_self')\""
+                        . "title=\"".$clang->gTview("Create or Import New Survey")."\" "
+                        . "onmouseout=\"hideTooltip()\""
+                        . "onmouseover=\"showTooltip(event,'".$clang->gT("Create or Import New Survey", "js")."');return false\">" .
+                        "<img src='$imagefiles/add.png' name='AddSurvey' title='' alt='". $clang->gT("Create or Import New Survey")."' /></a>\n";
+                 }
+
+
+        if(isset($_SESSION['loginID'])) //ADDED to prevent errors by reading db while not logged in.
+	    {
+	        $adminmenu .= "\t\t<img src='$imagefiles/seperator.gif' alt='' border='0' hspace='0' />\n"
+                        . "\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=logout', '_self')\""
                         . "title=\"".$clang->gTview("Logout")."\" "
                         . "onmouseout=\"hideTooltip()\""
 					    . "onmouseover=\"showTooltip(event,'".$clang->gT("Logout", "js")."');return false\">"
                         . "<img src='$imagefiles/logout.png' name='Logout'"
-					    . "title='' alt='".$clang->gT("Logout")."'  align='right' /></a>"
-	                    . "\t\t\t\t\t<img src='$imagefiles/seperator.gif' alt='' align='right' border='0' hspace='0' />\n";
-
-			if($_SESSION['USER_RIGHT_CREATE_SURVEY'] == 1)
-				{
-			$adminmenu .= "<a href=\"#\" onclick=\"window.open('$scriptname?action=newsurvey', '_self')\""
-						. "title=\"".$clang->gTview("Create or Import New Survey")."\" "
-						. "onmouseout=\"hideTooltip()\""
-						. "onmouseover=\"showTooltip(event,'".$clang->gT("Create or Import New Survey", "js")."');return false\">" .
-						"<img src='$imagefiles/add.png' align='right' name='AddSurvey' title='' alt='". $clang->gT("Create or Import New Survey")."' /></a>\n";
-	             }
-			$adminmenu .= "\t\t\t\t\t<font class=\"boxcaption\">".$clang->gT("Surveys").":</font>"
-	                    . "\t\t\t\t\t<select onchange=\"window.open(this.options[this.selectedIndex].value,'_self')\">\n"
-	                    . getsurveylist()
-	                    . "\t\t\t\t\t</select>\n"
-	                    . "\t\t\t\t</td>\n";
+					    . "title='' alt='".$clang->gT("Logout")."'/></a>"
+	                    . "\t\t<a href=\"#\" onclick=\"showhelp('show')\""
+                        . "title=\"".$clang->gTview("Show Help")."\" "
+                        . "onmouseout=\"hideTooltip()\""
+                        . "onmouseover=\"showTooltip(event,'".$clang->gT("Show Help", "js")."');return false\">"
+                        . "<img src='$imagefiles/showhelp.png' name='ShowHelp' title=''"
+                        . "alt='". $clang->gT("Show Help")."'/></a>";
+                        
+	        $adminmenu .= "\t\t\t\t</div>\n"
+                        . "\t\t\t</div>\n"
+                        . "\t\t</div>\n";
+            $adminmenu .= "<p style='margin:0;font-size:1px;line-height:1px;height:1px;'>&nbsp;</p>"; //CSS Firefox 2 transition fix
+            if (count(getsurveylist(true))==0 && !isset($action) && !isset($surveyid)) {
+                $adminmenu.= '<div style="width:500px;margin:0 auto;">'
+                             .'<h2>'.sprintf($clang->gT("Welcome to %s!"),'LimeSurvey').'</h2>'
+                             .'<p>'.$clang->gT("Some piece-of-cake steps to create your very own first survey:").'<br/>'
+                             .'<ol>'
+                             .'<li>'.sprintf($clang->gT('Create a new survey clicking on the %s icon in the upper right.'),"<img src='$imagefiles/add_small.png' name='ShowHelp' title='' alt='". $clang->gT("Add survey")."'/>").'</li>'
+                             .'<li>'.$clang->gT('Create a new group inside your survey.').'</li>'
+                             .'<li>'.$clang->gT('Create one or more question inside the new group.').'</li>'
+                             .'<li>'.sprintf($clang->gT('Done. Test your survey using the %s icon.'),"<img src='$imagefiles/do_small.png' name='ShowHelp' title='' alt='". $clang->gT("Test survey")."'/>").'</li>'
+                             .'</ol></p><br />&nbsp;</div>';
             }
-            $adminmenu .= "\t\t\t</tr>\n"
-	                    . "\t\t</table>\n"
-	                    . "\t</td>\n"
-	                    . "</tr>\n"
-	                    . "</table>\n";
+                        
+        }                 
         return $adminmenu;
         }
 
@@ -398,7 +478,8 @@ function &db_select_limit_num($sql,$numrows=-1,$offset=-1,$inputarr=false)
 {
 	global $connect;
 
-	$dataset=$connect->SelectLimit($sql,$numrows=-1,$offset=-1,$inputarr=false) or safe_die($sql);
+	$connect->SetFetchMode(ADODB_FETCH_NUM);
+	$dataset=$connect->SelectLimit($sql,$numrows,$offset,$inputarr=false) or safe_die($sql);
 	return $dataset;
 }
 
@@ -434,9 +515,12 @@ function db_quote_id($id)
 
     switch ($databasetype)
     {
+        case "mysqli" : 
         case "mysql" : 
             return "`".$id."`";
             break;
+        case "mssql_n" : 
+        case "mssql" : 
         case "odbc_mssql" : 
             return "[".$id."]";
             break;
@@ -451,17 +535,17 @@ function db_quote_id($id)
 function db_random()
 {
     global $connect,$databasetype;
-    if ($databasetype=='odbc_mssql') {$srandom='NEWID()';}
+    if ($databasetype=='odbc_mssql' || $databasetype=='mssql_n' || $databasetype=='odbtp')  {$srandom='NEWID()';}
     else {$srandom=$connect->random;}
     return $srandom;
     
 }
 
-function db_quote($str)
+function db_quote($str,$ispostvar=false)
 // This functions escapes the string only inside 
 {
-	global $connect;
-	return $connect->escape($str);
+    global $connect;
+    return $connect->escape($str, $ispostvar);
 }
 
 function db_quoteall($str,$ispostvar=false)  
@@ -480,23 +564,31 @@ function db_table_name($name)
 	return db_quote_id($dbprefix.$name);
 }
 
+/**
+* returns the table name without quotes 
+* 
+* @param mixed $name
+*/
 function db_table_name_nq($name)
-//returns the table name without quotes
 {
-    
     global $dbprefix;
     return $dbprefix.$name;
 }
 
-/*
+/**
  *  Return a sql statement for finding LIKE named tables
+* 
+* @param mixed $table
  */
 function db_select_tables_like($table)
 {
 	global $databasetype;
 	switch ($databasetype) {
-		case 'mysql'	  : 
+        case 'mysqli': 
+		case 'mysql' : 
 			return "SHOW TABLES LIKE '$table'";
+        case 'odbtp' : 
+        case 'mssql_n' : 
 		case 'odbc_mssql' : 
 			return "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES where TABLE_TYPE='BASE TABLE' and TABLE_NAME LIKE '$table'";
 		case 'postgres' : 
@@ -505,9 +597,11 @@ function db_select_tables_like($table)
 	}	
 }
 
-/*
+/**
  *  Return a boolean stating if the table(s) exist(s)
  *  Accepts '%' in names since it uses the 'like' statement
+* 
+* @param mixed $table
  */
 function db_tables_exist($table)
 {
@@ -528,19 +622,23 @@ function db_tables_exist($table)
 
 /**
 * getsurveylist() Queries the database (survey table) for a list of existing surveys
+* 
+* @param mixed $returnarray   boolean - if set to true an array instead of an HTML option list is given back
+* 
 * @global string $surveyid
 * @global string $dbprefix
 * @global string $scriptname
+* @global string $connect
+* @global string $clang
+* 
 * @return string This string is returned containing <option></option> formatted list of existing surveys
 *
 */
-function getsurveylist()
-    {
-    global $surveyid, $dbprefix, $scriptname, $connect, $clang;
-    $surveyidquery = "SELECT a.sid, a.owner_id, surveyls_title, surveyls_description, a.admin, a.active, surveyls_welcometext, a.useexpiry, a.expires, "
-					. "a.adminemail, a.private, a.faxto, a.format, a.template, a.url, "
-					. "a.language, a.datestamp, a.ipaddr, a.refurl, a.usecookie, a.notification, a.allowregister, a.attribute1, a.attribute2, "
-					. "a.allowsave, a.autoredirect, a.allowprev, a.datecreated FROM ".db_table_name('surveys')." AS a "
+function getsurveylist($returnarray=false)
+{
+    global $surveyid, $dbprefix, $scriptname, $connect, $clang, $timeadjust;
+    $surveyidquery = " SELECT a.*, surveyls_title, surveyls_description, surveyls_welcometext, surveyls_url "
+					." FROM ".db_table_name('surveys')." AS a "
 					. "INNER JOIN ".db_table_name('surveys_languagesettings')." on (surveyls_survey_id=a.sid and surveyls_language=a.language) ";
 
 	if ($_SESSION['USER_RIGHT_SUPERADMIN'] != 1)
@@ -550,32 +648,44 @@ function getsurveylist()
 	}
 
 	$surveyidquery .= " order by active DESC, surveyls_title";
-
-    $surveyidresult = db_execute_num($surveyidquery);  //Checked
+    if ($returnarray===true)
+    {
+        $surveyidresult = $connect->GetAll($surveyidquery);  //Checked
+        return $surveyidresult;
+    }
+    $surveyidresult = db_execute_assoc($surveyidquery);  //Checked
     if (!$surveyidresult) {return "Database Error";}
     $surveyselecter = "";
     $surveynames = $surveyidresult->GetRows();
     $activesurveys='';
     $inactivesurveys='';
+    $expiredsurveys='';
     if ($surveynames)
     {
         foreach($surveynames as $sv)
         {
-            if($sv[5]!='Y') 
+            $sv['surveyls_title']=htmlspecialchars(strip_tags($sv['surveyls_title']));
+            if($sv['active']!='Y') 
             { 
               $inactivesurveys .= "\t\t\t<option ";
-        			if($_SESSION['loginID'] == $sv[1]) {$inactivesurveys .= " style=\"font-weight: bold;\"";}
-        			if ($sv[0] == $surveyid) {$inactivesurveys .= " selected='selected'"; $svexist = 1;}
-                    $inactivesurveys .=" value='$scriptname?sid=$sv[0]'>$sv[2]</option>\n";
+        			if($_SESSION['loginID'] == $sv['owner_id']) {$inactivesurveys .= " style=\"font-weight: bold;\"";}
+        			if ($sv['sid'] == $surveyid) {$inactivesurveys .= " selected='selected'"; $svexist = 1;}
+                    $inactivesurveys .=" value='$scriptname?sid={$sv['sid']}'>{$sv['surveyls_title']}</option>\n";
             }
-              else
-              {
-              $activesurveys .= "\t\t\t<option ";
-        			if($_SESSION['loginID'] == $sv[1]) {$activesurveys .= " style=\"font-weight: bold;\"";}
-        			if ($sv[0] == $surveyid) {$activesurveys .= " selected='selected'"; $svexist = 1;}
-                    $activesurveys .=" value='$scriptname?sid=$sv[0]'>$sv[2]</option>\n";
-              
-              }
+            elseif($sv['expires']!='' && $sv['expires'] < date_shift(date("Y-m-d H:i:s"), "Y-m-d", $timeadjust))
+            {
+			        $expiredsurveys .="\t\t\t<option ";
+			        if ($_SESSION['loginID'] == $sv['owner_id']) {$expiredsurveys .= " style=\"font-weight: bold;\"";}
+			        if ($sv['sid'] == $surveyid) {$expiredsurveys .= " selected='selected'"; $svexist = 1;}
+			        $expiredsurveys .=" value='$scriptname?sid={$sv['sid']}'>{$sv['surveyls_title']}</option>\n";
+			}
+            else
+            {
+                $activesurveys .= "\t\t\t<option ";
+        		if($_SESSION['loginID'] == $sv['owner_id']) {$activesurveys .= " style=\"font-weight: bold;\"";}
+        		if ($sv['sid'] == $surveyid) {$activesurveys .= " selected='selected'"; $svexist = 1;}
+                $activesurveys .=" value='$scriptname?sid={$sv['sid']}'>{$sv['surveyls_title']}</option>\n";
+            }
         }
 		}
     //Only show each activesurvey group if there are some 
@@ -584,23 +694,30 @@ function getsurveylist()
       $surveyselecter .= "\t\t\t<optgroup label='".$clang->gT("Active")."' class='activesurveyselect'>\n";
       $surveyselecter .= $activesurveys . "\t\t\t</optgroup>";
     }
+    if ($expiredsurveys!='')
+    {
+	  $surveyselecter .= "\t\t\t<optgroup label='".$clang->gT("Expired")."' class='expiredsurveyselect'>\n";
+	  $surveyselecter .= $expiredsurveys . "\t\t\t</optgroup>";
+	}
     if ($inactivesurveys!='') 
     {  
       $surveyselecter .= "\t\t\t<optgroup label='".$clang->gT("Inactive")."' class='inactivesurveyselect'>\n";
       $surveyselecter .= $inactivesurveys . "\t\t\t</optgroup>";
     }    
     if (!isset($svexist)) {$surveyselecter = "\t\t\t<option selected='selected'>".$clang->gT("Please Choose...")."</option>\n".$surveyselecter;}
-      else {$surveyselecter = "\t\t\t<option value='$scriptname?sid='>".$clang->gT("None")."</option>\n".$surveyselecter;}
+    else {$surveyselecter = "\t\t\t<option value='$scriptname?sid='>".$clang->gT("None")."</option>\n".$surveyselecter;}
     return $surveyselecter;
-    }
+}
 
 /**
 * getquestions() queries the database for a list of all questions matching the current survey sid
+* 
 * @global string $surveyid
 * @global string $gid
 * @global string $qid
 * @global string $dbprefix
 * @global string $scriptname
+* 
 * @return This string is returned containing <option></option> formatted list of questions to current survey
 */
 function getquestions($surveyid,$gid,$selectedqid)
@@ -608,12 +725,10 @@ function getquestions($surveyid,$gid,$selectedqid)
 	global $dbprefix, $scriptname, $connect, $clang;
 //MOD for multilanguage surveys
 	$s_lang = GetBaseLanguageFromSurveyID($surveyid);
-	$qquery = 'SELECT * FROM '.db_table_name('questions')." WHERE sid=$surveyid AND gid=$gid AND language='{$s_lang}'";
+	$qquery = 'SELECT * FROM '.db_table_name('questions')." WHERE sid=$surveyid AND gid=$gid AND language='{$s_lang}' order by question_order";
 	$qresult = db_execute_assoc($qquery); //checked
 	$qrows = $qresult->GetRows();
 
-	// Perform a case insensitive natural sort on group name then question title of a multidimensional array
-	usort($qrows, 'CompareGroupThenTitle');
 	if (!isset($questionselecter)) {$questionselecter="";}
 	foreach ($qrows as $qrow)
 	{
@@ -628,8 +743,8 @@ function getquestions($surveyid,$gid,$selectedqid)
 			$questionselecter .= $question;
 		}
 		else
-		{
-			$questionselecter .= substr($question, 0, 35)."..";
+		{   
+			$questionselecter .= htmlspecialchars(mb_strcut(html_entity_decode($question,ENT_QUOTES,'UTF-8'), 0, 35, 'UTF-8'))."...";          
 		}
 		$questionselecter .= "</option>\n";
 	}
@@ -642,7 +757,12 @@ function getquestions($surveyid,$gid,$selectedqid)
 }
 
 
-// Gets number of groups inside a particular survey
+/**
+* Gets number of groups inside a particular survey
+* 
+* @param string $surveyid
+* @param mixed $lang
+*/
 function getGroupSum($surveyid, $lang)
 {
 	global $surveyid,$dbprefix ;
@@ -655,7 +775,12 @@ function getGroupSum($surveyid, $lang)
 }
 
 
-// Gets number of questions inside a particular group 
+/**
+* Gets number of questions inside a particular group
+* 
+* @param string $surveyid
+* @param mixed $groupid
+*/
 function getQuestionSum($surveyid, $groupid)
 {
 	global $surveyid,$dbprefix ;
@@ -669,6 +794,8 @@ function getQuestionSum($surveyid, $groupid)
 
 /**
 * getMaxgrouporder($surveyid) queries the database for the maximum sortorder of a group.
+* 
+* @param mixed $surveyid     
 * @global string $surveyid
 */
 function getMaxgrouporder($surveyid)
@@ -686,8 +813,13 @@ function getMaxgrouporder($surveyid)
 	else return ++$current_max ;
 }
 
+
 /**
 * getGroupOrder($surveyid,$gid) queries the database for the sortorder of a group.
+* 
+* @param mixed $surveyid
+* @param mixed $gid
+* @return mixed
 */
 function getGroupOrder($surveyid,$gid)
 {
@@ -705,6 +837,7 @@ function getGroupOrder($surveyid,$gid)
 
 /**
 * getMaxquestionorder($gid) queries the database for the maximum sortorder of a question.
+* 
 * @global string $surveyid
 */
 function getMaxquestionorder($gid)
@@ -726,41 +859,15 @@ function getMaxquestionorder($gid)
 
 
 /**
-* getanswers() queries the database for a list of all answers matching the current question qid
-* @global string $surveyid
-* @global string $gid
-* @global string $qid
-* @global string $dbprefix
-* @global string $code
-* @return This string is returned containing <option></option> formatted list of answers matching current qid
-*/
-function getanswers()
-{
-	global $surveyid, $gid, $qid, $code, $dbprefix, $connect, $clang;
-	$qid=sanitize_int($qid);
-	$s_lang = GetBaseLanguageFromSurveyID($surveyid);
-	$aquery = "SELECT code, answer FROM ".db_table_name('answers')." WHERE qid=$qid AND language='$s_lang' ORDER BY sortorder, answer";
-
-	$aresult = db_execute_assoc($aquery); //Checked
-	$answerselecter = "";
-	while ($arow = $aresult->FetchRow())
-	{
-		$answerselecter .= "\t\t<option value='$scriptname?sid=$surveyid&amp;gid=$gid&amp;qid=$qid&amp;code={$arow['code']}'";
-		if ($code == $arow['code']) {$answerselecter .= " selected='selected'"; $aexists="Y";}
-		$answerselecter .= ">{$arow['code']}: {$arow['answer']}</option>\n";
-	}
-	if (!$aexists) {$answerselecter = "\t\t<option selected='selected'>".$clang->gT("Please Choose...")."</option>\n".$answerselecter;}
-	return $answerselecter;
-}
-
-
-/**
 * getqtypelist() Returns list of question types available in LimeSurvey. Edit this if you are adding a new
 *    question type
+* 
 * @global string $publicurl
 * @global string $sourcefrom
+* 
 * @param string $SelectedCode Value of the Question Type (defaults to "T")
 * @param string $ReturnType Type of output from this function (defaults to selector)
+* 
 * @return depending on $ReturnType param, returns a straight "array" of question types, or an <option></option> list
 */
 function getqtypelist($SelectedCode = "T", $ReturnType = "selector")
@@ -796,8 +903,9 @@ function getqtypelist($SelectedCode = "T", $ReturnType = "selector")
 		"X"=>$clang->gT("Boilerplate Question"),
 		"Y"=>$clang->gT("Yes/No"),
 		"Z"=>$clang->gT("List (Flexible Labels) (Radio)"),
-		"!"=>$clang->gT("List (Dropdown)")
-		//            "^"=>$clang->gT("Slider"),
+		"!"=>$clang->gT("List (Dropdown)"),
+		":"=>$clang->gT("Array (Multi Flexible) (Numbers)"),
+		";"=>$clang->gT("Array (Multi Flexible) (Text)"),
 		);
         asort($qtypes);
 		if ($ReturnType == "array") {return $qtypes;}
@@ -814,8 +922,321 @@ function getqtypelist($SelectedCode = "T", $ReturnType = "selector")
 
 
 /**
+ * question_class() returns a class name for a given question type to allow custom styling for each question type.
+ *
+ * @param string $input containing unique character representing each question type.
+ * @return string containing the class name for a given question type.
+ */
+function question_class($input)
+{
+
+	switch($input)
+	{	// I think this is a bad solution to adding classes to question
+		// DIVs but I can't think of a better solution. (eric_t_cruiser)
+
+		case 'X': return 'boilerplate';		//	BOILERPLATE QUESTION
+		case '5': return 'choice-5-pt-radio';	//	5 POINT CHOICE radio-buttons
+		case 'D': return 'date';		//	DATE
+		case 'Z': return 'list-radio-flexible';	//	LIST Flexible radio-button
+		case 'L': return 'list-radio';		//	LIST radio-button
+		case 'W': return 'list-dropdown-flexible'; //	LIST drop-down (flexible label)
+		case '!': return 'list-dropdown';	//	List - dropdown
+		case 'O': return 'list-with-comment';	//	LIST radio-button + textarea
+		case 'R': return 'ranking';		//	RANKING STYLE
+		case 'M': return 'multiple-opt';	//	MULTIPLE OPTIONS checkbox
+		case 'I': return 'language';		//	Language Question
+		case 'P': return 'multiple-opt-comments'; //	MULTIPLE OPTIONS WITH COMMENTS checkbox + text
+		case 'Q': return 'multiple-short-txt';	//	TEXT
+		case 'K': return 'numeric-multi';	//	MULTIPLE NUMERICAL QUESTION
+		case 'N': return 'numeric';		//	NUMERICAL QUESTION TYPE
+		case 'S': return 'text-short';		//	SHORT FREE TEXT
+		case 'T': return 'text-long';		//	LONG FREE TEXT
+		case 'U': return 'text-huge';		//	HUGE FREE TEXT
+		case 'Y': return 'yes-no';		//	YES/NO radio-buttons
+		case 'G': return 'gender';		//	GENDER drop-down list
+		case 'A': return 'array-5-pt';		//	ARRAY (5 POINT CHOICE) radio-buttons
+		case 'B': return 'array-10-pt';		//	ARRAY (10 POINT CHOICE) radio-buttons
+		case 'C': return 'array-yes-uncertain-no'; //	ARRAY (YES/UNCERTAIN/NO) radio-buttons
+		case 'E': return 'array-increase-same-decrease'; // ARRAY (Increase/Same/Decrease) radio-buttons
+		case 'F': return 'array-flexible-row';	//	ARRAY (Flexible) - Row Format
+		case 'H': return 'array-flexible-column'; //	ARRAY (Flexible) - Column Format
+//		case '^': return 'slider';			//	SLIDER CONTROL
+		case ':': return 'array-multi-flexi';	//	ARRAY (Multi Flexi) 1 to 10
+		case ";": return 'array-multi-flexi-text';
+		case "1": return 'array-flexible-duel-scale'; //	Array (Flexible Labels) dual scale
+		default:  return 'generic_question';	//	Should have a default fallback
+	};
+};
+
+if(!defined('COLSTYLE'))
+{
+/**
+ * The following prepares and defines the 'COLSTYLE' constant which
+ * dictates how columns are to be marked up for list type questions.
+ *
+ * $column_style is initialised at the end of config-defaults.php or from within config.php
+ */
+	if(	!isset($column_style)	||
+		$column_style  != 'css' ||
+		$column_style  != 'ul'	||
+		$column_style  != 'table' ||
+		$column_style  != null )
+	{
+		$column_style = 'ul';
+	};
+	define('COLSTYLE' ,strtolower($column_style), true);
+};
+if(!defined('MAX_COLUMNS'))
+{
+/**
+ * The following prepares and defines the 'MAX_COLUMNS' constant which
+ * dictates the maximum number of columns allowed when using display columns.
+ *
+ * $column_style is initialised at the end of config-defaults.php or from within config.php
+ */
+	$max_columns = isset($max_columns)?$max_columns:8;
+	define('MAX_COLUMNS' , $max_columns , true);
+};
+
+function setup_columns($columns, $answer_count)
+{
+/**
+ * setup_columns() defines all the html tags to be wrapped around
+ * various list type answers.
+ *
+ * @param integer $columns - the number of columns, usually supplied by $dcols
+ * @param integer $answer_count - the number of answers to a question, usually supplied by $anscount
+ * @return array with all the various opening and closing tags to generate a set of columns.
+ *
+ * It returns an array with the following items:
+ *    $wrapper['whole-start']   = Opening wrapper for the whole list
+ *    $wrapper['whole-end']     = closing wrapper for the whole list
+ *    $wrapper['col-devide']    = normal column devider
+ *    $wrapper['col-devide-last'] = the last column devider (to allow
+ *                                for different styling of the last
+ *                                column
+ *    $wrapper['item-start']    = opening wrapper tag for individual
+ *                                option
+ *    $wrapper['item-start-other'] = opening wrapper tag for other
+ *                                option
+ *    $wrapper['item-end']      = closing wrapper tag for individual
+ *                                option
+ *    $wrapper['maxrows']       = maximum number of rows in each
+ *                                column
+ *    $wrapper['cols']          = Number of columns to be inserted
+ *                                (and checked against)
+ *
+ * It also expect the constant COLSTYLE which sets how columns should
+ * be rendered.
+ *
+ * COLSTYLE is defined 30 lines above.
+ *
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Columns are a problem.
+ * Really there is no perfect solution to columns at the moment.
+ *
+ * -  Using Tables is problematic semanticly.
+ * -  Using inline or float to create columns, causes the answers
+ *    flows horizontally, not vertically which is not ideal visually.
+ * -  Using CSS3 columns is also a problem because of browser support
+ *    and also because if you have answeres split across two or more
+ *    lines, and those answeres happen to fall at the bottom of a
+ *    column, the answer might be split across columns as well as
+ *    lines.
+ * -  Using nested unordered list with the first level of <LI>s
+ *    floated is the same as using tables and so is bad semantically
+ *    for the same reason tables are bad.
+ * -  Breaking the unordered lists into consecutive floated unordered
+ *    lists is not great semantically but probably not as bad as
+ *    using tables.
+ *
+ * Because I haven't been able to decide which option is the least
+ * bad, I have handed over that responsibility to the admin who sets
+ * LimeSurvey up on their server.
+ *
+ * There are four options:
+ *    'css'   using one of the various CSS only methods for
+ *            rendering columns.
+ *            (Check the CSS file for your chosen template to see
+ *             how columns are defined.)
+ *    'ul'    using multiple floated unordered lists. (DEFAULT)
+ *    'table' using conventional tables based layout.
+ *     NULL   blocks the use of columns
+ *
+ * 'ul' is the default because it's the best possible compromise
+ * between semantic markup and visual layout.
+ */
+
+
+	$colstyle = COLSTYLE;
+
+/*
+	if(defined('PRINT_TEMPLATE')) // This forces tables based columns for printablesurvey
+	{
+		$colstyle = 'table';
+	};
+*/
+	if($columns < 2)
+	{
+		$colstyle = null;
+		$columns = 1;
+	}
+	elseif($columns > MAX_COLUMNS)
+	{
+		$columns = MAX_COLUMNS;
+	};
+
+	if($columns > $answer_count)
+	{
+		$columns = $answer_count;
+	};
+
+	$class_first = '';
+	if($columns > 1 && $colstyle != null)
+	{
+		if($colstyle == 'ul')
+		{
+			$ul = '-ul';
+		}
+		else
+		{
+			$ul = '';
+		}
+		$class_first = ' class="cols-'.$columns . $ul.' first"';
+		$class = ' class="cols-'.$columns . $ul.'"';
+		$class_last_ul = ' class="cols-'.$columns . $ul.' last"';
+		$class_last_table = ' class="cols-'.$columns.' last"';
+	}
+	else
+	{
+		$class = '';
+		$class_last_ul = '';
+		$class_last_table = '';
+	};
+
+	$wrapper = array(
+			 'whole-start'	=> "\n<ul$class_first>\n"
+			,'whole-end'	=> "</ul>\n"
+			,'col-devide'	=> ''
+			,'col-devide-last' => ''
+			,'item-start'	=> "\t<li>\n"
+			,'item-start-other' => "\t<li class=\"other\">\n"
+			,'item-end'	=> "\t</li>\n"
+			,'maxrows'	=> ceil($answer_count/$columns) //Always rounds up to nearest whole number
+			,'cols'		=> $columns
+	);
+
+	switch($colstyle)
+	{
+		case 'ul':	if($columns > 1)
+				{
+					$wrapper['col-devide']	= "\n</ul>\n\n<ul$class>\n";
+					$wrapper['col-devide-last']	= "\n</ul>\n\n<ul$class_last_ul>\n";
+				}
+				break;
+
+		case 'table':	$table_cols = '';
+				for($cols = $columns ; $cols > 0 ; --$cols)
+				{
+					switch($cols)
+					{
+						case $columns:	$table_cols .= "\t<col$class_first />\n";
+								break;
+						case 1:		$table_cols .= "\t<col$class_last_table />\n";
+								break;
+						default:	$table_cols .= "\t<col$class />\n";
+					};
+				};
+
+				if($columns > 1)
+				{
+					$wrapper['col-devide']	= "\t\t\t\t</ul>\n\t\t\t</td>\n\n\t\t\t<td>\n\t\t\t\t<ul>\n";
+					$wrapper['col-devide-last']	= "\t\t\t\t</ul>\n\t\t\t</td>\n\n\t\t\t<td class=\"last\">\n\t\t\t\t<ul>\n";
+				};
+				$wrapper['whole-start']	= "\n<table$class>\n$table_cols\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<ul>\n";
+				$wrapper['whole-end']	= "\t\t\t\t</ul>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>\n";
+				$wrapper['item-start']	= "\t\t\t\t\t<li>\n";
+				$wrapper['item-end']	= "\t\t\t\t\t</li>\n";
+	};
+
+	return $wrapper;
+};
+
+function alternation($alternate = '' , $type = 'col')
+{
+/**
+ * alternation() Returns a class identifyer for alternating between
+ * two options. Used to style alternate elements differently. creates
+ * or alternates between the odd string and the even string used in
+ * as column and row classes for array type questions.
+ *
+ * @param string $alternate = '' (empty) (default) , 'array2' ,  'array1' , 'odd' , 'even'
+ * @param string  $type = 'col' (default) or 'row'
+ *
+ * @return string representing either the first alternation or the opposite alternation to the one supplied..
+ */
+ /*
+// The following allows type to be left blank for row in subsequent
+// function calls.
+// It has been left out because 'row' must be defined the first time
+// alternation() is called. Since it is only ever written once for each
+// while statement within a function, 'row' is always defined.
+	if(!empty($alternate) && $type != 'row')
+	{	if($alternate == ('array2' || 'array1'))
+		{
+			$type = 'row';
+		};
+	};
+// It has been left in case it becomes useful but probably should be
+// removed.
+*/
+	if($type == 'row')
+	{
+		$odd  = 'array2'; // should be row_odd
+		$even = 'array1'; // should be row_even
+	}
+	else
+	{
+		$odd  = 'odd';	// should be col_odd
+		$even = 'even';	// should be col_even
+	};
+	if($alternate == $odd)
+	{
+		$alternate = $even;
+	}
+	else
+	{
+		$alternate = $odd;
+	};
+	return $alternate;
+}
+
+
+/**
+ * longest_string() returns the length of the longest string past to it.
+ * @peram string $new_string
+ * @peram integer $longest_length length of the (previously) longest string passed to it.
+ * @return integer representing the length of the longest string passed (updated if $new_string was longer than $longest_length)
+ *
+ * usage should look like this: $longest_length = longest_string( $new_string , $longest_length );
+ *
+ */
+function longest_string( $new_string , $longest_length )
+{
+	if($longest_length < strlen(trim(strip_tags($new_string))))
+	{
+		$longest_length = strlen(trim(strip_tags($new_string)));
+	};
+	return $longest_length;	
+};
+
+
+
+/**
 * getNotificationlist() returns different options for notifications
+* 
 * @param string $notificationcode - the currently selected one
+* 
 * @return This string is returned containing <option></option> formatted list of notification methods for current survey
 */
 function getNotificationlist($notificationcode)
@@ -839,10 +1260,13 @@ function getNotificationlist($notificationcode)
 
 /**
 * getgrouplist() queries the database for a list of all groups matching the current survey sid
+* 
 * @global string $surveyid
 * @global string $dbprefix
 * @global string $scriptname
+* 
 * @param string $gid - the currently selected gid/group
+* 
 * @return This string is returned containing <option></option> formatted list of groups to current survey
 */
 function getgrouplist($gid)
@@ -914,6 +1338,23 @@ function getgrouplist3($gid)
 	return $groupselecter;
 }
 
+function getgrouplist4($gid)
+{
+	global $surveyid, $dbprefix, $connecti,$clang;
+    if (!$surveyid) {$surveyid=returnglobal('sid');}
+	$groupselecter = "";
+	$s_lang = GetBaseLanguageFromSurveyID($surveyid);
+	$gidquery = "SELECT group_name FROM ".db_table_name('groups')." WHERE sid=$surveyid AND language='{$s_lang}' and gid=$gid";
+
+
+	$gidresult = db_execute_num($gidquery) or safe_die("Plain old did not work!");      //Checked
+	while ($gv = $gidresult->FetchRow())
+	{
+		$groupselecter .= "\t\t".htmlspecialchars($gv[0])." - ".$clang->gT("Cannot be modified (Survey is active)")."\n";
+	}
+	return $groupselecter;
+}
+
 
 function getgrouplistlang($gid, $language)
 {
@@ -927,7 +1368,14 @@ function getgrouplistlang($gid, $language)
 	{
 		$groupselecter .= "\t\t<option";
 		if ($gv[0] == $gid) {$groupselecter .= " selected='selected'"; $gvexist = 1;}
-		$groupselecter .= " value='$scriptname?sid=$surveyid&amp;gid=$gv[0]'>".htmlspecialchars(strip_tags($gv[1]))."</option>\n";
+		$groupselecter .= " value='$scriptname?sid=$surveyid&amp;gid=$gv[0]'>";
+        if (strip_tags($gv[1]))
+        {
+            $groupselecter .= htmlspecialchars(strip_tags($gv[1]));
+		} else {
+		    $groupselecter .= htmlspecialchars($gv[1]);
+		}
+		$groupselecter .= "</option>\n";
 	}
 	if ($groupselecter)
 	{
@@ -940,21 +1388,28 @@ function getgrouplistlang($gid, $language)
 
 function getuserlist($outputformat='fullinfoarray')
 {
-	global $dbprefix, $connect;
+	global $dbprefix, $connect, $databasetype;
 	global $usercontrolSameGroupPolicy;
-
+	
     if (isset($_SESSION['loginID']))
 		{
 			$myuid=sanitize_int($_SESSION['loginID']);
 		}
 
 	if ($_SESSION['USER_RIGHT_SUPERADMIN'] != 1 && isset($usercontrolSameGroupPolicy) &&
-		$usercontrolSameGroupPolicy === true)
+		$usercontrolSameGroupPolicy == true)
 	{
 		if (isset($myuid))
 		{
-			// List users from same group as me + all my childs
-			$uquery = "SELECT u.* FROM ".db_table_name('users')." AS u, ".db_table_name('user_in_groups')." AS ga ,".db_table_name('user_in_groups')." AS gb WHERE u.uid=$myuid OR (ga.ugid=gb.ugid AND ( (gb.uid=$myuid AND u.uid=ga.uid) OR (u.parent_id=$myuid) ) ) GROUP BY u.uid";
+			// List users from same group as me + all my childs	
+            // a subselect is used here because MSSQL does not like to group by text
+            // also Postgres does like this one better
+			 	$uquery = " SELECT * FROM ".db_table_name('users')." where uid in 
+                        (SELECT u.uid FROM ".db_table_name('users')." AS u, 
+			 			".db_table_name('user_in_groups')." AS ga ,".db_table_name('user_in_groups')." AS gb 
+			 			WHERE u.uid=$myuid 
+			 			OR (ga.ugid=gb.ugid AND ( (gb.uid=$myuid AND u.uid=ga.uid) OR (u.parent_id=$myuid) ) ) 
+			 			GROUP BY u.uid)";
 		}
 		else
 		{
@@ -1029,10 +1484,14 @@ function gettemplatelist()
 }
 
 
+/**
+* Gets all survey infos in one big array including the language specific settings
+* 
+* @param string $surveyid  The survey ID
+* @param string $languagecode The language code - if not given the base language of the particular survey is used
+* @return array Returns array with survey info or false, if survey does not exist
+*/
 function getSurveyInfo($surveyid, $languagecode='')
-// Gets all survey infos in one big array including the language specific settings
-// if $languagecode is not set then the base language from the survey is used
-// 
 {
 	global $dbprefix, $siteadminname, $siteadminemail, $connect, $languagechanger;
 	$surveyid=sanitize_int($surveyid);
@@ -1048,7 +1507,7 @@ function getSurveyInfo($surveyid, $languagecode='')
 	while ($row=$result->FetchRow())
 	{
         $thissurvey=$row;
-        // now create some stupid array translations
+        // now create some stupid array translations - needed for backward compatibility
         // Newly added surveysettings don't have to be added specifically - these will be available by field name automatically
         $thissurvey["name"]=$thissurvey['surveyls_title'];
         $thissurvey["description"]=$thissurvey['surveyls_description'];
@@ -1057,6 +1516,7 @@ function getSurveyInfo($surveyid, $languagecode='')
         $thissurvey["adminname"]=$thissurvey['admin'];
         $thissurvey["tablename"]=$dbprefix."survey_".$thissurvey['sid'];
         $thissurvey["urldescrip"]=$thissurvey['surveyls_urldescription'];
+        $thissurvey["url"]=$thissurvey['surveyls_url'];
         $thissurvey["sendnotification"]=$thissurvey['notification'];
         $thissurvey["expiry"]=$thissurvey['expires'];
         $thissurvey["email_invite_subj"]=$thissurvey['surveyls_email_invite_subj'];
@@ -1069,7 +1529,10 @@ function getSurveyInfo($surveyid, $languagecode='')
         $thissurvey["email_register"]=$thissurvey['surveyls_email_register'];
 	    if (!isset($thissurvey['adminname'])) {$thissurvey['adminname']=$siteadminname;}
 	    if (!isset($thissurvey['adminemail'])) {$thissurvey['adminemail']=$siteadminemail;}
-	    if (!isset($thissurvey['urldescrip'])) {$thissurvey['urldescrip']=$thissurvey['url'];}
+	    if (!isset($thissurvey['urldescrip']) ||
+		$thissurvey['urldescrip'] == '' ) {$thissurvey['urldescrip']=$thissurvey['surveyls_url'];}
+		$thissurvey['passthrulabel']=isset($_SESSION['passthrulabel']) ? $_SESSION['passthrulabel'] : "";
+		$thissurvey['passthruvalue']=isset($_SESSION['passthruvalue']) ? $_SESSION['passthruvalue'] : "";
 	}              
     
     //not sure this should be here... ToDo: Find a better place
@@ -1107,77 +1570,12 @@ function getlabelsets($languages=null)
 }
 
 
-function checkactivations()
-{
-	global $dbprefix, $connect;
-	$tablelist = $connect->MetaTables();
-	$tablenames[] = "ListofTables"; //dummy entry because in_array never finds the first one!
-	foreach ($tablelist as $tbl)
-	{
-		$tablenames[] = $tbl;
-	}
-	$caquery = "SELECT sid FROM ".db_table_name('surveys')." WHERE active='Y'";
-	$caresult = db_execute_assoc($caquery);    //Checked
-	if (!$caresult) {return "Database Error";}
-	while ($carow = $caresult->FetchRow())
-	{
-		$surveyname = "{$dbprefix}survey_{$carow['sid']}";
-		if (!in_array($surveyname, $tablenames))
-		{
-			$udquery = "UPDATE ".db_table_name('surveys')." SET active='N' WHERE sid={$carow['sid']}";
-			$udresult = $connect->Execute($udquery);   //Checked    
-		}
-	}
-}
-
-
 function checkifemptydb()
 {
 	global $connect, $dbprefix;
 	$tablelist = $connect->MetaTables('TABLES');
 	if ( in_array($dbprefix.'surveys',$tablelist) ) {Return(false);}
 	else {Return(true);}
-}
-
-function checkfortables()
-{
-	global $scriptname, $dbprefix, $setfont, $connect, $clang;
-	$alltables=array("{$dbprefix}surveys",
-	"{$dbprefix}groups",
-	"{$dbprefix}questions",
-	"{$dbprefix}answers",
-	"{$dbprefix}conditions",
-	"{$dbprefix}users",
-	"{$dbprefix}labelsets",
-	"{$dbprefix}labels");
-	$tables = $connect->MetaTables();
-
-	foreach($alltables as $at)
-	{
-		if (!sql_table_exists($at, $tables))
-		{
-			$checkfields="Y";
-		}
-	}
-	if (!isset($checkfields)) {$checkfields="";}
-	if ($checkfields=="Y")
-	{
-		echo "<br />\n"
-		."<table width='350' align='center' style='border: 1px solid #555555' cellpadding='1' cellspacing='0'>\n"
-		."\t<tr bgcolor='#555555'><td colspan='2' height='4'><font size='1' face='verdana' color='white'><strong>"
-		.$clang->gT("LimeSurvey Setup")."</strong></td></tr>\n"
-		."\t<tr bgcolor='#CCCCCC'><td align='center'>$setfont\n"
-		."\t\t<font color='red'><strong>"
-		.$clang->gT("Error")."</strong></font><br />\n"
-		."\t\t"
-		.$clang->gT("It appears as if some tables or fields are missing from your database.")."<br /><br />\n"
-		."\t\t<input type='submit' value='"
-		.$clang->gT("Check Database Fields")."' onclick=\"window.open('checkfields.php', '_self')\" />\n"
-		."\t</td></tr>\n"
-		."</table>\n"
-		."</body></html>\n";
-		exit;
-	}
 }
 
 
@@ -1187,10 +1585,15 @@ function sql_table_exists($tableName, $tables)
 }
 
 
-################################################################################
-# Compares two elements from an array (passed by the usort function)
-# and returns -1, 0 or 1 depending on the result of the comparison of
-# the sort order of the group_order and question_order field
+/**
+* Compares two elements from an array (passed by the usort function) 
+* and returns -1, 0 or 1 depending on the result of the comparison of 
+* the sort order of the group_order and question_order field
+* 
+* @param mixed $a
+* @param mixed $b
+* @return int
+*/
 function CompareGroupThenTitle($a, $b)
 {
 	if (isset($a["group_order"]) && isset($b["group_order"]))
@@ -1216,63 +1619,11 @@ function StandardSort($a, $b)
 }
 
 
-function conditionscount($qid)
-{
-	global $dbprefix, $connect;
-    $qid=sanitize_int($qid);
-	$query="SELECT COUNT(*) FROM ".db_table_name('conditions')." WHERE qid=$qid";
-	$result=db_execute_num($query) or safe_die ("Couldn't get conditions<br />$query<br />".$connect->ErrorMsg());
-	list($count) = $result->FetchRow();
-	return $count;
-}
-
-
-function keycontroljs()
-{
-	$kcjs="
-    <script type=\"text/javascript\">
-    <!--
-
-    function getkey(e)
-       {
-       if (window.event) return window.event.keyCode;
-        else if (e) return e.which; else return null;
-        }
-
-    function goodchars(e, goods)
-        {
-       var key, keychar;
-       key = getkey(e);
-        if (key == null) return true;
-
-        // get character
-        keychar = String.fromCharCode(key);
-        keychar = keychar.toLowerCase();
-       goods = goods.toLowerCase();
-
-       // check goodkeys
-        if (goods.indexOf(keychar) != -1)
-            return true;
-
-        // control keys
-        if ( key==null || key==0 || key==8 || key==9  || key==27 || key==13)
-          return true;
-
-      // else return false
-     return false;
-       }
-    //-->
-    </script>
-";
-	return $kcjs;
-}
-
-
 function fixsortorderAnswers($qid) //Function rewrites the sortorder for a group of answers
 {
 	global $dbprefix, $connect, $surveyid;
     $qid=sanitize_int($qid);
-	$baselang = GetBaseLanguageFromSurveyID($surveyid);
+	$baselang = GetBaseLanguageFromSurveyID($surveyid);     
 	$cdresult = db_execute_num("SELECT qid, code, sortorder FROM ".db_table_name('answers')." WHERE qid={$qid} and language='{$baselang}' ORDER BY sortorder"); //Checked    
 	$position=0;
 	while ($cdrow=$cdresult->FetchRow())
@@ -1283,19 +1634,18 @@ function fixsortorderAnswers($qid) //Function rewrites the sortorder for a group
 	}
 }
 
-
-function fixsortorderQuestions($qid,$gid=0) //Function rewrites the sortorder for questions
+/**
+* This function rewrites the sortorder for questions inside the named group
+* 
+* @param integer $groupid the group id
+* @param integer $surveyid the survey id
+*/
+function fixsortorderQuestions($groupid, $surveyid) //Function rewrites the sortorder for questions
 {
-	global $dbprefix, $connect, $surveyid;
-    $qid=sanitize_int($qid);
-    $gid=sanitize_int($gid);
+	global $connect;
+    $gid = sanitize_int($groupid);
+    $surveyid = sanitize_int($surveyid);
 	$baselang = GetBaseLanguageFromSurveyID($surveyid);
-	if ($gid == 0)
-    {
-    	$result = db_execute_assoc("SELECT gid FROM ".db_table_name('questions')." WHERE qid='{$qid}' and language='{$baselang}'");  //Checked
-    	$row=$result->FetchRow();
-    	$gid=$row['gid'];
-    }
 	$cdresult = db_execute_assoc("SELECT qid FROM ".db_table_name('questions')." WHERE gid='{$gid}' and language='{$baselang}' ORDER BY question_order, title ASC");      //Checked    
 	$position=0;
 	while ($cdrow=$cdresult->FetchRow())
@@ -1329,7 +1679,7 @@ function fixsortorderGroups() //Function rewrites the sortorder for groups
 {
 	global $dbprefix, $connect, $surveyid;
 	$baselang = GetBaseLanguageFromSurveyID($surveyid);
-	$cdresult = db_execute_assoc("SELECT gid FROM ".db_table_name('groups')." WHERE language='{$baselang}' ORDER BY group_order, group_name"); //Checked
+    $cdresult = db_execute_assoc("SELECT gid FROM ".db_table_name('groups')." WHERE sid='{$surveyid}' AND language='{$baselang}' ORDER BY group_order, group_name");    
 	$position=0;
 	while ($cdrow=$cdresult->FetchRow())
 	{
@@ -1354,7 +1704,7 @@ function fixmovedquestionConditions($qid,$oldgid,$newgid) //Function rewrites th
 		$mycfieldname=$crow['cfieldname'];
 		$cfnregs="";
 
-		if (ereg($surveyid."X".$oldgid."X".$qid."(.*)", $mycfieldname, $cfnregs) > 0) 
+		if (preg_match('/'.$surveyid."X".$oldgid."X".$qid."(.*)/", $mycfieldname, $cfnregs) > 0) 
 		{
 			$newcfn=$surveyid."X".$newgid."X".$qid.$cfnregs[1];
 			$c2query="UPDATE ".db_table_name('conditions')
@@ -1366,28 +1716,34 @@ function fixmovedquestionConditions($qid,$oldgid,$newgid) //Function rewrites th
 	}
 }
 
-function browsemenubar()
+function browsemenubar($title='')
 {
-	global $surveyid, $scriptname, $imagefiles, $homeurl, $clang, $sumrows5;
+	global $surveyid, $scriptname, $imagefiles, $homeurl, $clang, $sumrows5, $surrows;
+
+	$thissurvey=getSurveyInfo($surveyid);
 	//BROWSE MENU BAR
-	$browsemenubar = "\t<tr>\n"
-	. "\t\t<td>\n"
+	$browsemenubar = "<div class='menubar'>\n"
+	. "\t<div class='menubar-title'>\n"
+    . "\t<strong>$title</strong>: ({$thissurvey['name']})"
+    . "\t</div>"
+    . "\t<div class='menubar-main'>\n"
+    . "\t<div class='menubar-left'>\n"
 	. "\t\t\t<a href='$scriptname?sid=$surveyid' onmouseout=\"hideTooltip()\" " .
 			"title=\"".$clang->gTview("Return to Survey Administration")."\" " .
 			"onmouseover=\"showTooltip(event,'".$clang->gT("Return to Survey Administration", "js")."')\">" .
-			"<img name='Administration' src='$imagefiles/home.png' title='' alt='' align='left' /></a>\n"
-	. "\t\t\t<img src='$imagefiles/blank.gif' alt='' width='11'  align='left' />\n"
-	. "\t\t\t<img src='$imagefiles/seperator.gif' alt=''  align='left' />\n"
+			"<img name='Administration' src='$imagefiles/home.png' title='' alt='' /></a>\n"
+	. "\t\t\t<img src='$imagefiles/blank.gif' alt='' width='11' />\n"
+	. "\t\t\t<img src='$imagefiles/seperator.gif' alt='' />\n"
 	. "\t\t\t<a href='$scriptname?action=browse&amp;sid=$surveyid' onmouseout=\"hideTooltip()\"" .
 			" title=\"".$clang->gTview("Show summary information")."\" " .
 			" onmouseover=\"showTooltip(event,'".$clang->gT("Show summary information", "js")."')\"" .
-			"><img name='SurveySummary' src='$imagefiles/summary.png' title='' alt='' align='left' /></a>\n";
+			"><img name='SurveySummary' src='$imagefiles/summary.png' title='' alt='' /></a>\n";
     if (count(GetAdditionalLanguagesFromSurveyID($surveyid)) == 0)
     {
         $browsemenubar .="\t\t\t<a href='$scriptname?action=browse&amp;sid=$surveyid&amp;subaction=all' onmouseout=\"hideTooltip()\"" .
         "title=\"".$clang->gTview("Display Responses")."\" " .
         "onmouseover=\"showTooltip(event,'".$clang->gT("Display Responses", "js")."')\">" .
-        "<img name='ViewAll' src='$imagefiles/document.png' title='' alt='' align='left' /></a>\n";
+        "<img name='ViewAll' src='$imagefiles/document.png' title='' alt='' /></a>\n";
     
     } else {
             $browsemenubar .= "<a href=\"#\" accesskey='b' onclick=\"hideTooltip(); document.getElementById('browsepopup').style.visibility='visible';\""
@@ -1395,7 +1751,7 @@ function browsemenubar()
             . "title=\"".$clang->gTview("Display Responses")."\" " 
             . "onmouseover=\"showTooltip(event,'".$clang->gT("Display Responses", "js")."');return false\">"
             ."<img src='$imagefiles/document.png' title='".$clang->gTview("Display Responses")."' "
-            . "name='ViewAll' align='left' alt='' /></a>";
+            . "name='ViewAll' alt='' /></a>";
             
             $tmp_survlangs = GetAdditionalLanguagesFromSurveyID($surveyid);
             $baselang = GetBaseLanguageFromSurveyID($surveyid);
@@ -1418,51 +1774,74 @@ function browsemenubar()
 	$browsemenubar .= "\t\t\t<a href='$scriptname?action=browse&amp;sid=$surveyid&amp;subaction=all&amp;limit=50&amp;order=desc'" .
 			" title=\"".$clang->gTview("Display Last 50 Responses")."\" " .
 			"onmouseout=\"hideTooltip()\" onmouseover=\"showTooltip(event,'".$clang->gT("Display Last 50 Responses", "js")."')\">" .
-			"<img name='ViewLast' src='$imagefiles/viewlast.png' title='' alt='' align='left' /></a>\n"
+			"<img name='ViewLast' src='$imagefiles/viewlast.png' title='' alt='' /></a>\n"
 	. "\t\t\t<a href='$scriptname?action=dataentry&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" ".
 			" title=\"".$clang->gTview("Dataentry Screen for Survey")."\" " .
 			" onmouseover=\"showTooltip(event,'".$clang->gT("Dataentry Screen for Survey", "js")."')\">" .
-	  "<img name='DataEntry' src='$imagefiles/dataentry.png' title='' alt='' align='left' /></a>\n"
+	  "<img name='DataEntry' src='$imagefiles/dataentry.png' title='' alt='' /></a>\n"
 	. "\t\t\t<a href='$scriptname?action=statistics&amp;sid=$surveyid' "
 	."title=\"".$clang->gTview("Get statistics from these responses")."\" "
 	."onmouseout=\"hideTooltip()\" onmouseover=\"showTooltip(event,'".$clang->gT("Get statistics from these responses", "js")."')\">"
-	."<img name='Statistics' src='$imagefiles/statistics.png' title='' alt='' align='left' /></a>\n"
-	. "\t\t\t<img src='$imagefiles/seperator.gif' alt=''  align='left' />\n";
+	."<img name='Statistics' src='$imagefiles/statistics.png' title='' alt='' /></a>\n"
+	. "\t\t\t<img src='$imagefiles/seperator.gif' alt='' />\n";
 	if ($sumrows5['export'] == "1" || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)
 	{
 		$browsemenubar .= "\t\t\t<a href='$scriptname?action=exportresults&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" "
 		. "title=\"".$clang->gTview("Export Results to Application")."\" "
 		. "onmouseover=\"showTooltip(event,'".$clang->gT("Export Results to Application", "js")."')\">"
 		. "<img name='Export' src='$imagefiles/export.png' "
-		. "title='' alt=''align='left' /></a>\n"
+		. "title='' alt='' /></a>\n"
 		. "\t\t\t<a href='$scriptname?action=exportspss&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" "
-		. "title=\"".$clang->gTview("Export result to a SPSS command file")."\" "
-		. "onmouseover=\"showTooltip(event,'".$clang->gT("Export result to a SPSS command file", "js")."')\">"
-		. "<img src='$imagefiles/exportspss.png' align='left' "
-		. "title='' border='0' alt='". $clang->gT("Export result to a SPSS command file")."' /></a>\n";
+		. "title=\"".$clang->gTview("Export results to an SPSS command file")."\" "
+		. "onmouseover=\"showTooltip(event,'".$clang->gT("Export results to a SPSS/PASW command file", "js")."')\">"
+		. "<img src='$imagefiles/exportspss.png' "
+		. "title='' border='0' alt='". $clang->gT("Export result to a SPSS/PASW command file")."' /></a>\n"
+        . "\t\t\t<a href='$scriptname?action=exportr&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" "
+        . "title=\"".$clang->gTview("Export result to a SPSS command file")."\" "
+        . "onmouseover=\"showTooltip(event,'".$clang->gT("Export results to a R data file", "js")."')\">"
+        . "<img src='$imagefiles/exportr.png' "
+        . "title='' border='0' alt='". $clang->gT("Export results to a R data file")."' /></a>\n";
 	}
 	$browsemenubar .= "\t\t\t<a href='$scriptname?action=importoldresponses&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" "
 	. " title=\"".$clang->gTview("Import answers from a deactivated survey table")."\" "
 	. " onmouseover=\"showTooltip(event,'".$clang->gT("Import answers from a deactivated survey table", "js")."')\" >" .
-			"<img name='ImportOld' src='$imagefiles/importold.png' title='' alt=''align='left' /></a>\n"
-	. "\t\t\t<img src='$imagefiles/seperator.gif' alt=''  align='left' />\n"
+			"<img name='ImportOld' src='$imagefiles/importold.png' title='' alt='' /></a>\n"
+	. "\t\t\t<img src='$imagefiles/seperator.gif' alt='' />\n"
 	. "\t\t\t<a href='$scriptname?action=saved&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" "
 	. " title=\"".$clang->gTview("View Saved but not submitted Responses")."\" "
 	. " onmouseover=\"showTooltip(event,'".$clang->gT("View Saved but not submitted Responses", "js")."')\" >" .
-		"<img src='$imagefiles/saved.png' title='' alt='' align='left'  name='BrowseSaved' /></a>\n"
+		"<img src='$imagefiles/saved.png' title='' alt='' name='BrowseSaved' /></a>\n"
 	. "\t\t\t<a href='$scriptname?action=vvimport&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" "
 	. " title=\"".$clang->gTview("Import a VV survey file")."\" "
 	. " onmouseover=\"showTooltip(event,'".$clang->gT("Import a VV survey file", "js")."')\">\n"
-	. "<img src='$imagefiles/importvv.png' align='left' title='' border='0' alt='' /></a>\n";
+	. "<img src='$imagefiles/importvv.png' alt='' /></a>\n";
 	if ($sumrows5['export'] == "1" || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)
 	{
 		$browsemenubar .= "\t\t\t<a href='$scriptname?action=vvexport&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" " .
 		" title=\"".$clang->gTview("Export a VV survey file")."\" " .
 		" onmouseover=\"showTooltip(event,'".$clang->gT("Export a VV survey file", "js")."')\">" .
-		"<img src='$imagefiles/exportvv.png' align='left' title='' alt='' border='0' /></a>\n";
+		"<img src='$imagefiles/exportvv.png' title='' alt='' /></a>\n";
 	}
-	$browsemenubar .= "\t\t</td>\n"
-	. "\t</tr>\n";
+	if (
+		( ($surrows['browse_response'] && $surrows['activate_survey']) || 
+			$_SESSION['USER_RIGHT_SUPERADMIN'] == 1
+		) &&
+		(
+			$thissurvey['private'] == 'N' &&
+			$thissurvey['tokenanswerspersistence'] == 'Y'
+		)
+	)
+	{ //TIBO
+		$browsemenubar .= "\t\t\t<a href='$scriptname?action=iteratesurvey&amp;sid=$surveyid' onmouseout=\"hideTooltip()\" " .
+		" title=\"".$clang->gTview("Iterate surevey")."\" " .
+		" onmouseover=\"showTooltip(event,'".$clang->gT("Iterate survey", "js")."')\">" .
+		"<img src='$imagefiles/iterate.png' title='' alt='' /></a>\n";
+	}
+	$browsemenubar .= "\t\t</div>\n"
+    . "\t</div>\n"
+	. "</div>\n"
+    ."<font style='size:12px;line-height:2px;'>&nbsp;&nbsp;</font>"; //CSS Firefox 2 transition fix
+    
 	return $browsemenubar;
 }
 
@@ -1474,8 +1853,10 @@ function returnglobal($stringname)
 		{
 		if ($stringname == "sid" || $stringname == "gid" || 
 			$stringname == "qid" || $stringname == "tid" || 
-			$stringname == "lid" || $stringname == "ugid"|| $stringname == "thisstep" || 
-            $stringname == "qaid" || $stringname == "scid")
+			$stringname == "lid" || $stringname == "ugid"|| 
+			$stringname == "thisstep" || $stringname == "scenario" ||
+			$stringname == "cqid" || $stringname == "cid" || 
+			$stringname == "qaid" || $stringname == "scid")
 		{
 			return sanitize_int($_REQUEST[$stringname]);
 		}
@@ -1483,9 +1864,14 @@ function returnglobal($stringname)
         {
             return sanitize_languagecode($_REQUEST[$stringname]);
         }
-        elseif ($stringname =="htmleditormode")
+        elseif ($stringname =="htmleditormode" || 
+		$stringname =="subaction")
         {
             return sanitize_paranoid_string($_REQUEST[$stringname]);    
+        }
+        elseif ( $stringname =="cquestions")
+        {
+            return sanitize_cquestions($_REQUEST[$stringname]);    
         }
 		return $_REQUEST[$stringname];
 	}
@@ -1499,6 +1885,7 @@ function sendcacheheaders()
 	if ( $embedded ) return;
     if (!headers_sent())
     {
+        header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');  // this line lets IE7 run LimeSurvey in an iframe    
 	    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
 	    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");  // always modified
 	    header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
@@ -1509,28 +1896,18 @@ function sendcacheheaders()
 }
 
 
-function getLegitQids($surveyid)
-{
-	global $dbprefix;
-    $surveyid=sanitize_int($surveyid);
-
-	//GET LIST OF LEGIT QIDs FOR TESTING LATER
-	$lq = "SELECT DISTINCT qid FROM ".db_table_name('questions')." WHERE sid=$surveyid AND language='".$_SESSION['s_lang']."'";
-	$lr = db_execute_num($lq);        //Checked
-	return array_merge(array("DUMMY ENTRY"), $lr->GetRows());
-}
-
-
 function returnquestiontitlefromfieldcode($fieldcode)
 {
 	// Performance optimized	: Nov 13, 2006
 	// Performance Improvement	: 37%
 	// Optimized By				: swales
+    
 
 	global $dbprefix, $surveyid, $connect, $clang;
 	if (!isset($fieldcode)) {return $clang->gT("Preset");}
 	if ($fieldcode == "token") {return $clang->gT("Token");}
-	if ($fieldcode == "datestamp") {return $clang->gT("Date Stamp");}
+	if ($fieldcode == "datestamp") {return $clang->gT("Date Last Action");}
+	if ($fieldcode == "startdate") {return $clang->gT("Date Started");}
 	if ($fieldcode == "ipaddr") {return $clang->gT("IP Address");}
 	if ($fieldcode == "refurl") {return $clang->gT("Referring URL");}
 
@@ -1553,20 +1930,36 @@ function returnquestiontitlefromfieldcode($fieldcode)
 			$qname=strip_tags($qrow['question']);
 		}
 	}
+    $aname='';
 	if (isset($details['aid']) && $details['aid']) //Add answer if necessary (array type questions)
 	{
+	    if($details['type'] == ":" || $details['type'] == ";")
+	    {
+		    list($details['aid'], $lidcode) = explode("_", $details['aid']);
+		}
 		$qq = "SELECT answer FROM ".db_table_name('answers')." WHERE qid=$fqid AND code='{$details['aid']}' AND language='".$_SESSION['s_lang']."'";
 		$qr = db_execute_assoc($qq) or safe_die ("ERROR: ".$connect->ErrorMsg()."<br />$qq"); //Checked
 		while($qrow=$qr->FetchRow())
 		{
-			$qname.=" [".$qrow['answer']."]";
+			$aname=$qrow['answer'];
 		}
+		if (isset($lidcode) && isset($details['lid'])) 
+		{
+		   //Add the Labelset Title to the answer info
+		   $qq = "SELECT title FROM ".db_table_name('labels')." WHERE lid = {$details['lid']} AND code='$lidcode' AND language='".$_SESSION['s_lang']."'";
+		   $qr = db_execute_assoc($qq) or safe_die ("ERROR: ".$connect->ErrorMsg()."<br />$qq"); 
+		   while ($qrow=$qr->FetchRow())
+		   {
+		     $aname .= "] [".$qrow['title'];
+		   }
+		}
+		unset($lidcode);
 	}
-	if (substr($fieldcode, -5) == "other")
+	if (substr($fieldcode, -5) == 'other')
 	{
-		$qname .= " [Other]";
+		$aname = $clang->gT('Other');
 	}
-	return $qname;
+	return array($qname,$aname);
 }
 
 
@@ -1622,11 +2015,16 @@ function getsidgidqidaidtype($fieldcode)
 	return $aRef;
 }
 
-/*
-*
-*
+/**
+* put your comment there...
+* 
+* @param mixed $fieldcode
+* @param mixed $value
+* @param mixed $format
+* @param mixed $dateformatid
+* @return string
 */
-function getextendedanswer($fieldcode, $value, $format='')
+function getextendedanswer($fieldcode, $value, $format='', $dateformatphp='d.m.Y')
 {
 	// Performance optimized	: Nov 13, 2006
 	// Performance Improvement	: 36%
@@ -1635,7 +2033,7 @@ function getextendedanswer($fieldcode, $value, $format='')
 	global $dbprefix, $surveyid, $connect, $clang, $action;
 
 	// use Survey base language if s_lang isn't set in _SESSION (when browsing answers)
-	$s_lang = GetBaseLanguageFromSurveyID($surveyid);
+	$s_lang = GetBaseLanguageFromSurveyID($surveyid);        
 	if  (!isset($action) || (isset($action) && $action!='browse') ) 
     {
         if (isset($_SESSION['s_lang'])) $s_lang = $_SESSION['s_lang'];  //This one does not work in admin mode when you browse a particular answer
@@ -1657,75 +2055,85 @@ function getextendedanswer($fieldcode, $value, $format='')
 		} // while
 		switch($this_type)
 		{
+            case 'D': if (trim($value)!='')
+                {
+                    $datetimeobj = new Date_Time_Converter($value , "Y-m-d H:i:s");
+                    $value=$datetimeobj->convert($dateformatphp);                                      
+                }
+                break;                                   
 			case "L":
 			case "!":
 			case "O":
 			case "^":
 			case "I":
 			case "R":
-			$query = "SELECT code, answer FROM ".db_table_name('answers')." WHERE qid={$fields['qid']} AND code='".$connect->escape($value)."' AND language='".$s_lang."'";
-			$result = db_execute_assoc($query) or safe_die ("Couldn't get answer type L - getextendedanswer() in common.php<br />$query<br />".$connect->ErrorMsg()); //Checked   
-			while($row=$result->FetchRow())
-			{
-				$this_answer=$row['answer'];
-			} // while
-			if ($value == "-oth-")
-			{
-				$this_answer=$clang->gT("Other");
-			}
-			break;
+			    $query = "SELECT code, answer FROM ".db_table_name('answers')." WHERE qid={$fields['qid']} AND code='".$connect->escape($value)."' AND language='".$s_lang."'";
+			    $result = db_execute_assoc($query) or safe_die ("Couldn't get answer type L - getextendedanswer() in common.php<br />$query<br />".$connect->ErrorMsg()); //Checked   
+			    while($row=$result->FetchRow())
+			    {
+				    $this_answer=$row['answer'];
+			    } // while
+			    if ($value == "-oth-")
+			    {
+				    $this_answer=$clang->gT("Other");
+			    }
+			    break;
 			case "M":
 			case "J":
 			case "P":
-			switch($value)
-			{
-				case "Y": $this_answer=$clang->gT("Yes"); break;
-			}
-			break;
+			    switch($value)
+			    {
+				    case "Y": $this_answer=$clang->gT("Yes"); break;
+			    }
+			    break;
 			case "Y":
-			switch($value)
-			{
-				case "Y": $this_answer=$clang->gT("Yes"); break;
-				case "N": $this_answer=$clang->gT("No"); break;
-				default: $this_answer=$clang->gT("No answer");
-			}
-			break;
+			    switch($value)
+			    {
+				    case "Y": $this_answer=$clang->gT("Yes"); break;
+				    case "N": $this_answer=$clang->gT("No"); break;
+				    default: $this_answer=$clang->gT("No answer");
+			    }
+			    break;
 			case "G":
-			switch($value)
-			{
-				case "M": $this_answer=$clang->gT("Male"); break;
-				case "F": $this_answer=$clang->gT("Female"); break;
-				default: $this_answer=$clang->gT("No answer");
-			}
-			break;
+			    switch($value)
+			    {
+				    case "M": $this_answer=$clang->gT("Male"); break;
+				    case "F": $this_answer=$clang->gT("Female"); break;
+				    default: $this_answer=$clang->gT("No answer");
+			    }
+			    break;
 			case "C":
-			switch($value)
-			{
-				case "Y": $this_answer=$clang->gT("Yes"); break;
-				case "N": $this_answer=$clang->gT("No"); break;
-				case "U": $this_answer=$clang->gT("Uncertain"); break;
-			}
-			break;
+			    switch($value)
+			    {
+				    case "Y": $this_answer=$clang->gT("Yes"); break;
+				    case "N": $this_answer=$clang->gT("No"); break;
+				    case "U": $this_answer=$clang->gT("Uncertain"); break;
+			    }
+			    break;
 			case "E":
-			switch($value)
-			{
-				case "I": $this_answer=$clang->gT("Increase"); break;
-				case "D": $this_answer=$clang->gT("Decrease"); break;
-				case "S": $this_answer=$clang->gT("Same"); break;
-			}
-			break;
+			    switch($value)
+			    {
+				    case "I": $this_answer=$clang->gT("Increase"); break;
+				    case "D": $this_answer=$clang->gT("Decrease"); break;
+				    case "S": $this_answer=$clang->gT("Same"); break;
+			    }
+			    break;
 			case "F":
 			case "H":
 			case "W":
 			case "Z":
 			case "1":
-			$query = "SELECT title FROM ".db_table_name('labels')." WHERE ((lid=$this_lid) OR (lid=$this_lid1)) AND code='".$connect->escape($value)."' AND language='".$s_lang."'";
-			$result = db_execute_assoc($query) or safe_die ("Couldn't get answer type F/H - getextendedanswer() in common.php");   //Checked
-			while($row=$result->FetchRow())
-			{
-				$this_answer=$row['title'];
-			} // while
-			break;
+			    $query = "SELECT title FROM ".db_table_name('labels')." WHERE ((lid=$this_lid) OR (lid=$this_lid1)) AND code='".$connect->escape($value)."' AND language='".$s_lang."'";
+			    $result = db_execute_assoc($query) or safe_die ("Couldn't get answer type F/H - getextendedanswer() in common.php");   //Checked
+			    while($row=$result->FetchRow())
+			    {
+				    $this_answer=$row['title'];
+			    } // while
+			    if ($value == "-oth-")
+			    {
+				    $this_answer=$clang->gT("Other");
+			    }
+			    break;
 			default:
 			;
 		} // switch
@@ -1738,7 +2146,38 @@ function getextendedanswer($fieldcode, $value, $format='')
 		}
 		else
 		{
-			return strip_tags($this_answer);
+			 if (strip_tags($this_answer) == "") 
+			 { 
+				switch ($this_type)
+				{// for questions with answers beeing
+				// answer code, it is safe to return the
+				// code instead of the blank stripped answer
+					case "A":
+					case "B":
+					case "C":
+					case "E":
+					case "F":
+					case "H":
+					case "1":
+					case "M":
+					case "P":
+					case "!":
+					case "5":
+					case "L":
+					case "O":
+					case "W":
+					case "Z":
+						return $value;
+						break;
+					default:
+						return strip_tags($this_answer); 
+						break;
+				}
+			 } 
+			 else 
+			 { 
+			 	return strip_tags($this_answer); 
+			 }
 		}
 	}
 	else
@@ -1764,29 +2203,25 @@ function validate_templatedir($templatename)
     {
          return $templatename;
     }
-    else 
+    elseif (is_dir("$publicdir/templates/{$defaulttemplate}/"))
     {
          return $defaulttemplate;
-
+    }
+    else 
+    {
+         return 'default';
     }     
 }
 
 
-function crlf_lineendings($text)
-{
-	$text=str_replace("\r\n", "~~~~", $text); //First replace any good line endings with ~~~~
-	$text=str_replace("\n", "~~~~", $text); //Then replace any solitary \n's with ~~~~
-	$text=str_replace("\r", "~~~~", $text); //Then replace any solitary \r's with ~~~~
-	$text=str_replace("~~~~", "\r\n", $text); //Finally replace all ~~~~'s with \r\n
-	return $text;
-}
-
-
-
-//This function generates an array containing the fieldcode, and matching data in the same
-//order as the activate script
-// @param: $force_refresh  - Forces to really refresh the array, not just take the session copy
-
+/**
+* This function generates an array containing the fieldcode, and matching data in the same order as the activate script
+* 
+* @param string $surveyid
+* @param mixed $style
+* @param mixed $force_refresh - Forces to really refresh the array, not just take the session copy 
+* @return mixed
+*/
 function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 
 	global $dbprefix, $connect, $globalfieldmap, $clang;
@@ -1804,7 +2239,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 	{
 		if ($prow['private'] == "N")
 		{
-			$fieldmap[]=array("fieldname"=>"token", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
+			$fieldmap[$counter]=array("fieldname"=>"token", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
 			if ($style == "full")
 			{
 				$fieldmap[$counter]['title']="";
@@ -1815,7 +2250,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 		}
 		if ($prow['datestamp'] == "Y")
 		{
-			$fieldmap[]=array("fieldname"=>"datestamp", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
+			$fieldmap[$counter]=array("fieldname"=>"datestamp", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
 			if ($style == "full")
 			{
 				$fieldmap[$counter]['title']="";
@@ -1824,9 +2259,20 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 			}
 			$counter++;
 		}
+		if ($prow['datestamp'] == "Y")
+		{
+			$fieldmap[$counter]=array("fieldname"=>"startdate", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
+			if ($style == "full")
+			{
+				$fieldmap[$counter]['title']="";
+				$fieldmap[$counter]['question']="startdate";
+				$fieldmap[$counter]['group_name']="";
+			}
+			$counter++;
+		}
 		if ($prow['ipaddr'] == "Y")
 		{
-			$fieldmap[]=array("fieldname"=>"ipaddr", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
+			$fieldmap[$counter]=array("fieldname"=>"ipaddr", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
 			if ($style == "full")
 			{
 				$fieldmap[$counter]['title']="";
@@ -1838,7 +2284,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 		// Add 'refurl' to fieldmap.
 		if ($prow['refurl'] == "Y")
 		{
-			$fieldmap[]=array("fieldname"=>"refurl", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
+			$fieldmap[$counter]=array("fieldname"=>"refurl", "type"=>"", "sid"=>$surveyid, "gid"=>"", "qid"=>"", "aid"=>"");
 			if ($style == "full")
 			{
 				$fieldmap[$counter]['title']="";
@@ -1856,7 +2302,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 	.db_table_name('questions').".sid=$surveyid AND "
 	.db_table_name('questions').".language='{$s_lang}' AND "
 	.db_table_name('groups').".language='{$s_lang}' "
-	." ORDER BY {$dbprefix}groups.group_order, title";
+	." ORDER BY group_order, question_order";
 	$aresult = db_execute_assoc($aquery) or safe_die ("Couldn't get list of questions in createFieldMap function.<br />$query<br />".$connect->ErrorMsg()); //Checked
 	while ($arow=$aresult->FetchRow()) //With each question, create the appropriate field(s)
 	{
@@ -1864,9 +2310,10 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 		$arow['type'] !="C" && $arow['type'] != "E" && $arow['type'] != "F" &&
 		$arow['type'] != "H" && $arow['type'] !="P" && $arow['type'] != "R" &&
 		$arow['type'] != "Q" && $arow['type'] != "J" && $arow['type'] != "K" && 
-		$arow['type'] != "^" && $arow['type'] != "1")
+		$arow['type'] != "^" && $arow['type'] != ":" && $arow['type'] != "1" &&
+		$arow['type'] != ";")
 		{
-			$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}", "type"=>"{$arow['type']}", "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"");
+			$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}", "type"=>"{$arow['type']}", "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"");
 			if ($style == "full")
 			{
 				$fieldmap[$counter]['title']=$arow['title'];
@@ -1882,7 +2329,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 				case "Z":  //FLEXIBLE RADIO LIST
 				if ($arow['other'] == "Y")
 				{
-					$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}other",
+					$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}other",
 					"type"=>$arow['type'],
 					"sid"=>$surveyid,
 					"gid"=>$arow['gid'],
@@ -1899,7 +2346,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 				}
 				break;
 				case "O": //DROPDOWN LIST WITH COMMENT
-				$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}comment",
+				$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}comment",
 				"type"=>$arow['type'],
 				"sid"=>$surveyid,
 				"gid"=>$arow['gid'],
@@ -1916,6 +2363,54 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 				break;
 			}
 		}
+		elseif ($arow['type'] == ":" || $arow['type'] == ";")
+		{
+		    //MULTI FLEXI
+			$abquery = "SELECT ".db_table_name('answers').".*, ".db_table_name('questions').".other, ".db_table_name('questions').".lid\n"
+			." FROM ".db_table_name('answers').", ".db_table_name('questions')
+			." WHERE sid=$surveyid AND ".db_table_name('answers').".qid=".db_table_name('questions').".qid "
+			. "AND ".db_table_name('questions').".language='".$s_lang."'"
+			." AND ".db_table_name('answers').".language='".$s_lang."'"
+			." AND ".db_table_name('questions').".qid={$arow['qid']} "
+			." ORDER BY ".db_table_name('answers').".sortorder, ".db_table_name('answers').".answer";
+			$abresult=db_execute_assoc($abquery) or die ("Couldn't get list of answers in createFieldMap function (case :)<br />$abquery<br />".htmlspecialchars($connect->ErrorMsg()));
+			$ab2query = "SELECT ".db_table_name('labels').".*
+			             FROM ".db_table_name('questions').", ".db_table_name('labels')."
+			             WHERE sid=$surveyid 
+						 AND ".db_table_name('labels').".lid=".db_table_name('questions').".lid
+			             AND ".db_table_name('questions').".language='".$s_lang."'
+			             AND ".db_table_name('labels').".language='".$s_lang."'
+			             AND ".db_table_name('questions').".qid=".$arow['qid']."
+			             ORDER BY ".db_table_name('labels').".sortorder, ".db_table_name('labels').".title";
+			$ab2result=db_execute_assoc($ab2query) or die("Couldn't get list of labels in createFieldMap function (case :)<br />$ab2query<br />".htmlspecialchars($connection->ErrorMsg()));
+			$lset=array();
+			while($ab2row=$ab2result->FetchRow())
+			{
+			    $lset[]=$ab2row;
+			}
+			while ($abrow=$abresult->FetchRow())
+			{
+			    foreach($lset as $ls)
+			    {
+				  $fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}_{$ls['code']}", 
+				                    "type"=>$arow['type'], 
+									"sid"=>$surveyid, 
+									"gid"=>$arow['gid'], 
+									"qid"=>$arow['qid'], 
+									"aid"=>$abrow['code']."_".$ls['code'],
+									"lid"=>$abrow['lid']);
+				  if ($abrow['other']=="Y") {$alsoother="Y";}
+				  if ($style == "full")
+			  	  {
+					$fieldmap[$counter]['title']=$arow['title'];
+					$fieldmap[$counter]['question']=$arow['question']."[".$ls['title']."] [".$abrow['answer']."]";
+					$fieldmap[$counter]['group_name']=$arow['group_name'];
+				  }
+				  $counter++;
+			    }
+			}
+			unset($lset);
+		}
 		elseif ($arow['type'] == "M" || $arow['type'] == "A" || $arow['type'] == "B" ||
 		$arow['type'] == "C" || $arow['type'] == "E" || $arow['type'] == "F" ||
 		$arow['type'] == "H" || $arow['type'] == "P" || $arow['type'] == "^" || $arow['type'] == "J")
@@ -1931,7 +2426,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 			$abresult=db_execute_assoc($abquery) or safe_die ("Couldn't get list of answers in createFieldMap function (case M/A/B/C/E/F/H/P)<br />$abquery<br />".$connect->ErrorMsg());  //Checked
 			while ($abrow=$abresult->FetchRow())
 			{
-				$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code']);
+				$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code']);
 				if ($abrow['other']=="Y") {$alsoother="Y";}
 				if ($style == "full")
 				{
@@ -1942,7 +2437,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 				$counter++;
 				if ($arow['type'] == "P")
 				{
-					$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}comment", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"comment");
+					$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}comment", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"comment");
 					if ($style == "full")
 					{
 						$fieldmap[$counter]['title']=$arow['title'];
@@ -1954,7 +2449,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 			}
 			if ((isset($alsoother) && $alsoother=="Y") && ($arow['type']=="M" || $arow['type']=="P"))
 			{
-				$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}other", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"other");
+				$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}other", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"other");
 				if ($style == "full")
 				{
 					$fieldmap[$counter]['title']=$arow['title'];
@@ -1964,7 +2459,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 				$counter++;
 				if ($arow['type']=="P")
 				{
-					$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}othercomment", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"othercomment");
+					$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}othercomment", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>"othercomment");
 					if ($style == "full")
 					{
 						$fieldmap[$counter]['title']=$arow['title'];
@@ -1986,7 +2481,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 			$abresult=db_execute_assoc($abquery) or safe_die ("Couldn't get list of answers in createFieldMap function (type Q)<br />$abquery<br />".$connect->ErrorMsg()); //Checked
 			while ($abrow=$abresult->FetchRow())
 			{
-				$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code']);
+				$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code']);
 				if ($style == "full")
 				{
 					$fieldmap[$counter]['title']=$arow['title'];
@@ -2019,7 +2514,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 				//if ($abmultiscalecount>0)
 				if ($abmultiscaleresultrow=$abmultiscaleresult->FetchRow())
 					{
- 					$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}#0", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code'], "lid"=>$abmultiscaleresultrow["lid"], "lid1"=>$arow["lid1"]);
+ 					$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}#0", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code'], "lid"=>$abmultiscaleresultrow["lid"], "lid1"=>$arow["lid1"]);
      					if ($style == "full")
 						{
 							$fieldmap[$counter]['title']=$arow['title'];
@@ -2042,7 +2537,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 				$abmultiscalecount=$abmultiscaleresult->RecordCount();
 				if ($abmultiscaleresultrow=$abmultiscaleresult->FetchRow())
 				{
- 					$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}#1", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code'], "lid"=>$abmultiscaleresultrow["lid"], "lid1"=>$arow["lid1"]);
+ 					$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}{$abrow['code']}#1", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$abrow['code'], "lid"=>$abmultiscaleresultrow["lid"], "lid1"=>$arow["lid1"]);
 					if ($style == "full")
 					{
 						$fieldmap[$counter]['title']=$arow['title'];
@@ -2069,7 +2564,7 @@ function createFieldMap($surveyid, $style="null", $force_refresh=false) {
 			$abcount=$abresult->RecordCount();
 			for ($i=1; $i<=$abcount; $i++)
 			{
-				$fieldmap[]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}$i", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$i);
+				$fieldmap[$counter]=array("fieldname"=>"{$arow['sid']}X{$arow['gid']}X{$arow['qid']}$i", "type"=>$arow['type'], "sid"=>$surveyid, "gid"=>$arow['gid'], "qid"=>$arow['qid'], "aid"=>$i);
 				if ($style == "full")
 				{
 					$fieldmap[$counter]['title']=$arow['title'];
@@ -2104,13 +2599,9 @@ function arraySearchByKey($needle, $haystack, $keyname, $maxanswers="") {
 	return $output;
 }
 
-function templatereplace($line)
+function templatereplace($line, $replacements=array())
 {
-	// Performance optimized	: Nov 10, 2006
-	// Performance Improvement	: 49%
-	// Optimized By				: swales
-
-	global $surveylist, $sitename, $clienttoken;
+	global $surveylist, $sitename, $clienttoken, $rooturl;
 	global $thissurvey, $imagefiles, $defaulttemplate;
 	global $percentcomplete, $move;
 	global $groupname, $groupdescription, $question;
@@ -2121,7 +2612,7 @@ function templatereplace($line)
 	global $publicurl, $templatedir, $token;
 	global $assessments, $s_lang;
 	global $errormsg, $clang;
-	global $saved_id;
+	global $saved_id, $templaterootdir;
 	global $totalBoilerplatequestions, $relativeurl;
     global $languagechanger;    
     global $printoutput, $captchapath, $loadname;
@@ -2129,9 +2620,9 @@ function templatereplace($line)
 	if (stripos ($line,"</head>"))
 	{
 		$line=str_ireplace("</head>",
-			"<script type=\"text/javascript\" src=\"scripts/surveyRuntime.js\">\n"
-			."</script>\n"
-			."</head>", $line);
+			"\t\t<script type=\"text/javascript\" src=\"$rooturl/scripts/survey_runtime.js\"></script>\n"
+			.use_firebug()
+			."\t</head>", $line);
 	}
 
 
@@ -2141,6 +2632,11 @@ function templatereplace($line)
 		return $line;
 	}
 
+    foreach ($replacements as $replacementkey=>$replacementvalue)
+    {
+        if (strpos($line, '{'.$replacementkey.'}') !== false) $line=str_replace('{'.$replacementkey.'}', $replacementvalue, $line);
+    }
+    
 	if (strpos($line, "{SURVEYLISTHEADING}") !== false) $line=str_replace("{SURVEYLISTHEADING}", $surveylist['listheading'], $line);
 	if (strpos($line, "{SURVEYLIST}") !== false) $line=str_replace("{SURVEYLIST}", $surveylist['list'], $line);
 	if (strpos($line, "{NOSURVEYID}") !== false) $line=str_replace("{NOSURVEYID}", $surveylist['nosid'], $line);
@@ -2189,22 +2685,10 @@ function templatereplace($line)
 	}
 
 	if (strpos($line, "{SID}") !== false) $line=str_replace("{SID}", $surveyid, $line);
-	if ($help) {
-		if (strpos($line, "{QUESTIONHELP}") !== false) $line=str_replace("{QUESTIONHELP}", "<img src='".$imagefiles."/help.gif' alt='Help' align='left' />".$help, $line);
-		if (strpos($line, "{QUESTIONHELPPLAINTEXT}") !== false) $line=str_replace("{QUESTIONHELPPLAINTEXT}", strip_tags(addslashes($help)), $line);
-	}
-	else
-	{
-		if (strpos($line, "{QUESTIONHELP}") !== false) $line=str_replace("{QUESTIONHELP}", $help, $line);
-		if (strpos($line, "{QUESTIONHELPPLAINTEXT}") !== false) $line=str_replace("{QUESTIONHELPPLAINTEXT}", strip_tags(addslashes($help)), $line);
-	}
-	while (strpos($line, "{INSERTANS:") !== false)
-	{
-		$answreplace=substr($line, strpos($line, "{INSERTANS:"), strpos($line, "}", strpos($line, "{INSERTANS:"))-strpos($line, "{INSERTANS:")+1);
-		$answreplace2=substr($answreplace, 11, strpos($answreplace, "}", strpos($answreplace, "{INSERTANS:"))-11);
-		$answreplace3=strip_tags(retrieve_Answer($answreplace2));
-		$line=str_replace($answreplace, $answreplace3, $line);
-	}
+
+	if (strpos($line, "{EXPIRY}") !== false) $line=str_replace("{EXPIRY}", $thissurvey['expiry'], $line);
+	if (strpos($line, "{EXPIRY-DMY}") !== false) $line=str_replace("{EXPIRY-DMY}", date("d-m-Y",strtotime($thissurvey["expiry"])), $line);
+	if (strpos($line, "{EXPIRY-MDY}") !== false) $line=str_replace("{EXPIRY-MDY}", date("m-d-Y",strtotime($thissurvey["expiry"])), $line);
 	if (strpos($line, "{NAVIGATOR}") !== false) $line=str_replace("{NAVIGATOR}", $navigator, $line);
 	if (strpos($line, "{SUBMITBUTTON}") !== false) {
 		$submitbutton="<input class='submit' type='submit' value=' ".$clang->gT("Submit")." ' name='move2' onclick=\"javascript:document.limesurvey.move.value = 'movesubmit';\" />";
@@ -2212,8 +2696,15 @@ function templatereplace($line)
 	}
 	if (strpos($line, "{COMPLETED}") !== false) $line=str_replace("{COMPLETED}", $completed, $line);
 	if (strpos($line, "{URL}") !== false) {
-		if ($thissurvey['url']!=""){$linkreplace="<a href='{$thissurvey['url']}'>{$thissurvey['urldescrip']}</a>";}
-		else {$linkreplace="";}
+		if ($thissurvey['surveyls_url']!=""){
+            if (trim($thissurvey['surveyls_urldescription'])!=''){    
+                $linkreplace="<a href='{$thissurvey['surveyls_url']}'>{$thissurvey['surveyls_urldescription']}</a>";
+            }
+		    else {
+                $linkreplace="<a href='{$thissurvey['surveyls_url']}'>{$thissurvey['surveyls_url']}</a>";
+            }
+        }
+        else $linkreplace='';
 		$line=str_replace("{URL}", $linkreplace, $line);            
         $line=str_replace("{SAVEDID}",$saved_id, $line);     // to activate the SAVEDID in the END URL 
         if (isset($clienttoken)) {$token=$clienttoken;} else {$token='';}
@@ -2226,7 +2717,7 @@ function templatereplace($line)
     }
 	if (strpos($line, "{PRIVACYMESSAGE}") !== false) 
     {
-        $line=str_replace("{PRIVACYMESSAGE}", "<strong><i>".$clang->gT("A Note On Privacy")."</i></strong><br />".$clang->gT("This survey is anonymous.")."<br />".$clang->gT("The record kept of your survey responses does not contain any identifying information about you unless a specific question in the survey has asked for this. If you have responded to a survey that used an identifying token to allow you to access the survey, you can rest assured that the identifying token is not kept with your responses. It is managed in a separate database, and will only be updated to indicate that you have (or haven't) completed this survey. There is no way of matching identification tokens with survey responses in this survey."), $line);
+        $line=str_replace("{PRIVACYMESSAGE}", "<span style='font-weight:bold; font-style: italic;'>".$clang->gT("A Note On Privacy")."</span><br />".$clang->gT("This survey is anonymous.")."<br />".$clang->gT("The record kept of your survey responses does not contain any identifying information about you unless a specific question in the survey has asked for this. If you have responded to a survey that used an identifying token to allow you to access the survey, you can rest assured that the identifying token is not kept with your responses. It is managed in a separate database, and will only be updated to indicate that you have (or haven't) completed this survey. There is no way of matching identification tokens with survey responses in this survey."), $line);
     }
 	if (strpos($line, "{CLEARALL}") !== false) 	{
 		$clearall = "\t\t\t\t\t<div class='clearall'>"
@@ -2259,7 +2750,13 @@ function templatereplace($line)
 		{
 			// Find out if the user has any saved data
 			
-			if (!isset($_SESSION['step']) || !$_SESSION['step'])  //First page, show LOAD
+            if ($thissurvey['format']=='A')
+            {
+                $saveall = "<input type='submit' name='loadall' value='".$clang->gT("Load Unfinished Survey")."' class='saveall' ". (($thissurvey['active'] != "Y")? "disabled='disabled'":"") ."/>"
+                          ."<input type='button' name='saveallbtn' value='".$clang->gT("Resume Later")."' class='saveall' onclick=\"javascript:document.limesurvey.move.value = this.value;addHiddenField(document.getElementById('limesurvey'),'saveall',this.value);document.getElementById('limesurvey').submit();\" ". (($thissurvey['active'] != "Y")? "disabled='disabled'":"") ."/>";  // Show Save So Far button
+                
+            }
+			elseif (!isset($_SESSION['step']) || !$_SESSION['step'])  //First page, show LOAD
 			{
 				$saveall = "<input type='submit' name='loadall' value='".$clang->gT("Load Unfinished Survey")."' class='saveall' ". (($thissurvey['active'] != "Y")? "disabled='disabled'":"") ."/>";
 			}
@@ -2290,6 +2787,47 @@ function templatereplace($line)
         }
 		$line=str_replace("{TEMPLATEURL}", $templateurl, $line);
 	}
+    if ($help) {
+        if (strpos($line, "{QUESTIONHELP}") !== false) 
+        {
+           If (!isset($helpicon))
+           {
+              $templatedir="$templaterootdir/".$thissurvey['templatedir']."/";
+               if ($thissurvey['templatedir']) 
+               {
+                   $templateurl="$publicurl/templates/".validate_templatedir($thissurvey['templatedir'])."/";
+               }
+               else  {
+                   $templateurl="$publicurl/templates/{$defaulttemplate}/";
+               }                        
+               if (file_exists($templatedir.'/help.gif'))
+              {
+                
+                  $helpicon=$templateurl.'/help.gif';    
+              }
+              elseif (file_exists($templatedir.'/help.png'))
+              {
+                
+                  $helpicon=$templateurl.'/help.png';    
+              }
+              else 
+              {
+                  $helpicon=$imagefiles."/help.gif";
+              }
+           }
+           $line=str_replace("{QUESTIONHELP}", "<img src='$helpicon' alt='Help' align='left' />".$help, $line);
+           
+        }
+        if (strpos($line, "{QUESTIONHELPPLAINTEXT}") !== false) $line=str_replace("{QUESTIONHELPPLAINTEXT}", strip_tags(addslashes($help)), $line);
+    }
+    else
+    {
+        if (strpos($line, "{QUESTIONHELP}") !== false) $line=str_replace("{QUESTIONHELP}", $help, $line);
+        if (strpos($line, "{QUESTIONHELPPLAINTEXT}") !== false) $line=str_replace("{QUESTIONHELPPLAINTEXT}", strip_tags(addslashes($help)), $line);
+    }    
+
+    $line=insertansReplace($line);
+
 	if (strpos($line, "{SUBMITCOMPLETE}") !== false) $line=str_replace("{SUBMITCOMPLETE}", "<strong>".$clang->gT("Thank You!")."<br /><br />".$clang->gT("You have completed answering the questions in this survey.")."</strong><br /><br />".$clang->gT("Click on 'Submit' now to complete the process and save your answers."), $line);
 	if (strpos($line, "{SUBMITREVIEW}") !== false) {
 		if (isset($thissurvey['allowprev']) && $thissurvey['allowprev'] == "N") {
@@ -2305,28 +2843,40 @@ function templatereplace($line)
 		if (strpos($line, "{TOKEN:FIRSTNAME}") !== false) $line=str_replace("{TOKEN:FIRSTNAME}", $_SESSION['thistoken']['firstname'], $line);
 		if (strpos($line, "{TOKEN:LASTNAME}") !== false) $line=str_replace("{TOKEN:LASTNAME}", $_SESSION['thistoken']['lastname'], $line);
 		if (strpos($line, "{TOKEN:EMAIL}") !== false) $line=str_replace("{TOKEN:EMAIL}", $_SESSION['thistoken']['email'], $line);
-		if (strpos($line, "{TOKEN:ATTRIBUTE_1}") !== false) $line=str_replace("{TOKEN:ATTRIBUTE_1}", $_SESSION['thistoken']['attribute_1'], $line);
-		if (strpos($line, "{TOKEN:ATTRIBUTE_2}") !== false) $line=str_replace("{TOKEN:ATTRIBUTE_2}", $_SESSION['thistoken']['attribute_2'], $line);
 	}
 	else
 	{
 		if (strpos($line, "{TOKEN:FIRSTNAME}") !== false) $line=str_replace("{TOKEN:FIRSTNAME}", "", $line);
 		if (strpos($line, "{TOKEN:LASTNAME}") !== false) $line=str_replace("{TOKEN:LASTNAME}", "", $line);
 		if (strpos($line, "{TOKEN:EMAIL}") !== false) $line=str_replace("{TOKEN:EMAIL}", "", $line);
-		if (strpos($line, "{TOKEN:ATTRIBUTE_1}") !== false) $line=str_replace("{TOKEN:ATTRIBUTE_1}", "", $line);
-		if (strpos($line, "{TOKEN:ATTRIBUTE_2}") !== false) $line=str_replace("{TOKEN:ATTRIBUTE_2}", "", $line);
 	}
 
+    while (strpos($line, "{TOKEN:ATTRIBUTE_")!== false) 
+    {
+        $templine=substr($line,strpos($line, "{TOKEN:ATTRIBUTE_"));
+        $templine=substr($templine,0,strpos($templine, "}")+1);
+        $attr_no=(int)substr($templine,17,strpos($templine, "}")-17);
+        $replacestr='';
+        if (isset($_SESSION['thistoken']['attribute_'.$attr_no])) $replacestr=$_SESSION['thistoken']['attribute_'.$attr_no];
+        $line=str_replace($templine, $replacestr, $line);
+    }
+    
+    
+    
 	if (strpos($line, "{ANSWERSCLEARED}") !== false) $line=str_replace("{ANSWERSCLEARED}", $clang->gT("Answers Cleared"), $line);
 	if (strpos($line, "{RESTART}") !== false)
 	{
 		if ($thissurvey['active'] == "N") 
 		{
-			$line=str_replace("{RESTART}",  "<a href='{$_SERVER['PHP_SELF']}?sid=$surveyid&amp;newtest=Y&amp;lang=".$s_lang."'>".$clang->gT("Restart this Survey")."</a>", $line);
+            $replacetext= "<a href='{$_SERVER['PHP_SELF']}?sid=$surveyid&amp;newtest=Y";
+            if (isset($s_lang) && $s_lang!='') $replacetext.="&amp;lang=".$s_lang;
+            $replacetext.="'>".$clang->gT("Restart this Survey")."</a>";
+			$line=str_replace("{RESTART}", $replacetext, $line);
 		} else {
 			$restart_extra = "";
 			$restart_token = returnglobal('token');
 			if (!empty($restart_token)) $restart_extra .= "&amp;token=".urlencode($restart_token);
+              else $restart_extra = "&amp;newtest=Y";
 			if (!empty($_GET['lang'])) $restart_extra .= "&amp;lang=".returnglobal('lang');
 			$line=str_replace("{RESTART}",  "<a href='{$_SERVER['PHP_SELF']}?sid=$surveyid".$restart_extra."'>".$clang->gT("Restart this Survey")."</a>", $line);
 		}
@@ -2361,10 +2911,10 @@ function templatereplace($line)
 		$saveform .= "' /></td></tr>\n";
         if (function_exists("ImageCreate") && captcha_enabled('saveandloadscreen',$thissurvey['usecaptcha']))
         {
-		    $saveform .="<tr><td align='right'>".$clang->gT("Security Question").":</td><td><table><tr><td valign='middle'><img src='{$captchapath}verification.php' alt='' /></td><td valign='middle'><input type='text' size='5' maxlength='3' name='loadsecurity' value='' /></td></tr></table></td></tr>\n";
+		    $saveform .="<tr><td align='right'>".$clang->gT("Security Question").":</td><td><table><tr><td valign='middle'><img src='{$captchapath}verification.php' alt='' /></td><td valign='middle' style='text-align:left'><input type='text' size='5' maxlength='3' name='loadsecurity' value='' /></td></tr></table></td></tr>\n";
         }
 		$saveform .= "<tr><td align='right'></td><td></td></tr>\n"
-		. "<tr><td></td><td><input type='submit' name='savesubmit' value='".$clang->gT("Save Now")."'></td></tr>\n"
+		. "<tr><td></td><td><input type='submit'  id='savebutton' name='savesubmit' value='".$clang->gT("Save Now")."' /></td></tr>\n"
 		. "</table>";
 		$line=str_replace("{SAVEFORM}", $saveform, $line);
 	}
@@ -2386,7 +2936,7 @@ function templatereplace($line)
 
         
 		$loadform .="<tr><td align='right'></td><td></td></tr>\n"
-		. "<tr><td></td><td><input type='submit' value='".$clang->gT("Load Now")."' /></td></tr></table>\n";
+		. "<tr><td></td><td><input type='submit' id='loadbutton' value='".$clang->gT("Load Now")."' /></td></tr></table>\n";
 		$line=str_replace("{LOADFORM}", $loadform, $line);
 	}
 	//REGISTER SURVEY DETAILS
@@ -2437,7 +2987,7 @@ function templatereplace($line)
       
 
 		$registerform .= "<tr><td align='right'><input type='hidden' name='lang' value='".$reglang."' /></td><td></td></tr>\n";
-		if(isset($thissurvey['attribute1']) && $thissurvey['attribute1'])
+/*		if(isset($thissurvey['attribute1']) && $thissurvey['attribute1'])
 		{
 			$registerform .= "<tr><td align='right'>".$thissurvey['attribute1'].":</td>\n"
 			."<td align='left'><input class='text' type='text' name='register_attribute1'";
@@ -2456,8 +3006,8 @@ function templatereplace($line)
 				$registerform .= " value='".htmlentities(returnglobal('register_attribute2'),ENT_QUOTES,'UTF-8')."'";
 			}
 			$registerform .= " /></td></tr>\n";
-		}
-		$registerform .= "<tr><td></td><td><input class='submit' type='submit' value='".$clang->gT("Continue")."' />"
+		}        */
+		$registerform .= "<tr><td></td><td><input id='registercontinue' class='submit' type='submit' value='".$clang->gT("Continue")."' />"
 		."</td></tr>\n"
 		."</table>\n"
 		."</form>\n";
@@ -2469,6 +3019,50 @@ function templatereplace($line)
 	//queXS Addition
 	include_once("quexs.php");
 	$line = quexs_template_replace($line);
+
+	return $line;
+}
+
+/**
+* insertAnsReplace() takes a string and looks for any {INSERTANS:xxxx} variables
+*  which it then, one by one, substitutes the SGQA code with the relevant answer
+*  from the session array containing responses
+*
+*  The operations of this function were previously in the templatereplace function
+*  but have been moved to a function of their own to make it available
+*  to other areas of the script.
+* 
+* @param mixed $line   string - the string to iterate, and then return
+* 
+* @return string This string is returned containing the substituted responses
+*
+*/
+function insertansReplace($line)
+{
+	while (strpos($line, "{INSERTANS:") !== false)
+	{
+		$answreplace=substr($line, strpos($line, "{INSERTANS:"), strpos($line, "}", strpos($line, "{INSERTANS:"))-strpos($line, "{INSERTANS:")+1);
+		$answreplace2=substr($answreplace, 11, strpos($answreplace, "}", strpos($answreplace, "{INSERTANS:"))-11);
+		$answreplace3=strip_tags(retrieve_Answer($answreplace2));
+		$line=str_replace($answreplace, $answreplace3, $line);
+	}
+	return $line;
+}
+
+/**
+* passthruReplace() takes a string and looks for {PASSTHRULABEL} and {PASSTHRUVALUE} variables
+*  which it then substitutes for passthru data sent in the initial URL and stored
+*  in the session array containing responses
+*
+* @param mixed $line   string - the string to iterate, and then return
+* @param mixed $thissurvey     string - the string containing the surveyinformation
+* @return string This string is returned containing the substituted responses
+*
+*/
+function passthruReplace($line, $thissurvey)
+{
+	$line=str_replace("{PASSTHRULABEL}", $thissurvey['passthrulabel'], $line);
+	$line=str_replace("{PASSTHRUVALUE}", $thissurvey['passthruvalue'], $line);
 
 	return $line;
 }
@@ -2531,8 +3125,11 @@ function SetSurveyLanguage($surveyid, $language)// SetSurveyLanguage($surveyid)
 				$default_language = $row['language'];
 			}
 	
-			//echo "Language: ".$language."<br>Default language: ".$default_language."<br>Available languages: ".$additional_languages."<br />";
-			if ((isset($additional_languages) && strpos($additional_languages, $language) === false) or (isset($default_language) && $default_language == $language) or !isset($language)) {
+			if (!isset($language)
+                 or ($language=='') 
+                 or (isset($additional_languages) && strpos($additional_languages, $language) === false) 
+                 or (isset($default_language) && $default_language == $language) 
+             ) {
 				// Language not supported, or default language for survey, fall back to survey's default language
 				$_SESSION['s_lang'] = $default_language;
 				//echo "Language not supported, resorting to ".$_SESSION['s_lang']."<br />";
@@ -2561,7 +3158,7 @@ function buildLabelSetCheckSumArray()
 	while ($row=$result->FetchRow())
 	{
 		$thisset="";
-		$query2 = "SELECT code, title, sortorder, language
+		$query2 = "SELECT code, title, sortorder, language, assessment_value
                    FROM ".db_table_name('labels')."
                    WHERE lid={$row['lid']}
                    ORDER BY language, sortorder, code";
@@ -2575,6 +3172,12 @@ function buildLabelSetCheckSumArray()
 	return $csarray;
 }
 
+
+/**
+* Obsolete - please use getQAttributes instead
+* 
+* @param string $qid
+*/
 function getQuestionAttributes($qid)
 {
 	global $dbprefix, $connect;
@@ -2590,119 +3193,292 @@ function getQuestionAttributes($qid)
 	return $qid_attributes;
 }
 
-function questionAttributes()
+
+/**
+ * 
+ * returns a flat array with all question attributes for the question only (and the qid we gave it)!
+ * @author: wahrendorff
+ * @param $qid
+ * @return array{attribute=>value , attribute=>value}
+ */
+function getQAttributes($qid)
 {
-	//For each question attribute include a key:
-	// name - the display name
-	// types - a string with one character representing each question typ to which the attribute applies
-	// help - a short explanation
-    $qattributes[]=array("name"=>"answer_width",
-    "types"=>"ABCEF1",
-    "help"=>"The percentage width of the answer column");
-	$qattributes[]=array("name"=>"display_columns",
-	"types"=>"LMZG",
-	"help"=>"Number of columns to display");
-    $qattributes[]=array("name"=>"array_filter",
-    "types"=>"ABCEF",
-    "help"=>"Filter an Array's Answers from a Multiple Options Question");
-    $qattributes[]=array("name"=>"display_rows",
-    "types"=>"TU",
-    "help"=>"How many rows to display");
-	$qattributes[]=array("name"=>"hide_tip",
-	"types"=>"!LMOPWZK",
-	"help"=>"Hide the tip that is normally supplied with question");
-	$qattributes[]=array("name"=>"code_filter",
-	"types"=>"WZ",
-	"help"=>"Filter the available answers by this value");
-	$qattributes[]=array("name"=>"max_answers",
-	"types"=>"MP",
-	"help"=>"Limit the number of possible answers");
-    $qattributes[]=array("name"=>"maximum_chars",
-    "types"=>"STUNQK",
-    "help"=>"Maximum Characters Allowed");
-    $qattributes[]=array("name"=>"random_order",
-    "types"=>"!LMOPQKRWZFHABCE1",
-    "help"=>"Present Answers in random order");
-    $qattributes[]=array("name"=>"text_input_width",
-    "types"=>"NSTU",
-    "help"=>"Width of text input box");
-    $qattributes[]=array("name"=>"numbers_only",
-    "types"=>"Q",
-    "help"=>"Allow only numerical input");
-	$qattributes[]=array("name"=>"max_num_value",
-	"types"=>"K",
-	"help"=>"Maximum numeric value of multiple numeric input");
-	$qattributes[]=array("name"=>"equals_num_value",
-	"types"=>"K",
-	"help"=>"Multiple numeric inputs must equal this value");
-	$qattributes[]=array("name"=>"min_num_value",
-	"types"=>"K",
-	"help"=>"Multiple numeric inputs must be greater than this value");
-	$qattributes[]=array("name"=>"prefix",
-	"types"=>"KNSQ",
-	"help"=>"Add a prefix to the answer field");
-	$qattributes[]=array("name"=>"suffix",
-	"types"=>"KNSQ",
-	"help"=>"Add a suffix to the answer field");
-	$qattributes[]=array("name"=>"dropdown_dates",
-	"types"=>"D",
-	"help"=>"Use dropdown dates layout instead of calendar popup");
-	$qattributes[]=array("name"=>"exclude_all_others",
-	"types"=>"M",
-	"help"=>"Excludes all other options if this is selected");
-	$qattributes[]=array("name"=>"use_dropdown",
-	"types"=>"1",
-	"help"=>"Use Dual Dropdown instead of Dual Scale");
-	$qattributes[]=array("name"=>"dropdown_prepostfix",
-	"types"=>"1",
-	"help"=>"Prefix|Suffix for dropdown lists");
-	$qattributes[]=array("name"=>"dualscale_headerA",
-	"types"=>"1",
-	"help"=>"Header for Column A");
-	$qattributes[]=array("name"=>"dualscale_headerB",
-	"types"=>"1",
-	"help"=>"Header for Column B");
-	$qattributes[]=array("name"=>"dropdown_separators",
-	"types"=>"1",
-	"help"=>"Post-Answer-Separator|Inter-Dropdownlist-Separator for dropdown lists");
-	$qattributes[]=array("name"=>"other_replace_text",
-	"types"=>"LMPWZ!",
-	"help"=>"Replaces the 'other' label with text");
-	/* -- > Commented out since not yet used
-    $qattributes[]=array("name"=>"permission",
-    "types"=>"5DGL!OMPQNRSTUYABCEFHWZ",
-    "help"=>"Flexible attribute for permissions");
-	$qattributes[]=array("name"=>"default_value",
-	"types"=>"^",
-	"help"=>"What value to use as the default");
-	$qattributes[]=array("name"=>"minimum_value",
-	"types"=>"^",
-	"help"=>"The lowest value on the slider");
-	$qattributes[]=array("name"=>"maximum_value",
-	"types"=>"^",
-	"help"=>"The highest value on the slider");
-	//	$qattributes[]=array("name"=>"left_label",
-	//				"types"=>"^",
-	//				"help"=>"The label to the left of the slider");
-	//	$qattributes[]=array("name"=>"centre_label",
-	//				"types"=>"^"
-	//				"help"=>"The centre label on the slider");
-	//	$qattributes[]=array("name"=>"right_label",
-	//				"types"=>"^",
-	//				"help"=>"The ")
-
-	*/
-
-	//This builds a more useful array (don't modify)
-	foreach($qattributes as $qa)
+	$array = getQuestionAttributes($qid);
+	//$return = array();
+	$return["qid"]=$qid;
+	foreach($array as $key=>$value)
 	{
-		for ($i=0; $i<=strlen($qa['types'])-1; $i++)
+		foreach($value as $attribute=>$single)
 		{
-			$qat[substr($qa['types'], $i, 1)][]=array("name"=>$qa['name'],
-			"help"=>$qa['help']);
+			if($attribute == "attribute")
+			{
+				$return[$single] =  $value["value"] ;
+			}
 		}
 	}
-	return $qat;
+	return $return;
+}
+/**
+* Returns array of question type chars with attributes
+* 
+* @param mixed $returnByName If set to true the array will be by attribute name
+*/
+function questionAttributes($returnByName=false)
+{
+    global $clang;
+	//For each question attribute include a key:
+	// name - the display name
+	// types - a string with one character representing each question typy to which the attribute applies
+	// help - a short explanation
+
+    $qattributes["alphasort"]=array(
+    "types"=>"!LOWZ",
+    "help"=>$clang->gT("Sort answers alphabetically"),
+    "caption"=>$clang->gT('Sort answers alphabetically'));
+    
+    $qattributes["answer_width"]=array(
+    "types"=>"ABCEF1:;",
+    "help"=>$clang->gT('The percentage width of the answer column'),
+    "caption"=>$clang->gT('Answer width'));
+
+    $qattributes["array_filter"]=array(
+    "types"=>"ABCEF:;R",
+    "help"=>$clang->gT("Filter an array's answers from a Multiple Options Question"),
+    "caption"=>$clang->gT('Array filter'));
+    
+    $qattributes["category_separator"]=array(
+    "types"=>"!",
+    "help"=>$clang->gT('Category Separator'),
+    "caption"=>$clang->gT('Category Separator'));
+        
+    $qattributes["code_filter"]=array(
+    "types"=>"WZ",
+    "help"=>$clang->gT('Filter the available answers by this value'),
+    "caption"=>$clang->gT('Code filter'));
+
+	$qattributes["display_columns"]=array(
+	"types"=>"LMZG",
+	"help"=>$clang->gT('Number of columns to display'),
+    "caption"=>$clang->gT('Display columns'));
+    
+    $qattributes["display_rows"]=array(
+    "types"=>"TU",
+    "help"=>$clang->gT('How many rows to display'),
+    "caption"=>$clang->gT('Display rows'));
+    
+	$qattributes["hide_tip"]=array(
+	"types"=>"!LMOPRWZK",
+	"help"=>$clang->gT('Hide the tip that is normally shown with a question'),
+    "caption"=>$clang->gT('Hide tip'));
+  
+	$qattributes["max_answers"]=array(
+	"types"=>"MPR",
+	"help"=>$clang->gT('Limit the number of possible answers'),
+    "caption"=>$clang->gT('Maximum answers'));
+   
+    $qattributes["max_num_value"]=array(
+    "types"=>"K",
+    "help"=>$clang->gT('Maximum sum value of multiple numeric input'),
+    "caption"=>$clang->gT('Maximum sum value'));
+
+    $qattributes["maximum_chars"]=array(
+    "types"=>"STUNQK",
+    "help"=>$clang->gT('Maximum characters allowed'),
+    "caption"=>$clang->gT('Maximum characters'));
+
+	$qattributes["min_answers"]=array(
+	"types"=>"MPR",
+	"help"=>$clang->gT('Ensure a minimum number of possible answers'),
+    "caption"=>$clang->gT('Minimum answers'));
+
+	$qattributes["other_comment_mandatory"]=array(
+	"types"=>"PLW!Z",
+	"help"=>$clang->gT("Make the \"other comment\" field mandatory when the \"other\" field has been marked"),
+    "caption"=>$clang->gT('Other comment mandatory'));
+    
+    $qattributes["numbers_only"]=array(
+    "types"=>"Q;",
+    "help"=>$clang->gT('Allow only numerical input'),
+    "caption"=>$clang->gT('Numbers only'));
+
+
+    $qattributes["other_numbers_only"]=array(
+    "types"=>"LMP",
+    "help"=>$clang->gT('Allow only numerical input for `Other` text'),
+    "caption"=>$clang->gT('Numbers only for `Other`'));
+
+
+    $qattributes["random_order"]=array(
+    "types"=>"!LMOPQKRWZFHABCE1:;",
+    "help"=>$clang->gT('Present answers in random order'),
+    "caption"=>$clang->gT('Random answer order'));
+    
+    $qattributes["text_input_width"]=array(
+    "types"=>"NSTUK;Q",
+    "help"=>$clang->gT('Width of text input box'),
+    "caption"=>$clang->gT('Input box width'));
+    
+	$qattributes["equals_num_value"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('Multiple numeric inputs sum must equal this value'),
+    "caption"=>$clang->gT('Equals sum value'));
+    
+	$qattributes["min_num_value"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('Multiple numeric inputs must be greater than this value'),
+    "caption"=>$clang->gT('Minimum sum value'));
+
+	$qattributes["slider_layout"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('Use slider layout'),
+    "caption"=>$clang->gT('Use slider layout'));
+    
+	$qattributes["slider_min"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('Slider minimum value'),
+    "caption"=>$clang->gT('Slider minimum value'));
+    
+	$qattributes["slider_max"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('Slider maximum value'),
+    "caption"=>$clang->gT('Slider maximum value'));
+    
+	$qattributes["slider_accuracy"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('Slider accuracy'),
+    "caption"=>$clang->gT('Slider accuracy'));
+    
+	$qattributes["slider_default"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('Slider initial value'),
+    "caption"=>$clang->gT('Slider initial value'));
+
+	$qattributes["prefix"]=array(
+	"types"=>"KNSQ",
+	"help"=>$clang->gT('Add a prefix to the answer field'),
+    "caption"=>$clang->gT('Answer prefix'));
+    
+	$qattributes["suffix"]=array(
+	"types"=>"KNSQ",
+	"help"=>$clang->gT('Add a suffix to the answer field'),
+    "caption"=>$clang->gT('Answer suffix'));
+	
+	$qattributes["dropdown_dates"]=array(
+	"types"=>"D",
+	"help"=>$clang->gT('Use accessible select boxes instead of calendar popup'),
+    "caption"=>$clang->gT('Display select boxes'));
+    
+	$qattributes["dropdown_dates_year_min"]=array(
+	"types"=>"D",
+	"help"=>$clang->gT('Minimum year value in calendar'),
+    "caption"=>$clang->gT('Minimum dropdown year'));
+    
+	$qattributes["dropdown_dates_year_max"]=array(
+	"types"=>"D",
+	"help"=>$clang->gT('Maximum year value for calendar'),
+    "caption"=>$clang->gT('Maximum dropdown year'));
+	
+	$qattributes["exclude_all_others"]=array(
+	"types"=>"M",
+	"help"=>$clang->gT('Excludes all other options if this is selected'),
+    "caption"=>$clang->gT('Exclusive option'));
+    
+	$qattributes["multiflexible_max"]=array(
+	"types"=>":",
+	"help"=>$clang->gT('Maximum value for array(mult-flexible) question type'),
+    "caption"=>$clang->gT('Maximum value'));
+    
+	$qattributes["multiflexible_min"]=array(
+	"types"=>":",
+	"help"=>$clang->gT('Minimum value for array(multi-flexible) question type'),
+    "caption"=>$clang->gT('Minimum value'));
+    
+	$qattributes["multiflexible_step"]=array(
+	"types"=>":",
+	"help"=>$clang->gT('Step value for array (multi-flexible) question type'),
+    "caption"=>$clang->gT('Step value'));
+    
+	$qattributes["multiflexible_checkbox"]=array(
+	"types"=>":",
+	"help"=>$clang->gT('Use Checkbox layout for array (multi-flexible) question type'),
+    "caption"=>$clang->gT('Checkbox layout'));
+    
+	$qattributes["use_dropdown"]=array(
+	"types"=>"1",
+	"help"=>$clang->gT('Use Dual Dropdown instead of Dual Scale'),
+    "caption"=>$clang->gT('Dual dropdown'));
+    
+	$qattributes["dropdown_prepostfix"]=array(
+	"types"=>"1",
+	"help"=>$clang->gT('Prefix|Suffix for dropdown lists'),
+    "caption"=>$clang->gT('Prefix|Suffix'));
+    
+	$qattributes["dualscale_headerA"]=array(
+	"types"=>"1",
+	"help"=>$clang->gT('Header for scale A'),
+    "caption"=>$clang->gT('Header scale A'));
+    
+	$qattributes["dualscale_headerB"]=array(
+	"types"=>"1",
+	"help"=>$clang->gT('Header for scale B'),
+    "caption"=>$clang->gT('Header scale B'));
+    
+	$qattributes["dropdown_separators"]=array(
+	"types"=>"1",
+	"help"=>$clang->gT('Post-Answer-Separator|Inter-Dropdownlist-Separator for dropdown lists'),
+    "caption"=>$clang->gT('Dropdown separators'));
+    
+	$qattributes["other_replace_text"]=array(
+	"types"=>"LMPWZ!",
+	"help"=>$clang->gT("Replaces the 'other' label with text"),
+    "caption"=>$clang->gT('"Other" caption'));
+	
+	$qattributes["public_statistics"]=array(
+	"types"=>"15ABCEFGHKLMNOPRWYZ!:",
+	"help"=>$clang->gT('Show statistics of a certain question to the user'),
+    "caption"=>$clang->gT('Show in public statistics'));
+	
+	$qattributes["max_num_value_sgqa"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('SGQA identifier to use total of previous question as maximum for this question'),
+	"caption"=>$clang->gT('Max value from SGQA'));
+	
+	$qattributes["min_num_value_sgqa"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('SGQA identifier to use total of previous question as minimum for this question'),
+	"caption"=>$clang->gT('Min value from SGQA'));
+
+	$qattributes["num_value_equals_sgqa"]=array(
+	"types"=>"K",
+	"help"=>$clang->gT('SGQA identifier to use total of previous question as total for this question'),
+	"caption"=>$clang->gT('Value equals SGQA'));
+
+    $qattributes["page_break"]=array(
+    "types"=>"15ABCDEFGHKLMNOPQRSTUWXYZ!:;",
+    "help"=>$clang->gT('Insert a page break before this question in printable view by setting this to 1.'),
+    "caption"=>$clang->gT('Insert page break in printable view'));
+    
+    $qattributes["scale_export"]=array(
+    "types"=>"!LOFWZWH1:MPOGYCE",
+    "help"=>$clang->gT("1=nominal 2=ordinal 3=scale."),
+    "caption"=>$clang->gT('Export scale type 1=nominal 2=ordinal 3=scale.'));
+	//This builds a more useful array (don't modify)
+    if ($returnByName!=true)
+    {
+	    foreach($qattributes as $qname=>$qvalue)
+	    {
+		    for ($i=0; $i<=strlen($qvalue['types'])-1; $i++)
+		    {
+			    $qat[substr($qvalue['types'], $i, 1)][]=array("name"=>$qname,
+			                                                "help"=>$qvalue['help'],
+                                                            "caption"=>$qvalue['caption']);
+		    }
+	    }
+        return $qat;
+    }
+    else {
+        return $qattributes;
+    }
 }
 
 // make sure the given string (which comes from a POST or GET variable)
@@ -2737,22 +3513,26 @@ function javascript_escape($str, $strip_tags=false, $htmldecode=false) {
     $new_str ='';
 
     if ($htmldecode==true) {
-        $str=html_entity_decode_php4($str);
+        $str=html_entity_decode($str,ENT_QUOTES,'UTF-8');
     }
     if ($strip_tags==true)
     {
         $str=strip_tags($str);
     }
-    
-    return str_replace('\'',"\\'",$str);
-} 
+    return str_replace(array('\'','"', "\n"),
+	                   array("\\'",'\u0022', "\\n"),
+					   $str);
+}
 
 // This function returns the header as result string
 // If you want to echo the header use doHeader() !
 function getHeader()
 {
-	global $embedded, $surveyid, $rooturl,$defaultlang;
+	global $embedded, $surveyid, $rooturl,$defaultlang, $js_header_includes, $css_header_includes;
 
+    $js_header_includes = array_unique($js_header_includes);
+    $css_header_includes = array_unique($css_header_includes);
+    
     if (isset($_SESSION['s_lang']) && $_SESSION['s_lang'])
     {
         $surveylanguage= $_SESSION['s_lang'];
@@ -2765,23 +3545,32 @@ function getHeader()
     {
         $surveylanguage=$defaultlang;
     }
+
+	$js_header = ''; $css_header='';
+	foreach ($js_header_includes as $jsinclude)
+	{
+		$js_header .= "<script type=\"text/javascript\" src=\"".$rooturl."$jsinclude\"></script>\n";
+	}
+
+    foreach ($css_header_includes as $cssinclude)
+    {
+        $css_header .= "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"".$rooturl.$cssinclude."\" />\n";
+    }
+    
+    
 	if ( !$embedded )
 	{
-		$header=  "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
-        		. "<html ";
+		$header=  "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+        		. "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".$surveylanguage."\" lang=\"".$surveylanguage."\"";
         if (getLanguageRTL($surveylanguage))
         {
             $header.=" dir=\"rtl\" ";
         }
-        $header.= "><head>\n"
-//        		. "<link type=\"text/css\" rel=\"StyleSheet\" href=\"".$rooturl."/scripts/slider/swing.css\" />\n"
-        		. "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"".$rooturl."/scripts/calendar/calendar-blue.css\" title=\"win2k-cold-1\" />"
-//        		. "<script type=\"text/javascript\" src=\"".$rooturl."/scripts/slider/range.js\"></script>\n"
-//        		. "<script type=\"text/javascript\" src=\"".$rooturl."/scripts/slider/timer.js\"></script>\n"
-//        		. "<script type=\"text/javascript\" src=\"".$rooturl."/scripts/slider/slider.js\"></script>\n"
-        		. "<script type=\"text/javascript\" src=\"".$rooturl."/scripts/calendar/calendar.js\"></script>\n"
-        		. "<script type=\"text/javascript\" src=\"".$rooturl."/scripts/calendar/lang/calendar-".$surveylanguage.".js\"></script>\n"
-        		. "<script type=\"text/javascript\" src=\"".$rooturl."/scripts/calendar/calendar-setup.js\"></script>\n";
+        $header.= ">\n\t<head>\n"
+                . $css_header
+                . "\t\t<script type=\"text/javascript\" src=\"".$rooturl."/scripts/jquery/jquery.js\"></script>\n"
+			    . $js_header;
+			
         return $header;        
     }
 
@@ -2813,16 +3602,24 @@ function getAdminFooter($url, $explanation)
 	{
 		$buildtext="";
 	}
-
+   
+   //If user is not logged in, don't print the version number information in the footer.
+   $versiontitle=$clang->gT('Version');
+   if(!isset($_SESSION['loginID'])) 
+   {
+     $versionnumber="";
+     $buildtext="";
+     $versiontitle="";
+   }
 
 	$strHTMLFooter = "<div class='footer'>\n"
-	. "\t\t\t<div style='float:left;'><img alt='LimeSurvey - ".$clang->gT("Online Manual")."' title='LimeSurvey - ".$clang->gT("Online Manual")."' src='$imagefiles/help.gif' "
+	. "\t\t\t<div style='float:left;width:110px;text-align:left;'><img alt='LimeSurvey - ".$clang->gT("Online Manual")."' title='LimeSurvey - ".$clang->gT("Online Manual")."' src='$imagefiles/docs.png' "
 	. "onclick=\"window.open('$url')\" onmouseover=\"document.body.style.cursor='pointer'\" "
 	. "onmouseout=\"document.body.style.cursor='auto'\" /></div>\n"
 	. "\t\t\t<div style='float:right;'><img alt='".$clang->gT("Support this project - Donate to ")."LimeSurvey' title='".$clang->gT("Support this project - Donate to ")."LimeSurvey!' src='$imagefiles/donate.png' "
-	. "onclick=\"window.open('http://www.limesurvey.org/component/option,com_dtdonate/lang,en/index.php?option=com_dtdonate')\" "
+	. "onclick=\"window.open('http://www.donate.limesurvey.org')\" "
 	. "onmouseover=\"document.body.style.cursor='pointer'\" onmouseout=\"document.body.style.cursor='auto'\" /></div>\n"
-	. "\t\t\t<div class='subtitle'><a class='subtitle' title='".$clang->gT("Visit our website!")."' href='http://www.limesurvey.org' target='_blank'>LimeSurvey</a><br />".$clang->gT('Version')." $versionnumber $buildtext</div>"
+	. "\t\t\t<div class='subtitle'><a class='subtitle' title='".$clang->gT("Visit our website!")."' href='http://www.limesurvey.org' target='_blank'>LimeSurvey</a><br />".$versiontitle." $versionnumber $buildtext</div>"
 	. "</div></body>\n</html>";
 	return $strHTMLFooter;
 }
@@ -2835,8 +3632,8 @@ function doAdminHeader()
 
 function getAdminHeader($meta=false)
 {
-	global $sitename, $admintheme, $rooturl;
-	if (!isset($_SESSION['adminlang']) || $_SESSION['adminlang']=='') {$_SESSION['adminlang']='en';}
+	global $sitename, $admintheme, $rooturl, $defaultlang, $js_adminheader_includes, $css_adminheader_includes, $homeurl;
+	if (!isset($_SESSION['adminlang']) || $_SESSION['adminlang']=='') {$_SESSION['adminlang']=$defaultlang;}
 	$strAdminHeader="<?xml version=\"1.0\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
 	."<html ";
     
@@ -2854,22 +3651,74 @@ function getAdminHeader($meta=false)
         {
         $strAdminHeader.=$meta;
         }
-	$strAdminHeader.="<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n"
+	$strAdminHeader.="\t\t<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n"
 	. "<script type=\"text/javascript\" src=\"scripts/tabpane/js/tabpane.js\"></script>\n"
-	. "<script type=\"text/javascript\" src=\"scripts/tooltips.js\"></script>\n"
-    . "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"../scripts/calendar/calendar-blue.css\" title=\"win2k-cold-1\" />\n"
-    . "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"scripts/tabpane/css/tab.webfx.css \" />\n"
+	. "<script type=\"text/javascript\" src=\"scripts/tooltips.js\"></script>\n"                    
+    . "<script type=\"text/javascript\" src=\"../scripts/jquery/jquery.js\"></script>\n"
+    . "<script type=\"text/javascript\" src=\"../scripts/jquery/jquery-ui.js\"></script>\n";
+    if ($_SESSION['adminlang']!='en')
+    {
+        $strAdminHeader.= "<script type=\"text/javascript\" src=\"../scripts/jquery/locale/ui.datepicker-{$_SESSION['adminlang']}.js\"></script>\n";
+    }
+    $strAdminHeader.= "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"styles/$admintheme/tab.webfx.css \" />\n"
+    . "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"../scripts/jquery/css/start/jquery-ui-1.7.1.custom.css\" />\n"
+    . "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/$admintheme/printablestyle.css\" media=\"print\" />\n"    
     . "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/$admintheme/adminstyle.css\" />\n"
-	. "<script type=\"text/javascript\" src=\"../scripts/calendar/calendar.js\"></script>\n"
-	. "<script type=\"text/javascript\" src=\"../scripts/calendar/lang/calendar-".$_SESSION['adminlang'].".js\"></script>\n"
-	. "<script type=\"text/javascript\" src=\"../scripts/calendar/calendar-setup.js\"></script>\n"
-	. "<script type=\"text/javascript\" src=\"scripts/validation.js\"></script>"
-	. "</head>\n<body>\n"
-	. "<div class=\"maintitle\">\n"
-	. "\t\t$sitename\n"
-	. "</div>\n";
+    . '<link rel="shortcut icon" href="'.$homeurl.'/favicon.ico" type="image/x-icon" />'
+    . '<link rel="icon" href="'.$homeurl.'/favicon.ico" type="image/x-icon" />';
+    
+    if (getLanguageRTL($_SESSION['adminlang']))
+    {
+        $strAdminHeader.="\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/$admintheme/adminstyle-rtl.css\" />\n";
+    }
+
+    $js_adminheader_includes = array_unique($js_adminheader_includes);
+    $css_adminheader_includes = array_unique($css_adminheader_includes);
+    
+    foreach ($js_adminheader_includes as $jsinclude)
+    {
+        $strAdminHeader .= "<script type=\"text/javascript\" src=\"".$jsinclude."\"></script>\n";
+    }    
+    foreach ($css_adminheader_includes as $cssinclude)
+    {
+        $strAdminHeader .= "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"$cssinclude\" />\n";
+    }    
+	$strAdminHeader.= "\t\t<script type=\"text/javascript\" src=\"scripts/admin_core.js\"></script>"
+	. use_firebug()
+	. "\t</head>\n\t<body>\n";
+    if (isset($_SESSION['dateformat']))
+    {
+        $formatdata=getDateFormatData($_SESSION['dateformat']);
+        $strAdminHeader .= "<script type='text/javascript'>
+                               var userdateformat='".$formatdata['jsdate']."';
+                               var userlanguage='".$_SESSION['adminlang']."';
+                           </script>";
+    }
+    
+    $strAdminHeader .="\t\t<div class=\"maintitle\">\n"
+	. "\t\t\t$sitename\n"
+	. "\t\t</div>\n";
 	return $strAdminHeader;
 }
+
+
+function getPrintableHeader()
+{
+    global $rooturl;
+    $headelements = '
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <!--[if lt IE 7]>
+            <script defer type="text/javascript" src="'.$rooturl.'/scripts/pngfix.js"></script>
+    <![endif]-->
+
+            <script type="text/javascript" src="'.$rooturl.'/admin/scripts/tabpane/js/tabpane.js"></script>
+            <script type="text/javascript" src="'.$rooturl.'/admin/scripts/tooltips.js"></script>
+
+    '; 
+    return $headelements;   
+}
+
 
 
 
@@ -2881,7 +3730,7 @@ function getFooter()
 
 	if ( !$embedded )
 	{
-		return "</html>\n";
+		return "\n\n\t</body>\n</html>\n";
 	}
 
 	global $embedded_footerfunc;
@@ -2915,10 +3764,18 @@ function MailTextMessage($body, $subject, $to, $from, $sitename, $ishtml=false, 
 // This function mails a text $body to the recipient $to. YOu can use more than one 
 // recipient when using a comma separated string with recipients.
 
-	global $emailmethod, $emailsmtphost, $emailsmtpuser, $emailsmtppassword, $defaultlang, $rootdir, $maildebug, $maildebugbody;
+	global $emailmethod, $emailsmtphost, $emailsmtpuser, $emailsmtppassword, $defaultlang;
+    global $rootdir, $maildebug, $maildebugbody, $emailsmtpssl, $clang, $demoModeOnly, $emailcharset;
 
     //if ($ishtml) {$body=htmlwrap($body,110);}
 
+     if ($demoModeOnly==true)
+     {
+         $maildebug=$clang->gT('Email was not sent because demo-mode is activated.');
+         $maildebugbody='';
+         return false;
+     }    
+    
 	if (is_null($bouncemail) )
 	{
 		$sender=$from;
@@ -2933,8 +3790,11 @@ function MailTextMessage($body, $subject, $to, $from, $sitename, $ishtml=false, 
     {
         $mail->SetLanguage('en',$rootdir.'/classes/phpmailer/language/');
     }
-	$mail->CharSet = "UTF-8";
-	if (isset($emailsmtpssl) && $emailsmtpssl==1) {$mail->Protocol = "ssl";}
+	$mail->CharSet = $emailcharset;
+	if (isset($emailsmtpssl) && trim($emailsmtpssl)!=='' && $emailsmtpssl!==0) {
+        if ($emailsmtpssl===1) {$mail->SMTPSecure = "ssl";}
+    	 else {$mail->SMTPSecure = $emailsmtpssl;}
+	 }
 
 	$fromname='';
 	$fromemail=$from;
@@ -2952,13 +3812,28 @@ function MailTextMessage($body, $subject, $to, $from, $sitename, $ishtml=false, 
 		$sendername=trim(substr($sender,0, strpos($sender,'<')-1));
 	}
 
-	$mail->Mailer = $emailmethod;
+    if ($emailmethod=="qmail")
+    {
+        $mail->IsQmail();
+    }
+    else
+    {
+        $mail->Mailer = $emailmethod;
+    }
 	if ($emailmethod=="smtp")
-	{ $mail->Host = $emailsmtphost;
-	$mail->Username =$emailsmtpuser;
-	$mail->Password =$emailsmtppassword;
-	if ($emailsmtpuser!="")
-	{$mail->SMTPAuth = true;}
+	{ 
+        if (strpos($emailsmtphost,':')>0)
+        {
+            $mail->Host = substr($emailsmtphost,0,strpos($emailsmtphost,':'));
+            $mail->Port = substr($emailsmtphost,strpos($emailsmtphost,':')+1);
+        }
+        else {
+            $mail->Host = $emailsmtphost;
+        }
+	    $mail->Username =$emailsmtpuser;
+	    $mail->Password =$emailsmtppassword;
+	    if ($emailsmtpuser!="")
+	    {$mail->SMTPAuth = true;}
 	}
 	$mail->From = $fromemail;
 	$mail->Sender = $senderemail; // Sets Return-Path for error notifications
@@ -2984,14 +3859,14 @@ function MailTextMessage($body, $subject, $to, $from, $sitename, $ishtml=false, 
     if ($ishtml) { 
         $mail->IsHTML(true);
     	$mail->Body = $body;
-    	$mail->AltBody = strip_tags(br2nl(html_entity_decode_php4($textbody)));
+    	$mail->AltBody = strip_tags(br2nl(html_entity_decode($textbody,ENT_QUOTES,'UTF-8')));
     } else
         {
         $mail->IsHTML(false);
     	$mail->Body = $textbody;
         }
 
-	if (trim($subject)!='') {$mail->Subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";}
+	if (trim($subject)!='') {$mail->Subject = "=?$emailcharset?B?" . base64_encode($subject) . "?=";}
     $sent=$mail->Send();
     $maildebug=$mail->ErrorInfo;
     $maildebugbody=$mail->Body;
@@ -3001,9 +3876,8 @@ function MailTextMessage($body, $subject, $to, $from, $sitename, $ishtml=false, 
 // This functions removes all tags, CRs, linefeeds and other strange chars from a given text
 function FlattenText($texttoflatten)
 {
-	$nicetext = strip_tags($texttoflatten);
-	$nicetext = str_replace("\"", "`", $nicetext);
-	$nicetext = str_replace("'", "`", $nicetext);
+    $nicetext = strip_javascript($texttoflatten);
+	$nicetext = strip_tags($nicetext);
 	$nicetext = str_replace("\r", "", $nicetext);
 	$nicetext = trim(str_replace("\n", "", $nicetext));
 	return  $nicetext;
@@ -3022,7 +3896,7 @@ function getreferringurl()
   // refurl is not set in session, read it from server variable
   if(isset($_SERVER["HTTP_REFERER"]))
   {
-    if(!ereg($_SERVER["SERVER_NAME"], $_SERVER["HTTP_REFERER"]))
+    if(!preg_match('/'.$_SERVER["SERVER_NAME"].'/', $_SERVER["HTTP_REFERER"]))
     {
       if (!isset($stripQueryFromRefurl) || !$stripQueryFromRefurl)
       {
@@ -3036,7 +3910,7 @@ function getreferringurl()
     }
     else
     {
-       $_SESSION['refurl'] = $clang->gT("Local Submission");
+       $_SESSION['refurl'] = '-';
     }
   }
   else
@@ -3070,13 +3944,15 @@ function getArrayFiltersForGroup($surveyid,$gid)
 	global $dbprefix;
     $surveyid=sanitize_int($surveyid);
     $gid=sanitize_int($gid);
-	// Get All Questions in Current Group
-	$qquery = "SELECT * FROM ".db_table_name('questions')." WHERE sid='$surveyid' AND gid='$gid' AND language='".$_SESSION['s_lang']."' ORDER BY qid";
+    // Get All Questions in Current Group
+	$qquery = "SELECT * FROM ".db_table_name('questions')." WHERE sid='$surveyid'";
+	if($gid != "") {$qquery .= " AND gid='$gid'";}
+	$qquery .= " AND language='".$_SESSION['s_lang']."' ORDER BY qid";
 	$qresult = db_execute_assoc($qquery);  //Checked
 	$grows = array(); //Create an empty array in case query not return any rows
 	// Store each result as an array with in the $grows array
 	while ($qrow = $qresult->FetchRow()) {
-		$grows[$qrow['qid']] = array('qid' => $qrow['qid'],'type' => $qrow['type'], 'mandatory' => $qrow['mandatory'], 'title' => $qrow['title']);
+		$grows[$qrow['qid']] = array('qid' => $qrow['qid'],'type' => $qrow['type'], 'mandatory' => $qrow['mandatory'], 'title' => $qrow['title'], 'gid' => $qrow['gid']);
 	}
 	$attrmach = array(); // Stores Matches of filters that have their values as questions with in current group
 	$grows2 = $grows;
@@ -3091,7 +3967,7 @@ function getArrayFiltersForGroup($surveyid,$gid)
 			{
 				if ($avalue['title'] == $val[0])
 				{
-					$filter = array('qid' => $qrow['qid'], 'mandatory' => $qrow['mandatory'], 'type' => $avalue['type'], 'fid' => $avalue['qid']);
+					$filter = array('qid' => $qrow['qid'], 'mandatory' => $qrow['mandatory'], 'type' => $avalue['type'], 'fid' => $avalue['qid'], 'gid' => $qrow['gid'], 'gid2'=>$avalue['gid']);
 					array_push($attrmach,$filter);
 				}
 			}
@@ -3187,8 +4063,8 @@ function getArrayFiltersOutGroup($qid)
  * commands can be supplied in this argument.
  * @return bool Returns true if database was modified successfully.
  */
-function modify_database($sqlfile='', $sqlstring='') {
-
+function modify_database($sqlfile='', $sqlstring='') 
+{
 	global $dbprefix;
 	global $defaultuser;
 	global $defaultpass;
@@ -3196,13 +4072,13 @@ function modify_database($sqlfile='', $sqlstring='') {
 	global $siteadminname;
 	global $defaultlang;
 	global $codeString;
-	global $rootdir;
+	global $rootdir, $homedir;
     global $connect;
     global $clang;
     global $modifyoutput;
     global $databasetabletype;
 
-	require_once($rootdir."/admin/classes/core/sha256.php");
+	require_once($homedir."/classes/core/sha256.php");
 
 	$success = true;  // Let's be optimistic
     $modifyoutput='';
@@ -3235,7 +4111,7 @@ function modify_database($sqlfile='', $sqlstring='') {
 				$command .= $line;
 				$command = str_replace('prefix_', $dbprefix, $command); // Table prefixes
 				$command = str_replace('$defaultuser', $defaultuser, $command); // variables By Moses
-				$command = str_replace('$defaultpass', SHA256::hash($defaultpass), $command); // variables By Moses
+				$command = str_replace('$defaultpass', SHA256::hashing($defaultpass), $command); // variables By Moses
 				$command = str_replace('$siteadminname', $siteadminname, $command);
 				$command = str_replace('$siteadminemail', $siteadminemail, $command); // variables By Moses
 				$command = str_replace('$defaultlang', $defaultlang, $command); // variables By Moses
@@ -3243,11 +4119,13 @@ function modify_database($sqlfile='', $sqlstring='') {
 				$command = str_replace('$databasetabletype', $databasetabletype, $command);
 
 				if (! db_execute_num($command)) {  //Checked
+                  $command=htmlspecialchars($command);
                   $modifyoutput .="<br />".$clang->gT("Executing").".....".$command."<font color='#FF0000'>...".$clang->gT("Failed! Reason: ").$connect->ErrorMsg()."</font>";
 				  $success = false;
 				}
                  else
                  {
+                    $command=htmlspecialchars($command);
                     $modifyoutput .="<br />".$clang->gT("Executing").".....".$command."<font color='#00FF00'>...".$clang->gT("Success!")."</font>";
                  }
 
@@ -3266,7 +4144,7 @@ function modify_database($sqlfile='', $sqlstring='') {
 
 // unsets all Session variables to kill session
 function killSession()	//added by Dennis
-	{
+{
 		// Delete the Session Cookie
 		$CookieInfo = session_get_cookie_params();
 		if ( (empty($CookieInfo['domain'])) && (empty($CookieInfo['secure'])) ) {
@@ -3285,7 +4163,7 @@ function killSession()	//added by Dennis
 		$_SESSION = array(); // redundant with previous lines
 		session_unset();
 		session_destroy();
-  	}
+}
 
 
 
@@ -3295,7 +4173,7 @@ function killSession()	//added by Dennis
 
 // set the rights of a user and his children
 function setuserrights($uid, $rights)
-	{
+{
 	global $connect;
     $uid=sanitize_int($uid);
 	$updates = "create_survey=".$rights['create_survey']
@@ -3307,11 +4185,11 @@ function setuserrights($uid, $rights)
 	. ", manage_label=".$rights['manage_label'];
 	$uquery = "UPDATE ".db_table_name('users')." SET ".$updates." WHERE uid = ".$uid;
  	return $connect->Execute($uquery);     //Checked
-	}
+}
 
 // set the rights for a survey
 function setsurveyrights($uids, $rights)
-	{
+{
 	global $connect, $surveyid;
     $uids=array_map('sanitize_int',$uids);  
 	$uids_implode = implode(" OR uid = ", $uids);
@@ -3325,10 +4203,10 @@ function setsurveyrights($uids, $rights)
 	$uquery = "UPDATE ".db_table_name('surveys_rights')." SET ".$updates." WHERE sid = {$surveyid} AND uid = ".$uids_implode;
 	// TODO
 	return $connect->Execute($uquery);   //Checked 
-	}
+}
 
 function createPassword()
-	{
+{
 	$pwchars = "abcdefhjmnpqrstuvwxyz23456789";
 	$password_length = 8;
 	$passwd = '';
@@ -3338,10 +4216,10 @@ function createPassword()
 		$passwd .= $pwchars[floor(rand(0,strlen($pwchars)-1))];
 		}
 	return $passwd;
-	}
+}
 
 function getgroupuserlist()
-    {
+{
     global $ugid, $dbprefix, $scriptname, $connect, $clang;
 
     $ugid=sanitize_int($ugid);
@@ -3361,10 +4239,10 @@ function getgroupuserlist()
         }
     $surveyselecter = "\t\t\t<option value='-1' selected='selected'>".$clang->gT("Please Choose...")."</option>\n".$surveyselecter;
     return $surveyselecter;
-    }
+}
 
 function getsurveyuserlist()
-    {
+{
     global $surveyid, $dbprefix, $scriptname, $connect, $clang, $usercontrolSameGroupPolicy;
     $surveyid=sanitize_int($surveyid);
 	$surveyidquery = "SELECT a.uid, a.users_name FROM ".db_table_name('users')." AS a LEFT OUTER JOIN (SELECT uid AS id FROM ".db_table_name('surveys_rights')." WHERE sid = {$surveyid}) AS b ON a.uid = b.id WHERE id IS NULL ORDER BY a.users_name";
@@ -3375,7 +4253,7 @@ function getsurveyuserlist()
     $surveynames = $surveyidresult->GetRows();
 
     if (isset($usercontrolSameGroupPolicy) &&
-		$usercontrolSameGroupPolicy === true)
+		$usercontrolSameGroupPolicy == true)
     {
 	$authorizedUsersList = getuserlist('onlyuidarray');
     }
@@ -3385,7 +4263,7 @@ function getsurveyuserlist()
         foreach($surveynames as $sv)
             {
 		if (!isset($usercontrolSameGroupPolicy) ||
-			$usercontrolSameGroupPolicy === false ||
+			$usercontrolSameGroupPolicy == false ||
 			in_array($sv['uid'],$authorizedUsersList))
 		{
 			$surveyselecter .= "\t\t\t<option";
@@ -3396,10 +4274,10 @@ function getsurveyuserlist()
     if (!isset($svexist)) {$surveyselecter = "\t\t\t<option value='-1' selected='selected'>".$clang->gT("Please Choose...")."</option>\n".$surveyselecter;}
     else {$surveyselecter = "\t\t\t<option value='-1'>".$clang->gT("None")."</option>\n".$surveyselecter;}
     return $surveyselecter;
-    }
+}
 
 function getsurveyusergrouplist($outputformat='htmloptions')
-    {
+{
     global $surveyid, $dbprefix, $scriptname, $connect, $clang, $usercontrolSameGroupPolicy;
     $surveyid=sanitize_int($surveyid);
 
@@ -3413,7 +4291,7 @@ function getsurveyusergrouplist($outputformat='htmloptions')
     $surveynames = $surveyidresult->GetRows();
 
     if (isset($usercontrolSameGroupPolicy) &&
-		$usercontrolSameGroupPolicy === true)
+		$usercontrolSameGroupPolicy == true)
     {
 	 $authorizedGroupsList=getusergrouplist('simplegidarray');
     }
@@ -3423,7 +4301,7 @@ function getsurveyusergrouplist($outputformat='htmloptions')
         foreach($surveynames as $sv)
             {
 		if (!isset($usercontrolSameGroupPolicy) ||
-			$usercontrolSameGroupPolicy === false ||
+			$usercontrolSameGroupPolicy == false ||
 			in_array($sv['ugid'],$authorizedGroupsList))
 		{
 			$surveyselecter .= "\t\t\t<option";
@@ -3446,7 +4324,7 @@ function getsurveyusergrouplist($outputformat='htmloptions')
 }
 
 function getusergrouplist($outputformat='optionlist')
-    {
+{
     global $dbprefix, $scriptname, $connect, $clang;
 
 	//$squery = "SELECT ugid, name FROM ".db_table_name('user_groups') ." WHERE owner_id = {$_SESSION['loginID']} ORDER BY name";
@@ -3479,7 +4357,7 @@ function getusergrouplist($outputformat='optionlist')
     {
     	return $selecter;
     }
-    }
+}
 
 
 function languageDropdown($surveyid,$selected)
@@ -3511,17 +4389,6 @@ function languageDropdownClean($surveyid,$selected)
 	$html .= "</select>";
 	return $html;
 }
-
-function include2var($file)
-//This function includes a file but doesn't output it - instead it writes it into the return variable
-// by Carsten Schmitz
-{
-   ob_start();
-   include $file;
-   $output = ob_get_contents();
-   @ob_end_clean();
-   return $output;
-} 
 
 function BuildCSVFromQuery($Query)
 {
@@ -3563,7 +4430,8 @@ function BuildCSVFromQuery($Query)
 
 function CSVEscape($str) 
 {
-   return '"' . str_replace('"','""', $str) . '"';
+    $str= str_replace('\n','\%n',$str);
+    return '"' . str_replace('"','""', $str) . '"';
 }
 
 function convertCSVRowToArray($string, $seperator, $quotechar) 
@@ -3573,14 +4441,19 @@ function convertCSVRowToArray($string, $seperator, $quotechar)
 	return $fields;
 }
 
+
+/**
+* This function removes surrounding and masking quotes from the CSV field        
+* 
+* @param mixed $field
+* @return mixed
+*/
 function CSVUnquote($field)
-// This function removes surrounding and masking quotes from the CSV field
-// c_schmitz
 {
 	//print $field.":";
 	$field = preg_replace ("/^\040*\"/", "", $field);
 	$field = preg_replace ("/\"\040*$/", "", $field);
-    $field=str_replace('""','"',$field);
+    $field= str_replace('""','"',$field);
     //print $field."\n";
     return $field;
 }
@@ -3619,7 +4492,7 @@ function CleanLanguagesFromSurvey($sid, $availlangs)
 	$qidresult = db_execute_assoc($query) or safe_die($connect->ErrorMsg());    //Checked
 	while ($qrow =  $qidresult->FetchRow())
 	{
-		$myqid = $qrow[0];
+		$myqid = $qrow['qid'];
 		$query = "DELETE FROM ".db_table_name('answers')." WHERE qid='$myqid' and ($sqllang)";
 		$connect->Execute($query) or safe_die($connect->ErrorMsg());    //Checked
 	}
@@ -3636,7 +4509,7 @@ function CleanLanguagesFromSurvey($sid, $availlangs)
 }
 
 /**
-* FixLanguageConsistency() fixes missing groups,questions,answers for languages on a survey
+* FixLanguageConsistency() fixes missing groups,questions,answers & assessments for languages on a survey
 * @param string $sid - the currently selected survey
 * @param string $availlangs - space seperated list of additional languages in survey
 * @return bool - always returns true
@@ -3668,10 +4541,10 @@ function FixLanguageConsistency($sid, $availlangs)
 				$gresult = db_execute_assoc($query) or safe_die($connect->ErrorMsg()); //Checked
 				if ($gresult->RecordCount() < 1)
 				{
-                    if ($databasetype=='odbc_mssql') {$connect->Execute("SET IDENTITY_INSERT ".db_table_name('groups')." ON");}   //Checked
+                    if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {$connect->Execute('SET IDENTITY_INSERT '.db_table_name('groups')." ON");}   //Checked
 					$query = "INSERT INTO ".db_table_name('groups')." (gid,sid,group_name,group_order,description,language) VALUES('{$group['gid']}','{$group['sid']}',".db_quoteall($group['group_name']).",'{$group['group_order']}',".db_quoteall($group['description']).",'{$lang}')";  
 					$connect->Execute($query) or safe_die($connect->ErrorMsg());  //Checked
-                    if ($databasetype=='odbc_mssql') {$connect->Execute("SET IDENTITY_INSERT ".db_table_name('groups')." OFF");}   //Checked
+                     if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {$connect->Execute('SET IDENTITY_INSERT '.db_table_name('groups')." OFF");}   //Checked
 				}
 			}
 			reset($langs);
@@ -3692,10 +4565,10 @@ function FixLanguageConsistency($sid, $availlangs)
 				$gresult = db_execute_assoc($query) or safe_die($connect->ErrorMsg());   //Checked
 				if ($gresult->RecordCount() < 1)
 				{
-                    if ($databasetype=='odbc_mssql') {@$connect->Execute("SET IDENTITY_INSERT ".db_table_name('questions')." ON");}    //Checked
+                    if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {@$connect->Execute('SET IDENTITY_INSERT '.db_table_name('questions')." ON");}    //Checked
 					$query = "INSERT INTO ".db_table_name('questions')." (qid,sid,gid,type,title,question,preg,help,other,mandatory,lid,question_order,language) VALUES('{$question['qid']}','{$question['sid']}','{$question['gid']}','{$question['type']}',".db_quoteall($question['title']).",".db_quoteall($question['question']).",".db_quoteall($question['preg']).",".db_quoteall($question['help']).",'{$question['other']}','{$question['mandatory']}','{$question['lid']}','{$question['question_order']}','{$lang}')";
 					$connect->Execute($query) or safe_die($query."<br />".$connect->ErrorMsg());   //Checked
-                    if ($databasetype=='odbc_mssql') {$connect->Execute("SET IDENTITY_INSERT ".db_table_name('questions')." OFF");}      //Checked
+                    if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {$connect->Execute('SET IDENTITY_INSERT '.db_table_name('questions')." OFF");}      //Checked
 				}
 			}
 			reset($langs);
@@ -3719,16 +4592,43 @@ function FixLanguageConsistency($sid, $availlangs)
 					$gresult = db_execute_assoc($query) or safe_die($connect->ErrorMsg());  //Checked
 					if ($gresult->RecordCount() < 1)
 					{
-                        if ($databasetype=='odbc_mssql') {@$connect->Execute("SET IDENTITY_INSERT ".db_table_name('answers')." ON");}    //Checked
-						$query = "INSERT INTO ".db_table_name('answers')." (qid,code,answer,default_value,sortorder,language) VALUES('{$answer['qid']}',".db_quoteall($answer['code']).",".db_quoteall($answer['answer']).",".db_quoteall($answer['default_value']).",'{$answer['sortorder']}','{$lang}')";
+                        if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {@$connect->Execute('SET IDENTITY_INSERT '.db_table_name('answers')." ON");}    //Checked
+						$query = "INSERT INTO ".db_table_name('answers')." (qid,code,answer,default_value,sortorder,language,assessment_value) VALUES('{$answer['qid']}',".db_quoteall($answer['code']).",".db_quoteall($answer['answer']).",".db_quoteall($answer['default_value']).",'{$answer['sortorder']}','{$lang}',{$answer['assessment_value']})";
 						$connect->Execute($query) or safe_die($connect->ErrorMsg()); //Checked
-                        if ($databasetype=='odbc_mssql') {$connect->Execute("SET IDENTITY_INSERT ".db_table_name('answers')." OFF");}   //Checked
+                        if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {$connect->Execute('SET IDENTITY_INSERT '.db_table_name('answers')." OFF");}   //Checked
 					}
 				}
 				reset($langs);
 			}
 		}
 	}
+    
+    
+    $query = "SELECT * FROM ".db_table_name('assessments')." WHERE sid='{$sid}' AND language='{$baselang}'";
+    $result = db_execute_assoc($query) or safe_die($connect->ErrorMsg());  //Checked
+    if ($result->RecordCount() > 0)
+    {
+        while($assessment = $result->FetchRow())
+        {
+            foreach ($langs as $lang)
+            {
+                $query = "SELECT id FROM ".db_table_name('assessments')." WHERE sid='{$sid}' AND id='{$assessment['id']}' AND language='{$lang}'";
+                $gresult = db_execute_assoc($query) or safe_die($connect->ErrorMsg()); //Checked
+                if ($gresult->RecordCount() < 1)
+                {
+                    if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {$connect->Execute('SET IDENTITY_INSERT '.db_table_name('assessments')." ON");}   //Checked
+                    $query = "INSERT INTO ".db_table_name('assessments')." (id,sid,scope,gid,name,minimum,maximum,message,language) "
+                            ."VALUES('{$assessment['id']}','{$assessment['sid']}',".db_quoteall($assessment['scope']).",".db_quoteall($assessment['gid']).",".db_quoteall($assessment['name']).",".db_quoteall($assessment['minimum']).",".db_quoteall($assessment['maximum']).",".db_quoteall($assessment['message']).",'{$lang}')";  
+                    $connect->Execute($query) or safe_die($connect->ErrorMsg());  //Checked
+                    if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n') {$connect->Execute('SET IDENTITY_INSERT '.db_table_name('assessments')." OFF");}   //Checked
+                }
+            }
+            reset($langs);
+        }
+    }
+
+    
+    
 	return true;
 }
 
@@ -4060,41 +4960,10 @@ function checkMovequestionConstraintsForConditions($sid,$qid,$newgid="all")
 	return $resarray;
 }
 
-
-// array_combine function is PHP5 only so we have to provide 
-// our own in case it doesn't exist as in PHP 4
-if (!function_exists('array_combine')) {
-   function array_combine($a, $b) {
-       $c = array();
-       if (is_array($a) && is_array($b))
-           while (list(, $va) = each($a))
-               if (list(, $vb) = each($b))
-                   $c[$va] = $vb;
-               else
-                   break 1;
-       return $c;
-   }
-}
-
-if (!function_exists("stripos")) {
-  function stripos($str,$needle,$offset=0)
-  {
-      return strpos(strtolower($str),strtolower($needle),$offset);
-  }
-}
-
-if(!function_exists('str_ireplace')) {
-    function str_ireplace($search,$replace,$subject) 
-    {
-        $search = preg_quote($search, "/");
-        return preg_replace("/".$search."/i", $replace, $subject); 
-    } 
-}
-
 function incompleteAnsFilterstate()
 {
 	global $filterout_incomplete_answers;
-	$letsfliter='';
+	$letsfilter='';
 	$letsfilter = returnglobal('filterinc'); //read get/post filterinc
 
 	// first let's initialize the incompleteanswers session variable
@@ -4108,10 +4977,13 @@ function incompleteAnsFilterstate()
 	}
 
 	if  ($_SESSION['incompleteanswers']=='filter') {
-		return true;
+		return "filter"; //COMPLETE ANSWERS ONLY
 	}
 	elseif ($_SESSION['incompleteanswers']=='show') {
-		return false;
+		return false; //ALL ANSWERS
+	}
+	elseif ($_SESSION['incompleteanswers']=='incomplete') {
+	    return "inc"; //INCOMPLETE ANSWERS ONLY
 	}
 	else
 	{ // last resort is to prevent filtering
@@ -4175,25 +5047,32 @@ function captcha_enabled($screen, $captchamode='')
 	}
 }
 
-// used for import[survey|questions|groups]
+
+/**
+* used for import[survey|questions|groups]
+* 
+* @param mixed $string
+* @return mixed
+*/
 function convertCsvreturn2return($string)
 {
-        return str_replace('\n', "\n", $string);
+        $string= str_replace('\n', "\n", $string);
+        return str_replace('\%n', '\n', $string);
 }
 
-// Checks that each object from an array of CSV data
-// [question-rows,answer-rows,labelsets-row] 
-// supports iat least a given language
-//
-// param:
-// $csvarray : array with a line of csv data per row
-// $idkeysarray: array of integers giving the csv-row numbers of the object keys
-// $langfieldnum: integer giving the csv-row number of the language(s) filed
-//		==> the language field  can be a single language code or a 
-//		    space separated language code list
-// $langcode: the language code to be tested
-// $hasheader: if we should strip off the first line (if it contains headers)
-//
+
+
+/**
+*  Checks that each object from an array of CSV data [question-rows,answer-rows,labelsets-row] supports at least a given language
+* 
+* @param mixed $csvarray array with a line of csv data per row      
+* @param mixed $idkeysarray  array of integers giving the csv-row numbers of the object keys  
+* @param mixed $langfieldnum  integer giving the csv-row number of the language(s) filed
+*        ==> the language field  can be a single language code or a 
+*            space separated language code list
+* @param mixed $langcode  the language code to be tested    
+* @param mixed $hasheader  if we should strip off the first line (if it contains headers)   
+*/
 function  bDoesImportarraySupportsLanguage($csvarray,$idkeysarray,$langfieldnum,$langcode, $hasheader = false)
 {
 	// An array with one row per object id and langsupport status as value
@@ -4310,19 +5189,15 @@ function retrieve_Answer($code)
 	return html_escape($return);
 }
 
-// returns true if thesurvey has a token table defined
-function bHasSurveyGotTokentable($thesurvey, $sid=null)
+/**
+* Check if token table odes exist
+* 
+* @param mixed $sid  The survey id to check
+* @return boolean true if thesurvey has a token table defined       
+*/
+function tokenTableExists($surveyid)
 {
 	global $connect;
-	if (is_array($thesurvey))
-	{
-		$surveyid = $thesurvey['sid'];
-	}
-	elseif (!is_null($sid))
-	{
-		$surveyid = $sid;
-	}
-
 	$tablelist = $connect->MetaTables() or safe_die ("Error getting tokens<br />".$connect->ErrorMsg());
 	foreach ($tablelist as $tbl)
 	{
@@ -4334,14 +5209,13 @@ function bHasSurveyGotTokentable($thesurvey, $sid=null)
 	return false;
 }
 
-// Returns false if the survey is anonymous, but answers must be datestamp
+// Returns false if the survey is anonymous, 
 // and a token table exists: in this case the completed field of a token
 // will contain 'Y' instead of the submitted date to ensure privacy
 // Returns true otherwise
 function bIsTokenCompletedDatestamped($thesurvey)
 {
-	if ($thesurvey['private'] == 'Y' &&
-		bHasSurveyGotTokentable($thesurvey) )
+	if ($thesurvey['private'] == 'Y' &&  tokenTableExists($thesurvey['sid']))
 	{
 		return false;
 	}
@@ -4351,33 +5225,25 @@ function bIsTokenCompletedDatestamped($thesurvey)
 	}
 }
 
-function date_shift($date, $dformat, $shift)
-/* example usage
-
-$date = "2006-12-31 21:00";
-$shift "+6 hours"; // could be days, weeks... see function strtotime() for usage
-
-echo sql_date_shift($date, "Y-m-d H:i:s", $shift);
-
-// will output: 2007-01-01 03:00:00
+/**
+* example usage
+* $date = "2006-12-31 21:00";
+* $shift "+6 hours"; // could be days, weeks... see function strtotime() for usage
+* 
+* echo sql_date_shift($date, "Y-m-d H:i:s", $shift);
+* 
+* will output: 2007-01-01 03:00:00
+* 
+* @param mixed $date
+* @param mixed $dformat
+* @param mixed $shift
+* @return string
 */
+function date_shift($date, $dformat, $shift)
 {
 return date($dformat, strtotime($shift, strtotime($date)));
 }
 
-function mydebug($strOutput)
-{
-  $datei = fopen("d:\debug.txt","a+");
-  fwrite($datei, "$strOutput \n");
-  fclose($datei);
-}
-function mydebug_var($strOutput)
-{
-  $datei = fopen("d:\debug.txt","a+");
-  fwrite($datei, var_export($strOutput, TRUE));
-  fwrite($datei, "\n");
-  fclose($datei);
-}
 
 // getBounceEmail: returns email used to receive error notifications
 function getBounceEmail($surveyid)
@@ -4456,8 +5322,16 @@ function getNextCode($sourcecode)
     
 }
 
-// translink
-function translink($type, $oldid,$newid,$text)
+/**
+* Translink
+* 
+* @param mixed $type
+* @param mixed $oldid
+* @param mixed $newid
+* @param mixed $text
+* @return mixed
+*/
+function translink($type, $oldid, $newid, $text)
 {
 	if (!isset($_POST['translinksfields']))
 	{
@@ -4468,13 +5342,13 @@ function translink($type, $oldid,$newid,$text)
 		{
 			$pattern = "upload/surveys/$oldid/";
 			$replace = "upload/surveys/$newid/";
-			return ereg_replace($pattern, $replace, $text);
+			return preg_replace('#'.$pattern.'#', $replace, $text);
 		}
 		elseif ($type == 'label')
 		{
 			$pattern = "upload/labels/$oldid/";
 			$replace = "upload/labels/$newid/";
-			return ereg_replace($pattern, $replace, $text);
+            return preg_replace('#'.$pattern.'#', $replace, $text);
 		}
 		else
 		{
@@ -4482,6 +5356,14 @@ function translink($type, $oldid,$newid,$text)
 		}
 }
 
+
+/**
+* put your comment there...
+* 
+* @param string $newsid
+* @param string $oldsid
+* @param mixed $fieldnames
+*/
 function transInsertAns($newsid,$oldsid,$fieldnames)
 { 
 	global $connect, $dbprefix;
@@ -4491,8 +5373,35 @@ function transInsertAns($newsid,$oldsid,$fieldnames)
 		return;
 	}
 
-    $newsid=sanitize_int($newsid);
-    $oldsid=sanitize_int($oldsid);
+	$newsid=sanitize_int($newsid);
+	$oldsid=sanitize_int($oldsid);
+
+	# translate 'description' INSERTANS tags in groups 
+	$sql = "SELECT gid, language, description from {$dbprefix}groups WHERE sid=".$newsid." AND description LIKE '%{INSERTANS:".$oldsid."X%' ";
+	$res = db_execute_assoc($sql) or safe_die("Can't read groups table in transInsertAns ".$connect->ErrorMsg());     // Checked
+
+	while ($qentry = $res->FetchRow())
+	{
+		$description = $qentry['description'];
+		$gid = $qentry['gid'];
+		$language = $qentry['language'];
+
+		foreach ($fieldnames as $fnrow)
+		{
+			$pattern = "{INSERTANS:".$fnrow['oldfieldname']."}";
+			$replacement = "{INSERTANS:".$fnrow['newfieldname']."}";
+			$description=preg_replace('/'.$pattern.'/', $replacement, $description);
+		}
+
+		if (strcmp($description,$qentry['description']) !=0 )
+		{
+			// Update Field
+			$sqlupdate = "UPDATE {$dbprefix}groups SET description='".auto_escape($description)."' WHERE gid=$gid AND language='$language'";
+			$updateres=$connect->Execute($sqlupdate) or safe_die ("Couldn't update INSERTANS in groups<br />$sqlupdate<br />".$connect->ErrorMsg());    //Checked
+		} // Enf if modified
+	} // end while qentry
+
+	# translate 'question' and 'help' INSERTANS tags in questions 
 	$sql = "SELECT qid, language, question, help from {$dbprefix}questions WHERE sid=".$newsid." AND question LIKE '%{INSERTANS:".$oldsid."X%' OR help LIKE '%{INSERTANS:".$oldsid."X%'";
 	$res = db_execute_assoc($sql) or safe_die("Can't read question table in transInsertAns ".$connect->ErrorMsg());     // Checked
 
@@ -4505,22 +5414,56 @@ function transInsertAns($newsid,$oldsid,$fieldnames)
 
 		foreach ($fieldnames as $fnrow)
 		{
-			$pattern = "\{INSERTANS:".$fnrow['oldfieldname']."\}";
-			$replacement = "\{INSERTANS:".$fnrow['newfieldname']."\}";
-			$question=ereg_replace($pattern, $replacement, $question);
-			$help=ereg_replace($pattern, $replacement, $help);
+			$pattern = "{INSERTANS:".$fnrow['oldfieldname']."}";
+			$replacement = "{INSERTANS:".$fnrow['newfieldname']."}";
+			$question=preg_replace('/'.$pattern.'/', $replacement, $question);
+			$help=preg_replace('/'.$pattern.'/', $replacement, $help);
 		}
 
 		if (strcmp($question,$qentry['question']) !=0 ||
-			strcmp($help,$qentry['help']) !=0)
+				strcmp($help,$qentry['help']) !=0)
 		{
 			// Update Field
-			$sqlupdate = "UPDATE {$dbprefix}questions SET question='".$question."', help='".$help."' WHERE qid=$qid AND language='$language'";
+			$sqlupdate = "UPDATE {$dbprefix}questions SET question='".auto_escape($question)."', help='".auto_escape($help)."' WHERE qid=$qid AND language='$language'";
 			$updateres=$connect->Execute($sqlupdate) or safe_die ("Couldn't update INSERTANS in question<br />$sqlupdate<br />".$connect->ErrorMsg());    //Checked
+		} // Enf if modified
+	} // end while qentry
+
+
+	# translate 'answer' INSERTANS tags in answers 
+	$sql = "SELECT a.qid, a.language, a.code, a.answer from {$dbprefix}answers as a INNER JOIN {$dbprefix}questions as b ON a.qid=b.qid WHERE b.sid=".$newsid." AND a.answer LIKE '%{INSERTANS:".$oldsid."X%'";
+	$res = db_execute_assoc($sql) or safe_die("Can't read answers table in transInsertAns ".$connect->ErrorMsg());     // Checked
+
+	while ($qentry = $res->FetchRow())
+	{
+		$answer = $qentry['answer'];
+		$code = $qentry['code'];
+		$qid = $qentry['qid'];
+		$language = $qentry['language'];
+
+		foreach ($fieldnames as $fnrow)
+		{
+			$pattern = "{INSERTANS:".$fnrow['oldfieldname']."}";
+			$replacement = "{INSERTANS:".$fnrow['newfieldname']."}";
+			$answer=preg_replace('/'.$pattern.'/', $replacement, $answer);
+		}
+
+		if (strcmp($answer,$qentry['answer']) !=0)
+		{
+			// Update Field
+			$sqlupdate = "UPDATE {$dbprefix}answers SET answer='".auto_escape($answer)."' WHERE qid=$qid AND code='$code' AND language='$language'";
+			$updateres=$connect->Execute($sqlupdate) or safe_die ("Couldn't update INSERTANS in answers<br />$sqlupdate<br />".$connect->ErrorMsg());    //Checked
 		} // Enf if modified
 	} // end while qentry
 }
 
+
+/**
+* put your comment there...
+* 
+* @param mixed $id
+* @param mixed $type
+*/
 function hasResources($id,$type='survey')
 {
 	global $publicdir;
@@ -4559,7 +5502,11 @@ function hasResources($id,$type='survey')
 	return false;
 }
 
-
+/**
+* put your comment there...
+* 
+* @param mixed $length
+*/
 function randomkey($length)
 {
 	$pattern = "23456789abcdefghijkmnpqrstuvwxyz";
@@ -4576,7 +5523,13 @@ function randomkey($length)
 
 
                            
-
+/**
+* put your comment there...
+* 
+* @param mixed $mytext
+* @param mixed $ishtml
+* @return mixed
+*/
 function conditional_nl2br($mytext,$ishtml)
 {
 	if ($ishtml === true)
@@ -4644,8 +5597,770 @@ function safe_die($text)
 {
     //Only allowed tag: <br />
     $textarray=explode('<br />',$text);
-    array_map('htmlspecialchars',$textarray);
+    $textarray=array_map('htmlspecialchars',$textarray);
     die(implode( '<br />',$textarray));
 }
 
-?>
+/**
+* getQuotaInformation() returns quota information for the current survey
+* @param string $surveyid - Survey identification number
+* @param string $quotaid - Optional quotaid that restricts the result to a given quota
+* @return array - nested array, Quotas->Members->Fields
+*/
+function getQuotaInformation($surveyid,$quotaid='all')
+{
+	$baselang = GetBaseLanguageFromSurveyID($surveyid);
+	$query = "SELECT * FROM ".db_table_name('quota').", ".db_table_name('quota_languagesettings')."
+		   	  WHERE ".db_table_name('quota').".id = ".db_table_name('quota_languagesettings').".quotals_quota_id
+			  AND sid='{$surveyid}'
+			  AND quotals_language='$baselang'";
+	if ($quotaid != 'all')
+	{
+		$query .= " AND id=$quotaid";
+	}
+
+	$result = db_execute_assoc($query) or safe_die($connect->ErrorMsg());    //Checked 
+	$quota_info = array();
+	$x=0;
+	
+	// Check all quotas for the current survey
+	if ($result->RecordCount() > 0)
+	{
+		while ($survey_quotas = $result->FetchRow())
+		{
+			array_push($quota_info,array('Name' => $survey_quotas['name'],
+										 'Limit' => $survey_quotas['qlimit'],
+										 'Action' => $survey_quotas['action'],
+										 'Message' => $survey_quotas['quotals_message'],
+										 'Url' => passthruReplace(insertansReplace($survey_quotas['quotals_url']), getSurveyInfo($surveyid)),
+										 'UrlDescrip' => $survey_quotas['quotals_urldescrip'],
+										 'AutoloadUrl' => $survey_quotas['autoload_url']));
+			$query = "SELECT * FROM ".db_table_name('quota_members')." WHERE quota_id='{$survey_quotas['id']}'";
+			$result_qe = db_execute_assoc($query) or safe_die($connect->ErrorMsg());      //Checked 
+			$quota_info[$x]['members'] = array();
+			if ($result_qe->RecordCount() > 0)
+			{
+				while ($quota_entry = $result_qe->FetchRow())
+				{
+					$query = "SELECT type, title,gid FROM ".db_table_name('questions')." WHERE qid='{$quota_entry['qid']}' AND language='{$baselang}'";
+					$result_quest = db_execute_assoc($query) or safe_die($connect->ErrorMsg());     //Checked 
+					$qtype = $result_quest->FetchRow();
+					
+					$fieldnames = "0";
+					
+					if ($qtype['type'] == "I" || $qtype['type'] == "G" || $qtype['type'] == "Y")
+					{
+						$fieldnames=array(0 => $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
+						$value = $quota_entry['code'];
+					}
+					
+					if($qtype['type'] == "L" || $qtype['type'] == "O" || $qtype['type'] =="!") 
+					{
+					    $fieldnames=array(0 => $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
+					    $value = $quota_entry['code'];
+					}
+				
+					if($qtype['type'] == "M")
+					{
+						$fieldnames=array(0 => $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$quota_entry['code']);
+						$value = "Y";
+					}
+					
+					if($qtype['type'] == "A" || $qtype['type'] == "B")
+					{
+						$temp = explode('-',$quota_entry['code']);
+						$fieldnames=array(0 => $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$temp[0]);
+						$value = $temp[1];
+					}
+					
+					array_push($quota_info[$x]['members'],array('Title' => $qtype['title'],
+																'type' => $qtype['type'],
+																'code' => $quota_entry['code'],
+																'value' => $value,
+																'qid' => $quota_entry['qid'],
+																'fieldnames' => $fieldnames));
+				}
+			}
+			$x++;
+		}
+	}
+	return $quota_info;
+}
+
+/**
+* get_quotaCompletedCount() returns the number of answers matching the quota
+* @param string $surveyid - Survey identification number
+* @param string $quotaid - quota id for which you want to compute the completed field
+* @return string - number of mathing entries in the result DB or 'N/A'
+*/
+function get_quotaCompletedCount($surveyid, $quotaid)
+{
+	$result ="N/A";
+	$quota_info = getQuotaInformation($surveyid,$quotaid);	
+	$quota = $quota_info[0];
+
+	if ( db_tables_exist(db_table_name_nq('survey_'.$surveyid))  &&
+			count($quota['members']) > 0)
+	{
+		$fields_list = array(); // Keep a list of fields for easy reference
+		unset($querycond);
+
+		foreach($quota['members'] as $member)
+		{
+			$fields_query = array();
+			$select_query = " (";
+			foreach($member['fieldnames'] as $fieldname)
+			{
+				$fields_list[] = $fieldname;
+				$fields_query[] = db_quote_id($fieldname)." = '{$member['value']}'";
+				// Incase of multiple fields for an answer - only needs to match once.
+				$select_query.= implode(' OR ',$fields_query).' )';
+				$querycond[] = $select_query;
+				unset($fields_query);
+			}
+
+		}
+		//FOR MYSQL?
+		$querysel = "SELECT count(id) as count FROM ".db_table_name('survey_'.$surveyid)." WHERE ".implode(' AND ',$querycond)." "." AND submitdate !=''";
+		//FOR POSTGRES?
+		$querysel = "SELECT count(id) as count FROM ".db_table_name('survey_'.$surveyid)." WHERE ".implode(' AND ',$querycond)." "." AND submitdate IS NOT NULL";
+		$result = db_execute_assoc($querysel) or safe_die($connect->ErrorMsg()); //Checked
+		$quota_check = $result->FetchRow();
+		$result = $quota_check['count'];
+	}
+
+	return $result;
+}
+
+function fix_FCKeditor_text($str)
+{
+	$str = str_replace('<br type="_moz" />','',$str);
+	if ($str == "<br />" || $str == " ")
+	{
+		$str = "";
+	}
+	if (preg_match("/^[\s]+$/",$str))
+	{
+		$str='';
+	}
+	return $str;
+}
+
+
+function recursive_stripslashes($array_or_string)
+{
+	if (is_array($array_or_string))
+	{
+		return array_map('recursive_stripslashes', $array_or_string);
+	}
+	else
+	{
+		return stripslashes($array_or_string);
+	}
+}
+
+
+
+
+/**
+* This function checks if a given question should be displayed or not
+* If the optionnal gid parameter is set, then we are in a group/group survey
+* and thus we can't evaluate conditions using answers on the same page 
+* (this will be done by javascript): in this case we disregard conditions on 
+* answers from same page
+* 
+* @param mixed $qid
+* @param mixed $gid
+*/
+function checkquestionfordisplay($qid, $gid=null)
+{ 
+	global $dbprefix, $connect,$surveyid,$thissurvey;
+
+	if (!is_array($thissurvey))
+	{
+		$local_thissurvey=getSurveyInfo($surveyid);
+	}
+	else
+	{
+		$local_thissurvey=$thissurvey;
+	}
+
+	$scenarioquery = "SELECT DISTINCT scenario FROM ".db_table_name("conditions")
+		." WHERE ".db_table_name("conditions").".qid=$qid ORDER BY scenario";
+	$scenarioresult=db_execute_assoc($scenarioquery);
+
+	if ($scenarioresult->RecordCount() == 0)
+	{
+		return true;
+	}
+
+	while ($scenariorow=$scenarioresult->FetchRow())
+	{
+		$scenario = $scenariorow['scenario'];
+		$totalands=0;
+		$query = "SELECT * FROM ".db_table_name('conditions')."\n"
+			."WHERE qid=$qid AND scenario=$scenario ORDER BY cqid,cfieldname";
+		$result = db_execute_assoc($query) or safe_die("Couldn't check conditions<br />$query<br />".$connect->ErrorMsg());   //Checked 
+
+		$conditionsfoundforthisscenario=0;
+		while($row=$result->FetchRow())
+		{
+			// Conditions on the same question are Anded together
+			// (for instance conditions on several multiple-numerical lines)
+			// However, if they are related to the same cfieldname
+			// they are Ored. Conditions on the same cfieldname can be either:
+			// * conditions on the same 'simple question': 
+			//   - for instance several possible answers on the same radio-button question
+			// * conditions on the same 'multiple choice question': 
+			//   - this case is very specific. In fact each checkbox corresponds to a different
+			//     cfieldname (1X1X1a, 1X1X1b, ...), but the condition uses only the base 
+			//     'SGQ' cfieldname and the expected answers codes as values
+			//   - then, in the following lines for questions M or P, we transform the
+			//     condition SGQ='a' to SGQa='Y'
+			//  ==> This explains why conditions on multiple choice answers are ORed even if
+			//      in reality they use a different cfieldname for each checkbox
+			//
+			// In order to implement this we build an array storing the result
+			// of condition evaluations for this group and scenario
+			// This array is processed as follow:
+			// * it is indexed by cfieldname,
+			// * each 'cfieldname' row is added at the first condition eval on this fieldname
+			// * each row is updated only if the condition evaluation is successful
+			//   ==> this way if only 1 condition for a cfieldname is successful, the set of
+			//       conditions for this cfieldname is assumed to be met (Ored conditions)
+
+			$conditionsfoundforthisscenario++;
+			$conditionCanBeEvaluated=true;
+			//Iterate through each condition for this question and check if it is met.
+
+			if (preg_match("/^\+(.*)$/",$row['cfieldname'],$cfieldnamematch))
+			{ // this condition uses a single checkbox as source
+				$conditionSourceType='question';
+			$query2= "SELECT type, gid FROM ".db_table_name('questions')."\n"
+				." WHERE qid={$row['cqid']} AND language='".$_SESSION['s_lang']."'";
+			$result2=db_execute_assoc($query2) or safe_die ("Coudn't get type from questions<br />$ccquery<br />".$connect->ErrorMsg());   //Checked 
+			while($row2=$result2->FetchRow())
+			{
+				$cq_gid=$row2['gid'];
+					// set type to +M or +P in order to skip
+					$thistype='+'.$row2['type']; 
+				}
+
+				$row['cfieldname']=$cfieldnamematch[1]; // remover the leading '+'
+			}
+			elseif (preg_match("/^{/",$row['cfieldname']))
+			{ // this condition uses a token attr as source
+				$conditionSourceType='tokenattr';
+				$thistype="";
+				$cq_gid=0;
+			}
+			else
+			{ // this is a simple condition using a question as source
+				$conditionSourceType='question';
+				$query2= "SELECT type, gid FROM ".db_table_name('questions')."\n"
+					." WHERE qid={$row['cqid']} AND language='".$_SESSION['s_lang']."'";
+				$result2=db_execute_assoc($query2) or safe_die ("Coudn't get type from questions<br />$ccquery<br />".$connect->ErrorMsg());   //Checked 
+				while($row2=$result2->FetchRow())
+				{
+					$cq_gid=$row2['gid'];
+					//Find out the "type" of the question this condition uses
+					$thistype=$row2['type'];
+				}
+			}
+
+
+			
+			// Fix the cfieldname and cvalue in case of type M or P questions
+			if ($thistype == "M" || $thistype == "P")
+			{
+				// For multiple choice type questions, the "answer" value will be "Y"
+				// if selected, the fieldname will have the answer code appended.
+				$row['cfieldname']=$row['cfieldname'].$row['value'];
+				$row['value']="Y";     
+			}
+			
+			if ( !is_null($gid) && $gid == $cq_gid && $conditionSourceType == 'question')
+			{
+				//Don't do anything - this cq is in the current group
+			}
+			elseif (preg_match('/^@([0-9]+X[0-9]+X[^@]+)@'.'/',$row['value'],$targetconditionfieldname))
+			{ 
+				if (isset($_SESSION[$targetconditionfieldname[1]]) )
+				{
+					// If value uses @SIDXGIDXQID@ codes i
+					// then try to replace them with a 
+					// value recorded in SESSION if any
+					$cvalue=$_SESSION[$targetconditionfieldname[1]];
+					if ($conditionSourceType == 'question')
+					{
+					if (isset($_SESSION[$row['cfieldname']]))
+					{ 
+						$cfieldname=$_SESSION[$row['cfieldname']]; 
+					} 
+					else 
+					{ 
+						$conditionCanBeEvaluated=false;
+						//$cfieldname=' ';
+					}
+				}
+					elseif ($local_thissurvey['private'] == "N" && preg_match('/^{TOKEN:([^}]*)}$/',$row['cfieldname'],$sourceconditiontokenattr))
+					{
+						if ( isset($_SESSION['token']) &&
+							in_array(strtolower($sourceconditiontokenattr[1]),GetTokenConditionsFieldNames($surveyid)))
+						{
+							$cfieldname=GetAttributeValue($surveyid,strtolower($sourceconditiontokenattr[1]),$_SESSION['token']);	
+						}
+				else
+						{
+							$conditionCanBeEvaluated=false;
+						}
+					
+					}
+					else
+					{
+						$conditionCanBeEvaluated=false;
+					}
+				}
+				else
+				{ // if _SESSION[$targetconditionfieldname[1]] is not set then evaluate condition as FALSE
+					$conditionCanBeEvaluated=false;
+					//$cfieldname=' ';
+				}
+			}
+			elseif ($local_thissurvey['private'] == "N" && preg_match('/^{TOKEN:([^}]*)}$/',$row['value'],$targetconditiontokenattr))
+			{ //TIBO
+				if ( isset($_SESSION['token']) && 
+					in_array(strtolower($targetconditiontokenattr[1]),GetTokenConditionsFieldNames($surveyid)))
+				{
+					// If value uses {TOKEN:XXX} placeholders
+					// then try to replace them with a 
+					// the value recorded in DB
+					$cvalue=GetAttributeValue($surveyid,strtolower($targetconditiontokenattr[1]),$_SESSION['token']);
+					if ($conditionSourceType == 'question')
+					{
+						if (isset($_SESSION[$row['cfieldname']]))
+						{ 
+							$cfieldname=$_SESSION[$row['cfieldname']]; 
+						} 
+			else
+			{
+							$conditionCanBeEvaluated=false;
+						}
+					}
+					elseif ($local_thissurvey['private'] == "N" && preg_match('/^{TOKEN:([^}]*)}$/',$row['cfieldname'],$sourceconditiontokenattr))
+					{
+						if ( isset($_SESSION['token']) &&
+							in_array(strtolower($sourceconditiontokenattr[1]),GetTokenConditionsFieldNames($surveyid)))
+						{
+							$cfieldname=GetAttributeValue($surveyid,strtolower($sourceconditiontokenattr[1]),$_SESSION['token']);	
+						}
+						else
+						{
+							$conditionCanBeEvaluated=false;
+						}
+					
+					}
+					else
+					{
+						$conditionCanBeEvaluated=false;
+					}
+				}
+				else
+				{ // if _SESSION[$targetconditionfieldname[1]] is not set then evaluate condition as FALSE
+					$conditionCanBeEvaluated=false;
+				}
+			}
+			else
+			{
+				$cvalue=$row['value'];
+
+				//queXS addition
+				include_once("quexs.php");
+				$cvalue = quexs_template_replace($cvalue);
+
+				if ($conditionSourceType == 'question')
+				{
+					if (isset($_SESSION[$row['cfieldname']]))
+					{
+						$cfieldname=$_SESSION[$row['cfieldname']];
+					} 
+					elseif ($thistype == "M" || $thistype == "P" || $thistype == "+M" || $thistype == "+P")
+					{
+						$cfieldname="";
+					}
+					else 
+					{
+						$conditionCanBeEvaluated=false;
+					}
+				}
+				elseif ($local_thissurvey['private'] == "N" && preg_match('/^{TOKEN:([^}]*)}$/',$row['cfieldname'],$sourceconditiontokenattr))
+				{
+					if ( isset($_SESSION['token']) &&
+							in_array(strtolower($sourceconditiontokenattr[1]),GetTokenConditionsFieldNames($surveyid)))
+					{
+						$cfieldname=GetAttributeValue($surveyid,strtolower($sourceconditiontokenattr[1]),$_SESSION['token']);	
+					}
+					else
+					{
+						$conditionCanBeEvaluated=false;
+					}
+
+				}
+				else
+				{
+					$conditionCanBeEvaluated=false;
+				}
+			}
+
+			if ( !is_null($gid) && $gid == $cq_gid && $conditionSourceType == 'question')
+			{
+				//Don't do anything - this cq is in the current group
+				$conditionMatches=true;
+			}
+			elseif ($conditionCanBeEvaluated === false)
+			{
+				// condition can't be evaluated, so let's assume FALSE
+				$conditionMatches=false;
+			}
+			else
+			{
+					if (trim($row['method'])=='') 
+					{
+						$row['method']='==';
+					}
+				if ($row['method'] != 'RX')
+				{
+					if (eval('if (trim($cfieldname)'. $row['method'].' trim($cvalue)) return true; else return false;'))
+					{
+						$conditionMatches=true;
+						//This condition is met
+					}
+					else
+					{
+						$conditionMatches=false;
+					}
+				}
+				else
+				{
+					if (preg_match('/'.trim($cvalue).'/',trim($cfieldname)))
+					{
+						$conditionMatches=true;
+
+					}
+					else
+					{
+						$conditionMatches=false;
+					}
+				}
+			}
+
+			if ($conditionMatches === true)
+			{
+				// Let's store this positive result in the distinctcqids array
+				// indexed by cfieldname so that conditions on theb same cfieldname ar Ored
+				// while conditions on different cfieldnames (either different conditions
+				// or conditions on different cfieldnames inside the same question)
+				if (!isset($distinctcqids[$row['cfieldname']]) || $distinctcqids[$row['cfieldname']] == 0)
+				{
+					$distinctcqids[$row['cfieldname']] = 1;
+				}
+			}
+			else
+			{
+				// Let's store this negative result in the distinctcqids array
+				// indexed by cfieldname so that conditions on theb same cfieldname ar Ored
+				// while conditions on different cfieldnames (either different conditions
+				// or conditions on different cfieldnames inside the same question)
+				if (!isset($distinctcqids[$row['cfieldname']]))
+				{
+					$distinctcqids[$row['cfieldname']] = 0;
+				}
+			}
+		} // while
+		if ($conditionsfoundforthisscenario > 0) {
+			foreach($distinctcqids as $key=>$val)
+			{
+				// Let's count the number of conditions that are met, and then compare
+				// it to the total number of stored results
+				$totalands=$totalands+$val;
+			}
+			if ($totalands >= count($distinctcqids))
+			{
+				// if all stored results are positive then we MUST show the group
+				// because at least this question is displayed
+				return true;
+			}
+		}
+		else
+		{
+			//Curious there is no condition for this question in this scenario
+			// this is not a normal behaviour, but I propose to defaults to a
+			// condition-matched state in this case
+			return true;
+		}
+		unset($distinctcqids);
+	} // end while scenario
+	return false;
+}
+
+/**
+* This is a helper function for GetAttributeFieldNames
+* 
+* @param mixed $fieldname
+*/
+function filterforattributes ($fieldname)
+{
+    if (strpos($fieldname,'attribute_')===false) return false; else return true;    
+}
+
+
+/**
+* Retrieves the attribute field names from the related token table
+* 
+* @param mixed $surveyid  The survey ID
+* @return array The fieldnames
+*/
+function GetAttributeFieldNames($surveyid)
+{
+    global $dbprefix, $connect;
+    if (tokenTableExists($surveyid) === false)
+    {
+    return Array();
+    }    
+    $tokenfieldnames = array_values($connect->MetaColumnNames("{$dbprefix}tokens_$surveyid", true));
+    return array_filter($tokenfieldnames,'filterforattributes');
+}
+
+/**
+* Retrieves the token field names usable for conditions from the related token table
+* 
+* @param mixed $surveyid  The survey ID
+* @return array The fieldnames
+*/
+function GetTokenConditionsFieldNames($surveyid)
+{
+    $extra_attrs=GetAttributeFieldNames($surveyid);
+    $basic_attrs=Array('firstname','lastname','email','token','language','sent','remindersent','remindercount');
+    return array_merge($basic_attrs,$extra_attrs);
+}
+
+/**
+* Retrieves the attribute names from the related token table
+* 
+* @param mixed $surveyid  The survey ID
+* @return array The fieldnames as key and names as value in an Array
+*/
+function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
+{
+    global $dbprefix, $connect, $clang;
+    if (tokenTableExists($surveyid) === false)
+    {
+	return Array();
+    }
+    $extra_attrs=GetAttributeFieldNames($surveyid);
+    $basic_attrs=Array('firstname','lastname','email','token','language','sent','remindersent','remindercount');
+    $basic_attrs_names=Array(
+			$clang->gT('First Name'),
+			$clang->gT('Last Name'),
+			$clang->gT('Email address'),
+			$clang->gT('Token code'),
+			$clang->gT('Language code'),
+			$clang->gT('Invitation sent date'),
+			$clang->gT('Last Reminder sent date'),
+			$clang->gT('Total numbers of sent reminders'));
+
+    $thissurvey=getSurveyInfo($surveyid);               
+    $attdescriptiondata=!empty($thissurvey['attributedescriptions']) ? $thissurvey['attributedescriptions'] : "";
+    $attdescriptiondata=explode("\n",$attdescriptiondata);
+    $attributedescriptions=array(); 
+    $basic_attrs_and_names=array();
+    $extra_attrs_and_names=array();
+    foreach ($attdescriptiondata as $attdescription)
+    {
+        $attributedescriptions['attribute_'.substr($attdescription,10,strpos($attdescription,'=')-10)] = substr($attdescription,strpos($attdescription,'=')+1);
+    }
+    foreach ($extra_attrs as $fieldname)
+    {
+        if (isset($attributedescriptions[$fieldname]))
+        {
+            $extra_attrs_and_names[$fieldname]=$attributedescriptions[$fieldname];
+        }
+        else
+        {
+            $extra_attrs_and_names[$fieldname]=sprintf($clang->gT('Attribute %s'),substr($fieldname,10));
+        }
+    }
+    if ($onlyAttributes===false)
+    {
+        $basic_attrs_and_names=array_combine($basic_attrs,$basic_attrs_names);
+        return array_merge($basic_attrs_and_names,$extra_attrs_and_names);
+    }
+    else
+    {
+        return $extra_attrs_and_names;
+    }
+}
+
+/**
+* Retrieves the token attribute value from the related token table
+* 
+* @param mixed $surveyid  The survey ID
+* @param mixed $attrName  The token-attribute field name
+* @param mixed $token  The token code
+* @return string The token attribute value (or null on error)
+*/
+function GetAttributeValue($surveyid,$attrName,$token)
+{
+    global $dbprefix, $connect;
+    $attrName=strtolower($attrName);
+    if (!in_array($attrName,GetTokenConditionsFieldNames($surveyid)))
+    {
+	return null;	
+    }
+    $sanitized_token=$connect->qstr($token,get_magic_quotes_gpc());
+    $surveyid=sanitize_int($surveyid);
+
+    $query="SELECT $attrName FROM {$dbprefix}tokens_$surveyid WHERE token=$sanitized_token"; 
+    $result=db_execute_num($query);
+    $count=$result->RecordCount();
+    if ($count != 1)
+    {
+	return null;
+    }
+    else
+    {
+    	$row=$result->FetchRow();
+	return $row[0];
+    }
+}
+
+/**
+* This function strips any content between and including <style>  & <javascript> tags
+* 
+* @param string $content String to clean
+* @return string  Cleaned string
+*/
+function strip_javascript($content){
+    $search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
+                   '@<style[^>]*?>.*?</style>@siU'    // Strip style tags properly
+    /*               ,'@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+                   '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
+                   */
+    );
+    $text = preg_replace($search, '', $content);
+    return $text;
+} 
+
+
+/**
+ * 
+ * formats a datestring (YY-MM-DD or YYYY-MM-DD or YY-M-D... to whatever)
+ * @param $date Datestring, that should be formated normally it is in YYYY-MM-DD, but we take also YY-MM-DD or YY-M-D
+ * @param $format Format you want your date in (DD.MM.YYYY or MM.DD.YYYY or MM/YY ? everything possible )
+ * @return formated datestring
+
+function dateFormat($date, $format="DD.MM.YYYY")
+{
+	if(preg_match("/^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})/",$date))
+	{
+		$pieces = explode("-",$date);
+		$yy = $pieces[0];
+		$mm = $pieces[1];
+		$dd = $pieces[2];
+	}
+	elseif(preg_match("/^([0-9]{2})-([0-9]{1,2})-([0-9]{1,2})/",$date))
+	{
+		$pieces = explode("-",$date);
+		$yy = $pieces[0];
+		$mm = $pieces[1];
+		$dd = $pieces[2];
+	}
+	else
+	{
+		return "No valid Date";
+	}
+	// Format check
+	$c['Y'] = substr_count($format,"Y" );
+	$c['M'] = substr_count($format,"M" );
+	$c['D'] = substr_count($format,"D" );
+	
+	foreach($c as $key => $value)
+	{
+		for($n=0;$n<$value;++$n)
+		{
+			$dFormat[$key] .= "".$key;
+		}
+	}
+	
+	if(strlen($yy)>$c['Y'])
+	{$yy = substr($yy,-2,2);}
+	if(strlen($yy)<4 && strlen($yy)<$c['Y'])
+	{$yy = "20".$yy;}
+	if(strlen($mm)<2 && strlen($mm)<$c['M'])
+	{$mm = "0".$mm;}
+	if(strlen($dd)>2 )
+	{$dd = substr($dd,0,2);}
+	if(strlen($dd)<2 && strlen($dd)<$c['D'])
+	{$dd = "0".$dd;}
+	
+	$return = str_replace($dFormat['Y'],substr($yy,-$c['Y'], $c['Y']), $format);
+	$return = str_replace($dFormat['M'],substr($mm,-$c['M'], $c['M']), $return);
+	$return = str_replace($dFormat['D'],substr($dd,-$c['D'], $c['D']), $return);
+	
+	return $return;
+}
+ */
+ 
+/**
+* This function cleans files from the temporary directory being older than 1 day
+* @todo Make the days configurable 
+*/
+function cleanTempDirectory()
+{
+    global $tempdir;
+    $dir=  $tempdir.'/';
+    $dp = opendir($dir) or die ('Could not open temporary directory');
+    while ($file = readdir($dp)) {
+        if ((filemtime($dir.$file)) < (strtotime('-1 days')) && $file!='index.html' && $file!='readme.txt' && $file!='..' && $file!='.' && $file!='.svn') {
+            unlink($dir.$file);
+        }
+    }
+    closedir($dp);    
+}
+
+
+function use_firebug()
+{
+    if(FIREBUG == true)
+    {
+        return '<script type="text/javascript" src="http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"></script>';
+    };
+};
+
+/**
+* This is a convenience function for the coversion of datetime values
+*  
+* @param mixed $value
+* @param mixed $fromdateformat
+* @param mixed $todateformat
+* @return string
+*/
+function convertDateTimeFormat($value, $fromdateformat, $todateformat)
+{
+    $datetimeobj = new Date_Time_Converter($value , $fromdateformat);
+    return $datetimeobj->convert($todateformat);                
+}
+
+
+/**
+* This function removes the UTF-8 Byte Order Mark from a string
+* 
+* @param string $str
+* @return string
+*/
+function removeBOM($str=""){
+        if(substr($str, 0,3) == pack("CCC",0xef,0xbb,0xbf)) {
+                $str=substr($str, 3);
+        }
+        return $str;
+} 

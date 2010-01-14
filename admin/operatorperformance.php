@@ -64,12 +64,11 @@ include("../functions/functions.input.php");
  */
 include("../functions/functions.operator.php");
 
-xhtml_head(T_("Operator Performance"),true,false,array("../js/window.js"));
+xhtml_head(T_("Operator Performance"),true,array("../css/table.css"),array("../js/window.js"));
 
-$rs = get_CPH();
+$rs = get_stats_total(get_stats());
 print "<h2>" . T_("Overall") . "</h2>";
-xhtml_table($rs,array("firstName","completions","time","CPH"),array(T_("Operator"),T_("Completions"),T_("Total time"),T_("Completions per hour")),"tclass");
-xhtml_table(get_effectiveness(),array("firstName","effectiveness"),array(T_("Operator"),T_("Effectiveness (proportion of time on a call in a case)")),"tclass");
+xhtml_table($rs,array("firstName","completions","totalcalls","time","callt","CPH","CALLSPH","effectiveness"),array(T_("Operator"),T_("Completions"),T_("Calls"),T_("Total time"),T_("Call time"),T_("Completions p/h"),T_("Calls p/h"),T_("Effectiveness")));
 
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
@@ -77,10 +76,9 @@ display_questionnaire_chooser($questionnaire_id);
 
 if ($questionnaire_id)
 {
-	$rs = get_CPH_by_questionnaire($questionnaire_id);
+	$rs = get_stats_total(get_stats_by_questionnaire($questionnaire_id));
 	print "<h2>" . T_("This project") . "</h2>";
-	xhtml_table($rs,array("firstName","completions","time","CPH"),array(T_("Operator"),T_("Completions"),T_("Total time"),T_("Completions per hour")),"tclass");
-	xhtml_table(get_effectiveness_by_questionnaire($questionnaire_id),array("firstName","effectiveness"),array(T_("Operator"),T_("Effectiveness (proportion of time on a call in a case)")),"tclass");
+	xhtml_table($rs,array("firstName","completions","totalcalls","time","callt","CPH","CALLSPH","effectiveness"),array(T_("Operator"),T_("Completions"),T_("Calls"),T_("Total time"),T_("Call time"),T_("Completions p/h"),T_("Calls p/h"),T_("Effectiveness")));
 
 	$operator_id = get_operator_id();
 
@@ -99,9 +97,9 @@ if ($questionnaire_id)
 
 	if ($shift_id)
 	{
-		$rs = get_CPH_by_shift($questionnaire_id,$shift_id);
+		$rs = get_stats_total(get_stats_by_shift($questionnaire_id,$shift_id));
 		print "<h2>" . T_("This shift") . "</h2>";
-		xhtml_table($rs,array("firstName","completions","time","CPH"),array(T_("Operator"),T_("Completions"),T_("Total time"),T_("Completions per hour")),"tclass");
+		xhtml_table($rs,array("firstName","completions","totalcalls","time","callt","CPH","CALLSPH","effectiveness"),array(T_("Operator"),T_("Completions"),T_("Calls"),T_("Total time"),T_("Call time"),T_("Completions p/h"),T_("Calls p/h"),T_("Effectiveness")));
 	}
 }
 

@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: sessioncontrol.php 4916 2008-05-25 17:25:33Z c_schmitz $
+* $Id: sessioncontrol.php 6973 2009-05-28 23:23:36Z c_schmitz $
 */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB     
@@ -41,35 +41,15 @@ if (session_id() == "")
 //  ==> thus we just change the login form lang: no user profile update
 // if changelang is called from another form (after login) then update user lang
 // when a loginlang is specified at login time, the user profile is updated in usercontrol.php 
-if (returnglobal('action') == "changelang" && (!isset($login) || !$login ))	
+if ((returnglobal('action') == "changelang" || returnglobal('action') == "savepersonalsettings") && (!isset($login) || !$login ))	
 	{
 	$_SESSION['adminlang']=returnglobal('lang');
-	// if user is logged in update language in database
-	if(isset($_SESSION['loginID']))
-		{
-		$uquery = "UPDATE {$dbprefix}users SET lang='{$_SESSION['adminlang']}' WHERE uid={$_SESSION['loginID']}";	//		added by Dennis
-		$uresult = $connect->Execute($uquery); //Checked
-		}
 	}
 elseif (!isset($_SESSION['adminlang']) || $_SESSION['adminlang']=='' )
 	{
 	$_SESSION['adminlang']=$defaultlang;
 	}
 
-// if changehtmleditormode is called then update user htmleditormode
-if (returnglobal('action') == "changehtmleditormode" )	
-	{
-	$_SESSION['htmleditormode']=returnglobal('htmleditormode');
-	if(isset($_SESSION['loginID']))
-		{
-		$uquery = "UPDATE {$dbprefix}users SET htmleditormode='{$_SESSION['htmleditormode']}' WHERE uid={$_SESSION['loginID']}";	//		added by Dennis
-		$uresult = $connect->Execute($uquery) or die("Can't update htmleditor setting"); //Checked
-		}
-	}
-elseif (!isset($_SESSION['htmleditormode']) || $_SESSION['htmleditormode']=='' )
-	{
-	$_SESSION['htmleditormode']=$defaulthtmleditormode;
-	}
 
 // Construct the language class, and set the language.
 if (isset($_REQUEST['rootdir'])) {die('You cannot start this script directly');}
@@ -79,7 +59,8 @@ $clang = new limesurvey_lang($_SESSION['adminlang']);
 // get user rights
 if(isset($_SESSION['loginID'])) {GetSessionUserRights($_SESSION['loginID']);}
 	
-// TIBO check wrong GET request
+// check that requests that modify the DB are using POST
+// and not GET requests
 $dangerousActionsArray = Array
 	(
 		'changelang' => Array(),
@@ -125,6 +106,11 @@ $dangerousActionsArray = Array
 			0 => Array('subaction' => 'insertcondition'),
 			1 => Array('subaction' => 'delete'),
 			2 => Array('subaction' => 'copyconditions'),
+			3 => Array('subaction' => 'updatecondition'),
+			4 => Array('subaction' => 'deletescenario'),
+			5 => Array('subaction' => 'updatescenario'),
+			6 => Array('subaction' => 'deleteallconditions'),
+			7 => Array('subaction' => 'renumberscenarios')
 			),
 		'insertlabelset' => Array(),
 		'importlabels' => Array(),
@@ -136,6 +122,9 @@ $dangerousActionsArray = Array
 		'assessmentadd' => Array(),
 		'assessmentedit' => Array(),
 		'assessmentdelete' => Array(),
+		'iteratesurvey' => Array(
+			0 => Array('subaction' => 'unfinalizeanswers')
+			),
 		'dataentry' => Array(
 			0 => Array('subaction' => 'delete'),
 			1 => Array('subaction' => 'update'),
@@ -177,7 +166,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) &&
 	{
 		foreach ($dangerousActionsArray[$_GET['action']] as $key => $arrayparams)
 		{
-			//error_log("TIBO trying dangerous-subparams number $key");
 			$totalparamcount=count($arrayparams);
 			$matchparamcount=0;
 			foreach ($arrayparams as $param => $val)
@@ -186,7 +174,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) &&
 					$_GET[$param] == $val)
 				{
 					$matchparamcount++;
-					//error_log("TIBO match param=$param val=$val count=$matchparamcount/$totalparamcount");
 				}
 			}
 			if ($matchparamcount == $totalparamcount)

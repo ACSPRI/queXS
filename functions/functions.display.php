@@ -104,7 +104,6 @@ function display_shift_chooser($questionnaire_id, $shift_id = false)
 	print "</select></div>";
 }
 
-
 /**
  * Display a list of samples to choose from in a drop down list
  *
@@ -128,6 +127,35 @@ function display_sample_chooser($questionnaire_id, $sample_import_id = false)
 		foreach($rs as $r)
 		{
 			print "<option value='?sample_import_id={$r['sample_import_id']}&amp;questionnaire_id=$questionnaire_id' {$r['selected']}>{$r['sample_import_id']}: {$r['description']}</option>";
+		}
+	}
+	print "</select></div>";
+}
+
+/**
+ * Display a list of quota rows to choose from in a drop down list
+ *
+ * @param int $questionnaire_id The questionnaire id
+ * @param int $sample_import_id The sample import id 
+ * @param int|bool $qsqri The sample import id or false if none selected
+ */
+function display_quota_chooser($questionnaire_id, $sample_import_id, $qsqri = false)
+{
+	global $db;
+
+	$sql = "SELECT q.questionnaire_sample_quota_row_id,q.description,CASE WHEN q.questionnaire_sample_quota_row_id = '$qsqri' THEN 'selected=\'selected\'' ELSE '' END AS selected
+		FROM questionnaire_sample_quota_row as q
+		WHERE q.questionnaire_id = '$questionnaire_id'
+		AND q.sample_import_id = '$sample_import_id'";
+		
+	$rs = $db->GetAll($sql);
+
+	print "<div><select id='questionnaire_sample_quota_row_id' name='questionnaire_sample_quota_row_id' onchange=\"LinkUp('questionnaire_sample_quota_row_id')\"><option value='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'></option>";
+	if (!empty($rs))
+	{
+		foreach($rs as $r)
+		{
+			print "<option value='?sample_import_id=$sample_import_id&amp;questionnaire_id=$questionnaire_id&amp;questionnaire_sample_quota_row_id={$r['questionnaire_sample_quota_row_id']}' {$r['selected']}>{$r['questionnaire_sample_quota_row_id']}: {$r['description']}</option>";
 		}
 	}
 	print "</select></div>";

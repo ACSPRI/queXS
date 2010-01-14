@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: assessments.php 5096 2008-06-18 08:28:32Z c_schmitz $
+* $Id: assessments.php 7428 2009-08-10 10:26:46Z c_schmitz $
 */
 
 
@@ -18,59 +18,116 @@ include_once("login_check.php");
 if (!isset($surveyid)) {$surveyid=returnglobal('sid');}
 if (!isset($action)) {$action=returnglobal('action');}
 
+$surveyinfo=getSurveyInfo($surveyid);
+
+$js_adminheader_includes[]= $homeurl.'/scripts/assessments.js';
+$js_adminheader_includes[]= $rooturl.'/scripts/jquery/jquery-ui.js';
+//                          . "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"styles/default/jquery-ui.css\" />\n";
+
 
 $actsurquery = "SELECT edit_survey_property FROM {$dbprefix}surveys_rights WHERE sid=$surveyid AND uid = ".$_SESSION['loginID']; //Getting rights for this survey
 $actsurresult = $connect->Execute($actsurquery) or safe_die($connect->ErrorMsg());		
 $actsurrows = $actsurresult->FetchRow();
 
+
+$assessmentlangs = GetAdditionalLanguagesFromSurveyID($surveyid);
+$baselang = GetBaseLanguageFromSurveyID($surveyid);
+array_unshift($assessmentlangs,$baselang);      // makes an array with ALL the languages supported by the survey -> $assessmentlangs     
+
+
 if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $actsurrows['edit_survey_property']){
 
 	if ($action == "assessmentadd") {
 		$inserttable=$dbprefix."assessments";
-		$query = $connect->GetInsertSQL($inserttable, array(
-		'sid' => $surveyid,
-		'scope' => $_POST['scope'],
-		'gid' => $_POST['gid'],
-		'minimum' => $_POST['minimum'],
-		'maximum' => $_POST['maximum'],
-		'name' => $_POST['name'],
-		'message' => $_POST['message'],
-		'link' => $_POST['link'] ));
-		$result=$connect->Execute($query) or safe_die("Error inserting<br />$query<br />".$connect->ErrorMsg());
+        $first=true;
+        foreach ($assessmentlangs as $assessmentlang)
+        {
+            if (!isset($_POST['gid'])) $_POST['gid']=0;   
+                        
+            $datarray=array(
+            'sid' => $surveyid,
+            'scope' => $_POST['scope'],
+            'gid' => $_POST['gid'],
+            'minimum' => $_POST['minimum'],
+            'maximum' => $_POST['maximum'],
+            'name' => $_POST['name_'.$assessmentlang],
+            'language' => $assessmentlang,
+            'message' => $_POST['assessmentmessage_'.$assessmentlang]);
+            
+            if ($first==false)
+            {
+                $datarray['id']=$aid;
+            }
+            
+		    $query = $connect->GetInsertSQL($inserttable, $datarray, get_magic_quotes_gpc());
+		    $result=$connect->Execute($query) or safe_die("Error inserting<br />$query<br />".$connect->ErrorMsg());
+            if ($first==true)
+            {
+              $first=false;
+              $aid=$connect->Insert_ID(db_table_name_nq('assessments'),"id");           
+            }
+        }
 	} elseif ($action == "assessmentupdate") {
-		$query = "UPDATE {$dbprefix}assessments
-				  SET scope='".db_quote($_POST['scope'])."',
-				  gid=".sanitize_int($_POST['gid']).",
-				  minimum='".sanitize_int($_POST['minimum'])."',
-				  maximum='".sanitize_int($_POST['maximum'])."',
-				  name='".db_quote($_POST['name'])."',
-				  message='".db_quote($_POST['message'])."',
-				  link='".db_quote($_POST['link'])."'
-				  WHERE id=".sanitize_int($_POST['id']);
-		$result = $connect->Execute($query) or safe_die("Error updating<br />$query<br />".$connect->ErrorMsg());
+
+        if ($filterxsshtml)    
+        {
+            require_once("../classes/inputfilter/class.inputfilter_clean.php");
+            $myFilter = new InputFilter('','',1,1,1); 
+        }
+        
+        foreach ($assessmentlangs as $assessmentlang)
+        {
+        
+            if (!isset($_POST['gid'])) $_POST['gid']=0;
+            if ($filterxsshtml)    
+            {
+              $_POST['name_'.$assessmentlang]=$myFilter->process($_POST['name_'.$assessmentlang]);  
+              $_POST['assessmentmessage_'.$assessmentlang]=$myFilter->process($_POST['assessmentmessage_'.$assessmentlang]);  
+            }
+	        $query = "UPDATE {$dbprefix}assessments
+			          SET scope='".db_quote($_POST['scope'])."',
+			          gid=".sanitize_int($_POST['gid']).",
+			          minimum='".sanitize_signedint($_POST['minimum'])."',
+			          maximum='".sanitize_signedint($_POST['maximum'])."',
+			          name='".db_quote($_POST['name_'.$assessmentlang],true)."',
+			          message='".db_quote($_POST['assessmentmessage_'.$assessmentlang],true)."'
+			          WHERE language='$assessmentlang' and id=".sanitize_int($_POST['id']);
+	        $result = $connect->Execute($query) or safe_die("Error updating<br />$query<br />".$connect->ErrorMsg());
+        }
 	} elseif ($action == "assessmentdelete") {
 		$query = "DELETE FROM {$dbprefix}assessments
 				  WHERE id=".sanitize_int($_POST['id']);
 		$result=$connect->Execute($query);
 	}
 	
-    $assessmentsoutput=  "<table width='100%' border='0' >\n"
+    $assessmentsoutput=PrepareEditorScript();  
+    $assessmentsoutput.="<script type=\"text/javascript\">
+                        <!-- 
+                            var strnogroup='".$clang->gT("There are no groups available.", "js")."';
+                        --></script>";
+    $assessmentsoutput.="<table width='100%' border='0' >\n"
         . "\t<tr>\n"
         . "\t\t<td>\n"
-        . "\t\t\t<table class='menubar'>\n"
-        . "\t\t\t<tr>\n"
-        . "\t\t\t\t<td colspan='2' height='8'>\n"
-        . "\t\t\t\t\t<strong>".$clang->gT("Assessments")."</strong></td></tr>\n";
+        . "<div class='menubar'>\n"
+        . "\t<div class='menubar-title'>\n"
+        . "\t\t<strong>".$clang->gT("Assessments")."</strong>\n";
 	
-	$assessmentsoutput.= "\t<tr >\n"
-	. "\t\t<td>\n"
+	$assessmentsoutput.= "\t</div>\n"
+    . "\t<div class='menubar-main'>\n"
+    . "\t\t<div class='menubar-left'>\n"
 	. "\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?sid=$surveyid', '_self')\" onmouseout=\"hideTooltip()\" onmouseover=\"showTooltip(event,'".$clang->gT("Return to Survey Administration", "js")."');return false\">" .
-			"<img name='Administration' src='$imagefiles/home.png' title='' alt='' align='left'  /></a>\n"
-	. "\t\t\t<img src='$imagefiles/blank.gif' alt='' width='11' border='0' hspace='0' align='left' />\n"
-	. "\t\t\t<img src='$imagefiles/seperator.gif' alt='' border='0' hspace='0' align='left' />\n"
-	. "\t\t</td>\n"
-	. "\t</tr>\n";
-	$assessmentsoutput.= "</table>";
+			"<img name='Administration' src='$imagefiles/home.png' title='' alt='' /></a>\n"
+	. "\t\t\t<img src='$imagefiles/blank.gif' alt='' width='11'  />\n"
+	. "\t\t\t<img src='$imagefiles/seperator.gif' alt='' />\n";
+    
+    if ($surveyinfo['assessments']!='Y')
+    {
+        $assessmentsoutput.='<span style="font-size:11px;">'.sprintf($clang->gT("Notice: Assessment mode for this survey is not activated. You can activate it in the %s survey settings %s (tab 'Notification & data management')."),'<a href="admin.php?action=editsurvey&sid='.$surveyid.'">','</a>').'</span>';   
+    }
+	$assessmentsoutput.= "\t\t</div>\n"
+	. "\t</div>\n"
+    . "</div>\n";
+    $assessmentsoutput .= "<p style='margin:0;font-size:1px;line-height:1px;height:1px;'>&nbsp;</p>"; //CSS Firefox 2 transition fix
 	
 	if ($surveyid == "") {
 		$assessmentsoutput.= $clang->gT("No SID Provided");
@@ -80,56 +137,54 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $actsurrows['edit_survey_property'
 	$assessments=getAssessments($surveyid);
 	//$assessmentsoutput.= "<pre>";print_r($assessments);echo "</pre>";
 	$groups=getGroups($surveyid);
-	$groupselect="<select name='gid'>\n";
+	$groupselect="<select name='gid' id='newgroupselect'>\n";
 	foreach($groups as $group) {
 		$groupselect.="<option value='".$group['gid']."'>".$group['group_name']."</option>\n";
 	}
 	$groupselect .="</select>\n";
-	$headings=array($clang->gT("Scope"), $clang->gT("Group"), $clang->gT("Minimum"), $clang->gT("Maximum"), $clang->gT("Heading"), $clang->gT("Message"), $clang->gT("URL"));
-	$inputs=array("<select name='scope'><option value='T'>".$clang->gT("Total")."</option><option value='G'>".$clang->gT("Group")."</option></select>",
+	$headings=array($clang->gT("Scope"), $clang->gT("Question group"), $clang->gT("Minimum"), $clang->gT("Maximum"));
+	$inputs=array("<input type='radio' id='radiototal' name='scope' value='T' checked='checked'>".$clang->gT("Total")."</input><input type='radio' id='radiogroup' name='scope' value='G'>".$clang->gT("Group")."</input>",
 	$groupselect,
-	"<input type='text' name='minimum' />",
-	"<input type='text' name='maximum' />",
-	"<input type='text' name='name' size='80'/>",
-	"<textarea name='message' rows='10' cols='80'></textarea >",
-	"<input type='text' name='link' size='80' />");
+	"<input type='text' name='minimum' class='numbersonly' />",
+	"<input type='text' name='maximum' class='numbersonly' />");
 	$actiontitle=$clang->gT("Add");
 	$actionvalue="assessmentadd";
 	$thisid="";
 	
 	if ($action == "assessmentedit") {
-		$query = "SELECT * FROM {$dbprefix}assessments WHERE id=".sanitize_int($_POST['id']);
+		$query = "SELECT * FROM {$dbprefix}assessments WHERE id=".sanitize_int($_POST['id'])." and language='$baselang'";
 		$results = db_execute_assoc($query);
 		while($row=$results->FetchRow()) {
 			$editdata=$row;
 		}
-		$scopeselect = "<select name='scope'><option ";
-		if ($editdata['scope'] == "T") {$scopeselect .= "selected='selected' ";}
-		$scopeselect .= "value='T'>".$clang->gT("Total")."</option><option value='G'";
-		if ($editdata['scope'] == "G") {$scopeselect .= " selected='selected'";}
-		$scopeselect .= ">".$clang->gT("Group")."</option></select>";
+		$scopeselect = "<input type='radio' id='radiototal' name='scope' ";
+		if ($editdata['scope'] == "T") {$scopeselect .= "checked='checked' ";}
+		$scopeselect .= "value='T'>".$clang->gT("Total")."</input>";
+        $scopeselect .= "<input type='radio' name='scope' id='radiogroup' value='G'";
+		if ($editdata['scope'] == "G") {$scopeselect .= " checked='checked'";}
+		$scopeselect .= ">".$clang->gT("Question group")."</input>";
 		$groupselect=str_replace("'".$editdata['gid']."'", "'".$editdata['gid']."' selected", $groupselect);
 		$inputs=array($scopeselect,
 		$groupselect,
-		"<input type='text' name='minimum' value='".$editdata['minimum']."' />",
-		"<input type='text' name='maximum' value='".$editdata['maximum']."' />",
+		"<input type='text' name='minimum' value='".$editdata['minimum']."' class='numbersonly' />",
+		"<input type='text' name='maximum' value='".$editdata['maximum']."' class='numbersonly' />",
 		"<input type='text' name='name' size='80' value='".htmlentities(stripslashes($editdata['name']), ENT_QUOTES,'UTF-8')."'/>",
-		"<textarea name='message' rows='10' cols='80'>".htmlentities(stripslashes($editdata['message']), ENT_QUOTES,'UTF-8')."</textarea>",
-		"<input type='text' name='link' size='80' value='".$editdata['link']."' />");
+		"<textarea name='message' id='assessmentmessage' rows='10' cols='80'>".htmlentities(stripslashes($editdata['message']), ENT_QUOTES,'UTF-8')."</textarea>");
 		$actiontitle=$clang->gT("Edit");	
 		$actionvalue="assessmentupdate";
 		$thisid=$editdata['id'];
 	}
 	//$assessmentsoutput.= "<pre>"; print_r($edits); $assessmentsoutput.= "</pre>";
 	//PRESENT THE PAGE
+
 	
 	$assessmentsoutput.= "<br /><table align='center'  width='90%'>
-		<tr><td colspan='12'>".$clang->gT("If you create any assessments in this page, for the currently selected survey, the assessment will be performed at the end of the survey after submission")."</th></tr>"
-		."<tr><th>ID</th><th>SID</th>\n";
+		<tr><th colspan='12'>".$clang->gT("Assessment rules")."</th></tr>"
+		."<tr><th>".$clang->gT("ID")."</th><th>".$clang->gT("SID")."</th>\n";
 	foreach ($headings as $head) {
 		$assessmentsoutput.= "<th>$head</th>\n";
 	}
-	$assessmentsoutput.= "<th>".$clang->gT("Actions")."</th>";
+	$assessmentsoutput.= "<th>".$clang->gT("Title")."</th><th>".$clang->gT("Message")."</th><th>".$clang->gT("Actions")."</th>";
 	$assessmentsoutput.= "</tr>\n";
     $flipflop=true;
 	foreach($assessments as $assess) {
@@ -139,16 +194,22 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $actsurrows['edit_survey_property'
 		$assessmentsoutput.= "<td>".$assess['id']."</td>\n";
 		$assessmentsoutput.= "<td>".$assess['sid']."</td>\n";
 
-		if ($assess['scope'] == "T") {	$assessmentsoutput.= "<td>".$clang->gT("Total")."</td>\n"; }
-		else {$assessmentsoutput.= "<td>".$clang->gT("Group")."</td>\n"; }
+		if ($assess['scope'] == "T") 
+        {	
+            $assessmentsoutput.= "<td>".$clang->gT("Total")."</td>\n"; 
+            $assessmentsoutput.= "<td>-</td>\n";
+        }
+		else 
+        {
+            $assessmentsoutput.= "<td>".$clang->gT("Question group")."</td>\n"; 
+            $assessmentsoutput.= "<td>".$groups[$assess['gid']]['group_name']." (".$assess['gid'].")</td>\n";
+        }
 
-		$assessmentsoutput.= "<td>".$groups[$assess['gid']]['group_name']." (".$assess['gid'].")</td>\n";
 		
 		$assessmentsoutput.= "<td>".$assess['minimum']."</td>\n";
 		$assessmentsoutput.= "<td>".$assess['maximum']."</td>\n";
 		$assessmentsoutput.= "<td>".stripslashes($assess['name'])."</td>\n";
-		$assessmentsoutput.= "<td>".stripslashes($assess['message'])."</td>\n";
-		$assessmentsoutput.= "<td>".stripslashes($assess['link'])."</td>\n";
+		$assessmentsoutput.= "<td>".strip_tags(strip_javascript($assess['message']))."</td>\n";
 		
 		$assessmentsoutput.= "<td>
 			   <table width='100%'>
@@ -169,21 +230,67 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $actsurrows['edit_survey_property'
 		$assessmentsoutput.= "</tr>\n";
 	}
 	$assessmentsoutput.= "</table>";
+    
+    
+    //now present edit/insert form
 	$assessmentsoutput.= "<br /><form method='post' name='assessmentsform' action='$scriptname?sid=$surveyid'><table align='center' cellspacing='0' border='0' class='form2columns'>\n";
 	$assessmentsoutput.= "<tr><th colspan='2'>$actiontitle</th></tr>\n";
 	$i=0;
 	
 	foreach ($headings as $head) {
-		$assessmentsoutput.= "<tr><td>$head</td><td>".$inputs[$i]."</td></tr>\n";
+		$assessmentsoutput.= "<tr><td>$head</td><td>".$inputs[$i]."<br /></td></tr>\n";
 		$i++;
 	}
-	$assessmentsoutput.= "<tr><th colspan='2' align='center'><input type='submit' value='".$clang->gT("Save")."' />\n";
+    
+    
+    // start tabs
+    $assessmentsoutput.= "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>\n";
+    $assessmentsoutput.='</table><div id="languagetabs">'
+                        .'<ul>';
+    foreach ($assessmentlangs as $assessmentlang)
+    {
+        $position=0;
+        $assessmentsoutput .= '<li><a href="#tablang'.$assessmentlang.'"><span>'.getLanguageNameFromCode($assessmentlang, false);
+        if ($assessmentlang==$baselang) {$assessmentsoutput .= ' ('.$clang->gT("Base Language").')';}
+        $assessmentsoutput .='</span></a></li>';
+    }
+    $assessmentsoutput.= '</ul>';
+    foreach ($assessmentlangs as $assessmentlang)
+    {
+        $heading=''; $message='';
+        if ($action == "assessmentedit") 
+        {       
+            $query = "SELECT * FROM {$dbprefix}assessments WHERE id=".sanitize_int($_POST['id'])." and language='$assessmentlang'";
+            $results = db_execute_assoc($query);
+            while($row=$results->FetchRow()) {
+                $editdata=$row;
+            }
+            $heading=$editdata['name'];
+            $message=$editdata['message'];
+        }
+        $assessmentsoutput .= '<div id="tablang'.$assessmentlang.'">';
+        $assessmentsoutput .= $clang->gT("Heading")."<br/>"
+        ."<input type='text' name='name_$assessmentlang' size='80' value='$heading'/><br /><br />"
+        .$clang->gT("Message")
+        ."<textarea name='assessmentmessage_$assessmentlang' id='assessmentmessage_$assessmentlang' rows='10' cols='80'>$message</textarea >";
+        
+        $assessmentsoutput .='</div>';
+    }    
+    $assessmentsoutput .='</div>'; 
+    
+    
+	$assessmentsoutput.= "<div style='width:200px;margin:5px auto;'><input type='submit' value='".$clang->gT("Save")."' />\n";
 	if ($action == "assessmentedit") $assessmentsoutput.= "&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' value='".$clang->gT("Cancel")."' onclick=\"document.assessmentsform.action.value='assessments'\" />\n";
 	$assessmentsoutput.= "<input type='hidden' name='sid' value='$surveyid' />\n"
 	."<input type='hidden' name='action' value='$actionvalue' />\n"
 	."<input type='hidden' name='id' value='$thisid' />\n"
-	."</th></tr>\n"                                            
-	."</table></form></td></tr></table>\n";
+	."<div>\n"                                            
+	."</form>\n";
+    foreach ($assessmentlangs as $assessmentlang)   
+    {
+        $assessmentsoutput.=getEditor("assessment-text","assessmentmessage_$assessmentlang", "[".$clang->gT("Message:", "js")."]",$surveyid,$gid,$qid,$action);
+    }
+    
 	}
 else
 	{
@@ -193,10 +300,10 @@ else
 	}
 	
 function getAssessments($surveyid) {
-	global $dbprefix, $connect;
-	$query = "SELECT id, sid, scope, gid, minimum, maximum, name, message, link
+	global $dbprefix, $connect, $baselang;
+	$query = "SELECT id, sid, scope, gid, minimum, maximum, name, message
 			  FROM ".db_table_name('assessments')."
-			  WHERE sid='$surveyid'
+			  WHERE sid='$surveyid' and language='$baselang'
 			  ORDER BY scope, gid";
 	$result=db_execute_assoc($query) or safe_die("Error getting assessments<br />$query<br />".$connect->ErrorMsg());
 	$output=array();

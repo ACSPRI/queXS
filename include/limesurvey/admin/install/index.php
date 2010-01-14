@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 *
-* $Id: index.php 4346 2008-02-25 21:32:02Z c_schmitz $
+* $Id: index.php 6952 2009-05-27 09:40:07Z c_schmitz $
 */
 
 
@@ -60,7 +60,7 @@ else
     $connect->database = $databasename;
     $connect->Execute("USE DATABASE `$databasename`");
 	$output=checkforupgrades();
-    if (!isset($ouput)) {$adminoutput.='<br />LimeSurvey Database is up to date. No action needed';}
+    if ($output== '') {$adminoutput.='<br />LimeSurvey Database is up to date. No action needed';}
       else {$adminoutput.=$output;}
     $adminoutput.="<br />Please <a href='$homeurl/$scriptname'>log in.</a>";
 
@@ -73,7 +73,10 @@ function checkforupgrades()
 {
     global $connect, $databasetype, $dbprefix, $dbversionnumber, $clang;
     $adminoutput='';
-    include ('upgrade-'.$databasetype.'.php');
+    $upgradedbtype=$databasetype;
+    if ($upgradedbtype=='mssql_n' || $upgradedbtype=='odbc_mssql' || $upgradedbtype=='odbtp') $upgradedbtype='mssql';         
+    if ($upgradedbtype=='mysqli') $upgradedbtype='mysql';         
+    include ('upgrade-'.$upgradedbtype.'.php');
     $tables = $connect->MetaTables();
 
     $usquery = "SELECT stg_value FROM ".db_table_name("settings_global")." where stg_name='DBVersion'";

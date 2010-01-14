@@ -87,13 +87,12 @@ function WebFXTabPane( el, bUseCookie ) {
 	this.selectedIndex = tabIndex;
 	
 	// loop through child nodes and add them
-	var cs = el.childNodes;
-	var n;
-	for (var i = 0; i < cs.length; i++) {
-		if (cs[i].nodeType == 1 && cs[i].className == "tab-page") {
-			this.addTabPage( cs[i] );
-		}
-	}
+    var c=this;
+	var b=$(el).find(".tab-page");
+        jQuery.each(b, function() {
+                c.addTabPage( this );
+    }
+    );
 }
 
 WebFXTabPane.prototype.classNameTag = "dynamic-tab-pane-control";
@@ -289,7 +288,7 @@ function setupAllTabs() {
 		
 		// uninitiated tab pane
 		if ( tabPaneRe.test( cn ) && !el.tabPane )
-			new WebFXTabPane( el, false );
+			new WebFXTabPane( el, true );
 	
 		// unitiated tab page wit a valid tab pane parent
 		else if ( tabPageRe.test( cn ) && !el.tabPage &&
@@ -326,27 +325,3 @@ function disposeAllTabs() {
 	}
 }
 
-
-// initialization hook up
-
-// DOM2
-if ( typeof window.addEventListener != "undefined" )
-	window.addEventListener( "load", setupAllTabs, false );
-
-// IE 
-else if ( typeof window.attachEvent != "undefined" ) {
-	window.attachEvent( "onload", setupAllTabs );
-	window.attachEvent( "onunload", disposeAllTabs );
-}
-
-else {
-	if ( window.onload != null ) {
-		var oldOnload = window.onload;
-		window.onload = function ( e ) {
-			oldOnload( e );
-			setupAllTabs();
-		};
-	}
-	else 
-		window.onload = setupAllTabs;
-}

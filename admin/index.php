@@ -64,6 +64,8 @@ print "<li><a href=\"javascript:link('mainobj','dataoutput.php');\">" . T_("Data
 
 print "<li><h3>" . T_("Questionnaire progress") . "</h3>";
 print "<ul><li><a href=\"javascript:link('mainobj','displayappointments.php');\">" . T_("Display all future appointments") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','samplecallattempts.php');\">" . T_("Sample call attempts report") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','quotareport.php');\">" . T_("Quota report") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','outcomes.php');\">" . T_("Questionnaire outcomes") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Performance") . "</h3>";

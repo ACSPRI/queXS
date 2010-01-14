@@ -96,10 +96,11 @@ if (isset($_POST['import_file']))
 	if ($rs)
 	{
 		$qid = $db->Insert_ID();
-		print "<p>Successfully inserted $name as questionnaire $qid, linked to $lime_sid</p>";
+		print "<p>" . T_("Successfully inserted") . " $name " . T_("as questionnaire") . " $qid, " . T_("linked to") . " $lime_sid</p>";
+		print "<p>" . T_("You must now edit and activate the questionnaire") . "</p>";
 	}else
 	{
-		print "<p>Error: Failed to insert questionnaire</p>";
+		print "<p>" . T_("Error: Failed to insert questionnaire") . "</p>";
 	}
 
 	

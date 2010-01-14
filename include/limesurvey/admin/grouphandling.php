@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: grouphandling.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: grouphandling.php 7446 2009-08-11 18:28:47Z c_schmitz $
 */
 
 
@@ -32,9 +32,16 @@ if ($action == "addgroup")
 
 
 //    $newgroupoutput .="<table width='100%' border='0'  class='tab-page'>\n\t<tr><td>\n"
-    $newgroupoutput .= "<form action='$scriptname' id ='addnewgroupfrom' name='addnewgroupfrom' method='post'>";
     $newgroupoutput .="\n"
-    .  '<div class="tab-pane" id="tab-pane-1">';
+    .  '<div class="tab-pane" id="tab-pane-newgroup">';
+    $newgroupoutput .= "<form action='$scriptname' id ='addnewgroupfrom' name='addnewgroupfrom' method='post' onsubmit=\"if (1==0 ";
+
+    foreach ($grplangs as $grouplang)
+    {
+      $newgroupoutput .= "|| document.getElementById('group_name_$grouplang').value.length==0 ";
+    }
+    $newgroupoutput .=" ) {alert ('".$clang->gT("Error: You have to enter a group title for each language.",'js')."'); return false;}\" ";
+
     foreach ($grplangs as $grouplang)
     {
         $newgroupoutput .= '<div class="tab-page"> <h2 class="tab">'.GetLanguageNameFromCode($grouplang,false);
@@ -70,8 +77,8 @@ if ($action == "addgroup")
     . "\t\n"
     . "\t\t<td><strong>".$clang->gT("Select CSV File:")."</strong></td>\n"
     . "\t\t<td><input name=\"the_file\" type=\"file\" size=\"35\" /></td></tr>\n"
-    . "\t\t<tr>\t\t<td>".$clang->gT("Convert Resources links ?")."</td>\n"
-    . "\t\t<td><input name=\"translinksfields\" type=\"checkbox\" /></td></tr>\n"
+    . "\t\t<tr>\t\t<td>".$clang->gT("Convert resources links?")."</td>\n"
+    . "\t\t<td><input name=\"translinksfields\" type=\"checkbox\" checked=\"checked\"/></td></tr>\n"
     . "\t<tr><td colspan='2'class='centered'><input type='submit' value='".$clang->gT("Import Group")."' />\n"
     . "\t<input type='hidden' name='action' value='importgroup' />\n"
     . "\t<input type='hidden' name='sid' value='$surveyid' />\n"
@@ -130,7 +137,7 @@ if ($action == "editgroup")
     $editgroup .= "<table width='100%' border='0'>\n\t<tr><td class='settingcaption'>"
     . "\t\t".$clang->gT("Edit Group")."</td></tr></table>\n"
     . "<form name='editgroup' action='$scriptname' method='post'>\n"
-    . '<div class="tab-pane" id="tab-pane-1">';
+    . '<div class="tab-pane" id="tab-pane-group-'.$gid.'">';
 
     $esrow = $egresult->FetchRow();
     $editgroup .= '<div class="tab-page"> <h2 class="tab">'.getLanguageNameFromCode($esrow['language'],false);

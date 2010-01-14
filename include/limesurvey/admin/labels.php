@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: labels.php 5144 2008-06-22 12:46:05Z c_schmitz $
+* $Id: labels.php 7451 2009-08-12 03:56:38Z paraya $
 */
 
 include_once("login_check.php");  //Login Check dies also if the script is started directly
@@ -27,6 +27,7 @@ if (isset($_POST['method']) && get_magic_quotes_gpc())
 	$_POST['method']  = stripslashes($_POST['method']);
 }
 
+$labelsoutput='';
 if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL'] == 1)
 {
 
@@ -36,7 +37,6 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 	if (!isset($action)) {$action=returnglobal('action');}
 	if (!isset($lid)) {$lid=returnglobal('lid');}
 	if (!isset($lid1)) {$lid1=returnglobal('lid1');}
-	$labelsoutput= include2var('./scripts/addremove.js');
 	
 	//DO DATABASE UPDATESTUFF 
 	if ($action == "updateset") {updateset($lid);}
@@ -57,37 +57,27 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 	}
 	
 
-	$labelsoutput.= "<table width='100%' border='0' >\n"
-                    . "\t<tr>\n"
-                    . "\t\t<td>\n"
-                    . "\t\t\t<table class='menubar'>\n"
-                    . "\t\t\t<tr >\n"
-                    . "\t\t\t\t<td colspan='2' height='8'>\n"
-                    . "\t\t\t\t<strong>"
-	.$clang->gT("Label Sets Administration")."</strong></td></tr>\n"
-	."<tr >\n"
-	."\t<td>\n"
+	$labelsoutput= "<table width='100%' border='0' >\n"
+    ."\t<tr>\n"
+    ."\t<td>\n"
+    ."\t\t<div class='menubar'>\n"
+    ."\t\t<div class='menubar-title'>\n"
+    ."\t\t<strong>".$clang->gT("Label Sets Administration")."</strong>\n"
+	."\t\t</div>\n"
+    ."\t<div class='menubar-main'>\n"
+    ."\t<div class='menubar-left'>\n"
 	."\t<a href='$scriptname' onmouseout=\"hideTooltip()\" title=\"".$clang->gTview("Return to Survey Administration")."\" onmouseover=\"showTooltip(event,'".$clang->gT("Return to Survey Administration", "js")."');return false\">" .
-			"<img name='Administration' src='$imagefiles/home.png' title='' alt='' align='left'  /></a>"
-	."\t<img src='$imagefiles/blank.gif' width='11' height='20' border='0' hspace='0' align='left' alt='' />\n"
-	."\t<img src='$imagefiles/seperator.gif' border='0' hspace='0' align='left' alt='' />\n"
-	."\t</td>\n"
-	."\t<td align='right' width='620'>\n"
-	."<a href=\"#\" onclick=\"showhelp('show')\"" 
-	."onmouseout=\"hideTooltip()\"" 
-	."title=\"".$clang->gTview("Show Help")."\"" 
-	."onmouseover=\"showTooltip(event,'".$clang->gT("Show Help", "js")."');return false\">" 
-	."<img src='$imagefiles/showhelp.png' name='ShowHelp' title=''" 
-	."alt='". $clang->gT("Show Help")."' align='right'  /></a>"	
-	."\t<img src='$imagefiles/blank.gif' width='42' height='20' align='right' hspace='0' border='0'  alt='' />\n"
-	."\t<img src='$imagefiles/seperator.gif' align='right' hspace='0' border='0' alt='' />\n"
-	."<a href=\"#\" onclick=\"window.open('admin.php?action=newlabelset', '_self')\"" 
-	."onmouseout=\"hideTooltip()\"" 
-	."title=\"".$clang->gTview("Add New Label Set")."\"" 
-	."onmouseover=\"showTooltip(event,'".$clang->gT("Add New Label Set", "js")."');return false\">"
-	."<img src='$imagefiles/add.png' align='right' name='AddLabel' title='' alt='". $clang->gT("Add new label set")."' /></a>\n"	 
+			"<img name='Administration' src='$imagefiles/home.png' title='' alt='' /></a>"
+	."\t<img src='$imagefiles/blank.gif' width='11' height='20' alt='' />\n"
+	."\t<img src='$imagefiles/seperator.gif' alt='' />\n"
+	."\t</div>\n"
+    ."\t<div class='menubar-right'>\n"
+	."\t<img src='$imagefiles/blank.gif' width='5' height='20' alt='' />\n"
 	."\t<font class='boxcaption'>".$clang->gT("Labelsets").": </font>"
 	."\t<select onchange=\"window.open(this.options[this.selectedIndex].value,'_self')\">\n";
+	$labelsoutput.= "<option value=''";
+	if (!isset($lid) || $lid<1) {$labelsoutput.= " selected='selected'";}
+	$labelsoutput.= ">".$clang->gT("Please Choose...")."</option>\n";
 	$labelsets=getlabelsets();
 	if (count($labelsets)>0)
 	{
@@ -98,17 +88,33 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 			$labelsoutput.= ">{$lb[1]}</option>\n";
 		}
 	}
-	$labelsoutput.= "<option value=''";
-	if (!isset($lid) || $lid<1) {$labelsoutput.= " selected='selected'";}
-	$labelsoutput.= ">".$clang->gT("Please Choose...")."</option>\n";
 	
 	$labelsoutput.= "\t</select>\n"
-	."\t</td>\n"
-	."</tr>\n"
-	."\t</table>\n";
-
-
-	if ($action!='labels' || isset($lid))  {$labelsoutput.="<table ><tr><td></td></tr></table>\n";}
+    ."<a href=\"#\" onclick=\"window.open('admin.php?action=newlabelset', '_self')\"" 
+    ."onmouseout=\"hideTooltip()\"" 
+    ."title=\"".$clang->gTview("Add new label set")."\"" 
+    ."onmouseover=\"showTooltip(event,'".$clang->gT("Add new label set", "js")."');return false\">"
+    ."<img src='$imagefiles/add.png'  name='AddLabel' title='' alt='". $clang->gT("Add new label set")."' /></a>\n"     
+    //Logout button
+    ."\t<img src='$imagefiles/seperator.gif'  alt='' />\n"
+    ."\t<img src='$imagefiles/blank.gif' width='5' height='20' alt='' />\n"
+    . "\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=logout', '_self')\""
+    . "title=\"".$clang->gTview("Logout")."\" "
+    . "onmouseout=\"hideTooltip()\""
+    . "onmouseover=\"showTooltip(event,'".$clang->gT("Logout", "js")."');return false\">"
+    . "<img src='$imagefiles/logout.png' name='Logout'"
+    . "title='' alt='".$clang->gT("Logout")."' /></a>"
+    ."<a href=\"#\" onclick=\"showhelp('show')\"" 
+    ."onmouseout=\"hideTooltip()\"" 
+    ."title=\"".$clang->gTview("Show Help")."\"" 
+    ."onmouseover=\"showTooltip(event,'".$clang->gT("Show Help", "js")."');return false\">" 
+    ."<img src='$imagefiles/showhelp.png' name='ShowHelp' title=''" 
+    ."alt='". $clang->gT("Show Help")."' /></a>"    
+	."\t\t</div>\n"
+	."\t</div>\n"
+	."</div>\n";
+    $labelsoutput .= "<p style='margin:0;font-size:1px;line-height:1px;height:1px;'>&nbsp;</p>"; //CSS Firefox 2 transition fix
+    
     	
 	//NEW SET
 	if ($action == "newlabelset" || $action == "editlabelset")
@@ -125,13 +131,13 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 		."<th>\n"
 		."<input type='image' src='$imagefiles/close.gif' align='right' "
 		."onclick=\"window.open('admin.php?action=labels&amp;lid=$lid', '_self')\" />\n";
-		if ($action == "newlabelset") {$labelsoutput.= $clang->gT("Create or Import New Label Set"); $langids="en"; $tabitem=$clang->gT("Create New Label Set");}
+		if ($action == "newlabelset") {$labelsoutput.= $clang->gT("Create or Import New Label Set"); $langids=$_SESSION['adminlang']; $tabitem=$clang->gT("Create New Label Set");}
 		else {$labelsoutput.= $clang->gT("Edit Label Set"); $tabitem=$clang->gT("Edit Label Set");}
 		$langidsarray=explode(" ",trim($langids)); //Make an array of it
 		$labelsoutput.= "\n\t</th></tr></table>\n";
 
-
-		$labelsoutput.= "<div class='tab-pane' id='tab-pane-1'>\n";
+        if (isset($row['lid'])) { $panecookie=$row['lid'];} else  {$panecookie='new';}
+		$labelsoutput.= "<div class='tab-pane' id='tab-pane-labelset-{$panecookie}'>\n";
 
 		$labelsoutput.= "<div class='tab-page'> <h2 class='tab'>".$tabitem."</h2>\n";
 
@@ -208,8 +214,8 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 			."<td><input name=\"the_file\" type=\"file\" size=\"35\" />"
 			."\t<tr>\n"
 			."<td align='right'><strong>"
-			.$clang->gT("Convert Resources links ?")."</strong></td>\n"
-			."<td><input name=\"translinksfields\" type=\"checkbox\" />\n"
+			.$clang->gT("Convert resources links?")."</strong></td>\n"
+			."<td><input name=\"translinksfields\" type=\"checkbox\" checked=\"checked\" />\n"
 			."</td></tr>\n"
 			."\t<tr><td></td><td><input type='submit' value='".$clang->gT("Import Label Set")."' />\n"
 			."\t<input type='hidden' name='action' value='importlabels' /></td>\n"
@@ -229,7 +235,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 		//$query = "SELECT * FROM ".db_table_name('questions')." WHERE type IN ('F','H','Z','W') AND lid='$lid' GROUP BY qid";
 		//NOTE: OK, we're back to "what the hell is Tom up to?". SQL Server complains if the selected columns aren't either aggregated
 		// part of the GROUP BY clause. This should work for both databases.
-		$query = "SELECT qid, sid, gid FROM ".db_table_name('questions')." WHERE type IN ('F','H','Z','W') AND lid='$lid' GROUP BY qid, sid, gid";		
+		$query = "SELECT qid, sid, gid FROM ".db_table_name('questions')." WHERE type IN ('F','H','Z','W','1',':',';') AND lid='$lid' OR lid1='$lid' GROUP BY qid, sid, gid";		
 		$result = db_execute_assoc($query);
 		$totaluse=$result->RecordCount();
 		while($row=$result->FetchRow())
@@ -241,15 +247,13 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 		$result = db_execute_assoc($query);
 		while ($row=$result->FetchRow())
 		{
-			$labelsoutput.= "\t<table class='menubar'>\n"
-			."<tr><td height='4' colspan='2'>"
-			."<strong>".$clang->gT("Label Set").":</strong> {$row['label_name']}</td></tr>\n"
-			."<tr>\n"
-			."\t<td>\n"
-			."\t<input type='image' src='$imagefiles/close.gif' title='"
-			.$clang->gT("Close Window")."' align='right' "
-			."onclick=\"window.open('admin.php?action=labels', '_self')\" />\n"
-			."\t<img src='$imagefiles/blank.gif' width='50' height='20' border='0' hspace='0' align='left' alt='' />\n"
+			$labelsoutput.= "<div class='menubar'>\n"
+			."<div class='menubar-title'>\n"
+			."\t<strong>".$clang->gT("Label Set").":</strong> {$row['label_name']}\n"
+			."</div>\n"
+			."<div class='menubar-main'>\n"
+            ."\t<div class='menubar-left'>\n"
+			."\t<img src='$imagefiles/blank.gif' width='60' height='20' border='0' hspace='0' align='left' alt='' />\n"
 			."\t<img src='$imagefiles/seperator.gif' border='0' hspace='0' align='left' alt='' />\n"
 			."\t<a href='admin.php?action=editlabelset&amp;lid=$lid' onmouseout=\"hideTooltip()\" title=\"".$clang->gTview("Edit label set")."\" onmouseover=\"showTooltip(event,'".$clang->gT("Edit label set", "js")."');return false\">" .
 			"<img name='EditLabelsetButton' src='$imagefiles/edit.png' alt='' align='left'  /></a>" 
@@ -260,9 +264,14 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 			."\t<img src='$imagefiles/seperator.gif' border='0' hspace='0' align='left' alt='' />\n"
 			."\t<a href='admin.php?action=dumplabel&amp;lid=$lid' onmouseout=\"hideTooltip()\" title=\"".$clang->gTview("Export Label Set")."\" onmouseover=\"showTooltip(event,'".$clang->gT("Export Label Set", "js")."');return false\">" .
 					"<img src='$imagefiles/exportcsv.png' alt='".$clang->gT("Export Label Set")."' title='' align='left' /></a>" 
-			."\t</td>\n"
-			."</tr>\n"
-			."\t</table>\n";
+			."\t</div>\n"
+            ."\t<div class='menubar-right'>\n"
+            ."\t<input type='image' src='$imagefiles/close.gif' title='".$clang->gT("Close Window")."'"
+            ."onclick=\"window.open('admin.php?action=labels', '_self')\" />\n"
+            ."\t</div>\n"
+            ."\t</div>\n"
+			."\t</div>\n";
+            $labelsoutput .= "<p style='margin:0;font-size:1px;line-height:1px;height:1px;'>&nbsp;</p>"; //CSS Firefox 2 transition fix
 		}
 
 
@@ -276,17 +285,23 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 		
 		$labelsoutput.= PrepareEditorScript("editlabel");
 
+        $maxquery = "SELECT max(sortorder) as maxsortorder FROM ".db_table_name('labels')." WHERE lid=$lid and language='{$lslanguages[0]}'";
+        $maxresult = db_execute_assoc($maxquery) or safe_die($connect->ErrorMsg());
+        $msorow=$maxresult->FetchRow();
+        $maxsortorder=$msorow['maxsortorder']+1;        
+        
 		$labelsoutput.= "\t<table width='100%'>\n"
 		."<tr>\n"
 		."\t<td colspan='4' class='header'><strong>\n"
 		.$clang->gT("Labels")
 		."\t</strong></td>\n"
 		."</tr>\n"
-        ."\t<tr><td colspan='4'>\n"        ."<form method='post' action='admin.php'>\n"
+        ."\t<tr><td colspan='4'>\n"        
+        ."<form method='post' action='admin.php' onsubmit=\"return codeCheck('code_',$maxsortorder,'".$clang->gT("Error: You are trying to use duplicate label codes.",'js')."');\">\n"
 	    ."<input type='hidden' name='sortorder' value='{$row['sortorder']}' />\n"
 		."<input type='hidden' name='lid' value='$lid' />\n"
 		."<input type='hidden' name='action' value='modlabelsetanswers' />\n";
-        $labelsoutput.= "<div class='tab-pane' id='tab-pane-1'>";    
+        $labelsoutput.= "<div class='tab-pane' id='tab-pane-labels-{$lid}'>";    
         $first=true;
         $sortorderids=''; $codeids='';
 		foreach ($lslanguages as $lslanguage)
@@ -297,31 +312,40 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
     		$labelcount = $result->RecordCount();
             $labelsoutput.= "<div class='tab-page'>"
                 ."<h2 class='tab'>".getLanguageNameFromCode($lslanguage)."</h2>"
-                ."\t<table width='100%' class='form2columns'>\n"
+                ."\t<table id='labels' class='answertable' align='center'>\n"
                 ."<thead align='center'>"
         		."<tr>\n"
-        		."\t<td width='25%' align='right' class='settingcaption'><strong>\n"
+        		."\t<th align='right' class='settingcaption'>\n"
         		.$clang->gT("Code")
-        		."\t</strong></td>\n"
-//        		."\t<td width='35%' class='settingcaption'><strong>\n"
-        		."\t<td class='settingcaption'><strong>\n"
+        		."\t</th>\n";
+                $labelsoutput.="<th align='right' class='settingcaption'>".$clang->gT("Assessment value").'</th>';
+        		$labelsoutput.="\t<th class='settingcaption'>\n"
         		.$clang->gT("Title")
-        		."\t</strong></td>\n"
-//        		."\t<td width='15%' class='settingcaption'><strong>\n"
-        		."\t<td class='settingcaption'><strong>\n"
+        		."\t</th>\n"
+        		."\t<th align='center' class='settingcaption'>\n"
         		.$clang->gT("Action")
-        		."\t</strong></td>\n"
-//        		."\t<td width='25%' align='center' class='settingcaption'><strong>\n"
-        		."\t<td align='center' class='settingcaption'><strong>\n"
+        		."\t</th>\n"
+        		."\t<th align='center' class='settingcaption'>\n"
         		.$clang->gT("Order")
-        		."\t</strong></td>\n"
+        		."\t</th>\n"
         		."</tr></thead>"
                 ."<tbody align='center'>";
+            $alternate=false;    
     		while ($row=$result->FetchRow())
     		{
                 $sortorderids=$sortorderids.' '.$row['language'].'_'.$row['sortorder'];
     			if ($first) {$codeids=$codeids.' '.$row['sortorder'];}                 
-    			$labelsoutput.= "<tr><td align='right'>\n";
+    			$labelsoutput.= "<tr style='white-space: nowrap;' ";
+                if ($alternate==true)
+                {
+                    $labelsoutput.=' class="highlight" ';
+                    $alternate=false;
+                }
+                else
+                {
+                    $alternate=true;
+                }
+                $labelsoutput.="><td align='right'>\n";
 
     			if ($activeuse > 0)
     			{
@@ -335,15 +359,30 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
     			else
     			{
     				$labelsoutput.= "\t<input type='hidden' name='oldcode_{$row['sortorder']}' value=\"{$row['code']}\" />\n"; 
-    				$labelsoutput.= "\t<input type='text' name='code_{$row['sortorder']}' maxlength='5' size='10' value=\"{$row['code']}\" onkeypress=\"return catchenter(event,'saveallbtn');\" />\n";
+    				$labelsoutput.= "\t<input type='text' id='code_{$row['sortorder']}' name='code_{$row['sortorder']}' maxlength='5' size='6' value=\"{$row['code']}\" onkeypress=\"return catchenter(event,'saveallbtn_$lslanguage');\" />\n";
     			}
     			
+            
+                
+                
     			$labelsoutput.= "\t</td>\n"
-    			."\t<td>\n"
-    			."\t<input type='text' name='title_{$row['language']}_{$row['sortorder']}' maxlength='3000' size='80' value=\"".html_escape($row['title'])."\" onkeypress=\"return catchenter(event,'saveallbtn');\"/>\n"
-			. getEditor("editlabel", "title_{$row['language']}_{$row['sortorder']}", "[".$clang->gT("Label:", "js")."](".$row['language'].")",'','','',$action)
+    			."\t<td style='text-align:center;'>\n";
+                if ($first)
+                {
+                    $labelsoutput.= "\t<input type='text' id='assessmentvalue_{$row['sortorder']}' style='text-align: right;' name='assessmentvalue_{$row['sortorder']}' maxlength='5' size='6' value=\"{$row['assessment_value']}\" "
+                                   ."onkeypress=\" if(event.keyCode==13) {if (event && event.preventDefault) event.preventDefault(); document.getElementById('saveallbtn_$lslanguage').click(); return false;} return goodchars(event,'1234567890-')\" />";
+                }
+                else
+                {
+                    $labelsoutput.= $row['assessment_value'];
+                    
+                }
+                $labelsoutput.= "\t</td>\n"
+                ."\t<td>\n"
+    			."\t<input type='text' name='title_{$row['language']}_{$row['sortorder']}' maxlength='3000' size='80' value=\"".html_escape($row['title'])."\" onkeypress=\"return catchenter(event,'saveallbtn_$lslanguage');\"/>\n"
+			    . getEditor("editlabel", "title_{$row['language']}_{$row['sortorder']}", "[".$clang->gT("Label:", "js")."](".$row['language'].")",'','','',$action)
     			."\t</td>\n"
-    			."\t<td>\n";
+    			."\t<td style='text-align:center;'>\n";
     			if ($activeuse == 0)
     			{
     				$labelsoutput.= "\t<input type='submit' name='method' value='".$clang->gT("Del")."' onclick=\"this.form.sortorder.value='{$row['sortorder']}'\" />\n";
@@ -356,7 +395,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
     			};
     			if ($position < $labelcount-1)
     			{
-    				// Fill the sortorder hiddenfield so we now what field is moved down
+    				// Fill the sortorder hiddenfield so we know what field is moved down
                     $labelsoutput.= "\t<input type='submit' name='method' value='".$clang->gT("Dn")."' onclick=\"this.form.sortorder.value='{$row['sortorder']}'\" />\n";
     			}
     			$labelsoutput.= "\t</td></tr>\n";
@@ -364,24 +403,26 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
     		}
     	    if ($labelcount>0)  
             {                       
-                $labelsoutput.= "\t<tr><td colspan='4'><center><input type='submit' name='method' value='".$clang->gT("Save All")."'  id='saveallbtn' />"
+                $labelsoutput.= "\t<tr><td colspan='5'><center><input type='submit' name='method' value='".$clang->gT("Save Changes")."'  id='saveallbtn_$lslanguage' />"
                 ."</center></td></tr>\n";
             }
 
     		$position=sprintf("%05d", $position);
+            if (!isset($_SESSION['nextlabelcode'])) $_SESSION['nextlabelcode']='';
     		if ($activeuse == 0 && $first)
     		{   $labelsoutput.= "<tr><td><br /></td></tr><tr><td align='right'>"
-  			    ."<strong>".$clang->gT("New label").":</strong> <input type='text' maxlength='5' name='insertcode' size='10' id='addnewlabelcode' onkeypress=\"return catchenter(event,'addnewlabelbtn');\" />\n"
+  			    ."<strong>".$clang->gT("New label").":</strong> <input type='text' maxlength='5' name='insertcode' size='6' value='".$_SESSION['nextlabelcode']."' id='addnewlabelcode' onkeypress=\"return catchenter(event,'addnewlabelbtn');\" />\n"
     			."\t</td>\n"
+                ."<td style='text-align:center;'>"
+                ."<input style='text-align:right;' type='text' maxlength='5' name='insertassessmentvalue' size='6' id='insertassessmentvalue' value='0'"
+                ."onkeypress=\" if(event.keyCode==13) {if (event && event.preventDefault) event.preventDefault(); document.getElementById('addnewlabelbtn').click(); return false;} return goodchars(event,'1234567890-')\" />"
+                ."\t</td>\n"
     			."\t<td>\n"
     			."\t<input type='text' maxlength='3000' name='inserttitle' size='80' onkeypress=\"return catchenter(event,'addnewlabelbtn');\"/>\n"
-			. getEditor("addlabel", "inserttitle", "[".$clang->gT("Label:", "js")."](".$lslanguage.")",'','','',$action)
+			    . getEditor("addlabel", "inserttitle", "[".$clang->gT("Label:", "js")."](".$lslanguage.")",'','','',$action)
     			."\t</td>\n"
-    			."\t<td>\n"
+    			."\t<td colspan='2'>\n"
     			."\t<input type='submit' name='method' value='".$clang->gT("Add new label")."' id='addnewlabelbtn' />\n"
-    			."\t</td>\n"
-    			."\t<td>\n"
-			."<input type='button' onclick=\"document.getElementById('formfixorder').submit();\" value=\"".$clang->gT('Fix Order')."\">\n"
                 ."<script type='text/javascript'>\n"
     			."<!--\n"
     			."document.getElementById('addnewlabelcode').focus();\n"
@@ -407,7 +448,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
     			$labelsoutput.= "<tr>\n"
     			."\t<td colspan='4' align='center'>\n"
     			."<font color='green' size='1'><i><strong>"
-    			.$clang->gT("Warning")."</strong>: ".$clang->gT("Inserting New labels must be done on the first language folder.")."</i></font>\n"
+    			.$clang->gT("Note: Inserting new labels must be done on the first language tab.")."</i></font>\n"
     			."\t</td>\n"
     			."</tr>\n";
 			}
@@ -424,6 +465,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
     			$labelsoutput .= "\t</center></td>\n"
     			."</tr>\n";
     		}
+        unset($_SESSION['nextlabelcode']);
         $first=false;
     	$labelsoutput.="</tbody></table>\n";
 
@@ -450,16 +492,16 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 
 	$labelsoutput.= "<div class='tab-page'> <h2 class='tab'>".$clang->gT("Uploaded Resources Management")."</h2>\n"
 		. "\t<form enctype='multipart/form-data' name='importlabelresources' action='$scriptname' method='post' onsubmit='return validatefilename(this,\"".$clang->gT('Please select a file to import!','js')."\");'>\n"
-		. "\t<input type='hidden' name='lid' value='$lid'>\n"
-		. "\t<input type='hidden' name='action' value='importlabelresources'>\n"
+		. "\t<input type='hidden' name='lid' value='$lid' />\n"
+		. "\t<input type='hidden' name='action' value='importlabelresources' />\n"
 		. "\t<table width='100%' class='form2columns'>\n"
 		. "\t<tbody align='center'>"
 		. "\t\t<tr><td></td><td>\n"
-		. "\t\t<input type='button' onclick='window.open(\"$fckeditordir/editor/filemanager/browser/default/browser.html?Connector=../../connectors/php/connector.php?\", \"_blank\")'/ value=\"".$clang->gT("Browse Uploaded Resources")."\" $disabledIfNoResources></td><td><td></tr>\n"
-		. "\t\t<tr><td></td><td><input type='button' onclick='window.open(\"$scriptname?action=exportlabelresources&amp;lid={$lid}\", \"_blank\")'/ value=\"".$clang->gT("Export Resources As ZIP Archive")."\" $disabledIfNoResources></td><td><td></tr>\n"
-		. "\t\t<tr></tr>&nbsp;<tr><td>".$clang->gT("Select ZIP File:")."</td>\n"
+		. "\t\t<input type='button' onclick='window.open(\"$fckeditordir/editor/filemanager/browser/default/browser.html?Connector=../../connectors/php/connector.php?\", \"_blank\")' value=\"".$clang->gT("Browse Uploaded Resources")."\" $disabledIfNoResources /></td><td><td></tr>\n"
+		. "\t\t<tr><td></td><td><input type='button' onclick='window.open(\"$scriptname?action=exportlabelresources&amp;lid={$lid}\", \"_blank\")' value=\"".$clang->gT("Export Resources As ZIP Archive")."\" $disabledIfNoResources /></td><td>&nbsp;</td></tr>\n"
+		. "\t\t<tr><td>".$clang->gT("Select ZIP File:")."</td>\n"
 		. "\t\t<td><input name=\"the_file\" type=\"file\" size=\"50\" /></td><td></td></tr>\n"
-		. "\t\t<tr><td></td><td><input type='button' value='".$clang->gT("Import Resources ZIP Archive")."' $ZIPimportAction/></td><td></td>\n"
+		. "\t\t<tr><td></td><td><input type='button' value='".$clang->gT("Import Resources ZIP Archive")."' $ZIPimportAction /></td><td></td>\n"
 		. "\t\t</tr>\n"
 		. "\t</tbody></table></form>\n";
 
@@ -470,17 +512,7 @@ if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL
 
 	
 	// Here starts the hidden Fix Sort order form
-    $labelsoutput.= "</td></tr><tr><td colspan='4'>"
-        ."<form id='formfixorder' style='margin-bottom:0;' action='admin.php?action=labels' method='post'>"
-		."<table width='100%' style='border: solid; border-width: 0px; border-color: #555555' cellspacing='0'><tbody align='center'>\n"
-		."\t<tr><td width='80%'></td>"
-//		."<td></td><td><input type='submit' name='method' value='"
-		."<td></td><td><input type='hidden' name='method' value='"
-		.$clang->gT("Fix Sort")."' /></td>\n"
-		."</tr></tbody></table>"
-		."\t<input type='hidden' name='lid' value='$lid' />\n"
-		."\t<input type='hidden' name='action' value='modlabelsetanswers' />\n"
-		."</form></td></tr>\n";
+    $labelsoutput.= "</td></tr>\n";
 		if ($totaluse > 0 && $activeuse == 0) //If there are surveys using this labelset, but none are active warn about modifying
 		{
 			$labelsoutput.= "<tr>\n"
@@ -535,32 +567,32 @@ function updateset($lid)
 	$dellangidsarray=array_diff($oldlangidsarray,$newlanidarray);
 
 	// If new languages are added, create labels' codes and sortorder for the new languages	
-	$query = "SELECT code,sortorder FROM ".db_table_name('labels')." WHERE lid=".$lid." GROUP BY code,sortorder";
+	$query = "SELECT code,sortorder,assessment_value FROM ".db_table_name('labels')." WHERE lid=".$lid." GROUP BY code,sortorder,assessment_value";
 	$result=db_execute_assoc($query);
-	if ($result) { while ($row=$result->FetchRow()) {$oldcodesarray[$row['code']]=$row['sortorder'];} }
+	if ($result) { while ($row=$result->FetchRow()) {$oldcodesarray[$row['code']]=array('sortorder'=>$row['sortorder'],'assessment_value'=>$row['assessment_value']);} }
 	if (isset($oldcodesarray) && count($oldcodesarray) > 0 )
 	{
 		foreach ($addlangidsarray as $addedlangid)
 		{
-			foreach ($oldcodesarray as $oldcode => $oldsortorder)
+			foreach ($oldcodesarray as $oldcode => $olddata)
 			{
-				$sqlvalues[]= " ($lid, '$oldcode', '$oldsortorder', '$addedlangid')";
+				$sqlvalues[]= " ($lid, '$oldcode', '{$olddata['sortorder']}', '$addedlangid', '{$olddata['assessment_value']}' )";
 			}
 		}
 	}	
 	if (isset($sqlvalues))
 	{
-        if ($databasetype=='odbc_mssql') {@$connect->Execute("SET IDENTITY_INSERT ".db_table_name('labels')." ON");}
+        if ($connect->databaseType == 'odbc_mssql' || $connect->databaseType == 'odbtp' || $connect->databaseType == 'mssql_n') {@$connect->Execute('SET IDENTITY_INSERT '.db_table_name('labels')." ON");}
         foreach ($sqlvalues as $sqlline) 
         {
-		    $query = "INSERT INTO ".db_table_name('labels')." (lid,code,sortorder,language) VALUES ".($sqlline);
+		    $query = "INSERT INTO ".db_table_name('labels')." (lid,code,sortorder,language,assessment_value) VALUES ".($sqlline);
 		    $result=db_execute_assoc($query);
 		    if (!$result)
 		    {
 			    $labelsoutput.= "<script type=\"text/javascript\">\n<!--\n alert(\"".$clang->gT("Failed to Copy already defined labels to added languages","js")." - ".$query." - ".$connect->ErrorMsg()."\")\n //-->\n</script>\n";
 		    }
         }
-        if ($databasetype=='odbc_mssql') {@$connect->Execute("SET IDENTITY_INSERT ".db_table_name('labels')." OFF");}
+        if ($connect->databaseType == 'odbc_mssql' || $connect->databaseType == 'odbtp' || $connect->databaseType == 'mssql_n') {@$connect->Execute('SET IDENTITY_INSERT '.db_table_name('labels')." OFF");}
 	}
 
 	// If languages are removed, delete labels for these languages
@@ -663,6 +695,7 @@ function modlabelsetanswers($lid)
 		case $clang->gT("Add new label", "unescaped"):
 		if (isset($_POST['insertcode']) && $_POST['insertcode']!='')
 		{
+            $_SESSION['nextlabelcode']=getNextCode($_POST['insertcode']);
 			$_POST['insertcode'] = db_quoteall($_POST['insertcode'],true);
 			// check that the code doesn't exist yet
    			$query = "SELECT code FROM ".db_table_name('labels')." WHERE lid='$lid' AND code=".$_POST['insertcode'];
@@ -681,26 +714,23 @@ function modlabelsetanswers($lid)
 	   			}
                 else
                           {
-                            $_POST['inserttitle'] = html_entity_decode_php4($_POST['inserttitle'], ENT_QUOTES, "UTF-8");
+                            $_POST['inserttitle'] = html_entity_decode($_POST['inserttitle'], ENT_QUOTES, "UTF-8");
                           }
                 
                 // Fix bug with FCKEditor saving strange BR types
-                $_POST['inserttitle']=str_replace('<br type="_moz" />','',$_POST['inserttitle']);
-		if ($_POST['inserttitle'] == "<br />")
-		{
-			$_POST['inserttitle']='';
-		}
+                $_POST['inserttitle']=fix_FCKeditor_text($_POST['inserttitle']);
                
    				$_POST['inserttitle'] = db_quoteall($_POST['inserttitle'],true);
+                $_POST['insertassessmentvalue']=(int)$_POST['insertassessmentvalue'];
 	  			foreach ($lslanguages as $lslanguage)
 				{
-                    if ($databasetype=='odbc_mssql') {@$connect->Execute("SET IDENTITY_INSERT ".db_table_name('labels')." ON");}
-    				$query = "INSERT INTO ".db_table_name('labels')." (lid, code, title, sortorder,language) VALUES ($lid, {$_POST['insertcode']}, {$_POST['inserttitle']}, '$newsortorder','$lslanguage')";
+                    if ($connect->databaseType == 'odbc_mssql' || $connect->databaseType == 'odbtp' || $connect->databaseType == 'mssql_n') {@$connect->Execute('SET IDENTITY_INSERT '.db_table_name('labels')." ON");}
+    				$query = "INSERT INTO ".db_table_name('labels')." (lid, code, title, sortorder,language, assessment_value) VALUES ($lid, {$_POST['insertcode']}, {$_POST['inserttitle']}, '$newsortorder','$lslanguage',{$_POST['insertassessmentvalue']})";
 					if (!$result = $connect->Execute($query))
 	    				{
 	    					$labelsoutput.= "<script type=\"text/javascript\">\n<!--\n alert(\"".$clang->gT("Failed to insert label", "js")." - ".$query." - ".$connect->ErrorMsg()."\")\n //-->\n</script>\n";
 	    				}
-                    if ($databasetype=='odbc_mssql') {@$connect->Execute("SET IDENTITY_INSERT ".db_table_name('labels')." OFF");}
+                    if ($connect->databaseType == 'odbc_mssql' || $connect->databaseType == 'odbtp' || $connect->databaseType == 'mssql_n') {@$connect->Execute('SET IDENTITY_INSERT '.db_table_name('labels')." OFF");}
 				}
 			}
 			else
@@ -711,7 +741,7 @@ function modlabelsetanswers($lid)
 		break;
 
 		// Save all labels with one button
-		case $clang->gT("Save All", "unescaped"):
+		case $clang->gT("Save Changes", "unescaped"):
 		//Determine autoids by evaluating the hidden field		
 		$sortorderids=explode(' ', trim($_POST['sortorderids']));
 		$codeids=explode(' ', trim($_POST['codeids']));
@@ -721,7 +751,7 @@ function modlabelsetanswers($lid)
 		foreach ($codeids as $codeid)
 		{
 			$_POST['code_'.$codeid] = db_quoteall($_POST['code_'.$codeid],true);
-			$_POST['oldcode_'.$codeid] = db_quoteall($_POST['oldcode_'.$codeid],true);
+			if (isset($_POST['oldcode_'.$codeid])) $_POST['oldcode_'.$codeid] = db_quoteall($_POST['oldcode_'.$codeid],true);
 			// Get the code values to check for duplicates
 			$codevalues[] = $_POST['code_'.$codeid];
 		}
@@ -745,19 +775,15 @@ function modlabelsetanswers($lid)
 				}
 				else
 				{
-					$_POST['title_'.$sortorderid] = html_entity_decode_php4($_POST['title_'.$sortorderid], ENT_QUOTES, "UTF-8");
+					$_POST['title_'.$sortorderid] = html_entity_decode($_POST['title_'.$sortorderid], ENT_QUOTES, "UTF-8");
 				}
 
 
 				// Fix bug with FCKEditor saving strange BR types
-				$_POST['title_'.$sortorderid]=str_replace('<br type="_moz" />','',$_POST['title_'.$sortorderid]);
-				if ($_POST['title_'.$sortorderid] == "<br />")
-				{
-					$_POST['title_'.$sortorderid]='';
-				}
+				$_POST['title_'.$sortorderid]=fix_FCKeditor_text($_POST['title_'.$sortorderid]);
 				$_POST['title_'.$sortorderid] = db_quoteall($_POST['title_'.$sortorderid],true);
 
-				$query = "UPDATE ".db_table_name('labels')." SET code=".$_POST['code_'.$codeids[$count]].", title={$_POST['title_'.$sortorderid]} WHERE lid=$lid AND sortorder=$orderid AND language='$langid'";
+				$query = "UPDATE ".db_table_name('labels')." SET code=".$_POST['code_'.$codeids[$count]].", title={$_POST['title_'.$sortorderid]}, assessment_value={$_POST['assessmentvalue_'.$codeids[$count]]} WHERE lid=$lid AND sortorder=$orderid AND language='$langid'";
 
 				if (!$result = $connect->Execute($query)) 
 					// if update didn't work we assume the label does not exist and insert it
@@ -770,11 +796,12 @@ function modlabelsetanswers($lid)
 					}
 				}
 
-				update_labelcodes_in_conditions($lid,$_POST['oldcode_'.$codeids[$count]],$_POST['code_'.$codeids[$count]]);
+				if (isset($_POST['oldcode_'.$codeids[$count]])) update_labelcodes_in_conditions($lid,$_POST['oldcode_'.$codeids[$count]],$_POST['code_'.$codeids[$count]]);
 
 				$count++;
 				if ($count>count($codeids)-1) {$count=0;}
 			}
+            fixorder($lid);   
 		}
 		else
 		{
@@ -814,11 +841,7 @@ function modlabelsetanswers($lid)
 		{
 			$labelsoutput.= "<script type=\"text/javascript\">\n<!--\n alert(\"".$clang->gT("Failed to delete label","js")." - ".$query." - ".$connect->ErrorMsg()."\")\n //-->\n</script>\n";
 		}
-		break;
-		
-		// Fix Sortorder button
-		case $clang->gT("Fix Sort", "unescaped"):
-		fixorder($lid);
+        fixorder($lid);
 		break;
 	}
 }
@@ -848,15 +871,28 @@ function fixorder($lid) //Function rewrites the sortorder for a group of answers
 
 function update_labelcodes_in_conditions($labelid,$oldcode,$newcode)
 {
-	global $dbprefix, $connect;
+	global $dbprefix, $databasetype, $connect;
 
 	if ($oldcode != $newcode)
 	{
 		// If question type is not dual scale, then update only if: value is old label code AND question uses the modified label
 		// If question is Dualscale then check if it uses the modified label as lid or lid1 and check 
-		$query = "UPDATE ".db_table_name('conditions')." AS c INNER JOIN ".db_table_name('questions')." AS q ON  c.cqid=q.qid SET value=$newcode WHERE c.value=$oldcode AND ( (q.type <> 1 AND q.lid=$labelid) OR (q.type = 1 AND q.lid=$labelid AND c.cfieldname like '%#0') OR (q.type = 1 AND q.lid1=$labelid AND c.cfieldname like '%#1') )";
+        if ($connect->databaseType == 'odbc_mssql' || $connect->databaseType == 'odbtp' || $connect->databaseType == 'mssql_n')
+        {
+            $query = "UPDATE   ".db_table_name('conditions')
+                    ."SET value = $newcode"
+                    ."FROM ".db_table_name('conditions')." AS c INNER JOIN"
+                    .db_table_name('questions')." AS q ON c.cqid = q.qid CROSS JOIN ".db_table_name('conditions')
+                    ."WHERE     (q.type <> 1) AND (q.lid = 3) AND (c.value = $oldcode) OR"
+                    ."(q.type = 1) AND (q.lid = $labelid) AND (c.value = $oldcode) AND (c.cfieldname LIKE '%#0') OR"
+                    ."(q.type = 1) AND (q.lid1 = $labelid) AND (c.value = $oldcode) AND (c.cfieldname LIKE '%#1')";
+        }        
+        else
+        {        
+            $query = "UPDATE ".db_table_name('conditions')." AS c INNER JOIN ".db_table_name('questions')." AS q ON  c.cqid=q.qid SET value=$newcode "
+                    ."WHERE c.value=$oldcode AND ( (q.type <> 1 AND q.lid=$labelid) OR (q.type = 1 AND q.lid=$labelid AND c.cfieldname like '%#0') OR (q.type = 1 AND q.lid1=$labelid AND c.cfieldname like '%#1') )";
+        }
 		$result=$connect->Execute($query) or safe_die($connect->ErrorMsg());
-		//error_log("TIBO=$query");
 	}
 }
 

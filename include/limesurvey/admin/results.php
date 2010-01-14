@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: results.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: results.php 7431 2009-08-10 15:40:51Z c_schmitz $
 */
 
 
@@ -284,7 +284,7 @@ function makeSummaryFromRawData($results, $surveyid=null, $gid=null, $qid=null) 
 		if (isset($newarray)) {unset($newarray);}
 		$newarray[$thisquestion['sid']."X".$thisquestion['gid']."X".$thisquestion['qid']]['question']=$thisquestion['question'];
 		foreach ($summary as $sum) {
-			ereg("\[(.*)\]", $sum['question'], $regs);
+			preg_match("/\[(.*)\]/", $sum['question'], $regs);
 			$newarray[$thisquestion['sid']."X".$thisquestion['gid']."X".$thisquestion['qid']]['summary'][$regs[1]]=$sum['summary'][$clang->gT("Yes")];
 		}
 		$summary=$newarray;

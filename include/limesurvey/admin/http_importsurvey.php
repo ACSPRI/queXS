@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: http_importsurvey.php 4037 2008-01-20 15:23:53Z c_schmitz $
+* $Id: http_importsurvey.php 6853 2009-05-15 12:51:09Z c_schmitz $
 */
 
 //Ensure script is not run directly, avoid path disclosure

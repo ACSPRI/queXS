@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: dumplabel.php 4769 2008-05-06 23:20:29Z c_schmitz $
+* $Id: dumplabel.php 7382 2009-08-01 19:48:15Z c_schmitz $
 */
 
 
@@ -48,7 +48,7 @@ $qquery = "SELECT * FROM {$dbprefix}labelsets WHERE lid=$lid";
 $qdump = BuildCSVFromQuery($qquery);
 
 //2: Answers table
-$aquery = "SELECT lid, code, title, sortorder, language FROM {$dbprefix}labels WHERE lid=$lid";
+$aquery = "SELECT lid, code, title, sortorder, language, assessment_value FROM {$dbprefix}labels WHERE lid=$lid";
 $adump = BuildCSVFromQuery($aquery);
 
 $fn = "limesurvey_labelset_$lid.csv";

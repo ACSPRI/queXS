@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 *
-* $Id: config-defaults.php 4989 2008-06-02 20:13:54Z lemeur $
+* $Id: config-defaults.php 7241 2009-07-07 21:46:50Z lemeur $
 */
 
 // CAUTION
@@ -25,15 +25,22 @@
 
 // === Basic Setup
 
-$databasetype       =   "mysql";       // ADOdb database driver - valid values are mysql, odbc_mssql or postgres
-$databaselocation   =   "localhost";   // Network location of your Database - for odbc_mssql use the mssql servername, not localhost or IP
-$databaseport       =   "default";     // The port of your Database - if you use a standard port leave on default
-$databasename       =   "limesurvey";  // The name of the database that we will create
-$databaseuser       =   "root";        // The name of a user with rights to create db (or if db already exists, then rights within that db)
-$databasepass       =   "";            // Password of db user
-$dbprefix           =   "lime_";       // A global prefix that can be added to all LimeSurvey tables. Use this if you are sharing
-                                       // a database with other applications. Suggested prefix is "lime_"
-$databasetabletype  =   "InnoDB";	   // Storage engine mysql should use when creating survey results tables and token tables (if mysql is used). If available, InnoDB is recommended. Default is myISAM.
+$databasetype       =   'mysql';       // ADOdb database driver - valid values are mysql, mysqli, odbc_mssql, mssql_n, odbtp or postgres
+                                       // mysql: Recommended driver for mysql
+                                       // mysqli: Slightly faster driver for mysql - not on all server systems available 
+                                       // odbc_mssql: MSSQL driver for easy run with MS SQL Server
+                                       // mssql_n: Experimental driver for  MS SQL Server which handles UTF-8 charsets
+                                       // odbtp: Best choice for MSSQL-Server to handle UTF-8 correctly - we recommend to activate $databasepersistent for decent speed
+                                       // postgres: Standard postgres driver
+$databaselocation   =   'localhost';   // Network location of your Database - for odbc_mssql use the mssql servername, not localhost or IP
+$databaseport       =   'default';     // The port of your Database - if you use a standard port leave on default
+$databasename       =   'limesurvey';  // The name of the database that we will create
+$databaseuser       =   'root';        // The name of a user with rights to create db (or if db already exists, then rights within that db)
+$databasepass       =   '';            // Password of db user
+$dbprefix           =   'lime_';       // A global prefix that can be added to all LimeSurvey tables. Use this if you are sharing
+                                       // a database with other applications. Suggested prefix is 'lime_'
+$databasetabletype  =   'InnoDB';	     // Storage engine mysql should use when creating survey results tables and token tables (if mysql is used). If available, InnoDB is recommended. Default is myISAM.
+$databasepersistent =   false;	       // If you want to enable persistent database connections set this to 'true' - this might be faster for some database drivers. Default is false.
 
 // FILE LOCATIONS
 
@@ -48,87 +55,102 @@ $rootsymlinked      =   0;  // if your root document dir is symlinked LimeSurvey
                             // If you notice that labels are not being translated like "_ADMINISTRATION_" instead of "Administration"
                             // then try setting this to 1 .
 
-
 // Site Info
-$sitename           =   "LimeSurvey";     // The official name of the site (appears in the Window title)
-$scriptname         =   "admin.php";      // The name of the admin script
+$sitename           =   'LimeSurvey';     // The official name of the site (appears in the Window title)
+$scriptname         =   'admin.php';      // The name of the admin script
 
-$defaultuser        =   "admin";          // This is the default username when LimeSurvey is installed
-$defaultpass        =   "password";       // This is the default password for the default user when LimeSurvey is installed
+$defaultuser        =   'admin';          // This is the default username when LimeSurvey is installed
+$defaultpass        =   'password';       // This is the default password for the default user when LimeSurvey is installed
 
 // Site Settings
-$lwcdropdowns       =   "R";              // SHOW LISTS WITH COMMENT in Public Survey as Radio Buttons (R) or Dropdown List (L)
-$dropdownthreshold  =   "25";             // The number of answers to a list type question before it switches from Radio Buttons to List
-                                          // Only applicable, of course, if you have chosen "R" for $dropdowns and/or $lwcdropdowns
-$repeatheadings     =   "25";             // The number of answers to show before repeating the headings in array (flexible) questions. Set to 0 to turn this feature off
-$minrepeatheadings  =   3;                // The minimum number of remaing answers that are required before repeating the headings in array (flexible) questions.
-$defaultlang        =   "en";             // The default language to use - the available languages are the directory names in the /locale dir - for example de = German
+$lwcdropdowns       =   'R';              // SHOW LISTS WITH COMMENT in Public Survey as Radio Buttons (R) or Dropdown List (L)
+$dropdownthreshold  =   '25';             // The number of answers to a list type question before it switches from Radio Buttons to List
+                                          // Only applicable, of course, if you have chosen 'R' for $dropdowns and/or $lwcdropdowns
+$repeatheadings     =   '25';             // The number of answers to show before repeating the headings in array (flexible) questions. Set to 0 to turn this feature off
+$minrepeatheadings  =   3;                // The minimum number of remaining answers that are required before repeating the headings in array (flexible) questions.
+$defaultlang        =   'en';             // The default language to use - the available languages are the directory names in the /locale dir - for example de = German
+
+$translationmode    =   0;                // If interface translations are not working this might be because of a bug in your PHP version. 
+                                          // Set this to '1' to activate a workaround for this bug
 
 $timeadjust         =   0;                // Number of hours to adjust between your webserver local time and your own local time (for datestamping responses)
 $allowexportalldb   =   1;                // 0 will only export prefixed tables when doing a database dump. If set to 1 ALL tables in the database will be exported
 $allowmandbackwards =   1;                // Allow moving backwards (ie: << prev) through survey if a mandatory question
                                           // has not been answered. 1=Allow, 0=Deny
 $deletenonvalues    =   1;                // By default, LimeSurvey does not save responses to conditional questions that haven't been answered/shown. To have LimeSurvey save these responses change this value to 0.
-$shownoanswer       =   1;                // Show "no answer" for non mandatory questions
-$admintheme         =  "default";         // This setting specifys the directory where the admin finds it theme/css style files, e.g. setting 'default' points to /admin/styles/default
+$printanswershonorsconditions = 1;	      // Set to 1 if you want the participant printanswers feature to show only the questions that were displayed survey branching-logic 
+$shownoanswer       =   1;                // Show 'no answer' for non mandatory questions
+$admintheme         =  'default';         // This setting specifys the directory where the admin finds it theme/css style files, e.g. setting 'default' points to /admin/styles/default
 
-$defaulttemplate    =  "default";         // This setting specifys the default theme used for the "public list" of surveys
+$defaulttemplate    =  'default';         // This setting specifys the default theme used for the 'public list' of surveys
 
-$allowedtemplateuploads = "gif,jpg,png";   // File types allowed to be uploaded in the templates section.
+$allowedtemplateuploads = 'gif,jpg,png';  // File types allowed to be uploaded in the templates section.
 
-$allowedresourcesuploads = "7z,aiff,asf,avi,bmp,csv,doc,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xml,zip";   // File types allowed to be uploaded in the resources sections, and with the HTML Editor
+$allowedresourcesuploads = '7z,aiff,asf,avi,bmp,csv,doc,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xml,zip,pstpl,css,js';   // File types allowed to be uploaded in the resources sections, and with the HTML Editor
 
 
 $debug              =   0;      // Set this to 1 if you are looking for errors. If you still get no errors after enabling this
                                 // then please check your error-logs - either in your hosting provider admin panel or in some /logs dir.
-                                // LimeSurvey developers set this to 2.   
-$memorylimit       =  "32M";    // This sets how much memory LimeSurvey can access. 16M is the minimum (M=mb) recommended.
-$translationmode    =   0;      // If interface translations are not working this might be because of a bug in your PHP version. 
-                                // Set this to '1' to activate a workaround for this bug
+                                // LimeSurvey developers set this to 2 to circumvent the restriction to remove the installation directory or to change the password
+                                // If you set it to 3 then in addition PHP STRICT warnings will be shown
                                 
-$sessionlifetime    =   3600;   // How long until a survey session expires in seconds
+$memorylimit        =  '32M';   // This sets how much memory LimeSurvey can access. 16M is the minimum (M=mb) recommended.
+
+$sessionlifetime    =  3600;    // How long until a survey session expires in seconds
+$showpopups         =   1;                // Show popup messages if mandatory or conditional questions have not been answered correctly.
+                                          // 1=Show popup message, 0=Show message on page instead.
+
+
 
 // Email Settings
 // These settings determine how LimeSurvey will send emails
 
-$siteadminemail     =   "your@email.org"; // The default email address of the site administrator
-$siteadminbounce     =   "your@email.org"; // The default email address used for error notification of sent messages for the site administrator (Return-Path)
-$siteadminname      =   "Your Name";      // The name of the site administrator
+$siteadminemail     =   'your@email.org'; // The default email address of the site administrator
+$siteadminbounce    =   'your@email.org'; // The default email address used for error notification of sent messages for the site administrator (Return-Path)
+$siteadminname      =   'Your Name';      // The name of the site administrator
 
-$emailmethod        =   "mail";           // The following values can be used:
-									      // mail      -  use internal PHP Mailer
+$emailmethod        =   'mail';           // The following values can be used:
+                                          // mail      -  use internal PHP Mailer
                                           // sendmail  -  use Sendmail Mailer
+                                          // qmail     -  use Qmail MTA
                                           // smtp      -  use SMTP relaying
 
-$emailsmtphost      =   "localhost";      // Sets the SMTP host. All hosts must be separated by a semicolon.
-                                          // You can also specify a different port for each host by using
-                                          // this format: [hostname:port] (e.g. "smtp1.example.com:25;smtp2.example.com").
+$emailsmtphost      =   'localhost';      // Sets the SMTP host. You can also specify a different port than 25 by using
+                                          // this format: [hostname:port] (e.g. 'smtp1.example.com:25').
 
-$emailsmtpuser      =   "";               // SMTP authorisation username - only set this if your server requires authorization - if you set it you HAVE to set a password too
-$emailsmtppassword  =   "";               // SMTP authorisation password - empty password is not allowed
-$emailsmtpssl       =   0;                // Set this to 1 to use SSL for SMTP connection 
+$emailsmtpuser      =   '';               // SMTP authorisation username - only set this if your server requires authorization - if you set it you HAVE to set a password too
+$emailsmtppassword  =   '';               // SMTP authorisation password - empty password is not allowed
+$emailsmtpssl       =   '';               // Set this to 'ssl' or 'tls' to use SSL/TLS for SMTP connection 
 
 $maxemails          =   50;               // The maximum number of emails to send in one go (this is to prevent your mail server or script from timeouting when sending mass mail)
 
-// JPGRAPH Settings
-// To use jpgraph you must install and set up jpgraph, available from http://www.aditus.nu/jpgraph/
-// LimeSurvey has been tested using version 1.13. Documentation for this is available at the
-// jpgraph website. LimeSurvey cannot assist in the setting up of this system.
-// To use JPGraph adjust the next two lines, and adjust the location as suites.
-$usejpgraph         =   0; //Set to 1 to enable
-$jpgraphdir         =   "/var/apache/htdocs/jpgraph"; //The location of the jpgraph class (where jpgraph.php is)
-                                                      // If you use IIS then you MUST enter the complete rootdir e.g. : $rootDir="C:\\Inetpub\\wwwroot\\jpgraph"
-$jpgraphfont        =   "FF_ARIAL"; //The font to use with graphs. A failsafe setting would be "FF_FONT1"
-$jpgraphfontdir     =   "";         //On debian based systems, the fonts aren't in the old font dir of XFree86 : (/usr/X11R6/lib/X11/fonts/truetype/)
-                                    //To have beautiful fonts with JpGraph it might be necessary to set this to a new path , for example: /usr/share/fonts/truetype/msttcorefonts/
-$jpgraph_antialiasing	=	"0"; // Set to 1 to enable AntiAliasing, this will make your graph's curves smoother, but will take more than twise aslong to generate statistics or might even timeout.
+$emailcharset = "UTF-8";                  // You can change this to change the charset of outgoing emails to some other encoding  - like 'iso-8859-1'
+
+
+// Support for Fancy URLs
+//
+// This new feature makes survey URLs more readable
+// For example a normal survey that looks like this 
+
+//     http://example.com/limesurvey/index.php?sid=12345&lang=de
+
+// will look like this
+
+//      http://example.com/lime/survey/12345/lang-fr/tk-ertoiuy [^]
+
+// If you want to have fancy URLs, set this to 1 AND
+// rename htaccess.txt in the LimeSurvey root directory to .htaccess
+// 
+// NOTE: You MUST have the Apache mod_rewrite module installed.
+// If you don't know what this is better leave this setting alone.
+$modrewrite         =   0;  
 
 // CMS Integration Settings
-// Set $embedded to true and specify the header and footer functions if the survey is to be displayed embedded in a CMS
+// Set $embedded to true and specify the header and footer functions - for example if the survey is to be displayed embedded in a CMS
 $embedded = false;
-$embedded_inc = "";             // path to the header to include if any
-$embedded_headerfunc = "";      // e.g. COM_siteHeader for geeklog
-$embedded_footerfunc = "";      // e.g. COM_siteFooter for geeklog
+$embedded_inc = '';             // path to a php file to include 
+$embedded_headerfunc = '';      // e.g. COM_siteHeader for geeklog
+$embedded_footerfunc = '';      // e.g. COM_siteFooter for geeklog
 
 // Enable or Disable Ldap feature
 $enableLdap = false;
@@ -137,9 +159,12 @@ $enableLdap = false;
 //
 // $filterout_incomplete_answers
 //  * default behaviour of LimeS regarding answer records with no submitdate
-//  * can be overwritten by module parameters
-//         ("Filter-Out incomplete answers" checkbox when implemented)
-$filterout_incomplete_answers = true;
+//  * can be overwritten by module parameters choose one of the following://         
+//		* filter: 		Show only complete answers
+//		* show: 		Show both complete and incomplete answers
+//		* incomplete: 	Show only incomplete answers
+
+$filterout_incomplete_answers = 'show';
 //
 // $stripQueryFromRefurl (default is false)
 //  * default behaviour is to record the full referer url when requested
@@ -161,6 +186,15 @@ $defaulthtmleditormode = 'inline';
 // before beeing able to preview a survey (testing a non active survey)
 // Default is true
 $surveyPreview_require_Auth = true;
+
+
+// $use_one_time_passwords
+// New feature since version 1.81: One time passwords
+// The user can call the limesurvey login at /limesurvey/admin and pass username and
+// a one time password which was previously written into the users table (column one_time_pw) by
+// an external application.
+// This setting has to be turned on to enable the usage of one time passwords (default = off).
+$use_one_time_passwords = false;
 
 
 // $useWebserverAuth
@@ -223,7 +257,7 @@ $useWebserverAuth = false;
 //function hook_get_autouserprofile($user_name)
 //{
 //	return Array(
-//			'full_name' => "$user_name",
+//			'full_name' => '$user_name',
 //			'email' => "$user_name@localdomain.org",
 //			'lang' => 'en',
 //			'htmleditormode' => 'inline',
@@ -258,8 +292,143 @@ $usercontrolSameGroupPolicy = true;
 // If this option is set to true, then LimeSurvey will add 'title' html element
 // to all links used in menus. This will help screen reader to analyse the
 // menus. Only set this to true if you're using a screen reader because
-// it overlaps with tooltips.
+// it overlaps with tooltips. This option shouldn't be required anymore
+// for new releases of screen readers.
 $addTitleToLinks = false;
+
+// $demoModeOnly
+// If this option is set to true, then LimeSurvey will go into demo mode.
+// Demo mode disables the following things:
+//
+// * Disables changing of the admin user's details and password
+// * Disables uploading files on the Template Editor
+// * Disables sending email invitations and reminders
+// * Disables doing a database dump
+
+$demoModeOnly = false;
+
+/** -----------------------------------------------------
+ * Because columns are tricky things, in terms of balancing visual
+ * layout against semantic markup. The choice has been left to the
+ * system administrator or designer. (Who ever cares most.)
+ *
+ * $column_style defines how columns are rendered for survey answers.
+ * There are four possible options:
+ *     'css'   using one of the various CSS only methods for creating
+               columns (see template style sheet for details).
+ *     'ul'    using multiple floated unordered lists. (DEFAULT)
+ *     'table' using conventional tables based layout.
+ *     NULL    blocks the use of columns
+ */
+$column_style = 'ul';
+/** -----------------------------------------------------
+ * By default, the most columns you can have when you set the
+ * columns attribute for a questions is 8. (If you set it above the
+ * maximum, it will default to the maximum) This is because the
+ * number of columns must be reflected in the style sheet.
+ *
+ * NOTE: If you increase $max_columns from 8, you MUST add additional
+ *       styles to your style sheets.
+ *       The style definitions in template.css you'll need to add to are:
+ *              ul.cols-2 , table.cols-2 (etc)
+ *              ul.cols-2 li , ul.cols-2-ul (etc)
+ *              ul.cols-2 li , ul.cols-2-ul , table.cols-2 td { width: 48%; } (etc)
+ */
+$max_columns = 8;
+
+/**
+ * before 1.85RC3, the group description of a group of questions with all questions
+ * hidden by conditions was displayed in all-in-one survey mode.
+ * Since 1.85RC3, the global parameter 'hide_groupdescr_allinone' can be set to control
+ * if the group description should be hidden in this case.
+ * hide_groupdescr_allinone can be set to true or false (default: true)
+ */
+$hide_groupdescr_allinone=true;
+
+
+/**
+ * Use FireBug Lite for JavaScript and template development and testing.
+ * This allows you to use all the features of Firebug in any browser.
+ * see http://getfirebug.com/lite.html for more info.
+ */
+$use_firebug_lite = false;
+
+/*
+ * When activated there are additional values like arithmetic mean and standard deviation at statistics.
+ * This only affects question types "A" (5 point array) and "5" (5 point choice).
+ * Furthermore data is aggregated to get a faster overview. 
+ */
+$showaggregateddata = 1;
+
+
+/**
+ * When this settings is true/1 (default) then the standard templates that are delivered with the
+ * LimeSurvey installation package are read-only. If you want to modify a template just copy it first.
+ * This prevents upgrade problems later because if you modify your standard templates you could accidenitally
+ * overwrite these on a LimSurvey upgrade. Only set this to 0 if you know what you are doing.    
+ */ 
+$standard_templates_readonly    =  true; 
+
+
+
+/**
+*  PDF Export Settings   
+*  This feature activates PDF export for printable survey and Print Answers
+*  The PDF export is totally experimental. The output is mostly ugly.
+*  At this point no support can be given - if you want to help to fix it please get in touch with us
+*/
+
+$usepdfexport   = 0;                       //Set 0 to disable; 1 to enable 
+$pdfdefaultfont = 'freemono';              //Default font for the pdf Export
+$pdffontsize    = 9;                       //Fontsize for normal text; Surveytitle is +4; grouptitle is +2
+$notsupportlanguages = array('zh-Hant-TW','zh-Hant-HK','zh-Hans','ja','th');
+$pdforientation = 'P';                     // Set L for Landscape or P for portrait format
+
+
+
+// RemoteControl Settings
+/**
+* This value determines if the RemoteControl is enabled (true) or not (false)
+*/
+$enableLsrc = false;
+
+/**
+* This value determines if you can save survey structures (as .csv) into your lsrc folder in export menu      
+*/
+$export4lsrc = false;
+
+// CAS Settings
+/**
+ * Please note that CAS functionality is very basic and you have to modify the client to your needs. 
+ * At least the hard work is done. 
+ * The Client is deployed in Limesurvey and a file login_check_cas.php does what login_check.php does in normal mode.
+ * 
+ * $casEnabled determines if CAS should be used or not for Authentication. 
+ * $casAuthServer the servername of the cas Auth Server. Without http://
+ * $casAuthPort CAS Server listening Port
+ * $casAuthUri relative uri from $casAuthServer to cas workingdirectory
+ */
+$casEnabled = false;
+$casAuthServer = 'localhost';
+$casAuthPort = 8443;
+$casAuthUri = '/cas-server/';
+
+
+/**
+*  Statistics chart settings
+*  Different languages need different fonts to properly create charts - this is what the following settings are for 
+*/
+
+/**
+*  $chartfontfile - set the font file name used to created the charts in statistics - this font must reside in <limesurvey root folder>/fonts
+*  Set this to specific font-file (for example 'vera.ttf') or set it to 'auto' and LimeSurvey tried to pick the best font depending on your survey base language
+*/
+$chartfontfile='auto';
+
+/**
+*  $chartfontsize - set the size of the font to created the charts in statistics 
+*/
+$chartfontsize =10;
 
 
 //DO NOT EVER CHANGE THE FOLLOWING LINE ---------------
@@ -277,29 +446,34 @@ require_once(dirname(__FILE__).'/config.php');
 
     //The following url and dir locations do not need to be modified unless you have a non-standard
     //LimeSurvey installation. Do not change unless you know what you are doing.
-    $homeurl        =   "$rooturl/admin"; // The website location (url) of the admin scripts
-    $publicurl      =   "$rooturl";       // The public website location (url) of the public survey script
+    $homeurl        =   "$rooturl/admin";     // The website location (url) of the admin scripts
+    $publicurl      =   "$rooturl";           // The public website location (url) of the public survey script
     $tempurl        =   "$rooturl/tmp";
-    $imagefiles     =   "$rooturl/images"; //Location of button bar files for admin script
-    $homedir        =   "$rootdir/admin"; // The physical disk location of the admin scripts
-    $publicdir      =   "$rootdir";       // The physical disk location of the public scripts
-    $tempdir        =   "$rootdir/tmp";   // The physical location where LimeSurvey can store temporary files
-                                          // Note: For OS/2 the $tempdir may need to be defined as an actual directory
-                                          // example: "x:/limesurvey/tmp". We don't know why.
-    $fckeditordir   =   "$homeurl/scripts/fckeditor.26";
-
-//PDF Export Settings
-$usepdfexport   = 1;                        //Set 0 to disable; 1 to enable 
-$pdfexportdir   = "/admin/classes/tcpdf";  //Directory with the tcpdf.php extensiontcpdf.php
-$pdffonts       = $pdfexportdir."/fonts";  //Directory for the TCPDF fonts
-$pdfdefaultfont = 'freemono';               //Default font for the pdf Export
-$pdffontsize    = 10;                       //Fontsize for normal text; Surveytitle is +4; grouptitle is +2
-$notsupportlanguages = array("zh-Hant-TW","zh-Hant-HK","zh-Hans","ja","th");
+    $imagefiles     =   "$rooturl/images";    // Location of button bar files for admin script
+  	$templaterootdir=   "$rootdir/templates"; // Location of the templates
+    $templaterooturl=   "$rooturl/templates"; // Location of the templates
+    $homedir        =   "$rootdir/admin";     // The physical disk location of the admin scripts
+    $publicdir      =   "$rootdir";           // The physical disk location of the public scripts
+    $tempdir        =   "$rootdir/tmp";       // The physical location where LimeSurvey can store temporary files
+                                              // Note: For OS/2 the $tempdir may need to be defined as an actual directory
+                                              // example: "x:/limesurvey/tmp". We don't know why.
+    $fckeditordir   =   "$homeurl/scripts/fckeditor.2641";
+    $fckeditexpandtoolbar   =   true; // defines if the FCKeditor toolbar should be opened by default
+    $pdfexportdir   = '/admin/classes/tcpdf';  //Directory with the tcpdf.php extensiontcpdf.php
+    $pdffonts       = $pdfexportdir.'/fonts';  //Directory for the TCPDF fonts
 
 // Computing relative url
 // $relativeurl  is the url relative to you DocumentRoot where is installed LimeSurvey.
 // Usually same as $rooturl without http://{$_SERVER['HTTP_HOST']}.
 // $relativeurl  is now automatically computed from $rooturl
-$parsedurl = parse_url($rooturl);
-$relativeurl= $parsedurl['path'];
-?>
+if(!isset($cmd_install) || !$cmd_install==true)
+{
+	$parsedurl = parse_url($rooturl);
+	$relativeurl= isset($parsedurl['path']) ? $parsedurl['path'] : "";
+}
+else
+{
+	// commandline installation, no relativeurl needed 
+}
+
+

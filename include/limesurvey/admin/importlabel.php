@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 * 
-* $Id: importlabel.php 4973 2008-06-01 14:07:01Z c_schmitz $
+* $Id: importlabel.php 7382 2009-08-01 19:48:15Z c_schmitz $
 */
 
 //Ensure script is not run directly, avoid path disclosure
@@ -144,9 +144,13 @@ if (isset($labelsetsarray) && $labelsetsarray) {
 			
 				if ($labellid == $oldlid) {
 					$labelrowdata['lid']=$newlid;
-
-			// translate internal links
-			$labelrowdata['title']=translink('label', $oldlid, $newlid, $labelrowdata['title']);
+                    
+			        // translate internal links
+			        $labelrowdata['title']=translink('label', $oldlid, $newlid, $labelrowdata['title']);
+                    if (!isset($labelrowdata["assessment_value"]))
+                    {
+                       $labelrowdata["assessment_value"]=(int)$labelrowdata["code"];
+                    }
 
                     $newvalues=array_values($labelrowdata);
                     $newvalues=array_map(array(&$connect, "qstr"),$newvalues); // quote everything accordingly
@@ -158,7 +162,7 @@ if (isset($labelsetsarray) && $labelsetsarray) {
 
 		//CHECK FOR DUPLICATE LABELSETS
 		$thisset="";
-		$query2 = "SELECT code, title, sortorder, language 
+		$query2 = "SELECT code, title, sortorder, language, assessment_value 
                    FROM ".db_table_name('labels')."
                    WHERE lid=".$newlid."
                    ORDER BY sortorder, code";
