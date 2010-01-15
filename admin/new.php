@@ -120,11 +120,14 @@ $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	WHERE s.active = 'Y'";
 
 $surveys = $db->GetAll($sql);
-foreach($surveys as $s)
-{
-	print "<option value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
-}
 
+if (!empty($surveys))
+{
+	foreach($surveys as $s)
+	{
+		print "<option value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
+	}
+}
 ?></select></p>
 <p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
