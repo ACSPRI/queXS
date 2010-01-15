@@ -458,11 +458,11 @@ CREATE TABLE `questionnaire` (
   `restrict_work_shifts` tinyint(1) NOT NULL default '1',
   `testing` tinyint(1) NOT NULL default '0' COMMENT 'Whether this questionnaire is just for testing',
   `respondent_selection` tinyint(1) NOT NULL default '1',
-  `rs_intro` varchar(1024) NOT NULL,
-  `rs_project_intro` varchar(1024) NOT NULL,
-  `rs_project_end` varchar(1024) NOT NULL,
-  `rs_callback` varchar(1024) NOT NULL,
-  `rs_answeringmachine` varchar(1024) NOT NULL,
+  `rs_intro` text collate utf8_unicode_ci NOT NULL,
+  `rs_project_intro` text collate utf8_unicode_ci NOT NULL,
+  `rs_project_end` text collate utf8_unicode_ci NOT NULL,
+  `rs_callback` text collate utf8_unicode_ci NOT NULL,
+  `rs_answeringmachine` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`questionnaire_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
