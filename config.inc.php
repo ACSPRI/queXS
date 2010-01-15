@@ -20,11 +20,11 @@
  *	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *
- * @author Adam Zammit <adam.zammit@deakin.edu.au>
- * @copyright Deakin University 2007,2008
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @copyright Australian Consortium for Social and Political Research Incorporated (ACSPRI) 2009
  * @package queXS
  * @subpackage configuration
- * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
+ * @link http://www.acspri.org.au/ queXS was writen for ACSPRI
  * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
  * 
  */
@@ -32,51 +32,14 @@
 
 /**
  *
- * Only some of the configuration directives are here. See the file: config.default.php for them all
- *
- * Make your configuration changes in this file only - they will "overwrite" the default configuration
+ * Make your configuration changes in a file called: config.inc.local.php
  *
  */
 
-/**
- * The default time zone
- */
-define('DEFAULT_TIME_ZONE', 'Australia/Victoria');
+if (file_exists(dirname(__FILE__).'/config.inc.local.php'))
+{
+	include(dirname(__FILE__).'/config.inc.local.php');
+}
 
-/**
- * Flag for VoIP with Asterisk to be enabled or not
- */
-define('VOIP_ENABLED',false);
-
-/**
- * The Asterisk server address
- */
-define('VOIP_SERVER','asterisk.dcarf');
-
-/**
- * Whether to automatically pop up a coding window when the respondent hangs up
- */
-define('AUTO_POPUP',false);
-
-/**
- * The path to queXS from the server root
- */
-define('QUEXS_PATH', '/quexs/');
-
-/**
- * Path to ADODB
- */
-define('ADODB_PATH',dirname(__FILE__).'/../adodb/');
-
-/**
- * Database configuration for queXS
- */
-define('DB_USER', 'quexs');
-define('DB_PASS', 'quexs');
-define('DB_HOST', 'databasedev.dcarf');
-define('DB_NAME', 'quexs');
-
-
-//Do not modify the following line:
 include(dirname(__FILE__).'/config.default.php');
 ?>
