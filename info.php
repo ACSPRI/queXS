@@ -47,7 +47,7 @@ include ("lang.inc.php");
 xhtml_head(T_("Information"));
 
 ?>
-<p>DCARF Number: 1800 232 273</p>
+<p>ACSPRI Website: <a href='http://www.acspri.org.au'>http://www.acspri.org.au</a></p>
 <?
 
 xhtml_foot();
