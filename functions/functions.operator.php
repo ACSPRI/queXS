@@ -1228,13 +1228,12 @@ function end_case($operator_id)
 		//
 
 		//Look for any calls where none should be tried again (this should be a final outcome)
-		//OR if the call has been refered to the supervisor
 		$sql = "SELECT c.call_id, c.outcome_id
 			FROM `call` as c, `outcome` as o
 			WHERE c.case_id = '$case_id'
 			AND c.outcome_id = o.outcome_id
 			AND o.tryanother = 0
-			AND (o.outcome_type_id = 4 OR o.outcome_type_id = 2)
+			AND (o.outcome_type_id = 4)
 			ORDER BY c.call_id DESC
 			LIMIT 1";
 
@@ -1300,9 +1299,10 @@ function end_case($operator_id)
 			else if ($count >= 1) //one or more numbers to be tried again - first code as eligible if ever eligible...
 			{
 				//$r[0]['contact_phone_id'];
+				//code as eligible if ever eligible, or if referred to the supervisor, code as that if last call
 				$sql = "SELECT c.outcome_id as outcome_id
 					FROM `call` as c
-					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id AND o.eligible = 1)
+					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id AND (o.eligible = 1 OR o.outcome_type_id = 2) )
 					WHERE c.case_id = '$case_id'
 					ORDER BY c.call_id DESC";
 			
