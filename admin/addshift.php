@@ -82,6 +82,14 @@ $woy = $y['y'];
 
 $operator_id = get_operator_id();
 
+if (!$operator_id)
+{
+	xhtml_head(T_("Add shifts"));
+	print "<p>" . T_("You must be an operator (as well as have administrator access) to add/edit shifts") . "</p>";
+	xhtml_foot();
+	exit();
+}
+
 
 if (isset($_POST['submit']))
 {
