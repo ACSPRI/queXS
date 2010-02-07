@@ -105,6 +105,11 @@ if (!defined('SUPERVISOR_EXTENSION')) define('SUPERVISOR_EXTENSION',"0392517290"
 if (!defined('LIME_PATH')) define('LIME_PATH', 'include/limesurvey/');
 
 /**
+ *
+ */
+if (!defined('LIME_AUTO_ADVANCE')) define('LIME_AUTO_ADVANCE', true);
+
+/**
  * The path to queXS from the server root
  */
 if (!defined('QUEXS_PATH')) define('QUEXS_PATH', '/quexs/');

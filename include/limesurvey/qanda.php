@@ -955,12 +955,15 @@ define('SELECTED' , ' selected="selected"' , true);
 // ==================================================================
 // QUESTION METHODS =================================================
 
+
 //queXS addition
-function quexs_submit_on_click($do = true)
+function quexs_submit_on_click()
 {
+	include_once(dirname(__FILE__) . '/quexs.php');
+
 	$r = "";
 
-	if ($do)
+	if (LIME_AUTO_ADVANCE)
 	{
 		$r = "; document.limesurvey.move.value = '";
 		if (isset($_SESSION['step']) && $_SESSION['step'] && ($_SESSION['step'] == $_SESSION['totalsteps']))
