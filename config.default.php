@@ -105,7 +105,7 @@ if (!defined('SUPERVISOR_EXTENSION')) define('SUPERVISOR_EXTENSION',"0392517290"
 if (!defined('LIME_PATH')) define('LIME_PATH', 'include/limesurvey/');
 
 /**
- *
+ * Automatically move to the next question when clicked in limesurvey
  */
 if (!defined('LIME_AUTO_ADVANCE')) define('LIME_AUTO_ADVANCE', true);
 
