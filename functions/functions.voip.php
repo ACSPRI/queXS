@@ -58,6 +58,33 @@ class voip {
 
 
 	/**
+	 * Return a list of IAX extensions
+	 * as an associative array
+	 *
+	 * @return array Key is extension, value is status
+	 *
+	 */
+	function getIAXStatus()
+	{
+		$ret = $this->query("Action: IAXPeerList\r\n\r\n","PeerlistComplete");
+
+		$c = spliti("\r\n\r\n",$ret);
+		$chans = array();
+		foreach ($c as $s)
+		{
+			if(eregi("Event: PeerEntry.*ObjectName: ([0-9a-zA-Z-]+).*Status: ([/0-9a-zA-Z-]+)",$s,$regs))
+			{
+				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
+				$chan = substr($regs[1],0,4);
+				$chans[$chan] = $regs[2];
+			}
+		}
+		return $chans;
+	}
+
+
+
+	/**
 	 * Return a list of active extensions and their corresponding
 	 * channels as an associative array
 	 *
@@ -72,16 +99,18 @@ class voip {
 		$chans = array();
 		foreach ($c as $s)
 		{
-			if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*BridgedChannel: ([/0-9a-zA-Z-]+)",$s,$regs))
+			if(eregi("Event: Status.*Channel: (SIP/|IAX2/[0-9a-zA-Z-]+).*BridgedChannel: (SIP/|IAX2/[/0-9a-zA-Z-]+)",$s,$regs))
 			{
 				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
-				$chan = substr($regs[1],0,4);
+				$ccs = explode('-',$regs[1]);
+				$chan = $ccs[0];
 				$chans[$chan] = array($regs[1],$regs[2]);
 			}
-			else if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*",$s,$regs))
+			else if(eregi("Event: Status.*Channel: (SIP/|IAX2/[0-9a-zA-Z-]+).*",$s,$regs))
 			{
 				//print T_("Channel: ") . $regs[1] .  "\n";
-				$chan = substr($regs[1],0,4);
+				$ccs = explode('-', $regs[1]);
+				$chan = $ccs[0];
 				$chans[$chan] = array($regs[1],false);
 			}
 		}
@@ -224,26 +253,40 @@ class voip {
 	{
 		if($ext)
 		{
+			$type = "SIP";
 			$exts = explode('/', $ext, 2);
+			if (isset($exts[0]))
+				$type = $exts[0];
 			if (isset($exts[1]))
 				$ext = $exts[1];
-				
-			$ret = $this->query("Action: ExtensionState\r\nContext: default\r\nExten: $ext\r\nActionID: 1\r\n\r\n","Status:");
-			if(eregi("Status: ([0-9]+)",$ret,$regs))
+	
+			if ($type == "SIP")
 			{
-				if (isset($regs[1]))
+				$ret = $this->query("Action: ExtensionState\r\nContext: from-internal\r\nExten: $ext\r\nActionID: \r\n\r\n","Status:");
+				if(eregi("Status: ([0-9]+)",$ret,$regs))
 				{
-					// 0 appears to be online, 1 online and on a call
-					if ($regs[1] == 0)
-						return 1;
-					else if ($regs[1] == 1 || $regs[1] == 8)
-						return 2;
+					if (isset($regs[1]))
+					{
+						// 0 appears to be online, 1 online and on a call
+						if ($regs[1] == 0)
+							return 1;
+						else if ($regs[1] == 1 || $regs[1] == 8)
+							return 2;
+					}
 				}
 			}
+			else if ($type == "IAX2")
+			{
+				$exts = $this->getIAXStatus();
+				if (isset($exts[$ext]))
+				{
+					$status = $exts[$ext];
+					if ($status == "OK")
+						return 1;
+				}				
+			}
 		}
-
 		return false;
-
 	}
 
 	/**

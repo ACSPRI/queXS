@@ -72,10 +72,16 @@ if (is_voip_enabled($operator_id))
 	$v = new voip();
 	$v->connect(VOIP_SERVER);
 	$ext = get_extension($operator_id);
+	$exta = $ext;
+	//Get just the start of the extension for auto dial out
+	$exts = explode('/', $ext, 2);
+		if (isset($exts[1]))
+			$exta = $exts[1];
+	$extp = get_extension_password($operator_id);
 	if ($v->getExtensionStatus($ext))
-		print "<div class='online statusbutton'>" . T_("VoIP On") . "</div>";
+		print "<div class='online statusbutton'><a href='news://turnvoipoff'>" . T_("VoIP On") . "</a></div>";
 	else
-		print "<div class='offline statusbutton'>" . T_("VoIP Off") . "</div>";
+		print "<div class='offline statusbutton'><a href='irc://$exta:$extp@" . VOIP_SERVER . "/'>" . T_("VoIP Off") . "</a></div>";
 }
 else
 	print "<div class='online statusbutton'>" . T_("No VoIP") . "</div>";
