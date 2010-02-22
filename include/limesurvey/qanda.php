@@ -957,13 +957,13 @@ define('SELECTED' , ' selected="selected"' , true);
 
 
 //queXS addition
-function quexs_submit_on_click()
+function quexs_submit_on_click($do = true)
 {
 	include_once(dirname(__FILE__) . '/quexs.php');
 
 	$r = "";
 
-	if (LIME_AUTO_ADVANCE)
+	if (LIME_AUTO_ADVANCE && $do)
 	{
 		$r = "; document.limesurvey.move.value = '";
 		if (isset($_SESSION['step']) && $_SESSION['step'] && ($_SESSION['step'] == $_SESSION['totalsteps']))
