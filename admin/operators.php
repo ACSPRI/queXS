@@ -59,6 +59,7 @@ if (isset($_POST['operator']))
 	$lastname = $db->qstr($_POST['lastname'],get_magic_quotes_gpc());
 	$time_zone_name = $db->qstr($_POST['Time_zone_name'],get_magic_quotes_gpc());
 	$extension = $db->qstr($_POST['extension'],get_magic_quotes_gpc());
+	$extensionp = $db->qstr($_POST['extensionp'],get_magic_quotes_gpc());
 	$supervisor = 0;
 	$temporary = 0;
 	$refusal = 0;
@@ -70,8 +71,8 @@ if (isset($_POST['operator']))
 	if (!empty($_POST['operator']))
 	{
 		$sql = "INSERT INTO operator
-			(`operator_id` ,`username` ,`firstName` ,`lastName`, `extension`, `Time_zone_name`,`voip`)
-			VALUES (NULL , $operator, $firstname , $lastname, $extension, $time_zone_name, $voip);";
+			(`operator_id` ,`username` ,`firstName` ,`lastName`, `extension`,`extension_password`, `Time_zone_name`,`voip`)
+			VALUES (NULL , $operator, $firstname , $lastname, $extension, $extensionp, $time_zone_name, $voip);";
 	
 		if ($db->Execute($sql))
 		{
@@ -125,6 +126,7 @@ if ($a)
 	<p><? echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
 	<p><? echo T_("Enter the Time Zone of an operator to add:"); ?> <input name="Time_zone_name" type="text" value="<? echo DEFAULT_TIME_ZONE; ?>"/></p>
 	<p><? echo T_("Enter the telephone extension number:"); ?> <input name="extension" type="text"/></p>
+	<p><? echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
 	<p><? echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
 	<p><? echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
 	<p><? echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>

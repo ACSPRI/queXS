@@ -302,6 +302,7 @@ CREATE TABLE `operator` (
   `firstName` varchar(255) NOT NULL,
   `lastName` varchar(255) NOT NULL,
   `extension` varchar(10) NOT NULL,
+  `extension_password` varchar(255),
   `Time_zone_name` char(64) NOT NULL,
   `enabled` tinyint(1) NOT NULL default '1',
   `voip` tinyint(1) NOT NULL default '1',

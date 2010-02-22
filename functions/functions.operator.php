@@ -402,7 +402,7 @@ function get_case_id($operator_id, $create = false)
 						$db->Execute("SET @row := 0");
 		
 						$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-							SELECT $case_id as case_id,@row := @row + 1 AS priority,extension as phone, CONCAT(firstName, ' ', lastName)
+							SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(extension,'/',-1) as phone, CONCAT(firstName, ' ', lastName)
 							FROM operator";
 		
 						$db->Execute($sql);
@@ -535,6 +535,26 @@ function get_call_number($call_id)
 		return $rs['phone'];
 	else
 		return false;
+}
+
+/**
+ * Return the extension password of an operator
+ *
+ * @param int $operator_id The queXS Operator ID
+ * @return string|bool the extension password or false if cannot find
+ *
+ */
+function get_extension_password($operator_id)
+{
+	global $db;
+		
+	$sql = "SELECT o.extension_password
+		FROM `operator` as o
+		WHERE o.operator_id = '$operator_id'";
+
+	$rs = $db->GetRow($sql);
+	if (!empty($rs) && isset($rs['extension_password'])) return $rs['extension_password'];
+	return false;		
 }
 
 /**
