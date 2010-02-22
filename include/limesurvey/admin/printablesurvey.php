@@ -567,19 +567,19 @@ while ($degrow = $degresult->FetchRow())
 						case "H":
 						case "K":
 							$thiscquestion=arraySearchByKey($conrow['cfieldname'], $fieldmap, "fieldname");
-							$ansquery="SELECT answer FROM ".db_table_name("answers")." WHERE qid='{$conrow['cqid']}' AND code='{$thiscquestion[0]['aid']}' AND language='{$surveyprintlang}'";
+							$ansquery="SELECT code,answer FROM ".db_table_name("answers")." WHERE qid='{$conrow['cqid']}' AND code='{$thiscquestion[0]['aid']}' AND language='{$surveyprintlang}'";
 							//$ansquery="SELECT question FROM ".db_table_name("questions")." WHERE qid='{$conrow['cqid']}' AND language='{$surveyprintlang}'";
 							$ansresult=db_execute_assoc($ansquery);
 							while ($ansrow=$ansresult->FetchRow())
 							{
-								$answer_section=" (".$ansrow['answer'].")";
+								$answer_section=" [".$ansrow['code'] ."] (".$ansrow['answer'].")";
 							}
 							break;
 
 						case "1": // dual: (Label 1), (Label 2)
 							$labelIndex=preg_match("/^[^#]+#([01]{1})$/",$conrow['cfieldname']);
 							$thiscquestion=arraySearchByKey($conrow['cfieldname'], $fieldmap, "fieldname");
-							$ansquery="SELECT answer FROM ".db_table_name("answers")." WHERE qid='{$conrow['cqid']}' AND code='{$thiscquestion[0]['aid']}' AND language='{$surveyprintlang}'";
+							$ansquery="SELECT answer,code FROM ".db_table_name("answers")." WHERE qid='{$conrow['cqid']}' AND code='{$thiscquestion[0]['aid']}' AND language='{$surveyprintlang}'";
 							//$ansquery="SELECT question FROM ".db_table_name("questions")." WHERE qid='{$conrow['cqid']}' AND language='{$surveyprintlang}'";
 							$ansresult=db_execute_assoc($ansquery);
 
@@ -587,14 +587,14 @@ while ($degrow = $degresult->FetchRow())
 							{ 
 								while ($ansrow=$ansresult->FetchRow())
 								{
-									$answer_section=" (".$ansrow['answer']." ".$clang->gT("Label")."1)";
+									$answer_section=" [".$ansrow['code'] ."](".$ansrow['answer']." ".$clang->gT("Label")."1)";
 								}
 							}
 							elseif ($labelIndex == 1)
 							{
 								while ($ansrow=$ansresult->FetchRow())
 								{
-									$answer_section=" (".$ansrow['answer']." ".$clang->gT("Label")."2)";
+									$answer_section=" [".$ansrow['code'] ."](".$ansrow['answer']." ".$clang->gT("Label")."2)";
 								}
 							}
 							break;
@@ -776,7 +776,7 @@ while ($degrow = $degresult->FetchRow())
 
 					while ($dearow = $dearesult->FetchRow())
 					{
-						$question['ANSWER'] .= $wrapper['item-start'].input_type_image('radio' , $dearow['code']).' '.$dearow['title'].$wrapper['item-end'];
+						$question['ANSWER'] .= $wrapper['item-start'].input_type_image('radio' , $dearow['code']).' ['.$dearow['code'].'] '.$dearow['title'].$wrapper['item-end'];
 						if(isset($_POST['printableexport'])){$pdf->intopdf(" o ".$dearow['title']);}
 
 						++$rowcounter;
@@ -966,7 +966,7 @@ while ($degrow = $degresult->FetchRow())
 				
 				while ($mearow = $mearesult->FetchRow())
 				{
-					$question['ANSWER'] .= $wrapper['item-start'].input_type_image('checkbox',$mearow['answer'])."\n\t\t".$mearow['answer'].$wrapper['item-end'];
+					$question['ANSWER'] .= $wrapper['item-start'].input_type_image('checkbox',$mearow['answer'])."\n\t\t".'['.$mearow['code'].'] '.$mearow['answer'].$wrapper['item-end'];
 					if(isset($_POST['printableexport'])){$pdf->intopdf(" o ".$mearow['answer']);}
 //						$upto++;
 					
@@ -1071,7 +1071,7 @@ while ($degrow = $degresult->FetchRow())
 				while ($mearow = $mearesult->FetchRow())
 				{
 					$longest_string = longest_string($mearow['answer'] , $longest_string );
-					$question['ANSWER'] .=  "\t<li>\n\t\t<span>".$mearow['answer']."</span>\n\t\t".input_type_image('text',$mearow['answer'],$width)."\n\t</li>\n";
+					$question['ANSWER'] .=  "\t<li>\n\t\t<span>[".$mearow['code'].'] '.$mearow['answer']."</span>\n\t\t".input_type_image('text',$mearow['answer'],$width)."\n\t</li>\n";
 					if(isset($_POST['printableexport'])){$pdf->intopdf($mearow['answer'].": ____________________");}
 				}
 				$question['ANSWER'] =  "\n<ul>\n".$question['ANSWER']."</ul>\n";
@@ -1480,7 +1480,7 @@ while ($degrow = $degresult->FetchRow())
 				$column_headings = array();
 				while ($frow = $fresult->FetchRow())
 				{
-					$column_headings[] = $frow['title'];
+					$column_headings[] = '[' . $frow['code'] . '] '. $frow['title'];
 				}
 				$col_width = round(80 / count($column_headings));
 				
@@ -1498,7 +1498,7 @@ while ($degrow = $degresult->FetchRow())
 				{
 					$question['ANSWER'] .= "\t\t<tr class=\"$rowclass\">\n";
 				    $rowclass = alternation($rowclass,'row');
-					$answertext=$mearow['answer'];
+					$answertext='[' . $mearow['code'] . '] ' . $mearow['answer'];
                     if (trim($answertext)=='') $answertext='&nbsp;';
 					if (strpos($answertext,'|')) {$answertext=substr($answertext,0, strpos($answertext,'|'));}
 					$question['ANSWER'] .= "\t\t\t<th class=\"answertext\">$answertext</th>\n";
