@@ -5170,12 +5170,14 @@ function retrieve_Answer($code)
 			}
 			else
 			{
-				$return=$clang->gT("No answer");
+				//$return=$clang->gT("No answer");
+				$return=""; //queXS Addition
 			}
 		}
 		elseif (!$_SESSION[$code])
 		{
-			$return=$clang->gT("No answer");
+			//$return=$clang->gT("No answer");
+			$return=""; //queXS Addition
 		}
 		else
 		{
