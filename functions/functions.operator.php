@@ -465,7 +465,7 @@ function get_case_id($operator_id, $create = false)
 						if ($lime_sid)
 						{
 							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
-							VALUES (NULL,'','','',$case_id,'en','N','N',NULL)";
+							VALUES (NULL,'','','',$case_id,'".DEFAULT_LOCALE."','N','N',NULL)";
 		
 							$db->Execute($sql);
 						}
