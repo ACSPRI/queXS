@@ -159,7 +159,7 @@ if ($questionnaire_id)
 			else
 			{
 				$completions = limesurvey_quota_completions($v['lime_sgqa'],$v['lime_sid'],$questionnaire_id,$sample_import_id,$v['value'],$v['comparison']);
-				$perc = ROUND(($completions / ($v['completions'])) * 100,2);
+				$perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
 			}
 
 			//We need to calc Sample size, Sample drawn, Sample remain
