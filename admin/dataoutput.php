@@ -74,6 +74,75 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.display.php");
 
+if (isset($_GET['key']))
+{
+	$questionnaire_id = bigintval($_GET['questionnaire_id']);
+	$sample_import_id = bigintval($_GET['sample_import_id']);
+
+	$sql = "SELECT sv.var as value
+		FROM `sample_var` as sv
+		WHERE sv.sample_id = (SELECT sample_id FROM sample WHERE import_id = '$sample_import_id' LIMIT 1)";
+
+	$svars = $db->GetAll($sql);
+
+	$fn = "key_all_$questionnaire_id" . "_" . $sample_import_id .".csv";
+
+	header("Content-Type: text/csv");
+	header("Content-Disposition: attachment; filename=$fn");
+	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
+	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
+	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	header("Pragma: no-cache");                          // HTTP/1.0
+
+	echo("caseid");
+	foreach($svars as $s)
+	{
+		echo("," . $s['value']);
+	}
+	echo("\n");
+
+	$sql = "SELECT c.case_id ";
+
+	$i = 0;
+	foreach ($svars as $s)
+	{
+		$sql .= ", sv$i.val as v$i";
+		$i++;
+	}
+
+	$sql .= " FROM sample
+		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id') ";
+
+	$i = 0;
+	foreach ($svars as $s)
+	{
+		$sql .= " LEFT JOIN sample_var AS sv$i ON (sv$i.sample_id = sample.sample_id AND sv$i.var = '{$s['value']}') ";
+		$i++;
+	}
+
+	$sql .= " WHERE sample.import_id = '$sample_import_id'
+		AND c.sample_id = sample.sample_id";
+
+	$list = $db->GetAll($sql);
+
+
+	if (!empty($list))
+	{
+		foreach($list as $l)
+		{
+			echo $l['case_id'];
+			$i = 0;
+			foreach ($svars as $s)
+			{
+				echo "," . str_replace(","," ",$l["v$i"]);
+				$i++;
+			}
+			echo  "\n";
+		}
+	}
+
+	exit;
+}
 
 if (isset($_GET['sample_var']))
 {
@@ -142,6 +211,9 @@ if ($questionnaire_id)
 		print "<h3>" . T_("Download key file: select sample var") . "</h3>";
 
 		display_chooser($db->GetAll($sql),"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
+		//download complete key file
+		print "<p><a href='?key=key&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . T_("Download complete key file") . "</a></p>";
+
 
 	}
 }
