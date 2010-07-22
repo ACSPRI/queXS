@@ -6008,6 +6008,12 @@ function checkquestionfordisplay($qid, $gid=null)
 					}
 
 				}
+				elseif ($local_thissurvey['private'] == "N" && preg_match('/^{/',$row['cfieldname'],$sourceconditiontokenattr))
+				{
+					//queXS Addition
+					include_once("quexs.php");
+					$cfieldname=quexs_template_replace($row['cfieldname']);
+				}
 				else
 				{
 					$conditionCanBeEvaluated=false;
