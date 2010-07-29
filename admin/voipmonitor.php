@@ -70,7 +70,7 @@ if ($p)
 			kill_process($p);
 	}
 
-	xhtml_head(T_("Monitor VoIP Process"),true,false,false,false,10,true);
+	xhtml_head(T_("Monitor VoIP Process"),true,false,false,false,false,true);
 
 	print "<h1>" . T_("Running process:") . " $p</h1>";
 

@@ -52,8 +52,11 @@ class voip {
 	 */
 	function __destruct() {
 		//close the socket
-		fclose($this->socket); 
-		$this->socket = false; 	
+		if ($this->socket !== false)
+		{
+			fclose($this->socket); 
+			$this->socket = false; 	
+		}
 	}
 
 
@@ -318,8 +321,8 @@ class voip {
 		$this->socket = fsockopen($ip,VOIP_PORT,$errno,$errstr,1);
 		if (!$this->socket)
 		{
-			print "$errno: $errstr";
-			exit();
+			//print "$errno: $errstr";
+			//exit();
 			return false;
 		}
 
@@ -465,6 +468,12 @@ class voipWatch extends voip {
 
 		do
 		{
+			if (!$this->isConnected() || $this->socket === false){
+				print(T_("Disconnected") . "\n");
+				$this->connect(VOIP_SERVER,VOIP_ADMIN_USER,VOIP_ADMIN_PASS,true);
+				if ($this->isConnected()) print (T_("Reconnected") . "\n");
+			}
+
 			$in = fgets($this->socket, 4096);
 
 			//print "IN: $in\n";
