@@ -89,7 +89,8 @@ print "<li><a href=\"javascript:link('mainobj','callrestrict.php');\">" . T_("Se
 if (VOIP_ENABLED)
 {
 	print "<li><h3>" . T_("VoIP") . "</h3>";
-	print "<ul><li><a href=\"javascript:link('mainobj','voipmonitor.php');\">" . T_("Start and monitor VoIP") . "</a></li></ul></li>";
+	print "<ul><li><a href=\"javascript:link('mainobj','voipmonitor.php');\">" . T_("Start and monitor VoIP") . "</a></li>";
+	print "<li><a href=\"javascript:link('mainobj','extensionstatus.php');\">" . T_("Extension status") . "</a></li></ul></li>";
 }
 
 print "</ul></div>";
