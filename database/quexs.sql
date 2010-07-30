@@ -306,6 +306,7 @@ CREATE TABLE `operator` (
   `Time_zone_name` char(64) NOT NULL,
   `enabled` tinyint(1) NOT NULL default '1',
   `voip` tinyint(1) NOT NULL default '1',
+  `voip_status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`operator_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `extension` (`extension`)

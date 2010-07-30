@@ -538,6 +538,26 @@ function get_call_number($call_id)
 }
 
 /**
+ * Return the extension status from the database
+ *
+ * @param int $operator_id The queXS Operator ID
+ * @return bool the extension status (false for offline, true for online)
+ *
+ */
+function get_extension_status($operator_id)
+{
+	global $db;
+		
+	$sql = "SELECT o.voip_status
+		FROM `operator` as o
+		WHERE o.operator_id = '$operator_id'";
+
+	$rs = $db->GetRow($sql);
+	if (!empty($rs) && $rs['voip_status'] == 1  ) return true;
+	return false;		
+}
+
+/**
  * Return the extension password of an operator
  *
  * @param int $operator_id The queXS Operator ID

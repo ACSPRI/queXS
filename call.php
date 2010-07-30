@@ -259,11 +259,7 @@ switch($state)
 				$es = 1;
 				if (is_voip_enabled($operator_id))
 				{
-					include("functions/functions.voip.php");
-					$v = new voip();
-					$v->connect(VOIP_SERVER);
-					$ext = get_extension($operator_id);
-					if ($v->getExtensionStatus($ext))
+					if (get_extension_status($operator_id))
 						$es = 1;	
 					else
 						$es = 0;
@@ -339,11 +335,7 @@ switch($state)
 					$es = 1;
 					if (is_voip_enabled($operator_id))
 					{
-						include("functions/functions.voip.php");
-						$v = new voip();
-						$v->connect(VOIP_SERVER);
-						$ext = get_extension($operator_id);
-						if ($v->getExtensionStatus($ext))
+						if (get_extension_status($operator_id))
 							$es = 1;	
 						else
 							$es = 0;

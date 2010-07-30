@@ -433,6 +433,21 @@ class voipWatch extends voip {
 	}
 
 
+	function setExtensionStatus($ext, $online = true)
+	{
+		global $db;
+
+		$s = $online ? 1 : 0;
+		
+		print(T_("Extension") . " $ext " . ($online ? T_("online") : T_("offline")) . "\n");
+
+		$sql = "UPDATE operator
+			SET voip_status = '$s'
+			WHERE extension = '$ext'";
+			
+		$db->Execute($sql);
+	}
+
 	function setState($call_id,$state,$checkOutcome = false)
 	{
 		global $db;
@@ -448,6 +463,33 @@ class voipWatch extends voip {
 	}
 
 	/**
+ 	 * Update the extension status for all extensions
+	 */
+	function updateAllExtensionStatus()
+	{
+		global $db;
+
+		$sql = "SELECT extension,operator_id
+			FROM operator
+			WHERE voip = 1 AND enabled = 1";
+
+		$rs = $db->GetAll($sql);
+
+		foreach($rs as $r)
+		{
+			$o = $r['operator_id'];
+			$e = $r['extension'];
+
+			$s = $this->getExtensionStatus($e);
+
+			if ($s == false)
+				$this->setExtensionStatus($e,false);
+			else
+				$this->setExtensionStatus($e,true);
+		}
+	}
+
+	/**
 	 *  Watch for Asterisk events and make changes to the queXS databse if
 	 *  appropriate
 	 *
@@ -460,12 +502,16 @@ class voipWatch extends voip {
 		 */
 		if ($process_id) include_once(dirname(__FILE__).'/../functions/functions.process.php');
 	
-	
 		$line = "";
    
 		if ($this->socket === false)
 		     return false;
 
+		//Set initial extension status
+		$this->updateAllExtensionStatus(); 
+
+
+		//Watch for events
 		do
 		{
 			if (!$this->isConnected() || $this->socket === false){
@@ -520,6 +566,24 @@ class voipWatch extends voip {
 						print T_("Hangup") . T_(" Extension ") . $regs[1] . "\n";
 						$this->setState($call_id,4,true);
 					}
+				}
+
+				/**
+				 * The status of an extension has changed to unregistered
+				 */
+				else if (eregi("Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Unregistered",$line,$regs))
+				{
+					print T_("Unregistered") . T_(" Extension ") . $regs[1] . "\n";
+					$this->setExtensionStatus($regs[1],false);
+				}
+
+				/**
+				 * The status of an extension has changed to registered
+				 */
+				else if (eregi("Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Registered",$line,$regs))
+				{
+					print T_("Registered") . T_(" Extension ") . $regs[1] . "\n";
+					$this->setExtensionStatus($regs[1],true);
 				}
 
 				//print $line . "\n\n";
