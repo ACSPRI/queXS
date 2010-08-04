@@ -55,7 +55,7 @@ include ("functions/functions.operator.php");
 include ("functions/functions.limesurvey.php");
 
 
-xhtml_head(T_("Respondent Selection - Introduction"),true,array("css/rs.css"),array("js/popup.js"));
+xhtml_head(T_("Respondent Selection - Introduction"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
 
 //display introduction text
 
@@ -89,13 +89,13 @@ if (limesurvey_percent_complete($case_id) == false)
 ?>
 <p class='rsoption'><a href="rs_business.php"><? echo T_("Business number"); ?></a></p>
 <p class='rsoption'><a href="rs_answeringmachine.php"><? echo T_("Answering machine"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=2');"><? echo T_("End call with outcome: No answer (ring out or busy) "); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=18');"><? echo T_("End call with outcome: Accidental hang up"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=6');"><? echo T_("End call with outcome: Refusal by unknown person"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=17');"><? echo T_("End call with outcome: No eligible respondent (person never available on this number)"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=31');"><? echo T_("End call with outcome: Non contact (person not currently available on this number: no appointment made)"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=30');"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=2');"><? echo T_("End call with outcome: No answer (ring out or busy) "); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=18');"><? echo T_("End call with outcome: Accidental hang up"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=6');"><? echo T_("End call with outcome: Refusal by unknown person"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=17');"><? echo T_("End call with outcome: No eligible respondent (person never available on this number)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=31');"><? echo T_("End call with outcome: Non contact (person not currently available on this number: no appointment made)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=30');"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
 <?
 
 xhtml_foot();

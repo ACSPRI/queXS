@@ -169,9 +169,9 @@ if (isset($_POST['submit']))
 				$v->dial(get_extension($operator_id),get_call_number($call_id));
 			}
 			if (is_respondent_selection($operator_id))
-				$btext = "onload='openParentObject(\"main-content\",\"rs_intro.php\"); top.close();'";
+				$btext = "onload='openParentObject(\"main-content\",\"rs_intro.php\"); parent.closePopup();'";
 			else
-				$btext = "onload='top.close();'";
+				$btext = "onload='parent.closePopup();'";
 			xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),$btext);
 		}
 	}
@@ -188,7 +188,7 @@ if (isset($_POST['submit']))
 		}
 		//disable recording
 		$newtext = T_("Start REC");
-		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); top.close();'");
+		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); parent.closePopup();'");
 	}
 	else
 	{
@@ -202,7 +202,7 @@ if (isset($_POST['submit']))
 		}
 		//disable recording
 		$newtext = T_("Start REC");
-		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); top.close();'");
+		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); parent.closePopup();'");
 
 	}
 

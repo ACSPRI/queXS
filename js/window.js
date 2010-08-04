@@ -1,4 +1,4 @@
-function LinkUp(element) 
+function LinkUp(element)
 {
 	var number = document.getElementById(element).selectedIndex;
 	location.href = document.getElementById(element).options[number].value;
@@ -6,20 +6,19 @@ function LinkUp(element)
 
 function openParent(get)
 {
-	window.opener.top.location.href = 'index.php?' + get;
-	top.close();
+	parent.location.href = 'index.php?' + get;
 }
 
 
 function openParentNote(get)
 {
-	window.opener.top.location.href = 'index.php?note=' + document.getElementById('note').value + '&' + get;
-	top.close();
+	parent.closePopup();
+	parent.location.href = 'index.php?note=' + document.getElementById('note').value + '&' + get;
 }
 
 function openParentObject(oid,get)
 {
-	var a = window.opener.top.document.getElementById(oid);
+	var a = parent.document.getElementById(oid);
 	if (a)
 	{
 		var clone = a.cloneNode(true);
@@ -33,7 +32,7 @@ function openParentObject(oid,get)
 
 function toggleRec(text,link,classes)
 {
-	var a = window.opener.document.getElementById('reclink');
+	var a = parent.document.getElementById('reclink');
 	if (a)
 	{
 		a.innerHTML = text;

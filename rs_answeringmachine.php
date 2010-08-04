@@ -54,7 +54,7 @@ $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);
 $leavemessage = leave_message($case_id);
 
-xhtml_head(T_("Respondent Selection - Answering machine"),true,array("css/rs.css"), array("js/popup.js"));
+xhtml_head(T_("Respondent Selection - Answering machine"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
 
 if ($leavemessage)
 {
@@ -71,16 +71,16 @@ else
 	print "<p class='rstext'>" . T_("Do not leave a message, please hang up") . "</p>";
 
 ?>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=29');"><? echo T_("End call with outcome: Business answering machine"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=29');"><? echo T_("End call with outcome: Business answering machine"); ?></a></p>
 <?
 if ($leavemessage)
 {
 ?>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=23');"><? echo T_("End call with outcome: Answering machine Message left"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=23');"><? echo T_("End call with outcome: Answering machine Message left"); ?></a></p>
 <?
 }
 ?>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=24');"><? echo T_("End call with outcome: Answering machine No message left"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=24');"><? echo T_("End call with outcome: Answering machine No message left"); ?></a></p>
 <p class='rsoption'><a href="rs_intro.php"><? echo T_("Go Back"); ?></a></p>
 <?
 

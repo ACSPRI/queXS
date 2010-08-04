@@ -50,8 +50,7 @@ include ("functions/functions.xhtml.php");
 include ("functions/functions.operator.php");
 
 
-xhtml_head(T_("Respondent Selection - Project Introduction"),true,array("css/rs.css"),array("js/popup.js"));
-
+xhtml_head(T_("Respondent Selection - Project Introduction"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
 
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
@@ -73,9 +72,9 @@ print "<p class='rstext'>" . template_replace($r['rs_project_intro'],$operator_i
 
 <p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
 
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=17');"><? echo T_("End call with outcome: No eligible respondent (person not available on this number)"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=30');"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=17');"><? echo T_("End call with outcome: No eligible respondent (person not available on this number)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=30');"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
 
 <p class='rsoption'><a href="rs_intro.php"><? echo T_("Go Back"); ?></a></p>
 

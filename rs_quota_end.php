@@ -50,8 +50,7 @@ include ("functions/functions.xhtml.php");
 include ("functions/functions.operator.php");
 
 
-xhtml_head(T_("Respondent Selection - Project Quota End"),true,array("css/rs.css"),array("js/popup.js"));
-
+xhtml_head(T_("Respondent Selection - Project Quota End"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
 
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
@@ -60,7 +59,7 @@ $questionnaire_id = get_questionnaire_id($operator_id);
 print "<p class='rstext'>" . template_replace($_GET['message'],$operator_id,$case_id) . "</p>";
 
 ?>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=32');"><? echo T_("End call with outcome: Quota filled"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=32');"><? echo T_("End call with outcome: Quota filled"); ?></a></p>
 <?
 
 xhtml_foot();

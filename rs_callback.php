@@ -54,8 +54,7 @@ include ("functions/functions.operator.php");
  */
 include ("functions/functions.limesurvey.php");
 
-xhtml_head(T_("Respondent Selection - Call back"),true,array("css/rs.css"),array("js/popup.js"));
-
+xhtml_head(T_("Respondent Selection - Call back"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
 
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
@@ -77,7 +76,7 @@ print "<p class='rstext'>" . T_("You are: ") . round(limesurvey_percent_complete
 ?>
 
 <p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue where we left off"); ?></a></p>
-<p class='rsoption'><a href="javascript:poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
 <p class='rsoption'><a href="rs_intro.php"><? echo T_("Go Back"); ?></a></p>
 <?
 
