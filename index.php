@@ -91,7 +91,7 @@ if (isset($_GET['endcase']))
 	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
 }
 
-xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css") , array("js/popup.js","js/tabber.js"));
+xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
 ?>
 
 <div id="casefunctions">
