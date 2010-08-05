@@ -104,7 +104,7 @@ if(isset($_POST['start']) && isset($_POST['end']) && isset($_POST['day']) && iss
 
 	$db->CompleteTrans();
 
-	xhtml_head(T_("Appointment made"),true,false,false,"onload='top.close()'");
+	xhtml_head(T_("Appointment made"),true,false,false,"onload='parent.closePopup();'");
 	xhtml_foot();
 	exit();
 }
