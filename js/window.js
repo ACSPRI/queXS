@@ -12,7 +12,6 @@ function openParent(get)
 
 function openParentNote(get)
 {
-	parent.closePopup();
 	parent.location.href = 'index.php?note=' + document.getElementById('note').value + '&' + get;
 }
 
