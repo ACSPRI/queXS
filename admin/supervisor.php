@@ -72,6 +72,18 @@ $operator_id = get_operator_id();
 $case_id = false;
 if (isset($_GET['case_id'])) 	$case_id = bigintval($_GET['case_id']);
 
+
+if (isset($_GET['case_note_id']))
+{
+	$case_note_id = bigintval($_GET['case_note_id']);
+
+	$sql = "DELETE FROM case_note
+		WHERE case_id = '$case_id'
+		AND case_note_id = '$case_note_id'";
+
+	$db->Execute($sql);
+}
+
 xhtml_head(T_("Supervisor functions"),true,array("../css/table.css"),array("../js/window.js"));
 
 print "<h1>" . T_("Enter a case id or select a case from the list below:") . "</h1>";
@@ -215,7 +227,7 @@ if ($case_id != false)
 		}
 	
 		//view notes
-		$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.datetime,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as time, op.firstName, op.lastName, c.note as note
+		$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.datetime,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as time, op.firstName, op.lastName, c.note as note,  CONCAT('<a href=\'?case_id=$case_id&amp;case_note_id=', c.case_note_id, '\'>". T_("Delete") . "</a>') as link 
 				FROM `case_note` as c
 				JOIN (operator as op) on (c.operator_id = op.operator_id)
 				WHERE c.case_id = '$case_id'
@@ -229,7 +241,7 @@ if ($case_id != false)
 		if (empty($rs))
 			print "<p>" . T_("No notes") . "</p>";
 		else
-			xhtml_table($rs,array("time","firstName","note"),array(T_("Date/Time"),T_("Operator"),T_("Note")));
+			xhtml_table($rs,array("time","firstName","note","link"),array(T_("Date/Time"),T_("Operator"),T_("Note"),T_("Delete")));
 	
 	
 		//add a note
