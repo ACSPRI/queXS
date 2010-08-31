@@ -31,7 +31,7 @@ CREATE TABLE `appointment` (
   `completed_call_id` bigint(20) default NULL,
   PRIMARY KEY  (`appointment_id`),
   KEY `completed_call_id` (`completed_call_id`),
-  KEY `call_attempt_id` (`call_attempt_id`)
+  KEY `call_attempt_id` (`call_attempt_id`),
   KEY `case_id` (`case_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
