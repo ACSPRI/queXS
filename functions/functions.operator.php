@@ -538,6 +538,28 @@ function get_call_number($call_id)
 }
 
 /**
+ * Set the extension status in the database
+ *
+ * @param int $operator_id The queXS Operator ID
+ * @param bool the extension status (false for offline, true for online)
+ *
+ */
+function set_extension_status($operator_id,$online = true)
+{
+	global $db;
+		
+	$s = 0;
+
+	if ($online) $s = 1;
+
+	$sql = "UPDATE `operator`
+		SET voip_status = '$s'
+		WHERE operator_id = '$operator_id'";
+
+	$db->Execute($sql);
+}
+
+/**
  * Return the extension status from the database
  *
  * @param int $operator_id The queXS Operator ID

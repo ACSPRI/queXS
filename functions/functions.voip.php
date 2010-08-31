@@ -433,13 +433,13 @@ class voipWatch extends voip {
 	}
 
 
-	function setExtensionStatus($ext, $online = true)
+	function setExtensionStatus($ext, $online = true, $msg = false)
 	{
 		global $db;
 
 		$s = $online ? 1 : 0;
 		
-		print(T_("Extension") . " $ext " . ($online ? T_("online") : T_("offline")) . "\n");
+		if ($msg) print(T_("Extension") . " $ext " . ($online ? T_("online") : T_("offline")) . "\n");
 
 		$sql = "UPDATE operator
 			SET voip_status = '$s'
@@ -483,9 +483,9 @@ class voipWatch extends voip {
 			$s = $this->getExtensionStatus($e);
 
 			if ($s == false)
-				$this->setExtensionStatus($e,false);
+				$this->setExtensionStatus($e,false,true);
 			else
-				$this->setExtensionStatus($e,true);
+				$this->setExtensionStatus($e,true,true);
 		}
 	}
 
