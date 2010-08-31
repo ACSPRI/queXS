@@ -530,7 +530,7 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 	</tr>
 	</table>
 	<?
-
+	print "<div>" . date('l j F Y',mktime(0,0,0,$month,$day,$year)) . "</div>";
 }
 
 
