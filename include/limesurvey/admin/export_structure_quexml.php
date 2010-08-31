@@ -416,7 +416,7 @@ while ($Row = $QueryResult->FetchRow())
 			    $question->append_child($response);
 		            break;
 		        case "S": //SHORT FREE TEXT
-			    $response->append_child(create_free("text",get_length($qid,"text_input_width","240"),""));
+			    $response->append_child(create_free("text",get_length($qid,"maximum_chars","240"),""));
 			    $question->append_child($response);
 		            break;
 		        case "T": //LONG FREE TEXT
@@ -491,21 +491,36 @@ while ($Row = $QueryResult->FetchRow())
 		$section->append_child($question);
 	}
 
+		
+	$questionnaire->append_child($section);
+}
+
 	//Add caseid field
+
+	$section = $dom->create_element("section");
+	
+	$question = $dom->create_element("question");
+	$text = $dom->create_element("text");
+	$text->set_content("caseid");
 	$response = $dom->create_element("response");		
         $response->set_attribute("varName",'caseid');
 	$response->append_child(create_free("integer",9,""));
+	$question->append_child($text);
 	$question->append_child($response);
-		
+	$section->append_child($question);
+
 	//Add date field	
+	$question = $dom->create_element("question");
+	$text = $dom->create_element("text");
+	$text->set_content("datecomp");
 	$response = $dom->create_element("response");		
         $response->set_attribute("varName",'datecomp');
 	$response->append_child(create_free("text",16,""));
+	$question->append_child($text);
 	$question->append_child($response);
-
-			
+	$section->append_child($question);
+	
 	$questionnaire->append_child($section);
-}
 
 
 $dom->append_child($questionnaire);
