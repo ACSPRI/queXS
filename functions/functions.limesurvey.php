@@ -75,7 +75,36 @@ function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sam
 	return false;
 }
 
+/**
+ * Return whether the given case matches the requested quota
+ *
+ * @param string $lime_sgqa The limesurvey SGQA
+ * @param int $lime_sid The limesurvey survey id 
+ * @param int $case_id The case id
+ * @param int $sample_import_id The sample import ID
+ * @param string $value The value to compare
+ * @param string $comparison The type of comparison
+ * @return bool|int False if failed, otherwise 1 if matched, 0 if doesn't
+ * 
+ */
+function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison)
+{
+	global $db;
 
+	$sql = "SELECT count(*) as c
+		FROM " . LIME_PREFIX . "survey_$lime_sid as s
+		JOIN `case` as c ON (c.case_id = '$case_id')
+		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
+		WHERE s.token = c.case_id
+		AND s.`$lime_sgqa` $comparison '$value'";
+
+	$rs = $db->GetRow($sql);
+
+	if (isset($rs) && !empty($rs))
+		return $rs['c'];
+	
+	return false;
+}
 
 /**
  * Return the number of completions for a given
@@ -104,6 +133,7 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
 		AND s.`$lime_sgqa` $comparison '$value'";
 
 	$rs = $db->GetRow($sql);
+
 
 	if (isset($rs) && !empty($rs))
 		return $rs['c'];

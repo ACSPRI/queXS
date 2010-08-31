@@ -149,7 +149,7 @@ if ($questionnaire_id != false)
 
 		print "<h1>" . T_("Current row quotas (click to delete)") . "</h1>";
 		
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val
+		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,current_completions
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
@@ -176,7 +176,7 @@ if ($questionnaire_id != false)
 					print T_("Row quota not yet reached (Open)");
 
 				if ($v['lime_sgqa'] != -1)
-					print " - " . T_("Current completions: ") . limesurvey_quota_completions($v['lime_sgqa'],$v['lime_sid'],$questionnaire_id,$sample_import_id,$v['value'],$v['comparison']);
+					print " - " . T_("Current completions: ") . $v['current_completions'] . ":" . limesurvey_quota_completions($v['lime_sgqa'],$v['lime_sid'],$questionnaire_id,$sample_import_id,$v['value'],$v['comparison']);
 
 				print "</div>";
 	

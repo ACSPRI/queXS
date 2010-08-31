@@ -506,6 +506,29 @@ CREATE TABLE `questionnaire_sample` (
 -- Dumping data for table `questionnaire_sample`
 --
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questionnaire_sample_exclude_priority`
+--
+
+CREATE TABLE `questionnaire_sample_exclude_priority` (
+  `questionnaire_id` bigint(20) NOT NULL,
+  `sample_id` bigint(20) NOT NULL,
+  `exclude` tinyint(1) NOT NULL default '0',
+  `priority` tinyint(3) NOT NULL default '50',
+  PRIMARY KEY  (`questionnaire_id`,`sample_id`),
+  KEY `exclude` (`exclude`),
+  KEY `priority` (`priority`),
+  KEY `questionnaire_id` (`questionnaire_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `questionnaire_sample_exclude_priority`
+--
+
+
 --
 -- Table structure for table `questionnaire_sample_quota`
 --

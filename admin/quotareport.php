@@ -140,7 +140,7 @@ if ($questionnaire_id)
 
 		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
 		//b. (Replicate quota) Exclude selected sample records (where lime_sgqa == -1) 
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,qsq.description
+		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,qsq.description,current_completions
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
@@ -150,15 +150,15 @@ if ($questionnaire_id)
 
 		foreach ($r as $v)
 		{
+			$completions = $v['current_completions'];
+
 			if ($v['lime_sgqa'] == -1)
 			{
-				$completions = limesurvey_quota_replicate_completions($v['lime_sid'],$questionnaire_id,$sample_import_id,$v['exclude_val'],$v['exclude_var']);
 				$v['completions'] = "";
 				$perc = "";
 			}
 			else
 			{
-				$completions = limesurvey_quota_completions($v['lime_sgqa'],$v['lime_sid'],$questionnaire_id,$sample_import_id,$v['value'],$v['comparison']);
 				$perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
 			}
 
