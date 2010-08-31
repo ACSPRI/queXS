@@ -58,6 +58,8 @@ $callstatus = is_on_call($operator_id);
 
 if ($callstatus == 3) //On a call
 {
+	print "<p>" T_("Please wait till you have ended this call to call the supervisor") . "</p>";
+	/*
 	if (is_voip_enabled($operator_id))
 	{
 		if (isset($_GET['callsupervisor']))
@@ -79,13 +81,14 @@ if ($callstatus == 3) //On a call
 		else
 		{
 			print "<p><a href='?callsupervisor=callsupervisor'>" . T_("Click here to call the supervisor's phone. A conference call will be created with the respondent, yourself and the supervisor. Otherwise close this window") . "</a></p>";
-//			print "<p><a href='?callsupervisor=hangup'>" . T_("Hangup when calling the supervisor") . "</a></p>";
+			print "<p><a href='?callsupervisor=hangup'>" . T_("Hangup when calling the supervisor") . "</a></p>";
 		}
 	}
 	else
 	{
 		print "<p>" . T_("Try calling the supervisor") .  "</p>";
 	}
+	*/
 }
 else if ($callstatus == 0 || $callstatus == 4 || $callstatus == 5)
 {
@@ -110,7 +113,7 @@ else if ($callstatus == 0 || $callstatus == 4 || $callstatus == 5)
                 else
                 {
                         print "<p><a href='?callsupervisor=callsupervisor'>" . T_("Click here to call the supervisor's phone. Otherwise close this window") . "</a></p>";
-//			print "<p><a href='?callsupervisor=hangup'>" . T_("Hangup when calling the supervisor") . "</a></p>";
+			print "<p><a href='?callsupervisor=hangup'>" . T_("Hangup when calling the supervisor") . "</a></p>";
                 }
         }
         else
