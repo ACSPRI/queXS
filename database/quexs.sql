@@ -561,6 +561,7 @@ CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota_row` (
   `exclude_var` char(128) collate utf8_unicode_ci NOT NULL,
   `exclude_val` varchar(256) collate utf8_unicode_ci NOT NULL,
   `quota_reached` tinyint(1) NOT NULL default '0',
+  `current_completions` int(11) NOT NULL default '0',
   `description` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`questionnaire_sample_quota_row_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
