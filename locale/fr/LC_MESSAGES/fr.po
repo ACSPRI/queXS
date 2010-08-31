@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-01-15 12:46+1000\n"
-"PO-Revision-Date: 2009-06-04 17:24+0000\n"
-"Last-Translator: apobla <Unknown>\n"
+"PO-Revision-Date: 2010-03-22 23:35+0000\n"
+"Last-Translator: rudy1210 <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-15 03:36+0000\n"
+"X-Launchpad-Export-Date: 2010-08-31 01:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: performance.php:58
@@ -39,7 +39,7 @@ msgstr "Opérateur"
 #: performance.php:82
 #: performance.php:88
 msgid "Completions"
-msgstr ""
+msgstr "Complétions"
 
 #: performance.php:75
 #: performance.php:82
@@ -63,7 +63,7 @@ msgstr "Arrêter l'enregistrement"
 #: record.php:79
 #: record.php:96
 msgid "Record"
-msgstr ""
+msgstr "Enregistrement"
 
 #: record.php:66
 msgid "Beginning recording..."
@@ -109,12 +109,12 @@ msgstr ""
 
 #: appointmentlist.php:86
 msgid "Start"
-msgstr ""
+msgstr "Démarrer"
 
 #: appointmentlist.php:86
 #: index.php:98
 msgid "End"
-msgstr ""
+msgstr "Terminer"
 
 #: appointmentlist.php:86
 msgid "Respondent"
@@ -123,7 +123,7 @@ msgstr ""
 #: appointmentlist.php:86
 #: calllist.php:80
 msgid "Outcome"
-msgstr ""
+msgstr "Résultat"
 
 #: nocaseavailable.php:59
 msgid "No case available"
@@ -225,7 +225,7 @@ msgstr ""
 #: index.php:99
 #: appointment.php:114
 msgid "Appointment"
-msgstr ""
+msgstr "Rendez-vous"
 
 #: index.php:100
 msgid "Call/Hangup"
@@ -233,15 +233,15 @@ msgstr ""
 
 #: index.php:101
 msgid "Supervisor"
-msgstr ""
+msgstr "Superviseur"
 
 #: index.php:124
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: index.php:130
 msgid "Call history"
-msgstr ""
+msgstr "Historique des appels"
 
 #: index.php:136
 msgid "Shifts"
@@ -249,7 +249,7 @@ msgstr ""
 
 #: index.php:142
 msgid "Appointments"
-msgstr ""
+msgstr "Rendez-vous"
 
 #: index.php:153
 msgid "Work history"
@@ -257,7 +257,7 @@ msgstr ""
 
 #: index.php:159
 msgid "Info"
-msgstr ""
+msgstr "Informations"
 
 #: rs_quota_end.php:53
 msgid "Respondent Selection - Project Quota End"
@@ -358,7 +358,7 @@ msgstr ""
 
 #: appointment.php:155
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: appointment.php:164
 msgid "Add new phone number"
@@ -386,11 +386,11 @@ msgstr ""
 
 #: appointment.php:199
 msgid " on "
-msgstr ""
+msgstr " le "
 
 #: appointment.php:199
 msgid "on"
-msgstr ""
+msgstr "activé"
 
 #: casenote.php:53
 msgid "Case Notes"
@@ -399,11 +399,11 @@ msgstr ""
 #: casenote.php:63
 #: casenote.php:102
 msgid "Add note"
-msgstr ""
+msgstr "Ajouter une note"
 
 #: casenote.php:66
 msgid "Go back"
-msgstr ""
+msgstr "Revenir en arrière"
 
 #: casenote.php:105
 msgid "No notes"
@@ -411,7 +411,7 @@ msgstr ""
 
 #: casenote.php:107
 msgid "Note"
-msgstr ""
+msgstr "Note"
 
 #: endwork.php:45
 msgid "End of work"
@@ -482,15 +482,15 @@ msgstr ""
 
 #: respondent.php:146
 msgid "Show details"
-msgstr ""
+msgstr "Afficher les détails"
 
 #: respondent.php:150
 msgid "Var"
-msgstr ""
+msgstr "Var"
 
 #: respondent.php:150
 msgid "Value"
-msgstr ""
+msgstr "Valeur"
 
 #: callhistory.php:52
 msgid "Case History List"
@@ -506,7 +506,7 @@ msgstr ""
 
 #: callhistory.php:83
 msgid "No operator"
-msgstr ""
+msgstr "Pas d'opérateur"
 
 #: supervisor.php:71
 #: supervisor.php:102
@@ -626,6 +626,7 @@ msgstr ""
 #: call.php:282
 msgid "Press the call button to dial the number for this appointment:"
 msgstr ""
+"Appuyer sur le bouton d'appel pour composer le numéro de votre rendez-vous :"
 
 #: call.php:285
 msgid "Number to call:"
@@ -666,7 +667,7 @@ msgstr "Appel répondu"
 #: call.php:419
 #: call.php:426
 msgid "Hangup"
-msgstr ""
+msgstr "Raccrocher"
 
 #: call.php:415
 #: status.php:97
@@ -704,7 +705,7 @@ msgstr ""
 
 #: status.php:61
 msgid "Status"
-msgstr ""
+msgstr "État"
 
 #: status.php:76
 msgid "VoIP On"
@@ -728,7 +729,7 @@ msgstr ""
 
 #: status.php:93
 msgid "Requesting"
-msgstr ""
+msgstr "Demande en cours"
 
 #: status.php:109
 msgid "APPT"
@@ -805,7 +806,7 @@ msgstr ""
 
 #: functions/functions.calendar.php:240
 msgid "First name:"
-msgstr ""
+msgstr "Prénom :"
 
 #: functions/functions.calendar.php:241
 msgid "Last  name:"
@@ -813,7 +814,7 @@ msgstr ""
 
 #: functions/functions.calendar.php:246
 msgid "Time Zone:"
-msgstr ""
+msgstr "Fuseau horaire:"
 
 #: functions/functions.calendar.php:289
 msgid "Shift from:"
@@ -821,15 +822,15 @@ msgstr ""
 
 #: functions/functions.calendar.php:296
 msgid "Start Time"
-msgstr ""
+msgstr "Heure de début"
 
 #: functions/functions.calendar.php:346
 msgid "End Time"
-msgstr ""
+msgstr "Heure de fin"
 
 #: functions/functions.import.php:89
 msgid "Duplicate name"
-msgstr ""
+msgstr "Nom dupliqué"
 
 #: functions/functions.import.php:111
 msgid "You must select one and one only Primary Phone number"
@@ -837,15 +838,15 @@ msgstr ""
 
 #: functions/functions.import.php:127
 msgid "Import?"
-msgstr ""
+msgstr "Importer?"
 
 #: functions/functions.import.php:127
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: functions/functions.import.php:127
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: admin/new.php:54
 msgid "New: Create new questionnaire"
@@ -861,7 +862,7 @@ msgstr ""
 
 #: admin/new.php:99
 msgid "linked to"
-msgstr ""
+msgstr "Liée à"
 
 #: admin/new.php:100
 msgid "You must now edit and activate the questionnaire"
@@ -964,7 +965,7 @@ msgstr ""
 #: admin/outcomes.php:98
 #: admin/outcomes.php:203
 msgid "Number"
-msgstr ""
+msgstr "Numéro"
 
 #: admin/outcomes.php:104
 msgid "Average time on a completed questionnaire"
@@ -972,15 +973,15 @@ msgstr ""
 
 #: admin/outcomes.php:104
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: admin/outcomes.php:104
 msgid "Secs"
-msgstr ""
+msgstr "Secs"
 
 #: admin/outcomes.php:117
 msgid "Rate"
-msgstr ""
+msgstr "Taux"
 
 #: admin/outcomes.php:118
 msgid "Response Rate 1"
@@ -1002,13 +1003,13 @@ msgstr ""
 #: admin/outcomes.php:170
 #: admin/outcomes.php:223
 msgid "Count"
-msgstr ""
+msgstr "Comptes"
 
 #: admin/outcomes.php:136
 #: admin/outcomes.php:170
 #: admin/outcomes.php:223
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: admin/outcomes.php:155
 msgid "Operator call outcomes"
@@ -1016,7 +1017,7 @@ msgstr ""
 
 #: admin/outcomes.php:186
 msgid "Sample"
-msgstr ""
+msgstr "Échantillon"
 
 #: admin/outcomes.php:226
 msgid "No outcomes recorded for this sample"
@@ -1044,7 +1045,7 @@ msgstr ""
 
 #: admin/outcomes.php:259
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #: admin/outcomes.php:259
 msgid "Shift report"
@@ -1056,7 +1057,7 @@ msgstr ""
 
 #: admin/dataoutput.php:118
 msgid "Data output"
-msgstr ""
+msgstr "Sortie des données"
 
 #: admin/dataoutput.php:120
 msgid "Please select a questionnaire"
@@ -1132,7 +1133,7 @@ msgstr ""
 
 #: admin/databasestrings.php:33
 msgid "No answer"
-msgstr ""
+msgstr "Aucune réponse"
 
 #: admin/databasestrings.php:34
 msgid "Technical phone problems"
@@ -1164,7 +1165,7 @@ msgstr ""
 
 #: admin/databasestrings.php:41
 msgid "Complete"
-msgstr ""
+msgstr "Terminer"
 
 #: admin/databasestrings.php:42
 msgid "Known respondent refusal"
@@ -1268,31 +1269,31 @@ msgstr ""
 
 #: admin/databasestrings.php:68
 msgid "Monday"
-msgstr ""
+msgstr "Lundi"
 
 #: admin/databasestrings.php:69
 msgid "Tuesday"
-msgstr ""
+msgstr "Mardi"
 
 #: admin/databasestrings.php:70
 msgid "Wednesday"
-msgstr ""
+msgstr "Mercredi"
 
 #: admin/databasestrings.php:71
 msgid "Thursday"
-msgstr ""
+msgstr "Jeudi"
 
 #: admin/databasestrings.php:72
 msgid "Friday"
-msgstr ""
+msgstr "Vendredi"
 
 #: admin/databasestrings.php:73
 msgid "Saturday"
-msgstr ""
+msgstr "Samedi"
 
 #: admin/databasestrings.php:74
 msgid "Sunday"
-msgstr ""
+msgstr "Dimanche"
 
 #: admin/databasestrings.php:75
 msgid "Quota filled"
@@ -1354,7 +1355,7 @@ msgstr ""
 
 #: admin/operators.php:120
 msgid "tool"
-msgstr ""
+msgstr "outil"
 
 #: admin/operators.php:121
 #: admin/clients.php:87
@@ -1404,7 +1405,7 @@ msgstr ""
 #: admin/operators.php:132
 #: admin/clients.php:93
 msgid "Add user"
-msgstr ""
+msgstr "Ajouter un utilisateur"
 
 #: admin/index.php:47
 msgid "Administrative Tools"
@@ -1510,7 +1511,7 @@ msgstr ""
 
 #: admin/index.php:84
 msgid "System settings"
-msgstr ""
+msgstr "Configuration du système"
 
 #: admin/index.php:85
 msgid "Set default timezone list"
@@ -1556,11 +1557,11 @@ msgstr ""
 
 #: admin/displayappointments.php:187
 msgid "Start time"
-msgstr ""
+msgstr "Heure de démarrage"
 
 #: admin/displayappointments.php:188
 msgid "End time"
-msgstr ""
+msgstr "Heure de fin"
 
 #: admin/displayappointments.php:193
 msgid "Cancel edit"
@@ -1581,14 +1582,14 @@ msgstr ""
 #: admin/displayappointments.php:207
 #: admin/displayappointments.php:220
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: admin/displayappointments.php:207
 #: admin/displayappointments.php:220
 #: admin/shiftreport.php:97
 #: admin/shiftreport.php:105
 msgid "Edit"
-msgstr ""
+msgstr "Éditer"
 
 #: admin/displayappointments.php:220
 msgid "Operator Name"
@@ -1600,7 +1601,7 @@ msgstr ""
 
 #: admin/displayappointments.php:220
 msgid "Surname"
-msgstr ""
+msgstr "Nom de famille"
 
 #: admin/displayappointments.php:220
 msgid "Current outcome"
@@ -1628,11 +1629,11 @@ msgstr ""
 
 #: admin/timezonetemplate.php:103
 msgid "Timezone: "
-msgstr ""
+msgstr "Fuseau horaire : "
 
 #: admin/timezonetemplate.php:104
 msgid "Add Timezone"
-msgstr ""
+msgstr "Tous les fuseaux horaires"
 
 #: admin/clients.php:71
 msgid "Could not add"
@@ -1686,19 +1687,19 @@ msgstr ""
 #: admin/operatorperformance.php:81
 #: admin/operatorperformance.php:102
 msgid "Calls"
-msgstr ""
+msgstr "Appels"
 
 #: admin/operatorperformance.php:71
 #: admin/operatorperformance.php:81
 #: admin/operatorperformance.php:102
 msgid "Total time"
-msgstr ""
+msgstr "Temps total"
 
 #: admin/operatorperformance.php:71
 #: admin/operatorperformance.php:81
 #: admin/operatorperformance.php:102
 msgid "Call time"
-msgstr ""
+msgstr "Heure de l'appel"
 
 #: admin/operatorperformance.php:71
 #: admin/operatorperformance.php:81
@@ -1746,7 +1747,7 @@ msgstr ""
 #: admin/quota.php:151
 #: admin/quotarow.php:166
 msgid "for"
-msgstr ""
+msgstr "pour"
 
 #: admin/quota.php:151
 #: admin/quotarow.php:166
@@ -1829,11 +1830,11 @@ msgstr ""
 
 #: admin/callrestrict.php:118
 msgid "Day"
-msgstr ""
+msgstr "Jour"
 
 #: admin/callrestrict.php:134
 msgid "Add row"
-msgstr ""
+msgstr "Ajouter une ligne"
 
 #: admin/callrestrict.php:135
 msgid "Save changes to restriction times"
@@ -1884,7 +1885,7 @@ msgstr ""
 #: admin/quotarow.php:164
 #: admin/quotarow.php:166
 msgid "like"
-msgstr ""
+msgstr "comme"
 
 #: admin/quotarow.php:166
 msgid "Stop calling"
@@ -1908,7 +1909,7 @@ msgstr ""
 
 #: admin/quotarow.php:193
 msgid "Copy"
-msgstr ""
+msgstr "Copie"
 
 #: admin/quotarow.php:199
 msgid "Select a question for the row quota"
@@ -1996,11 +1997,11 @@ msgstr ""
 
 #: admin/shiftreport.php:105
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: admin/shiftreport.php:105
 msgid "Report"
-msgstr ""
+msgstr "Rapport"
 
 #: admin/shiftreport.php:108
 msgid "Create new report for this shift"
@@ -2061,7 +2062,7 @@ msgstr ""
 
 #: admin/supervisor.php:167
 msgid "Project"
-msgstr ""
+msgstr "Projet"
 
 #: admin/supervisor.php:170
 msgid "Current outcome:"
@@ -2135,7 +2136,7 @@ msgstr ""
 
 #: admin/addshift.php:252
 msgid "Submit changes"
-msgstr ""
+msgstr "Valider les modifications"
 
 #: admin/import.php:53
 msgid "Import: Validating and uploading"
@@ -2151,7 +2152,7 @@ msgstr ""
 
 #: admin/import.php:77
 msgid "Error:"
-msgstr ""
+msgstr "Erreur :"
 
 #: admin/import.php:77
 msgid "Please go back in your browser and fix the problem"
@@ -2184,12 +2185,12 @@ msgstr ""
 #: admin/quotareport.php:188
 #: admin/quotareport.php:195
 msgid "closed"
-msgstr ""
+msgstr "Fermé"
 
 #: admin/quotareport.php:190
 #: admin/quotareport.php:197
 msgid "open"
-msgstr ""
+msgstr "Ouvrir"
 
 #: admin/quotareport.php:238
 msgid "Strata"
@@ -2197,7 +2198,7 @@ msgstr ""
 
 #: admin/quotareport.php:238
 msgid "Quota"
-msgstr ""
+msgstr "Quota"
 
 #: admin/quotareport.php:238
 msgid "Sample Used"
@@ -2209,7 +2210,7 @@ msgstr ""
 
 #: admin/quotareport.php:238
 msgid "% Complete"
-msgstr ""
+msgstr "Complet à %"
 
 #: admin/samplesearch.php:83
 msgid "Search sample"
@@ -2233,7 +2234,7 @@ msgstr ""
 
 #: admin/samplesearch.php:130
 msgid "Link"
-msgstr ""
+msgstr "Lien"
 
 #: admin/samplesearch.php:149
 msgid "Search within this sample"
@@ -2246,11 +2247,11 @@ msgstr ""
 
 #: admin/samplesearch.php:156
 msgid "Search for:"
-msgstr ""
+msgstr "Rechercher:"
 
 #: admin/samplesearch.php:158
 msgid "Start search"
-msgstr ""
+msgstr "Lancer la recherche"
 
 #: client/index.php:72
 msgid "There are no questionnaires assigned to you"
@@ -2262,7 +2263,7 @@ msgstr ""
 
 #: display/index.php:111
 msgid "Display"
-msgstr ""
+msgstr "Écran"
 
 #: include/php-gettext-1.0.7/examples/pigs_fallback.php:74
 #: include/php-gettext-1.0.7/examples/pigs_dropin.php:75
@@ -2270,3 +2271,5 @@ msgid ""
 "This is how the story goes.\n"
 "\n"
 msgstr ""
+"C'est ainsi que va l'histoire.\n"
+"\n"

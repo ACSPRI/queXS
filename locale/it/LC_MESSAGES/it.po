@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-01-15 12:46+1000\n"
-"PO-Revision-Date: 2009-09-24 21:55+0000\n"
-"Last-Translator: Alessandro Musacchio <predator11987@gmail.com>\n"
+"PO-Revision-Date: 2010-06-13 08:46+0000\n"
+"Last-Translator: Alessandro Pischedda <uub@virgilio.it>\n"
 "Language-Team: Diego Donati\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-15 03:32+0000\n"
+"X-Launchpad-Export-Date: 2010-08-31 01:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: performance.php:58
@@ -889,11 +889,11 @@ msgstr ""
 
 #: admin/new.php:100
 msgid "You must now edit and activate the questionnaire"
-msgstr ""
+msgstr "Ora devi editare e attivare il questionario"
 
 #: admin/new.php:103
 msgid "Error: Failed to insert questionnaire"
-msgstr ""
+msgstr "Errore: inserimento questionario fallito"
 
 #: admin/new.php:114
 msgid "Name for questionnaire:"
@@ -1603,7 +1603,7 @@ msgstr ""
 
 #: admin/displayappointments.php:194
 msgid "Delete this appointment"
-msgstr ""
+msgstr "Cancella questo appuntamento"
 
 #: admin/displayappointments.php:203
 msgid "Display Appointments"
@@ -1890,7 +1890,7 @@ msgstr ""
 #: admin/samplecallattempts.php:100
 #: admin/samplecallattempts.php:119
 msgid "Number of cases"
-msgstr ""
+msgstr "Numero di casi"
 
 #: admin/samplecallattempts.php:67
 #: admin/samplecallattempts.php:83
@@ -1901,7 +1901,7 @@ msgstr ""
 
 #: admin/samplecallattempts.php:99
 msgid "This sample"
-msgstr ""
+msgstr "Questo esempio"
 
 #: admin/samplecallattempts.php:118
 msgid "This quota"
@@ -1970,7 +1970,7 @@ msgstr "Inserire i dettagli per creare la quota di colonna:"
 
 #: admin/quotarow.php:265
 msgid "Describe this quota"
-msgstr ""
+msgstr "Descrivi questa quota"
 
 #: admin/quotarow.php:275
 msgid "Exclude from the sample where the value is like"
