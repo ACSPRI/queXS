@@ -563,6 +563,8 @@ CREATE TABLE IF NOT EXISTS `questionnaire_sample_quota_row` (
   `quota_reached` tinyint(1) NOT NULL default '0',
   `current_completions` int(11) NOT NULL default '0',
   `description` text collate utf8_unicode_ci NOT NULL,
+  `priority` tinyint(3) NOT NULL default '50' COMMENT 'Priority from 0 - 100',
+  `autoprioritise` tinyint(1) NOT NULL default '0' COMMENT 'Should this row have it''s priority automatically adjusted to 100 - (completions %)',
   PRIMARY KEY  (`questionnaire_sample_quota_row_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
   KEY `sample_import_id` (`sample_import_id`),

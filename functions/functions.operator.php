@@ -330,11 +330,10 @@ function get_case_id($operator_id, $create = false)
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
 				AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
 				AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-				ORDER BY apn.start DESC, a.start ASC
+				ORDER BY apn.start DESC, a.start ASC, qsep.priority DESC
 				LIMIT 1";
 	
 				//apn.appointment_id contains the id of an appointment if we are calling on an appointment
-	
 			$r2 = $db->GetRow($sql);
 	
 			if (empty($r2))
@@ -367,7 +366,7 @@ function get_case_id($operator_id, $create = false)
 					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
 					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-					ORDER BY rand() * qs.random_select, s.sample_id
+					ORDER BY qsep.priority DESC, rand() * qs.random_select, s.sample_id
 					LIMIT 1";
 				
 	
@@ -1219,6 +1218,7 @@ function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_
  * Update the row quota table
  *
  * @param int $questionnaire_id The questionnaire ID to update
+ * @param int|bool $case_id The case id if known to limit the scope of the search
  */
 function update_row_quota($questionnaire_id,$case_id = false)
 {
@@ -1228,7 +1228,7 @@ function update_row_quota($questionnaire_id,$case_id = false)
 
 	$db->StartTrans();
 
-	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val,qsq.current_completions
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val,qsq.current_completions,qsq.priority,qsq.autoprioritise
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
@@ -1245,6 +1245,7 @@ function update_row_quota($questionnaire_id,$case_id = false)
 		//update all row quotas for this questionnaire
 		foreach($rs as $r)
 		{
+			//whether a completion was changed for this quota
 			$updatequota = false;
 
 			//if a case_Id is specified, we can just check if this case matches
@@ -1290,10 +1291,25 @@ function update_row_quota($questionnaire_id,$case_id = false)
 				else
 				{
 					$sql = "UPDATE questionnaire_sample_quota_row
-						SET current_completions = '$completions'
-						WHERE questionnaire_sample_quota_row_id = {$r['questionnaire_sample_quota_row_id']}";
+						SET current_completions = '$completions' ";
+
+					//If autopriority is set update it here
+					if ($r['autoprioritise'] == 1)
+					{
+						//priority is 100 - the percentage of completions
+						$pr = 100 - round(100 * ($completions / $r['completions']));
+						$sql .= ", priority = '$pr' ";				
+
+						//need to update quotas now
+						$update = true;
+					}
+	
+					$sql .= " WHERE questionnaire_sample_quota_row_id = {$r['questionnaire_sample_quota_row_id']}";
+	
 					$db->Execute($sql);
+
 				}
+
 
 			}
 
@@ -1347,6 +1363,44 @@ function update_quota_priorities($questionnaire_id)
 	$db->Execute($sql);
 
 	if ($db->HasFailedTrans()) die ($sql);
+
+	//Update the priority record
+
+	//Select all quota rows that are open, and have a priority != 50
+	$sql = "SELECT questionnaire_sample_quota_row_id, priority
+		FROM questionnaire_sample_quota_row
+		WHERE questionnaire_id = '$questionnaire_id'
+		AND quota_reached = 0
+		AND priority != 50
+		ORDER BY priority ASC";
+
+	$rs = $db->GetAll($sql);
+
+	if ($db->HasFailedTrans()) die ($sql);
+
+	if (!empty($rs)) foreach ($rs as $r)
+	{
+		$qsqri = $r['questionnaire_sample_quota_row_id'];
+		$priority = $r['priority'];
+
+		//find all cases that match this quota, and update it to the new priority
+		$sql = "UPDATE sample as s, sample_var as sv, questionnaire_sample_quota_row as qs, questionnaire_sample_exclude_priority as qsep
+			SET qsep.priority = '$priority'
+			WHERE s.import_id = qs.sample_import_id
+			AND qs.questionnaire_sample_quota_row_id = '$qsqri'
+			AND s.sample_id = sv.sample_id
+			AND sv.var = qs.exclude_var
+			AND qs.exclude_val LIKE sv.val
+			AND qsep.questionnaire_id = qs.questionnaire_id
+			AND qsep.sample_id = s.sample_id";
+
+
+		$db->Execute($sql);
+		
+
+		if ($db->HasFailedTrans()) die ($sql);			
+	}
+
 
 	//Update the exclusion record to be 1 where exists in the qsqre table
 

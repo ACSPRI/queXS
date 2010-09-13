@@ -67,6 +67,46 @@ include("../functions/functions.operator.php");
  */
 include("../functions/functions.limesurvey.php");
 
+
+if (isset($_POST['submit']))
+{
+	$questionnaire_id = bigintval($_POST['questionnaire_id']);
+
+	$db->StartTrans();
+
+	$sql = "UPDATE questionnaire_sample_quota_row
+		SET autoprioritise = 0
+		WHERE questionnaire_id = '$questionnaire_id'";
+
+	$db->Execute($sql);
+
+	foreach($_POST as $key => $val)
+	{
+		$qsqr = bigintval(substr($key,1));
+		if (substr($key,0,1) == 'a')
+		{
+			$sql = "UPDATE questionnaire_sample_quota_row
+				SET autoprioritise = 1
+				WHERE questionnaire_sample_quota_row_id = $qsqr";
+
+			$db->Execute($sql);
+		}
+		else if (substr($key,0,1) == 'p')
+		{
+			$val = intval($val);
+
+			$sql = "UPDATE questionnaire_sample_quota_row
+				SET priority = '$val'
+				WHERE questionnaire_sample_quota_row_id = $qsqr";
+
+			$db->Execute($sql);
+		}
+	}
+	update_quota_priorities($questionnaire_id);
+
+	$db->CompleteTrans();
+}
+
 xhtml_head(T_("Quota report"),true,array("../css/table.css"),array("../js/window.js"));
 
 print "<h2>" . T_("Select a questionnaire from the list below") . "</h2>";
@@ -140,7 +180,7 @@ if ($questionnaire_id)
 
 		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
 		//b. (Replicate quota) Exclude selected sample records (where lime_sgqa == -1) 
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,qsq.description,current_completions
+		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,qsq.description,current_completions, priority, autoprioritise
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
@@ -151,6 +191,12 @@ if ($questionnaire_id)
 		foreach ($r as $v)
 		{
 			$completions = $v['current_completions'];
+			$priority = $v['priority'];
+			$autoprioritise = $v['autoprioritise'];
+			$checked = "";
+			if ($autoprioritise) $checked = "checked='checked'";
+			$qsqr = $v['questionnaire_sample_quota_row_id'];
+			
 
 			if ($v['lime_sgqa'] == -1)
 			{
@@ -185,9 +231,9 @@ if ($questionnaire_id)
 			if ($completions < $v['completions'] || $v['lime_sgqa'] == -1) //if completions less than the quota, allow for closing/opening
 			{
 				if ($v['quota_reached'] == 1)
-					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota={$v['questionnaire_sample_quota_row_id']}&amp;open=open'>" . T_("closed") . "</a>";
+					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;open=open'>" . T_("closed") . "</a>";
 				else
-					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota={$v['questionnaire_sample_quota_row_id']}&amp;close=close'>" . T_("open") . "</a>";
+					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;close=close'>" . T_("open") . "</a>";
 			}
 			else
 			{
@@ -197,7 +243,7 @@ if ($questionnaire_id)
 					$status = T_("open");
 			}
 			
-			$report[] = array("strata" => "<a href='quotarow.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc);
+			$report[] = array("strata" => "<a href='quotarow.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='text' size='3' value='$priority' id='p$qsqr' name='p$qsqr' />", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
 		}
 
 		//c. (Questionnaire quota) Monitor outcomes of questions in completed questionnaires, and abort interview when completion limit is reached 
@@ -235,8 +281,11 @@ if ($questionnaire_id)
 			$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
 		}
 
-		xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete")),"tclass",false,false);
+		print "<form action='' method='post'>";
+		xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc","priority","autoprioritise"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete"),T_("Set priority"),T_("Auto prioritise")),"tclass",false,false);
+		print "<p><input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/><input type='submit' id='submit' name='submit' value='" . T_("Update priorities") . "'/></p></form>";
 	}
+	
 }
 
 xhtml_foot();

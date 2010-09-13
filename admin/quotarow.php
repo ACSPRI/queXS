@@ -76,7 +76,11 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['va
 	$comparison = -1;
 	$completions = -1;
 	$sgqa = -1;
+	$autoprioritise = 0;
 
+	if (isset($_GET['autoprioritise'])) $autoprioritise = 1;
+	
+	$priority = intval($_GET['priority']);
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$sample_import_id = bigintval($_GET['sample_import_id']);
 	if ($_GET['sgqa'] != -1)
@@ -90,8 +94,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['va
 	$exclude_var = $db->quote($_GET['exclude_var']);
 	$description = $db->quote($_GET['description']);
 
-	$sql = "INSERT INTO questionnaire_sample_quota_row(questionnaire_id, sample_import_id, lime_sgqa,value,completions,comparison,exclude_var,exclude_val,description)
-		VALUES ($questionnaire_id, $sample_import_id, $sgqa, $value, $completions, $comparison, $exclude_var, $exclude_val, $description)";
+	$sql = "INSERT INTO questionnaire_sample_quota_row(questionnaire_id, sample_import_id, lime_sgqa,value,completions,comparison,exclude_var,exclude_val,description, priority, autoprioritise)
+		VALUES ($questionnaire_id, $sample_import_id, $sgqa, $value, $completions, $comparison, $exclude_var, $exclude_val, $description, $priority, $autoprioritise)";
 
 	$db->Execute($sql);
 
@@ -263,6 +267,8 @@ if ($questionnaire_id != false)
 				<form action="" method="get">
 				<p>
 				<label for="description"><? echo T_("Describe this quota"); ?> </label><input type="text" name="description" id="description"/>		<br/>
+				<label for="priority"><? echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?> </label><input type="text" name="priority" id="priority" value="50"/>		<br/>
+				<label for="autoprioritise"><? echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> </label><input type="checkbox" name="autoprioritise" id="autoprioritise"/>		<br/>
 				<? if ($sgqa != -1) { ?>
 				<label for="value"><? echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
 				<label for="comparison"><? echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
