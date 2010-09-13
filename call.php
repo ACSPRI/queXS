@@ -231,7 +231,7 @@ if (isset($_GET['newstate']))
 }
 
 
-xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"));
+xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js","include/jquery-ui/js/jquery-1.4.2.min.js"));
 
 $state = is_on_call($operator_id);
 switch($state)
@@ -363,6 +363,8 @@ switch($state)
 					if ($rn) // a note is required to be entered
 					{
 						print "<div><label for='note'>" . T_("Enter a reason for this outcome before completing this case:") . "</label><input type='text' id='note' name='note' size='48'/><br/><br/><br/><br/></div>";
+						//give focus on load
+						print '<script type="text/javascript">$(document).ready(function(){$("#note").focus();});</script>';
 						//put these lower on the screen so they don't get "automatically" clicked
 						print "<p><a href='javascript:openParentNote(\"endcase=endcase\")'>" . T_("End case") . "</a></p>";
 						print "<p><a href='javascript:openParentNote(\"endwork=endwork\")'>" . T_("End work") . "</a></p>";
@@ -384,6 +386,7 @@ switch($state)
 				if ($rn) // a note is required to be entered
 				{
 					print "<div><label for='note'>" . T_("Enter a reason for this outcome before completing this case:") . "</label><input type='text' id='note' name='note' size='48'/><br/><br/><br/><br/></div>";
+					print '<script type="text/javascript">$(document).ready(function(){$("#note").focus();});</script>';
 					print "<p><a href='javascript:openParentNote(\"endcase=endcase\")'>" . T_("End case") . "</a></p>";
 					print "<p><a href='javascript:openParentNote(\"endwork=endwork\")'>" . T_("End work") . "</a></p>";
 				}
