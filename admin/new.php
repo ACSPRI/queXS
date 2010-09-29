@@ -63,10 +63,11 @@ if (isset($_POST['import_file']))
 	$testing = 0;
 	$rs = 0;
 	$lime_sid = 0;
+	$lime_rs_sid = "NULL";
 	if (isset($_POST['ras'])) $ras = 1;
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['testing'])) $testing = 1;
-	if (isset($_POST['rs'])) $rs = 1;
+	if ($_POST['selectrs'] != "none") $rs = 1;
 	
 	$name = $db->qstr($_POST['description'],get_magic_quotes_gpc());
 	$rs_intro = $db->qstr($_POST['rs_intro'],get_magic_quotes_gpc());
@@ -78,8 +79,7 @@ if (isset($_POST['import_file']))
 	if ($_POST['select'] == "new")
 	{
 		//create one from scratch
-		include("../functions/functions.limesurvey.php");
-
+		include_once("../functions/functions.limesurvey.php");
 		$lime_sid = create_limesurvey_questionnaire($name);
 	}
 	else
@@ -88,8 +88,19 @@ if (isset($_POST['import_file']))
 		$lime_sid = bigintval($_POST['select']);
 	}
 
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing')";
+	if ($_POST['selectrs'] == "new")
+	{
+		//create one from scratch
+		include_once("../functions/functions.limesurvey.php");
+		$lime_rs_sid = create_limesurvey_questionnaire($db->qstr(T_("Respondent Selection for ") . $_POST['description']),false);
+	}
+	else if (is_numeric($_POST['selectrs']))
+	{
+		$lime_rs_sid = bigintval($_POST['selectrs']);
+	}
+
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid)";
 
 	$rs = $db->Execute($sql);
 
@@ -129,17 +140,33 @@ if (!empty($surveys))
 	}
 }
 ?></select></p>
+	<p><? echo T_("Respondent selection type:"); ?> <select name="selectrs"><option value="none" onclick="hide(this,'rstext');"><? echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old" onclick="show(this,'rstext');" ><? echo T_("Use basic respondent selection text (below)"); ?></option><option onclick="hide(this,'rstext');" value="new"><? echo T_("Create new respondent selection questionnaire in Limesurvey"); ?></option><?
+$sql = "SELECT s.sid as sid, sl.surveyls_title AS title
+	FROM " . LIME_PREFIX . "surveys AS s
+	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
+	AND sl.surveyls_language = 'en' )
+	WHERE s.active = 'Y'";
+
+$surveys = $db->GetAll($sql);
+
+if (!empty($surveys))
+{
+	foreach($surveys as $s)
+	{
+		print "<option onclick=\"hide(this, 'rstext');\"  value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
+	}
+}
+?></select></p>
 <p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
-<p><? echo T_("Use respondent selection text?"); ?> <input name="rs" id="rs" type="checkbox" checked="checked" onclick="showHide(this,'rstext');"/></p>
-<div id='rstext'>
+<div id='rstext' style='display:none;'>
 <p><? echo T_("Respondent selection introduction:"); ?> <textarea cols="40" rows="4" name="rs_intro"></textarea></p>
 <p><? echo T_("Respondent selection project introduction:"); ?> <textarea cols="40" rows="4" name="rs_project_intro"></textarea></p>
-<p><? echo T_("Respondent selection project end:"); ?> <textarea cols="40" rows="4" name="rs_project_end"></textarea></p>
 <p><? echo T_("Respondent selection callback (already started questionnaire):"); ?> <textarea cols="40" rows="4" name="rs_callback"></textarea></p>
 <p><? echo T_("Message to leave on an answering machine:"); ?> <textarea cols="40" rows="4" name="rs_answeringmachine"></textarea></p>
 </div>
+<p><? echo T_("Project end text (thank you screen):"); ?> <textarea cols="40" rows="4" name="rs_project_end"></textarea></p>
 <p><input type="submit" name="import_file" value="<? echo T_("Create Questionnaire"); ?>"/></p>
 </form>
 <?

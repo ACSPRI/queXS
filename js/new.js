@@ -11,3 +11,15 @@ function showHide(me,id)
 	}
 		
 }
+
+function show(me,id)
+{
+	e = document.getElementById(id);
+	e.style.display = 'inline';
+		
+}
+function hide(me,id)
+{
+	e = document.getElementById(id);
+	e.style.display = 'none';
+}

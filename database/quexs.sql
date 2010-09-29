@@ -409,6 +409,7 @@ INSERT INTO `outcome` VALUES(29, '3.14', 'Answering machine - Not a household', 
 INSERT INTO `outcome` VALUES(30, '4.10', 'Out of sample', 0, 4, 0, 1, 0, 0, 0, '');
 INSERT INTO `outcome` VALUES(31, '2.20', 'Non contact', 180, 1, 1, 1, 1, 1, 0, 'NC');
 INSERT INTO `outcome` VALUES(32, '4.80', 'Quota filled', 0, 4, 0, 1, 0, 0, 0, '');
+INSERT INTO `outcome` VALUES(33, '2.36', 'Miscellaneous - Unavailable for a week', 10080, 1, 0, 1, 1, 1, 0, 'O');
 
 -- --------------------------------------------------------
 
@@ -466,6 +467,7 @@ CREATE TABLE `questionnaire` (
   `rs_project_end` text collate utf8_unicode_ci NOT NULL,
   `rs_callback` text collate utf8_unicode_ci NOT NULL,
   `rs_answeringmachine` text collate utf8_unicode_ci NOT NULL,
+  `lime_rs_sid` int(11) default NULL,
   PRIMARY KEY  (`questionnaire_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 

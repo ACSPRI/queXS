@@ -1282,6 +1282,8 @@ if ($countquota > 0 && (!isset($countquotals) || $countquotals == 0)) {
 
 if (isset($conditionsarray) && $conditionsarray) {//ONLY DO THIS IF THERE ARE CONDITIONS!
     $count='0';  
+
+
 	foreach ($conditionsarray as $car) {
         if ($importversion>=111)
         {
@@ -1296,7 +1298,7 @@ if (isset($conditionsarray) && $conditionsarray) {//ONLY DO THIS IF THERE ARE CO
             }
         $conditionrowdata=array_combine($fieldorders,$fieldcontents);
 
-		$oldcid=$conditionrowdata["cid"];
+			$oldcid=$conditionrowdata["cid"];
 		$oldqid=$conditionrowdata["qid"];
 		$oldcfieldname=$conditionrowdata["cfieldname"];
 		$oldcqid=$conditionrowdata["cqid"];
@@ -1321,7 +1323,11 @@ if (isset($conditionsarray) && $conditionsarray) {//ONLY DO THIS IF THERE ARE CO
 		}
 		foreach($fieldnames as $fns) {
 			//if the $fns['oldcfieldname'] is not the same as $fns['oldfieldname'] then this is a multiple type question
-			if ($fns['oldcfieldname'] == $fns['oldfieldname']) { //The normal method - non multiples
+			if (stripos($oldcfieldname,'TOKEN') !== false) //detecting tokens
+			{
+				$newcfieldname = $oldcfieldname;
+			}
+			else if ($fns['oldcfieldname'] == $fns['oldfieldname']) { //The normal method - non multiples
 				if ($oldcfieldname==$fns['oldcfieldname']) {
 					$newcfieldname=$fns['newcfieldname'];
 				}
@@ -1332,6 +1338,7 @@ if (isset($conditionsarray) && $conditionsarray) {//ONLY DO THIS IF THERE ARE CO
 			}
 		}
 		if (!isset($newcfieldname)) {$newcfieldname="";}
+
 		unset($conditionrowdata["cid"]);
 		$conditionrowdata["qid"]=$newqid;
 		$conditionrowdata["cfieldname"]=$newcfieldname;

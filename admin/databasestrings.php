@@ -64,6 +64,7 @@ T_("Temporary Outcomes (normal cases)");
 T_("Supervisor Outcomes (referred to supervisor)");
 T_("Refusal Outcomes (respondent refused)");
 T_("Final Outcomes (completed, final refusal, etc)");
+T_("Miscellaneous - Unavailable for a week");
 T_("Appointments");
 T_("Monday");
 T_("Tuesday");

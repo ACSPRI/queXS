@@ -305,6 +305,11 @@ if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notan
             $url=str_replace("{SID}", $surveyid, $url);              // to activate the SID in the END URL
             $url=str_replace("{LANG}", $clang->getlangcode(), $url); // to activate the LANG in the END URL
 
+	    //queXS Addition
+    	    include_once("quexs.php");
+	    $quexs_url = get_start_interview_url();	
+	    $url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
+
             header("Location: {$url}");
         }
 

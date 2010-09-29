@@ -117,12 +117,19 @@ if ((isset($_POST['fieldnames']) && $_POST['fieldnames']) || (isset($_POST['move
 		{
 			if ($result=$connect->Execute($subquery))  // Checked
 			{
+
 	            if (substr($subquery,0,6)=='INSERT')
 				{
 	               $tempID=$connect->Insert_ID($thissurvey['tablename'],"id"); // Find out id immediately if inserted 
 	        	   $_SESSION['srid'] = $tempID;
 	        	   $saved_id = $tempID;
 				}
+
+			//queXS addition
+			include_once('quexs.php');
+			global $surveyid;
+			quexs_update_sample($surveyid,$saved_id,$postedfieldnames);
+
 				if ($bFinalizeThisAnswer === true)
 				{
 					$connect->Execute("DELETE FROM ".db_table_name("saved_control")." where srid=".$_SESSION['srid'].' and sid='.$surveyid);   // Checked    

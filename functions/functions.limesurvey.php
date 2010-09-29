@@ -246,9 +246,10 @@ function getRandomID()
  * With modifications
  *
  * @param string $title Questionnaire name
+ * @param bool $exittoend Whether to exit to the project end, or to the start of the questionnaire
  * @link http://www.limesurvey.org/ LimeSurvey
  */
-function create_limesurvey_questionnaire($title)
+function create_limesurvey_questionnaire($title,$exittoend = true)
 {
 	global $db;
 
@@ -286,7 +287,13 @@ function create_limesurvey_questionnaire($title)
 	. "'', '',\n"
 	. "'', '',\n"
 	. "'', '',\n"
-	. "'', '" . QUEXS_URL . "rs_project_end.php')";
+	. "'', '";
+
+	if ($exittoend)
+		$isquery .=  QUEXS_URL . "rs_project_end.php')";
+	else
+		$isquery .=  "{STARTINTERVIEWURL}')";
+	
 	$isresult = $db->Execute($isquery) or die ($isquery."<br/>".$db->ErrorMsg());
 
 

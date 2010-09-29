@@ -3530,6 +3530,7 @@ function getHeader()
 {
 	global $embedded, $surveyid, $rooturl,$defaultlang, $js_header_includes, $css_header_includes;
 
+    $js_header_includes[] = '/../../js/popup.js'; //queXS addition
     $js_header_includes = array_unique($js_header_includes);
     $css_header_includes = array_unique($css_header_includes);
     
@@ -6149,6 +6150,8 @@ function GetTokenConditionsFieldNames($surveyid)
 {
     $extra_attrs=GetAttributeFieldNames($surveyid);
     $basic_attrs=Array('firstname','lastname','email','token','language','sent','remindersent','remindercount');
+    $basic_attrs[] = 'callattempts'; //queXS addition
+    $basic_attrs[] = 'onappointment'; //queXS addition
     return array_merge($basic_attrs,$extra_attrs);
 }
 
@@ -6167,6 +6170,8 @@ function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
     }
     $extra_attrs=GetAttributeFieldNames($surveyid);
     $basic_attrs=Array('firstname','lastname','email','token','language','sent','remindersent','remindercount');
+    $basic_attrs[] = 'callattempts'; //queXS addition
+    $basic_attrs[] = 'onappointment'; //queXS addition
     $basic_attrs_names=Array(
 			$clang->gT('First Name'),
 			$clang->gT('Last Name'),
@@ -6176,6 +6181,9 @@ function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
 			$clang->gT('Invitation sent date'),
 			$clang->gT('Last Reminder sent date'),
 			$clang->gT('Total numbers of sent reminders'));
+
+    $basic_attrs_names[] = $clang->gT('queXS: Number of call attempts'); //queXS addition
+    $basic_attrs_names[] = $clang->gT('queXS: On appointment?'); //queXS addition
 
     $thissurvey=getSurveyInfo($surveyid);               
     $attdescriptiondata=!empty($thissurvey['attributedescriptions']) ? $thissurvey['attributedescriptions'] : "";
@@ -6227,6 +6235,22 @@ function GetAttributeValue($surveyid,$attrName,$token)
     }
     $sanitized_token=$connect->qstr($token,get_magic_quotes_gpc());
     $surveyid=sanitize_int($surveyid);
+
+    if ($attrName == 'callattempts' || $attrName == 'onappointment') //queXS addition
+    {
+	include_once("quexs.php");
+	$quexs_operator_id = get_operator_id();
+	$quexs_case_id = get_case_id($quexs_operator_id);
+	if ($quexs_case_id)
+	{
+		if ($attrName == 'callattempts')
+			return get_call_attempts($quexs_case_id);
+		else if ($attrName == 'onappointment')
+			return is_on_appointment($quexs_case_id,$quexs_operator_id);
+	}
+	else
+		return 0;
+    }
 
     $query="SELECT $attrName FROM {$dbprefix}tokens_$surveyid WHERE token=$sanitized_token"; 
     $result=db_execute_num($query);

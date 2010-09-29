@@ -183,6 +183,12 @@ if ((isset($move) && $move == "movesubmit") && (!isset($notanswered) || !$notans
             $url=str_replace("{TOKEN}",$clienttoken, $url);          // to activate the TOKEN in the END URL
             $url=str_replace("{SID}", $surveyid, $url);              // to activate the SID in the END URL
             $url=str_replace("{LANG}", $clang->getlangcode(), $url); // to activate the LANG in the END URL
+
+	//queXS Addition
+	include_once("quexs.php");
+	$quexs_url = get_start_interview_url();	
+	$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
+
 			//Automatically redirect the page to the "url" setting for the survey
 			session_write_close();
 

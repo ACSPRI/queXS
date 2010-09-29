@@ -55,6 +55,11 @@ if (!defined('DEFAULT_TIME_ZONE')) define('DEFAULT_TIME_ZONE', 'Australia/Victor
 if (!defined('DATE_TIME_FORMAT')) define('DATE_TIME_FORMAT','%a %d %b %I:%i%p'); 
 
 /**
+ * Date format for displaying: see above for mySQL details
+ */
+if (!defined('DATE_FORMAT')) define('DATE_FORMAT','%a %d %b');
+
+/**
  * Time format for displaying: see above for mySQL details
  */
 if (!defined('TIME_FORMAT')) define('TIME_FORMAT','%I:%i%p');

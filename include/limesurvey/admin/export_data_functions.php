@@ -308,7 +308,7 @@ function spss_fieldmap($prefix = 'V') {
 		foreach ($tokenattributes as $attributefield=>$attributedescription)
 		{
 			//Drop the token field, since it is in the survey too
-			if($attributefield!='token') {
+			if($attributefield!='token' && $attributefield!='callattempts' && $attributefield!='onappointment') { //queXS Addition
 				$fieldno++;
 				$fields[] = array('id'=>"$prefix$fieldno",'name'=>mb_substr($attributefield, 0, 8),
 			    'qid'=>0,'code'=>'','SPSStype'=>'A','LStype'=>'Undef',
@@ -431,7 +431,7 @@ function spss_getquery() {
 		$tokenattributes=GetTokenFieldsAndNames($surveyid,false);
 		foreach ($tokenattributes as $attributefield=>$attributedescription) {
 			//Drop the token field, since it is in the survey too
-			if($attributefield!='token') {
+			if($attributefield!='token' && $attributefield!='callattempts' && $attributefield!='onappointment') { //queXS Addition
 				$query .= "{$dbprefix}tokens_$surveyid.$attributefield, ";
 			}
 		}

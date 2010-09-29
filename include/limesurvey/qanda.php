@@ -961,11 +961,11 @@ function quexs_submit_on_click($do = true)
 {
 	include_once(dirname(__FILE__) . '/quexs.php');
 
-	$r = "";
+	$r = "; $('.submit').css('display', ''); ";
 
 	if (LIME_AUTO_ADVANCE && $do)
 	{
-		$r = "; document.limesurvey.move.value = '";
+		$r .= " document.limesurvey.move.value = '";
 		if (isset($_SESSION['step']) && $_SESSION['step'] && ($_SESSION['step'] == $_SESSION['totalsteps']))
 			$r .= "movesubmit";
 		else
@@ -974,6 +974,35 @@ function quexs_submit_on_click($do = true)
 	}
 
 	return $r;
+}
+
+function quexs_appointment($do)
+{
+	include_once(dirname(__FILE__) . '/quexs.php');
+	
+	$r = "";
+
+	if ($do)
+	{
+		$r = "; $('.submit').css('display', 'none'); parent.poptastic('" . QUEXS_URL . "appointment.php'); ";
+	}
+	
+	return $r;	
+}
+
+function quexs_outcome($outcome)
+{
+	include_once(dirname(__FILE__) . '/quexs.php');
+
+	$r = "";
+
+	if (is_numeric($outcome) && $outcome != 0)
+	{
+		$r = "; $('.submit').css('display', 'none'); parent.poptastic('" . QUEXS_URL . "call.php?defaultoutcome=$outcome'); ";
+	}
+
+	return $r;
+
 }
 
 
@@ -2006,7 +2035,31 @@ function do_list_flexible_radio($ia)
 			{
 				$check_ans ='';
 			};
-			$answer .= $wrapper['item-start'].'		<input class="radio" type="radio" value="'.$ansrow['code'].'" name="'.$ia[1].'" id="answer'.$ia[1].$ansrow['code'].'"'.$check_ans.' onclick="if (document.getElementById(\'answer'.$ia[1].'othertext\') != null) document.getElementById(\'answer'.$ia[1].'othertext\').value=\'\';checkconditions(this.value, this.name, this.type)'.quexs_submit_on_click().'" />
+			
+			//queXS check if this is designed to set an outcome:
+			$quexs_outcome = false;
+			$quexs_outcome_code = 0;
+			if (strncasecmp($ansrow['title'],"{OUTCOME:",9) == 0)
+			{
+				$quexs_pos = strrpos($ansrow['title'],"}",8);
+				if ($quexs_pos != false)
+				{
+					$quexs_outcome_code = substr($ansrow['title'],9,$quexs_pos - 9);
+					$quexs_outcome = true;
+					include_once(dirname(__FILE__) . '/quexs.php');
+					$ansrow['title'] = quexs_template_replace($ansrow['title']);
+				}
+			}	
+	
+			//queXS check if this is designed to schedule an appointment:
+			$quexs_appointment = false;
+			if (strncasecmp($ansrow['title'],"{SCHEDULEAPPOINTMENT}",21) == 0)
+			{
+				$ansrow['title'] = $clang->gT("Schedule Appointment");
+				$quexs_appointment = true;
+			}
+
+			$answer .= $wrapper['item-start'].'		<input class="radio" type="radio" value="'.$ansrow['code'].'" name="'.$ia[1].'" id="answer'.$ia[1].$ansrow['code'].'"'.$check_ans.' onclick="if (document.getElementById(\'answer'.$ia[1].'othertext\') != null) document.getElementById(\'answer'.$ia[1].'othertext\').value=\'\';checkconditions(this.value, this.name, this.type)'.quexs_submit_on_click(!$quexs_outcome && !$quexs_appointment).quexs_outcome($quexs_outcome_code).quexs_appointment($quexs_appointment).'" />
 		<label for="answer'.$ia[1].$ansrow['code'].'" class="answertext">'.$ansrow['title'].'</label>
 '.$wrapper['item-end'];
 
@@ -3302,6 +3355,23 @@ function do_multipleshorttext($ia)
 		{
 			$myfname = $ia[1].$ansrow['code'];
 			if ($ansrow['answer'] == "") {$ansrow['answer'] = "&nbsp;";}
+			
+			$quexs_answer = false;
+
+			if (strncasecmp($ansrow['answer'],"{SAMPLEUPDATE:",14) == 0) //queXS Addition
+			{
+				$ansrow['answer'] = substr($ansrow['answer'],14,-1); //remove token text
+				include_once('quexs.php');
+				$quexs_operator_id = get_operator_id();
+				$quexs_case_id = get_case_id($quexs_operator_id);
+				if ($quexs_case_id)
+				{
+					$quexs_answer = get_sample_variable($ansrow['answer'],$quexs_case_id);
+					$tiwidth = strlen($quexs_answer) + 5;
+					$maxsize = $tiwidth + 255;
+				}
+			}
+
 			$answer_main .= "\t<li>\n"
 			. "\t\t<label for=\"answer$myfname\">{$ansrow['answer']}</label>\n"
 			. "\t\t\t<span>\n\t\t\t\t".$prefix."\n\t\t\t\t".'<input class="text" type="text" size="'.$tiwidth.'" name="'.$myfname.'" id="answer'.$myfname.'" value="';
@@ -3311,7 +3381,11 @@ function do_multipleshorttext($ia)
 				$label_width = strlen(trim(strip_tags($ansrow['answer'])));
 			}
 
-			if (isset($_SESSION[$myfname]))
+			if ($quexs_answer !== false)
+			{
+				$answer_main .= $quexs_answer;
+			}
+			else if (isset($_SESSION[$myfname]))
 			{
 				$answer_main .= $_SESSION[$myfname];
 			}

@@ -228,7 +228,7 @@ function template_replace($string,$operator_id,$case_id)
  * enabled
  *
  * @param int $operator_id The operator id
- * @return bool True if respondent selection enabled otherwise false
+ * @return bool|int True if respondent selection enabled, lime_sid if rs enabled with limesurvey otherwise false
  *
  */
 function is_respondent_selection($operator_id)
@@ -242,7 +242,7 @@ function is_respondent_selection($operator_id)
 	if (!$questionnaire_id)
 		return false;
 
-	$sql = "SELECT respondent_selection
+	$sql = "SELECT respondent_selection, lime_rs_sid
 		FROM questionnaire 
 		WHERE questionnaire_id = '$questionnaire_id'";
 	
@@ -255,7 +255,13 @@ function is_respondent_selection($operator_id)
 		return false;
 
 	if (!$rs) return false;
-	if ($rs['respondent_selection'] == 1) return true;
+	if ($rs['respondent_selection'] == 1){
+		if ($rs['lime_rs_sid'] > 0)
+		{
+			return $rs['lime_rs_sid'];	
+		}
+		return true;
+	}
 	return false;
 }
 
@@ -427,8 +433,10 @@ function get_case_id($operator_id, $create = false)
 							$i = 1;
 							foreach ($r5 as $r5v)
 							{
+								$tnum =  ereg_replace('[^0-9]*','',$r5v['phone']); 
+								if (empty($tnum)) $tnum = "312345678"; //handle error condition
 								$sql = "INSERT INTO contact_phone (case_id,priority,phone)
-									VALUES ($case_id,$i," . ereg_replace('[^0-9]*','',$r5v['phone']) . ")";
+									VALUES ($case_id,$i,$tnum)";
 								$db->Execute($sql);
 								$i++;
 							}
@@ -448,7 +456,8 @@ function get_case_id($operator_id, $create = false)
 						SELECT $case_id as case_id, s1.val as firstName, s2.val as lastName, s3.Time_zone_name as Time_zone_name  
 						FROM sample as s3
 						LEFT JOIN sample_var as s2 on (s2.sample_id = '{$r3['sample_id']}' and s2.type = 7) 
-						LEFT JOIN sample_var as s1 on (s1.sample_id = '{$r3['sample_id']}' and s1.type = 6)  						   WHERE s3.sample_id = '{$r3['sample_id']}'";
+						LEFT JOIN sample_var as s1 on (s1.sample_id = '{$r3['sample_id']}' and s1.type = 6) 
+						WHERE s3.sample_id = '{$r3['sample_id']}'";
 	
 					$db->Execute($sql);
 	
@@ -903,6 +912,20 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "",$creat
 				VALUES (NULL,'$operator_id','$case_id','$ca',CONVERT_TZ(NOW(),'System','UTC'),NULL,'$respondent_id','$contact_phone_id','0','1')";
 				$db->Execute($sql);
 				$id = $db->Insert_Id();
+
+				//If respondent selection is enabled, add token to RS Limesurvey database
+				$lime_rsid = is_respondent_selection($operator_id);
+
+				if ($lime_rsid !== true && $lime_rsid > 0 && !$db->HasFailedTrans())
+				//if the transaction hasn't failed and Limesurvey RS is enabled
+				{
+					$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_rsid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
+					VALUES (NULL,'','','',$id,'en','N','N',NULL)";
+		
+					//Insert the token as the call_id
+					$db->Execute($sql);
+				}
+				
 			}
 			else
 			{
@@ -923,6 +946,39 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "",$creat
 	return false;
 }
 
+
+/**
+ * Get the complete URL for the Limesurvey questionnaire of respondent selection
+ * If no case available, return an error screen
+ *
+ * @param int $operator_id The operator id
+ * @return string The URL of the LimeSurvey questionnaire, or the URL of an error screen if none available
+ *
+ */
+function get_respondentselection_url($operator_id)
+{
+	global $db;
+
+	$db->StartTrans();
+
+	$url = "nocallavailable.php";
+
+	$call_id = get_call($operator_id);
+
+	if ($call_id)
+	{
+		$sid = get_limesurvey_id($operator_id,true); //true for RS
+		if ($sid != false && !empty($sid) && $sid != 'NULL')
+			$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
+		else
+			$url = 'rs_intro.php';
+	}
+
+	//if ($db->HasFailedTrans()) { print "FAILED in get_limesurvey_url"; exit; }
+	$db->CompleteTrans();
+
+	return $url;
+}
 
 /**
  * Get the complete URL for the Limesurvey questionnaire
@@ -1782,17 +1838,21 @@ function end_call($operator_id,$outcome_id,$state = 5)
  * Get the limesurvey "survey id" of the current questionnaire assigned to the operator
  *
  * @param int $operator_id The operator
+ * @param bool $rs If asking for respondent selection
  * @return bool|int False if none found else the limesurvey sid
  *
- * @todo Implement session destruction here
  *
  */
-function get_limesurvey_id($operator_id)
+function get_limesurvey_id($operator_id,$rs = false)
 {
 	global $db;
 
-	$sql = "SELECT q.lime_sid  as lime_sid
-		FROM `case` as c, questionnaire_sample as qs, sample as s, questionnaire as q
+	if ($rs)
+		$sql = "SELECT q.lime_rs_sid as sid";
+	else
+		$sql = "SELECT q.lime_sid as sid";
+
+	$sql .= " FROM `case` as c, questionnaire_sample as qs, sample as s, questionnaire as q
 		WHERE c.current_operator_id = '$operator_id'
 		AND c.sample_id = s.sample_id
 		AND s.import_id = qs.sample_import_id
@@ -1804,7 +1864,7 @@ function get_limesurvey_id($operator_id)
 	if (empty($rs))
 		return false;
 
-	return $rs['lime_sid'];
+	return $rs['sid'];
 
 }
 
