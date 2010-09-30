@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-31 10:59+1000\n"
+"POT-Creation-Date: 2010-09-30 11:46+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -285,18 +285,18 @@ msgstr ""
 
 #: call.php:252
 #: call.php:254
-#: call.php:368
-#: call.php:373
-#: call.php:388
-#: call.php:394
+#: call.php:370
+#: call.php:375
+#: call.php:391
+#: call.php:397
 msgid "End work"
 msgstr ""
 
 #: call.php:253
-#: call.php:367
-#: call.php:372
-#: call.php:387
-#: call.php:393
+#: call.php:369
+#: call.php:374
+#: call.php:390
+#: call.php:396
 msgid "End case"
 msgstr ""
 
@@ -318,51 +318,51 @@ msgid "Select phone number to dial:"
 msgstr ""
 
 #: call.php:361
-#: call.php:392
+#: call.php:395
 msgid "The last call completed this call attempt"
 msgstr ""
 
 #: call.php:365
-#: call.php:386
+#: call.php:388
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr ""
 
-#: call.php:400
+#: call.php:403
 msgid "Requesting call"
-msgstr ""
-
-#: call.php:401
-#: call.php:408
-msgid "Call Answered"
 msgstr ""
 
 #: call.php:404
 #: call.php:411
-#: call.php:418
-msgid "Hangup"
+msgid "Call Answered"
 msgstr ""
 
 #: call.php:407
+#: call.php:414
+#: call.php:421
+msgid "Hangup"
+msgstr ""
+
+#: call.php:410
 msgid "Ringing"
 msgstr ""
 
-#: call.php:414
+#: call.php:417
 msgid "Answered"
 msgstr ""
 
-#: call.php:415
+#: call.php:418
 msgid "Not Answered"
 msgstr ""
 
-#: call.php:421
+#: call.php:424
 msgid "Requires coding"
 msgstr ""
 
-#: call.php:424
+#: call.php:427
 msgid "Assign outcome"
 msgstr ""
 
-#: call.php:428
+#: call.php:431
 msgid "Error: Close window"
 msgstr ""
 
@@ -593,7 +593,7 @@ msgstr ""
 #: performance.php:75
 #: performance.php:82
 #: performance.php:88
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "Completions"
 msgstr ""
 
@@ -612,7 +612,7 @@ msgid "Overall"
 msgstr ""
 
 #: status.php:61
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "Status"
 msgstr ""
 
@@ -656,6 +656,18 @@ msgstr ""
 msgid "End call with outcome: Complete"
 msgstr ""
 
+#: nocallavailable.php:47
+msgid "No call available"
+msgstr ""
+
+#: nocallavailable.php:50
+msgid "Please click on:"
+msgstr ""
+
+#: nocallavailable.php:50
+msgid "to display call script"
+msgstr ""
+
 #: rs_business.php:47
 msgid "Respondent Selection - Business answers"
 msgstr ""
@@ -681,7 +693,6 @@ msgid "Appointment List"
 msgstr ""
 
 #: appointmentlist.php:67
-#: admin/displayappointments.php:207
 msgid "Not yet called"
 msgstr ""
 
@@ -738,54 +749,66 @@ msgstr ""
 msgid "Assign clients to questionnaires"
 msgstr ""
 
-#: admin/quotareport.php:70
+#: admin/quotareport.php:110
 msgid "Quota report"
 msgstr ""
 
-#: admin/quotareport.php:72
+#: admin/quotareport.php:112
 msgid "Select a questionnaire from the list below"
 msgstr ""
 
-#: admin/quotareport.php:79
+#: admin/quotareport.php:119
 msgid "Select a sample from the list below"
 msgstr ""
 
-#: admin/quotareport.php:139
+#: admin/quotareport.php:179
 msgid "Total sample"
 msgstr ""
 
-#: admin/quotareport.php:188
-#: admin/quotareport.php:195
+#: admin/quotareport.php:234
+#: admin/quotareport.php:241
 msgid "closed"
 msgstr ""
 
-#: admin/quotareport.php:190
-#: admin/quotareport.php:197
+#: admin/quotareport.php:236
+#: admin/quotareport.php:243
 msgid "open"
 msgstr ""
 
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "Strata"
 msgstr ""
 
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "Quota"
 msgstr ""
 
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "Sample"
 msgstr ""
 
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "Sample Used"
 msgstr ""
 
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "Sample Remaining"
 msgstr ""
 
-#: admin/quotareport.php:238
+#: admin/quotareport.php:285
 msgid "% Complete"
+msgstr ""
+
+#: admin/quotareport.php:285
+msgid "Set priority"
+msgstr ""
+
+#: admin/quotareport.php:285
+msgid "Auto prioritise"
+msgstr ""
+
+#: admin/quotareport.php:286
+msgid "Update priorities"
 msgstr ""
 
 #: admin/import.php:53
@@ -880,6 +903,8 @@ msgstr ""
 
 #: admin/displayappointments.php:207
 #: admin/displayappointments.php:220
+#: admin/shiftreport.php:97
+#: admin/shiftreport.php:105
 msgid "Edit"
 msgstr ""
 
@@ -925,12 +950,12 @@ msgid "Stop calling this sample when:"
 msgstr ""
 
 #: admin/quota.php:151
-#: admin/quotarow.php:171
+#: admin/quotarow.php:170
 msgid "for"
 msgstr ""
 
 #: admin/quota.php:151
-#: admin/quotarow.php:171
+#: admin/quotarow.php:170
 msgid "completions"
 msgstr ""
 
@@ -943,7 +968,7 @@ msgid "Quota not yet reached"
 msgstr ""
 
 #: admin/quota.php:158
-#: admin/quotarow.php:179
+#: admin/quotarow.php:178
 msgid "Current completions: "
 msgstr ""
 
@@ -956,32 +981,32 @@ msgid "Enter the details for creating the quota:"
 msgstr ""
 
 #: admin/quota.php:190
-#: admin/quotarow.php:253
+#: admin/quotarow.php:248
 msgid "Pre defined values for this question:"
 msgstr ""
 
 #: admin/quota.php:203
-#: admin/quotarow.php:266
+#: admin/quotarow.php:261
 msgid "No labels defined for this question"
 msgstr ""
 
 #: admin/quota.php:205
-#: admin/quotarow.php:268
+#: admin/quotarow.php:263
 msgid "Code value"
 msgstr ""
 
 #: admin/quota.php:211
-#: admin/quotarow.php:276
+#: admin/quotarow.php:273
 msgid "The code value to compare"
 msgstr ""
 
 #: admin/quota.php:212
-#: admin/quotarow.php:277
+#: admin/quotarow.php:274
 msgid "The type of comparison"
 msgstr ""
 
 #: admin/quota.php:213
-#: admin/quotarow.php:278
+#: admin/quotarow.php:275
 msgid "The number of completions to stop calling at"
 msgstr ""
 
@@ -1120,7 +1145,7 @@ msgid "Set values in questionnaire to pre fill"
 msgstr ""
 
 #: admin/index.php:58
-#: admin/quotarow.php:115
+#: admin/quotarow.php:119
 msgid "Quota row management"
 msgstr ""
 
@@ -1526,85 +1551,84 @@ msgstr ""
 msgid "Submit changes"
 msgstr ""
 
-#: admin/quotarow.php:142
-#: admin/quotarow.php:147
+#: admin/quotarow.php:146
 msgid "Copied quotas"
 msgstr ""
 
-#: admin/quotarow.php:150
+#: admin/quotarow.php:149
 msgid "Current row quotas (click to delete)"
 msgstr ""
 
-#: admin/quotarow.php:162
+#: admin/quotarow.php:161
 msgid "Currently no row quotas"
 msgstr ""
 
-#: admin/quotarow.php:169
+#: admin/quotarow.php:168
 msgid "Replicate: Where"
 msgstr ""
 
-#: admin/quotarow.php:169
-#: admin/quotarow.php:171
+#: admin/quotarow.php:168
+#: admin/quotarow.php:170
 msgid "like"
 msgstr ""
 
-#: admin/quotarow.php:171
+#: admin/quotarow.php:170
 msgid "Stop calling"
 msgstr ""
 
-#: admin/quotarow.php:171
+#: admin/quotarow.php:170
 msgid "rows from this sample when:"
 msgstr ""
 
-#: admin/quotarow.php:174
+#: admin/quotarow.php:173
 msgid "Row quota reached (Closed)"
 msgstr ""
 
-#: admin/quotarow.php:176
+#: admin/quotarow.php:175
 msgid "Row quota not yet reached (Open)"
 msgstr ""
 
-#: admin/quotarow.php:196
+#: admin/quotarow.php:195
 msgid "Copy quotas for this sample to (No error/duplicate checking): "
 msgstr ""
 
-#: admin/quotarow.php:198
+#: admin/quotarow.php:197
 msgid "Copy"
 msgstr ""
 
-#: admin/quotarow.php:200
-msgid "Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
-msgstr ""
-
-#: admin/quotarow.php:202
-msgid "Copy adjustments"
-msgstr ""
-
-#: admin/quotarow.php:208
+#: admin/quotarow.php:203
 msgid "Select a question for the row quota"
 msgstr ""
 
-#: admin/quotarow.php:230
+#: admin/quotarow.php:225
 msgid "No question (Replicate)"
 msgstr ""
 
-#: admin/quotarow.php:240
+#: admin/quotarow.php:235
 msgid "Select the sample variable to exclude"
 msgstr ""
 
-#: admin/quotarow.php:252
+#: admin/quotarow.php:247
 msgid "Enter the details for creating the row quota:"
 msgstr ""
 
-#: admin/quotarow.php:274
+#: admin/quotarow.php:269
 msgid "Describe this quota"
 msgstr ""
 
-#: admin/quotarow.php:284
+#: admin/quotarow.php:270
+msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
+msgstr ""
+
+#: admin/quotarow.php:271
+msgid "Should the priority be automatically updated based on the number of completions in this quota?"
+msgstr ""
+
+#: admin/quotarow.php:281
 msgid "Exclude from the sample where the value is like"
 msgstr ""
 
-#: admin/quotarow.php:302
+#: admin/quotarow.php:299
 msgid "Add row quota"
 msgstr ""
 
@@ -1677,79 +1701,96 @@ msgstr ""
 msgid "New: Create new questionnaire"
 msgstr ""
 
-#: admin/new.php:99
+#: admin/new.php:95
+msgid "Respondent Selection for "
+msgstr ""
+
+#: admin/new.php:110
 msgid "Successfully inserted"
 msgstr ""
 
-#: admin/new.php:99
+#: admin/new.php:110
 msgid "as questionnaire"
 msgstr ""
 
-#: admin/new.php:99
+#: admin/new.php:110
 msgid "linked to"
 msgstr ""
 
-#: admin/new.php:100
+#: admin/new.php:111
 msgid "You must now edit and activate the questionnaire"
 msgstr ""
 
-#: admin/new.php:103
+#: admin/new.php:114
 msgid "Error: Failed to insert questionnaire"
 msgstr ""
 
-#: admin/new.php:114
+#: admin/new.php:125
 msgid "Name for questionnaire:"
 msgstr ""
 
-#: admin/new.php:115
+#: admin/new.php:126
 msgid "Select creation type:"
 msgstr ""
 
-#: admin/new.php:115
+#: admin/new.php:126
 msgid "Create new questionnaire in Limesurvey"
 msgstr ""
 
-#: admin/new.php:128
+#: admin/new.php:139
+#: admin/new.php:156
 msgid "Existing questionnaire:"
 msgstr ""
 
-#: admin/new.php:132
-msgid "Restrict appointments to shifts?"
-msgstr ""
-
-#: admin/new.php:133
-msgid "Restrict work to shifts?"
-msgstr ""
-
-#: admin/new.php:134
-msgid "Questionnaire for testing only?"
-msgstr ""
-
-#: admin/new.php:135
-msgid "Use respondent selection text?"
-msgstr ""
-
-#: admin/new.php:137
-msgid "Respondent selection introduction:"
-msgstr ""
-
-#: admin/new.php:138
-msgid "Respondent selection project introduction:"
-msgstr ""
-
-#: admin/new.php:139
-msgid "Respondent selection project end:"
-msgstr ""
-
-#: admin/new.php:140
-msgid "Respondent selection callback (already started questionnaire):"
-msgstr ""
-
-#: admin/new.php:141
-msgid "Message to leave on an answering machine:"
+#: admin/new.php:143
+msgid "Respondent selection type:"
 msgstr ""
 
 #: admin/new.php:143
+msgid "No respondent selection (go straight to questionnaire)"
+msgstr ""
+
+#: admin/new.php:143
+msgid "Use basic respondent selection text (below)"
+msgstr ""
+
+#: admin/new.php:143
+msgid "Create new respondent selection questionnaire in Limesurvey"
+msgstr ""
+
+#: admin/new.php:160
+msgid "Restrict appointments to shifts?"
+msgstr ""
+
+#: admin/new.php:161
+msgid "Restrict work to shifts?"
+msgstr ""
+
+#: admin/new.php:162
+msgid "Questionnaire for testing only?"
+msgstr ""
+
+#: admin/new.php:164
+msgid "Respondent selection introduction:"
+msgstr ""
+
+#: admin/new.php:165
+msgid "Respondent selection project introduction:"
+msgstr ""
+
+#: admin/new.php:166
+msgid "Respondent selection callback (already started questionnaire):"
+msgstr ""
+
+#: admin/new.php:167
+msgid "Message to leave on an answering machine:"
+msgstr ""
+
+#: admin/new.php:169
+msgid "Project end text (thank you screen):"
+msgstr ""
+
+#: admin/new.php:170
 msgid "Create Questionnaire"
 msgstr ""
 
@@ -1933,35 +1974,39 @@ msgstr ""
 msgid "Final Outcomes (completed, final refusal, etc)"
 msgstr ""
 
-#: admin/databasestrings.php:68
-msgid "Monday"
+#: admin/databasestrings.php:67
+msgid "Miscellaneous - Unavailable for a week"
 msgstr ""
 
 #: admin/databasestrings.php:69
-msgid "Tuesday"
+msgid "Monday"
 msgstr ""
 
 #: admin/databasestrings.php:70
-msgid "Wednesday"
+msgid "Tuesday"
 msgstr ""
 
 #: admin/databasestrings.php:71
-msgid "Thursday"
+msgid "Wednesday"
 msgstr ""
 
 #: admin/databasestrings.php:72
-msgid "Friday"
+msgid "Thursday"
 msgstr ""
 
 #: admin/databasestrings.php:73
-msgid "Saturday"
+msgid "Friday"
 msgstr ""
 
 #: admin/databasestrings.php:74
-msgid "Sunday"
+msgid "Saturday"
 msgstr ""
 
 #: admin/databasestrings.php:75
+msgid "Sunday"
+msgstr ""
+
+#: admin/databasestrings.php:76
 msgid "Quota filled"
 msgstr ""
 
@@ -2182,7 +2227,7 @@ msgstr ""
 msgid "evening"
 msgstr ""
 
-#: functions/functions.operator.php:633
+#: functions/functions.operator.php:641
 msgid "ERROR: You do not have server side authentication enabled therefore queXS cannot determine which user is accessing the system."
 msgstr ""
 
