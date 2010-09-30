@@ -308,6 +308,10 @@ elseif ($action == 'iteratesurvey')
     if( ($surrows['browse_response'] && $surrows['activate_survey']) || $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    {include('iterate_survey.php');}               
         else { include('access_denied.php');}    
     }    
+elseif ($action=='showquexmlsurvey')  
+    { 
+        include('quexmlsurvey.php'); //No special right needed to show the printable survey
+    } 
 elseif ($action=='showprintablesurvey')  
     { 
         include('printablesurvey.php'); //No special right needed to show the printable survey

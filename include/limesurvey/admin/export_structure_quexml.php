@@ -525,15 +525,19 @@ while ($Row = $QueryResult->FetchRow())
 
 $dom->append_child($questionnaire);
 
+$quexml = $dom->dump_mem(true,'UTF-8');
 
-$fn = "survey_$surveyid.xml";
-header("Content-Type: application/download");
-header("Content-Disposition: attachment; filename=$fn");
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
-header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
-Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Pragma: no-cache");                          // HTTP/1.0
-
-echo $dom->dump_mem(true,'UTF-8');
-exit;
+if (!(isset($noheader) && $noheader == true))
+{
+	$fn = "survey_$surveyid.xml";
+	header("Content-Type: application/download");
+	header("Content-Disposition: attachment; filename=$fn");
+	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
+	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
+	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	header("Pragma: no-cache");                          // HTTP/1.0
+	
+	echo $quexml;	
+	exit();
+}
 ?>
