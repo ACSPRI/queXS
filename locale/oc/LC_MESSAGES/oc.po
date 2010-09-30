@@ -1,16 +1,16 @@
-# Dutch translation for quexs
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# Occitan (post 1500) translation for quexs
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # This file is distributed under the same license as the quexs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-08-31 10:59+1000\n"
-"PO-Revision-Date: 2010-01-12 10:33+0000\n"
-"Last-Translator: cumulus007 <cumulus0007@gmail.com>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"PO-Revision-Date: 2010-04-20 21:06+0000\n"
+"Last-Translator: Cédric VALMARY (Tot en òc) <cvalmary@yahoo.fr>\n"
+"Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,242 +19,237 @@ msgstr ""
 
 #: callhistory.php:52
 msgid "Case History List"
-msgstr "Case Geschiedenis Lijst"
+msgstr ""
 
 #: callhistory.php:75
 msgid "No calls ever made"
-msgstr "Nooit gesprekken gedaan"
+msgstr ""
 
 #: callhistory.php:79
 #: calllist.php:80
 msgid "Date/Time"
-msgstr "Datum/tijd"
+msgstr "Data / Ora"
 
 #: callhistory.php:79
 msgid "Case ID"
-msgstr "Case ID"
+msgstr ""
 
 #: callhistory.php:79
 #: calllist.php:80
 msgid "Outcome"
-msgstr "Resultaat"
+msgstr "Resultat"
 
 #: callhistory.php:79
 msgid "Respondent"
-msgstr "Respondent"
+msgstr ""
 
 #: callhistory.php:83
 msgid "No operator"
-msgstr "Geen operator"
+msgstr ""
 
 #: record.php:55
 msgid "Stop REC"
-msgstr "Stop opname"
+msgstr ""
 
 #: record.php:56
 #: record.php:79
 #: record.php:96
 msgid "Record"
-msgstr "Opnemen"
+msgstr "Enregistrament"
 
 #: record.php:66
 msgid "Beginning recording..."
-msgstr "Begint met opname..."
+msgstr ""
 
 #: record.php:69
 #: record.php:97
 msgid "Not on a call, so not beginning a recording"
-msgstr "Niet in gesprek, opname start dus niet"
+msgstr ""
 
 #: record.php:73
 msgid "Begin the manual recording now..."
-msgstr "Begin de manuele opname nu..."
+msgstr ""
 
 #: record.php:78
 #: index.php:102
 #: call.php:190
 #: call.php:204
 msgid "Start REC"
-msgstr "Start opname"
+msgstr "Enregistrar"
 
 #: record.php:86
 msgid "Stopping recording..."
-msgstr "Stopt met opname..."
+msgstr ""
 
 #: record.php:90
 msgid "Stop the manual recording now..."
-msgstr "Stop de manuele opname nu..."
+msgstr ""
 
 #: rs_project_intro.php:53
 msgid "Respondent Selection - Project Introduction"
-msgstr "Respondent Keuze - Project inleiding"
+msgstr ""
 
 #: rs_project_intro.php:73
 #: rs_intro.php:82
 #: rs_intro.php:86
 msgid "Yes - Continue"
-msgstr "Ja - Ga verder"
+msgstr ""
 
 #: rs_project_intro.php:75
 #: rs_callback.php:79
 #: rs_intro.php:95
 msgid "End call with outcome: Refusal by respondent"
-msgstr "Einde contactpoging met als resultaat: Weigering door respondent"
+msgstr ""
 
 #: rs_project_intro.php:76
 msgid ""
 "End call with outcome: No eligible respondent (person not available on this "
 "number)"
 msgstr ""
-"Einde contactpoging met als resultaat: Geen geschikte respondent (persoon "
-"niet beschikbaar op dit nummer)"
 
 #: rs_project_intro.php:77
 #: rs_intro.php:98
 msgid ""
 "End call with outcome: Out of sample (already completed in another mode)"
 msgstr ""
-"Einde contactpoging met als resultaat: Buiten steekproef (al afgewerkt via "
-"een andere manier)"
 
 #: rs_project_intro.php:79
 #: rs_answeringmachine.php:84
 #: rs_callback.php:80
 msgid "Go Back"
-msgstr "Vorige"
+msgstr "Tornar en rèire"
 
 #: appointment.php:69
 msgid "Appointment error"
-msgstr "Afspraak fout"
+msgstr ""
 
 #: appointment.php:70
 msgid ""
 "You have not been assigned a case therefore cannot create an appointment"
-msgstr "Er werd u geen case toegewezen, daarom kan u geen afspraak maken"
+msgstr ""
 
 #: appointment.php:107
 msgid "Appointment made"
-msgstr "Afspraak gemaakt"
+msgstr ""
 
 #: appointment.php:114
 #: index.php:99
 msgid "Appointment"
-msgstr "Afspraak"
+msgstr "Rendètz-vos"
 
 #: appointment.php:117
 msgid "Select a respondent"
-msgstr "Kies een respondent"
+msgstr ""
 
 #: appointment.php:125
 msgid "Create new respondent:"
-msgstr "Maak een nieuwe respondent aan:"
+msgstr ""
 
 #: appointment.php:128
 msgid "Add this respondent"
-msgstr "Voeg deze respondent toe"
+msgstr ""
 
 #: appointment.php:150
 msgid "Select phone number:"
-msgstr "Kies telefoonnummer:"
+msgstr ""
 
 #: appointment.php:155
 msgid "None"
-msgstr "Geen"
+msgstr "Pas cap"
 
 #: appointment.php:164
 msgid "Add new phone number"
-msgstr "Voeg een nieuw telefoonnummer toe"
+msgstr ""
 
 #: appointment.php:175
 msgid "Add new phone number (with area code, eg 0398761234):"
 msgstr ""
-"Voeg een nieuw telefoonnummer toe (met regiocode, bv. 025555555 voor Brussel)"
 
 #: appointment.php:178
 msgid "Add this phone number"
-msgstr "Voeg dit telefoonnummer toe"
+msgstr ""
 
 #: appointment.php:197
 msgid "Appointment:"
-msgstr "Afspraak:"
+msgstr ""
 
 #: appointment.php:199
 msgid "Accept appointment from "
-msgstr "Aanvaard afspraak van "
+msgstr ""
 
 #: appointment.php:199
 msgid " till "
-msgstr " tot "
+msgstr ""
 
 #: appointment.php:199
 msgid " on "
-msgstr " op "
+msgstr " lo "
 
 #: appointment.php:199
 msgid "on"
-msgstr "op"
+msgstr ""
 
 #: calllist.php:52
 msgid "Call List"
-msgstr "Gesprekken Lijst"
+msgstr ""
 
 #: calllist.php:76
 msgid "No calls made"
-msgstr "Geen gesprekken gevoerd"
+msgstr ""
 
 #: calllist.php:80
 msgid "Number called"
-msgstr "Nummer gebeld"
+msgstr ""
 
 #: calllist.php:80
 msgid "Operator"
-msgstr "Operator"
+msgstr "Operador"
 
 #: calllist.php:84
 msgid "No case"
-msgstr "Geen case"
+msgstr ""
 
 #: index.php:94
 msgid "queXS"
-msgstr "queXS"
+msgstr ""
 
 #: index.php:98
 #: shifts.php:78
 #: shifts.php:99
 msgid "End"
-msgstr "Einde"
+msgstr "Acabar"
 
 #: index.php:100
 msgid "Call/Hangup"
-msgstr "Bell/Hang op"
+msgstr ""
 
 #: index.php:101
 msgid "Supervisor"
-msgstr "Toezichthouder"
+msgstr "Supervisor"
 
 #: index.php:124
 msgid "Notes"
-msgstr "Opmerking"
+msgstr "Nòtas"
 
 #: index.php:130
 msgid "Call history"
-msgstr "Bel geschiendenis"
+msgstr ""
 
 #: index.php:136
 msgid "Shifts"
-msgstr "Shifts"
+msgstr ""
 
 #: index.php:142
 msgid "Appointments"
-msgstr "Afpraken"
+msgstr "Rendètz-vos"
 
 #: index.php:148
 msgid "Performance"
-msgstr "Prestaties"
+msgstr "Performància"
 
 #: index.php:153
 msgid "Work history"
-msgstr "Werk geschiedenis"
+msgstr ""
 
 #: index.php:159
 msgid "Info"
@@ -262,41 +257,38 @@ msgstr "Info"
 
 #: rs_answeringmachine.php:57
 msgid "Respondent Selection - Answering machine"
-msgstr "Respondent Keuze - Antwoordapparaat"
+msgstr ""
 
 #: rs_answeringmachine.php:71
 msgid "Do not leave a message, please hang up"
-msgstr "Laat geen bericht na, hang op"
+msgstr ""
 
 #: rs_answeringmachine.php:74
 msgid "End call with outcome: Business answering machine"
-msgstr "Einde contactpoging met resultaat: Zakelijk antwoordapparaat"
+msgstr ""
 
 #: rs_answeringmachine.php:79
 msgid "End call with outcome: Answering machine Message left"
 msgstr ""
-"Einde contactpoging met als resultaat: Antwoordapparaat Bericht nagelaten"
 
 #: rs_answeringmachine.php:83
 msgid "End call with outcome: Answering machine No message left"
 msgstr ""
-"Einde contactpoging met als resultaat: Antwoordapparaat Geen bericht "
-"nagelaten"
 
 #: info.php:47
 msgid "Information"
-msgstr "Informatie"
+msgstr "Informacion"
 
 #: call.php:175
 #: call.php:191
 #: call.php:205
 #: call.php:234
 msgid "Call"
-msgstr "Bellen"
+msgstr "Sonar"
 
 #: call.php:241
 msgid "Not on a call"
-msgstr "Niet aan het bellen"
+msgstr ""
 
 #: call.php:252
 #: call.php:254
@@ -305,7 +297,7 @@ msgstr "Niet aan het bellen"
 #: call.php:388
 #: call.php:394
 msgid "End work"
-msgstr "Einde werk"
+msgstr ""
 
 #: call.php:253
 #: call.php:367
@@ -313,15 +305,15 @@ msgstr "Einde werk"
 #: call.php:387
 #: call.php:393
 msgid "End case"
-msgstr "Einde case"
+msgstr ""
 
 #: call.php:278
 msgid "Press the call button to dial the number for this appointment:"
-msgstr "Druk op de bellen knop om het nummer te vormen voor deze afspraak"
+msgstr ""
 
 #: call.php:281
 msgid "Number to call:"
-msgstr "Nummer om te bellen:"
+msgstr ""
 
 #: call.php:285
 #: call.php:356
@@ -329,69 +321,67 @@ msgid ""
 "Your VoIP extension is not enabled. Please close this window and enable VoIP "
 "by clicking once on the red button that says 'VoIP Off'"
 msgstr ""
-"VoIP extensie is uitgeschakeld. Sluit dit venster en schakel VoIP in door "
-"één maal op de rode knop waarop staat 'VoIP Uit' te klikken."
 
 #: call.php:346
 msgid "Select phone number to dial:"
-msgstr "Kies het telefoonnummer om te bellen"
+msgstr ""
 
 #: call.php:361
 #: call.php:392
 msgid "The last call completed this call attempt"
-msgstr "De laatste gesprekspoging werd zojuist afgewerkt"
+msgstr ""
 
 #: call.php:365
 #: call.php:386
 msgid "Enter a reason for this outcome before completing this case:"
-msgstr "Geef een reden voor dit resultaat voor het beëindigen van deze case:"
+msgstr ""
 
 #: call.php:400
 msgid "Requesting call"
-msgstr "Gesprekspoging"
+msgstr ""
 
 #: call.php:401
 #: call.php:408
 msgid "Call Answered"
-msgstr "Oproep beantwoord"
+msgstr ""
 
 #: call.php:404
 #: call.php:411
 #: call.php:418
 msgid "Hangup"
-msgstr "Ophangen"
+msgstr ""
 
 #: call.php:407
 msgid "Ringing"
-msgstr "Gaat over"
+msgstr ""
 
 #: call.php:414
 msgid "Answered"
-msgstr "Beantwoord"
+msgstr "Respondut"
 
 #: call.php:415
 msgid "Not Answered"
-msgstr "Niet beantwoord"
+msgstr ""
 
 #: call.php:421
 msgid "Requires coding"
-msgstr "Vereist codering"
+msgstr ""
 
 #: call.php:424
 msgid "Assign outcome"
-msgstr "Ken resultaat toe"
+msgstr ""
 
 #: call.php:428
 msgid "Error: Close window"
-msgstr "Fout: Sluit venster"
+msgstr ""
 
 #: rs_callback.php:57
 msgid "Respondent Selection - Call back"
-msgstr "Respondent Keuze - Bel terug"
+msgstr ""
 
 #: rs_callback.php:71
 msgid "You are: "
-msgstr "U bent: "
+msgstr ""
 
 #: rs_callback.php:71
 #, php-format
@@ -400,45 +390,43 @@ msgstr ""
 
 #: rs_callback.php:78
 msgid "Yes - Continue where we left off"
-msgstr "Ja - Ga verder waar we waren gebleven"
+msgstr ""
 
 #: endwork.php:45
 msgid "End of work"
-msgstr "Einde van het werk"
+msgstr ""
 
 #: endwork.php:57
 msgid "Work has ended. That is it"
-msgstr "Het werk is beëindigd. Dit was het"
+msgstr ""
 
 #: endwork.php:59
 msgid "Go back to work"
-msgstr "Ga terug aan het werk"
+msgstr ""
 
 #: rs_intro.php:58
 msgid "Respondent Selection - Introduction"
-msgstr "Respondent Keuze - Inleiding"
+msgstr ""
 
 #: rs_intro.php:90
 msgid "Business number"
-msgstr "Zakelijk nummer"
+msgstr ""
 
 #: rs_intro.php:91
 msgid "Answering machine"
-msgstr "Antwoordapparaat"
+msgstr ""
 
 #: rs_intro.php:92
 msgid "End call with outcome: No answer (ring out or busy) "
 msgstr ""
-"Einde contactpoging met als resultaat: Geen antwoord (beltoon gestopt of "
-"bezet) "
 
 #: rs_intro.php:93
 msgid "End call with outcome: Accidental hang up"
-msgstr "Einde contactpoging met als resultaat: Toevallig opgehangen"
+msgstr ""
 
 #: rs_intro.php:94
 msgid "End call with outcome: Refusal by unknown person"
-msgstr "Einde contactpoging met als resultaat: Weigering door onbekende"
+msgstr ""
 
 #: rs_intro.php:96
 msgid ""
@@ -451,54 +439,52 @@ msgid ""
 "End call with outcome: Non contact (person not currently available on this "
 "number: no appointment made)"
 msgstr ""
-"Einde contactpoging met als resultaat: Non contact (persoon tegenwoordig "
-"niet beschikbaar op dit nummer: geen afspraak gemaakt)"
 
 #: shifts.php:53
 msgid "Shift List"
-msgstr "Shift Lijst"
+msgstr ""
 
 #: shifts.php:76
 msgid "No shifts for this project"
-msgstr "Geen shift voor dit project"
+msgstr ""
 
 #: shifts.php:78
 #: shifts.php:99
 msgid "Start"
-msgstr "Start"
+msgstr "Començar"
 
 #: shifts.php:97
 msgid "No future shifts scheduled"
-msgstr "Geen toekomstige shifts gepland"
+msgstr ""
 
 #: shifts.php:99
 msgid "Questionnaire"
-msgstr "Vragenlijst"
+msgstr "Questionari"
 
 #: respondent.php:62
 msgid "Respondent Selector"
-msgstr "Respondent Selectie"
+msgstr ""
 
 #: respondent.php:86
 #: respondent.php:122
 msgid "Add respondent"
-msgstr "Voeg respondent toe"
+msgstr ""
 
 #: respondent.php:88
 msgid "Go back"
-msgstr "Ga terug"
+msgstr ""
 
 #: respondent.php:94
 msgid "Case id:"
-msgstr "Case id:"
+msgstr ""
 
 #: respondent.php:95
 msgid "Respondent:"
-msgstr "Respondent:"
+msgstr ""
 
 #: respondent.php:146
 msgid "Show details"
-msgstr "Toon details"
+msgstr "Afichar los detalhs"
 
 #: respondent.php:150
 msgid "Var"
@@ -506,90 +492,88 @@ msgstr "Var"
 
 #: respondent.php:150
 msgid "Value"
-msgstr "Waarde"
+msgstr "Valor"
 
 #: nocaseavailable.php:59
 msgid "No case available"
-msgstr "Geen case beschikbaar"
+msgstr ""
 
 #: nocaseavailable.php:64
 msgid "There is no case currently available"
-msgstr "Er is op dit ogenblik geen case beschikbaar"
+msgstr ""
 
 #: nocaseavailable.php:65
 msgid "Reasons:"
-msgstr "Rede:"
+msgstr "Rasons :"
 
 #: nocaseavailable.php:84
 msgid "Assigned questionnaires:"
-msgstr "Toegewezen vragenlijsten:"
+msgstr ""
 
 #: nocaseavailable.php:87
 msgid "ID"
-msgstr "Identiteit"
+msgstr "Identificant (ID)"
 
 #: nocaseavailable.php:87
 msgid "Description"
-msgstr "Beschrijving"
+msgstr "Descripcion"
 
 #: nocaseavailable.php:90
 msgid "ERROR: No questionnaires assigned to you"
-msgstr "FOUT: Er werd u geen vragenlijst toegewezen"
+msgstr ""
 
 #: nocaseavailable.php:108
 msgid "Current shifts available:"
-msgstr "Shifts beschikbaar op dit ogenblik:"
+msgstr ""
 
 #: nocaseavailable.php:111
 msgid "Shift start"
-msgstr "Shift start"
+msgstr ""
 
 #: nocaseavailable.php:111
 msgid "Shift end"
-msgstr "Shift einde"
+msgstr ""
 
 #: nocaseavailable.php:114
 msgid "ERROR: No shifts at this time"
-msgstr "FOUT: Geen shifts op dit ogenblik"
+msgstr ""
 
 #: nocaseavailable.php:134
 msgid "Call restrictions:"
-msgstr "Bel beperkingen:"
+msgstr ""
 
 #: nocaseavailable.php:138
 msgid ""
 "ERROR: There are no cases available that fall within call restrictions"
 msgstr ""
-"FOUT: Er zijn geen cases beschikbaar die binnen u bel beperkingen vallen"
 
 #: nocaseavailable.php:142
 msgid "There are "
-msgstr "Er zijn "
+msgstr ""
 
 #: nocaseavailable.php:142
 msgid " unassigned case(s) available within the specified call restrictions"
 msgstr ""
-" niet toegewezen case(s) beschikbaar binnen de bepaalde bel beperkingen"
 
 #: nocaseavailable.php:148
 msgid "Limesurvey links:"
-msgstr "Limesurvey links:"
+msgstr ""
 
 #: nocaseavailable.php:168
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
-msgstr "FOUT: Geen token table bepaald voor de LimeSurvey vragenlijst"
+msgstr ""
 
 #: nocaseavailable.php:168
 msgid "from questionnaire:"
-msgstr "van vragenlijst:"
+msgstr ""
 
 #: nocaseavailable.php:170
 msgid "Tokens table exists for Limesurvey questionnaire:"
-msgstr "Token tabel bestaat voor Limesurvey vragenlijst:"
+msgstr ""
 
 #: nocaseavailable.php:175
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
-msgstr "FOUT: Kan geen vragenlijst vinden met LimeSurvey ID's"
+msgstr ""
 
 #: nocaseavailable.php:194
 msgid "ERROR: Quota reached for this question"
@@ -601,82 +585,82 @@ msgstr ""
 
 #: casenote.php:53
 msgid "Case Notes"
-msgstr "Case opmerkingen"
+msgstr ""
 
 #: casenote.php:63
 #: casenote.php:102
 msgid "Add note"
-msgstr "Voeg opmerking toe"
+msgstr "Apondre una nòta"
 
 #: casenote.php:105
 msgid "No notes"
-msgstr "Geen opmerkingen"
+msgstr ""
 
 #: casenote.php:107
 msgid "Note"
-msgstr "Opmerking"
+msgstr "Nòta"
 
 #: performance.php:74
 msgid "This shift"
-msgstr "Deze shift"
+msgstr ""
 
 #: performance.php:75
 #: performance.php:82
 #: performance.php:88
 #: admin/quotareport.php:238
 msgid "Completions"
-msgstr "Afgewerkt"
+msgstr ""
 
 #: performance.php:75
 #: performance.php:82
 #: performance.php:88
 msgid "Completions per hour"
-msgstr "Afgewerkt per uur"
+msgstr ""
 
 #: performance.php:81
 msgid "This project"
-msgstr "Dit project"
+msgstr ""
 
 #: performance.php:87
 msgid "Overall"
-msgstr "Algemeen"
+msgstr ""
 
 #: status.php:61
 #: admin/quotareport.php:238
 msgid "Status"
-msgstr "Status"
+msgstr "Estatut"
 
 #: status.php:79
 msgid "VoIP On"
-msgstr "VoIP aan"
+msgstr ""
 
 #: status.php:81
 msgid "VoIP Off"
-msgstr "VoIP uit"
+msgstr ""
 
 #: status.php:84
 msgid "No VoIP"
-msgstr "Geen VoIP"
+msgstr ""
 
 #: status.php:88
 msgid "No call"
-msgstr "Geen gesprek"
+msgstr ""
 
 #: status.php:92
 msgid "To be coded"
-msgstr "Te coderen"
+msgstr ""
 
 #: status.php:96
 msgid "Requesting"
-msgstr "Bezig met verbinden"
+msgstr "Demanda en cors"
 
 #: status.php:112
 msgid "APPT"
-msgstr "Afspraak"
+msgstr ""
 
 #: status.php:113
 msgid "MISSED"
-msgstr "Gemist"
+msgstr ""
 
 #: rs_project_end.php:53
 msgid "Respondent Selection - Project end"
@@ -684,20 +668,19 @@ msgstr ""
 
 #: rs_project_end.php:69
 msgid "End call with outcome: Complete"
-msgstr "Einde contactpoging met als resultaat: Afgewerkt"
+msgstr ""
 
 #: rs_business.php:47
 msgid "Respondent Selection - Business answers"
-msgstr "Respondent Keuze - Bedrijf antwoord"
+msgstr ""
 
 #: rs_business.php:51
 msgid "Sorry to bother you, I have called the wrong number"
 msgstr ""
-"Het spijt me dat ik u gestoord heb, ik heb het verkeerde nummer gebeld"
 
 #: rs_business.php:53
 msgid "End call with outcome: Business number"
-msgstr "Einde contactpoging met als resultaat: Zakelijk nummer"
+msgstr ""
 
 #: rs_quota_end.php:53
 msgid "Respondent Selection - Project Quota End"
@@ -709,20 +692,20 @@ msgstr ""
 
 #: appointmentlist.php:53
 msgid "Appointment List"
-msgstr "Afspraken lijst"
+msgstr ""
 
 #: appointmentlist.php:67
 #: admin/displayappointments.php:207
 msgid "Not yet called"
-msgstr "Nog niet gebeld"
+msgstr ""
 
 #: appointmentlist.php:79
 msgid "No appointments made"
-msgstr "Nog geen afspraken gemaakt"
+msgstr ""
 
 #: appointmentlist.php:81
 msgid "No future appointments scheduled"
-msgstr "Geen toekomstige afspraken"
+msgstr ""
 
 #: supervisor.php:61
 msgid "Please wait till you have ended this call to call the supervisor"
@@ -734,7 +717,7 @@ msgstr ""
 
 #: supervisor.php:110
 msgid "Calling the supervisor, you may close this window"
-msgstr "Belt de toezichthouder, u mag dit venster sluiten"
+msgstr ""
 
 #: supervisor.php:115
 msgid ""
@@ -747,7 +730,7 @@ msgstr ""
 
 #: supervisor.php:121
 msgid "Try calling the supervisor"
-msgstr "Probeer de toezichthouder te bellen"
+msgstr ""
 
 #: supervisor.php:128
 msgid ""
@@ -756,20 +739,20 @@ msgstr ""
 
 #: admin/callhistory.php:52
 msgid "Call History List"
-msgstr "Bel Geschiedenis lijst"
+msgstr ""
 
 #: admin/callhistory.php:74
 msgid "Date/Time call start"
-msgstr "Datum/Tijd gesprek start"
+msgstr ""
 
 #: admin/callhistory.php:74
 msgid "Time end"
-msgstr "Einde tijd"
+msgstr ""
 
 #: admin/clientquestionnaire.php:146
 #: admin/clientquestionnaire.php:267
 msgid "Assign clients to questionnaires"
-msgstr "Wijs klanten aan vragenlijst toe"
+msgstr ""
 
 #: admin/quotareport.php:70
 msgid "Quota report"
@@ -777,11 +760,11 @@ msgstr ""
 
 #: admin/quotareport.php:72
 msgid "Select a questionnaire from the list below"
-msgstr "Kies een vragenlijst van de onderstaande lijst"
+msgstr ""
 
 #: admin/quotareport.php:79
 msgid "Select a sample from the list below"
-msgstr "Kies een steekproef uit de onderstaande lijst"
+msgstr ""
 
 #: admin/quotareport.php:139
 msgid "Total sample"
@@ -790,12 +773,12 @@ msgstr ""
 #: admin/quotareport.php:188
 #: admin/quotareport.php:195
 msgid "closed"
-msgstr ""
+msgstr "tampat"
 
 #: admin/quotareport.php:190
 #: admin/quotareport.php:197
 msgid "open"
-msgstr ""
+msgstr "Dobrir"
 
 #: admin/quotareport.php:238
 msgid "Strata"
@@ -803,11 +786,11 @@ msgstr ""
 
 #: admin/quotareport.php:238
 msgid "Quota"
-msgstr ""
+msgstr "Quota"
 
 #: admin/quotareport.php:238
 msgid "Sample"
-msgstr "Steekproef"
+msgstr "Escandalhatge"
 
 #: admin/quotareport.php:238
 msgid "Sample Used"
@@ -819,43 +802,43 @@ msgstr ""
 
 #: admin/quotareport.php:238
 msgid "% Complete"
-msgstr ""
+msgstr "% acabat"
 
 #: admin/import.php:53
 msgid "Import: Validating and uploading"
-msgstr "Importeren: Aan het valideren en uploaden"
+msgstr ""
 
 #: admin/import.php:69
 msgid "Successfully imported file"
-msgstr "Bestand succesvol geïmporteerd"
+msgstr ""
 
 #: admin/import.php:73
 msgid "Error importing file. Please try again"
-msgstr "Fout bij het importeren van het bestand. Probeer het opnieuw"
+msgstr ""
 
 #: admin/import.php:77
 msgid "Error:"
-msgstr "FOUT:"
+msgstr "Error :"
 
 #: admin/import.php:77
 msgid "Please go back in your browser and fix the problem"
-msgstr "Ga terug in u browser en los het probleem op"
+msgstr ""
 
 #: admin/import.php:89
 msgid "Import: Select columns to import"
-msgstr "Importeren: Selecteer kolommen om te importeren"
+msgstr ""
 
 #: admin/import.php:114
 msgid "Import: Select file to upload"
-msgstr "Importeren: Selecteer bestand om te uploaden"
+msgstr ""
 
 #: admin/import.php:119
 msgid "Choose the CSV sample file to upload:"
-msgstr "Kies het CSV steekproef bestand om te uploaden"
+msgstr ""
 
 #: admin/import.php:120
 msgid "Description for file:"
-msgstr "Beschrijving voor bestand:"
+msgstr ""
 
 #: admin/import.php:121
 msgid "Add sample"
@@ -863,17 +846,16 @@ msgstr ""
 
 #: admin/displayappointments.php:147
 msgid "Now modify case outcome"
-msgstr "Wijzig case resultaat nu"
+msgstr ""
 
 #: admin/displayappointments.php:149
 msgid ""
 "The appointment has been deleted. Now you must modify the case outcome"
 msgstr ""
-"De afspraak werd verwijderd. Nu dient u het case resultaat aan te passen."
 
 #: admin/displayappointments.php:150
 msgid "Modify case outcome"
-msgstr "Wijzig case resultaat"
+msgstr ""
 
 #: admin/displayappointments.php:155
 #: admin/displayappointments.php:190
@@ -886,7 +868,7 @@ msgstr ""
 
 #: admin/displayappointments.php:187
 msgid "Start time"
-msgstr ""
+msgstr "Ora de començament"
 
 #: admin/displayappointments.php:188
 msgid "End time"
@@ -902,45 +884,45 @@ msgstr ""
 
 #: admin/displayappointments.php:203
 msgid "Display Appointments"
-msgstr "Geef afspraken weer"
+msgstr ""
 
 #: admin/displayappointments.php:205
 msgid "All appointments (with times displayed in your time zone)"
-msgstr "Alle afspraken (met tijden weergegeven in je tijdzone)"
+msgstr ""
 
 #: admin/displayappointments.php:207
 #: admin/displayappointments.php:220
 msgid "Delete"
-msgstr "Verwijder"
+msgstr "Suprimir"
 
 #: admin/displayappointments.php:207
 #: admin/displayappointments.php:220
 msgid "Edit"
-msgstr "Bewerk"
+msgstr "Editar"
 
 #: admin/displayappointments.php:220
 msgid "Operator Name"
-msgstr "Operator Naam"
+msgstr ""
 
 #: admin/displayappointments.php:220
 msgid "Respondent Name"
-msgstr "Respodent Naam"
+msgstr ""
 
 #: admin/displayappointments.php:220
 msgid "Surname"
-msgstr "Achternaam"
+msgstr "Nom d'Ostal"
 
 #: admin/displayappointments.php:220
 msgid "Current outcome"
-msgstr "Huidig resultaat"
+msgstr ""
 
 #: admin/displayappointments.php:220
 msgid "Operator who called"
-msgstr "Operator die belde"
+msgstr ""
 
 #: admin/displayappointments.php:223
 msgid "No appointments in the future"
-msgstr "Geen toekomstige afspraken"
+msgstr ""
 
 #: admin/quota.php:109
 #: admin/index.php:57
@@ -962,7 +944,7 @@ msgstr ""
 #: admin/quota.php:151
 #: admin/quotarow.php:171
 msgid "for"
-msgstr ""
+msgstr "per"
 
 #: admin/quota.php:151
 #: admin/quotarow.php:171
@@ -1026,16 +1008,16 @@ msgstr ""
 
 #: admin/operatorskill.php:145
 msgid "Assign operators to Skills"
-msgstr "Voeg operatoren toe aan Vaardigheden"
+msgstr ""
 
 #: admin/operatorskill.php:266
 #: admin/index.php:61
 msgid "Modify operator skills"
-msgstr "Wijzig operator kwaliteiten"
+msgstr ""
 
 #: admin/operatorperformance.php:67
 msgid "Operator Performance"
-msgstr "Operator Prestaties"
+msgstr ""
 
 #: admin/operatorperformance.php:71
 #: admin/operatorperformance.php:81
@@ -1047,7 +1029,7 @@ msgstr ""
 #: admin/operatorperformance.php:81
 #: admin/operatorperformance.php:102
 msgid "Total time"
-msgstr "Totale tijd"
+msgstr "Temps total"
 
 #: admin/operatorperformance.php:71
 #: admin/operatorperformance.php:81
@@ -1075,84 +1057,84 @@ msgstr ""
 
 #: admin/operatorperformance.php:88
 msgid "till"
-msgstr "tot"
+msgstr ""
 
 #: admin/shiftreport.php:62
 #: admin/index.php:82
 msgid "Shift reports"
-msgstr "Shift rapporten"
+msgstr ""
 
 #: admin/shiftreport.php:66
 msgid "Please select a questionnaire"
-msgstr "Kies een vragenlijst"
+msgstr ""
 
 #: admin/shiftreport.php:73
 msgid "Please select a shift"
-msgstr "Kies een shift"
+msgstr ""
 
 #: admin/shiftreport.php:93
 msgid "Reports for this shift"
-msgstr "Rapporten voor deze shift"
+msgstr ""
 
 #: admin/shiftreport.php:105
 msgid "Date"
-msgstr "Datum"
+msgstr "Data"
 
 #: admin/shiftreport.php:105
 msgid "Report"
-msgstr "Rapport"
+msgstr "Rapòrt"
 
 #: admin/shiftreport.php:108
 msgid "Create new report for this shift"
-msgstr "Maak een nieuw rapport voor deze shift aan"
+msgstr ""
 
 #: admin/shiftreport.php:114
 msgid "Enter report for this shift"
-msgstr "Voeg een rapport voor deze shift toe"
+msgstr ""
 
 #: admin/shiftreport.php:118
 msgid "Add report"
-msgstr "Voeg rapport toe"
+msgstr ""
 
 #: admin/shiftreport.php:154
 msgid "This report does not exist in the database"
-msgstr "Dit rapport bestaat niet in de database"
+msgstr ""
 
 #: admin/shiftreport.php:159
 msgid "Edit report for this shift"
-msgstr "Bewerk rapport voor deze shift"
+msgstr ""
 
 #: admin/shiftreport.php:164
 msgid "Modify report"
-msgstr "Pas rapport aan"
+msgstr ""
 
 #: admin/index.php:47
 msgid "Administrative Tools"
-msgstr "Administratieve hulpmiddelen"
+msgstr ""
 
 #: admin/index.php:51
 msgid "Questionnaire creation and management"
-msgstr "Vragenlijst opstellen en beheren"
+msgstr ""
 
 #: admin/index.php:52
 msgid "Create a new questionnaire"
-msgstr "Maak een nieuwe vragenlijst aan"
+msgstr ""
 
 #: admin/index.php:53
 msgid "Administer questionnaires with Limesurvey"
-msgstr "Bewerk vragenlijst met Limesurvey"
+msgstr ""
 
 #: admin/index.php:54
 msgid "Import a sample file (in CSV form)"
-msgstr "Importeer een steekproef (in CSV vorm)"
+msgstr ""
 
 #: admin/index.php:55
 msgid "Assign samples to questionnaires"
-msgstr "Voeg een steekproeven aan vragenlijsten toe"
+msgstr ""
 
 #: admin/index.php:56
 msgid "Set values in questionnaire to pre fill"
-msgstr "Configureer automatisch antwoordinvulling"
+msgstr ""
 
 #: admin/index.php:58
 #: admin/quotarow.php:115
@@ -1161,27 +1143,27 @@ msgstr ""
 
 #: admin/index.php:59
 msgid "Add operators to the system"
-msgstr "Voeg operatoren aan systeem toe"
+msgstr ""
 
 #: admin/index.php:60
 msgid "Assign operators to questionnaires"
-msgstr "Voeg operators aan vragenlijst toe"
+msgstr ""
 
 #: admin/index.php:62
 msgid "Shift management (add/remove)"
-msgstr "Shift management (voeg toe/verwijder)"
+msgstr ""
 
 #: admin/index.php:63
 msgid "Data output"
-msgstr "Data uitvoer"
+msgstr "Sortida de las donadas"
 
 #: admin/index.php:65
 msgid "Questionnaire progress"
-msgstr "Vragenlijst vooruitgang"
+msgstr ""
 
 #: admin/index.php:66
 msgid "Display all future appointments"
-msgstr "Geef alle toekomstige afspraken weer"
+msgstr ""
 
 #: admin/index.php:67
 msgid "Sample call attempts report"
@@ -1189,56 +1171,56 @@ msgstr ""
 
 #: admin/index.php:69
 msgid "Questionnaire outcomes"
-msgstr "Vragenlijst resultaten"
+msgstr ""
 
 #: admin/index.php:72
 #: admin/outcomes.php:259
 msgid "Operator performance"
-msgstr "Operator Prestaties"
+msgstr ""
 
 #: admin/index.php:74
 msgid "Client management"
-msgstr "Klanten beheer"
+msgstr ""
 
 #: admin/index.php:75
 msgid "Add clients to the system"
-msgstr "Voeg klanten aan systeem toe"
+msgstr ""
 
 #: admin/index.php:78
 msgid "Supervisor functions"
-msgstr "Functies voor de toezichthouder"
+msgstr ""
 
 #: admin/index.php:79
 msgid "Assign outcomes to cases"
-msgstr "Ken resultaten aan cases toe"
+msgstr ""
 
 #: admin/index.php:80
 msgid "Search the sample"
-msgstr "Doorzoek de steekproef"
+msgstr ""
 
 #: admin/index.php:84
 msgid "System settings"
-msgstr "Systeeminstellingen"
+msgstr "Paramètres del sistèma"
 
 #: admin/index.php:85
 msgid "Set default timezone list"
-msgstr "Stel standaard tijdzone lijst in"
+msgstr ""
 
 #: admin/index.php:86
 msgid "Set default shift times"
-msgstr "Stel standaard shift tijden in"
+msgstr ""
 
 #: admin/index.php:87
 msgid "Set call restriction times"
-msgstr "Stel bel restrictie tijden in"
+msgstr ""
 
 #: admin/index.php:91
 msgid "VoIP"
-msgstr "VoIP"
+msgstr ""
 
 #: admin/index.php:92
 msgid "Start and monitor VoIP"
-msgstr "Start en monitor VoIP"
+msgstr ""
 
 #: admin/index.php:93
 msgid "Extension status"
@@ -1246,84 +1228,83 @@ msgstr ""
 
 #: admin/assignsample.php:100
 msgid "Assign Sample: Select sample to assign"
-msgstr "Steekproef toevoegen: Selecteer de toe te voegen steekproef"
+msgstr ""
 
 #: admin/assignsample.php:107
 msgid "Samples selected for this questionnaire"
-msgstr "Steekproeven geselecteerd voor deze vragenlijst"
+msgstr ""
 
 #: admin/assignsample.php:118
 msgid "Sequentially selected"
-msgstr "Opeenvolgend geselecteerd"
+msgstr ""
 
 #: admin/assignsample.php:119
 msgid "Randomly selected"
-msgstr "Toevallig geselecteerd"
+msgstr ""
 
 #: admin/assignsample.php:120
 msgid "Max calls:"
-msgstr "Max gesprekken:"
+msgstr ""
 
 #: admin/assignsample.php:120
 msgid "Max call attempts:"
-msgstr "Max aantal bel pogingen:"
+msgstr ""
 
 #: admin/assignsample.php:120
 msgid "Click to unassign"
-msgstr "Klik om te verwijderen:"
+msgstr ""
 
 #: admin/assignsample.php:135
 msgid "Add a sample to this questionnaire:"
-msgstr "Voeg een steekproef aan deze vragenlijst toe:"
+msgstr ""
 
 #: admin/assignsample.php:138
 msgid "Select sample:"
-msgstr "Kies steekproef:"
+msgstr ""
 
 #: admin/assignsample.php:148
 msgid "Max calls (0 for unlimited)"
-msgstr "Max gesprekken"
+msgstr ""
 
 #: admin/assignsample.php:149
 msgid "Max call attempts (0 for unlimited)"
-msgstr "Max aantal bel pogingen (0 voor oneindig)"
+msgstr ""
 
 #: admin/assignsample.php:150
 msgid "Number of answering machine messages to leave per case (0 for never)"
 msgstr ""
-"Aantal antwoordapparaat berichten na te laten per case (o voor nooit)"
 
 #: admin/assignsample.php:151
 msgid "Select from sample randomly? (otherwise sequentially)"
-msgstr "Kies toevallig uit de steekproef? (anders opeenvolgend)"
+msgstr ""
 
 #: admin/samplesearch.php:83
 msgid "Search sample"
-msgstr "Zoek steekproef"
+msgstr ""
 
 #: admin/samplesearch.php:100
 msgid "No cases yet assigned: Delete this sample record"
-msgstr "Nog geen cases toegekend: Verwijder dit steekproef element"
+msgstr ""
 
 #: admin/samplesearch.php:100
 msgid "Assigned to questionnaire: "
-msgstr "Voeg toe aan vragenlijst: "
+msgstr ""
 
 #: admin/samplesearch.php:110
 msgid "No records in this sample match this search criteria"
-msgstr "Geef element in de steekproef voldoen aan dit criteria:"
+msgstr ""
 
 #: admin/samplesearch.php:121
 msgid "Sample id"
-msgstr "Steekproef id"
+msgstr ""
 
 #: admin/samplesearch.php:130
 msgid "Link"
-msgstr "Verwijzing"
+msgstr "Ligam"
 
 #: admin/samplesearch.php:149
 msgid "Search within this sample"
-msgstr "Zoek in deze steekproef"
+msgstr ""
 
 #: admin/samplesearch.php:151
 #, php-format
@@ -1332,44 +1313,44 @@ msgstr ""
 
 #: admin/samplesearch.php:156
 msgid "Search for:"
-msgstr "Zoek naar:"
+msgstr "Recercar :"
 
 #: admin/samplesearch.php:158
 msgid "Start search"
-msgstr "Begin met zoeken"
+msgstr ""
 
 #: admin/outcomes.php:78
 msgid "Questionnaire Outcomes"
-msgstr "Vragenlijst Resultaten"
+msgstr ""
 
 #: admin/outcomes.php:87
 #: admin/outcomes.php:206
 msgid "Outcomes"
-msgstr "Resultaten"
+msgstr ""
 
 #: admin/outcomes.php:89
 #: admin/outcomes.php:193
 msgid "Sample status"
-msgstr "Steekproef status"
+msgstr ""
 
 #: admin/outcomes.php:91
 #: admin/outcomes.php:195
 msgid "Drawn from sample"
-msgstr "Gekozen uit steekproef"
+msgstr ""
 
 #: admin/outcomes.php:91
 #: admin/outcomes.php:195
 msgid "Remain in sample"
-msgstr "Behouden in steekproef"
+msgstr ""
 
 #: admin/outcomes.php:98
 #: admin/outcomes.php:203
 msgid "Number"
-msgstr "Nummer"
+msgstr "Numèro"
 
 #: admin/outcomes.php:104
 msgid "Average time on a completed questionnaire"
-msgstr "Gemiddelde tijd per afgewerkte vragenlijst"
+msgstr ""
 
 #: admin/outcomes.php:104
 msgid "Min"
@@ -1377,39 +1358,39 @@ msgstr "Min"
 
 #: admin/outcomes.php:104
 msgid "Secs"
-msgstr "Sec"
+msgstr "Segs"
 
 #: admin/outcomes.php:117
 msgid "Rate"
-msgstr "Ratio"
+msgstr "Debit"
 
 #: admin/outcomes.php:118
 msgid "Response Rate 1"
-msgstr "Response Rate 1"
+msgstr ""
 
 #: admin/outcomes.php:119
 msgid "Refusal Rate 1"
-msgstr "Refusal Rate 1"
+msgstr ""
 
 #: admin/outcomes.php:120
 msgid "Cooperation Rate 1"
-msgstr "Cooperation Rate 1"
+msgstr ""
 
 #: admin/outcomes.php:121
 msgid "Contact Rate 1"
-msgstr "Contact Rate 1"
+msgstr ""
 
 #: admin/outcomes.php:136
 #: admin/outcomes.php:170
 #: admin/outcomes.php:223
 msgid "Count"
-msgstr "Aantal"
+msgstr "Compte"
 
 #: admin/outcomes.php:136
 #: admin/outcomes.php:170
 #: admin/outcomes.php:223
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: admin/outcomes.php:155
 msgid "Operator call outcomes"
@@ -1421,53 +1402,51 @@ msgstr ""
 
 #: admin/outcomes.php:231
 msgid "No outcomes recorded for this questionnaire"
-msgstr "Geen resultaten opgeslagen voor deze vragenlijst"
+msgstr ""
 
 #: admin/outcomes.php:238
 msgid "No shift reports: Add report"
-msgstr "Geen shift rapporten: Voeg rapport toe"
+msgstr ""
 
 #: admin/outcomes.php:238
 msgid "View shift reports"
-msgstr "Bekijk shift rapporten"
+msgstr ""
 
 #: admin/outcomes.php:238
 msgid "View operator performance"
-msgstr "Bekijk operator prestaties"
+msgstr ""
 
 #: admin/outcomes.php:257
 msgid "No shifts defined for this questionnaire"
-msgstr "Geen shifts bepaald voor deze vragenlijst"
+msgstr ""
 
 #: admin/outcomes.php:259
 msgid "Shift"
-msgstr "Shift"
+msgstr "Maj"
 
 #: admin/outcomes.php:259
 msgid "Shift report"
-msgstr "Shift rapport"
+msgstr ""
 
 #: admin/voipmonitor.php:73
 #: admin/voipmonitor.php:93
 #: admin/voipmonitor.php:94
 msgid "Monitor VoIP Process"
-msgstr "Vol VoIP Proces op"
+msgstr ""
 
 #: admin/voipmonitor.php:75
 msgid "Running process:"
-msgstr "Actief proces:"
+msgstr ""
 
 #: admin/voipmonitor.php:77
 msgid "Note: This page will automatically refresh every 10 seconds"
-msgstr "Opmerking: Deze pagina herlaadt elke 10 seconden automatisch"
+msgstr ""
 
 #: admin/voipmonitor.php:81
 msgid ""
 "Kill signal sent: Please wait... (Note: Process will be stalled until there "
 "is activity on the VoIP Server)"
 msgstr ""
-"Beëndigt zend signaal: Wacht... (Opmerking: Het proces wordt onderbroken tot "
-"er activiteit op de VoIP Server is)"
 
 #: admin/voipmonitor.php:82
 msgid ""
@@ -1476,62 +1455,59 @@ msgstr ""
 
 #: admin/voipmonitor.php:86
 msgid "Kill the running process"
-msgstr "Stop het actief proces"
+msgstr ""
 
 #: admin/voipmonitor.php:86
 msgid "(requires activity on the VoIP Server to take effect)"
-msgstr "(vereist activiteit op de VoIP Server om toegepast te worden)"
+msgstr ""
 
 #: admin/voipmonitor.php:95
 msgid "Click here to begin monitoring the VoIP Process"
-msgstr "Klik hier om te starten met het VoIP proces op te volgen"
+msgstr ""
 
 #: admin/voipmonitor.php:96
 msgid "Outcome of last process run (if any)"
-msgstr "Resultaat van het laatst actief proces (als er een was)"
+msgstr ""
 
 #: admin/questionnaireprefill.php:99
 msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
 msgstr ""
-"Automatisch invullen vragenlijst: Zet waarde van vragenlijst op automatisch "
-"invullen"
 
 #: admin/questionnaireprefill.php:109
 msgid "Current pre fills (click to delete)"
-msgstr "Huidige automatische waarden (klik om te verwijderen)"
+msgstr ""
 
 #: admin/questionnaireprefill.php:119
 msgid "Currently no pre fills"
-msgstr "Momenteel geen automatische invulling"
+msgstr ""
 
 #: admin/questionnaireprefill.php:131
 msgid "Select a question to pre fill"
-msgstr "Kies een vraag om automatisch in te vullen"
+msgstr ""
 
 #: admin/questionnaireprefill.php:154
 msgid "Enter a value to pre fill this question with:"
-msgstr "Vul een waarde in om automatisch vragen mee in te vullen:"
+msgstr ""
 
 #: admin/questionnaireprefill.php:156
 msgid "Possible uses:"
-msgstr "Mogelijke gebruiken:"
+msgstr ""
 
 #: admin/questionnaireprefill.php:158
 msgid "{Respondent:firstName} First name of the respondent"
-msgstr "{Respondent:firstName} Voornaam van de respondent"
+msgstr ""
 
 #: admin/questionnaireprefill.php:159
 msgid "{Respondent:lastName} Last name of the respondent"
-msgstr "{Respondent:lastName} Familienaam van de respondent"
+msgstr ""
 
 #: admin/questionnaireprefill.php:160
 msgid "{Sample:var} A record from the sample where the column name is 'var'"
 msgstr ""
-"{Sample:var} Een record uit de steekproef waarvan de kolomnaam 'var' is"
 
 #: admin/questionnaireprefill.php:173
 msgid "The value to pre fill"
-msgstr "De waarde om automatisch in te vullen"
+msgstr ""
 
 #: admin/questionnaireprefill.php:174
 msgid "or: Select pre fill from sample list"
@@ -1544,7 +1520,7 @@ msgstr ""
 #: admin/addshift.php:87
 #: admin/addshift.php:140
 msgid "Add shifts"
-msgstr "Voeg shifts toe"
+msgstr ""
 
 #: admin/addshift.php:88
 msgid ""
@@ -1556,24 +1532,22 @@ msgstr ""
 msgid ""
 "Your database does not have timezones installed, please see here for details"
 msgstr ""
-"De tijdzones zijn niet geïnstalleerd voor je databse, lees verder voor "
-"details"
 
 #: admin/addshift.php:163
 msgid "Add shifts in your Time Zone"
-msgstr "Voeg shifts in je tijdzone toe"
+msgstr ""
 
 #: admin/addshift.php:235
 msgid "Day"
-msgstr "Dag"
+msgstr "Jorn"
 
 #: admin/addshift.php:235
 msgid "Use shift?"
-msgstr "Gebruik shift?"
+msgstr ""
 
 #: admin/addshift.php:260
 msgid "Submit changes"
-msgstr ""
+msgstr "Validar las modificacions"
 
 #: admin/quotarow.php:142
 #: admin/quotarow.php:147
@@ -1595,7 +1569,7 @@ msgstr ""
 #: admin/quotarow.php:169
 #: admin/quotarow.php:171
 msgid "like"
-msgstr ""
+msgstr "coma"
 
 #: admin/quotarow.php:171
 msgid "Stop calling"
@@ -1619,7 +1593,7 @@ msgstr ""
 
 #: admin/quotarow.php:198
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: admin/quotarow.php:200
 msgid ""
@@ -1661,21 +1635,19 @@ msgstr ""
 #: admin/operators.php:111
 #: admin/operators.php:120
 msgid "Add an operator"
-msgstr "Voeg een operator toe"
+msgstr ""
 
 #: admin/operators.php:121
 msgid "Adding an operator here will give the user the ability to call cases"
 msgstr ""
-"Hier een operator toevoegen geeft de gebruiker de mogelijkheid cases te "
-"bellen"
 
 #: admin/operators.php:121
 msgid "Assign Operator to Questionnaire"
-msgstr "Voeg Operator aan Vragenlijst toe"
+msgstr ""
 
 #: admin/operators.php:121
 msgid "tool"
-msgstr "pagina"
+msgstr "esplech"
 
 #: admin/operators.php:122
 msgid ""
@@ -1684,30 +1656,26 @@ msgid ""
 "queXS using Apache file based security, enter the usernames of the users "
 "here."
 msgstr ""
-"Gebruik dit formulier om de gebruikersnaam van de gebruiker in te geven "
-"gebaseerd op uw map beveiligingssyteem. Bijvoorbeeld, als je Apache "
-"mapbeveiling hebt gebruikt voor de basis map van queXS, voer de naam van de "
-"gebruikers hier dan in."
 
 #: admin/operators.php:124
 msgid "Enter the username of an operator to add:"
-msgstr "Vul de gebruikersnaam in van de toe te voegen operator in:"
+msgstr ""
 
 #: admin/operators.php:125
 msgid "Enter the first name of an operator to add:"
-msgstr "Vul de voornaam in van de toe te voegen operator in:"
+msgstr ""
 
 #: admin/operators.php:126
 msgid "Enter the surname of an operator to add:"
-msgstr "Vul de familienaam in van de toe te voegen operator in:"
+msgstr ""
 
 #: admin/operators.php:127
 msgid "Enter the Time Zone of an operator to add:"
-msgstr "Vul de tijdzone in van de toe te voegen operator in:"
+msgstr ""
 
 #: admin/operators.php:128
 msgid "Enter the telephone extension number:"
-msgstr "Vul de telefoonextensie in:"
+msgstr ""
 
 #: admin/operators.php:129
 msgid "Enter the telephone extension password:"
@@ -1719,23 +1687,23 @@ msgstr ""
 
 #: admin/operators.php:131
 msgid "Is the operator a normal interviewer?"
-msgstr "Is de operator een normale interviewer?"
+msgstr ""
 
 #: admin/operators.php:132
 msgid "Is the operator a supervisor?"
-msgstr "Is the operator een toezichthouder"
+msgstr ""
 
 #: admin/operators.php:133
 msgid "Is the operator a refusal converter?"
-msgstr "Is de operator een weigeraar hercontacteerder?"
+msgstr ""
 
 #: admin/operators.php:134
 msgid "Add user"
-msgstr "Gebruiker toegoeven"
+msgstr "Apondre un utilizaire"
 
 #: admin/new.php:54
 msgid "New: Create new questionnaire"
-msgstr "Nieuw: Maak een nieuwe vragenlijst aan"
+msgstr ""
 
 #: admin/new.php:99
 msgid "Successfully inserted"
@@ -1759,59 +1727,59 @@ msgstr ""
 
 #: admin/new.php:114
 msgid "Name for questionnaire:"
-msgstr "Naam van de vragenlijst:"
+msgstr ""
 
 #: admin/new.php:115
 msgid "Select creation type:"
-msgstr "Selecteer aanmaak type:"
+msgstr ""
 
 #: admin/new.php:115
 msgid "Create new questionnaire in Limesurvey"
-msgstr "Maak een nieuwe vragenlijst in Limesurvey aan"
+msgstr ""
 
 #: admin/new.php:128
 msgid "Existing questionnaire:"
-msgstr "Bestaande vragenlijst:"
+msgstr ""
 
 #: admin/new.php:132
 msgid "Restrict appointments to shifts?"
-msgstr "Beperk afspraken tot shifts?"
+msgstr ""
 
 #: admin/new.php:133
 msgid "Restrict work to shifts?"
-msgstr "Beperk werk tot shifts?"
+msgstr ""
 
 #: admin/new.php:134
 msgid "Questionnaire for testing only?"
-msgstr "Enkel als testvragenlijst?"
+msgstr ""
 
 #: admin/new.php:135
 msgid "Use respondent selection text?"
-msgstr "Gebruik respondent selectie tekst?"
+msgstr ""
 
 #: admin/new.php:137
 msgid "Respondent selection introduction:"
-msgstr "Respondent selectie inleiding:"
+msgstr ""
 
 #: admin/new.php:138
 msgid "Respondent selection project introduction:"
-msgstr "Respondent selectie project inleiding:"
+msgstr ""
 
 #: admin/new.php:139
 msgid "Respondent selection project end:"
-msgstr "Respondent selectie project einde:"
+msgstr ""
 
 #: admin/new.php:140
 msgid "Respondent selection callback (already started questionnaire):"
-msgstr "Respondent selectie bij het terugbellen (vragenlijst reeds gestart):"
+msgstr ""
 
 #: admin/new.php:141
 msgid "Message to leave on an answering machine:"
-msgstr "Bericht om na te laten op het antwoord apparaat:"
+msgstr ""
 
 #: admin/new.php:143
 msgid "Create Questionnaire"
-msgstr "Maak vragenlijst aan:"
+msgstr ""
 
 #: admin/extensionstatus.php:47
 msgid "Display extension status"
@@ -1859,7 +1827,7 @@ msgstr ""
 
 #: admin/databasestrings.php:33
 msgid "No answer"
-msgstr ""
+msgstr "Pas cap de responsa"
 
 #: admin/databasestrings.php:34
 msgid "Technical phone problems"
@@ -1891,7 +1859,7 @@ msgstr ""
 
 #: admin/databasestrings.php:41
 msgid "Complete"
-msgstr ""
+msgstr "Acabat"
 
 #: admin/databasestrings.php:42
 msgid "Known respondent refusal"
@@ -1995,31 +1963,31 @@ msgstr ""
 
 #: admin/databasestrings.php:68
 msgid "Monday"
-msgstr ""
+msgstr "Diluns"
 
 #: admin/databasestrings.php:69
 msgid "Tuesday"
-msgstr ""
+msgstr "Dimars"
 
 #: admin/databasestrings.php:70
 msgid "Wednesday"
-msgstr ""
+msgstr "Dimècres"
 
 #: admin/databasestrings.php:71
 msgid "Thursday"
-msgstr ""
+msgstr "Dijòus"
 
 #: admin/databasestrings.php:72
 msgid "Friday"
-msgstr ""
+msgstr "Divendres"
 
 #: admin/databasestrings.php:73
 msgid "Saturday"
-msgstr ""
+msgstr "Dissabte"
 
 #: admin/databasestrings.php:74
 msgid "Sunday"
-msgstr ""
+msgstr "Dimenge"
 
 #: admin/databasestrings.php:75
 msgid "Quota filled"
@@ -2027,20 +1995,20 @@ msgstr ""
 
 #: admin/process.php:90
 msgid "Cannot connect to VoIP Server"
-msgstr "Kan niet verbinden met VoIP Server"
+msgstr ""
 
 #: admin/clients.php:71
 msgid "Could not add"
-msgstr "Kon niet toevoegen"
+msgstr ""
 
 #: admin/clients.php:71
 msgid "There may already be an client of this name"
-msgstr "Waarschijnlijk is er reeds een klant met deze naam"
+msgstr ""
 
 #: admin/clients.php:76
 #: admin/clients.php:85
 msgid "Add a client"
-msgstr "Voeg een klant toe"
+msgstr ""
 
 #: admin/clients.php:86
 msgid ""
@@ -2048,54 +2016,49 @@ msgid ""
 "client subdirectory. You can assign a client to a particular project using "
 "the"
 msgstr ""
-"Hier een klant toevoegen zal hen toelaten de project informatie in de klant "
-"submap te raadplegen. U kan een klant toevoegen aan een specifiek project "
-"door gebruik te maken van de"
 
 #: admin/clients.php:86
 msgid "Assign client to Questionnaire"
-msgstr "Voeg klant aan Vragenlijst toe"
+msgstr ""
 
 #: admin/clients.php:86
 msgid "tool."
-msgstr "pagina."
+msgstr ""
 
 #: admin/clients.php:89
 msgid "Enter the username of an client to add:"
-msgstr "Voer de gebruikersnaam van de toe te voegen klant in:"
+msgstr ""
 
 #: admin/clients.php:90
 msgid "Enter the first name of an client to add:"
-msgstr "Voer de voornaam van de toe te voegen klant in:"
+msgstr ""
 
 #: admin/clients.php:91
 msgid "Enter the surname of an client to add:"
-msgstr "Voer de achternaam van de toe te voegen klant in:"
+msgstr ""
 
 #: admin/clients.php:92
 msgid "Enter the Time Zone of an client to add:"
-msgstr "Voeg de tijdzone van een toe te voegen klant in:"
+msgstr ""
 
 #: admin/shifttemplate.php:82
 msgid "Modify shift template"
-msgstr "Bewerk shift sjabloon"
+msgstr ""
 
 #: admin/shifttemplate.php:96
 msgid ""
 "Enter standard shift start and end times for each day of the week in local "
 "time"
 msgstr ""
-"Voeg standaard shift start en eind tijden in voor elke dag van de week in "
-"lokale tijd"
 
 #: admin/shifttemplate.php:134
 #: admin/callrestrict.php:134
 msgid "Add row"
-msgstr "Voeg rij toe"
+msgstr ""
 
 #: admin/shifttemplate.php:135
 msgid "Save changes to shifts"
-msgstr "Bewaar wijzigingen in de shifts"
+msgstr ""
 
 #: admin/dataoutput.php:196
 msgid "Download all data for this questionnaire"
@@ -2115,19 +2078,17 @@ msgstr ""
 
 #: admin/callrestrict.php:82
 msgid "Modify call restriction times"
-msgstr "Bewerk gespreksbeperkingstijden"
+msgstr ""
 
 #: admin/callrestrict.php:96
 msgid ""
 "Enter the start and end times for each day of the week to restrict calls "
 "within"
 msgstr ""
-"Geef de start en eind tijd voor elke dag van de week waarbinnen u de "
-"gesprekken wil beperken"
 
 #: admin/callrestrict.php:135
 msgid "Save changes to restriction times"
-msgstr "Bewaar wijzingen aan tijdsbeperkingen"
+msgstr ""
 
 #: admin/samplecallattempts.php:57
 msgid "Sample call attempt"
@@ -2157,19 +2118,19 @@ msgstr ""
 
 #: admin/timezonetemplate.php:87
 msgid "Add/Remove Timezones"
-msgstr "Voeg toe/verwijder Tijdzones"
+msgstr ""
 
 #: admin/timezonetemplate.php:88
 msgid "Click to remove a Timezone from the default list"
-msgstr "Klik om een tijdzone van de standaardlijst te verwijderen"
+msgstr ""
 
 #: admin/timezonetemplate.php:100
 msgid "Add a Timezone:"
-msgstr "Voeg een tijdzone toe:"
+msgstr ""
 
 #: admin/timezonetemplate.php:103
 msgid "Timezone: "
-msgstr "Tijdzone: "
+msgstr ""
 
 #: admin/timezonetemplate.php:104
 msgid "Add Timezone"
@@ -2177,33 +2138,32 @@ msgstr ""
 
 #: admin/supervisor.php:89
 msgid "Enter a case id or select a case from the list below:"
-msgstr "Vul een case id in of kies een case uit de onderstaande lijst:"
+msgstr ""
 
 #: admin/supervisor.php:100
 msgid "Select case from list of cases referred to the supervisor:"
 msgstr ""
-"Kies een case van de lijst met cases doorverwezen naar de toezichthouder:"
 
 #: admin/supervisor.php:109
 msgid "Select case"
-msgstr "Kies een case"
+msgstr ""
 
 #: admin/supervisor.php:126
 msgid "Set an outcome for this call"
-msgstr "Stel een resultaat voor dit gesprek in"
+msgstr ""
 
 #: admin/supervisor.php:139
 #: admin/supervisor.php:280
 msgid "Set outcome"
-msgstr "Stel resultaat in"
+msgstr ""
 
 #: admin/supervisor.php:179
 msgid "Project"
-msgstr "Project"
+msgstr "Projècte"
 
 #: admin/supervisor.php:182
 msgid "Current outcome:"
-msgstr "Huidig resultaat:"
+msgstr ""
 
 #: admin/supervisor.php:206
 msgid "No appointments for this case"
@@ -2215,19 +2175,19 @@ msgstr ""
 
 #: admin/supervisor.php:220
 msgid "Call list"
-msgstr "Gesprekslijst"
+msgstr ""
 
 #: admin/supervisor.php:226
 msgid "Phone number"
-msgstr "Telefoonnummer"
+msgstr "Numèro de telefòn"
 
 #: admin/supervisor.php:226
 msgid "Change outcome"
-msgstr "Wijzig resultaat"
+msgstr ""
 
 #: admin/supervisor.php:239
 msgid "Case notes"
-msgstr "Case opmerkingen"
+msgstr ""
 
 #: admin/supervisor.php:261
 msgid "Modify responses for this case"
@@ -2239,23 +2199,23 @@ msgstr ""
 
 #: admin/supervisor.php:267
 msgid "Set a case outcome"
-msgstr "Stel een case resultaat in"
+msgstr ""
 
 #: admin/supervisor.php:286
 msgid "Case does not exist"
-msgstr "De case bestaat niet"
+msgstr ""
 
 #: functions/functions.operator.php:94
 msgid "morning"
-msgstr "ochtend"
+msgstr ""
 
 #: functions/functions.operator.php:95
 msgid "afternoon"
-msgstr "namiddag"
+msgstr ""
 
 #: functions/functions.operator.php:96
 msgid "evening"
-msgstr "avond"
+msgstr ""
 
 #: functions/functions.operator.php:633
 msgid ""
@@ -2265,48 +2225,48 @@ msgstr ""
 
 #: functions/functions.calendar.php:240
 msgid "First name:"
-msgstr "Voornaam:"
+msgstr "Pichon nom :"
 
 #: functions/functions.calendar.php:241
 msgid "Last  name:"
-msgstr "Achternaam:"
+msgstr ""
 
 #: functions/functions.calendar.php:246
 msgid "Time Zone:"
-msgstr "Tijdzone:"
+msgstr "Fus orari :"
 
 #: functions/functions.calendar.php:289
 msgid "Shift from:"
-msgstr "Shift van:"
+msgstr ""
 
 #: functions/functions.calendar.php:296
 msgid "Start Time"
-msgstr "Starttijd"
+msgstr "Ora de començament"
 
 #: functions/functions.calendar.php:346
 msgid "End Time"
-msgstr "Eindtijd"
+msgstr "Ora de fin"
 
 #: functions/functions.performance.php:460
 msgid "No shift"
-msgstr "Geen shift"
+msgstr ""
 
 #: functions/functions.performance.php:483
 msgid "Total completions"
-msgstr "Totaal afgewerkt"
+msgstr ""
 
 #: functions/functions.performance.php:512
 msgid "Completions this shift"
-msgstr "Afgewerkt in deze shift"
+msgstr ""
 
 #: functions/functions.performance.php:535
 #: functions/functions.performance.php:581
 msgid "No previous shift"
-msgstr "Geen voorgaande shift"
+msgstr ""
 
 #: functions/functions.performance.php:555
 msgid "Completions on the previous shift"
-msgstr "Afgewerkt in de vorige shift"
+msgstr ""
 
 #: functions/functions.performance.php:602
 msgid "Completions this time on the previous shift"
@@ -2314,39 +2274,39 @@ msgstr ""
 
 #: functions/functions.performance.php:620
 msgid "No calls made for this shift"
-msgstr "Geen gesprekken gedaan voor deze shift"
+msgstr ""
 
 #: functions/functions.performance.php:622
 msgid "Top CPH for this shift"
-msgstr "Top afgewerkt per uur voor deze shift"
+msgstr ""
 
 #: functions/functions.performance.php:639
 msgid "No calls made for this project"
-msgstr "Geen gesprekken gedaan voor dit project"
+msgstr ""
 
 #: functions/functions.performance.php:641
 msgid "Top CPH"
-msgstr "Top afgewerkt per uur"
+msgstr ""
 
 #: functions/functions.import.php:89
 msgid "Duplicate name"
-msgstr "Dubbele naam"
+msgstr "Nom duplicat"
 
 #: functions/functions.import.php:111
 msgid "You must select one and one only Primary Phone number"
-msgstr "Selecteer slechts één hoofd telefoonnummer"
+msgstr ""
 
 #: functions/functions.import.php:127
 msgid "Import?"
-msgstr "Importeren?"
+msgstr "Importar ?"
 
 #: functions/functions.import.php:127
 msgid "Name"
-msgstr "Naam"
+msgstr "Nom"
 
 #: functions/functions.import.php:127
 msgid "Type"
-msgstr "Type"
+msgstr "Tipe"
 
 #: functions/functions.voip.php:442
 msgid "online"
@@ -2382,15 +2342,15 @@ msgstr ""
 
 #: display/index.php:111
 msgid "Display"
-msgstr "Toon"
+msgstr "Afichar"
 
 #: client/index.php:72
 msgid "There are no questionnaires assigned to you"
-msgstr "Er zijn geen vragenlijsten aan u toegekend"
+msgstr ""
 
 #: client/index.php:123
 msgid "You are not a valid client"
-msgstr "U bent geen geldige klant"
+msgstr ""
 
 #: include/php-gettext-1.0.9/examples/pigs_dropin.php:77
 #: include/php-gettext-1.0.9/examples/pigs_fallback.php:76
@@ -2398,5 +2358,3 @@ msgid ""
 "This is how the story goes.\n"
 "\n"
 msgstr ""
-"Zo gaat het verhaal.\n"
-"\n"
