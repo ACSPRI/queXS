@@ -495,6 +495,12 @@ while ($Row = $QueryResult->FetchRow())
 	$questionnaire->append_child($section);
 }
 
+
+$dom->append_child($questionnaire);
+
+
+if (!(isset($noheader) && $noheader == true))
+{
 	//Add caseid field
 
 	$section = $dom->create_element("section");
@@ -522,13 +528,6 @@ while ($Row = $QueryResult->FetchRow())
 	
 	$questionnaire->append_child($section);
 
-
-$dom->append_child($questionnaire);
-
-$quexml = $dom->dump_mem(true,'UTF-8');
-
-if (!(isset($noheader) && $noheader == true))
-{
 	$fn = "survey_$surveyid.xml";
 	header("Content-Type: application/download");
 	header("Content-Disposition: attachment; filename=$fn");
@@ -537,7 +536,9 @@ if (!(isset($noheader) && $noheader == true))
 	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	header("Pragma: no-cache");                          // HTTP/1.0
 	
-	echo $quexml;	
+	echo $dom->dump_mem(true,'UTF-8');
 	exit();
 }
+
+$quexml = $dom->dump_mem(true,'UTF-8');
 ?>

@@ -323,7 +323,7 @@ class queXMLPDF extends TCPDF {
 	 * @var mixed  Defaults to 1. 
 	 * @since 2010-09-20
 	 */
-	protected $longTextResponseHeightMultiplier = 1;
+	protected $longTextResponseHeightMultiplier = 0.0390625;
 
 	/**
 	 * Width of a long text response box
@@ -1280,6 +1280,7 @@ class queXMLPDF extends TCPDF {
 		$this->SetX(($this->getPageWidth() - $this->getMainPageX() - $this->skipColumnWidth - $this->longTextResponseWidth),false);
 		//Add to pay layout
 		$this->addBox($this->GetX(),$this->GetY(),$this->GetX() + $this->longTextResponseWidth, $this->GetX() + $height);
+		$this->SetDrawColor($this->lineColour[0],$this->lineColour[1],$this->lineColour[2]);
 		$this->Cell($this->longTextResponseWidth,$height,'',$border,0,'',true,'',0,false,'T','C');
 		$currentY = $currentY + $height;
 		$this->SetY($currentY,false);
