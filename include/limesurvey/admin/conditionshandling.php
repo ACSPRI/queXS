@@ -108,7 +108,7 @@ if (!isset($surveyid) || !$surveyid)
 	."\t<tr><td align='center'><br /><font color='red'><strong>"
 	.$clang->gT("Error")."</strong></font><br />".$clang->gT("You have not selected a survey")."<br /><br />"
 	."<input type='submit' value='"
-	.$clang->gT("Main admin screen")."' onclick=\"window.open('$scriptname', '_top')\" /><br /><br /></td></tr>\n"
+	.$clang->gT("Main admin screen")."' onclick=\"window.open('$scriptname', '_self')\" /><br /><br /></td></tr>\n"
 	."</table>\n"
 	."</body>\n</html>";
 	return;
@@ -122,7 +122,7 @@ if (!isset($qid) || !$qid)
 	."\t<tr><td align='center'><br /><font color='red'><strong>"
 	.$clang->gT("Error")."</strong></font><br />".$clang->gT("You have not selected a question")."<br /><br />"
 	."<input type='submit' value='"
-	.$clang->gT("Main admin screen")."' onclick=\"window.open('$scriptname', '_top')\" /><br /><br /></td></tr>\n"
+	.$clang->gT("Main admin screen")."' onclick=\"window.open('$scriptname', '_self')\" /><br /><br /></td></tr>\n"
 	."</table>\n"
 	."</body>\n</html>";
 	return;
@@ -141,18 +141,18 @@ if (isset($qid) && isset($gid))
 // If we made it this far, then lets develop the menu items
 $conditionsoutput .= "\t<div class='menubar-main'>\n"
 ."\t\t<div class='menubar-left'>\n"
-."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?sid=$surveyid$extraGetParams', '_top')\" onmouseout=\"hideTooltip()\""
+."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?sid=$surveyid$extraGetParams', '_self')\" onmouseout=\"hideTooltip()\""
 ."onmouseover=\"showTooltip(event,'".$clang->gT("Return to survey administration", "js")."');return false\">" .
 "<img name='HomeButton' src='$imagefiles/home.png' alt='' /></a>\n"
 ."\t\t\t<img src='$imagefiles/blank.gif' alt='' width='11' />\n"
 ."\t\t\t<img src='$imagefiles/seperator.gif' alt='' />\n"
-."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=conditions&amp;sid=$surveyid&amp;gid=$gid&amp;qid=$qid', '_top')\" onmouseout=\"hideTooltip()\" onmouseover=\"showTooltip(event,'".$clang->gT("Show conditions for this question", "js")."');return false\" >" 
+."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=conditions&amp;sid=$surveyid&amp;gid=$gid&amp;qid=$qid', '_self')\" onmouseout=\"hideTooltip()\" onmouseover=\"showTooltip(event,'".$clang->gT("Show conditions for this question", "js")."');return false\" >" 
 ."<img name='SummaryButton' src='$imagefiles/summary.png' title='' alt='' /></a>\n"
 ."\t\t\t<img src='$imagefiles/seperator.gif' alt='' />\n"
-."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=conditions&amp;sid=$surveyid&amp;gid=$gid&amp;qid=$qid&amp;subaction=editconditionsform', '_top')\" onmouseout=\"hideTooltip()\""
+."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=conditions&amp;sid=$surveyid&amp;gid=$gid&amp;qid=$qid&amp;subaction=editconditionsform', '_self')\" onmouseout=\"hideTooltip()\""
 ."onmouseover=\"showTooltip(event,'".$clang->gT("Add and edit conditions", "js")."');return false\">" 
 ."<img name='ConditionAddButton' src='$imagefiles/conditions_add.png' title='' alt='' /></a>\n"
-."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=conditions&amp;sid=$surveyid&amp;gid=$gid&amp;qid=$qid&amp;subaction=copyconditionsform', '_top')\" onmouseout=\"hideTooltip()\""
+."\t\t\t<a href=\"#\" onclick=\"window.open('$scriptname?action=conditions&amp;sid=$surveyid&amp;gid=$gid&amp;qid=$qid&amp;subaction=copyconditionsform', '_self')\" onmouseout=\"hideTooltip()\""
 ."onmouseover=\"showTooltip(event,'".$clang->gT("Copy conditions", "js")."');return false\">" 
 ."<img name='ConditionCopyButton' src='$imagefiles/conditions_copy.png' title='' alt='' /></a>\n";
 
@@ -160,7 +160,7 @@ $conditionsoutput .= "\t<div class='menubar-main'>\n"
 $conditionsoutput .="\t\t\t</div><div class='menubar-right'>\n"
 		."<img width=\"11\" alt=\"\" src=\"$imagefiles/blank.gif\"/>\n"
 		."<font class=\"boxcaption\">".$clang->gT("Questions").":</font>\n"
-		."<select id='questionNav' onchange=\"window.open(this.options[this.selectedIndex].value,'_top')\"></select>\n"
+		."<select id='questionNav' onchange=\"window.open(this.options[this.selectedIndex].value,'_self')\"></select>\n"
 		."<img hspace=\"0\" border=\"0\" alt=\"\" src=\"$imagefiles/seperator.gif\"/>\n"
 		."<a href=\"#\" onclick=\"showhelp('show')\"" 
 		."onmouseout=\"hideTooltip()\"" 
