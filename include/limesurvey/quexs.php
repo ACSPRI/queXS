@@ -37,6 +37,39 @@ require_once(dirname(__FILE__).'/../../config.inc.php');
 
 
 /**
+ * Get the number of answering messages left for this case
+ * 
+ * @param mixed $case_id 
+ * 
+ * @return number of answering messages left
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2010-10-18
+ */
+function get_messages_left($case_id)
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+
+	$sql = "SELECT count(*) as count 
+		FROM `call` 
+		WHERE case_id = '$case_id' 
+		AND outcome_id = '23'";
+
+	$r = $db->GetRow($sql);
+
+	if (!empty($r))
+	{	
+		return $r['count'];
+	}
+
+	return 0;
+}
+	
+
+
+/**
  * Return the percent complete a questionnaire is, or 0 if not started
  *
  * @param int $case_id The case id

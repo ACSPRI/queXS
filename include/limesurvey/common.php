@@ -6153,6 +6153,7 @@ function GetTokenConditionsFieldNames($surveyid)
     $basic_attrs[] = 'callattempts'; //queXS addition
     $basic_attrs[] = 'onappointment'; //queXS addition
     $basic_attrs[] = 'perccomplete'; //queXS addition
+    $basic_attrs[] = 'messagesleft'; //queXS addition
     return array_merge($basic_attrs,$extra_attrs);
 }
 
@@ -6174,6 +6175,7 @@ function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
     $basic_attrs[] = 'callattempts'; //queXS addition
     $basic_attrs[] = 'onappointment'; //queXS addition
     $basic_attrs[] = 'perccomplete'; //queXS addition
+    $basic_attrs[] = 'messagesleft'; //queXS addition
     $basic_attrs_names=Array(
 			$clang->gT('First Name'),
 			$clang->gT('Last Name'),
@@ -6187,6 +6189,7 @@ function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
     $basic_attrs_names[] = $clang->gT('queXS: Number of call attempts'); //queXS addition
     $basic_attrs_names[] = $clang->gT('queXS: On appointment?'); //queXS addition
     $basic_attrs_names[] = $clang->gT('queXS: Percentage complete'); //queXS addition
+    $basic_attrs_names[] = $clang->gT('queXS: Number of answering machine messages left'); //queXS addition
 
     $thissurvey=getSurveyInfo($surveyid);               
     $attdescriptiondata=!empty($thissurvey['attributedescriptions']) ? $thissurvey['attributedescriptions'] : "";
@@ -6239,7 +6242,7 @@ function GetAttributeValue($surveyid,$attrName,$token)
     $sanitized_token=$connect->qstr($token,get_magic_quotes_gpc());
     $surveyid=sanitize_int($surveyid);
 
-    if ($attrName == 'callattempts' || $attrName == 'onappointment' || $attrName == 'perccomplete') //queXS addition
+    if ($attrName == 'callattempts' || $attrName == 'onappointment' || $attrName == 'perccomplete' || $attrName == 'messagesleft') //queXS addition
     {
 	include_once("quexs.php");
 	$quexs_operator_id = get_operator_id();
@@ -6252,6 +6255,8 @@ function GetAttributeValue($surveyid,$attrName,$token)
 			return is_on_appointment($quexs_case_id,$quexs_operator_id);
 		else if ($attrName == 'perccomplete')
 			return get_percent_complete($quexs_case_id);
+		else if ($attrName == 'messagesleft')
+			return get_messages_left($quexs_case_id);
 	}
 	else
 		return 0;
