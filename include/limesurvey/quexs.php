@@ -35,6 +35,50 @@
  */
 require_once(dirname(__FILE__).'/../../config.inc.php');
 
+
+/**
+ * Return the percent complete a questionnaire is, or 0 if not started
+ *
+ * @param int $case_id The case id
+ * @return bool|float False if no data, otherwise the percentage of questions answered
+ *
+ */
+function get_percent_complete($case_id)
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$sql = "SELECT l.saved_thisstep, q.lime_sid
+		FROM ". LIME_PREFIX ."saved_control as l, questionnaire as q, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND q.questionnaire_id = c.questionnaire_id
+		AND l.sid = q.lime_sid
+		AND l.identifier = '$case_id'";
+
+	$r = $db->GetRow($sql);
+
+	if (!empty($r))
+	{
+		$step = $r['saved_thisstep'];
+		$lime_sid = $r['lime_sid'];
+
+	        $sql = "SELECT count(qid) as c
+        	        FROM " . LIME_PREFIX . "questions
+	                WHERE sid = '$lime_sid'";
+		
+		$qs = $db->GetRow($sql);
+		$questions = 1;
+		if (!empty($qs))
+			$questions = $qs['c'];
+
+		return ($step / $questions) * 100.0;
+	}
+
+	return 0;
+
+}
+
 /**
  * Return the phone number of the latest appointment for this respondent
  *
@@ -490,6 +534,12 @@ function quexs_template_replace($string)
 		$string=str_ireplace("{CALLATTEMPTS}", $call_attempts, $string);
 	}
 
+	while (stripos($string, "{RESPONDENTSELECTIONURL}") !== false)
+	{
+		$url = get_respondent_selection_url();
+		$string=str_ireplace("{RESPONDENTSELECTIONURL}", $url, $string);
+	}
+
 	while (stripos($string, "{ONAPPOINTMENT}") !== false)
 	{
 		$on_appointment = is_on_appointment($case_id,$operator_id);
@@ -504,6 +554,7 @@ function quexs_template_replace($string)
 	if (stripos($string, "{APPOINTMENTDATE}") !== false) $string=str_ireplace("{APPOINTMENTDATE}", get_appointment_date($respondent_id), $string);
 	if (stripos($string, "{APPOINTMENTTIME}") !== false) $string=str_ireplace("{APPOINTMENTTIME}", get_appointment_time($respondent_id), $string);
 	if (stripos($string, "{APPOINTMENTNUMBER}") !== false) $string=str_ireplace("{APPOINTMENTNUMBER}", get_appointment_number($respondent_id), $string);
+	if (stripos($string, "{PERCCOMPLETE}") !== false) $string=str_ireplace("{PERCCOMPLETE}", round(get_percent_complete($case_id),0), $string);
 
 	return $string;
 }
@@ -512,30 +563,36 @@ function quexs_template_replace($string)
  * Get the limesurvey "survey id" of the current questionnaire assigned to the operator
  *
  * @param int $operator_id The operator
+ * @param bool $rs Whether or not to get the respondent selection URL
  * @return bool|int False if none found else the limesurvey sid
  *
  */
-function get_limesurvey_id($operator_id)
+function get_limesurvey_id($operator_id,$rs = false)
 {
         $db = newADOConnection(DB_TYPE);
 	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$db->SetFetchMode(ADODB_FETCH_ASSOC);
 
-        $sql = "SELECT q.lime_sid  as lime_sid
-                FROM `case` as c, questionnaire_sample as qs, sample as s, questionnaire as q
-                WHERE c.current_operator_id = '$operator_id'
-                AND c.sample_id = s.sample_id
-                AND s.import_id = qs.sample_import_id
-                AND q.questionnaire_id = qs.questionnaire_id
-                AND c.questionnaire_id = q.questionnaire_id";
+	$sql = "";
 
-        $rs = $db->GetRow($sql);
+	if ($rs)
+		$sql = "SELECT q.lime_rs_sid as sid";
+	else
+		$sql = "SELECT q.lime_sid as sid";
 
-        if (empty($rs))
-                return false;
+	$sql .= " FROM `case` as c, questionnaire_sample as qs, sample as s, questionnaire as q
+		WHERE c.current_operator_id = '$operator_id'
+		AND c.sample_id = s.sample_id
+		AND s.import_id = qs.sample_import_id
+		AND q.questionnaire_id = qs.questionnaire_id
+		AND c.questionnaire_id = q.questionnaire_id";
 
-        return $rs['lime_sid'];
+	$rr = $db->GetRow($sql);
 
+	if (empty($rr))
+		return false;
+
+	return $rr['sid'];
 }
 
 
@@ -564,6 +621,36 @@ function get_questionnaire_id($operator_id)
 
         return $rs['questionnaire_id'];
 
+}
+
+/**
+ * Get the URL of the respondent selection module
+ * 
+ * @return string The URL of the respondent selection script
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2010-10-12
+ */
+function get_respondent_selection_url()
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$url = QUEXS_URL . "nocallavailable.php";
+
+	$operator_id = get_operator_id($operator_id);
+	$call_id = get_call($operator_id);
+
+	if ($call_id)
+	{
+		$sid = get_limesurvey_id($operator_id,true); //true for RS
+		if ($sid != false && !empty($sid) && $sid != 'NULL')
+			$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
+		else
+			$url = 'rs_intro.php';
+	}
+
+	return $url;
 }
 
 
@@ -603,8 +690,6 @@ function get_start_interview_url()
                 }
         }
 
-        //if ($db->HasFailedTrans()) { print "FAILED in get_limesurvey_url"; exit; }
-        $db->CompleteTrans();
 
         return $url;
 	
