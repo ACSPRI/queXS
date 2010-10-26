@@ -58,7 +58,7 @@ $callstatus = is_on_call($operator_id);
 
 if ($callstatus == 3) //On a call
 {
-	print "<p>" T_("Please wait till you have ended this call to call the supervisor") . "</p>";
+	print "<p>" . T_("Please wait till you have ended this call to call the supervisor") . "</p>";
 	/*
 	if (is_voip_enabled($operator_id))
 	{
