@@ -27,9 +27,6 @@
  * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
  * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
  * 
- *
- * @todo Make timezone a drop down list
- *
  */
 
 /**
@@ -116,6 +113,12 @@ if ($a)
 	<h3><? echo $a; ?></h3>
 <?
 }
+
+$sql = "SELECT Time_zone_name as value, Time_zone_name as description
+	FROM timezone_template";
+
+$rs = $db->GetAll($sql);
+
 ?>
 <h1><? echo T_("Add an operator"); ?></h1>
 <p><? echo T_("Adding an operator here will give the user the ability to call cases"); ?> <a href="operatorquestionnaire.php"><? echo T_("Assign Operator to Questionnaire"); ?></a> <? echo T_("tool"); ?>.</p>
@@ -124,7 +127,7 @@ if ($a)
 	<p><? echo T_("Enter the username of an operator to add:"); ?> <input name="operator" type="text"/></p>
 	<p><? echo T_("Enter the first name of an operator to add:"); ?> <input name="firstname" type="text"/></p>
 	<p><? echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
-	<p><? echo T_("Enter the Time Zone of an operator to add:"); ?> <input name="Time_zone_name" type="text" value="<? echo DEFAULT_TIME_ZONE; ?>"/></p>
+	<p><a href='timezonetemplate.php'><? echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
 	<p><? echo T_("Enter the telephone extension number:"); ?> <input name="extension" type="text"/></p>
 	<p><? echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
 	<p><? echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
