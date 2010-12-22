@@ -66,14 +66,33 @@ if (isset($_POST['client']))
 			VALUES (NULL , $client, $firstname , $lastname, $time_zone_name);";
 	
 		if ($db->Execute($sql))
+		{
+			if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false)
+			{
+				//Get password and add it to the configured htpassword
+				include_once("../functions/functions.htpasswd.php");
+				$htp = New Htpasswd(HTPASSWD_PATH);
+				$htg = New Htgroup(HTGROUP_PATH);
+				
+				$htp->addUser($_POST['client'],$_POST['password']);
+				$htg->addUserToGroup($_POST['client'],HTGROUP_CLIENT);
+			}
+
 			$a = T_("Added: $client");	
+		}
 		else
-			$a = T_("Could not add") . " " . $client . ". " . T_("There may already be an client of this name");
+			$a = T_("Could not add") . " " . $client . ". " . T_("There may already be a client of this name");
 	}
 }
 
 
 xhtml_head(T_("Add a client"));
+
+$sql = "SELECT Time_zone_name as value, Time_zone_name as description
+	FROM timezone_template";
+
+$rs = $db->GetAll($sql);
+
 
 if ($a)
 {
@@ -86,10 +105,13 @@ if ($a)
 <p><? echo T_("Adding a client here will allow them to access project information in the client subdirectory. You can assign a client to a particular project using the"); ?> <a href="clientquestionnaire.php"><? echo T_("Assign client to Questionnaire"); ?></a> <? echo T_("tool."); ?></p>
 <p><? echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p>
 <form enctype="multipart/form-data" action="" method="post">
-	<p><? echo T_("Enter the username of an client to add:"); ?> <input name="client" type="text"/></p>
-	<p><? echo T_("Enter the first name of an client to add:"); ?> <input name="firstname" type="text"/></p>
-	<p><? echo T_("Enter the surname of an client to add:"); ?> <input name="lastname" type="text"/></p>
-	<p><? echo T_("Enter the Time Zone of an client to add:"); ?> <input name="Time_zone_name" type="text" value="<? echo DEFAULT_TIME_ZONE; ?>"/></p>
+	<p><? echo T_("Enter the username of a client to add:"); ?> <input name="client" type="text"/></p>
+	<? if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
+	<p><? echo T_("Enter the password of a client to add:"); ?> <input name="password" type="text"/></p>
+<? } ?>
+	<p><? echo T_("Enter the first name of a client to add:"); ?> <input name="firstname" type="text"/></p>
+	<p><? echo T_("Enter the surname of a client to add:"); ?> <input name="lastname" type="text"/></p>
+	<p><a href='timezonetemplate.php'><? echo T_("Enter the Time Zone of a client to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
 	<p><input type="submit" value="<? echo T_("Add user"); ?>" /></p>
 </form>
 

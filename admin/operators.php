@@ -55,8 +55,45 @@ if (isset($_POST['operator']))
 	$firstname = $db->qstr($_POST['firstname'],get_magic_quotes_gpc());
 	$lastname = $db->qstr($_POST['lastname'],get_magic_quotes_gpc());
 	$time_zone_name = $db->qstr($_POST['Time_zone_name'],get_magic_quotes_gpc());
-	$extension = $db->qstr($_POST['extension'],get_magic_quotes_gpc());
-	$extensionp = $db->qstr($_POST['extensionp'],get_magic_quotes_gpc());
+	$extension = 1000;
+	$extensionp = "";
+	if (FREEPBX_PATH == false)
+	{
+		//Manually add extension information
+		$extension = $db->qstr($_POST['extension'],get_magic_quotes_gpc());
+		$extensionp = $db->qstr($_POST['extensionp'],get_magic_quotes_gpc());
+	}
+	else
+	{
+		//Generate new extension from last one in database and random password
+		$sql = "SELECT SUBSTRING_INDEX(extension, '/', -1) as ext
+			FROM operator
+			ORDER BY ext DESC
+			LIMIT 1";
+		
+		$laste = $db->GetRow($sql);
+
+		$extensionn = "1000";
+		$extension = "'IAX2/1000'";		
+
+		//increment if exists
+		if (!empty($laste))
+		{
+			$extensionn = $laste['ext'] + 1;
+			$extension = "'IAX2/$extensionn'";
+		}
+
+		//generate random 8 length password
+		$extensionnp = "";
+		$length = 12;
+		$chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+		for ($i = 0; $i < $length; $i++) 
+			$extensionnp .= $chars[(rand() % strlen($chars))];
+
+		//quote for SQL
+		$extensionp = "'$extensionnp'";
+
+	}
 	$supervisor = 0;
 	$temporary = 0;
 	$refusal = 0;
@@ -65,6 +102,7 @@ if (isset($_POST['operator']))
 	if (isset($_POST['refusal']) && $_POST['refusal'] == "on") $refusal = 1;
 	if (isset($_POST['temporary']) && $_POST['temporary'] == "on") $temporary = 1;	
 	if (isset($_POST['voip']) && $_POST['voip'] == "on") $voip = 1;	
+
 	if (!empty($_POST['operator']))
 	{
 		$sql = "INSERT INTO operator
@@ -73,7 +111,31 @@ if (isset($_POST['operator']))
 	
 		if ($db->Execute($sql))
 		{
-			$a = "Added: $operator";	
+			if (FREEPBX_PATH !== false)
+			{
+				//Generate new extension in freepbx
+				include_once("../functions/functions.freepbx.php");
+				freepbx_add_extension($extensionn, $_POST["firstname"] . " " . $_POST["lastname"], $extensionnp);
+			}
+
+			if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false)
+			{
+				//Get password and add it to the configured htpassword
+				include_once("../functions/functions.htpasswd.php");
+				$htp = New Htpasswd(HTPASSWD_PATH);
+				$htg = New Htgroup(HTGROUP_PATH);
+				
+				$htp->addUser($_POST['operator'],$_POST['password']);
+				$htg->addUserToGroup($_POST['operator'],HTGROUP_INTERVIEWER);
+
+				if ($supervisor)
+					$htg->addUserGroup(HTGROUP_ADMIN);
+			}
+	
+			$a = T_("Added:") . " " .  $operator;	
+
+			if (FREEPBX_PATH !== false)
+				$a .= "<br/>" . T_("Please reload FreePBX for the new VoIP extension to take effect");
 	
 			$oid = $db->Insert_ID();
 
@@ -95,9 +157,10 @@ if (isset($_POST['operator']))
 
 
 
-		}else
+		}
+		else
 		{
-			$a = "Could not add $operator. There may already be an operator of this name";
+			$a = T_("Could not add operator. There may already be an operator of this name:") . " $operator" ;
 		}
 
 
@@ -125,11 +188,16 @@ $rs = $db->GetAll($sql);
 <p><? echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p>
 <form enctype="multipart/form-data" action="" method="post">
 	<p><? echo T_("Enter the username of an operator to add:"); ?> <input name="operator" type="text"/></p>
+<? if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
+	<p><? echo T_("Enter the password of an operator to add:"); ?> <input name="password" type="text"/></p>
+<? } ?>
 	<p><? echo T_("Enter the first name of an operator to add:"); ?> <input name="firstname" type="text"/></p>
 	<p><? echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
 	<p><a href='timezonetemplate.php'><? echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
+<? if (FREEPBX_PATH == false) { ?>
 	<p><? echo T_("Enter the telephone extension number:"); ?> <input name="extension" type="text"/></p>
 	<p><? echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
+<? } ?>
 	<p><? echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
 	<p><? echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
 	<p><? echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>

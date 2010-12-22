@@ -90,6 +90,16 @@ if (!defined('VOIP_ADMIN_PASS')) define('VOIP_ADMIN_PASS','amp111');
 if (!defined('VOIP_PORT')) define('VOIP_PORT','5038');
 
 /**
+ * The freepbx root path (if installed) otherwise false to disable freepbx integration
+ */
+if (!defined ('FREEPBX_PATH')) define('FREEPBX_PATH', false);
+
+/**
+ * The freepbx database name
+ */
+if (!defined ('FREEPBX_DATABASE')) define('FREEPBX_DATABASE', 'asterisk');
+
+/**
  * The meet me room id for the VOIP Server
  */
 if (!defined('MEET_ME_ROOM')) define('MEET_ME_ROOM','5000');
@@ -145,6 +155,32 @@ if (!defined('PHP_EXEC')) define('PHP_EXEC', "php");
  * Path to ADODB
  */
 if (!defined('ADODB_PATH')) define('ADODB_PATH',dirname(__FILE__).'/../adodb/');
+
+/**
+ * Path to the HTPASSWD file read/writable by the web server user for htpasswd integration
+ */
+if (!defined('HTPASSWD_PATH')) define('HTPASSWD_PATH',false);
+
+/**
+ * Path to the HTGROUP file read/writable by the web server user for htpasswd integration
+ */
+if (!defined('HTGROUP_PATH')) define('HTGROUP_PATH',false);
+
+/**
+ * The name of the admin group for htaccess
+ */
+if (!defined('HTGROUP_ADMIN')) define('HTGROUP_ADMIN','admin');
+
+/**
+ * The name of the interviewers group for htaccess
+ */
+if (!defined('HTGROUP_INTERVIEWER')) define('HTGROUP_INTERVIEWER','interviewers');
+
+/**
+ * The name of the clients group for htaccess
+ */
+if (!defined('HTGROUP_CLIENT')) define('HTGROUP_CLIENT','clients');
+
 
 /**
  * Database configuration for queXS
