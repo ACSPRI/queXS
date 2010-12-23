@@ -255,6 +255,7 @@ function display_respondent_form($respondent_id = false,$case_id = false)
  *
  * @see make_appointment()
  *
+ * @param int $questionnaire_id The questionnaire id
  * @param int $respondent_id The respondent id
  * @param int $day the day of the month
  * @param int $month the month of the year
@@ -264,23 +265,36 @@ function display_respondent_form($respondent_id = false,$case_id = false)
  *
  * @todo Handle questionnaires without shift restrictions
  */
-function display_time($respondent_id, $day, $month, $year, $time = false, $timeend = false)
+function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $time = false, $timeend = false)
 {
 	global $db;
 
-	/**
-	 * Select shift start and end times for this day
-	 */
-	$sql = "     SELECT s.shift_id, HOUR(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sh, MINUTE(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( TIME( CONVERT_TZ( s.end, 'UTC', r.Time_zone_name ) ) , TIME( CONVERT_TZ( s.start, 'UTC', r.Time_zone_name ) ) ) ) /300) as intervals, TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) as start, TIME(CONVERT_TZ(s.end,'UTC',r.Time_zone_name)) as  end
-				FROM shift as s, respondent as r, `case` as c
-				WHERE r.respondent_id = '$respondent_id'
-				AND r.case_id = c.case_id
-				AND s.questionnaire_id = c.questionnaire_id
-				AND DAY(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$day'
-				AND MONTH(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$month'
-				AND YEAR(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$year'
-				ORDER BY s.start ASC";
+	
+	$restricted = is_shift_restricted($questionnaire_id);
 
+
+	if ($restricted)
+	{
+		/**
+		 * Select shift start and end times for this day
+		 */
+		$sql = "     SELECT s.shift_id, HOUR(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sh, MINUTE(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( TIME( CONVERT_TZ( s.end, 'UTC', r.Time_zone_name ) ) , TIME( CONVERT_TZ( s.start, 'UTC', r.Time_zone_name ) ) ) ) /300) as intervals, TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) as start, TIME(CONVERT_TZ(s.end,'UTC',r.Time_zone_name)) as  end
+					FROM shift as s, respondent as r, `case` as c
+					WHERE r.respondent_id = '$respondent_id'
+					AND r.case_id = c.case_id
+					AND s.questionnaire_id = c.questionnaire_id
+					AND DAY(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$day'
+					AND MONTH(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$month'
+					AND YEAR(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$year'
+					ORDER BY s.start ASC";
+	
+	}
+	else
+		$sql = "SELECT  0 as sh, 0 as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ('$year-$month-$day 00:00:00','UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( TIME( CONVERT_TZ(DATE_ADD( CURDATE( ) , INTERVAL '23:59:59' HOUR_SECOND ) , 'System', r.Time_zone_name ) ) , TIME( CONVERT_TZ( CURDATE(), 'System', r.Time_zone_name ) ) ) ) /300) as intervals, TIME(CONVERT_TZ(CURDATE(),'System',r.Time_zone_name)) as start, TIME(CONVERT_TZ(DATE_ADD( CURDATE( ) , INTERVAL '23:59:59' HOUR_SECOND ),'System',r.Time_zone_name)) as  end
+			FROM respondent as r
+			WHERE r.respondent_id = '$respondent_id'";
+
+	
 	$rs = $db->GetAll($sql);
 
 	print "<div class=\"shifts\">";

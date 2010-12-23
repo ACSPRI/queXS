@@ -141,7 +141,7 @@ else if(isset($_GET['respondent_id']))
 
 		display_calendar($respondent_id,$questionnaire_id,$year,$month,$day);
 
-		display_time($respondent_id,$day,$month,$year,isset($_GET['start'])?$_GET['start']:false,isset($_GET['end'])?$_GET['end']:false);
+		display_time($questionnaire_id,$respondent_id,$day,$month,$year,isset($_GET['start'])?$_GET['start']:false,isset($_GET['end'])?$_GET['end']:false);
 
 		if (isset($_GET['end']) && isset($_GET['start']))
 		{
