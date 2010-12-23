@@ -57,6 +57,7 @@ print "<li><a href=\"javascript:link('mainobj','questionnaireprefill.php');\">" 
 print "<li><a href=\"javascript:link('mainobj','quota.php');\">" . T_("Quota management") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','quotarow.php');\">" . T_("Quota row management") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','operators.php');\">" . T_("Add operators to the system") . "</a></li>";
+print "<li><a href=\"javascript:link('mainobj','operatorlist.php');\">" . T_("Operator management") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','operatorquestionnaire.php');\">" . T_("Assign operators to questionnaires") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','operatorskill.php');\">" . T_("Modify operator skills") . "</a></li>";
 print "<li><a href=\"javascript:link('mainobj','addshift.php');\">" . T_("Shift management (add/remove)") . "</a></li>";
@@ -90,6 +91,7 @@ if (VOIP_ENABLED)
 {
 	print "<li><h3>" . T_("VoIP") . "</h3>";
 	print "<ul><li><a href=\"javascript:link('mainobj','voipmonitor.php');\">" . T_("Start and monitor VoIP") . "</a></li>";
+	print "<li><a href=\"javascript:link('mainobj','operatorlist.php');\">" . T_("Operator management") . "</a></li>";
 	print "<li><a href=\"javascript:link('mainobj','extensionstatus.php');\">" . T_("Extension status") . "</a></li></ul></li>";
 }
 
