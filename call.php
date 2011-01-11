@@ -172,7 +172,10 @@ if (isset($_POST['submit']))
 				$btext = "onload='openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'";
 			else
 				$btext = "onload='parent.closePopup();'";
-			xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),$btext);
+
+			$js = "js/window.js";
+			if (browser_ie()) $js = "js/window_ie6.js";
+			xhtml_head(T_("Call"),true,array("css/call.css"),array($js),$btext);
 		}
 	}
 	else if (isset($_POST['outcome']))
@@ -188,7 +191,11 @@ if (isset($_POST['submit']))
 		}
 		//disable recording
 		$newtext = T_("Start REC");
-		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
+
+		$js = "js/window.js";
+		if (browser_ie()) $js = "js/window_ie6.js";
+
+		xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
 	}
 	else
 	{
@@ -202,7 +209,9 @@ if (isset($_POST['submit']))
 		}
 		//disable recording
 		$newtext = T_("Start REC");
-		xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js"),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
+		$js = "js/window.js";
+		if (browser_ie()) $js = "js/window_ie6.js";
+		xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
 
 	}
 
@@ -230,8 +239,10 @@ if (isset($_GET['newstate']))
 	$db->Execute($sql);
 }
 
+$js = "js/window.js";
+if (browser_ie()) $js = "js/window_ie6.js";
 
-xhtml_head(T_("Call"),true,array("css/call.css"),array("js/window.js","include/jquery-ui/js/jquery-1.4.2.min.js"));
+xhtml_head(T_("Call"),true,array("css/call.css"),array($js,"include/jquery-ui/js/jquery-1.4.2.min.js"));
 
 $state = is_on_call($operator_id);
 switch($state)

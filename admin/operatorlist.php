@@ -113,9 +113,9 @@ if (isset($_GET['operator_id']))
 			header("Pragma: public");                          // HTTP/1.0
 	
 			if (isset($_GET['winbat']))
-				echo "voip.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . VOIP_SERVER;
+				echo "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_ADDR'];
 			else
-				echo "./voip -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . VOIP_SERVER;
+				echo "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_ADDR'];
 		}
 	}
 }
@@ -132,22 +132,23 @@ if ($display)
 			ELSE
 				CONCAT('<a href=\'?disable=',operator_id,'\'>" . T_("Disable") . "</a>') 
 			END
-			as enabledisable
+			as enabledisable,
+			username
 		FROM operator";
 	
 	$rs = $db->GetAll($sql);
 	
 	xhtml_head(T_("Operator list"),true,array("../css/table.css"));
 	
-	$columns = array("name","enabledisable");
-	$titles = array(T_("Operator"),T_("Enable/Disable"));
+	$columns = array("name","username","enabledisable");
+	$titles = array(T_("Operator"),T_("Username"),T_("Enable/Disable"));
 
 	if (VOIP_ENABLED)
 	{
 		print "<p>" . T_("Download the file for each user and save in the same folder as the voip.exe executable. When the file is executed, it will run the voip.exe program with the correct connection details to connect the operator to the VoIP server") . "</p>";
 	
-		print "<p><a href='voip.exe'>" . T_("Download Windows VoIP Executable")  . "</a></p>";
-		print "<p><a href='voip'>" . T_("Download Linux VoIP Executable")  . "</a></p>";
+		print "<p><a href='../voipclient.exe'>" . T_("Download Windows VoIP Executable")  . "</a></p>";
+		print "<p><a href='../voipclient'>" . T_("Download Linux VoIP Executable")  . "</a></p>";
 
 		$columns[] = "winbat";
 		$columns[] = "sh";

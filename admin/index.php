@@ -44,64 +44,69 @@ include ("../config.inc.php");
  */
 include ("../functions/functions.xhtml.php");
 
-xhtml_head(T_("Administrative Tools"),true,array("../css/table.css","../css/admin.css"),array("../js/link.js"));
+xhtml_head(T_("Administrative Tools"),true,array("../css/table.css","../css/admin.css"));
 
 print "<div id='menu'><ul class='navmenu'>";
 
 print "<li><h3>" . T_("Questionnaire creation and management") . "</h3>";
-print "<ul><li><a href=\"javascript:link('mainobj','new.php');\">" . T_("Create a new questionnaire") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','" . LIME_URL . "admin/admin.php');\">" . T_("Administer questionnaires with Limesurvey") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','import.php');\">" . T_("Import a sample file (in CSV form)") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','assignsample.php');\">" . T_("Assign samples to questionnaires") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','questionnaireprefill.php');\">" . T_("Set values in questionnaire to pre fill") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','quota.php');\">" . T_("Quota management") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','quotarow.php');\">" . T_("Quota row management") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','operators.php');\">" . T_("Add operators to the system") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','operatorlist.php');\">" . T_("Operator management") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','operatorquestionnaire.php');\">" . T_("Assign operators to questionnaires") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','operatorskill.php');\">" . T_("Modify operator skills") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','addshift.php');\">" . T_("Shift management (add/remove)") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','dataoutput.php');\">" . T_("Data output") . "</a></li></ul></li>";
+print "<ul><li><a href=\"?page=new.php\">" . T_("Create a new questionnaire") . "</a></li>";
+print "<li><a href=\"?page=" . LIME_URL . "admin/admin.php\">" . T_("Administer questionnaires with Limesurvey") . "</a></li>";
+print "<li><a href=\"?page=import.php\">" . T_("Import a sample file (in CSV form)") . "</a></li>";
+print "<li><a href=\"?page=assignsample.php\">" . T_("Assign samples to questionnaires") . "</a></li>";
+print "<li><a href=\"?page=questionnaireprefill.php\">" . T_("Set values in questionnaire to pre fill") . "</a></li>";
+print "<li><a href=\"?page=quota.php\">" . T_("Quota management") . "</a></li>";
+print "<li><a href=\"?page=quotarow.php\">" . T_("Quota row management") . "</a></li>";
+print "<li><a href=\"?page=operators.php\">" . T_("Add operators to the system") . "</a></li>";
+print "<li><a href=\"?page=operatorlist.php\">" . T_("Operator management") . "</a></li>";
+print "<li><a href=\"?page=operatorquestionnaire.php\">" . T_("Assign operators to questionnaires") . "</a></li>";
+print "<li><a href=\"?page=operatorskill.php\">" . T_("Modify operator skills") . "</a></li>";
+print "<li><a href=\"?page=addshift.php\">" . T_("Shift management (add/remove)") . "</a></li>";
+print "<li><a href=\"?page=dataoutput.php\">" . T_("Data output") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Questionnaire progress") . "</h3>";
-print "<ul><li><a href=\"javascript:link('mainobj','displayappointments.php');\">" . T_("Display all future appointments") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','samplecallattempts.php');\">" . T_("Sample call attempts report") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','quotareport.php');\">" . T_("Quota report") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','outcomes.php');\">" . T_("Questionnaire outcomes") . "</a></li></ul></li>";
+print "<ul><li><a href=\"?page=displayappointments.php\">" . T_("Display all future appointments") . "</a></li>";
+print "<li><a href=\"?page=samplecallattempts.php\">" . T_("Sample call attempts report") . "</a></li>";
+print "<li><a href=\"?page=quotareport.php\">" . T_("Quota report") . "</a></li>";
+print "<li><a href=\"?page=outcomes.php\">" . T_("Questionnaire outcomes") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Performance") . "</h3>";
-print "<ul><li><a href=\"javascript:link('mainobj','operatorperformance.php');\">" . T_("Operator performance") . "</a></li></ul></li>";
+print "<ul><li><a href=\"?page=operatorperformance.php\">" . T_("Operator performance") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Client management") . "</h3>";
-print "<ul><li><a href=\"javascript:link('mainobj','clients.php');\">" . T_("Add clients to the system") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','clientquestionnaire.php');\">" . T_("Assign clients to questionnaires") . "</a></li></ul></li>";
+print "<ul><li><a href=\"?page=clients.php\">" . T_("Add clients to the system") . "</a></li>";
+print "<li><a href=\"?page=clientquestionnaire.php\">" . T_("Assign clients to questionnaires") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Supervisor functions") . "</h3>";
-print "<ul><li><a href=\"javascript:link('mainobj','supervisor.php');\">" . T_("Assign outcomes to cases") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','samplesearch.php');\">" . T_("Search the sample") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','callhistory.php');\">" . T_("Call history") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','shiftreport.php');\">" . T_("Shift reports") . "</a></li></ul></li>";
+print "<ul><li><a href=\"?page=supervisor.php\">" . T_("Assign outcomes to cases") . "</a></li>";
+print "<li><a href=\"?page=samplesearch.php\">" . T_("Search the sample") . "</a></li>";
+print "<li><a href=\"?page=callhistory.php\">" . T_("Call history") . "</a></li>";
+print "<li><a href=\"?page=shiftreport.php\">" . T_("Shift reports") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("System settings") . "</h3>";
-print "<ul><li><a href=\"javascript:link('mainobj','timezonetemplate.php');\">" . T_("Set default timezone list") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','shifttemplate.php');\">" . T_("Set default shift times") . "</a></li>";
-print "<li><a href=\"javascript:link('mainobj','callrestrict.php');\">" . T_("Set call restriction times") . "</a></li></ul></li>";
+print "<ul><li><a href=\"?page=timezonetemplate.php\">" . T_("Set default timezone list") . "</a></li>";
+print "<li><a href=\"?page=shifttemplate.php\">" . T_("Set default shift times") . "</a></li>";
+print "<li><a href=\"?page=callrestrict.php\">" . T_("Set call restriction times") . "</a></li></ul></li>";
 
 if (VOIP_ENABLED)
 {
 	print "<li><h3>" . T_("VoIP") . "</h3>";
-	print "<ul><li><a href=\"javascript:link('mainobj','voipmonitor.php');\">" . T_("Start and monitor VoIP") . "</a></li>";
-	print "<li><a href=\"javascript:link('mainobj','operatorlist.php');\">" . T_("Operator management") . "</a></li>";
-	print "<li><a href=\"javascript:link('mainobj','extensionstatus.php');\">" . T_("Extension status") . "</a></li></ul></li>";
+	print "<ul><li><a href=\"?page=voipmonitor.php\">" . T_("Start and monitor VoIP") . "</a></li>";
+	print "<li><a href=\"?page=operatorlist.php\">" . T_("Operator management") . "</a></li>";
+	print "<li><a href=\"?page=extensionstatus.php\">" . T_("Extension status") . "</a></li></ul></li>";
 }
 
 print "</ul></div>";
 
+$page = "new.php";
 
-print "<div id='main'><object class='embeddedobject' id='mainobj' data='new.php' standby='Loading panel...' type='application/xhtml+xml'><p>Error, try with Firefox</p></object></div>";
+if (isset($_GET['page']))
+	$page = $_GET['page'];
+
+print "<div id='main'>";
+xhtml_object($page,"mainobj");
+print "</div>";
 
 
 xhtml_foot();
 
 ?>
-

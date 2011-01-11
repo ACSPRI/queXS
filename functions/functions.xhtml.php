@@ -199,6 +199,26 @@ function display_chooser($elements, $selectid, $var, $useblank = true, $pass = f
 	if ($indiv) print "</div>";
 }
 
+function xhtml_object($data, $id, $class="embeddedobject")
+{
+	if (browser_ie())
+		print '<iframe class="'.$class.'" id="'.$id.'" src="'.$data.'" frameBorder="0"><p>Error, try with Firefox</p></iframe>';
+	else
+		print '<object class="'.$class.'" id="'.$id.'" data="'.$data.'" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>';
+}
+
+/**
+ * Detect if the user is running on internet explorer
+ *
+ * @return bool True if MSIE is detected otherwise false
+ */
+function browser_ie()
+{
+    if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
+        return true;
+    else
+        return false;
+}
 
 
 ?>

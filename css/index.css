@@ -20,7 +20,7 @@ a:active {
 }
 
 #respondent {
-  position : fixed;
+  position : absolute;
   width : 20%;
   height : 30%;
   top : 0;
@@ -30,7 +30,7 @@ a:active {
 }
 
 #header {
-  position : fixed;
+  position : absolute;
   width : 20%;
   height : 30%;
   top : 0;
@@ -40,7 +40,7 @@ a:active {
   /*border-bottom: 1px solid #aaa;*/
 }
 #calllist {
-  position : fixed;
+  position : absolute;
   width : 60%;
   height : 30%;
   top : 0;
@@ -48,7 +48,7 @@ a:active {
   bottom : auto;
 }
 #qstatus {
-  position : fixed;
+  position : absolute;
   width : 10%;
   height : 30%;
   top : 0;
@@ -58,7 +58,7 @@ a:active {
   /*border: 1px solid #aaa;*/
 }
 #casefunctions {
-  position : fixed;
+  position : absolute;
   width : 10%;
   height : 30%;
   top : 0;
@@ -67,7 +67,7 @@ a:active {
   bottom : auto;
 }
 #content {
-  position : fixed;
+  position : absolute;
   top : 30%;
   left : 0;
   bottom : auto;

@@ -30,6 +30,19 @@
   SOFTWARE.
   ==================================================*/
 
+var tabberOptions = {  'onLoad': function(argsObj) {
+	if (jQuery.support.boxModel == false)
+	{
+		var w = $("#tab-main").width();
+		var h = $("#casefunctions").height();
+
+		$(".tabberdiv").css("width",w);
+		$(".tabberdiv").css("height",h);
+	}
+    }
+};
+
+
 function tabberObj(argsObj)
 {
   var arg; /* name of an argument to override */

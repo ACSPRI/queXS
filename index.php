@@ -92,6 +92,7 @@ if (isset($_GET['endcase']))
 }
 
 xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
+
 ?>
 
 <div id="casefunctions">
@@ -103,61 +104,73 @@ xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css","include/jq
 </div>
 
 <div id="content">
-<object class="embeddedobject" id="main-content" data="<? get_case_id($operator_id,true); get_call_attempt($operator_id,true); if (!is_respondent_selection($operator_id)) print(get_limesurvey_url($operator_id)); else print get_respondentselection_url($operator_id); ?>" standby="Loading questionnaire..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+<? 
+
+get_case_id($operator_id,true);
+get_call_attempt($operator_id,true);
+
+if (!is_respondent_selection($operator_id))
+	$data = get_limesurvey_url($operator_id);
+else 
+	$data = get_respondentselection_url($operator_id);
+
+xhtml_object($data,"main-content"); 
+
+?>
 </div>
 
 <div id="respondent">
-<object class="embeddedobject" id="main-respondent" data="respondent.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+<?xhtml_object("respondent.php","main-respondent");?>
 </div>
 
 <div id="qstatus">
-<object class="embeddedobject" id="main-qstatus" data="status.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+<?xhtml_object("status.php","main-qstatus");?>
 </div>
 
 
 <div id="calllist">
 
 
-<div class="tabber">
+<div class="tabber" id="tab-main">
 
      <div class="tabbertab">
 	  <h2><? echo T_("Notes"); ?></h2>
-	<object class="embeddedobject" id="main-casenotes" data="casenote.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>     
+	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("casenote.php","main-casenotes");?></div>
    </div>
 
 
      <div class="tabbertab">
 	  <h2><? echo T_("Call history"); ?></h2>
-	  <object class="embeddedobject" id="main-calllist" data="calllist.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+	  <div id="div-calllist" class="tabberdiv"><?xhtml_object("calllist.php","main-calllist");?></div>
      </div>
 
 
-     <div class="tabbertab">
+     <div class="tabbertab" id="tab-shifts">
 	  <h2><? echo T_("Shifts"); ?></h2>
-	  <object class="embeddedobject" id="main-shifts" data="shifts.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+	  <div id="div-shifts" class="tabberdiv"><?xhtml_object("shifts.php","main-shifts");?></div>
      </div>
 
 
      <div class="tabbertab">
 	  <h2><? echo T_("Appointments"); ?></h2>
-	  <object class="embeddedobject" id="main-appointmentlist" data="appointmentlist.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+	  <div id="div-appointmentlist" class="tabberdiv"><?xhtml_object("appointmentlist.php","main-appointmentlist");?></div>
      </div>
 
 
      <div class="tabbertab">
 	  <h2><? echo T_("Performance"); ?></h2>
-	  <object class="embeddedobject" id="main-performance" data="performance.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+	  <div id="div-performance" class="tabberdiv"><?xhtml_object("performance.php","main-performance");?></div>
      </div>
 
      <div class="tabbertab">
 	  <h2><? echo T_("Work history"); ?></h2>
-	  <object class="embeddedobject" id="main-callhistory" data="callhistory.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+	  <div id="div-callhistory" class="tabberdiv"><?xhtml_object("callhistory.php","main-callhistory");?></div>
      </div>
 
 
      <div class="tabbertab">
 	  <h2><? echo T_("Info"); ?></h2>
-	  <object class="embeddedobject" id="main-info" data="info.php" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>
+	  <div id="div-info" class="tabberdiv"><?xhtml_object("info.php","main-info");?></div>
      </div>
 
 
