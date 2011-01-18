@@ -509,6 +509,30 @@ function limesurvey_get_width($qid,$default)
 }
 
 
+/**
+ * Return the greatest width of answers
+ * 
+ * @param mixed $qid Limesurvey question id
+ * 
+ * @return int width of longest answer
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2010-11-03
+ */
+function limesurvey_answer_width($qid)
+{
+	global $db;
+
+	$sql = "SELECT MAX(LENGTH(code)) as c FROM ".LIME_PREFIX."answers WHERE qid = $qid";
+	$r = $db->GetRow($sql);
+
+	$val = 1;
+
+	if (!empty($r))
+		$val = $r['c'];
+
+	return $val;
+
+}
 
 function limesurvey_fixed_width($lid)
 {
@@ -658,15 +682,15 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 			    $vartype[$varName] = 1;
 		            break;
 		        case "L": //LIST drop-down/radio-button list
-		            $varwidth[$varName]=limesurvey_fixed_width($lid);
+		            $varwidth[$varName]=limesurvey_answer_width($qid);
 			    $vartype[$varName] = 1;
 		            break;
 		        case "W": //List - dropdown
-		            $varwidth[$varName]=limesurvey_fixed_width($lid);
+		            $varwidth[$varName]=limesurvey_answer_width($qid);
 			    $vartype[$varName] = 1;
 		            break;
 		        case "!": //List - dropdown
-		            $varwidth[$varName]=limesurvey_fixed_width($lid);
+		            $varwidth[$varName]=limesurvey_answer_width($qid);
 			    $vartype[$varName] = 1;
 		            break;
 		        case "O": //LIST WITH COMMENT drop-down/radio-button list + textarea
@@ -753,7 +777,8 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 	
 	$sql3 = "SELECT c.case_id as case_id
 		FROM `case` as c
-		WHERE c.questionnaire_id = '$questionnaire_id'";
+		WHERE c.questionnaire_id = '$questionnaire_id'
+		AND c.current_outcome_id = 10";
 
 	$r = $db->GetAll($sql3);
 
@@ -761,12 +786,12 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 	{
 		$sql = "SELECT *
 			FROM ".LIME_PREFIX."survey_$surveyid
-			WHERE submitdate IS NOT NULL";
+			WHERE ";
 
 
 		if ($sample_import_id == false)
 		{
-			$sql .= " AND (";
+			$sql .= " (";
 			$ccount = count($r);
 			$ccounter = 0;
 			foreach($r as $row)
@@ -791,7 +816,7 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 	
 			if (!empty($r))
 			{
-				$sql .= " AND (";
+				$sql .= " (";
 				$ccount = count($r);
 				$ccounter = 0;
 				foreach($r as $row)
@@ -808,7 +833,7 @@ function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = fal
 		}
 
 		$r = $db->GetAll($sql);
-	
+
 		foreach($r as $Row)
 		{
 			foreach ($varwidth as $var => $width)
