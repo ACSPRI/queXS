@@ -108,15 +108,27 @@ function convert_time($time)
 	$h = intval(substr($time,0,2));
 	$m = substr($time,3,2);
 	$s = intval(substr($time,5,2));
+	$p = "am";
 
 	if ($h == 12)
-		return "12:$m"."pm";
+	{
+		$p = "pm";
+	}
 	else if ($h == 0)
-		return "12:$m"."am";
+	{
+		$h = 12;
+		$p = "am";
+	}
 	else if ($h > 12)
-		return $h - 12 . ":$m"."pm";
-	else
-		return $h . ":$m"."am";
+	{
+		$h = $h - 12;
+		$p = "pm";
+	}
+
+	//Use the TIME_FORMAT string as defined in mysql http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
+	$from = array("%H","%h","%I","%i","%S","%s","%p");
+	$to = array(substr($time,0,2),$h,$h,$m,$s,$s,$p);
+	return str_replace($from,$to,TIME_FORMAT);
 }
 
 /**
