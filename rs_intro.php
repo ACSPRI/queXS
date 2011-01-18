@@ -65,7 +65,7 @@ $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);
 
 //display introduction text
-$sql = "SELECT rs_intro
+$sql = "SELECT rs_intro,rs_project_intro,rs_callback
 	FROM questionnaire
 	WHERE questionnaire_id = '$questionnaire_id'";
 
@@ -78,13 +78,33 @@ print "<p class='rstext'>". template_replace($r['rs_intro'],$operator_id,$case_i
 
 if (limesurvey_percent_complete($case_id) == false)
 {
-	?>
-	<p class='rsoption'><a href="rs_project_intro.php"><? echo T_("Yes - Continue"); ?></a></p>
-	<?
+	if(empty($r['rs_project_intro']))
+	{
+		//If nothing is specified as a project introduction, skip straight to questionnaire
+		?>
+		<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
+		<?
+	}
+	else
+	{
+		?>
+		<p class='rsoption'><a href="rs_project_intro.php"><? echo T_("Yes - Continue"); ?></a></p>
+		<?
+	}
 } else {
-	?>
-	<p class='rsoption'><a href="rs_callback.php"><? echo T_("Yes - Continue"); ?></a></p>
-	<?
+	if(empty($r['rs_callback']))
+	{
+		//If nothing is specified as a callback screen, skip straight to questionnaire
+		?>
+		<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
+		<?
+	}
+	else
+	{
+		?>
+		<p class='rsoption'><a href="rs_callback.php"><? echo T_("Yes - Continue"); ?></a></p>
+		<?
+	}
 }
 ?>
 <p class='rsoption'><a href="rs_business.php"><? echo T_("Business number"); ?></a></p>

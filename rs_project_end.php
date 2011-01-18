@@ -65,10 +65,17 @@ $r = $db->GetRow($sql);
 
 print "<p class='rstext'>" . template_replace($r['rs_project_end'],$operator_id,$case_id) . "</p>";
 
-?>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><? echo T_("End call with outcome: Complete"); ?></a></p>
-<?
-
+if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
+{
+	end_call($operator_id,10);
+	print "<p class='rsoption'>" . T_("Call automatically ended with outcome: Complete") . "</p>";
+}
+else
+{
+	?>
+	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><? echo T_("End call with outcome: Complete"); ?></a></p>
+	<?
+}
 xhtml_foot();
 
 ?>
