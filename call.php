@@ -76,8 +76,10 @@ function display_outcomes($contacted,$ca,$case_id)
 {
 	global $db;
 
+	$completed = limesurvey_is_completed($case_id);
+
 	//see if the case is completed
-	if (limesurvey_is_completed($case_id))
+	if ($completed)
 	{
 		$sql = "SELECT outcome_id,description
 			FROM outcome
@@ -112,7 +114,8 @@ function display_outcomes($contacted,$ca,$case_id)
 			if ($contacted === false)
 			{
 				$sql = "SELECT outcome_id,description
-					FROM outcome";
+					FROM outcome
+					WHERE outcome_id != 10"; //don't show completed if not
 			}
 			else
 			{
@@ -120,7 +123,8 @@ function display_outcomes($contacted,$ca,$case_id)
 		
 				$sql = "SELECT outcome_id,description
 					FROM outcome
-					WHERE contacted = '$contacted'";
+					WHERE contacted = '$contacted'
+					AND outcome_id != 10"; //don't show completed if not
 			}
 		}
 	}
