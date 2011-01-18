@@ -468,6 +468,8 @@ CREATE TABLE `questionnaire` (
   `rs_callback` text collate utf8_unicode_ci NOT NULL,
   `rs_answeringmachine` text collate utf8_unicode_ci NOT NULL,
   `lime_rs_sid` int(11) default NULL,
+  `info` text collate utf8_unicode_ci default NULL,
+  `enabled` tinyint(1) NOT NULL default '1'
   PRIMARY KEY  (`questionnaire_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
@@ -4135,10 +4137,19 @@ CREATE TABLE `sessions2` (
   KEY `sess2_expireref` (`expireref`)
 ) ENGINE=MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `sessions2`
+-- Table structure for table `setting`
 --
 
+CREATE TABLE IF NOT EXISTS `setting` (
+  `setting_id` int(11) NOT NULL auto_increment,
+  `field` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `value` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`setting_id`),
+  UNIQUE KEY `field` (`field`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Serialised table of settings';
 
 -- --------------------------------------------------------
 

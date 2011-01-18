@@ -50,6 +50,7 @@ print "<div id='menu'><ul class='navmenu'>";
 
 print "<li><h3>" . T_("Questionnaire creation and management") . "</h3>";
 print "<ul><li><a href=\"?page=new.php\">" . T_("Create a new questionnaire") . "</a></li>";
+print "<li><a href=\"?page=questionnairelist.php\">" . T_("Questionnaire management") . "</a></li>";
 print "<li><a href=\"?page=" . LIME_URL . "admin/admin.php\">" . T_("Administer questionnaires with Limesurvey") . "</a></li>";
 print "<li><a href=\"?page=import.php\">" . T_("Import a sample file (in CSV form)") . "</a></li>";
 print "<li><a href=\"?page=assignsample.php\">" . T_("Assign samples to questionnaires") . "</a></li>";
@@ -85,7 +86,8 @@ print "<li><a href=\"?page=shiftreport.php\">" . T_("Shift reports") . "</a></li
 print "<li><h3>" . T_("System settings") . "</h3>";
 print "<ul><li><a href=\"?page=timezonetemplate.php\">" . T_("Set default timezone list") . "</a></li>";
 print "<li><a href=\"?page=shifttemplate.php\">" . T_("Set default shift times") . "</a></li>";
-print "<li><a href=\"?page=callrestrict.php\">" . T_("Set call restriction times") . "</a></li></ul></li>";
+print "<li><a href=\"?page=callrestrict.php\">" . T_("Set call restriction times") . "</a></li>";
+print "<li><a href=\"?page=centreinfo.php\">" . T_("Set centre information") . "</a></li></ul></li>";
 
 if (VOIP_ENABLED)
 {

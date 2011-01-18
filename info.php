@@ -1,6 +1,6 @@
 <?
 /**
- * Display information about this project/centre
+ * Display information about this centre
  *
  *
  *	This file is part of queXS
@@ -44,11 +44,14 @@ include ("functions/functions.xhtml.php");
  */
 include ("lang.inc.php");
 
+/**
+ * Database
+ */
+include ("db.inc.php");
+
 xhtml_head(T_("Information"));
 
-?>
-<p>ACSPRI Website: <a href='http://www.acspri.org.au'>http://www.acspri.org.au</a></p>
-<?
+print get_setting("information");
 
 xhtml_foot();
 

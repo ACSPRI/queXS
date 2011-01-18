@@ -72,7 +72,60 @@ $db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
 if (DEBUG == true) $db->debug = true;
 
+$db->Execute("set names 'utf8'");
+
 //store session in database (see sessions2 table)
 ADOdb_Session::config(DB_TYPE, DB_HOST, DB_USER, DB_PASS, DB_NAME,$options=false);
+
+
+/**
+ * Get a setting from the database
+ * 
+ * @param mixed $name The setting name
+ * 
+ * @return mixed The setting value
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2011-01-17
+ */
+function get_setting($name)
+{
+	global $db;
+
+	$qname = $db->qstr($name);
+
+	$sql = "SELECT value
+		FROM setting
+		WHERE field LIKE $qname";
+
+	$rs = $db->GetRow($sql);
+
+	if (!empty($rs))
+		return unserialize($rs['value']);
+}
+
+/**
+ * Update or create a new setting to store in the database
+ * 
+ * @param mixed $name  
+ * @param mixed $value An array or string to save 
+ * 
+ * @return bool Successful database insert/update?
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2011-01-17
+ */
+function set_setting($name,$value)
+{
+	global $db;
+
+	$qname = $db->qstr($name);
+	$qvalue = serialize($value);
+
+	$sql = "INSERT INTO setting (setting_id,field,value)
+		VALUES (NULL,$qname,'$qvalue')
+		ON DUPLICATE KEY UPDATE value = '$qvalue'";
+
+
+	return $db->Execute($sql);
+}
 
 ?>

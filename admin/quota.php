@@ -110,7 +110,8 @@ xhtml_head(T_("Quota management"),true,false,array("../js/window.js"));
 print "<h1>" . T_("Select a questionnaire from the list below") . "</h1>";
 
 $sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
- 	FROM questionnaire";
+ 	FROM questionnaire
+	WHERE enabled = 1";
 display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id");
 
 

@@ -49,6 +49,11 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.input.php");
 
+/**
+ * CKEditor
+ */
+include("../include/ckeditor/ckeditor.php");
+
 global $db;
 
 xhtml_head(T_("New: Create new questionnaire"),true,false,array("../js/new.js"));
@@ -70,11 +75,12 @@ if (isset($_POST['import_file']))
 	if ($_POST['selectrs'] != "none") $rs = 1;
 	
 	$name = $db->qstr($_POST['description'],get_magic_quotes_gpc());
-	$rs_intro = $db->qstr($_POST['rs_intro'],get_magic_quotes_gpc());
-	$rs_project_intro = $db->qstr($_POST['rs_project_intro'],get_magic_quotes_gpc());
-	$rs_project_end = $db->qstr($_POST['rs_project_end'],get_magic_quotes_gpc());
-	$rs_callback = $db->qstr($_POST['rs_callback'],get_magic_quotes_gpc());
-	$rs_answeringmachine = $db->qstr($_POST['rs_answeringmachine'],get_magic_quotes_gpc());
+	$rs_intro = $db->qstr(html_entity_decode($_POST['rs_intro'],get_magic_quotes_gpc()));
+	$rs_project_intro = $db->qstr(html_entity_decode($_POST['rs_project_intro'],get_magic_quotes_gpc()));
+	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],get_magic_quotes_gpc()));
+	$rs_callback = $db->qstr(html_entity_decode($_POST['rs_callback'],get_magic_quotes_gpc()));
+	$rs_answeringmachine = $db->qstr(html_entity_decode($_POST['rs_answeringmachine'],get_magic_quotes_gpc()));
+	$info  = $db->qstr(html_entity_decode($_POST['info'],get_magic_quotes_gpc()));
 
 	if ($_POST['select'] == "new")
 	{
@@ -99,8 +105,8 @@ if (isset($_POST['import_file']))
 		$lime_rs_sid = bigintval($_POST['selectrs']);
 	}
 
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid)";
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info)";
 
 	$rs = $db->Execute($sql);
 
@@ -156,21 +162,43 @@ if (!empty($surveys))
 		print "<option onclick=\"hide(this, 'rstext');\"  value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
 	}
 }
+
+$CKEditor = new CKEditor();
+
+$ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
+	array("Cut","Copy","Paste","PasteText","PasteFromWord","-","Print","SpellChecker"),
+	array("Undo","Redo","-","Find","Replace","-","SelectAll","RemoveFormat"),
+	"/",
+	array("Bold","Italic","Underline","Strike","-","Subscript","Superscript"),
+	array("NumberedList","BulletedList","-","Outdent","Indent","Blockquote"),
+	array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
+	array('BidiLtr', 'BidiRtl'),
+	array('Link','Unlink','Anchor'),
+	array('Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'),
+	"/",
+	array('Styles','Format','Font','FontSize'),
+	array('TextColor','BGColor'),
+	array('About')),
+	"extraPlugins" => "tokens");
+	
+
 ?></select></p>
 <p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
 <p><? echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
 <div id='rstext' style='display:none;'>
-<p><? echo T_("Respondent selection introduction:"); ?> <textarea cols="40" rows="4" name="rs_intro"></textarea></p>
-<p><? echo T_("Respondent selection project introduction:"); ?> <textarea cols="40" rows="4" name="rs_project_intro"></textarea></p>
-<p><? echo T_("Respondent selection callback (already started questionnaire):"); ?> <textarea cols="40" rows="4" name="rs_callback"></textarea></p>
-<p><? echo T_("Message to leave on an answering machine:"); ?> <textarea cols="40" rows="4" name="rs_answeringmachine"></textarea></p>
+<p><? echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?></p>
+<p><? echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro","",$ckeditorConfig);?></p>
+<p><? echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback","",$ckeditorConfig);?> </p>
+<p><? echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine","",$ckeditorConfig);?> </p>
 </div>
-<p><? echo T_("Project end text (thank you screen):"); ?> <textarea cols="40" rows="4" name="rs_project_end"></textarea></p>
+<p><? echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end","",$ckeditorConfig); ?></p>
+<p><? echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info","",$ckeditorConfig);?></p>
 <p><input type="submit" name="import_file" value="<? echo T_("Create Questionnaire"); ?>"/></p>
 </form>
 <?
 xhtml_foot();
+
 
 
 ?>

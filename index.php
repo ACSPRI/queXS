@@ -167,6 +167,11 @@ xhtml_object($data,"main-content");
 	  <div id="div-callhistory" class="tabberdiv"><?xhtml_object("callhistory.php","main-callhistory");?></div>
      </div>
 
+     <div class="tabbertab">
+	  <h2><? echo T_("Project information"); ?></h2>
+	  <div id="div-projectinfo" class="tabberdiv"><?xhtml_object("project_info.php","main-projectinfo");?></div>
+     </div>
+
 
      <div class="tabbertab">
 	  <h2><? echo T_("Info"); ?></h2>
