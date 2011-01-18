@@ -1581,6 +1581,7 @@ function end_case($operator_id)
 					FROM `call` as c
 					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id)
 					WHERE c.case_id = '$case_id'
+					AND o.outcome_id != 18
 					ORDER BY o.contacted DESC,c.call_id DESC
 					LIMIT 1";
 			

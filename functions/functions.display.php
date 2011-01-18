@@ -61,7 +61,8 @@ function display_questionnaire_chooser($questionnaire_id = false)
 
 
 	$sql = "SELECT questionnaire_id,description,CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-		FROM questionnaire";
+		FROM questionnaire
+		WHERE enabled = 1";
 		
 	$rs = $db->GetAll($sql);
 
