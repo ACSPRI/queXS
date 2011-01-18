@@ -114,7 +114,10 @@ if (isset($_POST['submit']))
 
 	$sql = "DELETE 
 		FROM operator_questionnaire
-		WHERE 1";
+		WHERE questionnaire_id IN (
+			SELECT questionnaire_id
+			FROM questionnaire
+			WHERE enabled = 1)";
 
 	$db->Execute($sql);
 
