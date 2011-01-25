@@ -181,6 +181,16 @@ if (!defined('HTGROUP_INTERVIEWER')) define('HTGROUP_INTERVIEWER','interviewers'
  */
 if (!defined('HTGROUP_CLIENT')) define('HTGROUP_CLIENT','clients');
 
+/**
+ * Whether to automatically assign a call as complete if VoIP disabled at the end of a completed questionnaire
+ */
+if (!defined('AUTO_COMPLETE_OUTCOME')) define('AUTO_COMPLETE_OUTCOME',false);
+
+/**
+ * The number of minutes of inactivity to wait before automatically logging out an operator with an open screen
+ * False to disable
+ */
+if (!defined('AUTO_LOGOUT_MINUTES')) define('AUTO_LOGOUT_MINUTES',false);
 
 /**
  * Database configuration for queXS
