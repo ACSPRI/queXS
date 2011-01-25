@@ -56,6 +56,10 @@
 
 	$.fn.nap.fallAsleepFunctions 	= new Array();
 	$.fn.nap.wakeUpFunctions 		= new Array();
+
+	$.fn.nap.test = function () {
+		alert("TEST CALLED");
+	};
 	
 	$.fn.nap.fallAsleep = function() {
 		$.fn.nap.isAwake = false;

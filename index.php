@@ -91,7 +91,27 @@ if (isset($_GET['endcase']))
 	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
 }
 
-xhtml_head(T_("queXS"), true, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
+$js = array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
+$body = true;
+$script = "";
+if (AUTO_LOGOUT_MINUTES !== false)
+{
+	$js[] = "include/nap-1.0.0/js/jquery.nap-1.0.0.js";
+	$script = "<script type='text/javascript'>
+		   $(document).nap(
+			function() { 
+				location.replace('" . QUEXS_URL . "?endwork=endwork');
+			},
+			function() { 
+				//do nothing if woken up as shouldn't get here
+			},
+			" . (AUTO_LOGOUT_MINUTES * 60) . "
+		);</script></head><body>";
+	$body = false;
+}
+
+xhtml_head(T_("queXS"), $body, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
+print $script;
 
 ?>
 
