@@ -54,7 +54,11 @@ include ("db.inc.php");
  */
 include ("functions/functions.operator.php");
 
-xhtml_head(T_("Project information"));
+$js = false;
+if (AUTO_LOGOUT_MINUTES !== false)
+        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
+
+xhtml_head(T_("Project information"),true,false,$js);
 
 $operator_id = get_operator_id();
 

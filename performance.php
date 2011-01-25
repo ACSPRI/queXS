@@ -54,8 +54,11 @@ include("functions/functions.operator.php");
  */
 include("functions/functions.performance.php");
 
+$js = false;
+if (AUTO_LOGOUT_MINUTES !== false)
+        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
 
-xhtml_head(T_("Performance"),true,array("css/table.css"),false,false,60);
+xhtml_head(T_("Performance"),true,array("css/table.css"),$js,false,60);
 
 $operator_id = get_operator_id();
 $questionnaire_id = get_questionnaire_id($operator_id);

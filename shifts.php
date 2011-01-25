@@ -49,8 +49,12 @@ include ("functions/functions.xhtml.php");
  */
 include("functions/functions.operator.php");
 
+$js = false;
+if (AUTO_LOGOUT_MINUTES !== false)
+        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
 
-xhtml_head(T_("Shift List"),true,array("css/table.css"),false,false,600);
+
+xhtml_head(T_("Shift List"),true,array("css/table.css"),$js,false,600);
 
 //List the shifts
 // display in operator time

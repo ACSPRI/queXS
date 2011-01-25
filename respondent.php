@@ -59,7 +59,15 @@ include("functions/functions.operator.php");
  */
 include("functions/functions.input.php");
 
-xhtml_head(T_("Respondent Selector"),true,array("css/table.css","css/respondent.css"),array("js/window.js","js/showhide.js"));
+$js = array("js/window.js","js/showhide.js");
+
+if (AUTO_LOGOUT_MINUTES !== false)
+{
+        $js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+	$js[] = "js/childnap.js";
+}
+
+xhtml_head(T_("Respondent Selector"),true,array("css/table.css","css/respondent.css"),$js);
 
 
 //display the respondents as a drop down list for this call attempt

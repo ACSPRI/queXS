@@ -44,7 +44,11 @@ include ("functions/functions.xhtml.php");
  */
 include ("lang.inc.php");
 
-xhtml_head(T_("No call available"),true,array("css/table.css"));
+$js = false;
+if (AUTO_LOGOUT_MINUTES !== false)
+        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
+
+xhtml_head(T_("No call available"),true,array("css/table.css"),$js);
 
 ?>
 <h1><? echo T_("Please click on:") . " " . T_("Call/Hangup") . " " .T_("to display call script"); ?></h1>

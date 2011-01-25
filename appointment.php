@@ -110,8 +110,13 @@ if(isset($_POST['start']) && isset($_POST['end']) && isset($_POST['day']) && iss
 }
 
 
-
-xhtml_head(T_("Appointment"),true,array("css/respondent.css"),array("js/window.js"));
+$js = array("js/window.js");
+if (AUTO_LOGOUT_MINUTES !== false)
+{
+        $js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+	$js[] = "js/childnap.js";
+}
+xhtml_head(T_("Appointment"),true,array("css/respondent.css"),$js);
 
 //select a respondent from a list or create a new one
 print("<p>" . T_("Select a respondent") . "</p>");

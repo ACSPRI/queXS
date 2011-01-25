@@ -56,7 +56,11 @@ include ("functions/functions.operator.php");
  */
 include ("functions/functions.limesurvey.php");
 
-xhtml_head(T_("No case available"),true,array("css/table.css"));
+$js = false;
+if (AUTO_LOGOUT_MINUTES !== false)
+        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
+
+xhtml_head(T_("No case available"),true,array("css/table.css"),$js);
 
 $operator_id = get_operator_id();
 

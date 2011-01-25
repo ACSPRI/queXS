@@ -58,7 +58,14 @@ $btext = false;
 if ($state == 4 && AUTO_POPUP)
 	$btext = "onload=\"poptastic('call.php')\"";
 
-xhtml_head(T_("Status"),true,array("css/status.css"),array("js/popupkeep.js"),$btext,10);
+$js = array("js/popupkeep.js");
+if (AUTO_LOGOUT_MINUTES !== false)
+{  
+        $js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+        $js[] = "js/childnap.js";
+}
+
+xhtml_head(T_("Status"),true,array("css/status.css"),$js,$btext,10);
 
 print "<div class='text'>" . get_operator_time($operator_id,"%a %d %b %h:%i%p") ."</div>";
 
