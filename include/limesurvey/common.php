@@ -3570,6 +3570,7 @@ function getHeader()
         $header.= ">\n\t<head>\n"
                 . $css_header
                 . "\t\t<script type=\"text/javascript\" src=\"".$rooturl."/scripts/jquery/jquery.js\"></script>\n"
+                . "\t\t<script type=\"text/javascript\" src=\"".$rooturl."/../../js/childnap.js\"></script>\n" //queXS Addition
 			    . $js_header;
 			
         return $header;        
