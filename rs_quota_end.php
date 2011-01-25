@@ -49,8 +49,16 @@ include ("functions/functions.xhtml.php");
  */
 include ("functions/functions.operator.php");
 
+$js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js")
 
-xhtml_head(T_("Respondent Selection - Project Quota End"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
+if (AUTO_LOGOUT_MINUTES !== false)
+{  
+        $js[] = "js/childnap.js";
+}
+
+
+
+xhtml_head(T_("Respondent Selection - Project Quota End"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
 
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);

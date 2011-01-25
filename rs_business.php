@@ -44,7 +44,15 @@ include ("functions/functions.xhtml.php");
  */
 include ("lang.inc.php");
 
-xhtml_head(T_("Respondent Selection - Business answers"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js"));
+$js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js")
+
+if (AUTO_LOGOUT_MINUTES !== false)
+{  
+        $js[] = "js/childnap.js";
+}
+
+
+xhtml_head(T_("Respondent Selection - Business answers"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js));
 
 
 ?>
