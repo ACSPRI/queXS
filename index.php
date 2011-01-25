@@ -100,7 +100,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 	$script = "<script type='text/javascript'>
 		   $(document).nap(
 			function() { 
-				location.replace('" . QUEXS_URL . "?endwork=endwork');
+				location.replace('" . QUEXS_URL . "?endwork=endwork&auto=auto');
 			},
 			function() { 
 				//do nothing if woken up as shouldn't get here

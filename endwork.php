@@ -42,21 +42,16 @@ include_once("lang.inc.php");
  */
 include_once("functions/functions.xhtml.php");
 
-xhtml_head(T_("End of work"),false);
+xhtml_head(T_("End of work"));
 
-print "<script type='text/javascript'>
-function unhide()
+if (isset($_GET['auto']))
 {
-	document.getElementById('cati').style.visibility = 'visible';
-	top.location = 'news://turnoffvoip';
+	print "<h1>" . T_("You have been automatically logged out of work due to inactivity") . "</h1>";
 }
-</script>
-	</head>
-	<body>";
 
 print "<h1>" . T_("Work has ended. That is it") . "</h1>";
 
-print "<p id='cati'><a href='index.php'>" . T_("Go back to work") . "</a></p>";
+print "<p><a href='index.php'>" . T_("Go back to work") . "</a></p>";
 
 xhtml_foot();
 
