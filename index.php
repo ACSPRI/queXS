@@ -126,8 +126,16 @@ print $script;
 <div id="content">
 <? 
 
-get_case_id($operator_id,true);
-get_call_attempt($operator_id,true);
+$case_id = get_case_id($operator_id,true);
+$ca = get_call_attempt($operator_id,true);
+$appointment = false;
+if ($ca)
+{
+	if (is_on_appointment($ca))
+	{
+		$appointment= true;
+	}
+}
 
 if (!is_respondent_selection($operator_id))
 	$data = get_limesurvey_url($operator_id);
@@ -153,47 +161,55 @@ xhtml_object($data,"main-content");
 
 <div class="tabber" id="tab-main">
 
-     <div class="tabbertab">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'casenotes' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'casenotes' && $appointment)) 
+					print "tabbertabdefault"; ?>">
 	  <h2><? echo T_("Notes"); ?></h2>
 	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("casenote.php","main-casenotes");?></div>
    </div>
 
 
-     <div class="tabbertab">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'calllist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'calllist' && $appointment)) 
+					print "tabbertabdefault"; ?>">
 	  <h2><? echo T_("Call history"); ?></h2>
 	  <div id="div-calllist" class="tabberdiv"><?xhtml_object("calllist.php","main-calllist");?></div>
      </div>
 
 
-     <div class="tabbertab" id="tab-shifts">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'shifts' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'shifts' && $appointment)) 
+					print "tabbertabdefault"; ?>" id="tab-shifts">
 	  <h2><? echo T_("Shifts"); ?></h2>
 	  <div id="div-shifts" class="tabberdiv"><?xhtml_object("shifts.php","main-shifts");?></div>
      </div>
 
 
-     <div class="tabbertab">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'appointmentlist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'appointmentlist' && $appointment)) 
+					print "tabbertabdefault"; ?>">
 	  <h2><? echo T_("Appointments"); ?></h2>
 	  <div id="div-appointmentlist" class="tabberdiv"><?xhtml_object("appointmentlist.php","main-appointmentlist");?></div>
      </div>
 
 
-     <div class="tabbertab">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'performance' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'performance' && $appointment)) 
+					print "tabbertabdefault"; ?>">
 	  <h2><? echo T_("Performance"); ?></h2>
 	  <div id="div-performance" class="tabberdiv"><?xhtml_object("performance.php","main-performance");?></div>
      </div>
 
-     <div class="tabbertab">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'callhistory' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'callhistory' && $appointment)) 
+					print "tabbertabdefault"; ?>">
 	  <h2><? echo T_("Work history"); ?></h2>
 	  <div id="div-callhistory" class="tabberdiv"><?xhtml_object("callhistory.php","main-callhistory");?></div>
      </div>
 
-     <div class="tabbertab">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'projectinfo' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'projectinfo' && $appointment)) 
+					print "tabbertabdefault"; ?>">
 	  <h2><? echo T_("Project information"); ?></h2>
 	  <div id="div-projectinfo" class="tabberdiv"><?xhtml_object("project_info.php","main-projectinfo");?></div>
      </div>
 
 
-     <div class="tabbertab">
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'info' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'info' && $appointment)) 
+					print "tabbertabdefault"; ?>">
 	  <h2><? echo T_("Info"); ?></h2>
 	  <div id="div-info" class="tabberdiv"><?xhtml_object("info.php","main-info");?></div>
      </div>

@@ -193,6 +193,16 @@ if (!defined('AUTO_COMPLETE_OUTCOME')) define('AUTO_COMPLETE_OUTCOME',false);
 if (!defined('AUTO_LOGOUT_MINUTES')) define('AUTO_LOGOUT_MINUTES',false);
 
 /**
+ * The default tab to start on on the main screen
+ */
+if (!defined('DEFAULT_TAB')) define('DEFAULT_TAB','casenotes');
+
+/**
+ * The default tab to start on for appointments
+ */
+if (!defined('DEFAULT_TAB_APPOINTMENT')) define('DEFAULT_TAB_APPOINTMENT','casenotes');
+
+/**
  * Database configuration for queXS
  */
 if (!defined('DB_USER')) define('DB_USER', 'quexs');
