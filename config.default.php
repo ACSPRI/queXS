@@ -203,6 +203,16 @@ if (!defined('DEFAULT_TAB')) define('DEFAULT_TAB','casenotes');
 if (!defined('DEFAULT_TAB_APPOINTMENT')) define('DEFAULT_TAB_APPOINTMENT','casenotes');
 
 /**
+ * Show the contact details tab?
+ */
+if (!defined('CONTACT_DETAILS_TAB')) define('CONTACT_DETAILS_TAB', false);
+
+/**
+ * Enable a header expander for the main page to shrink/expand when not in use?
+ */
+if (!defined('HEADER_EXPANDER')) define('HEADER_EXPANDER', false);
+
+/**
  * Database configuration for queXS
  */
 if (!defined('DB_USER')) define('DB_USER', 'quexs');

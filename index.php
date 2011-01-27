@@ -110,20 +110,23 @@ if (AUTO_LOGOUT_MINUTES !== false)
 	$body = false;
 }
 
+if (HEADER_EXPANDER) 
+	$js[] = "js/headerexpand.js";
+
 xhtml_head(T_("queXS"), $body, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
 print $script;
 
 ?>
 
-<div id="casefunctions">
+<div id="casefunctions" class="header">
 	<div class='box'><a href="javascript:poptastic('call.php?end=end');"><? echo T_("End"); ?></a></div>
 	<div class='box'><a href="javascript:poptastic('appointment.php');"><? echo T_("Appointment"); ?></a></div>
-	<div class='box'><a href="javascript:poptastic('call.php');"><? echo T_("Call/Hangup"); ?></a></div>
+	<div class='box important'><a href="javascript:poptastic('call.php');"><? echo T_("Call/Hangup"); ?></a></div>
 	<div class='box'><a href="javascript:poptastic('supervisor.php');"><? echo T_("Supervisor"); ?></a></div>
 	<div class='box' id='recbox'><a id='reclink' class='offline' href="javascript:poptastic('record.php?start=start');"><? echo T_("Start REC"); ?></a></div>
 </div>
 
-<div id="content">
+<div id="content" class="content">
 <? 
 
 $case_id = get_case_id($operator_id,true);
@@ -147,16 +150,16 @@ xhtml_object($data,"main-content");
 ?>
 </div>
 
-<div id="respondent">
+<div id="respondent" class="header">
 <?xhtml_object("respondent.php","main-respondent");?>
 </div>
 
-<div id="qstatus">
+<div id="qstatus" class="header">
 <?xhtml_object("status.php","main-qstatus");?>
 </div>
 
 
-<div id="calllist">
+<div id="calllist" class="header">
 
 
 <div class="tabber" id="tab-main">
@@ -166,6 +169,14 @@ xhtml_object($data,"main-content");
 	  <h2><? echo T_("Notes"); ?></h2>
 	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("casenote.php","main-casenotes");?></div>
    </div>
+
+<? if (CONTACT_DETAILS_TAB) { ?>
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'contactdetails' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'contactdetails' && $appointment)) 
+					print "tabbertabdefault"; ?>">
+	  <h2><? echo T_("Contact details"); ?></h2>
+	  <div id="div-contactdetails" class="tabberdiv"><?xhtml_object("contactdetails.php","main-contactdetails");?></div>
+   </div>
+<? }?>
 
 
      <div class="tabbertab <? if ((DEFAULT_TAB == 'calllist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'calllist' && $appointment)) 
@@ -219,6 +230,8 @@ xhtml_object($data,"main-content");
 
 
 </div>
+
+<script type='text/javascript' src='js/headerexpand.js'/>
 
 <?
 
