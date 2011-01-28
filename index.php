@@ -247,8 +247,6 @@ xhtml_object($data,"main-content");
 
 </div>
 
-<script type='text/javascript' src='js/headerexpand.js'/>
-
 <?
 
 xhtml_foot();

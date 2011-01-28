@@ -952,10 +952,11 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "",$creat
  * If no case available, return an error screen
  *
  * @param int $operator_id The operator id
+ * @param bool $escape Whether to escape the ampersands default true
  * @return string The URL of the LimeSurvey questionnaire, or the URL of an error screen if none available
  *
  */
-function get_respondentselection_url($operator_id)
+function get_respondentselection_url($operator_id,$escape = true)
 {
 	global $db;
 
@@ -965,11 +966,14 @@ function get_respondentselection_url($operator_id)
 
 	$call_id = get_call($operator_id);
 
+	$amp = "&amp;";
+	if (!$escape) $amp = "&";
+
 	if ($call_id)
 	{
 		$sid = get_limesurvey_id($operator_id,true); //true for RS
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
-			$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
+			$url = LIME_URL . "index.php?loadall=reload" . $amp . "sid=$sid" . $amp . "token=$call_id" . $amp . "lang=" . DEFAULT_LOCALE;
 		else
 			$url = 'rs_intro.php';
 	}

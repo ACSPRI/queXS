@@ -6,7 +6,7 @@ $(document).ready(function(){
 				$(".header").css("height","30%");
 				$(".content").css("height","70%");
 				$(".content").css("top","30%");
-				$(".box:not(.important)").css("display","inline");
+				$(".box:not(.important)").css("display","");
 			},
 
 			//function on mouse out
