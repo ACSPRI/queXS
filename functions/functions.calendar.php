@@ -312,7 +312,7 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 	print "<div class=\"shifts\">";
 	foreach($rs as $r)
 	{
-		print "<p>" . T_("Shift from:") . " ".convert_time($r['start'])." till ".convert_time($r['end'])."</p>";
+		print "<p>" . T_("Shift from:") . " ".convert_time($r['start']).T_(" till ")." ".convert_time($r['end'])."</p>";
 	}
 	print "</div>";
 
