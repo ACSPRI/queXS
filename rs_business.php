@@ -44,7 +44,7 @@ include ("functions/functions.xhtml.php");
  */
 include ("lang.inc.php");
 
-$js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js")
+$js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {  
