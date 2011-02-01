@@ -87,7 +87,8 @@ print "<li><h3>" . T_("System settings") . "</h3>";
 print "<ul><li><a href=\"?page=timezonetemplate.php\">" . T_("Set default timezone list") . "</a></li>";
 print "<li><a href=\"?page=shifttemplate.php\">" . T_("Set default shift times") . "</a></li>";
 print "<li><a href=\"?page=callrestrict.php\">" . T_("Set call restriction times") . "</a></li>";
-print "<li><a href=\"?page=centreinfo.php\">" . T_("Set centre information") . "</a></li></ul></li>";
+print "<li><a href=\"?page=centreinfo.php\">" . T_("Set centre information") . "</a></li>";
+print "<li><a href=\"?page=systemsort.php\">" . T_("Start and monitor system wide case sorting") . "</a></li></ul></li>";
 
 if (VOIP_ENABLED)
 {

@@ -295,86 +295,122 @@ function get_case_id($operator_id, $create = false)
 	{	
 		if ($create)
 		{
-			/**
-			 * find a case that:
-			 *    Has not been called in the last x hours based on last outcome 
-			 *    Is available for this operator
-			 *    Has no appointments scheduled in the future (can also check if outcome is appointment)
-			 *    Nobody else is servicing the call at the moment
-			 *    The case is not referred to the supervisor and the operator is not the supervisor
-			 *    The case is not on a refusal outcome and the operator is not a refusal converter
-			 *    Give priority if there is an appointment scheduled now
-			 *    If restricted to shift times to work, make sure we are in those
-			 *    If restricted to respondent call times, make sure we are in those
-			 *    Only assign if outcome type is assigned to the operator
-			 *    Has not reached the quota
-			 *
-			 *    
-			 *   THINGS TO ADD:
-			 *
-			 *   @todo also option of "time of day" calls - try once in the morning/etc
-			 *   @todo also could check the respondent_not_available table to see if now is a "bad time" to call
-			 */	
+			$systemsort = get_setting('systemsort');
+
+			if ($systemsort)
+			{
+				//Just make sure that this case should go to this operator (assigned to this project and skill)
+				$sql = "SELECT c.case_id as caseid
+					FROM `case` as c
+					JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = c.questionnaire_id)
+					JOIN outcome as ou ON (ou.outcome_id = c.current_outcome_id)
+					JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = ou.outcome_type_id)
+					WHERE c.sortorder IS NOT NULL
+					AND c.current_operator_id IS NULL
+					ORDER BY c.sortorder ASC
+					LIMIT 1";
+
+			}
+			else
+			{
+				/**
+				 * find a case that:
+				 *    Has not been called in the last x hours based on last outcome 
+				 *    Is available for this operator
+				 *    Has no appointments scheduled in the future (can also check if outcome is appointment)
+				 *    Nobody else is servicing the call at the moment
+				 *    The case is not referred to the supervisor and the operator is not the supervisor
+				 *    The case is not on a refusal outcome and the operator is not a refusal converter
+				 *    Give priority if there is an appointment scheduled now
+				 *    If restricted to shift times to work, make sure we are in those
+				 *    If restricted to respondent call times, make sure we are in those
+				 *    Only assign if outcome type is assigned to the operator
+				 *    Has not reached the quota
+				 *
+				 *    
+				 *   THINGS TO ADD:
+				 *
+				 *   @todo also option of "time of day" calls - try once in the morning/etc
+				 *   @todo also could check the respondent_not_available table to see if now is a "bad time" to call
+				 */	
+			
+				$sql = "SELECT c.case_id as caseid,s.*,apn.*,a.*,sh.*,op.*,cr.*,si.*,CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) as resptime
+					FROM `case`  as c
+					LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
+					JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
+					JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, outcome as ou) on (c.questionnaire_id = q.questionnaire_id and op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and ou.outcome_id = c.current_outcome_id)
+					LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
+					LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
+					LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
+					LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+					LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
+					JOIN operator_skill as os on (os.operator_id = op.operator_id and os.outcome_type_id = ou.outcome_type_id)
+					WHERE c.current_operator_id IS NULL
+					AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
+					AND ap.case_id is NULL
+					AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
+					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL AND os.outcome_type_id != 2)
+					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND os.outcome_type_id != 2)
+					AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
+					AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
+					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+					ORDER BY apn.start DESC, a.start ASC, qsep.priority DESC
+					LIMIT 1";
 		
-			$sql = "SELECT c.case_id as caseid,s.*,apn.*,a.*,sh.*,op.*,cr.*,si.*,CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) as resptime
-				FROM `case`  as c
-				LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
-				JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
-				JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, outcome as ou) on (c.questionnaire_id = q.questionnaire_id and op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and ou.outcome_id = c.current_outcome_id)
-				LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
-				LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
-				LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
-				LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
-				LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
-				JOIN operator_skill as os on (os.operator_id = op.operator_id and os.outcome_type_id = ou.outcome_type_id)
-				WHERE c.current_operator_id IS NULL
-				AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
-				AND ap.case_id is NULL
-				AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
-				AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL AND os.outcome_type_id != 2)
-				AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND os.outcome_type_id != 2)
-				AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
-				AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
-				AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-				ORDER BY apn.start DESC, a.start ASC, qsep.priority DESC
-				LIMIT 1";
-	
-				//apn.appointment_id contains the id of an appointment if we are calling on an appointment
+					//apn.appointment_id contains the id of an appointment if we are calling on an appointment
+			}
 			$r2 = $db->GetRow($sql);
 	
 			if (empty($r2))
 			{
 	
+				if ($systemsort)
+				{
+					//Just make sure that this case should go to this operator (assigned to this project and skill)
+					$sql = "SELECT qsep.sample_id as sample_id, qsep.questionnaire_id as questionnaire_id
+						FROM questionnaire_sample_exclude_priority as qsep
+						JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = 1)
+						JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = qsep.questionnaire_id)
+						LEFT JOIN `case` as c ON (c.sample_id = qsep.sample_id AND c.questionnaire_id = qsep.sample_id)
+						WHERE qsep.sortorder IS NOT NULL 
+						AND c.case_id IS NULL
+						ORDER BY qsep.sortorder ASC
+						LIMIT 1";
 	
-				/**
-				 * If no case found, we must draw the next available case from the sample
-				 * only if no case due to lack of cases to call not out of shift time/etc and
-				 * only draw cases that are new (Temporary outcome_type_id)
-				 *
-				 *
-				 * Method:
-				 *    next available that has not been assigned
-				 *    if none available - return false? report to operator that no one available to call at currenet settings
-				 *
-				 */
-				
-			  
-				$sql = "SELECT s.sample_id as sample_id,c.case_id as case_id,qs.questionnaire_id as questionnaire_id,CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) as resptime, q.testing as testing
-					FROM sample as s
-					JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, sample_import as si, operator_skill as os) on (op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and si.sample_import_id = s.import_id and os.operator_id = op.operator_id and os.outcome_type_id = 1)
-					LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
-					LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
-					LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
-					LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = qs.questionnaire_id AND qsep.sample_id = s.sample_id)
+				}
+				else
+				{
 
-					WHERE c.case_id is NULL
-					AND ((qsep.questionnaire_id IS NULL) or qsep.exclude = 0)
-					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
-					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
-					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-					ORDER BY qsep.priority DESC, rand() * qs.random_select, s.sample_id
-					LIMIT 1";
-				
+					/**
+					 * If no case found, we must draw the next available case from the sample
+					 * only if no case due to lack of cases to call not out of shift time/etc and
+					 * only draw cases that are new (Temporary outcome_type_id) - this makes sure that we are not drawing
+					 * a case just because the operator doesn't have access to temporary outcome id's.
+					 *
+					 *
+					 * Method:
+					 *    next available that has not been assigned
+					 *    if none available - return false? report to operator that no one available to call at currenet settings
+					 *
+					 */
+					
+				  
+					$sql = "SELECT s.sample_id as sample_id,c.case_id as case_id,qs.questionnaire_id as questionnaire_id,CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) as resptime, q.testing as testing
+						FROM sample as s
+						JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, sample_import as si, operator_skill as os) on (op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and si.sample_import_id = s.import_id and os.operator_id = op.operator_id and os.outcome_type_id = 1)
+						LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
+						LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+						LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
+						LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = qs.questionnaire_id AND qsep.sample_id = s.sample_id)
+
+						WHERE c.case_id is NULL
+						AND ((qsep.questionnaire_id IS NULL) or qsep.exclude = 0)
+						AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
+						AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
+						AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+						ORDER BY qsep.priority DESC, rand() * qs.random_select, s.sample_id
+						LIMIT 1";
+				}			
 	
 				$r3 = $db->GetRow($sql);
 	

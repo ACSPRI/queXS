@@ -43,15 +43,17 @@ include_once(dirname(__FILE__).'/../db.inc.php');
 /**
  * Determine if a process is already running
  *
+ * @param int $type Defaults to 1 - specify the process type (class) to search for
  * @return bool|int Return false if no process already running, else return the process_id
  */
-function is_process_running()
+function is_process_running($type = 1)
 {
 	global $db;
 
 	$sql = "SELECT `process_id`
 		FROM `process`
-		WHERE `stop` IS NULL";
+		WHERE `stop` IS NULL
+		AND type = '$type'";
 
 	$rs = $db->GetRow($sql);
 
@@ -90,23 +92,24 @@ function is_process_killed($process_id)
  * Start a process
  *
  * @param string $filename The PHP file of the process to run
+ * @param int $type The type (class) of process (so we can run multiple processes at the same time) defaults to 1
  * @return bool|int False if we couldnt start a process, else the process id from the process table
  * 
  * @link http://www.djkaty.com/php/fork Cross platform process tutorial (this code adapted from here)
  */
-function start_process($filename)
+function start_process($filename,$type = 1)
 {
 	//create a record only if no process already running
 	global $db;
 
 	$db->StartTrans();
 
-	$process = is_process_running();
+	$process = is_process_running($type);
 
 	if ($process == false)
 	{
-		$sql = "INSERT INTO `process` (`process_id`,`start`,`stop`,`kill`,`data`)
-			VALUES (NULL,CONVERT_TZ(NOW(),'System','UTC'),NULL,0,'')";
+		$sql = "INSERT INTO `process` (`process_id`,`type`,`start`,`stop`,`kill`,`data`)
+			VALUES (NULL,'$type',CONVERT_TZ(NOW(),'System','UTC'),NULL,0,'')";
 
 		$rs = $db->Execute($sql);
 		$args = $db->Insert_ID();
@@ -220,15 +223,17 @@ function process_get_data($process_id)
 /**
  * Get data from the last process run
  *
+ * @param int $type The last processes class (type) defaults to 1
  * @return string Data from the last process, or an empty string if not available
  *
  */
-function process_get_last_data()
+function process_get_last_data($type = 1)
 {
 	global $db;
 
 	$sql = "SELECT `data`
 		FROM `process`
+		WHERE type = '$type'
 		ORDER BY `process_id` DESC
 		LIMIT 1";
 

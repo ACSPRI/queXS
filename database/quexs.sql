@@ -176,12 +176,14 @@ CREATE TABLE `case` (
   `current_operator_id` bigint(20) default NULL,
   `current_call_id` bigint(20) default NULL,
   `current_outcome_id` int(11) NOT NULL default '1',
+  `sortorder` int(11) default NULL,
   PRIMARY KEY  (`case_id`),
   UNIQUE KEY `onecasepersample` (`sample_id`,`questionnaire_id`),
   UNIQUE KEY `current_operator_id` (`current_operator_id`),
   UNIQUE KEY `current_call_id` (`current_call_id`),
   KEY `sample_id` (`sample_id`),
-  KEY `questionnaire_id` (`questionnaire_id`)
+  KEY `questionnaire_id` (`questionnaire_id`),
+  KEY `sortorder` (`sortorder`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 
@@ -441,6 +443,7 @@ INSERT INTO `outcome_type` VALUES(5, 'Appointments');
 
 CREATE TABLE `process` (
   `process_id` bigint(20) NOT NULL auto_increment,
+  `type` int(11) NOT NULL default '1',
   `start` datetime NOT NULL,
   `stop` datetime default NULL,
   `kill` tinyint(1) NOT NULL default '0',
@@ -522,10 +525,12 @@ CREATE TABLE `questionnaire_sample_exclude_priority` (
   `sample_id` bigint(20) NOT NULL,
   `exclude` tinyint(1) NOT NULL default '0',
   `priority` tinyint(3) NOT NULL default '50',
+  `sortorder` int(11) default NULL,
   PRIMARY KEY  (`questionnaire_id`,`sample_id`),
   KEY `exclude` (`exclude`),
   KEY `priority` (`priority`),
-  KEY `questionnaire_id` (`questionnaire_id`)
+  KEY `questionnaire_id` (`questionnaire_id`),
+  KEY `sortorder` (`sortorder`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
