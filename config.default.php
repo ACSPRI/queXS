@@ -226,6 +226,11 @@ if (!defined('HEADER_EXPANDER')) define('HEADER_EXPANDER', false);
 if (!defined('SYSTEM_SORT_MINUTES')) define ('SYSTEM_SORT_MINUTES',5);
 
 /**
+ * Allow page refreshing
+ */
+if (!defined('ALLOW_PAGE_REFRESH')) define ('ALLOW_PAGE_REFRESH',true);
+
+/**
  * Database configuration for queXS
  */
 if (!defined('DB_USER')) define('DB_USER', 'quexs');

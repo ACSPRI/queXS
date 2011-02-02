@@ -56,7 +56,7 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 		foreach ($css as $c) print "<link rel='stylesheet' href='$c' type='text/css'></link>";
 	if ($javascript)
 		foreach ($javascript as $j) print "<script type='text/javascript' src='$j'></script>";
-	if ($refresh)
+	if ($refresh && ALLOW_PAGE_REFRESH)
 	{
 		print " <!--Set to refresh every $refresh seconds-->
 			<meta http-equiv='Cache-Control' content='no-cache'/>
