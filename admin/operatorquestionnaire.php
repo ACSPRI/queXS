@@ -117,6 +117,10 @@ if (isset($_POST['submit']))
 		WHERE questionnaire_id IN (
 			SELECT questionnaire_id
 			FROM questionnaire
+			WHERE enabled = 1)
+		AND operator_id IN (
+			SELECT operator_id
+			FROM operator
 			WHERE enabled = 1)";
 
 	$db->Execute($sql);
@@ -142,6 +146,7 @@ $questionnaires = $db->GetAll($sql);
 
 $sql = "SELECT operator_id,firstname as description
 	FROM operator
+	WHERE enabled = 1
 	ORDER by operator_id ASC";
 
 $operators = $db->GetAll($sql);

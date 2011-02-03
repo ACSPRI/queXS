@@ -70,6 +70,7 @@ function get_CPH_by_shift($qid,$sid)
 			AND s.`start` <= a.`start`
 			AND s.`end` >= a.`start`
 			GROUP BY operator_id) as ca on (ca.operator_id = o.operator_id)
+		WHERE o.enabled = 1
 		ORDER BY cph DESC";
 
 	return $db->GetAll($sql);
@@ -98,6 +99,7 @@ function get_CPH_by_questionnaire($qid)
 			WHERE a.case_id = b.case_id
 			AND b.questionnaire_id = '$qid'
 			GROUP BY operator_id) as ca on (ca.operator_id = o.operator_id)
+		WHERE o.enabled = 1
 		ORDER BY cph DESC";
 
 
@@ -157,6 +159,7 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
 			AND s.`end` >= a.`start`
 			AND b.questionnaire_id = '$questionnaire_id'
 			GROUP BY a.operator_id) as calls on (calls.operator_id = o.operator_id)
+		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 
 	return $db->GetAll($sql);
@@ -255,6 +258,7 @@ function get_stats()
 		JOIN (  SELECT count(*) as calls,a.operator_id
 			FROM `call` as a
 			GROUP BY a.operator_id) as calls on (calls.operator_id = o.operator_id)
+		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 
 	return $db->GetAll($sql);
@@ -301,6 +305,7 @@ function get_stats_by_questionnaire($questionnaire_id)
 			WHERE a.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
 			GROUP BY a.operator_id) as calls on (calls.operator_id = o.operator_id)
+		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 
 	return $db->GetAll($sql);
@@ -325,6 +330,7 @@ function get_CPH()
 		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , start, IFNULL(end,CONVERT_TZ(NOW(),'System','UTC')))) as time, operator_id
 			FROM `call_attempt`
 			GROUP BY operator_id) as ca on (ca.operator_id = o.operator_id)
+		WHERE o.enabled = 1
 		ORDER BY cph DESC";
 	
 	return $db->GetAll($sql);
@@ -360,6 +366,7 @@ function get_effectiveness_by_questionnaire($questionnaire_id)
 			AND b.questionnaire_id = '$questionnaire_id'
 			GROUP BY operator_id
 		) AS callattempttime ON ( callattempttime.operator_id = o.operator_id )
+		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 	
 	return $db->GetAll($sql);
@@ -390,6 +397,7 @@ function get_effectiveness()
 			FROM `call_attempt` AS c
 			GROUP BY operator_id
 		) AS callattempttime ON ( callattempttime.operator_id = o.operator_id )
+		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 	
 	return $db->GetAll($sql);

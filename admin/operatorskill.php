@@ -113,7 +113,10 @@ if (isset($_POST['submit']))
 
 	$sql = "DELETE 
 		FROM operator_skill
-		WHERE 1";
+		WHERE operator_id IN (
+			SELECT operator_id
+			FROM operator
+			WHERE enabled = 1)";
 
 	$db->Execute($sql);
 
@@ -137,6 +140,7 @@ $outcome_types = $db->GetAll($sql);
 
 $sql = "SELECT operator_id,firstname as description
 	FROM operator
+	WHERE enabled = 1
 	ORDER by operator_id ASC";
 
 $operators = $db->GetAll($sql);
