@@ -236,6 +236,11 @@ if (!defined('SYSTEM_SORT_MINUTES')) define ('SYSTEM_SORT_MINUTES',5);
 if (!defined('ALLOW_PAGE_REFRESH')) define ('ALLOW_PAGE_REFRESH',true);
 
 /**
+ * Allow operator to select respondent from list or add respondents
+ */
+if (!defined('ALLOW_RESPONDENT_SELECTOR')) define ('ALLOW_RESPONDENT_SELECTOR',true);
+
+/**
  * Database configuration for queXS
  */
 if (!defined('DB_USER')) define('DB_USER', 'quexs');

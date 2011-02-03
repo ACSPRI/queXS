@@ -123,16 +123,24 @@ else
 
 
 	$timezone = "";
-	print "<select id='respondent' name='respondent' onchange=\"LinkUp('respondent')\"><option value='?respondent_id=0' class='addresp'>" . T_("Add respondent") . "</option>";
-	if (!empty($rs))
+	if (ALLOW_RESPONDENT_SELECTOR)
 	{
-		foreach($rs as $r)
+		print "<select id='respondent' name='respondent' onchange=\"LinkUp('respondent')\"><option value='?respondent_id=0' class='addresp'>" . T_("Add respondent") . "</option>";
+		if (!empty($rs))
 		{
-			if (!empty($r['selected'])) $timezone = $r['Time_zone_name'];
-			print "<option value='?respondent_id={$r['respondent_id']}' {$r['selected']}>{$r['firstName']} {$r['lastName']}</option>";
+			foreach($rs as $r)
+			{
+				if (!empty($r['selected'])) $timezone = $r['Time_zone_name'];
+				print "<option value='?respondent_id={$r['respondent_id']}' {$r['selected']}>{$r['firstName']} {$r['lastName']}</option>";
+			}
 		}
+		print "</select></div>";
 	}
-	print "</select></div>";
+	else
+	{
+		if (isset($rs[0]))
+			print " " . $rs[0]['firstName'] . " " . $rs[0]['lastName'] . "</div>";
+	}
 
 	print "<div>$timezone</div>";
 
