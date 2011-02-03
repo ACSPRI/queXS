@@ -58,7 +58,7 @@ $js = false;
 if (AUTO_LOGOUT_MINUTES !== false)
         $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
 
-xhtml_head(T_("Performance"),true,array("css/table.css"),$js,false,60);
+xhtml_head(T_("Performance"),true,array("css/table.css"),$js);
 
 $operator_id = get_operator_id();
 $questionnaire_id = get_questionnaire_id($operator_id);
@@ -85,10 +85,11 @@ if ($questionnaire_id)
 	xhtml_table($rs,array("firstName","completions","CPH"),array(T_("Operator"),T_("Completions"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
 }
 
-
+/* Don't display overall performance - not useful to operators?
 $rs = get_CPH();
 print "<div>" . T_("Overall") . "</div>";
 xhtml_table($rs,array("firstName","completions","CPH"),array(T_("Operator"),T_("Completions"),T_("Completions per hour")),"tclass",array("operator_id" => $operator_id));
+*/
 
 xhtml_foot();
 
