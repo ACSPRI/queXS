@@ -52,7 +52,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 }
 
 
-xhtml_head(T_("Respondent Selection - Business answers"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js));
+xhtml_head(T_("Respondent Selection - Business answers"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
 
 
 ?>
