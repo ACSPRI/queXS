@@ -1,3 +1,13 @@
+.headerexpand {
+    text-align: center;
+    position: absolute; 
+    height: 20px;
+    bottom: 0px;
+    width: 100%;
+}
+#headerexpandimage {
+	height: 20px;
+}
 .box {
  margin: 8px;	
 }

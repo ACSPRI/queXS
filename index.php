@@ -111,7 +111,15 @@ if (AUTO_LOGOUT_MINUTES !== false)
 }
 
 if (HEADER_EXPANDER) 
+{
 	$js[] = "js/headerexpand.js";
+	$js[] = "js/headerexpandauto.js";
+}
+else if (HEADER_EXPANDER_MANUAL) 
+{
+	$js[] = "js/headerexpand.js";
+	$js[] = "js/headerexpandmanual.js";
+}
 
 xhtml_head(T_("queXS"), $body, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
 print $script;
@@ -124,6 +132,7 @@ print $script;
 	<div class='box important'><a href="javascript:poptastic('call.php');"><? echo T_("Call/Hangup"); ?></a></div>
 	<div class='box'><a href="javascript:poptastic('supervisor.php');"><? echo T_("Supervisor"); ?></a></div>
 	<div class='box' id='recbox'><a id='reclink' class='offline' href="javascript:poptastic('record.php?start=start');"><? echo T_("Start REC"); ?></a></div>
+	<? if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.png' alt='<? echo T_('Arrow for expanding or contracting'); ?>'/></div> <? } ?>
 </div>
 
 <div id="content" class="content">

@@ -221,6 +221,11 @@ if (!defined('TAB_INFO')) define('TAB_INFO', true);
 if (!defined('HEADER_EXPANDER')) define('HEADER_EXPANDER', false);
 
 /**
+ * Enable a header expander for the main page to shrink/expand when clicking on an arrow?
+ */
+if (!defined('HEADER_EXPANDER_MANUAL')) define('HEADER_EXPANDER_MANUAL', false);
+
+/**
  * Define how many minutes between each system sort (defaults to 5 as this is a common interval for appointments)
  */
 if (!defined('SYSTEM_SORT_MINUTES')) define ('SYSTEM_SORT_MINUTES',5);
