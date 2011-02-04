@@ -444,7 +444,8 @@ function get_case_id($operator_id, $create = false)
 		
 						$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
 							SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(extension,'/',-1) as phone, CONCAT(firstName, ' ', lastName)
-							FROM operator";
+							FROM operator
+							WHERE enabled = 1";
 		
 						$db->Execute($sql);
 					}
