@@ -64,6 +64,7 @@ if ($client_id)
 	$sql = "SELECT q.questionnaire_id,q.description
 		FROM questionnaire as q, client_questionnaire as cq
 		WHERE cq.questionnaire_id = q.questionnaire_id
+		AND q.enabled = 1
 		AND cq.client_id = '$client_id'";
 	
 	$qs = $db->GetAll($sql);
