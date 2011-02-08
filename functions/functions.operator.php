@@ -367,10 +367,11 @@ function get_case_id($operator_id, $create = false)
 				if ($systemsort)
 				{
 					//Just make sure that this case should go to this operator (assigned to this project and skill)
-					$sql = "SELECT qsep.sample_id as sample_id, qsep.questionnaire_id as questionnaire_id
+					$sql = "SELECT qsep.sample_id as sample_id, qsep.questionnaire_id as questionnaire_id, q.testing as testing
 						FROM questionnaire_sample_exclude_priority as qsep
 						JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = 1)
 						JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = qsep.questionnaire_id)
+						JOIN questionnaire as q ON (q.questionnaire_id = qsep.questionnaire_id)
 						LEFT JOIN `case` as c ON (c.sample_id = qsep.sample_id AND c.questionnaire_id = qsep.sample_id)
 						WHERE qsep.sortorder IS NOT NULL 
 						AND c.case_id IS NULL
@@ -1661,7 +1662,7 @@ function end_case($operator_id)
 		}
 		
 		$sql = "UPDATE `case`
-			SET current_operator_id = NULL, current_call_id = NULL, current_outcome_id = '$outcome', last_call_id = '$lastcall'
+			SET current_operator_id = NULL, current_call_id = NULL, sortorder = NULL, current_outcome_id = '$outcome', last_call_id = '$lastcall'
 			WHERE case_id = '$case_id'";
 
 		$o = $db->Execute($sql);
