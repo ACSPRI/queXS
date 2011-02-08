@@ -98,6 +98,14 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 
 	$db->StartTrans();
 
+	//First set all cases as unavailable
+	$sql = "UPDATE `case`
+		SET sortorder = NULL
+		WHERE 1";
+
+	$db->Execute($sql);
+
+
 	//Sort current cases for all enabled questionnaires
 	
 	
@@ -136,6 +144,16 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 		$i++;
 	}
 	
+
+	//First set all sample records as unavailable
+	$sql = "UPDATE `questionnaire_sample_exclude_priority`
+		SET sortorder = NULL
+		WHERE 1";
+
+	$db->Execute($sql);
+
+
+
 	//Sort sample list where attached to an enabled questionnaire
 
 	$sql = "SELECT s.sample_id as sample_id,qs.questionnaire_id as questionnaire_id

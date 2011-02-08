@@ -334,7 +334,7 @@ function get_case_id($operator_id, $create = false)
 				 *   @todo also could check the respondent_not_available table to see if now is a "bad time" to call
 				 */	
 			
-				$sql = "SELECT c.case_id as caseid,s.*,apn.*,a.*,sh.*,op.*,cr.*,si.*,CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) as resptime
+				$sql = "SELECT c.case_id as caseid
 					FROM `case`  as c
 					LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
 					JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
