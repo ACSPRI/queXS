@@ -113,7 +113,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 		FROM `case`  as c
 		LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
 		JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
-		JOIN (questionnaire_sample as qs, questionnaire as q,  outcome as ou) on (c.questionnaire_id = q.questionnaire_id and qs.sample_import_id = s.import_id and ou.outcome_id = c.current_outcome_id and q.enabled = 1)
+		JOIN (questionnaire_sample as qs, questionnaire as q,  outcome as ou) on (c.questionnaire_id = q.questionnaire_id and qs.sample_import_id = s.import_id and ou.outcome_id = c.current_outcome_id and q.enabled = 1 and qs.questionnaire_id = c.questionnaire_id)
 		LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
 		LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
 		LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
