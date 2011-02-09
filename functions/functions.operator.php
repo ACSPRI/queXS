@@ -372,7 +372,7 @@ function get_case_id($operator_id, $create = false)
 						JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = 1)
 						JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = qsep.questionnaire_id)
 						JOIN questionnaire as q ON (q.questionnaire_id = qsep.questionnaire_id)
-						LEFT JOIN `case` as c ON (c.sample_id = qsep.sample_id AND c.questionnaire_id = qsep.sample_id)
+						LEFT JOIN `case` as c ON (c.sample_id = qsep.sample_id AND c.questionnaire_id = qsep.questionnaire_id)
 						WHERE qsep.sortorder IS NOT NULL 
 						AND c.case_id IS NULL
 						ORDER BY qsep.sortorder ASC
