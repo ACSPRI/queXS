@@ -472,7 +472,7 @@ CREATE TABLE `questionnaire` (
   `rs_answeringmachine` text collate utf8_unicode_ci NOT NULL,
   `lime_rs_sid` int(11) default NULL,
   `info` text collate utf8_unicode_ci default NULL,
-  `enabled` tinyint(1) NOT NULL default '1'
+  `enabled` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`questionnaire_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
