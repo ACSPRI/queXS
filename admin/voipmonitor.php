@@ -74,8 +74,6 @@ if ($p)
 
 	print "<h1>" . T_("Running process:") . " $p</h1>";
 
-	print "<h2>" . T_("Note: This page will automatically refresh every 10 seconds") . "</h2>";
-
 	if (is_process_killed($p))
 	{
 		print "<h3>" . T_("Kill signal sent: Please wait... (Note: Process will be stalled until there is activity on the VoIP Server)") . "</h3>";
