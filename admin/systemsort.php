@@ -70,7 +70,7 @@ if ($p)
 			kill_process($p);
 	}
 
-	xhtml_head(T_("Monitor system wide case sorting"),true,false,false,false,false,true);
+	xhtml_head(T_("Monitor system wide case sorting"),true,array("../css/table.css"),false,false,false,true);
 
 	print "<h1>" . T_("Running process:") . " $p</h1>";
 
@@ -84,16 +84,25 @@ if ($p)
 		print "<p><a href='?kill=kill'>" . T_("Kill the running process") . "</a></p>";
 	}
 
-	print process_get_data($p);
+        $d = process_get_data($p);
+        if ($d !== false)
+        {
+                xhtml_table($d,array('process_log_id','datetime','data'),array(T_("Log id"), T_("Date"), T_("Log entry")));
+        }
+
 }
 else
 {
-	xhtml_head(T_("Monitor system wide case sorting"));
+	xhtml_head(T_("Monitor system wide case sorting"),true,array("../css/table.css"));
 	print "<h2>" . T_("Monitor system wide case sorting") . "</h2>";
 	print "<p><a href='?watch=watch'>" . T_("Click here to enable and begin system wide case sorting") . "</a></p>";
 	print "<p>"  . T_("System wide case sorting is periodically (via SYSTEM_SORT_MINUTES configuration directive) sorting cases on a system wide basis instead of finding the most appropriate case each time an operator requests a new case. This may increase performance where there are a large number of cases or complex quotas in place. If you are not experiencing any performance problems, it is not recommended to use this feature.") . "</p>";
 	print "<h2>" . T_("Outcome of last process run (if any)") . "</h2>";
-	print process_get_last_data(2);
+	$d = process_get_last_data(2);
+        if ($d !== false)
+        {
+                xhtml_table($d,array('process_log_id','datetime','data'),array(T_("Log id"), T_("Date"), T_("Log entry")));
+        }
 }
 xhtml_foot();
 

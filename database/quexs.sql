@@ -453,6 +453,15 @@ CREATE TABLE `process` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE `process_log` (
+`process_log_id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`process_id` BIGINT NOT NULL ,
+`datetime` DATETIME NOT NULL ,
+`data` TEXT NOT NULL ,
+INDEX ( `process_id` )
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE=utf8_unicode_ci;
+
+
 --
 -- Table structure for table `questionnaire`
 --

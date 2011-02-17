@@ -326,7 +326,7 @@ class voip {
 			return false;
 		}
 
-		stream_set_timeout($this->socket, 1);
+	//	stream_set_timeout($this->socket, 1);
 
 		$q = "Action: Login\r\nUsername: $user\r\nSecret: $pass\r\nEvents: ";
 
@@ -395,11 +395,14 @@ class voipWatch extends voip {
 	function dbReconnect()
 	{
 		global $db;
-		
-		//keep reconnecting to the db so it doesn't time out
-		$db = newADOConnection(DB_TYPE);
-		$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-		$db->SetFetchMode(ADODB_FETCH_ASSOC);
+	
+		if (!$db->IsConnected())
+		{
+			//keep reconnecting to the db so it doesn't time out
+			$db = newADOConnection(DB_TYPE);
+			$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+			$db->SetFetchMode(ADODB_FETCH_ASSOC);
+		}
 	
 	}
 
@@ -413,7 +416,7 @@ class voipWatch extends voip {
 	{	
 		global $db;
 	
-		$sql = "SELECT l.call_id
+		$sql = "SELECT l.call_id, c.case_id
                         FROM operator AS o
                         JOIN (`case` AS c, `call_attempt` AS ca, `call` AS l) ON
                                                       ( c.current_operator_id = o.operator_id
@@ -426,10 +429,14 @@ class voipWatch extends voip {
 
 		$rs = $db->GetRow($sql);
 		$call_id =0;
+		$case_id =0;
 		if (!empty($rs))
+		{
 			$call_id =$rs['call_id'];
+			$case_id =$rs['case_id'];
+		}
 
-		return $call_id;	
+		return array($call_id,$case_id);	
 	}
 
 
@@ -511,16 +518,22 @@ class voipWatch extends voip {
 		$this->updateAllExtensionStatus(); 
 
 
+		$in = true;
+
+		$time = time();
+
 		//Watch for events
 		do
 		{
-			if (!$this->isConnected() || $this->socket === false){
+			if (!$this->isConnected() || $this->socket === false || $in === FALSE){
+				fclose($this->socket);
 				print(T_("Disconnected") . "\n");
 				$this->connect(VOIP_SERVER,VOIP_ADMIN_USER,VOIP_ADMIN_PASS,true);
 				if ($this->isConnected()) print (T_("Reconnected") . "\n");
 			}
 
 			$in = fgets($this->socket, 4096);
+
 
 			//print "IN: $in\n";
 
@@ -536,10 +549,10 @@ class voipWatch extends voip {
 				 */
 				if (eregi("Event: Dial.*SubEvent: Begin.*Channel: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
 				{
-					$call_id = $this->getCallId($regs[1]);
+					list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
 					{
-						print T_("Ringing") . T_(" Extension ") . $regs[1] . "\n"; 
+						print T_("Ringing") . T_(" Extension ") . $regs[1] . " " . T_("Case id") . ": <a href=\"supervisor.php?case_id=$case_id\">$case_id</a>\n"; 
 						$this->setState($call_id,2);	
 					}
 				}
@@ -548,10 +561,10 @@ class voipWatch extends voip {
 				 */
 				else if (eregi("Event: Bridge.*Channel1: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
 				{
-					$call_id = $this->getCallId($regs[1]);
+					list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
 					{
-						print T_("Answered") . T_(" Extension ") . $regs[1] .  "\n";
+						print T_("Answered") . T_(" Extension ") . $regs[1] . " " . T_("Case id") . ": <a href=\"supervisor.php?case_id=$case_id\">$case_id</a>\n"; 
 						$this->setState($call_id,3);
 					}
 				}
@@ -560,10 +573,10 @@ class voipWatch extends voip {
 				 */
 				else if (eregi("Event: Hangup.*Channel: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
 				{
-					$call_id = $this->getCallId($regs[1]);
+					list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
 					{
-						print T_("Hangup") . T_(" Extension ") . $regs[1] . "\n";
+						print T_("Hangup") . T_(" Extension ") . $regs[1] . " " . T_("Case id") . ": <a href=\"supervisor.php?case_id=$case_id\">$case_id</a>\n"; 
 						$this->setState($call_id,4,true);
 					}
 				}
@@ -589,7 +602,7 @@ class voipWatch extends voip {
 				//print $line . "\n\n";
 				$line = "";
 			}
-			else
+			else if ($in !== FALSE)
 			{
 				/**
 				 * Append the lines to the message if we are not yet at the end of one
@@ -601,10 +614,11 @@ class voipWatch extends voip {
 
 			@flush();
 
-			if ($process_id)
+			if ($process_id && ((time() - $time) > 10))
 			{
 				$this->dbReconnect();
 				$this->keepWatching = !is_process_killed($process_id);
+				$time = time();
 			}
 
 		} while ($this->keepWatching);

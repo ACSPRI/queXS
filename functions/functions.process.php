@@ -188,9 +188,8 @@ function process_append_data($process_id,$data)
 
 	$data = $db->qstr($data,get_magic_quotes_gpc());
 
-	$sql = "UPDATE `process`
-		SET `data` = CONCAT(`data`, $data)
-		WHERE `process_id` = '$process_id'";
+	$sql = "INSERT INTO `process_log` (process_log_id,process_id,datetime,data)
+		VALUES (NULL,'$process_id',NOW(),$data)";
 
 	$db->Execute($sql);
 
@@ -208,16 +207,17 @@ function process_get_data($process_id)
 {
 	global $db;
 
-	$sql = "SELECT `data`
-		FROM `process`
-		WHERE `process_id` = '$process_id'";
+	$sql = "SELECT process_log_id,datetime,data
+		FROM `process_log`
+		WHERE `process_id` = '$process_id'
+		ORDER BY process_log_id DESC";
 
-	$rs = $db->GetRow($sql);
+	$rs = $db->GetAll($sql);
 
 	if (!empty($rs))
-		return $rs['data'];
+		return $rs;	
 
-	return "";
+	return false;
 }
 
 /**
@@ -231,7 +231,7 @@ function process_get_last_data($type = 1)
 {
 	global $db;
 
-	$sql = "SELECT `data`
+	$sql = "SELECT process_id
 		FROM `process`
 		WHERE type = '$type'
 		ORDER BY `process_id` DESC
@@ -240,9 +240,9 @@ function process_get_last_data($type = 1)
 	$rs = $db->GetRow($sql);
 
 	if (!empty($rs))
-		return $rs['data'];
+		return process_get_data($rs['process_id']);
 
-	return "";
+	return false;
 }
 
 ?>

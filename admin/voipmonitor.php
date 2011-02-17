@@ -70,7 +70,7 @@ if ($p)
 			kill_process($p);
 	}
 
-	xhtml_head(T_("Monitor VoIP Process"),true,false,false,false,false,true);
+	xhtml_head(T_("Monitor VoIP Process"),true,array("../css/table.css"),false,false,false,true);
 
 	print "<h1>" . T_("Running process:") . " $p</h1>";
 
@@ -86,15 +86,23 @@ if ($p)
 		print "<p><a href='?kill=kill'>" . T_("Kill the running process") . "</a> ". T_("(requires activity on the VoIP Server to take effect)") . "</p>";
 	}
 
-	print process_get_data($p);
+	$d = process_get_data($p);
+	if ($d !== false)
+	{
+		xhtml_table($d,array('process_log_id','datetime','data'),array(T_("Log id"), T_("Date"), T_("Log entry")));
+	}
 }
 else
 {
-	xhtml_head(T_("Monitor VoIP Process"));
+	xhtml_head(T_("Monitor VoIP Process"),true,array("../css/table.css"));
 	print "<h2>" . T_("Monitor VoIP Process") . "</h2>";
 	print "<p><a href='?watch=watch'>" . T_("Click here to begin monitoring the VoIP Process") . "</a></p>";
 	print "<h2>" . T_("Outcome of last process run (if any)") . "</h2>";
-	print process_get_last_data();
+	$d = process_get_last_data();
+	if ($d !== false)
+	{
+		xhtml_table($d,array('process_log_id','datetime','data'),array(T_("Log id"), T_("Date"), T_("Log entry")));
+	}
 }
 xhtml_foot();
 

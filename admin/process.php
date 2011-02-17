@@ -59,7 +59,7 @@ function update_callback($buffer)
 {
 	global $process_id;
 
-	process_append_data($process_id,"<p>" . $buffer . "</p>");
+	process_append_data($process_id,$buffer);
 
 	return ""; //empty buffer
 }

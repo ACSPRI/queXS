@@ -54,7 +54,7 @@ function update_callback($buffer)
 {
 	global $process_id;
 
-	process_append_data($process_id,"<p>" . $buffer . "</p>");
+	process_append_data($process_id,$buffer);
 
 	return ""; //empty buffer
 }
@@ -92,7 +92,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 	//Make sure that the system knows we are system sorting 
 	set_setting('systemsort',true);	
 
-	print date("Y-m-d H:i") . " : " .  T_("Sorting cases");
+	print T_("Sorting cases");
 
 	$time_start = microtime(true);
 
