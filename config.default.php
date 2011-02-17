@@ -240,6 +240,12 @@ if (!defined('ALLOW_PAGE_REFRESH')) define ('ALLOW_PAGE_REFRESH',true);
  */
 if (!defined('ALLOW_RESPONDENT_SELECTOR')) define ('ALLOW_RESPONDENT_SELECTOR',true);
 
+
+/**
+ * Number of log records to display
+ */
+if (!defined('PROCESS_LOG_LIMIT')) define('PROCESS_LOG_LIMIT', 500);
+
 /**
  * Database configuration for queXS
  */

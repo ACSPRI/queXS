@@ -207,10 +207,11 @@ function process_get_data($process_id)
 {
 	global $db;
 
-	$sql = "SELECT process_log_id,datetime,data
+	$sql = "SELECT process_log_id,DATE_FORMAT(datetime,'" . DATE_TIME_FORMAT ."') as datetime,data
 		FROM `process_log`
 		WHERE `process_id` = '$process_id'
-		ORDER BY process_log_id DESC";
+		ORDER BY process_log_id DESC
+		LIMIT " . PROCESS_LOG_LIMIT;
 
 	$rs = $db->GetAll($sql);
 
