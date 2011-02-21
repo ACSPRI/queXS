@@ -189,6 +189,9 @@ if ((isset($move) && $move == "movesubmit") && (!isset($notanswered) || !$notans
 	$quexs_url = get_start_interview_url();	
 	$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
 
+	$end_url = get_end_interview_url();
+	$url = str_replace("{ENDINTERVIEWURL}", $end_url, $url);
+
 			//Automatically redirect the page to the "url" setting for the survey
 			session_write_close();
 

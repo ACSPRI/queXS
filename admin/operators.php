@@ -135,7 +135,7 @@ if (isset($_POST['operator']))
 			$a = T_("Added:") . " " .  $operator;	
 
 			if (FREEPBX_PATH !== false)
-				$a .= "<br/>" . T_("Please reload FreePBX for the new VoIP extension to take effect");
+				$a .= "<br/>" . T_("FreePBX has been reloaded for the new VoIP extension to take effect");
 	
 			$oid = $db->Insert_ID();
 

@@ -62,8 +62,40 @@ if (isset($_POST))
 				$htp->addUser($_POST["username" . $operator_id],$val);
 			}
 		}
+		else if (substr($key,0,8) == "timezone")
+		{
+			$operator_id = intval(substr($key,8));
+			$tzone = $db->qstr($val);
+			$sql = "UPDATE operator
+				SET Time_zone_name = $tzone
+				WHERE operator_id = '$operator_id'";
+			$db->Execute($sql);
+		}
 	}
 }
+
+if (isset($_GET['voipdisable']))
+{
+	$operator_id = intval($_GET['voipdisable']);
+
+	$sql = "UPDATE operator
+		SET voip = 0
+		WHERE operator_id = '$operator_id'";
+
+	$db->Execute($sql);	
+}
+
+if (isset($_GET['voipenable']))
+{
+	$operator_id = intval($_GET['voipenable']);
+
+	$sql = "UPDATE operator
+		SET voip = 1
+		WHERE operator_id = '$operator_id'";
+
+	$db->Execute($sql);	
+}
+
 
 if (isset($_GET['disable']))
 {
@@ -113,9 +145,9 @@ if (isset($_GET['operator_id']))
 			header("Pragma: public");                          // HTTP/1.0
 	
 			if (isset($_GET['winbat']))
-				echo "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_ADDR'];
+				echo "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME'];
 			else
-				echo "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_ADDR'];
+				echo "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME'];
 		}
 	}
 }
@@ -125,6 +157,12 @@ if ($display)
 	$sql = "SELECT
 			CONCAT(firstName, ' ', lastName) as name,
 			CONCAT('<form action=\'?\' method=\'post\'><input type=\'text\' name=\'password', operator_id, '\'/><input type=\'hidden\' name=\'username', operator_id, '\' value=\'', username, '\'/><input type=\'submit\' value=\'" . T_("Update password") . "\'/></form>') as password,
+			CONCAT('<form action=\'?\' method=\'post\'><select name=\'timezone', operator_id, '\'/>', 
+
+(SELECT GROUP_CONCAT(CONCAT('<option ', CASE WHEN timezone_template.Time_zone_name LIKE operator.Time_zone_name THEN ' selected=\"selected\" ' ELSE '' END ,'value=\"', Time_zone_name, '\">', Time_zone_name, '</option>') SEPARATOR '') as tzones
+                FROM timezone_template)
+
+			  ,'</select><input type=\'submit\' value=\'" . T_("Update timezone") . "\'/></form>') as timezone,
 			CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . T_("Windows bat file") . "</a>') as winbat,
 			CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . T_("*nix script file") . "</a>') as sh,
 			CASE WHEN enabled = 0 THEN
@@ -133,6 +171,12 @@ if ($display)
 				CONCAT('<a href=\'?disable=',operator_id,'\'>" . T_("Disable") . "</a>') 
 			END
 			as enabledisable,
+			CASE WHEN voip = 0 THEN
+				CONCAT('<a href=\'?voipenable=',operator_id,'\'>" . T_("Enable VoIP") . "</a>') 
+			ELSE
+				CONCAT('<a href=\'?voipdisable=',operator_id,'\'>" . T_("Disable VoIP") . "</a>') 
+			END
+			as voipenabledisable,
 			username
 		FROM operator";
 	
@@ -140,8 +184,8 @@ if ($display)
 	
 	xhtml_head(T_("Operator list"),true,array("../css/table.css"));
 	
-	$columns = array("name","username","enabledisable");
-	$titles = array(T_("Operator"),T_("Username"),T_("Enable/Disable"));
+	$columns = array("name","username","enabledisable","timezone");
+	$titles = array(T_("Operator"),T_("Username"),T_("Enable/Disable"),T_("Update timezone"));
 
 	if (VOIP_ENABLED)
 	{
@@ -150,8 +194,10 @@ if ($display)
 		print "<p><a href='../voipclient.exe'>" . T_("Download Windows VoIP Executable")  . "</a></p>";
 		print "<p><a href='../voipclient'>" . T_("Download Linux VoIP Executable")  . "</a></p>";
 
+		$columns[] = "voipenabledisable";
 		$columns[] = "winbat";
 		$columns[] = "sh";
+		$titles[] = T_("Enable/Disable VoIP");
 		$titles[] = T_("Windows VoIP");
 		$titles[] = T_("*nix VoIP");
 	}

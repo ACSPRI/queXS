@@ -232,6 +232,8 @@ if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notan
 	$quexs_url = get_start_interview_url();	
 	$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
 
+	$end_url = get_end_interview_url();
+	$url = str_replace("{ENDINTERVIEWURL}", $end_url, $url);
 
 
 			header("Location: {$url}");

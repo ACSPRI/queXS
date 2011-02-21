@@ -70,7 +70,7 @@ if ($operator_id)
 			copy(realpath(dirname(__FILE__) . '/../voipclient'),"$zipdir/voipclient");
 			$f1 = "$zipdir/voipclient";
 			$f2 = "$zipdir/startvoip";
-			file_put_contents($f2, "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_ADDR']);
+			file_put_contents($f2, "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME']);
 
 		} 
 		else
@@ -79,7 +79,7 @@ if ($operator_id)
 			copy(realpath(dirname(__FILE__) . '/../voipclient.exe'),"$zipdir/voipclient.exe");
 			$f1 = "$zipdir/voipclient.exe";
 			$f2 = "$zipdir/startvoip.bat";
-			file_put_contents($f2, "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_ADDR']);
+			file_put_contents($f2, "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME']);
 
 		}
 

@@ -114,8 +114,75 @@ function freepbx_add_extension($extension,$name,$password)
 
 		freepbx_core_users_add($amp_conf,$astman,$vars);
 		freepbx_core_devices_add($amp_conf,$astman,$vars["deviceid"],$vars["tech"],$vars["devinfo_dial"],$vars["devicetype"],$vars["deviceuser"],$vars["description"],$vars["emergency_cid"],false,$vars);
-		freepbx_need_reload();
+		freepbx_do_reload($amp_conf,$astman,$asterisk_conf);
 }
+
+function freepbx_do_reload(&$amp_conf,&$astman,&$asterisk_conf) 
+{
+        global $db;
+
+       	array($return);
+ 
+        if (isset($amp_conf["PRE_RELOAD"]) && !empty($amp_conf['PRE_RELOAD']))  {
+                exec( $amp_conf["PRE_RELOAD"], $output, $exit_val );
+                
+        }
+        
+        $retrieve = $amp_conf['AMPBIN'].'/retrieve_conf 2>&1';
+        //exec($retrieve.'&>'.$asterisk_conf['astlogdir'].'/freepbx-retrieve.log', $output, $exit_val);
+        exec($retrieve, $output, $exit_val);
+        
+        
+        if ($exit_val != 0) {
+                $return['status'] = false;
+                $return['message'] = sprintf(_('Reload failed because retrieve_conf encountered an error: %s'),$exit_val);
+                $return['num_errors']++;
+                $notify->add_critical('freepbx','RCONFFAIL', _("retrieve_conf failed, config not applied"), $return['message']);
+                return $return;
+        }
+
+        if (!isset($astman) || !$astman) {
+                $return['status'] = false;
+                $return['message'] = _('Reload failed because FreePBX could not connect to the asterisk manager interface.');
+                $return['num_errors']++;
+                return $return;
+        }
+
+        //reload MOH to get around 'reload' not actually doing that.
+        $astman->send_request('Command', array('Command'=>'moh reload'));
+
+        //reload asterisk (>= 1.4)
+          $astman->send_request('Command', array('Command'=>'module reload'));
+
+        $return['status'] = true;
+
+        if ($amp_conf['FOPRUN'] && !$amp_conf['FOPDISABLE']) {
+                //bounce op_server.pl
+                $wOpBounce = $amp_conf['AMPBIN'].'/bounce_op.sh';
+                exec($wOpBounce.' &>'.$asterisk_conf['astlogdir'].'/freepbx-bounce_op.log', $output, $exit_val);
+
+                if ($exit_val != 0) {
+                        $desc = _('Could not reload the FOP operator panel server using the bounce_op.sh script. Configuration changes may not be reflected in the panel display.');
+                        $return['num_errors']++;
+		}
+        }
+
+        if (isset($amp_conf["POST_RELOAD"]) && !empty($amp_conf['POST_RELOAD']))  {
+                exec( $amp_conf["POST_RELOAD"], $output, $exit_val );
+
+                if ($exit_val != 0) {
+                        $desc = sprintf(_("Exit code was %s and output was: %s"), $exit_val, "\n\n".implode("\n",$output));
+                        $return['num_errors']++;
+		}
+        }
+
+	$sql = "UPDATE ".FREEPBX_DATABASE.".admin SET value = 'false' WHERE variable = 'need_reload'";
+	
+	$db->Execute($sql);
+
+        return $return;
+}
+
 
 
 function freepbx_need_reload()

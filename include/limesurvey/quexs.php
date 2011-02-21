@@ -688,6 +688,16 @@ function get_respondent_selection_url()
 
 
 /**
+ * Get the URL to end the interview
+ *
+ * @return string The URL to end the interview
+ */
+function get_end_interview_url()
+{
+	return QUEXS_URL . "rs_project_end.php";
+}
+
+/**
  * Get start interviewer URL
  *
  * @return string The URL to start the interview

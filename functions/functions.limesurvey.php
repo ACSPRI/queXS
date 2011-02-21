@@ -290,7 +290,7 @@ function create_limesurvey_questionnaire($title,$exittoend = true)
 	. "'', '";
 
 	if ($exittoend)
-		$isquery .=  QUEXS_URL . "rs_project_end.php')";
+		$isquery .=  "{ENDINTERVIEWURL}')";
 	else
 		$isquery .=  "{STARTINTERVIEWURL}')";
 	

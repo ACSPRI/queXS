@@ -309,8 +309,10 @@ if ((isset($move) && $move == "movesubmit")  && (!isset($notanswered) || !$notan
     	    include_once("quexs.php");
 	    $quexs_url = get_start_interview_url();	
 	    $url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
-
-            header("Location: {$url}");
+	    $end_url = get_end_interview_url();	
+	    $url = str_replace("{ENDINTERVIEWURL}", $end_url, $url);
+            
+	    header("Location: {$url}");
         }
 
 	//if($thissurvey['printanswers'] != 'Y' && $thissurvey['usecookie'] != 'Y' && $tokensexist !=1)
