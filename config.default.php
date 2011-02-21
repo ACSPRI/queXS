@@ -129,15 +129,22 @@ if (!defined('LIME_AUTO_ADVANCE')) define('LIME_AUTO_ADVANCE', true);
  */
 if (!defined('QUEXS_PATH')) define('QUEXS_PATH', '/quexs/');
 
+$protocol = "http://";
+
+if (!empty($_SERVER['HTTPS'])) 
+{
+	$protocol = "https://";
+}
+
 /**
  * The complete URL to limesurvey
  */
-if (!defined('LIME_URL')) define('LIME_URL','http://' . $_SERVER['SERVER_NAME'] . QUEXS_PATH . LIME_PATH);
+if (!defined('LIME_URL')) define('LIME_URL', $protocol . $_SERVER['SERVER_NAME'] . QUEXS_PATH . LIME_PATH);
 
 /**
  * The complete URL to this copy of queXS
  */
-if (!defined('QUEXS_URL')) define('QUEXS_URL','http://' . $_SERVER['SERVER_NAME'] . QUEXS_PATH);
+if (!defined('QUEXS_URL')) define('QUEXS_URL', $protocol . $_SERVER['SERVER_NAME'] . QUEXS_PATH);
 
 /**
  * The default locale (language)
