@@ -1,0 +1,114 @@
+queXS 1.3.0 - Changes since 1.2.0:
+
+queXS 1.3.0 includes major performance improvements for larger installations using the system sort process, better handling of VoIP, integration with FreePBX for easy VoIP extension creation, improved questionnaire management and support for the Internet Explorer >= 6.0 browser.
+
+New features:
+*{PERCCOMPLETE} token displays percentage complete in limesurvey and can be used as conditions token (eg > 0 means interview started)
+*messagesleft token for limesurvey conditions on number of answering messages left
+*Choose operator timezone from a list instead of having to enter
+*Integration with FREEPBX v2.8.0 (creation of extensions and reloading)
+*Operator management functions added 
+*Split database configuration file to structure and data by region (Added for Australia and USA)
+*Ability to download VoIP client
+*Support for Internet Explorer >= 6.0 (Sponsored by Zimi)
+*Can define project information in administrative menu
+*Ability to enable/disable questionnaires to remove clutter in administration screens
+*Complete outcome only appears for completed cases (Sponsored by Zimi)
+*Jump directly to questionnaire where no respondent selection informatino defined (Sponsored by Zimi)
+*AUTO_COMPLETE_OUTCOME added to automatically assign complete outcome on questionnaire completion (Sponsored by Zimi)
+*AUTO_LOGOUT_MINUTES to automatically logout interviewer session if left idle (Sponsored by Zimi)
+*DEFAULT_TAB, DEFAULT_TAB_APPOINTMENT set default tab to display in info section (Sponsored by Zimi)
+*Tabs can be enabled/disabled in configuration file
+*System sort process added for system wide case sorting. May improve performance in large installations
+*HEADER_EXPANDER_MANUAL directive added to allow for the header to be shrunk by the operator (Sponsored by Zimi)
+*Log of system sorting and voip monitoring displayed in table form
+*Limesurvey database automatically installed with new install
+
+Bug fixes:
+*queXS admin menu stays in place when using limesurvey condition editor
+*Case and appointments display correctly when questionnaire is not shift restrcited
+*Appointment time display respects TIME_FORMAT configuration directive
+*Word "till" localised (Thank you Zimi)
+*VoIP monitoring process gracefully handles errors/timeouts
+
+
+Required database modifications from 1.2.0:
+
+ALTER TABLE `questionnaire_sample_exclude_priority` ADD `sortorder` INT( 11 ) NULL ;
+ALTER TABLE `questionnaire_sample_exclude_priority` ADD INDEX ( `sortorder` ) ;
+ALTER TABLE `case` ADD `sortorder` INT( 11 ) NULL ;
+ALTER TABLE `case` ADD INDEX ( `sortorder` ) ;
+ALTER TABLE `questionnaire` ADD `info` text NULL ;
+ALTER TABLE `questionnaire` ADD `enabled` TINYINT( 1 ) NOT NULL default '1';
+ALTER TABLE `process` ADD `type` INT NOT NULL DEFAULT '1' AFTER `process_id` ;
+CREATE TABLE `process_log` (
+`process_log_id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`process_id` BIGINT NOT NULL ,
+`datetime` DATETIME NOT NULL ,
+ `data` text collate utf8_unicode_ci NOT NULL,
+INDEX ( `process_id` )
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE IF NOT EXISTS `setting` (
+ `setting_id` int(11) NOT NULL auto_increment,
+ `field` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `value` text collate utf8_unicode_ci NOT NULL,
+ PRIMARY KEY  (`setting_id`),
+ UNIQUE KEY `field` (`field`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+COMMENT='Serialised table of settings';
+
+
+queXS 1.2.0 - Changes since 1.1.0:
+
+queXS 1.2.0 has 3 major feature additions since 1.1.0.
+
+1. Ability to produce a seperate Limesurvey questionnaire to act as a respondent selection module
+2. Can export Limesurvey questionnaires directly to queXML PDF files, ready to import to queXF for banding
+3. Quota row prioritisation added including auto priority calculation (Sponsor: Zimi)
+
+In addition, Translations have been updated (Thank you to those on Launchpad who have contributed). 
+
+The documentation on the website (Administration manual and Reports and quota documentation) has been ammended to include details of the new features.
+
+Upgrading requires a small database update:
+
+INSERT INTO `outcome` VALUES(33, '2.36', 'Miscellaneous - Unavailable for a week', 10080, 1, 0, 1, 1, 1, 0, 'O');
+ALTER TABLE `questionnaire` ADD `lime_rs_sid` INT( 11 ) NULL ;
+
+queXS 1.1.0 - Changes since 1.0.0:
+
+New features:
+*Performance improvements when using quota rows (Thank you Zimi)
+*Added configuration directive for Auto advance: LIME_AUTO_ADVANCE
+*Added more descriptive elements to printable survey for debugging
+*Added extension password to operator details
+*Status updated to handle extension password for switching VoIP on an off
+*VoIP Functions can properly handle IAX2 extensions
+*Can output entire key file 
+*(Limesurvey) Can assign queXS sample codes in the fieldname of a condition
+*Added VoIP Extension status monitoring in admin functions
+*Does not use popup windows (better for Kiosks) (Thank you McMaster University)
+*Added ability to delete case notes as supervisor
+
+Bug fixes:
+*Put the code for outcome to be for the supervisor in the right spot
+*Supervisor outcomes given priority along with final outcomes
+*Added error message when not an operator and trying to add a shift
+*Fixed bug where not displaying if default lang is not 'en'
+*(Limesurvey) When INSERTANS used, do not display "No Answer" when no answer is selected
+*Make sure to only move forward on click where appropriate (allow false to be passed to stop auto click)
+*(Limesurevy) Updated templates to look a bit better and include the limesurvey customonLoad function
+*VoIP status is now part of VoIP monitoring so we don't query the Asterisk server often
+*Added index to appointment table to speed up case selection criteria
+*Added case_id and date to queXML structure output (as appears in fixed width data file)
+*Doesn't try to call supervisor when on a call
+
+Translations updated from Launchpad. Thank you for your contributions:
+*Galacian
+*Spanish
+*French
+*Italian
+*Lithuanian
+*Dutch
+
+
