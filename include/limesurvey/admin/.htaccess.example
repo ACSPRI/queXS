@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "queXS CATI: Authentication Required"
+AuthUserFile /var/opt/quexs/htpasswd
+AuthGroupFile /var/opt/quexs/htgroup
+require group admin
