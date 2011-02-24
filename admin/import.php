@@ -45,26 +45,24 @@ include ("../functions/functions.xhtml.php");
 include("../functions/functions.import.php");
 
 
-session_start();
-
-if (isset($_GET['import_form']))
+if (isset($_POST['import_form']))
 {
 	//form has been submitted
 	xhtml_head(T_("Import: Validating and uploading"));
 
 	//verify each GET field is unique (except import_form)
 	$sfields = array();
-	foreach($_GET as $getv => $val)
+	foreach($_POST as $getv => $val)
 		//clean up?
 		$sfields[$getv] = $val;
 
 	$error = verify_fields($sfields);
 
-	$description = $_GET['description'];
+	$description = $_POST['description'];
 
 	if ($error == "")
 	{	//verified so upload
-		if (import_file($_SESSION['filename'],$description,$sfields))
+		if (import_file($_POST['filename'],$description,$sfields))
 		{
 			print "<p>" . T_("Successfully imported file") . "</p>";
 		}
@@ -88,12 +86,11 @@ else if (isset($_POST['import_file']))
 	
 	xhtml_head(T_("Import: Select columns to import"));
 	?>
-	<form action="" method="get">
+	<form action="" method="post">
 	<?
 
 	$tmpfname = tempnam("/tmp", "FOO");
 	move_uploaded_file($_FILES['file']['tmp_name'],$tmpfname);
-	$_SESSION['filename'] = $tmpfname;
 
 	display_table(get_first_row($tmpfname));
 
@@ -101,6 +98,7 @@ else if (isset($_POST['import_file']))
 
 	?>
 	<p><input type="hidden" name="description" value="<? if (isset($_POST['description'])) print($_POST['description']); ?>"/></p>
+	<p><input type="hidden" name="filename" value="<? echo $tmpfname; ?>"/></p>
 	<p><input type="submit" name="import_form"/></p>
 	</form>
 
