@@ -292,8 +292,43 @@ function get_case_id($operator_id, $create = false)
 	$case_id = false;
 
 	if (empty($r1))
-	{	
-		if ($create)
+	{
+		$sql = "SELECT o.next_case_id 
+			FROM `operator` as o, `case` as c
+			WHERE o.operator_id = '$operator_id'
+			AND c.case_id = o.next_case_id
+			AND c.current_operator_id IS NULL";
+
+		$rnc = $db->GetRow($sql);
+
+		if (isset($rnc['next_case_id']) && !empty($rnc['next_case_id']))
+		{
+			$case_id = $rnc['next_case_id'];
+
+			$sql = "UPDATE `case`
+				SET current_operator_id = '$operator_id'
+				WHERE current_operator_id IS NULL
+				AND case_id = '$case_id'";
+	
+			$db->Execute($sql);
+		
+			//should fail transaction if already assigned to another case	
+			if ($db->Affected_Rows() != 1)
+			{
+				$db->FailTrans();
+			}
+			else
+			{
+				//remove next case setting
+				$sql = "UPDATE `operator`
+					SET next_case_id = NULL
+					WHERE operator_id = '$operator_id'";
+
+				$db->Execute($sql);
+			}
+
+		}	
+		else if ($create)
 		{
 			$systemsort = get_setting('systemsort');
 

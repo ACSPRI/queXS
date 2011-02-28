@@ -163,6 +163,28 @@ if ($case_id != false)
 		$db->Execute($sql);
 	}
 
+	if (isset($_GET['operator_id']))
+	{
+		$case_operator_id = bigintval($_GET['operator_id']);
+
+		if ($case_operator_id == 0)
+		{
+			//clear the next case if set to no operator
+			$sql = "UPDATE `operator`
+				SET next_case_id = NULL
+				WHERE next_case_id = '$case_id'";
+		}
+		else
+		{
+			$sql = "UPDATE `operator`
+				SET next_case_id = '$case_id'
+				WHERE operator_id = '$case_operator_id'";	
+		}
+
+		$db->Execute($sql);
+	}
+
+
 
 	$sql = "SELECT o.description,o.outcome_id, q.description as qd, si.description as sd
 		FROM `case` as c, `outcome` as o, questionnaire as q, sample as s, sample_import as si
@@ -280,6 +302,25 @@ if ($case_id != false)
 		<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Set outcome"); ?>"/></p>
 		</form>
 		<?
+
+		//assign this to an operator for their next case
+		print "<h3>" . T_("Assign this case to operator (will appear as next case for them)") . "</h3>";
+		?>
+		<form method="get" action="?">
+		<?              
+			$sql = "SELECT operator_id as value,CONCAT(firstName,' ', lastName) as description, CASE WHEN next_case_id = '$case_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+				FROM operator
+				WHERE enabled = 1";
+	
+			$rs3 = $db->GetAll($sql);
+			display_chooser($rs3, "operator_id", "operator_id",true,false,false);
+	
+		?>
+		<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Assign this case to operator"); ?>"/></p>
+		</form>
+		<?
+
+	
 	}
 	else
 	{
