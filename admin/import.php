@@ -89,7 +89,7 @@ else if (isset($_POST['import_file']))
 	<form action="" method="post">
 	<?
 
-	$tmpfname = tempnam("/tmp", "FOO");
+	$tmpfname = tempnam(TEMPORARY_DIRECTORY, "FOO");
 	move_uploaded_file($_FILES['file']['tmp_name'],$tmpfname);
 
 	display_table(get_first_row($tmpfname));
