@@ -3567,11 +3567,19 @@ function getHeader()
         {
             $header.=" dir=\"rtl\" ";
         }
+
+	include_once("quexs.php");
+
         $header.= ">\n\t<head>\n"
                 . $css_header
-                . "\t\t<script type=\"text/javascript\" src=\"".$rooturl."/scripts/jquery/jquery.js\"></script>\n"
-                . "\t\t<script type=\"text/javascript\" src=\"".$rooturl."/../../js/childnap.js\"></script>\n" //queXS Addition
-			    . $js_header;
+                . "\t\t<script type=\"text/javascript\" src=\"".$rooturl."/scripts/jquery/jquery.js\"></script>\n";
+
+	if (AUTO_LOGOUT_MINUTES !== false)
+	{
+   		$header .= "\t\t<script type=\"text/javascript\" src=\"".$rooturl."/../../js/childnap.js\"></script>\n"; //queXS Addition
+	}
+
+	$header .= $js_header;
 			
         return $header;        
     }
@@ -6164,7 +6172,7 @@ function GetTokenConditionsFieldNames($surveyid)
 * @param mixed $surveyid  The survey ID
 * @return array The fieldnames as key and names as value in an Array
 */
-function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
+function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false, $quexs = true)
 {
     global $dbprefix, $connect, $clang;
     if (tokenTableExists($surveyid) === false)
@@ -6173,10 +6181,13 @@ function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
     }
     $extra_attrs=GetAttributeFieldNames($surveyid);
     $basic_attrs=Array('firstname','lastname','email','token','language','sent','remindersent','remindercount');
-    $basic_attrs[] = 'callattempts'; //queXS addition
-    $basic_attrs[] = 'onappointment'; //queXS addition
-    $basic_attrs[] = 'perccomplete'; //queXS addition
-    $basic_attrs[] = 'messagesleft'; //queXS addition
+    if ($quexs)
+    {
+	    $basic_attrs[] = 'callattempts'; //queXS addition
+	    $basic_attrs[] = 'onappointment'; //queXS addition
+	    $basic_attrs[] = 'perccomplete'; //queXS addition
+	    $basic_attrs[] = 'messagesleft'; //queXS addition
+	}
     $basic_attrs_names=Array(
 			$clang->gT('First Name'),
 			$clang->gT('Last Name'),
@@ -6186,12 +6197,13 @@ function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false)
 			$clang->gT('Invitation sent date'),
 			$clang->gT('Last Reminder sent date'),
 			$clang->gT('Total numbers of sent reminders'));
-
+    if ($quexs)
+	{
     $basic_attrs_names[] = $clang->gT('queXS: Number of call attempts'); //queXS addition
     $basic_attrs_names[] = $clang->gT('queXS: On appointment?'); //queXS addition
     $basic_attrs_names[] = $clang->gT('queXS: Percentage complete'); //queXS addition
     $basic_attrs_names[] = $clang->gT('queXS: Number of answering machine messages left'); //queXS addition
-
+}
     $thissurvey=getSurveyInfo($surveyid);               
     $attdescriptiondata=!empty($thissurvey['attributedescriptions']) ? $thissurvey['attributedescriptions'] : "";
     $attdescriptiondata=explode("\n",$attdescriptiondata);

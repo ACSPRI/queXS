@@ -304,7 +304,7 @@ function spss_fieldmap($prefix = 'V') {
 
 	$fields=array();
 	if (isset($tokensexist) && $tokensexist == true && $surveyprivate == 'N') {
-		$tokenattributes=GetTokenFieldsAndNames($surveyid,false);
+		$tokenattributes=GetTokenFieldsAndNames($surveyid,false,false);
 		foreach ($tokenattributes as $attributefield=>$attributedescription)
 		{
 			//Drop the token field, since it is in the survey too
@@ -428,7 +428,7 @@ function spss_getquery() {
 	#See if tokens are being used
 	if (isset($tokensexist) && $tokensexist == true && $surveyprivate == 'N') {
 		$query="SELECT ";
-		$tokenattributes=GetTokenFieldsAndNames($surveyid,false);
+		$tokenattributes=GetTokenFieldsAndNames($surveyid,false,false);
 		foreach ($tokenattributes as $attributefield=>$attributedescription) {
 			//Drop the token field, since it is in the survey too
 			if($attributefield!='token' && $attributefield!='callattempts' && $attributefield!='onappointment') { //queXS Addition
