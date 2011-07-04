@@ -128,4 +128,3 @@ else
 xhtml_foot();
 
 ?>
-
