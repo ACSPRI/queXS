@@ -45,6 +45,33 @@ include_once(dirname(__FILE__).'/../db.inc.php');
 
 
 /**
+ * Check if the project associated with this case is using 
+ * questionnaire availability
+ * 
+ * @param int $case_id 
+ * 
+ * @return boolean True if using case availability, false if not
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2011-07-01
+ */
+function is_using_availability($case_id)
+{
+	global $db;
+
+	$sql = "SELECT count(qa.questionnaire_id) as cc
+		FROM `case` as c, questionnaire_availability as qa
+		WHERE qa.questionnaire_id = c.questionnaire_id
+		AND c.case_id = $case_id";
+
+	$rs = $db->CacheGetRow($sql);
+
+	if ($rs['cc'] > 0)
+		return true;
+
+	return false;
+}
+
+/**
  * Return if VOIP is enabled on an operator by operator basis
  * Will always return false if VOIP is globally disabled
  *
@@ -379,8 +406,11 @@ function get_case_id($operator_id, $create = false)
 					LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
 					LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
 					LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
+					LEFT JOIN case_availability AS casa ON (casa.case_id = c.case_id)
+					LEFT JOIN availability AS ava ON (ava.availability_group_id = casa.availability_group_id)
 					JOIN operator_skill as os on (os.operator_id = op.operator_id and os.outcome_type_id = ou.outcome_type_id)
 					WHERE c.current_operator_id IS NULL
+					AND (casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
 					AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
 					AND ap.case_id is NULL
 					AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
@@ -1659,7 +1689,7 @@ function end_case($operator_id)
 					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id)
 					WHERE c.case_id = '$case_id'
 					AND o.outcome_id != 18
-					ORDER BY o.contacted DESC,c.call_id DESC
+					ORDER BY c.call_id DESC
 					LIMIT 1";
 			
 				$t = $db->GetRow($sql);

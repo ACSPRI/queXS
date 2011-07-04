@@ -133,6 +133,7 @@ print $script;
 	<div class='box'><a href="javascript:poptastic('supervisor.php');"><? echo T_("Supervisor"); ?></a></div>
 	<div class='box' id='recbox'><a id='reclink' class='offline' href="javascript:poptastic('record.php?start=start');"><? echo T_("Start REC"); ?></a></div>
 	<? if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.png' alt='<? echo T_('Arrow for expanding or contracting'); ?>'/></div> <? } ?>
+	<div class='box'><a href='index.php?'><? echo T_("Restart"); ?></a></div>
 </div>
 
 <div id="content" class="content">
@@ -141,6 +142,7 @@ print $script;
 $case_id = get_case_id($operator_id,true);
 $ca = get_call_attempt($operator_id,true);
 $appointment = false;
+$availability = is_using_availability($case_id);
 if ($ca)
 {
 	if (is_on_appointment($ca))
@@ -180,6 +182,16 @@ xhtml_object($data,"main-content");
 	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("casenote.php","main-casenotes");?></div>
    </div>
 <? }?>
+
+<? if ($availability) { ?>
+     <div class="tabbertab <? if ((DEFAULT_TAB == 'availability' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'availability' && $appointment)) 
+					print "tabbertabdefault"; ?>">
+	  <h2><? echo T_("Availability"); ?></h2>
+	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("availability.php","main-casenotes");?></div>
+   </div>
+<? }?>
+
+
 
 <? if (TAB_CONTACTDETAILS) { ?>
      <div class="tabbertab <? if ((DEFAULT_TAB == 'contactdetails' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'contactdetails' && $appointment)) 

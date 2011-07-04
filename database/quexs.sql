@@ -1388,3 +1388,95 @@ CREATE TABLE `timezone_template` (
   `Time_zone_name` char(64) NOT NULL,
   PRIMARY KEY  (`Time_zone_name`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `availability`
+--
+
+CREATE TABLE IF NOT EXISTS `availability` (
+  `availability_id` bigint(20) NOT NULL auto_increment,
+  `availability_group_id` bigint(20) NOT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
+  `day_of_week` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`availability_id`),
+  KEY `availability_group_id` (`availability_group_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `availability`
+--
+
+INSERT INTO `availability` (`availability_id`, `availability_group_id`, `start`, `end`, `day_of_week`) VALUES
+(1, 1, '00:00:00', '11:59:59', 2),
+(2, 1, '00:00:00', '11:59:59', 3),
+(3, 1, '00:00:00', '11:59:59', 4),
+(4, 1, '00:00:00', '11:59:59', 5),
+(5, 1, '00:00:00', '11:59:59', 6),
+(6, 2, '12:00:00', '17:59:59', 2),
+(7, 2, '12:00:00', '17:59:59', 3),
+(8, 2, '12:00:00', '17:59:59', 4),
+(9, 2, '12:00:00', '17:59:59', 5),
+(10, 2, '12:00:00', '17:59:59', 6),
+(11, 3, '18:00:00', '23:59:59', 2),
+(12, 3, '18:00:00', '23:59:59', 3),
+(13, 3, '18:00:00', '23:59:59', 4),
+(14, 3, '18:00:00', '23:59:59', 5),
+(15, 3, '18:00:00', '23:59:59', 6),
+(16, 4, '00:00:00', '23:59:59', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `availability_group`
+--
+
+CREATE TABLE IF NOT EXISTS `availability_group` (
+  `availability_group_id` bigint(20) NOT NULL auto_increment,
+  `description` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`availability_group_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `availability_group`
+--
+
+INSERT INTO `availability_group` (`availability_group_id`, `description`) VALUES
+(1, 'Weekday mornings (Before 12pm)'),
+(2, 'Weekday afternoons (After 12pm but before 6pm)'),
+(3, 'Evenings (After 6pm)'),
+(4, 'Saturdays');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `case_availability`
+--
+
+CREATE TABLE IF NOT EXISTS `case_availability` (
+  `case_id` bigint(20) NOT NULL,
+  `availability_group_id` bigint(20) NOT NULL,
+  PRIMARY KEY  (`case_id`,`availability_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `case_availability`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questionnaire_availability`
+--
+
+CREATE TABLE IF NOT EXISTS `questionnaire_availability` (
+  `questionnaire_id` bigint(20) NOT NULL,
+  `availability_group_id` bigint(20) NOT NULL,
+  PRIMARY KEY  (`questionnaire_id`,`availability_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `questionnaire_availability`
+--

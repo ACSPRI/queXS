@@ -184,8 +184,27 @@ if ($case_id != false)
 		$db->Execute($sql);
 	}
 
+	if (isset($_GET['submitag']))
+	{
+		$db->StartTrans();
 
+		$sql = "DELETE FROM case_availability
+			WHERE case_id = '$case_id'";
 
+		$db->Execute($sql);
+
+		foreach($_GET as $key => $val)
+		{
+			if (substr($key,0,2) == "ag")
+			{
+				$sql = "INSERT INTO case_availability (case_id,availability_group_id)
+					VALUES ($case_id,'$val')";
+				$db->Execute($sql);						
+			}
+		}
+		$db->CompleteTrans();
+	}
+	
 	$sql = "SELECT o.description,o.outcome_id, q.description as qd, si.description as sd
 		FROM `case` as c, `outcome` as o, questionnaire as q, sample as s, sample_import as si
 		WHERE c.case_id = '$case_id'
@@ -302,6 +321,50 @@ if ($case_id != false)
 		<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Set outcome"); ?>"/></p>
 		</form>
 		<?
+
+		//view availability
+		if (is_using_availability($case_id))
+		{
+
+			//List all availability group items and whether selected or not (all selected by default unless >= 1 availability group is in use for this case
+			$sql = "SELECT qa.availability_group_id,ag.description,ca.availability_group_id as selected_group_id
+				FROM `case` as c
+				JOIN questionnaire_availability AS qa ON (qa.questionnaire_id = c.questionnaire_id)
+				JOIN availability_group AS ag ON (ag.availability_group_id = qa.availability_group_id)
+				LEFT JOIN case_availability AS ca ON (ca.availability_group_id = qa.availability_group_id and ca.case_id = c.case_id)
+				WHERE c.case_id = '$case_id'";
+
+			$rs = $db->GetAll($sql);
+
+			//Display all availability groups as checkboxes
+
+			print "<p>" . T_("Select groups to limit availability (Selecting none means always available)") .  "</p>";
+			print "<form action='?' method='get'>";
+			foreach ($rs as $r)
+			{
+				$checked = "";
+
+				//if ($allselected || $r['availability_group_id'] == $r['selected_group_id'])
+				if ($r['availability_group_id'] == $r['selected_group_id'])
+					$checked = "checked='checked'";
+
+				
+				print "	<div><input type='checkbox' name='ag{$r['availability_group_id']}' id='ag{$r['availability_group_id']}'
+					value='{$r['availability_group_id']}' $checked />
+					<label for='ag{$r['availability_group_id']}'>{$r['description']}</label></div>";
+			
+			}
+			?>
+			<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submitag" value="<? echo T_("Update case availability"); ?>"/></p>
+			</form>
+			<?
+		}
+		else
+		{
+			print "<p>" . T_("Availability groups not defined for this questionnaire") . "</p>";
+		}
+
+
 
 		//assign this to an operator for their next case
 		print "<h3>" . T_("Assign this case to operator (will appear as next case for them)") . "</h3>";

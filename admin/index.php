@@ -51,24 +51,34 @@ print "<div id='menu'><ul class='navmenu'>";
 print "<li><h3>" . T_("Questionnaire creation and management") . "</h3>";
 print "<ul><li><a href=\"?page=new.php\">" . T_("Create a new questionnaire") . "</a></li>";
 print "<li><a href=\"?page=questionnairelist.php\">" . T_("Questionnaire management") . "</a></li>";
-print "<li><a href=\"?page=" . LIME_URL . "admin/admin.php\">" . T_("Administer questionnaires with Limesurvey") . "</a></li>";
+print "<li><a href=\"?page=" . LIME_URL . "admin/admin.php\">" . T_("Administer questionnaires with Limesurvey") . "</a></li></ul></li>";
+
+print "<li><h3>" . T_("Sample/List management") . "</h3><ul>";
 print "<li><a href=\"?page=import.php\">" . T_("Import a sample file (in CSV form)") . "</a></li>";
 print "<li><a href=\"?page=assignsample.php\">" . T_("Assign samples to questionnaires") . "</a></li>";
-print "<li><a href=\"?page=questionnaireprefill.php\">" . T_("Set values in questionnaire to pre fill") . "</a></li>";
+print "<li><a href=\"?page=questionnaireprefill.php\">" . T_("Set values in questionnaire to pre fill") . "</a></li></ul></li>";
+
+print "<li><h3>" . T_("Quota management") . "</h3><ul>";
 print "<li><a href=\"?page=quota.php\">" . T_("Quota management") . "</a></li>";
-print "<li><a href=\"?page=quotarow.php\">" . T_("Quota row management") . "</a></li>";
+print "<li><a href=\"?page=quotarow.php\">" . T_("Quota row management") . "</a></li></ul></li>";
+
+print "<li><h3>" . T_("Operator management") . "</h3><ul>";
 print "<li><a href=\"?page=operators.php\">" . T_("Add operators to the system") . "</a></li>";
 print "<li><a href=\"?page=operatorlist.php\">" . T_("Operator management") . "</a></li>";
 print "<li><a href=\"?page=operatorquestionnaire.php\">" . T_("Assign operators to questionnaires") . "</a></li>";
-print "<li><a href=\"?page=operatorskill.php\">" . T_("Modify operator skills") . "</a></li>";
-print "<li><a href=\"?page=addshift.php\">" . T_("Shift management (add/remove)") . "</a></li>";
-print "<li><a href=\"?page=dataoutput.php\">" . T_("Data output") . "</a></li></ul></li>";
+print "<li><a href=\"?page=operatorskill.php\">" . T_("Modify operator skills") . "</a></li></ul></li>";
+
+print "<li><h3>" . T_("Availability and shift management") . "</h3><ul>";
+print "<li><a href=\"?page=availabilitygroup.php\">" . T_("Manage availablity groups") . "</a></li>";
+print "<li><a href=\"?page=questionnaireavailability.php\">" . T_("Assign availabilities to questionnaires") . "</a></li>";
+print "<li><a href=\"?page=addshift.php\">" . T_("Shift management (add/remove)") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Questionnaire progress") . "</h3>";
 print "<ul><li><a href=\"?page=displayappointments.php\">" . T_("Display all future appointments") . "</a></li>";
 print "<li><a href=\"?page=samplecallattempts.php\">" . T_("Sample call attempts report") . "</a></li>";
 print "<li><a href=\"?page=quotareport.php\">" . T_("Quota report") . "</a></li>";
-print "<li><a href=\"?page=outcomes.php\">" . T_("Questionnaire outcomes") . "</a></li></ul></li>";
+print "<li><a href=\"?page=outcomes.php\">" . T_("Questionnaire outcomes") . "</a></li>";
+print "<li><a href=\"?page=dataoutput.php\">" . T_("Data output") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Performance") . "</h3>";
 print "<ul><li><a href=\"?page=operatorperformance.php\">" . T_("Operator performance") . "</a></li></ul></li>";
