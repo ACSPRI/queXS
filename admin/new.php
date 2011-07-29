@@ -146,7 +146,9 @@ if (!empty($surveys))
 	}
 }
 ?></select></p>
-	<p><? echo T_("Respondent selection type:"); ?> <select name="selectrs"><option value="none" onclick="hide(this,'rstext');"><? echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old" onclick="show(this,'rstext');" ><? echo T_("Use basic respondent selection text (below)"); ?></option><option onclick="hide(this,'rstext');" value="new"><? echo T_("Create new respondent selection questionnaire in Limesurvey"); ?></option><?
+<p><? echo T_("Respondent selection type:"); ?>
+<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><? echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><? echo T_("Use basic respondent selection text (below)"); ?></option><option value="new"><? echo T_("Create new respondent selection questionnaire in Limesurvey"); ?></option>
+<?
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
@@ -159,7 +161,7 @@ if (!empty($surveys))
 {
 	foreach($surveys as $s)
 	{
-		print "<option onclick=\"hide(this, 'rstext');\"  value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
+		print "<option value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
 	}
 }
 
