@@ -102,14 +102,14 @@ class voip {
 		$chans = array();
 		foreach ($c as $s)
 		{
-			if(eregi("Event: Status.*Channel: (SIP/|IAX2/[0-9a-zA-Z-]+).*BridgedChannel: (SIP/|IAX2/[/0-9a-zA-Z-]+)",$s,$regs))
+			if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*BridgedChannel: ((SIP/|IAX2/)[/0-9a-zA-Z-]+)",$s,$regs))
 			{
 				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
 				$ccs = explode('-',$regs[1]);
 				$chan = $ccs[0];
-				$chans[$chan] = array($regs[1],$regs[2]);
+				$chans[$chan] = array($regs[1],$regs[3]);
 			}
-			else if(eregi("Event: Status.*Channel: (SIP/|IAX2/[0-9a-zA-Z-]+).*",$s,$regs))
+			else if(eregi("Event: Status.*Channel: ((SIP/|IAX2)/[0-9a-zA-Z-]+).*",$s,$regs))
 			{
 				//print T_("Channel: ") . $regs[1] .  "\n";
 				$ccs = explode('-', $regs[1]);
