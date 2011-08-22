@@ -109,7 +109,7 @@ class voip {
 				$chan = $ccs[0];
 				$chans[$chan] = array($regs[1],$regs[3]);
 			}
-			else if(eregi("Event: Status.*Channel: ((SIP/|IAX2)/[0-9a-zA-Z-]+).*",$s,$regs))
+			else if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+)",$s,$regs))
 			{
 				//print T_("Channel: ") . $regs[1] .  "\n";
 				$ccs = explode('-', $regs[1]);
