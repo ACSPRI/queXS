@@ -74,5 +74,9 @@ T_("Friday");
 T_("Saturday");
 T_("Sunday");
 T_("Quota filled");
+T_("Weekday mornings (Before 12pm)");
+T_("Weekday afternoons (After 12pm but before 6pm)");
+T_("Evenings (After 6pm)");
+T_("Saturdays");
 
 ?>
