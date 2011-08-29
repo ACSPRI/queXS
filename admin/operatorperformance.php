@@ -66,9 +66,9 @@ include("../functions/functions.operator.php");
 
 xhtml_head(T_("Operator Performance"),true,array("../css/table.css"),array("../js/window.js"));
 
-$rs = get_stats_total(get_stats());
-print "<h2>" . T_("Overall") . "</h2>";
-xhtml_table($rs,array("firstName","completions","totalcalls","time","callt","CPH","CALLSPH","effectiveness"),array(T_("Operator"),T_("Completions"),T_("Calls"),T_("Total time"),T_("Call time"),T_("Completions p/h"),T_("Calls p/h"),T_("Effectiveness")));
+//$rs = get_stats_total(get_stats());
+//print "<h2>" . T_("Overall") . "</h2>";
+//xhtml_table($rs,array("firstName","completions","totalcalls","time","callt","CPH","CALLSPH","effectiveness"),array(T_("Operator"),T_("Completions"),T_("Calls"),T_("Total time"),T_("Call time"),T_("Completions p/h"),T_("Calls p/h"),T_("Effectiveness")));
 
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
