@@ -44,7 +44,7 @@ include ("../config.inc.php");
  */
 include ("../functions/functions.xhtml.php");
 
-xhtml_head(T_("Administrative Tools"),true,array("../css/table.css","../css/admin.css"));
+xhtml_head(T_("Administrative Tools"),true,array("../css/table.css","../css/admin.css","../css/timepicker.css"));
 
 print "<div id='menu'><ul class='navmenu'>";
 

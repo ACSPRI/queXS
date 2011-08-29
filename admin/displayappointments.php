@@ -152,7 +152,10 @@ if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 	else
 	{
 		//Display an edit form
-		xhtml_head(T_("Edit appointment"));
+		$css = array("../css/timepicker.css","../include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css");
+		$js = array("../include/jquery-ui/js/jquery-1.4.2.min.js","../include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js","../include/timepicker/jquery-ui-timepicker-addon.js");
+		xhtml_head(T_("Edit appointment"),false,$css,$js);
+		print "<script type='text/javascript'>$(document).ready(function() { $('#start').datetimepicker({timeFormat: 'hh:mm:ss', dateFormat: 'yy-mm-dd'}); $('#end').datetimepicker({timeFormat: 'hh:mm:ss', dateFormat: 'yy-mm-dd'});});</script>";
 		
 		$sql = "SELECT a.contact_phone_id,a.call_attempt_id,CONVERT_TZ(a.start,'UTC',r.Time_zone_name) as start,CONVERT_TZ(a.end,'UTC',r.Time_zone_name) as end,a.respondent_id
 			FROM appointment as a, respondent as r
