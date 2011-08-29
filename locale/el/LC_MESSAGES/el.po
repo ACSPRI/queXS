@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-02-02 10:50+1000\n"
+"POT-Creation-Date: 2011-02-21 11:51+1000\n"
 "PO-Revision-Date: 2011-01-07 23:40+0000\n"
 "Last-Translator: Panos Panayiotopoulos <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-21 00:56+0000\n"
-"X-Generator: Launchpad (build 12399)\n"
+"X-Launchpad-Export-Date: 2011-08-29 01:12+0000\n"
+"X-Generator: Launchpad (build 13794)\n"
 
 #: callhistory.php:56
 msgid "Case History List"
@@ -71,7 +71,7 @@ msgid "Begin the manual recording now..."
 msgstr "Εκκίνηση της χειροκίνητης εγγραφής τώρα"
 
 #: record.php:78
-#: index.php:126
+#: index.php:134
 #: call.php:197
 #: call.php:215
 msgid "Start REC"
@@ -140,7 +140,7 @@ msgid "Appointment made"
 msgstr "Συνάντηση πραγματοποιήθηκε"
 
 #: appointment.php:119
-#: index.php:123
+#: index.php:131
 msgid "Appointment"
 msgstr "Ραντεβού"
 
@@ -219,57 +219,61 @@ msgid "No case"
 msgstr "Καμία περίπτωση"
 
 #: project_info.php:61
-#: index.php:230
+#: index.php:239
 msgid "Project information"
 msgstr ""
 
-#: index.php:116
+#: index.php:124
 msgid "queXS"
 msgstr "queXS"
 
-#: index.php:122
+#: index.php:130
 #: shifts.php:82
 #: shifts.php:103
 msgid "End"
 msgstr "Λήξη"
 
-#: index.php:124
+#: index.php:132
 msgid "Call/Hangup"
 msgstr "Κλήση/Απόρριψη"
 
-#: index.php:125
+#: index.php:133
 msgid "Supervisor"
 msgstr "Επιβλέπων"
 
-#: index.php:170
+#: index.php:135
+msgid "Arrow for expanding or contracting"
+msgstr ""
+
+#: index.php:179
 msgid "Notes"
 msgstr "Σημειώσεις"
 
-#: index.php:178
+#: index.php:187
 msgid "Contact details"
 msgstr ""
 
-#: index.php:187
+#: index.php:196
 msgid "Call history"
 msgstr "Ιστορικό κλήσεων"
 
-#: index.php:196
+#: index.php:205
 msgid "Shifts"
 msgstr "Βάρδιες"
 
-#: index.php:205
+#: index.php:214
 msgid "Appointments"
 msgstr "Ραντεβού"
 
-#: index.php:214
+#: index.php:223
 msgid "Performance"
 msgstr "Απόδοση"
 
-#: index.php:222
+#: index.php:231
 msgid "Work history"
 msgstr "Ιστορικό εργασίας"
 
-#: index.php:239
+#: index.php:248
 msgid "Info"
 msgstr "Πληροφορίες"
 
@@ -488,9 +492,9 @@ msgid "Questionnaire"
 msgstr "Ερωτηματολόγιο"
 
 #: contactdetails.php:90
-#: contactdetails.php:126
+#: contactdetails.php:128
 #: respondent.php:94
-#: respondent.php:130
+#: respondent.php:132
 msgid "Add respondent"
 msgstr ""
 
@@ -510,13 +514,13 @@ msgstr ""
 msgid "Respondent:"
 msgstr ""
 
-#: contactdetails.php:153
-#: respondent.php:158
+#: contactdetails.php:161
+#: respondent.php:168
 msgid "Var"
 msgstr ""
 
-#: contactdetails.php:153
-#: respondent.php:158
+#: contactdetails.php:161
+#: respondent.php:168
 msgid "Value"
 msgstr ""
 
@@ -524,7 +528,7 @@ msgstr ""
 msgid "Respondent Selector"
 msgstr ""
 
-#: respondent.php:154
+#: respondent.php:164
 msgid "Show details"
 msgstr "Εμφάνιση λεπτομερειών"
 
@@ -640,22 +644,16 @@ msgstr ""
 
 #: performance.php:78
 #: performance.php:85
-#: performance.php:91
 msgid "Completions"
 msgstr ""
 
 #: performance.php:78
 #: performance.php:85
-#: performance.php:91
 msgid "Completions per hour"
 msgstr ""
 
 #: performance.php:84
 msgid "This project"
-msgstr ""
-
-#: performance.php:90
-msgid "Overall"
 msgstr ""
 
 #: status.php:68
@@ -785,8 +783,8 @@ msgid ""
 msgstr ""
 
 #: admin/systemsort.php:73
-#: admin/systemsort.php:91
-#: admin/systemsort.php:92
+#: admin/systemsort.php:96
+#: admin/systemsort.php:97
 msgid "Monitor system wide case sorting"
 msgstr ""
 
@@ -807,11 +805,26 @@ msgstr ""
 msgid "Kill the running process"
 msgstr ""
 
-#: admin/systemsort.php:93
+#: admin/systemsort.php:90
+#: admin/systemsort.php:104
+msgid "Log id"
+msgstr ""
+
+#: admin/systemsort.php:90
+#: admin/systemsort.php:104
+msgid "Date"
+msgstr ""
+
+#: admin/systemsort.php:90
+#: admin/systemsort.php:104
+msgid "Log entry"
+msgstr ""
+
+#: admin/systemsort.php:98
 msgid "Click here to enable and begin system wide case sorting"
 msgstr ""
 
-#: admin/systemsort.php:94
+#: admin/systemsort.php:99
 msgid ""
 "System wide case sorting is periodically (via SYSTEM_SORT_MINUTES "
 "configuration directive) sorting cases on a system wide basis instead of "
@@ -821,7 +834,7 @@ msgid ""
 "problems, it is not recommended to use this feature."
 msgstr ""
 
-#: admin/systemsort.php:95
+#: admin/systemsort.php:100
 msgid "Outcome of last process run (if any)"
 msgstr ""
 
@@ -961,21 +974,21 @@ msgstr ""
 msgid "Sorting cases"
 msgstr ""
 
-#: admin/systemsortprocess.php:178
+#: admin/systemsortprocess.php:196
 msgid "Completed sort"
 msgstr ""
 
-#: admin/systemsortprocess.php:178
-#: admin/systemsortprocess.php:180
+#: admin/systemsortprocess.php:196
+#: admin/systemsortprocess.php:198
 msgid "This task took"
 msgstr ""
 
-#: admin/systemsortprocess.php:178
-#: admin/systemsortprocess.php:180
+#: admin/systemsortprocess.php:196
+#: admin/systemsortprocess.php:198
 msgid "seconds"
 msgstr ""
 
-#: admin/systemsortprocess.php:180
+#: admin/systemsortprocess.php:198
 msgid "Failed to complete sort"
 msgstr ""
 
@@ -1134,17 +1147,21 @@ msgstr ""
 msgid "Add quota"
 msgstr ""
 
-#: admin/operatorskill.php:145
+#: admin/operatorskill.php:149
 msgid "Assign operators to Skills"
 msgstr ""
 
-#: admin/operatorskill.php:266
+#: admin/operatorskill.php:270
 #: admin/index.php:63
 msgid "Modify operator skills"
 msgstr ""
 
 #: admin/operatorperformance.php:67
 msgid "Operator Performance"
+msgstr ""
+
+#: admin/operatorperformance.php:70
+msgid "Overall"
 msgstr ""
 
 #: admin/operatorperformance.php:71
@@ -1202,10 +1219,6 @@ msgstr ""
 
 #: admin/shiftreport.php:93
 msgid "Reports for this shift"
-msgstr ""
-
-#: admin/shiftreport.php:105
-msgid "Date"
 msgstr ""
 
 #: admin/shiftreport.php:105
@@ -1582,26 +1595,22 @@ msgid "Shift report"
 msgstr ""
 
 #: admin/voipmonitor.php:73
-#: admin/voipmonitor.php:93
-#: admin/voipmonitor.php:94
+#: admin/voipmonitor.php:95
+#: admin/voipmonitor.php:96
 msgid "Monitor VoIP Process"
 msgstr ""
 
-#: admin/voipmonitor.php:77
-msgid "Note: This page will automatically refresh every 10 seconds"
-msgstr ""
-
-#: admin/voipmonitor.php:81
+#: admin/voipmonitor.php:79
 msgid ""
 "Kill signal sent: Please wait... (Note: Process will be stalled until there "
 "is activity on the VoIP Server)"
 msgstr ""
 
-#: admin/voipmonitor.php:86
+#: admin/voipmonitor.php:84
 msgid "(requires activity on the VoIP Server to take effect)"
 msgstr ""
 
-#: admin/voipmonitor.php:95
+#: admin/voipmonitor.php:97
 msgid "Click here to begin monitoring the VoIP Process"
 msgstr ""
 
@@ -1777,7 +1786,7 @@ msgid "Added:"
 msgstr ""
 
 #: admin/operators.php:138
-msgid "Please reload FreePBX for the new VoIP extension to take effect"
+msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
 msgstr ""
 
 #: admin/operators.php:163
@@ -2288,62 +2297,79 @@ msgstr ""
 msgid "Save changes to restriction times"
 msgstr ""
 
-#: admin/operatorlist.php:127
-#: admin/operatorlist.php:162
+#: admin/operatorlist.php:159
+#: admin/operatorlist.php:208
 msgid "Update password"
 msgstr ""
 
-#: admin/operatorlist.php:128
+#: admin/operatorlist.php:165
+#: admin/operatorlist.php:188
+msgid "Update timezone"
+msgstr ""
+
+#: admin/operatorlist.php:166
 msgid "Windows bat file"
 msgstr ""
 
-#: admin/operatorlist.php:129
+#: admin/operatorlist.php:167
 msgid "*nix script file"
 msgstr ""
 
-#: admin/operatorlist.php:131
+#: admin/operatorlist.php:169
 #: admin/questionnairelist.php:189
 msgid "Enable"
 msgstr ""
 
-#: admin/operatorlist.php:133
+#: admin/operatorlist.php:171
 #: admin/questionnairelist.php:191
 msgid "Disable"
 msgstr ""
 
-#: admin/operatorlist.php:141
+#: admin/operatorlist.php:175
+msgid "Enable VoIP"
+msgstr ""
+
+#: admin/operatorlist.php:177
+msgid "Disable VoIP"
+msgstr ""
+
+#: admin/operatorlist.php:185
 msgid "Operator list"
 msgstr ""
 
-#: admin/operatorlist.php:144
+#: admin/operatorlist.php:188
 msgid "Username"
 msgstr ""
 
-#: admin/operatorlist.php:144
+#: admin/operatorlist.php:188
 #: admin/questionnairelist.php:184
 msgid "Enable/Disable"
 msgstr ""
 
-#: admin/operatorlist.php:148
+#: admin/operatorlist.php:192
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
 
-#: admin/operatorlist.php:150
+#: admin/operatorlist.php:194
 msgid "Download Windows VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:151
+#: admin/operatorlist.php:195
 msgid "Download Linux VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:155
+#: admin/operatorlist.php:200
+msgid "Enable/Disable VoIP"
+msgstr ""
+
+#: admin/operatorlist.php:201
 msgid "Windows VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:156
+#: admin/operatorlist.php:202
 msgid "*nix VoIP"
 msgstr ""
 
@@ -2494,7 +2520,7 @@ msgstr ""
 msgid "evening"
 msgstr ""
 
-#: functions/functions.operator.php:677
+#: functions/functions.operator.php:679
 msgid ""
 "ERROR: You do not have server side authentication enabled therefore queXS "
 "cannot determine which user is accessing the system."
@@ -2524,44 +2550,44 @@ msgstr ""
 msgid "End Time"
 msgstr ""
 
-#: functions/functions.performance.php:460
+#: functions/functions.performance.php:468
 msgid "No shift"
 msgstr ""
 
-#: functions/functions.performance.php:483
+#: functions/functions.performance.php:491
 msgid "Total completions"
 msgstr ""
 
-#: functions/functions.performance.php:512
+#: functions/functions.performance.php:520
 msgid "Completions this shift"
 msgstr ""
 
-#: functions/functions.performance.php:535
-#: functions/functions.performance.php:581
+#: functions/functions.performance.php:543
+#: functions/functions.performance.php:589
 msgid "No previous shift"
 msgstr ""
 
-#: functions/functions.performance.php:555
+#: functions/functions.performance.php:563
 msgid "Completions on the previous shift"
 msgstr ""
 
-#: functions/functions.performance.php:602
+#: functions/functions.performance.php:610
 msgid "Completions this time on the previous shift"
 msgstr ""
 
-#: functions/functions.performance.php:620
+#: functions/functions.performance.php:628
 msgid "No calls made for this shift"
 msgstr ""
 
-#: functions/functions.performance.php:622
+#: functions/functions.performance.php:630
 msgid "Top CPH for this shift"
 msgstr ""
 
-#: functions/functions.performance.php:639
+#: functions/functions.performance.php:647
 msgid "No calls made for this project"
 msgstr ""
 
-#: functions/functions.performance.php:641
+#: functions/functions.performance.php:649
 msgid "Top CPH"
 msgstr ""
 
@@ -2585,47 +2611,79 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: functions/functions.voip.php:442
+#: functions/functions.voip.php:449
 msgid "online"
 msgstr ""
 
-#: functions/functions.voip.php:442
+#: functions/functions.voip.php:449
 msgid "offline"
 msgstr ""
 
-#: functions/functions.voip.php:518
+#: functions/functions.voip.php:530
 msgid "Disconnected"
 msgstr ""
 
-#: functions/functions.voip.php:520
+#: functions/functions.voip.php:532
 msgid "Reconnected"
 msgstr ""
 
-#: functions/functions.voip.php:542
-#: functions/functions.voip.php:554
-#: functions/functions.voip.php:566
-#: functions/functions.voip.php:576
-#: functions/functions.voip.php:585
+#: functions/functions.voip.php:555
+#: functions/functions.voip.php:567
+#: functions/functions.voip.php:579
+#: functions/functions.voip.php:589
+#: functions/functions.voip.php:598
 msgid " Extension "
 msgstr ""
 
-#: functions/functions.voip.php:576
+#: functions/functions.voip.php:555
+#: functions/functions.voip.php:567
+#: functions/functions.voip.php:579
+msgid "Case id"
+msgstr ""
+
+#: functions/functions.voip.php:589
 msgid "Unregistered"
 msgstr ""
 
-#: functions/functions.voip.php:585
+#: functions/functions.voip.php:598
 msgid "Registered"
+msgstr ""
+
+#: functions/functions.freepbx.php:138
+#, php-format
+msgid "Reload failed because retrieve_conf encountered an error: %s"
+msgstr ""
+
+#: functions/functions.freepbx.php:140
+msgid "retrieve_conf failed, config not applied"
+msgstr ""
+
+#: functions/functions.freepbx.php:146
+msgid ""
+"Reload failed because FreePBX could not connect to the asterisk manager "
+"interface."
+msgstr ""
+
+#: functions/functions.freepbx.php:165
+msgid ""
+"Could not reload the FOP operator panel server using the bounce_op.sh "
+"script. Configuration changes may not be reflected in the panel display."
+msgstr ""
+
+#: functions/functions.freepbx.php:174
+#, php-format
+msgid "Exit code was %s and output was: %s"
 msgstr ""
 
 #: display/index.php:111
 msgid "Display"
 msgstr ""
 
-#: client/index.php:72
+#: client/index.php:73
 msgid "There are no questionnaires assigned to you"
 msgstr ""
 
-#: client/index.php:123
+#: client/index.php:124
 msgid "You are not a valid client"
 msgstr ""
 
