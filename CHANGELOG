@@ -1,3 +1,85 @@
+queXS 1.4.0 - Changes since 1.3.0:
+
+New features:
+*Administrator appointment editing added calendar to assist
+*Disabled overall performance information as it is slow with large installations and not particularly useful
+*Added "availability" feature:
+**Administrators specificy "availability groups" which include days of the week and times
+**Operators then choose if a case will be available within the availability group
+*Updated queXMLPDF class to queXML 1.3.3
+*Assign the next case to an operator specifically using the administrative functions
+*Reorganised administrators menu
+*Added database optimisations and keys
+*Updated translations. Thank you to all who contributed on Launchpad!
+
+Bug fixes:
+*Fixed: SIP Channels not hanging up
+*Fixed: Respondent selection text editor not printed correctly in Chrome - Patch by Grzesiek (thank you)
+*Fixed: Export to SPSS was failing due to queXS tokens
+*Removed reliance on sessions in sample import process unecessary
+
+Database changes:
+
+ALTER TABLE `operator` ADD `next_case_id` BIGINT( 20 ) default NULL ;
+ALTER TABLE `call` ADD INDEX(`start`);
+ALTER TABLE `case` ADD INDEX(`last_call_id`);
+ALTER TABLE `lime_saved_control` CHANGE `identifier` `identifier` BIGINT( 20 ) NOT NULL;
+ALTER TABLE `lime_saved_control` ADD INDEX(`identifier`);
+ALTER TABLE `lime_saved_control` ADD INDEX(`srid`);
+
+CREATE TABLE IF NOT EXISTS `availability` (
+  `availability_id` bigint(20) NOT NULL auto_increment,
+  `availability_group_id` bigint(20) NOT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
+  `day_of_week` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`availability_id`),
+  KEY `availability_group_id` (`availability_group_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `availability` (`availability_id`, `availability_group_id`, `start`, `end`, `day_of_week`) VALUES
+(1, 1, '00:00:00', '11:59:59', 2),
+(2, 1, '00:00:00', '11:59:59', 3),
+(3, 1, '00:00:00', '11:59:59', 4),
+(4, 1, '00:00:00', '11:59:59', 5),
+(5, 1, '00:00:00', '11:59:59', 6),
+(6, 2, '12:00:00', '17:59:59', 2),
+(7, 2, '12:00:00', '17:59:59', 3),
+(8, 2, '12:00:00', '17:59:59', 4),
+(9, 2, '12:00:00', '17:59:59', 5),
+(10, 2, '12:00:00', '17:59:59', 6),
+(11, 3, '18:00:00', '23:59:59', 2),
+(12, 3, '18:00:00', '23:59:59', 3),
+(13, 3, '18:00:00', '23:59:59', 4),
+(14, 3, '18:00:00', '23:59:59', 5),
+(15, 3, '18:00:00', '23:59:59', 6),
+(16, 4, '00:00:00', '23:59:59', 7);
+
+CREATE TABLE IF NOT EXISTS `availability_group` (
+  `availability_group_id` bigint(20) NOT NULL auto_increment,
+  `description` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`availability_group_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `availability_group` (`availability_group_id`, `description`) VALUES
+(1, 'Weekday mornings (Before 12pm)'),
+(2, 'Weekday afternoons (After 12pm but before 6pm)'),
+(3, 'Evenings (After 6pm)'),
+(4, 'Saturdays');
+
+CREATE TABLE IF NOT EXISTS `case_availability` (
+  `case_id` bigint(20) NOT NULL,
+  `availability_group_id` bigint(20) NOT NULL,
+  PRIMARY KEY  (`case_id`,`availability_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `questionnaire_availability` (
+  `questionnaire_id` bigint(20) NOT NULL,
+  `availability_group_id` bigint(20) NOT NULL,
+  PRIMARY KEY  (`questionnaire_id`,`availability_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 queXS 1.3.0 - Changes since 1.2.0:
 
 queXS 1.3.0 includes major performance improvements for larger installations using the system sort process, better handling of VoIP, integration with FreePBX for easy VoIP extension creation, improved questionnaire management and support for the Internet Explorer >= 6.0 browser.
