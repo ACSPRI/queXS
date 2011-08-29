@@ -61,7 +61,8 @@ CREATE TABLE `call` (
   KEY `operator_id` (`operator_id`),
   KEY `case_id` (`case_id`),
   KEY `call_attempt_id` (`call_attempt_id`),
-  KEY `contact_phone_id` (`contact_phone_id`)
+  KEY `contact_phone_id` (`contact_phone_id`),
+  KEY `start` (`start`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 --
@@ -183,7 +184,8 @@ CREATE TABLE `case` (
   UNIQUE KEY `current_call_id` (`current_call_id`),
   KEY `sample_id` (`sample_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
-  KEY `sortorder` (`sortorder`)
+  KEY `sortorder` (`sortorder`),
+  KEY `last_call_id` (`last_call_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 
@@ -556,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `lime_saved_control` (
   `scid` int(11) NOT NULL auto_increment,
   `sid` int(11) NOT NULL default '0',
   `srid` int(11) NOT NULL default '0',
-  `identifier` text collate utf8_unicode_ci NOT NULL,
+  `identifier` BIGINT(20) NOT NULL,
   `access_code` text collate utf8_unicode_ci NOT NULL,
   `email` varchar(320) collate utf8_unicode_ci default NULL,
   `ip` text collate utf8_unicode_ci NOT NULL,
@@ -565,7 +567,9 @@ CREATE TABLE IF NOT EXISTS `lime_saved_control` (
   `saved_date` datetime NOT NULL,
   `refurl` text collate utf8_unicode_ci,
   PRIMARY KEY  (`scid`),
-  KEY `saved_control_idx2` (`sid`)
+  KEY `saved_control_idx2` (`sid`),
+  KEY `identifier` (`identifier`),
+  KEY `srid` (`srid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
