@@ -84,13 +84,14 @@ if ($surveyexists <1)
 if (!$_SESSION['step'])
 {
     $totalquestions = buildsurveysession();
-    if(isset($thissurvey['showwelcome']) && $thissurvey['showwelcome'] == 'N') {
+//    queXS Addition - Always skip welcome screen
+//    if(isset($thissurvey['showwelcome']) && $thissurvey['showwelcome'] == 'N') {
         //If explicitply set, hide the welcome screen
         $_SESSION['step'] = 1;
-    } else {
-        display_first_page();
-        exit;
-    }
+//    } else {
+//        display_first_page();
+//        exit;
+//    }
 }
 
 //******************************************************************************************************
