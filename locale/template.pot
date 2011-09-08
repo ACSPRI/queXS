@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-29 11:06+1000\n"
+"POT-Creation-Date: 2011-09-08 12:55+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -136,51 +136,51 @@ msgstr ""
 msgid "Select a respondent"
 msgstr ""
 
-#: appointment.php:130
+#: appointment.php:132
 msgid "Create new respondent:"
 msgstr ""
 
-#: appointment.php:133
+#: appointment.php:135
 msgid "Add this respondent"
 msgstr ""
 
-#: appointment.php:155
+#: appointment.php:157
 msgid "Select phone number:"
 msgstr ""
 
-#: appointment.php:160
+#: appointment.php:162
 msgid "None"
 msgstr ""
 
-#: appointment.php:169
+#: appointment.php:171
 msgid "Add new phone number"
 msgstr ""
 
-#: appointment.php:180
+#: appointment.php:182
 msgid "Add new phone number (with area code, eg 0398761234):"
 msgstr ""
 
-#: appointment.php:183
+#: appointment.php:185
 msgid "Add this phone number"
 msgstr ""
 
-#: appointment.php:202
+#: appointment.php:204
 msgid "Appointment:"
 msgstr ""
 
-#: appointment.php:204
+#: appointment.php:206
 msgid "Accept appointment from "
 msgstr ""
 
-#: appointment.php:204
+#: appointment.php:206
 msgid " till "
 msgstr ""
 
-#: appointment.php:204
+#: appointment.php:206
 msgid " on "
 msgstr ""
 
-#: appointment.php:204
+#: appointment.php:206
 msgid "on"
 msgstr ""
 
@@ -648,39 +648,40 @@ msgstr ""
 msgid "This project"
 msgstr ""
 
-#: status.php:68
+#: status.php:58
+#: status.php:77
 msgid "Status"
 msgstr ""
 
-#: status.php:86
+#: status.php:95
 msgid "VoIP On"
 msgstr ""
 
-#: status.php:88
+#: status.php:97
 msgid "VoIP Off"
 msgstr ""
 
-#: status.php:91
+#: status.php:100
 msgid "No VoIP"
 msgstr ""
 
-#: status.php:95
+#: status.php:104
 msgid "No call"
 msgstr ""
 
-#: status.php:99
+#: status.php:108
 msgid "To be coded"
 msgstr ""
 
-#: status.php:103
+#: status.php:112
 msgid "Requesting"
 msgstr ""
 
-#: status.php:119
+#: status.php:128
 msgid "APPT"
 msgstr ""
 
-#: status.php:120
+#: status.php:129
 msgid "MISSED"
 msgstr ""
 
@@ -835,12 +836,12 @@ msgstr ""
 
 #: admin/clientquestionnaire.php:150
 #: admin/clientquestionnaire.php:271
-#: admin/index.php:88
+#: admin/index.php:89
 msgid "Assign clients to questionnaires"
 msgstr ""
 
 #: admin/quotareport.php:110
-#: admin/index.php:79
+#: admin/index.php:80
 msgid "Quota report"
 msgstr ""
 
@@ -1055,8 +1056,8 @@ msgid "No appointments in the future"
 msgstr ""
 
 #: admin/quota.php:109
-#: admin/index.php:61
 #: admin/index.php:62
+#: admin/index.php:63
 msgid "Quota management"
 msgstr ""
 
@@ -1133,7 +1134,7 @@ msgid "Assign operators to Skills"
 msgstr ""
 
 #: admin/operatorskill.php:270
-#: admin/index.php:69
+#: admin/index.php:70
 msgid "Modify operator skills"
 msgstr ""
 
@@ -1141,38 +1142,48 @@ msgstr ""
 msgid "Operator Performance"
 msgstr ""
 
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:102
+#: admin/operatorperformance.php:74
+#: admin/shiftreport.php:66
+msgid "Please select a questionnaire"
+msgstr ""
+
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:105
 msgid "Calls"
 msgstr ""
 
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:102
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:105
 msgid "Total time"
 msgstr ""
 
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:102
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:105
 msgid "Call time"
 msgstr ""
 
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:102
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:105
 msgid "Completions p/h"
 msgstr ""
 
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:102
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:105
 msgid "Calls p/h"
 msgstr ""
 
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:102
+#: admin/operatorperformance.php:82
+#: admin/operatorperformance.php:105
 msgid "Effectiveness"
 msgstr ""
 
-#: admin/operatorperformance.php:88
+#: admin/operatorperformance.php:89
 msgid "till"
+msgstr ""
+
+#: admin/operatorperformance.php:97
+#: admin/shiftreport.php:73
+msgid "Please select a shift"
 msgstr ""
 
 #: admin/availabilitygroup.php:70
@@ -1198,16 +1209,8 @@ msgid "Add availability group"
 msgstr ""
 
 #: admin/shiftreport.php:62
-#: admin/index.php:94
+#: admin/index.php:95
 msgid "Shift reports"
-msgstr ""
-
-#: admin/shiftreport.php:66
-msgid "Please select a questionnaire"
-msgstr ""
-
-#: admin/shiftreport.php:73
-msgid "Please select a shift"
 msgstr ""
 
 #: admin/shiftreport.php:93
@@ -1251,145 +1254,149 @@ msgid "Questionnaire creation and management"
 msgstr ""
 
 #: admin/index.php:52
-msgid "Create a new questionnaire"
+msgid "Create an instrument in Limesurvey"
 msgstr ""
 
 #: admin/index.php:53
-msgid "Questionnaire management"
+msgid "Create a new questionnaire"
 msgstr ""
 
 #: admin/index.php:54
-msgid "Administer questionnaires with Limesurvey"
+msgid "Questionnaire management"
 msgstr ""
 
-#: admin/index.php:56
-msgid "Sample/List management"
+#: admin/index.php:55
+msgid "Administer instruments with Limesurvey"
 msgstr ""
 
 #: admin/index.php:57
-msgid "Import a sample file (in CSV form)"
+msgid "Sample/List management"
 msgstr ""
 
 #: admin/index.php:58
-msgid "Assign samples to questionnaires"
+msgid "Import a sample file (in CSV form)"
 msgstr ""
 
 #: admin/index.php:59
+msgid "Assign samples to questionnaires"
+msgstr ""
+
+#: admin/index.php:60
 msgid "Set values in questionnaire to pre fill"
 msgstr ""
 
-#: admin/index.php:63
+#: admin/index.php:64
 msgid "Quota row management"
 msgstr ""
 
-#: admin/index.php:65
-#: admin/index.php:67
-#: admin/index.php:107
+#: admin/index.php:66
+#: admin/index.php:68
+#: admin/index.php:108
 msgid "Operator management"
 msgstr ""
 
-#: admin/index.php:66
+#: admin/index.php:67
 msgid "Add operators to the system"
 msgstr ""
 
-#: admin/index.php:68
+#: admin/index.php:69
 msgid "Assign operators to questionnaires"
 msgstr ""
 
-#: admin/index.php:71
+#: admin/index.php:72
 msgid "Availability and shift management"
 msgstr ""
 
-#: admin/index.php:72
+#: admin/index.php:73
 msgid "Manage availablity groups"
 msgstr ""
 
-#: admin/index.php:73
+#: admin/index.php:74
 msgid "Assign availabilities to questionnaires"
 msgstr ""
 
-#: admin/index.php:74
+#: admin/index.php:75
 msgid "Shift management (add/remove)"
 msgstr ""
 
-#: admin/index.php:76
+#: admin/index.php:77
 msgid "Questionnaire progress"
 msgstr ""
 
-#: admin/index.php:77
+#: admin/index.php:78
 msgid "Display all future appointments"
 msgstr ""
 
-#: admin/index.php:78
+#: admin/index.php:79
 msgid "Sample call attempts report"
 msgstr ""
 
-#: admin/index.php:80
+#: admin/index.php:81
 msgid "Questionnaire outcomes"
 msgstr ""
 
-#: admin/index.php:81
+#: admin/index.php:82
 msgid "Data output"
 msgstr ""
 
-#: admin/index.php:84
+#: admin/index.php:85
 msgid "Operator performance"
 msgstr ""
 
-#: admin/index.php:86
+#: admin/index.php:87
 msgid "Client management"
 msgstr ""
 
-#: admin/index.php:87
+#: admin/index.php:88
 msgid "Add clients to the system"
 msgstr ""
 
-#: admin/index.php:90
+#: admin/index.php:91
 msgid "Supervisor functions"
 msgstr ""
 
-#: admin/index.php:91
+#: admin/index.php:92
 msgid "Assign outcomes to cases"
 msgstr ""
 
-#: admin/index.php:92
+#: admin/index.php:93
 msgid "Search the sample"
 msgstr ""
 
-#: admin/index.php:96
+#: admin/index.php:97
 msgid "System settings"
 msgstr ""
 
-#: admin/index.php:97
+#: admin/index.php:98
 msgid "Set default timezone list"
 msgstr ""
 
-#: admin/index.php:98
+#: admin/index.php:99
 msgid "Set default shift times"
 msgstr ""
 
-#: admin/index.php:99
+#: admin/index.php:100
 msgid "Set call restriction times"
 msgstr ""
 
-#: admin/index.php:100
+#: admin/index.php:101
 #: admin/centreinfo.php:62
 msgid "Set centre information"
 msgstr ""
 
-#: admin/index.php:101
+#: admin/index.php:102
 msgid "Start and monitor system wide case sorting"
 msgstr ""
 
-#: admin/index.php:105
+#: admin/index.php:106
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:106
+#: admin/index.php:107
 msgid "Start and monitor VoIP"
 msgstr ""
 
-#: admin/index.php:108
+#: admin/index.php:109
 msgid "Extension status"
 msgstr ""
 
@@ -1893,100 +1900,84 @@ msgstr ""
 msgid "New: Create new questionnaire"
 msgstr ""
 
-#: admin/new.php:101
-msgid "Respondent Selection for "
-msgstr ""
-
-#: admin/new.php:116
+#: admin/new.php:102
 msgid "Successfully inserted"
 msgstr ""
 
-#: admin/new.php:116
+#: admin/new.php:102
 msgid "as questionnaire"
 msgstr ""
 
-#: admin/new.php:116
+#: admin/new.php:102
 msgid "linked to"
 msgstr ""
 
-#: admin/new.php:117
-msgid "You must now edit and activate the questionnaire"
-msgstr ""
-
-#: admin/new.php:120
+#: admin/new.php:105
 msgid "Error: Failed to insert questionnaire"
 msgstr ""
 
-#: admin/new.php:131
+#: admin/new.php:116
 msgid "Name for questionnaire:"
 msgstr ""
 
-#: admin/new.php:132
-msgid "Select creation type:"
+#: admin/new.php:117
+msgid "Select limesurvey instrument:"
 msgstr ""
 
-#: admin/new.php:132
-msgid "Create new questionnaire in Limesurvey"
+#: admin/new.php:131
+#: admin/new.php:155
+msgid "Existing instrument:"
 msgstr ""
 
-#: admin/new.php:145
-#: admin/new.php:164
-msgid "Existing questionnaire:"
-msgstr ""
-
-#: admin/new.php:149
+#: admin/new.php:140
 msgid "Respondent selection type:"
 msgstr ""
 
-#: admin/new.php:150
+#: admin/new.php:141
 msgid "No respondent selection (go straight to questionnaire)"
 msgstr ""
 
-#: admin/new.php:150
+#: admin/new.php:141
 msgid "Use basic respondent selection text (below)"
 msgstr ""
 
-#: admin/new.php:150
-msgid "Create new respondent selection questionnaire in Limesurvey"
-msgstr ""
-
-#: admin/new.php:188
+#: admin/new.php:179
 msgid "Restrict appointments to shifts?"
 msgstr ""
 
-#: admin/new.php:189
+#: admin/new.php:180
 msgid "Restrict work to shifts?"
 msgstr ""
 
-#: admin/new.php:190
+#: admin/new.php:181
 msgid "Questionnaire for testing only?"
 msgstr ""
 
-#: admin/new.php:192
+#: admin/new.php:183
 msgid "Respondent selection introduction:"
 msgstr ""
 
-#: admin/new.php:193
+#: admin/new.php:184
 msgid "Respondent selection project introduction:"
 msgstr ""
 
-#: admin/new.php:194
+#: admin/new.php:185
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr ""
 
-#: admin/new.php:195
+#: admin/new.php:186
 msgid "Message to leave on an answering machine:"
 msgstr ""
 
-#: admin/new.php:197
+#: admin/new.php:188
 msgid "Project end text (thank you screen):"
 msgstr ""
 
-#: admin/new.php:198
+#: admin/new.php:189
 msgid "Project information for interviewers/operators:"
 msgstr ""
 
-#: admin/new.php:199
+#: admin/new.php:190
 msgid "Create Questionnaire"
 msgstr ""
 
@@ -2306,19 +2297,23 @@ msgstr ""
 msgid "Save changes to shifts"
 msgstr ""
 
-#: admin/dataoutput.php:196
-msgid "Download all data for this questionnaire"
+#: admin/dataoutput.php:203
+msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
-#: admin/dataoutput.php:204
-msgid "Download data for this sample"
+#: admin/dataoutput.php:205
+msgid "Please select a sample"
 msgstr ""
 
-#: admin/dataoutput.php:211
+#: admin/dataoutput.php:212
+msgid "Download data for this sample via Limesurvey"
+msgstr ""
+
+#: admin/dataoutput.php:219
 msgid "Download key file: select sample var"
 msgstr ""
 
-#: admin/dataoutput.php:215
+#: admin/dataoutput.php:223
 msgid "Download complete key file"
 msgstr ""
 
@@ -2409,25 +2404,33 @@ msgid "Overall"
 msgstr ""
 
 #: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:83
-#: admin/samplecallattempts.php:100
-#: admin/samplecallattempts.php:119
+#: admin/samplecallattempts.php:88
+#: admin/samplecallattempts.php:109
+#: admin/samplecallattempts.php:132
 msgid "Number of cases"
 msgstr ""
 
 #: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:83
-#: admin/samplecallattempts.php:100
-#: admin/samplecallattempts.php:119
+#: admin/samplecallattempts.php:88
+#: admin/samplecallattempts.php:109
+#: admin/samplecallattempts.php:132
 msgid "Call attempts made"
 msgstr ""
 
-#: admin/samplecallattempts.php:99
-msgid "This sample"
+#: admin/samplecallattempts.php:113
+msgid "Please select a quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:118
-msgid "This quota"
+#: admin/samplecallattempts.php:130
+msgid "No calls for this quota"
+msgstr ""
+
+#: admin/samplecallattempts.php:136
+msgid "No calls for this sample"
+msgstr ""
+
+#: admin/samplecallattempts.php:140
+msgid "No calls for this questionnaire"
 msgstr ""
 
 #: admin/questionnairelist.php:122
@@ -2435,7 +2438,7 @@ msgid "Questionnaire list"
 msgstr ""
 
 #: admin/questionnairelist.php:161
-msgid "Edit questionnaire in Limesurvey"
+msgid "Edit instrument in Limesurvey"
 msgstr ""
 
 #: admin/questionnairelist.php:173
@@ -2563,68 +2566,68 @@ msgstr ""
 msgid "ERROR: You do not have server side authentication enabled therefore queXS cannot determine which user is accessing the system."
 msgstr ""
 
-#: functions/functions.calendar.php:252
+#: functions/functions.calendar.php:261
 msgid "First name:"
 msgstr ""
 
-#: functions/functions.calendar.php:253
+#: functions/functions.calendar.php:262
 msgid "Last  name:"
 msgstr ""
 
-#: functions/functions.calendar.php:258
+#: functions/functions.calendar.php:267
 msgid "Time Zone:"
 msgstr ""
 
-#: functions/functions.calendar.php:315
+#: functions/functions.calendar.php:324
 msgid "Shift from:"
 msgstr ""
 
-#: functions/functions.calendar.php:322
+#: functions/functions.calendar.php:331
 msgid "Start Time"
 msgstr ""
 
-#: functions/functions.calendar.php:372
+#: functions/functions.calendar.php:381
 msgid "End Time"
 msgstr ""
 
-#: functions/functions.performance.php:468
+#: functions/functions.performance.php:469
 msgid "No shift"
 msgstr ""
 
-#: functions/functions.performance.php:491
+#: functions/functions.performance.php:492
 msgid "Total completions"
 msgstr ""
 
-#: functions/functions.performance.php:520
+#: functions/functions.performance.php:521
 msgid "Completions this shift"
 msgstr ""
 
-#: functions/functions.performance.php:543
-#: functions/functions.performance.php:589
+#: functions/functions.performance.php:544
+#: functions/functions.performance.php:590
 msgid "No previous shift"
 msgstr ""
 
-#: functions/functions.performance.php:563
+#: functions/functions.performance.php:564
 msgid "Completions on the previous shift"
 msgstr ""
 
-#: functions/functions.performance.php:610
+#: functions/functions.performance.php:611
 msgid "Completions this time on the previous shift"
 msgstr ""
 
-#: functions/functions.performance.php:628
+#: functions/functions.performance.php:629
 msgid "No calls made for this shift"
 msgstr ""
 
-#: functions/functions.performance.php:630
+#: functions/functions.performance.php:631
 msgid "Top CPH for this shift"
 msgstr ""
 
-#: functions/functions.performance.php:647
+#: functions/functions.performance.php:648
 msgid "No calls made for this project"
 msgstr ""
 
-#: functions/functions.performance.php:649
+#: functions/functions.performance.php:650
 msgid "Top CPH"
 msgstr ""
 
