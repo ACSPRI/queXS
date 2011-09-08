@@ -52,6 +52,15 @@ include("functions/functions.operator.php");
 
 
 $operator_id = get_operator_id();
+
+if ($operator_id == false)
+{
+	xhtml_head(T_("Status"));
+	print "<p>" . T_("No operator") . "</p>";
+	xhtml_foot();
+	die();
+}
+
 $state = is_on_call($operator_id);
 $btext = false;
 
