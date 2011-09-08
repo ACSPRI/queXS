@@ -1049,61 +1049,10 @@ function makegraph($currentstep, $total)
     global $thissurvey;
     global $publicurl, $clang;
 
-    $size = intval(($currentstep-1)/$total*100);
+    $size = round(($currentstep-1)/$total*100,1);
 
-    $graph = '<script type="text/javascript">
-	$(function() {
-		$("#progressbar").progressbar({
-			value: '.$size.'
-		});
-	});';
-    if (getLanguageRTL($clang->langcode))
-    {
-        $graph.='
-		$(document).ready(function() {
-			$("div.ui-progressbar-value").removeClass("ui-corner-left");
-			$("div.ui-progressbar-value").addClass("ui-corner-right");
-		});';
-    }
-    $graph.='
-	</script>
-
-	<div id="progress-wrapper">
-	<span class="hide">'.sprintf($clang->gT('You have completed %s%% of this survey'),$size).'</span>
-		<div id="progress-pre">';
-    if (getLanguageRTL($clang->langcode))
-    {
-        $graph.='100%';
-    }
-    else
-    {
-        $graph.='0%';
-    }
-
-    $graph.='</div>
-		<div id="progressbar"></div>
-		<div id="progress-post">';
-    if (getLanguageRTL($clang->langcode))
-    {
-        $graph.='0%';
-    }
-    else
-    {
-        $graph.='100%';
-    }
-    $graph.='</div>
-	</div>';
-
-    if ($size == 0) // Progress bar looks dumb if 0
-
-    {
-        $graph.='
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$("div.ui-progressbar-value").hide();
-			});
-		</script>';
-    }
+   $graph='
+	<div>'.sprintf($clang->gT('%s%% complete'),$size).'</div>';
 
     return $graph;
 }
