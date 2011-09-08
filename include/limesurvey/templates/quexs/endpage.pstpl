@@ -1,12 +1,4 @@
-		</td>
-	</tr>
-</table>
-           <script type="text/javascript">
-           if(typeof Custom_On_Load == 'function'){
-              Custom_On_Load();
-           }
-	   $(document).ready(function() {
-		   $(":text:visible:enabled:first").focus();
-		   $("textarea:first").focus();
-	   });
-           </script>
+	        		</td>
+	        	</tr>
+	        </table>
+        </div>

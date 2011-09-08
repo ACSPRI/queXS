@@ -173,7 +173,8 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
  */
 function sec_to_time($seconds)
 {
-
+	$h = 0;
+	$m = 0;
 	if($seconds >= 3600){
       		$h = floor($seconds/3600);
 		$seconds = ($seconds%3600);

@@ -1,393 +1,226 @@
 <?php
 /*
-* LimeSurvey
-* Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
-* All rights reserved.
-* License: GNU/GPL License v2 or later, see LICENSE.php
-* LimeSurvey is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-* 
-* $Id: import_resources_zip.php 6864 2009-05-17 22:33:37Z c_schmitz $
-*/
+ * LimeSurvey
+ * Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
+ * All rights reserved.
+ * License: GNU/GPL License v2 or later, see LICENSE.php
+ * LimeSurvey is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ *
+ * $Id: import_resources_zip.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ */
 
 
 include_once("login_check.php");
 
 if (!isset($surveyid))
 {
-	returnglobal('sid');
+    returnglobal('sid');
 }
 
 if (!isset($lid))
 {
-	returnglobal('lid');
+    returnglobal('lid');
 }
 
 
 
-if ($action == "importsurvresources" && $surveyid) {
-	if ($demoModeOnly === true)
-	{
-		$importsurvresourcesoutput = "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-	    $importsurvresourcesoutput .= $clang->gT("Demo Mode Only: Uploading file is disabled in this system.")."<br /><br />\n";
-		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&amp;sid=$surveyid', '_self')\" />&nbsp;<br />&nbsp;<br />\n";
-		return;
-	}
-	require("classes/phpzip/phpzip.inc.php");
-	$zipfile=$_FILES['the_file']['tmp_name'];
-	$z = new PHPZip();
+if ($action == "importsurveyresources" && $surveyid) {
+    $importsurveyresourcesoutput = "<div class='header ui-widget-header'>".$clang->gT("Import survey resources")."</div>\n";
+    $importsurveyresourcesoutput .= "<div class='messagebox ui-corner-all'>";
 
-	// Create temporary directory
-	// If dangerous content is unzipped
-	// then no one will know the path
-	$extractdir=tempdir($tempdir);
-	$basedestdir = $publicdir."/upload/surveys";
-	$destdir=$basedestdir."/$surveyid/";
+    if ($demoModeOnly === true)
+    {
+        $importsurveyresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importsurveyresourcesoutput .= $clang->gT("Demo Mode Only: Uploading file is disabled in this system.")."<br /><br />\n";
+        $importsurveyresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&amp;sid=$surveyid', '_self')\" />\n";
+        $importsurveyresourcesoutput .= "</div>\n";
+        return;
+    }
 
-	$importsurvresourcesoutput = "<br />\n";
-	$importsurvresourcesoutput .= "<table class='alertbox'>\n";
-	$importsurvresourcesoutput .= "\t<tr><td colspan='2' height='4'><strong>".$clang->gT("Import Survey Resources")."</strong></td></tr>\n";
-	$importsurvresourcesoutput .= "\t<tr><td align='center'>\n";
+    require("classes/phpzip/phpzip.inc.php");
+    $zipfile=$_FILES['the_file']['tmp_name'];
+    $z = new PHPZip();
 
-	if (!is_writeable($basedestdir))
-	{
-		$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-	    $importsurvresourcesoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
-		$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-		return;
-	}
+    // Create temporary directory
+    // If dangerous content is unzipped
+    // then no one will know the path
+    $extractdir=tempdir($tempdir);
+    $basedestdir = $uploaddir."/surveys";
+    $destdir=$basedestdir."/$surveyid/";
 
-	if (!is_dir($destdir))
-	{
-		mkdir($destdir);
-	}
+    if (!is_writeable($basedestdir))
+    {
+        $importsurveyresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importsurveyresourcesoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
+        $importsurveyresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\" />\n";
+        $importsurveyresourcesoutput .= "</div>\n";
+        return;
+    }
 
-	$aImportedFilesInfo=null;
-	$aErrorFilesInfo=null;
+    if (!is_dir($destdir))
+    {
+        mkdir($destdir);
+    }
+
+    $aImportedFilesInfo=null;
+    $aErrorFilesInfo=null;
 
 
-	if (is_file($zipfile))
-	{
-		$importsurvresourcesoutput .= "<strong><font class='successtitle'>".$clang->gT("Success")."</font></strong><br />\n";
-		$importsurvresourcesoutput .= $clang->gT("File upload succeeded.")."<br /><br />\n";
-		$importsurvresourcesoutput .= $clang->gT("Reading file..")."<br />\n";
+    if (is_file($zipfile))
+    {
+        $importsurveyresourcesoutput .= "<div class=\"successheader\">".$clang->gT("Success")."</div><br />\n";
+        $importsurveyresourcesoutput .= $clang->gT("File upload succeeded.")."<br /><br />\n";
+        $importsurveyresourcesoutput .= $clang->gT("Reading file..")."<br /><br />\n";
 
-		if ($z->extract($extractdir,$zipfile) != 'OK')
-		{
-			$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-			$importsurvresourcesoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br /><br />\n";
-			$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
-			$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-			return;
-		}
+        if ($z->extract($extractdir,$zipfile) != 'OK')
+        {
+            $importsurveyresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+            $importsurveyresourcesoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br /><br />\n";
+            $importsurveyresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\" />\n";
+            $importsurveyresourcesoutput .= "</div>\n";
+            return;
+        }
 
-		// now read tempdir and copy authorized files only
-		$dh = opendir($extractdir);
-		while($direntry = readdir($dh))
-		{
-			if (($direntry!=".")&&($direntry!=".."))
-			{
-				if (is_file($extractdir."/".$direntry))
-				{ // is  a file
-					$extfile = substr(strrchr($direntry, '.'),1);
-					if  (!(stripos(','.$allowedresourcesuploads.',',','.$extfile.',') === false))
-					{ //Extension allowed
-						if (!copy($extractdir."/".$direntry, $destdir.$direntry))
-						{
-							$aErrorFilesInfo[]=Array(
+        // now read tempdir and copy authorized files only
+        $dh = opendir($extractdir);
+        while($direntry = readdir($dh))
+        {
+            if (($direntry!=".")&&($direntry!=".."))
+            {
+                if (is_file($extractdir."/".$direntry))
+                { // is  a file
+                    $extfile = substr(strrchr($direntry, '.'),1);
+                    if  (!(stripos(','.$allowedresourcesuploads.',',','.$extfile.',') === false))
+                    { //Extension allowed
+                        if (!copy($extractdir."/".$direntry, $destdir.$direntry))
+                        {
+                            $aErrorFilesInfo[]=Array(
 								"filename" => $direntry,
 								"status" => $clang->gT("Copy failed")
-							);
-							unlink($extractdir."/".$direntry);
-							
-						}
-						else
-						{	
-							$aImportedFilesInfo[]=Array(
+                            );
+                            unlink($extractdir."/".$direntry);
+
+                        }
+                        else
+                        {
+                            $aImportedFilesInfo[]=Array(
 								"filename" => $direntry,
 								"status" => $clang->gT("OK")
-							);
-							unlink($extractdir."/".$direntry);
-						}
-					}
-					
-					else
-					{ // Extension forbidden
-						$aErrorFilesInfo[]=Array(
+                            );
+                            unlink($extractdir."/".$direntry);
+                        }
+                    }
+
+                    else
+                    { // Extension forbidden
+                        $aErrorFilesInfo[]=Array(
 							"filename" => $direntry,
 							"status" => $clang->gT("Error")." (".$clang->gT("Forbidden Extension").")"
-						);
-						unlink($extractdir."/".$direntry);
-					}
-				} // end if is_file
-			} // end if ! . or ..
-		} // end while read dir
-		
+							);
+							unlink($extractdir."/".$direntry);
+                    }
+                } // end if is_file
+            } // end if ! . or ..
+        } // end while read dir
 
-		//Delete the temporary file
-		unlink($zipfile);
-		//Delete temporary folder
-		rmdir($extractdir);
 
-		// display summary
-		$okfiles = 0;
-		$errfiles= 0;
-	        $ErrorListHeader .= "";
-	        $ImportListHeader .= "";
-		if (is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
-		{
-			$status=$clang->gT("Success");
-			$color='green';
-			$okfiles = count($aImportedFilesInfo);
-		        $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
-		}
-		elseif (is_null($aErrorFilesInfo) && is_null($aImportedFilesInfo))
-		{
-			$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-			$importsurvresourcesoutput .= $clang->gT("This ZIP archive contains no valid Resources files. Import failed.")."<br /><br />\n";
-			$importsurvresourcesoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP Archive.")."<br /><br />\n";
-			$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
-			$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-			return;
-			
-		}
-		elseif (!is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
-		{
-			$status=$clang->gT("Partial");
-			$color='orange';
-			$okfiles = count($aImportedFilesInfo);
-			$errfiles = count($aErrorFilesInfo);
-		        $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
-		        $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
-		}
-		else
-		{
-			$status=$clang->gT("Error");
-			$color='red';
-			$errfiles = count($aErrorFilesInfo);
-		        $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
-		}
+        //Delete the temporary file
+        unlink($zipfile);
+        //Delete temporary folder
+        rmdir($extractdir);
 
-        		$importsurvresourcesoutput .= "<strong>".$clang->gT("Imported Resources for")." SID:</strong> $surveyid<br />\n";
-		        $importsurvresourcesoutput .= "<br />\n<strong><font color='$color'>".$status."</font></strong><br />\n";
-		        $importsurvresourcesoutput .= "<strong><u>".$clang->gT("Resources Import Summary")."</u></strong><br />\n";
-		        $importsurvresourcesoutput .= "".$clang->gT("Total Imported files").": $okfiles<br />\n";
-		        $importsurvresourcesoutput .= "".$clang->gT("Total Errors").": $errfiles<br />\n";
-			$importsurvresourcesoutput .= $ImportListHeader;
-			foreach ($aImportedFilesInfo as $entry)
-			{
-		        	$importsurvresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry["filename"]."</li>\n";
-			}
-		        $importsurvresourcesoutput .= "\t</ul><br /><br />\n";
-			$importsurvresourcesoutput .= $ErrorListHeader;
-			foreach ($aErrorFilesInfo as $entry)
-			{
-		        	$importsurvresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry['filename']." (".$entry['status'].")</li>\n";
-			}
-	}
-	else
-	{
-		$importsurvresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-	    $importsurvresourcesoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
-		$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-		return;
-	}
-		// Final Back not needed if files have been imported
-//		$importsurvresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\">\n";
-		$importsurvresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
+        // display summary
+        $okfiles = 0;
+        $errfiles= 0;
+        $ErrorListHeader = "";
+        $ImportListHeader = "";
+        if (is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
+        {
+            $status=$clang->gT("Success");
+            $statusClass='successheader';
+            $okfiles = count($aImportedFilesInfo);
+            $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
+        }
+        elseif (is_null($aErrorFilesInfo) && is_null($aImportedFilesInfo))
+        {
+            $importsurveyresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+            $importsurveyresourcesoutput .= $clang->gT("This ZIP archive contains no valid Resources files. Import failed.")."<br /><br />\n";
+            $importsurveyresourcesoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP archives.")."<br /><br />\n";
+            $importsurveyresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\" />\n";
+            $importsurveyresourcesoutput .= "</div>\n";
+            return;
+
+        }
+        elseif (!is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
+        {
+            $status=$clang->gT("Partial");
+            $statusClass='partialheader';
+            $okfiles = count($aImportedFilesInfo);
+            $errfiles = count($aErrorFilesInfo);
+            $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
+            $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
+        }
+        else
+        {
+            $status=$clang->gT("Error");
+            $statusClass='warningheader';
+            $errfiles = count($aErrorFilesInfo);
+            $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
+        }
+
+        $importsurveyresourcesoutput .= "<strong>".$clang->gT("Imported Resources for")." SID:</strong> $surveyid<br /><br />\n";
+        $importsurveyresourcesoutput .= "<div class=\"".$statusClass."\">".$status."</div><br />\n";
+        $importsurveyresourcesoutput .= "<strong><u>".$clang->gT("Resources Import Summary")."</u></strong><br />\n";
+        $importsurveyresourcesoutput .= "".$clang->gT("Total Imported files").": $okfiles<br />\n";
+        $importsurveyresourcesoutput .= "".$clang->gT("Total Errors").": $errfiles<br />\n";
+        $importsurveyresourcesoutput .= $ImportListHeader;
+        foreach ($aImportedFilesInfo as $entry)
+        {
+            $importsurveyresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry["filename"]."</li>\n";
+        }
+        if (!is_null($aImportedFilesInfo))
+        {
+            $importsurveyresourcesoutput .= "\t</ul><br />\n";
+        }
+        $importsurveyresourcesoutput .= $ErrorListHeader;
+        foreach ($aErrorFilesInfo as $entry)
+        {
+            $importsurveyresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry['filename']." (".$entry['status'].")</li>\n";
+        }
+        if (!is_null($aErrorFilesInfo))
+        {
+            $importsurveyresourcesoutput .= "\t</ul><br />\n";
+        }
+    }
+    else
+    {
+        $importsurveyresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importsurveyresourcesoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
+        $importsurveyresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\" />\n";
+        $importsurveyresourcesoutput .= "</div>\n";
+        return;
+    }
+    $importsurveyresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=editsurvey&sid=$surveyid', '_self')\" />\n";
+    $importsurveyresourcesoutput .= "</div>\n";
 }
 
 
 
 if ($action == "importlabelresources" && $lid)
 {
-	if ($demoModeOnly === true)
-	{
-		$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-		$importlabelresourcesoutput .= sprintf ($clang->gT("Demo Mode Only: Uploading file is disabled in this system."),$basedestdir)."<br /><br />\n";
-		$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
-		$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-		return;
-	}
+    $importlabelresourcesoutput = "<div class='header ui-widget-header'>".$clang->gT("Import Label Set")."</div>\n";
+    $importlabelresourcesoutput .= "<div class='messagebox ui-corner-all'>";
 
-	require("classes/phpzip/phpzip.inc.php");
-	//$the_full_file_path = $tempdir . "/" . $_FILES['the_file']['name'];
-	$zipfile=$_FILES['the_file']['tmp_name'];
-	$z = new PHPZip();
-	// Create temporary directory
-	// If dangerous content is unzipped
-	// then no one will know the path
-	$extractdir=tempdir($tempdir);
-	$basedestdir = $publicdir."/upload/labels";
-	$destdir=$basedestdir."/$lid/";
-
-	$importlabelresourcesoutput = "<br />\n";
-	$importlabelresourcesoutput .= "<table class='alertbox'>\n";
-	$importlabelresourcesoutput .= "\t<tr><td colspan='2' height='4'><strong>".$clang->gT("Import Label Set")."</strong></td></tr>\n";
-	$importlabelresourcesoutput .= "\t<tr><td align='center'>\n";
-
-	if (!is_writeable($basedestdir))
-	{
-		$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-	    $importlabelresourcesoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
-		$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-		return;
-	}
-
-	if (!is_dir($destdir))
-	{
-		mkdir($destdir);
-	}
-
-	$aImportedFilesInfo=null;
-	$aErrorFilesInfo=null;
-
-
-	if (is_file($zipfile))
-	{
-		$importlabelresourcesoutput .= "<strong><font class='successtitle'>".$clang->gT("Success")."</font></strong><br />\n";
-		$importlabelresourcesoutput .= $clang->gT("File upload succeeded.")."<br /><br />\n";
-		$importlabelresourcesoutput .= $clang->gT("Reading file..")."<br />\n";
-
-		if ($z->extract($extractdir,$zipfile) != 'OK')
-		{
-			$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-			$importlabelresourcesoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br /><br />\n";
-			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
-			$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-			return;
-		}
-
-		// now read tempdir and copy authorized files only
-		$dh = opendir($extractdir);
-		while($direntry = readdir($dh))
-		{
-			if (($direntry!=".")&&($direntry!=".."))
-			{
-				if (is_file($extractdir."/".$direntry))
-				{ // is  a file
-					$extfile = substr(strrchr($direntry, '.'),1);
-					if  (!(stripos(','.$allowedresourcesuploads.',',','.$extfile.',') === false))
-					{ //Extension allowed
-						if (!copy($extractdir."/".$direntry, $destdir.$direntry))
-						{
-							$aErrorFilesInfo[]=Array(
-								"filename" => $direntry,
-								"status" => $clang->gT("Copy failed")
-							);
-							unlink($extractdir."/".$direntry);
-							
-						}
-						else
-						{	
-							$aImportedFilesInfo[]=Array(
-								"filename" => $direntry,
-								"status" => $clang->gT("OK")
-							);
-							unlink($extractdir."/".$direntry);
-						}
-					}
-					
-					else
-					{ // Extension forbidden
-						$aErrorFilesInfo[]=Array(
-							"filename" => $direntry,
-							"status" => $clang->gT("Error")." (".$clang->gT("Forbidden Extension").")"
-						);
-						unlink($extractdir."/".$direntry);
-					}
-				} // end if is_file
-			} // end if ! . or ..
-		} // end while read dir
-		
-
-		//Delete the temporary file
-		unlink($zipfile);
-		//Delete temporary folder
-		rmdir($extractdir);
-
-		// display summary
-		$okfiles = 0;
-		$errfiles= 0;
-	        $ErrorListHeader .= "";
-	        $ImportListHeader .= "";
-		if (is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
-		{
-			$status=$clang->gT("Success");
-			$color='green';
-			$okfiles = count($aImportedFilesInfo);
-		        $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
-		}
-		elseif (is_null($aErrorFilesInfo) && is_null($aImportedFilesInfo))
-		{
-			$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-			$importlabelresourcesoutput .= $clang->gT("This ZIP archive contains no valid Resources files. Import failed.")."<br /><br />\n";
-			$importlabelresourcesoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP Archive.")."<br /><br />\n";
-			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
-			$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-			return;
-			
-		}
-		elseif (!is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
-		{
-			$status=$clang->gT("Partial");
-			$color='orange';
-			$okfiles = count($aImportedFilesInfo);
-			$errfiles = count($aErrorFilesInfo);
-		        $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
-		        $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
-		}
-		else
-		{
-			$status=$clang->gT("Error");
-			$color='red';
-			$errfiles = count($aErrorFilesInfo);
-		        $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
-		}
-
-        		$importlabelresourcesoutput .= "<strong>".$clang->gT("Imported Resources for")." LID:</strong> $lid<br />\n";
-		        $importlabelresourcesoutput .= "<br />\n<strong><font color='$color'>".$status."</font></strong><br />\n";
-		        $importlabelresourcesoutput .= "<strong><u>".$clang->gT("Resources Import Summary")."</u></strong><br />\n";
-		        $importlabelresourcesoutput .= "".$clang->gT("Total Imported files").": $okfiles<br />\n";
-		        $importlabelresourcesoutput .= "".$clang->gT("Total Errors").": $errfiles<br />\n";
-			$importlabelresourcesoutput .= $ImportListHeader;
-			foreach ($aImportedFilesInfo as $entry)
-			{
-		        	$importlabelresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry["filename"]."</li>\n";
-			}
-		        $importlabelresourcesoutput .= "\t</ul><br /><br />\n";
-			$importlabelresourcesoutput .= $ErrorListHeader;
-			foreach ($aErrorFilesInfo as $entry)
-			{
-		        	$importlabelresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry['filename']." (".$entry['status'].")</li>\n";
-			}
-	}
-	else
-	{
-		$importlabelresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-	    $importlabelresourcesoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-		$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
-		$importlabelresourcesoutput .= "</td></tr></table><br />&nbsp;\n";
-		return;
-	}
-			$importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
-}
-
-
-
-if ($action == "templateupload")
-{
     if ($demoModeOnly === true)
     {
-        $importtemplateresourcesoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-        $importtemplateoutput .= sprintf ($clang->gT("Demo mode: Uploading templates is disabled."),$basedestdir)."<br /><br />\n";
-        $importtemplateoutput .= "</td></tr></table><br />&nbsp;\n";
+        $importlabelresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importlabelresourcesoutput .= sprintf ($clang->gT("Demo mode only: Uploading files is disabled in this system."),$basedestdir)."<br /><br />\n";
+        $importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\" />\n";
+        $importlabelresourcesoutput .= "</div>\n";
         return;
     }
 
@@ -399,20 +232,198 @@ if ($action == "templateupload")
     // If dangerous content is unzipped
     // then no one will know the path
     $extractdir=tempdir($tempdir);
-    $basedestdir = $templaterootdir;
-    $newdir=str_replace('.','',strip_ext(sanitize_paranoid_string($_FILES['the_file']['name'])));
-    $destdir=$basedestdir.'/'.$newdir.'/';
-
-    $importtemplateoutput = "<br />\n";
-    $importtemplateoutput .= "<table class='alertbox'>\n";
-    $importtemplateoutput .= "\t<tr><td colspan='2' height='4'><strong>".$clang->gT("Import Label Set")."</strong></td></tr>\n";
-    $importtemplateoutput .= "\t<tr><td align='center'>\n";
+    $basedestdir = $publicdir."/upload/labels";
+    $destdir=$basedestdir."/$lid/";
 
     if (!is_writeable($basedestdir))
     {
-        $importtemplateoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-        $importtemplateoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-        $importtemplateoutput .= "</td></tr></table><br />&nbsp;\n";
+        $importlabelresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importlabelresourcesoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
+        $importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\" />\n";
+        $importlabelresourcesoutput .= "</div>\n";
+        return;
+    }
+
+    if (!is_dir($destdir))
+    {
+        mkdir($destdir);
+    }
+
+    $aImportedFilesInfo=null;
+    $aErrorFilesInfo=null;
+
+
+    if (is_file($zipfile))
+    {
+        $importlabelresourcesoutput .= "<div class=\"successheader\">".$clang->gT("Success")."</div><br />\n";
+        $importlabelresourcesoutput .= $clang->gT("File upload succeeded.")."<br /><br />\n";
+        $importlabelresourcesoutput .= $clang->gT("Reading file..")."<br /><br />\n";
+
+        if ($z->extract($extractdir,$zipfile) != 'OK')
+        {
+            $importlabelresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+            $importlabelresourcesoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br /><br />\n";
+            $importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\" />\n";
+            $importlabelresourcesoutput .= "</div>\n";
+            return;
+        }
+
+        // now read tempdir and copy authorized files only
+        $dh = opendir($extractdir);
+        while($direntry = readdir($dh))
+        {
+            if (($direntry!=".")&&($direntry!=".."))
+            {
+                if (is_file($extractdir."/".$direntry))
+                { // is  a file
+                    $extfile = substr(strrchr($direntry, '.'),1);
+                    if  (!(stripos(','.$allowedresourcesuploads.',',','.$extfile.',') === false))
+                    { //Extension allowed
+                        if (!copy($extractdir."/".$direntry, $destdir.$direntry))
+                        {
+                            $aErrorFilesInfo[]=Array(
+								"filename" => $direntry,
+								"status" => $clang->gT("Copy failed")
+                            );
+                            unlink($extractdir."/".$direntry);
+
+                        }
+                        else
+                        {
+                            $aImportedFilesInfo[]=Array(
+								"filename" => $direntry,
+								"status" => $clang->gT("OK")
+                            );
+                            unlink($extractdir."/".$direntry);
+                        }
+                    }
+
+                    else
+                    { // Extension forbidden
+                        $aErrorFilesInfo[]=Array(
+							"filename" => $direntry,
+							"status" => $clang->gT("Error")." (".$clang->gT("Forbidden Extension").")"
+							);
+							unlink($extractdir."/".$direntry);
+                    }
+                } // end if is_file
+            } // end if ! . or ..
+        } // end while read dir
+
+
+        //Delete the temporary file
+        unlink($zipfile);
+        //Delete temporary folder
+        rmdir($extractdir);
+
+        // display summary
+        $okfiles = 0;
+        $errfiles= 0;
+        $ErrorListHeader .= "";
+        $ImportListHeader .= "";
+        if (is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
+        {
+            $status=$clang->gT("Success");
+            $statusClass='successheader';
+            $okfiles = count($aImportedFilesInfo);
+            $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
+        }
+        elseif (is_null($aErrorFilesInfo) && is_null($aImportedFilesInfo))
+        {
+            $importlabelresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+            $importlabelresourcesoutput .= $clang->gT("This ZIP archive contains no valid Resources files. Import failed.")."<br /><br />\n";
+            $importlabelresourcesoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP archives.")."<br /><br />\n";
+            $importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\" />\n";
+            $importlabelresourcesoutput .= "</div>\n";
+            return;
+        }
+        elseif (!is_null($aErrorFilesInfo) && !is_null($aImportedFilesInfo))
+        {
+            $status=$clang->gT("Partial");
+            $statusClass='partialheader';
+            $okfiles = count($aImportedFilesInfo);
+            $errfiles = count($aErrorFilesInfo);
+            $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
+            $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
+        }
+        else
+        {
+            $status=$clang->gT("Error");
+            $statusClass='warningheader';
+            $errfiles = count($aErrorFilesInfo);
+            $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
+        }
+
+        $importlabelresourcesoutput .= "<strong>".$clang->gT("Imported Resources for")." LID:</strong> $lid<br /><br />\n";
+        $importlabelresourcesoutput .= "<div class=\"".$statusClass."\">".$status."</div><br />\n";
+        $importlabelresourcesoutput .= "<strong><u>".$clang->gT("Resources Import Summary")."</u></strong><br />\n";
+        $importlabelresourcesoutput .= "".$clang->gT("Total Imported files").": $okfiles<br />\n";
+        $importlabelresourcesoutput .= "".$clang->gT("Total Errors").": $errfiles<br />\n";
+        $importlabelresourcesoutput .= $ImportListHeader;
+        foreach ($aImportedFilesInfo as $entry)
+        {
+            $importlabelresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry["filename"]."</li>\n";
+        }
+        if (!is_null($aImportedFilesInfo))
+        {
+            $importlabelresourcesoutput .= "\t</ul><br />\n";
+        }
+        $importlabelresourcesoutput .= $ErrorListHeader;
+        foreach ($aErrorFilesInfo as $entry)
+        {
+            $importlabelresourcesoutput .= "\t<li>".$clang->gT("File").": ".$entry['filename']." (".$entry['status'].")</li>\n";
+        }
+        if (!is_null($aErrorFilesInfo))
+        {
+            $importlabelresourcesoutput .= "\t</ul><br />\n";
+        }
+    }
+    else
+    {
+        $importlabelresourcesoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importlabelresourcesoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
+        $importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Main Admin Screen")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\" />\n";
+        $importlabelresourcesoutput .= "</div>\n";
+        return;
+    }
+    $importlabelresourcesoutput .= "<input type='submit' value='".$clang->gT("Back")."' onclick=\"window.open('$scriptname?action=labels&lid=$lid', '_self')\">\n";
+    $importlabelresourcesoutput .= "</div>\n";
+}
+
+
+
+if ($action == "templateupload")
+{
+    $importtemplateoutput = "<div class='header ui-widget-header'>".$clang->gT("Import template")."</div>\n";
+    $importtemplateoutput .= "<div class='messagebox ui-corner-all'>";
+
+    if ($demoModeOnly === true)
+    {
+        $importtemplateoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importtemplateoutput .= sprintf ($clang->gT("Demo mode: Uploading templates is disabled."),$basedestdir)."<br/><br/>\n";
+        $importtemplateoutput .= "<br/><input type=\"submit\" onclick=\"window.open('$scriptname?action=templates', '_self')\" value=\"".$clang->gT("Template Editor")."\"/>\n";
+        $importtemplateoutput .= "</div>\n";
+        return;
+    }
+
+    require("classes/phpzip/phpzip.inc.php");
+    //$the_full_file_path = $tempdir . "/" . $_FILES['the_file']['name'];
+    $zipfile=$_FILES['the_file']['tmp_name'];
+    $z = new PHPZip();
+    // Create temporary directory
+    // If dangerous content is unzipped
+    // then no one will know the path
+    $extractdir=tempdir($tempdir);
+    $basedestdir = $usertemplaterootdir;
+    $newdir=str_replace('.','',strip_ext(sanitize_paranoid_string($_FILES['the_file']['name'])));
+    $destdir=$basedestdir.'/'.$newdir.'/';
+
+    if (!is_writeable($basedestdir))
+    {
+        $importtemplateoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importtemplateoutput .= sprintf ($clang->gT("Incorrect permissions in your %s folder."),$basedestdir)."<br/><br/>\n";
+        $importtemplateoutput .= "<br/><input type=\"submit\" onclick=\"window.open('$scriptname?action=templates', '_self')\" value=\"".$clang->gT("Template Editor")."\"/>\n";
+        $importtemplateoutput .= "</div>\n";
         return;
     }
 
@@ -422,9 +433,10 @@ if ($action == "templateupload")
     }
     else
     {
-        $importtemplateoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-        $importtemplateoutput .= sprintf ($clang->gT("Template '%s' does already exist."),$newdir)."<br /><br />\n";
-        $importtemplateoutput .= "</td></tr></table><br />&nbsp;\n";
+        $importtemplateoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importtemplateoutput .= sprintf ($clang->gT("Template '%s' does already exist."),$newdir)."<br/><br/>\n";
+        $importtemplateoutput .= "<br/><input type=\"submit\" onclick=\"window.open('$scriptname?action=templates', '_self')\" value=\"".$clang->gT("Template Editor")."\"/>\n";
+        $importtemplateoutput .= "</div>\n";
         return;
     }
 
@@ -434,19 +446,20 @@ if ($action == "templateupload")
 
     if (is_file($zipfile))
     {
-        $importtemplateoutput .= "<strong><font class='successtitle'>".$clang->gT("Success")."</font></strong><br />\n";
+        $importtemplateoutput .= "<div class=\"successheader\">".$clang->gT("Success")."</div><br />\n";
         $importtemplateoutput .= $clang->gT("File upload succeeded.")."<br /><br />\n";
-        $importtemplateoutput .= $clang->gT("Reading file..")."<br />\n";
+        $importtemplateoutput .= $clang->gT("Reading file..")."<br /><br />\n";
 
         if ($z->extract($extractdir,$zipfile) != 'OK')
         {
-            $importtemplateoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-            $importtemplateoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br /><br />\n";
-            $importtemplateoutput .= "</td></tr></table><br />&nbsp;\n";
+            $importtemplateoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+            $importtemplateoutput .= $clang->gT("This file is not a valid ZIP file archive. Import failed.")."<br/><br/>\n";
+            $importtemplateoutput .= "<br/><input type=\"submit\" onclick=\"window.open('$scriptname?action=templates', '_self')\" value=\"".$clang->gT("Template Editor")."\"/>\n";
+            $importtemplateoutput .= "</div>\n";
             return;
         }
 
-         $ErrorListHeader = "";
+        $ErrorListHeader = "";
         $ImportListHeader = "";
 
         // now read tempdir and copy authorized files only
@@ -467,10 +480,10 @@ if ($action == "templateupload")
                                 "status" => $clang->gT("Copy failed")
                             );
                             unlink($extractdir."/".$direntry);
-                            
+
                         }
                         else
-                        {    
+                        {
                             $aImportedFilesInfo[]=Array(
                                 "filename" => $direntry,
                                 "status" => $clang->gT("OK")
@@ -478,19 +491,19 @@ if ($action == "templateupload")
                             unlink($extractdir."/".$direntry);
                         }
                     }
-                    
+
                     else
                     { // Extension forbidden
                         $aErrorFilesInfo[]=Array(
                             "filename" => $direntry,
                             "status" => $clang->gT("Error")." (".$clang->gT("Forbidden Extension").")"
-                        );
-                        unlink($extractdir."/".$direntry);
+                            );
+                            unlink($extractdir."/".$direntry);
                     }
                 } // end if is_file
             } // end if ! . or ..
         } // end while read dir
-        
+
 
         //Delete the temporary file
         unlink($zipfile);
@@ -504,23 +517,24 @@ if ($action == "templateupload")
         if (count($aErrorFilesInfo)==0 && count($aImportedFilesInfo)>0)
         {
             $status=$clang->gT("Success");
-            $color='green';
+            $statusClass='successheader';
             $okfiles = count($aImportedFilesInfo);
             $ImportListHeader .= "<br /><strong><u>".$clang->gT("Imported Files List").":</u></strong><br />\n";
         }
         elseif (count($aErrorFilesInfo)==0 && count($aImportedFilesInfo)==0)
         {
-            $importtemplateoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
+            $importtemplateoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
             $importtemplateoutput .= $clang->gT("This ZIP archive contains no valid template files. Import failed.")."<br /><br />\n";
-            $importtemplateoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP archives.")."<br /><br />\n";
-            $importtemplateoutput .= "</td></tr></table><br />&nbsp;\n";
+            $importtemplateoutput .= $clang->gT("Remember that we do not support subdirectories in ZIP archives.")."<br/><br/>\n";
+            $importtemplateoutput .= "<br/><input type=\"submit\" onclick=\"window.open('$scriptname?action=templates', '_self')\" value=\"".$clang->gT("Template Editor")."\"/>\n";
+            $importtemplateoutput .= "</div>\n";
             return;
-            
+
         }
         elseif (count($aErrorFilesInfo)>0 && count($aImportedFilesInfo)>0)
         {
             $status=$clang->gT("Partial");
-            $color='orange';
+            $statusClass='partialheader';
             $okfiles = count($aImportedFilesInfo);
             $errfiles = count($aErrorFilesInfo);
             $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
@@ -529,13 +543,13 @@ if ($action == "templateupload")
         else
         {
             $status=$clang->gT("Error");
-            $color='red';
+            $statusClass='warningheader';
             $errfiles = count($aErrorFilesInfo);
-                $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
+            $ErrorListHeader .= "<br /><strong><u>".$clang->gT("Error Files List").":</u></strong><br />\n";
         }
 
-        $importtemplateoutput .= "<strong>".$clang->gT("Imported template files for")."</strong> $lid<br />\n";
-        $importtemplateoutput .= "<br />\n<strong><font color='$color'>".$status."</font></strong><br />\n";
+        $importtemplateoutput .= "<strong>".$clang->gT("Imported template files for")."</strong> $lid<br /><br />\n";
+        $importtemplateoutput .= "<div class=\"".$statusClass."\">".$status."</div><br />\n";
         $importtemplateoutput .= "<strong><u>".$clang->gT("Resources Import Summary")."</u></strong><br />\n";
         $importtemplateoutput .= "".$clang->gT("Total Imported files").": $okfiles<br />\n";
         $importtemplateoutput .= "".$clang->gT("Total Errors").": $errfiles<br />\n";
@@ -544,52 +558,61 @@ if ($action == "templateupload")
         {
             $importtemplateoutput .= "\t<li>".$clang->gT("File").": ".$entry["filename"]."</li>\n";
         }
-        $importtemplateoutput .= "\t</ul><br /><br />\n";
+        if (!is_null($aImportedFilesInfo))
+        {
+            $importtemplateoutput .= "\t</ul><br />\n";
+        }
         $importtemplateoutput .= $ErrorListHeader;
         foreach ($aErrorFilesInfo as $entry)
         {
             $importtemplateoutput .= "\t<li>".$clang->gT("File").": ".$entry['filename']." (".$entry['status'].")</li>\n";
         }
+        if (!is_null($aErrorFilesInfo))
+        {
+            $importtemplateoutput .= "\t</ul><br />\n";
+        }
     }
     else
     {
-        $importtemplateoutput .= "<strong><font color='red'>".$clang->gT("Error")."</font></strong><br />\n";
-        $importtemplateoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br /><br />\n";
-        $importtemplateoutput .= "</td></tr></table><br />&nbsp;\n";
+        $importtemplateoutput .= "<div class=\"warningheader\">".$clang->gT("Error")."</div><br />\n";
+        $importtemplateoutput .= sprintf ($clang->gT("An error occurred uploading your file. This may be caused by incorrect permissions in your %s folder."),$basedestdir)."<br/><br/>\n";
+        $importtemplateoutput .= "<br/><input type=\"submit\" onclick=\"window.open('$scriptname?action=templates', '_self')\" value=\"".$clang->gT("Template Editor")."\"/>\n";
+        $importtemplateoutput .= "</div>\n";
         return;
     }
-    $importtemplateoutput .= "<input type='submit' value='".$clang->gT("Open imported template")."' onclick=\"window.open('$scriptname?action=templates&templatename=$newdir', '_self')\">\n";
+    $importtemplateoutput .= "<input type='submit' value='".$clang->gT("Open imported template")."' onclick=\"window.open('$scriptname?action=templates&templatename=$newdir', '_self')\"/>\n";
+    $importtemplateoutput .= "</div>\n";
 }
 
 
 //---------------------
-	// Comes from http://fr2.php.net/tempnam
- function tempdir($dir, $prefix='', $mode=0700)
-  {
+// Comes from http://fr2.php.net/tempnam
+function tempdir($dir, $prefix='', $mode=0700)
+{
     if (substr($dir, -1) != '/') $dir .= '/';
 
     do
     {
-      $path = $dir.$prefix.mt_rand(0, 9999999);
+        $path = $dir.$prefix.mt_rand(0, 9999999);
     } while (!mkdir($path, $mode));
 
     return $path;
-  }
+}
 
-    /**
-    * Strips file extension
-    * 
-    * @param string $name
-    * @return string
-    */
-    function strip_ext($name)
+/**
+ * Strips file extension
+ *
+ * @param string $name
+ * @return string
+ */
+function strip_ext($name)
+{
+    $ext = strrchr($name, '.');
+    if($ext !== false)
     {
-         $ext = strrchr($name, '.');
-         if($ext !== false)
-         {
-             $name = substr($name, 0, -strlen($ext));
-         }
-         return $name;
-    }   
-  
+        $name = substr($name, 0, -strlen($ext));
+    }
+    return $name;
+}
+
 ?>

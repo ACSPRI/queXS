@@ -1,14 +1,4 @@
 $(document).ready(function(){
-     $('#filterinc').change(function(){
-         if ($('#filterinc').val()=="filter") {
-            $('#noncompleted').attr("checked", "");
-             $('#vertical_slide').slideUp('normal'); 
-         }
-         else
-         {
-             $('#vertical_slide').slideDown('normal'); 
-         }
-     })
      $('#usegraph').click( function(){
         if ($('#grapherror').length>0)
         { 
@@ -19,19 +9,23 @@ $(document).ready(function(){
      $('#viewsummaryall').click( function(){
         if ($('#viewsummaryall').attr('checked')==true)
         { 
-            $('#filterchoices').hide();
+            $('#filterchoices input[type=checkbox]').attr('checked', true);
         }
         else
         {
-            $('#filterchoices').show();
+            $('#filterchoices input[type=checkbox]').attr('checked', false);
             
         }
      })
      $('#hidefilter').click( function(){
-            $('#filtersettings').slideUp();
+            $('#filterchoices').hide();
+            $('#filterchoice_state').val('1');
+            $('#vertical_slide2').hide();               
      })
      $('#showfilter').click( function(){
-            $('#filtersettings').slideDown();
+            $('#filterchoices').show();
+            $('#filterchoice_state').val('');
+            $('#vertical_slide2').show();               
      })
      
      
@@ -59,4 +53,7 @@ function selectCheckboxes(Div, CheckBoxName, Button)
 		nInput[i].checked = Value;
 	}
 }
-
+function nographs()
+{
+	document.getElementById('usegraph').checked = false;
+}

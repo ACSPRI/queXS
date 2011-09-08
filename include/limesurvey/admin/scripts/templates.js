@@ -1,4 +1,4 @@
-// $Id: templates.js 6963 2009-05-28 03:49:18Z jcleeland $
+// $Id: templates.js 9680 2011-01-13 19:26:43Z shnoulle $
 // based on TTabs from http://interface.eyecon.ro/
 
 $(document).ready(function(){
@@ -17,15 +17,15 @@ $(document).ready(function(){
       $('#previewiframe').css("width", "320px");
       $('#previewiframe').css("height", "396px");
     });
-    $('#640').click(function(){
+    $('#x640').click(function(){
       $('#previewiframe').css("width", "640px");
       $('#previewiframe').css("height", "480px");
     });
-    $('#800').click(function(){
+    $('#x800').click(function(){
       $('#previewiframe').css("width", "800px");
       $('#previewiframe').css("height", "600px");
     });
-    $('#1024').click(function(){
+    $('#x1024').click(function(){
       $('#previewiframe').css("width", "1024px");
       $('#previewiframe').css("height", "768px");
     });

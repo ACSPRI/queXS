@@ -117,9 +117,15 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 
 		foreach ($fields as $e)
 		{
-			print "<td>{$row[$e]}</td>";
+			print "<td>";
+			if (isset($row[$e])) print $row[$e];
+			print "</td>";
 			if ($total && in_array($e,$total))
+			{
+				if (!isset($tot[$e])) 
+					$tot[$e] = 0;
 				$tot[$e] += $row[$e];
+			}
 		}
 		print "</tr>";
 	}

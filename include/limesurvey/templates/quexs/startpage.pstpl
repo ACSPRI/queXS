@@ -1,100 +1,30 @@
-<title>{SURVEYNAME}</title>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />   
-        <meta name="generator" content="LimeSurvey http://www.limesurvey.org" />
-<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}template.css" />
-<style type='text/css'>
-a:link, a:visited
-    {
-    color: #819d26;
-    text-decoration: none;
-    }
-body.default
-    {
-    background-color: #eeeeee;
-    font-size: 11pt;
-    line-height: 150%;
-    font-family: Arial, sans-serif;
-    color: #1d2d45;
-    }
-.questiontext
-{
-   font-weight: bold;
-   font-size: 16pt;
- }
-.question
-    {
-    font-size: 14pt;
-    }
-.questionhelp
-    {
-    font-size: 12pt;
-    }        
-.clearall
-    {
-    font-size: 11pt;
-    }
-.answertext
-    {
-    font-size: 12pt;
-    }
-.answertextright
-    {
-	text-align:left;
-    }
-.array1
-    {
-    font-size: 12pt;
-    text-align:center;
-    background-color: #eeeeee;
-    }
-.array2
-    {
-    font-size: 11pt;
-    text-align:center;
-    background-color: #eeeeee;
-    }
 
-.arraycaptionleft
-    {
-    text-align:right;
-    }
-    
-.errormandatory 
-    {
-    font-size:12pt;
-    font-weight:bold;
-    color:RED;
-    }
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>{SURVEYNAME} :: {GROUPNAME}</title>
+		<meta name="generator" content="LimeSurvey http://www.limesurvey.org" />
 
-.warningjs 
-    {
-    font-size:12pt;
-    font-weight:bold;
-    color:RED;
-    }
+		<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}template.css" />
+		
+		<!--[if lte IE 6]>
+				<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}ie_fix_6.css" />
+		<![endif]-->
+<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}ie_fix_7.css" />
+<![endif]-->
+<!--[if IE 8]>
+    	<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}ie_fix_8.css" />
+<![endif]-->
 
-.saveall
-    {
-    font-size:10pt;
-    font-weight:normal;
-    color:black;
-    }
-.asterisk
-    {
-    color: #FF0000;
-    font-size: 9pt;
-    }
-.innergraph img
-{
-  height:12px;
-}
-.innergraph table
-{
-border:1px solid #000;
-}
-</style>
-</head>
-<body class='default' bgcolor='#eeeeee'>
-<table width='100%' align='center' cellspacing='0' bgcolor='#eeeeee'>
-    <tr>
-        <td>
+    <!-- The following CSS hides visual elements of the progress bar from screen readers. -->
+    <style type="text/css" media="aural tty">
+        progress-graph .zero, progress-graph .graph, progress-graph .cent { display: none; }
+    </style>
+		
+	<script type="text/javascript" src="{TEMPLATEURL}template.js"></script>
+	<link rel="shortcut icon" href="{TEMPLATEURL}favicon.ico" />
+	</head>
+	<body class="lang-{SURVEYLANGAGE} {SURVEYFORMAT}">
+                <div class="outerframe">
+		        <table width="100%" align="center" class="bf" cellpadding="0" cellspacing="1">
+		        <tr>
+		        	<td>

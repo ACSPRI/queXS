@@ -65,7 +65,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
         $js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Status"),true,array("css/status.css"),$js,$btext,10);
+xhtml_head(T_("Status"),true,array("css/status.css"),$js,$btext,60);
 
 print "<div class='text'>" . get_operator_time($operator_id,"%a %d %b %h:%i%p") ."</div>";
 

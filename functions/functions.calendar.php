@@ -178,8 +178,9 @@ function return_contact_phone_list($case_id)
  *
  * @param int $case_id The case ID
  * @param bool|int $respondent_id The respondent already selected or false if none selected
+ * @param bool $first Select the first respondent available if none specifically selected?
  */
-function display_respondent_list($case_id,$respondent_id = false)
+function display_respondent_list($case_id,$respondent_id = false,$first = false)
 {
 	global $db;
 
@@ -195,13 +196,21 @@ function display_respondent_list($case_id,$respondent_id = false)
 		foreach($rs as $r)
 		{
 			$rid = $r['respondent_id'];
-			$selected = "";
+			if ($respondent_id == false && $first == true)
+			{
+				$first = false;
+				$selected = "selected='selected'";
+				$respondent_id = $rid;
+			}
+			else
+				$selected = "";
 			if ($rid == $respondent_id) $selected="selected='selected'";
 			print "<option value='?respondent_id=$rid' $selected>{$r['firstName']} {$r['lastName']}</option>";
 		}
 	}
 	print "<option value='?respondent_id=0' class='addresp'>" . T_("Add respondent") . "</option></select></div>";
 
+	return $respondent_id;
 }
 
 

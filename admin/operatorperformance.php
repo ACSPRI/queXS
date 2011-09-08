@@ -71,6 +71,7 @@ xhtml_head(T_("Operator Performance"),true,array("../css/table.css"),array("../j
 //xhtml_table($rs,array("firstName","completions","totalcalls","time","callt","CPH","CALLSPH","effectiveness"),array(T_("Operator"),T_("Completions"),T_("Calls"),T_("Total time"),T_("Call time"),T_("Completions p/h"),T_("Calls p/h"),T_("Effectiveness")));
 
 $questionnaire_id = false;
+print "<h3>" . T_("Please select a questionnaire") . "</h3>";
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
 display_questionnaire_chooser($questionnaire_id);
 
@@ -92,6 +93,8 @@ if ($questionnaire_id)
 		ORDER BY s.start ASC";
 		
 	$rs = $db->GetAll($sql);
+
+	print "<h3>" . T_("Please select a shift") . "</h3>";
 	
 	display_chooser($rs,"shift_id","shift_id",true,"questionnaire_id=$questionnaire_id");
 

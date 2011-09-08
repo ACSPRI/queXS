@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: quexmlsurvey.php 9149 2010-09-28 03:07:52Z azammitdcarf $
+ * $Id: quexmlsurvey.php 9607 2010-12-08 22:59:51Z azammitdcarf $
  */
 
 //Ensure script is not run directly, avoid path disclosure
@@ -84,10 +84,15 @@ unlink($f3);
 unlink($f4);
 rmdir($zipdir);
 
-header('Content-Type: application/octet-stream');
-header('Content-Disposition: attachment; filename="quexmlpdf_' . $qid . '_' . $surveyprintlang . '.zip"'); 
+header('Content-Type: application/zip');
 header('Content-Transfer-Encoding: binary');
+header('Content-Disposition: attachment; filename="quexmlpdf_' . $qid . '_' . $surveyprintlang . '.zip"'); 
+$len = filesize($zipfile);
+header("Content-Length: $len");
+header("Pragma: public");
 // load the file to send:
+ob_clean();
+flush();
 readfile($zipfile);
 unlink($zipfile);
 

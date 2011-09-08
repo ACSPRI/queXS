@@ -158,7 +158,7 @@ if (isset($_GET['modify']))
 	
 	echo "<h1>" . $rs['description'] . "</h1>";
 	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
-	echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'>" . T_("Edit questionnaire in Limesurvey") . "</a></p>";
+	echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'>" . T_("Edit instrument in Limesurvey") . "</a></p>";
 	?>
 		<form action="?modify=<? echo $questionnaire_id; ?>" method="post">
 		<p><? echo T_("Name for questionnaire:"); ?> <input type="text" name="description" value="<? echo $rs['description']; ?>"/></p>

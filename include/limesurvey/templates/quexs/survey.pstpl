@@ -1,12 +1,18 @@
-<table width='100%' align='center' cellspacing='0'>
-	<tr>
-		<td align='center' bgcolor='#EEEEEE'>
-			<font color='#328639'><strong>{SURVEYNAME}</strong></font>
-		</td>
-	</tr>
-	<tr>
-		<td align='center' bgcolor='#eeeeee'>
-			{PERCENTCOMPLETE}
-		</td>
-	</tr>
-</table>
+	<table width="100%" cellpadding="2">
+		<tr>
+			<td valign="bottom" align="center" width="100%">
+				<table width="100%">
+					<tr>
+						<td class="survey-name">{SURVEYNAME}</td>
+					</tr>
+					<tr>
+						<td class="graph">{PERCENTCOMPLETE}</td>
+					</tr>
+					<tr>
+						<td align="center">{LANGUAGECHANGER}</td>
+					</tr>
+				</table>
+			</td>
+			<td valign="bottom" align="right" height="100%" width="100%"></td>
+		</tr>
+	</table>

@@ -49,9 +49,10 @@ xhtml_head(T_("Administrative Tools"),true,array("../css/table.css","../css/admi
 print "<div id='menu'><ul class='navmenu'>";
 
 print "<li><h3>" . T_("Questionnaire creation and management") . "</h3>";
-print "<ul><li><a href=\"?page=new.php\">" . T_("Create a new questionnaire") . "</a></li>";
+print "<ul><li><a href='?page=" . LIME_URL ."admin/admin.php?action=newsurvey'>" . T_("Create an instrument in Limesurvey") . "</a></li>";
+print "<li><a href=\"?page=new.php\">" . T_("Create a new questionnaire") . "</a></li>";
 print "<li><a href=\"?page=questionnairelist.php\">" . T_("Questionnaire management") . "</a></li>";
-print "<li><a href=\"?page=" . LIME_URL . "admin/admin.php\">" . T_("Administer questionnaires with Limesurvey") . "</a></li></ul></li>";
+print "<li><a href=\"?page=" . LIME_URL . "admin/admin.php\">" . T_("Administer instruments with Limesurvey") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Sample/List management") . "</h3><ul>";
 print "<li><a href=\"?page=import.php\">" . T_("Import a sample file (in CSV form)") . "</a></li>";

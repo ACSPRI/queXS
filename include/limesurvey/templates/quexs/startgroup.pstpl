@@ -1,4 +1,4 @@
-<table><tr><td height='2'></td></tr></table>
-<table width='100%' align='center' bgcolor='#eeeeee' >
+<table width="100%">
 	<tr>
-		<td align='center'>
+		<td align="center">
+			<span class="group-name">{GROUPNAME}</span>

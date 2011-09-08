@@ -1,20 +1,23 @@
 <?php
 
-require_once('tcpdf.php');      
+require_once('tcpdf.php');
 
 class PDF extends TCPDF
-{    
+{
     function PDF($orientation='L', $unit='mm', $format='A4')
     {
         parent::__construct($orientation,$unit,$format);
-        $this->SetAutoPageBreak(true,10); 
+        $this->SetAutoPageBreak(true,10);
         $this->AliasNbPages();
-        
-    }    
-        
-    function intopdf($text,$format='')
+
+    }
+
+    function intopdf($text,$format='',$bStripHTML=true)
     {
+        if ($bStripHTML)
+        {
         $text = $this->delete_html($text);
+        }
         $oldformat = $this->FontStyle;
         $this->SetFont('',$format,$this->FontSizePt);
         $this->Write(5,$text);
@@ -28,7 +31,7 @@ class PDF extends TCPDF
         $this->Write(5,$this->delete_html($text));
         $this->ln(5);
         $this->SetFontSize($oldsize);
-    }   
+    }
     function titleintopdf($title,$description='')
     {
         if(!empty($title))
@@ -57,9 +60,9 @@ class PDF extends TCPDF
         }
     }
     function tableintopdf($array)
-    {      
+    {
         $maxwidth = array();
-        $maxwidth = $this->getmaxwidth($array);        
+        $maxwidth = $this->getmaxwidth($array);
         for($a=0;$a<sizeof($array);$a++)
         {
             for($b=0;$b<sizeof($array[$a]);$b++)
@@ -71,17 +74,17 @@ class PDF extends TCPDF
         $this->ln(5);
     }
     function getmaxwidth($array)
-    {  
+    {
         for($i=0;$i<sizeof($array);$i++)
         {
             for($j=0;$j<sizeof($array[$i]);$j++)
             {
                 if(($i-1)>=0)
                 {
-                     if(strlen($array[($i-1)][$j]) < strlen($array[$i][$j]))
-                     {
+                    if(strlen($array[($i-1)][$j]) < strlen($array[$i][$j]))
+                    {
                         $width[$j] = strlen($array[$i][$j]);
-                     }
+                    }
                 }
                 else
                 {
@@ -92,14 +95,14 @@ class PDF extends TCPDF
         return ($width);
     }
     function write_out($name)
-    {      
+    {
         $this->Output($name,"D");
     }
-    
+
     function delete_html($text)
     {
-       $text = html_entity_decode($text);
-       return strip_tags($text);
+        $text = html_entity_decode($text);
+        return strip_tags($text);
     }
-}    
+}
 ?>

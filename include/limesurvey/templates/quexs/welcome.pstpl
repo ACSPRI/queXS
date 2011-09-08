@@ -1,15 +1,26 @@
-<table align='center' width='100%' cellpadding='25' cellspacing='0' border='0' style='border-color: #111111'>
-	<tr>
-		<td align='center' bgcolor='#eef6ff'>
-        	{CHECKJAVASCRIPT}
-			<font face='verdana' size='4' color='#328639'><strong>{SURVEYNAME}</strong></font><br />
-			<font size='2' color='#1d2d45'>{SURVEYDESCRIPTION}</font>
-		</td>
-	</tr>
-	<tr>
-		<td align='center' bgcolor='#FFFFFF'>
-			<font face='verdana' size='2' color='#1d2d45'>{WELCOME}<br /><br />
-			<i>{THEREAREXQUESTIONS}</i>
-		</font></td>
-	</tr>
-</table>
+{CHECKJAVASCRIPT}
+	<table width="100%" cellpadding="2">
+		<tr>
+			<td valign="middle" align="left"><img src="{TEMPLATEURL}Logo-LimeSurvey.png" alt="Logo Image" /></td>
+			<td valign="bottom" align="center" width="100%">
+				<table width="100%">
+					<tr>
+						<td class="survey-name"><strong>{SURVEYNAME}</td>
+					</tr>
+					<tr>
+						<td  align="center">{LANGUAGECHANGER}</td>
+					</tr>
+				</table>
+			</td>
+		    <td valign="bottom" align="right" height="100%" width="100%"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<table class="welcome-table" width="80%">
+					<tr>
+						<td class="welcome-text">{WELCOME}<br /> <br /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>

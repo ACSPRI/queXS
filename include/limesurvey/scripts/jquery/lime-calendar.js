@@ -1,22 +1,25 @@
-// This file will auto convert slider divs to sliders
 $(document).ready(function(){
-	// call the init slider routine for each element of the .multinum-slider class
 	$(".popupdate").each(function(i,e) { 
         var basename = e.id.substr(6);         
         format=$('#dateformat'+basename).val();
         language=$('#datelanguage'+basename).val();
         yearrange=$('#dateyearrange'+basename).val();
+        range=yearrange.split(':');
         $(e).datepicker({ dateFormat: format,  
                           showOn: 'both',
                           changeYear: true, 
                           changeMonth: true,
-                          yearRange: yearrange, 
+                          yearRange: yearrange,
+                          defaultDate: +0,
+                          minDate:new Date(range[0],0,1),
+                          maxDate: new Date(range[1],11,31),
                           duration: 'fast'
                         }, $.datepicker.regional[language]);
     });
-    $('.year').change(dateUpdater);
     $('.month').change(dateUpdater);
     $('.day').change(dateUpdater)
+    $('.year').change(dateUpdater);
+    $('.year').change();
 });
 
 
@@ -35,7 +38,12 @@ function dateUpdater() {
         thisid=this.id.substr(3);
     }
 
-    if (($('#year'+thisid).val()=='') || ($('#month'+thisid).val()=='') || ($('#day'+thisid).val()=='')){
+    
+    if (($('#year'+thisid).val()=='') && ($('#month'+thisid).val()=='') && ($('#day'+thisid).val()=='')){
+        $('#qattribute_answer'+thisid).val('');
+        $('#answer'+thisid).val('');
+    }
+    else if (($('#year'+thisid).val()=='') || ($('#month'+thisid).val()=='') || ($('#day'+thisid).val()=='')){
         $('#qattribute_answer'+thisid).val('Please complete all parts of the date!');
         $('#answer'+thisid).val('');
     }
@@ -48,6 +56,7 @@ function dateUpdater() {
          $('#qattribute_answer'+thisid).val('');
     }
 }
+
 
 function ValidDate(oObject, value) {// Regular expression used to check if date is in correct format 
     var str_regexp = /[1-9][0-9]{3}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])/; 

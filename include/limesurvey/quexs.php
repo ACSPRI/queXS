@@ -242,20 +242,20 @@ function quexs_update_sample($lime_sid,$id,$postedfieldnames)
 	$db->SetFetchMode(ADODB_FETCH_ASSOC);
 
 	//Search over the questionnaire database to find multiple short text responses which reference the sample
-	$sql = "SELECT lq.sid,lq.gid,lq.qid,la.code,SUBSTR(la.answer,15,CHAR_LENGTH(la.answer)-15) as answer
+	$sql = "SELECT lq.sid,lq.gid,lq.qid,la.title,SUBSTR(la.question,15,CHAR_LENGTH(la.question)-15) as answer
                 FROM `lime_questions` AS lq
-                JOIN `lime_answers` AS la ON ( la.qid = lq.qid )
+                JOIN `lime_questions` AS la ON ( la.parent_qid = lq.qid )
                 WHERE lq.sid = '$lime_sid'
 		AND lq.type = 'Q' 
 		AND (";
 
 	foreach($postedfieldnames as $pf) //restrict to only the ones just updated
 	{
-		$sql .= " CONCAT(lq.sid, 'X', lq.gid, 'X', lq.qid, la.code) LIKE '$pf' OR ";
+		$sql .= " CONCAT(lq.sid, 'X', lq.gid, 'X', lq.qid, la.title) LIKE '$pf' OR ";
 	}
 
 	$sql = substr($sql,0,-4);
-	$sql .= ") AND la.answer LIKE '{SAMPLEUPDATE:%'";
+	$sql .= ") AND la.question LIKE '{SAMPLEUPDATE:%'";
 
 	$rs = $db->GetAll($sql);
 
@@ -278,7 +278,7 @@ function quexs_update_sample($lime_sid,$id,$postedfieldnames)
 	
 			foreach($rs as $r) //Update the queXS sample database to reflect the updated data
 			{
-				$sgqa = $r['sid'] . 'X' . $r['gid'] . 'X' . $r['qid'] . $r['code'];
+				$sgqa = $r['sid'] . 'X' . $r['gid'] . 'X' . $r['qid'] . $r['title'];
 				$var = $r['answer'];
 		
 				$sql = "UPDATE sample_var as sv, ".LIME_PREFIX."survey_$lime_sid as ld
@@ -770,5 +770,51 @@ function is_on_appointment($case_id,$operator_id)
 
 }
 
+
+/**
+ * Return an option list of each queXS questionnaire and sample associated with
+ * this Limesurvey instrument
+ * 
+ * @param int $lime_sid The limesurvey sid
+ * @param string $seleced The selected response, if any
+ * 
+ * @return string A list of options for an XHTML select box
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2011-09-07
+ */
+function get_questionnaire_sample_list($lime_sid,$selected = "")
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$return = "";
+
+	$sql = "(SELECT q.questionnaire_id, q.description AS qdes, 0 as sample_import_id, 'All samples' AS sdes
+		FROM questionnaire AS q
+		WHERE q.lime_sid = '$lime_sid')
+		UNION
+		(SELECT q.questionnaire_id, q.description AS qdes, qs.sample_import_id, s.description AS sdes
+		FROM questionnaire AS q, questionnaire_sample AS qs, sample_import AS s
+		WHERE q.lime_sid = '$lime_sid'
+		AND q.questionnaire_id = qs.questionnaire_id
+		AND s.sample_import_id = qs.sample_import_id)
+		ORDER BY questionnaire_id ASC, sample_import_id ASC";
+
+	$rs = $db->GetAll($sql);
+
+	if (empty($rs))
+		return false;
+
+	foreach($rs as $r)
+	{	
+		$s = "";
+		if (array($r['questionnaire_id'],$r['sample_import_id']) == $selected) 
+			$s = "selected='selected'";
+		$return .= "<option $s value='{$r['questionnaire_id']}:{$r['sample_import_id']}'>{$r['qdes']} - {$r['sdes']}</option>";
+	}	
+
+	return $return;
+}
 
 ?>

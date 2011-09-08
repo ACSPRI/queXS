@@ -121,7 +121,9 @@ xhtml_head(T_("Appointment"),true,array("css/respondent.css"),$js);
 //select a respondent from a list or create a new one
 print("<p>" . T_("Select a respondent") . "</p>");
 
-display_respondent_list($case_id,isset($_GET['respondent_id'])?bigintval($_GET['respondent_id']):false);
+$sr = display_respondent_list($case_id,isset($_GET['respondent_id'])?bigintval($_GET['respondent_id']):false,true);
+
+if ($sr != false) $_GET['respondent_id'] = $sr;
 
 if(isset($_GET['respondent_id']) && $_GET['respondent_id'] == 0) 
 {

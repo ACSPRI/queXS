@@ -1,5 +1,6 @@
+//$Id: admin_core.js 10855 2011-08-26 13:30:41Z mot3 $    
+
 $(document).ready(function(){
-    setupAllTabs();
     if(typeof(userdateformat) !== 'undefined') 
     {
         $(".popupdate").datepicker({ dateFormat: userdateformat,  
@@ -15,10 +16,336 @@ $(document).ready(function(){
                               duration: 'fast'
                             }, $.datepicker.regional[userlanguage]);
     }
+
+    $('button,input[type=submit],input[type=button],input[type=reset]').addClass("limebutton ui-state-default ui-corner-all");   
+    $('button,input[type=submit],input[type=button],input[type=reset]').hover(
+        function(){ 
+            $(this).addClass("ui-state-hover"); 
+        },
+        function(){ 
+            $(this).removeClass("ui-state-hover"); 
+        }
+    )
+    
+
+    // Loads the tooltips for the toolbars  except the surveybar
+    $('img[alt],input[src]').not('.surveybar img').each(function() {
+        if($(this).attr('alt') != '')
+        {
+             $(this).qtip({
+               style: { name: 'cream',
+                        tip:true, 
+                        color:'#1D2D45', 
+                        border: {
+                             width: 1,
+                             radius: 5,
+                             color: '#EADF95'}
+                       },  
+               position: { adjust: { 
+                        screen: true, scroll:true },
+                        corner: {
+                                target: 'bottomRight'}
+                        },
+               show: {effect: { length:50}},
+ 			   hide: { when: 'mouseout' },
+ 			   api: { onRender: function() {$(this.options.hide.when.target).bind('click', this.hide);}}
+
+               });
+        }
+    });    
+
+    
+    $('label[title]').each(function() {
+        if($(this).attr('title') != '')
+        {
+             $(this).qtip({
+               style: { name: 'cream',
+                        tip:true, 
+                        color:'#1D2D45', 
+                        border: {
+                             width: 1,
+                             radius: 5,
+                             color: '#EADF95'}
+                       },  
+               position: { adjust: { 
+                        screen: true, scroll:true },
+                        corner: {
+                                target: 'bottomRight'}
+                        },
+               show: {effect: { length:50}}
+               });
+        }
+    });    
+    
+    $('.dosurvey').qtip({
+        content:{
+                text:$('#dosurveylangpopup')
+        },
+        style: { name: 'cream',
+                        tip:true, 
+                color:'#1D2D45', 
+                border: {
+                     width: 1,
+                     radius: 5,
+                     color: '#EADF95'}
+               },  
+        position: { adjust: { 
+                screen: true, scroll:true },
+                corner: {
+                        target: 'bottomMiddle',
+                        tooltip: 'topMiddle'}
+                },
+        show: {effect: { length:50},
+               when: {
+                   event:'click'
+               }},
+        hide: {fixed:true,
+               when: {
+                   event:'unfocus'
+               }}
+    }); 
+
+    $('#previewquestion').qtip({
+        content:{
+                text:$('#previewquestionpopup')
+        },
+        style: { name: 'cream',
+                        tip:true, 
+                color:'#111111', 
+                border: {
+                     width: 1,
+                     radius: 5,
+                     color: '#EADF95'}
+               },  
+        position: { adjust: { 
+                screen: true, scroll:true },
+                corner: {
+                        target: 'bottomMiddle',
+                        tooltip: 'topMiddle'}
+                },
+        show: {effect: { length:50},
+               when: {
+                   event:'click'
+               }},
+        hide: {fixed:true,
+               when: {
+                   event:'unfocus'
+               }}
+    });            
+    
+    $('.tipme').each(function() {
+        if($(this).attr('alt') != '')
+        {
+             $(this).qtip({
+               style: { name: 'cream',
+                        tip:true, 
+                        color:'#111111', 
+                        border: {
+                             width: 1,
+                             radius: 5,
+                             color: '#EADF95'}
+                       },  
+               position: { adjust: { 
+                        screen: true, scroll:true },
+                        corner: {
+                                target: 'topRight',
+                                tooltip: 'bottomLeft'
+                        }
+                        },
+               show: {effect: { length:100}}
+
+               });
+        }
+    });    
+    
+
+    if ($('#showadvancedattributes').length>0) updatequestionattributes();
+    
+    $('#showadvancedattributes').click(function(){
+        $('#showadvancedattributes').hide();
+        $('#hideadvancedattributes').show();
+        $('#advancedquestionsettingswrapper').animate({
+          "height": "toggle", "opacity": "toggle"
+        });
+
+    })                                                                                 
+    $('#hideadvancedattributes').click(function(){
+        $('#showadvancedattributes').show();
+        $('#hideadvancedattributes').hide();
+        $('#advancedquestionsettingswrapper').animate({
+          "height": "toggle", "opacity": "toggle"
+        });
+
+    }) 
+    $('#question_type').change(updatequestionattributes);
+
+    $('#MinimizeGroupWindow').click(function(){
+        $('#groupdetails').hide();
+    });     
+    $('#MaximizeGroupWindow').click(function(){
+        $('#groupdetails').show();
+    });
+    $('#tabs').tabs();
+    $("#flashmessage").notify().notify('create','themeroller',{},{custom:true,
+    speed: 500,
+    expires: 5000
 });
 
+    var old_owner = '';
+
+    $(".ownername_edit").live('click',function(){
+       var oldThis = this;
+       var ownername_edit_id = $(this).attr('id');
+       var survey_id = ownername_edit_id.slice(15);
+       var translate_to = $(this).attr('translate_to');
+       var initial_text = $(this).html();
+       $.getJSON('admin.php', {
+                    action: 'ajaxgetusers'
+                },function(oData)
+                {
+                    old_owner =  $($(oldThis).parent()).html();
+		    
+                    old_owner = (old_owner.split("("))[0];
+                    $($(oldThis).parent()).html('<select class="ownername_select" id="ownername_select_'+survey_id+'"></select>'
+                    + '<input class="ownername_button" id="ownername_button_'+survey_id+'" type="button" initial_text="'+initial_text+'" value="'+translate_to+'">');
+                    $(oData).each(function(key,value){
+                        $('#ownername_select_'+survey_id).
+                          append($("<option id='opt_"+value[1]+"'></option>").
+                          attr("value",value[0]).
+                          text(value[1]));
+                    });
+                    $("#ownername_select_"+survey_id+ " option[id=opt_"+old_owner+"]").attr("selected","selected");
+         });
+    });
+
+    $(".ownername_button").live('click',function(){
+       var oldThis = this;
+       var initial_text = $(this).attr('initial_text');
+       var ownername_select_id = $(this).attr('id');
+       var survey_id = ownername_select_id.slice(17);
+       var newowner = $("#ownername_select_"+survey_id).val();
+       var translate_to = $(this).attr('value');
+
+       $.getJSON('admin.php',{
+            action: 'ajaxowneredit',
+            newowner: newowner,
+            survey_id : survey_id
+       }, function (data){
+	
+	    var objToUpdate = $($(oldThis).parent());
+	    
+	    if (data.record_count>0)
+               $(objToUpdate).html(data.newowner);
+	    else
+               $(objToUpdate).html(old_owner);
+	       
+	    $(objToUpdate).html($(objToUpdate).html() + '(<a id="ownername_edit_69173" translate_to='+translate_to+' class="ownername_edit" href="#">'+initial_text+'</a>)' );
+       });
+    });
+
+    if ($("#question_type").length > 0 && $("#question_type").attr('type')!='hidden'){
+        $("#question_type").msDropDown({onInit:qTypeDropdownInit});
+
+        $("#question_type").change(function(event){
+           var selected_value = qDescToCode[''+$("#question_type_child .selected").text()];
+           OtherSelection(selected_value);
+	    });
+    }
+    
+    
+    
+});
+
+function qTypeDropdownInit()
+{
+    $("#question_type_child a").each(function(index,element){
+
+        $(element).qtip({
+               style: {
+                            'margin' : '15px',
+                            'width': '450px',
+                            'height':'auto',
+                            'border':{
+                                    width: 4,
+                                    radius: 2
+                            }
+                    },
+               content: getToolTip($(element).text()),
+               position: {
+                            corner:{
+                                    target: 'leftMiddle',
+                                    tooltip:'rightMiddle'
+                            }
+                    },
+               show: 'mouseover',
+               hide: 'mouseout'
+        });
+
+    });       
+}
+
+
+
+
+var aToolTipData = {
+
+};
+
+var qDescToCode;
+var qCodeToInfo;
+
+function getToolTip(type){
+    var code = qDescToCode[''+type];
+    var multiple = 0;
+    if (code=='S') multiple = 2;
+    
+    if (code == ":") code = "COLON";
+    else if(code == "|") code = "PIPE";
+
+    if (multiple > 0){
+        returnval = '';
+        for(i=1;i<=multiple;i++){
+            returnval = returnval + "<img src='../images/screenshots/"+code+i+".png' /><br /><br />";
+        }
+        return returnval;
+    }
+    return "<img src='../images/screenshots/"+code+".png' />";
+}
 
 //We have form validation and other stuff..
+
+function updatequestionattributes()
+{
+        $('.loader').show();
+        $('#advancedquestionsettings').html('');
+        var selected_value = qDescToCode[''+$("#question_type_child .selected").text()];
+        if (selected_value==undefined) selected_value = $("#question_type").val();
+        $('#advancedquestionsettings').load('admin.php?action=ajaxquestionattributes',{qid:$('#qid').val(),
+                                                                                   question_type:selected_value,
+                                                                                   sid:$('#sid').val()
+                                                                                  }, function(){
+            // Loads the tooltips for the toolbars
+            
+            // Loads the tooltips for the toolbars
+           $('.loader').hide();
+            $('label[title]').qtip({
+               style: { name: 'cream', 
+                         tip: true, 
+                       color:'#111111', 
+                      border: {
+                             width: 1,
+                             radius: 5,
+                             color: '#EADF95'}
+                       },  
+               position: { adjust: { 
+                        screen: true, scroll:true },
+                        corner: {
+                                target: 'bottomRight'}
+                        },
+               show: {effect: { length:50}}
+            });}                                                                                        
+    );  
+}
 
 function validatefilename (form, strmessage )
 {
@@ -42,7 +369,7 @@ function isEmpty(elem, helperMsg)
 	return true;
 }
 
-function codeCheck(prefix, elementcount, helperMsg)
+function codeCheck(prefix, elementcount, helperMsg, reservedKeywordMsg)
 {
     var i, j;
     var X = new Array();
@@ -52,6 +379,11 @@ function codeCheck(prefix, elementcount, helperMsg)
         if (j != undefined) 
         {
            j.value=trim(j.value);
+           if (j.value == "other")
+           {
+              alert(reservedKeywordMsg);
+              return false;
+           }
            X.push(j.value);
         }
     }   
@@ -273,3 +605,41 @@ function checklangs(mylangs)
 	}
 	return true;
 }
+
+function isset( variable )
+{
+      return( typeof( variable ) != 'undefined' );
+}
+
+String.prototype.splitCSV = function(sep) {
+  for (var foo = this.split(sep = sep || ","), x = foo.length - 1, tl; x >= 0; x--) {
+    if (foo[x].replace(/"\s+$/, '"').charAt(foo[x].length - 1) == '"') {
+      if ((tl = foo[x].replace(/^\s+"/, '"')).length > 1 && tl.charAt(0) == '"') {
+        foo[x] = foo[x].replace(/^\s*"|"\s*$/g, '').replace(/""/g, '"');
+      } else if (x) {
+        foo.splice(x - 1, 2, [foo[x - 1], foo[x]].join(sep));
+      } else foo = foo.shift().split(sep).concat(foo);
+    } else foo[x].replace(/""/g, '"');
+  } return foo;
+};
+
+// This is a helper function to extract the question ID from a DOM ID element 
+function removechars(strtoconvert){
+  return strtoconvert.replace(/[-a-zA-Z_]/g,"");
+}
+
+
+function htmlspecialchars(str) {
+ if (typeof(str) == "string") {
+  str = str.replace(/&/g, "&amp;"); /* must do &amp; first */
+  str = str.replace(/"/g, "&quot;");
+  str = str.replace(/'/g, "&#039;");
+  str = str.replace(/</g, "&lt;");
+  str = str.replace(/>/g, "&gt;");
+  }
+ return str;
+}
+
+
+
+

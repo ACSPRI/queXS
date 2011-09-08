@@ -1,28 +1,30 @@
-<table width='100%' align='center'>
-	<tr>
-		<td align='center' bgcolor='#dddddd'>
-			<font size='1'>{QUESTION_CODE}.</font><span class='questiontext'>{QUESTION}</span>
-		</td>
-	</tr>
-	<tr>
-		<td class='questionhelp' align='center' bgcolor='#cccccc'>
-			{QUESTIONHELP}
-		</td>
-	</tr>
-	<tr>
-		<td align='center' bgcolor='#eeeeee'>
-			<table cellspacing='0'>
+<div {QUESTION_ESSENTIALS} class="{QUESTION_CLASS}{QUESTION_MAN_CLASS}{QUESTION_INPUT_ERROR_CLASS}">
+	<table width="100%">
+					<tr>
+						<td class="be">
+							{QUESTION_TEXT}<br />
+
+							{QUESTION_MAN_MESSAGE}
+							{QUESTION_VALID_MESSAGE}
+							{QUESTION_FILE_VALID_MESSAGE}
+						</td>
+					</tr>
+			                <tr>
+						<td class="survey-question-help">{QUESTIONHELP}</td>
+					</tr>
+					
+        	        <!--<tr><td><font size="-1"><i>{QUESTIONHELPPLAINTEXT}</i></font></td></tr>-->
+	</table>
+	<table class="question">
+		<tr>
+			<td align="center">
+				<table align="center" cellspacing="0" cellpadding="8" border="0">
 				<tr>
-					<td>
-						{ANSWER}
-					</td>
-				</tr>
+						<td width="100%" class="answer">{ANSWER}</td>
+					</tr>
 			</table>
-		</td>
-	</tr>
-</table>
-<table>
-	<tr>
-		<td height='10'></td>
-	</tr>
-</table>
+			</td>
+		</tr>
+	</table>
+	<table cellspacing="0" cellpadding="0"><tr><td height="24"></td></tr></table>
+</div>

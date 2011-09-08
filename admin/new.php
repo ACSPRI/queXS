@@ -82,25 +82,11 @@ if (isset($_POST['import_file']))
 	$rs_answeringmachine = $db->qstr(html_entity_decode($_POST['rs_answeringmachine'],get_magic_quotes_gpc()));
 	$info  = $db->qstr(html_entity_decode($_POST['info'],get_magic_quotes_gpc()));
 
-	if ($_POST['select'] == "new")
-	{
-		//create one from scratch
-		include_once("../functions/functions.limesurvey.php");
-		$lime_sid = create_limesurvey_questionnaire($name);
-	}
-	else
-	{
-		//use existing lime instrument
-		$lime_sid = bigintval($_POST['select']);
-	}
+	//use existing lime instrument
+	$lime_sid = bigintval($_POST['select']);
 
-	if ($_POST['selectrs'] == "new")
-	{
-		//create one from scratch
-		include_once("../functions/functions.limesurvey.php");
-		$lime_rs_sid = create_limesurvey_questionnaire($db->qstr(T_("Respondent Selection for ") . $_POST['description']),false);
-	}
-	else if (is_numeric($_POST['selectrs']))
+
+	if (is_numeric($_POST['selectrs']))
 	{
 		$lime_rs_sid = bigintval($_POST['selectrs']);
 	}
@@ -114,7 +100,6 @@ if (isset($_POST['import_file']))
 	{
 		$qid = $db->Insert_ID();
 		print "<p>" . T_("Successfully inserted") . " $name " . T_("as questionnaire") . " $qid, " . T_("linked to") . " $lime_sid</p>";
-		print "<p>" . T_("You must now edit and activate the questionnaire") . "</p>";
 	}else
 	{
 		print "<p>" . T_("Error: Failed to insert questionnaire") . "</p>";
@@ -129,7 +114,7 @@ if (isset($_POST['import_file']))
 	<form enctype="multipart/form-data" action="" method="post">
 	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
 	<p><? echo T_("Name for questionnaire:"); ?> <input type="text" name="description"/></p>
-	<p><? echo T_("Select creation type:"); ?> <select name="select"><option value="new"><? echo T_("Create new questionnaire in Limesurvey"); ?></option><?
+	<p><? echo T_("Select limesurvey instrument:"); 
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
@@ -140,14 +125,20 @@ $surveys = $db->GetAll($sql);
 
 if (!empty($surveys))
 {
+	print "<select name='select'>";
 	foreach($surveys as $s)
 	{
-		print "<option value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
+		print "<option value=\"{$s['sid']}\">" . T_("Existing instrument:") . " {$s['title']}</option>";
 	}
+	print "</select>";
 }
-?></select></p>
+else
+{
+	print "<a href='" . LIME_URL ."admin/admin.php?action=newsurvey'>" . T_("Create an instrument in Limesurvey") ."</a>";
+}
+?></p>
 <p><? echo T_("Respondent selection type:"); ?>
-<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><? echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><? echo T_("Use basic respondent selection text (below)"); ?></option><option value="new"><? echo T_("Create new respondent selection questionnaire in Limesurvey"); ?></option>
+<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><? echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><? echo T_("Use basic respondent selection text (below)"); ?></option>
 <?
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
@@ -161,7 +152,7 @@ if (!empty($surveys))
 {
 	foreach($surveys as $s)
 	{
-		print "<option value=\"{$s['sid']}\">" . T_("Existing questionnaire:") . " {$s['title']}</option>";
+		print "<option value=\"{$s['sid']}\">" . T_("Existing instrument:") . " {$s['title']}</option>";
 	}
 }
 

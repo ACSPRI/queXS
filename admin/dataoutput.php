@@ -193,15 +193,23 @@ display_questionnaire_chooser($questionnaire_id);
 
 if ($questionnaire_id)
 {
-	print "<p><a href='?data&amp;questionnaire_id=$questionnaire_id'>".  T_("Download all data for this questionnaire") . "</a></p>";
+	$sql = "SELECT lime_sid 
+		FROM questionnaire
+		WHERE questionnaire_id = $questionnaire_id";
 
+	$ls = $db->GetRow($sql);
+	$lsid = $ls['lime_sid'];
+
+	print "<p><a href='" . LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid'>".  T_("Download data for this questionnaire via Limesurvey") . "</a></p>";
+
+	print "<h3>" . T_("Please select a sample") . "</h3>";
 	$sample_import_id = false;
 	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
 	display_sample_chooser($questionnaire_id,$sample_import_id);
 
 	if ($sample_import_id)
 	{
-		print "<p><a href='?data&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . T_("Download data for this sample") . "</a></p>";
+		print "<p><a href='" .LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid&amp;quexsfilterinc=$questionnaire_id:$sample_import_id'>" . T_("Download data for this sample via Limesurvey") . "</a></p>";
 		//get sample vars
 		$sql = "SELECT sv.var as value, sv.var as description 
 			FROM `sample_var` as sv
