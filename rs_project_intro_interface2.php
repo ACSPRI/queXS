@@ -1,6 +1,6 @@
 <?
 /**
- * Respondent selection - Project End
+ * Respondent selection - Project Introduction 
  *
  *
  *	This file is part of queXS
@@ -34,7 +34,6 @@
  */
 include ("config.inc.php");
 
-
 /**
  * Database file
  */
@@ -50,15 +49,6 @@ include ("functions/functions.xhtml.php");
  */
 include ("functions/functions.operator.php");
 
-$operator_id = get_operator_id();
-
-//check for alternate interface
-if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
-{
-	include_once("rs_project_end_interface2.php");
-	die();
-}
-
 $js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
 
 if (AUTO_LOGOUT_MINUTES !== false)
@@ -66,33 +56,37 @@ if (AUTO_LOGOUT_MINUTES !== false)
         $js[] = "js/childnap.js";
 }
 
+xhtml_head(T_("Respondent Selection - Project Introduction"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
 
-
-xhtml_head(T_("Respondent Selection - Project end"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
-
+$operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);
 
 //display introduction text
-$sql = "SELECT rs_project_end
+$sql = "SELECT rs_project_intro
 	FROM questionnaire
 	WHERE questionnaire_id = '$questionnaire_id'";
 
 $r = $db->GetRow($sql);
 
-print "<p class='rstext'>" . template_replace($r['rs_project_end'],$operator_id,$case_id) . "</p>";
+print "<p class='rstext'>" . template_replace($r['rs_project_intro'],$operator_id,$case_id) . "</p>";
 
-if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
-{
-	end_call($operator_id,10);
-	print "<p class='rsoption'>" . T_("Call automatically ended with outcome: Complete") . "</p>";
-}
-else
-{
-	?>
-	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><? echo T_("End call with outcome: Complete"); ?></a></p>
-	<?
-}
+
+//display outcomes
+
+?>
+
+<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
+
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=8&endcase=endcase'"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=17&endcase=endcase'"><? echo T_("End call with outcome: No eligible respondent (person not available on this number)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=30&endcase=endcase'"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
+
+<p class='rsoption'><a href="rs_intro_interface2.php"><? echo T_("Go Back"); ?></a></p>
+
+<?
+
 xhtml_foot();
+
 
 ?>

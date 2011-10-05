@@ -66,9 +66,18 @@ $questionnaire_id = get_questionnaire_id($operator_id);
 
 print "<p class='rstext'>" . template_replace($_GET['message'],$operator_id,$case_id) . "</p>";
 
+if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
+{
+?>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=32&endcase=endcase'"><? echo T_("End call with outcome: Quota filled"); ?></a></p>
+<?
+} 
+else
+{
 ?>
 <p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=32');"><? echo T_("End call with outcome: Quota filled"); ?></a></p>
 <?
+}
 
 xhtml_foot();
 

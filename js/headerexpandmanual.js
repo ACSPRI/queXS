@@ -4,6 +4,12 @@ $(document).ready(function(){
 
 		});
 
+function headerforcecontract()
+{
+	$("#headerexpandimage").attr('src',"./images/arrow-down-2.png");
+	headercontract();
+}
+
 function headertogglemanual()
 {
 	if ($("#headerexpandimage").attr('src') == './images/arrow-up-2.png')

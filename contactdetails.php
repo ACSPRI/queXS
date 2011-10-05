@@ -87,7 +87,7 @@ if (isset($_GET['respondent_id']) && $_GET['respondent_id'] == 0)
 ?>
 	<form method="post" action="?">
 	<? display_respondent_form(false,$case_id); ?>
-	<div><input type='submit' name='submit' id='submit' value='<? echo T_("Add respondent"); ?>'/></div>
+	<div class="text"><input type='submit' name='submit' id='submit' value='<? echo T_("Add respondent"); ?>'/></div>
 	</form>
 	<div><a href="?"><? echo T_("Go back"); ?></a></div>
 
@@ -95,8 +95,8 @@ if (isset($_GET['respondent_id']) && $_GET['respondent_id'] == 0)
 }
 else
 {
-	print "<div>" . T_("Case id:") . " $case_id</div>";
-	print "<div>" . T_("Respondent:");
+	print "<div class='text'>" . T_("Case id:") . " $case_id</div>";
+	print "<div class='text'>" . T_("Respondent:");
 
 	if (isset($_GET['respondent_id']) && $_GET['respondent_id'] != 0)
 	{
@@ -142,7 +142,7 @@ else
 			print " " . $rs[0]['firstName'] . " " . $rs[0]['lastName'] . "</div>";
 	}
 
-	print "<div>$timezone</div>";
+	print "<div class='text'>$timezone</div>";
 
 
 
@@ -155,7 +155,7 @@ else
 	
 	$rs = $db->GetAll($sql);
 
-	print "<div id='details'>";
+	print "<div id='details' class='text'>";
 	if (!empty($rs))
 	{
 		xhtml_table($rs,array("var","val"),array(T_("Var"),T_("Value")));

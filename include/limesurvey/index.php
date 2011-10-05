@@ -2335,9 +2335,9 @@ function buildsurveysession()
 		        </form>";
 
             echo templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
-            doFooter();
-            exit;
-        }
+	    doFooter();
+	    exit;
+	}
     }
 
     //BEFORE BUILDING A NEW SESSION FOR THIS SURVEY, LET'S CHECK TO MAKE SURE THE SURVEY SHOULD PROCEED!
@@ -2452,6 +2452,15 @@ function buildsurveysession()
             doFooter();
             exit;
         }
+
+	//This should only happen once, so a good place to add the "start of the limesurrvey instrument code"
+	//queXS Addition
+	include_once("quexs.php");
+	if(HEADER_EXPANDER_QUESTIONNAIRE && HEADER_EXPANDER_MANUAL)
+	{
+		global $js_header_includes;
+		$js_header_includes[] = '/../../js/headerexpandquestionnaire.js'; //queXS addition
+	}
     }
     // TOKENS REQUIRED, A TOKEN PROVIDED
     // SURVEY CAPTCHA REQUIRED

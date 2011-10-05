@@ -32,32 +32,23 @@
 /**
  * Configuration file
  */
-include ("config.inc.php");
-
+include_once ("config.inc.php");
 
 /**
  * Database file
  */
-include ("db.inc.php");
+include_once ("db.inc.php");
 
 /**
  * XHTML functions
  */
-include ("functions/functions.xhtml.php");
+include_once ("functions/functions.xhtml.php");
 
 /**
  * Operator functions
  */
-include ("functions/functions.operator.php");
+include_once ("functions/functions.operator.php");
 
-$operator_id = get_operator_id();
-
-//check for alternate interface
-if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
-{
-	include_once("rs_project_end_interface2.php");
-	die();
-}
 
 $js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
 
@@ -70,6 +61,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 
 xhtml_head(T_("Respondent Selection - Project end"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
 
+$operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);
 
@@ -85,12 +77,12 @@ print "<p class='rstext'>" . template_replace($r['rs_project_end'],$operator_id,
 if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
 {
 	end_call($operator_id,10);
-	print "<p class='rsoption'>" . T_("Call automatically ended with outcome: Complete") . "</p>";
+	print "<p class='rsoption'><a href=\"javascript:parent.location.href = 'index_interface2.php?endcase=endcase'\">" . T_("Call automatically ended with outcome: Complete - End case") . "</a></p>";
 }
 else
 {
 	?>
-	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><? echo T_("End call with outcome: Complete"); ?></a></p>
+	<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=10&endcase=endcase'"><? echo T_("End call with outcome: Complete"); ?></a></p>
 	<?
 }
 xhtml_foot();

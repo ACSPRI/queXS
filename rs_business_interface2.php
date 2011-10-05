@@ -1,6 +1,6 @@
 <?
 /**
- * Respondent selection - Project End
+ * Respondent selection - Business answers
  *
  *
  *	This file is part of queXS
@@ -34,30 +34,15 @@
  */
 include ("config.inc.php");
 
-
 /**
- * Database file
- */
-include ("db.inc.php");
-
-/**
- * XHTML functions
+ * XHTML
  */
 include ("functions/functions.xhtml.php");
 
 /**
- * Operator functions
+ * Language
  */
-include ("functions/functions.operator.php");
-
-$operator_id = get_operator_id();
-
-//check for alternate interface
-if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
-{
-	include_once("rs_project_end_interface2.php");
-	die();
-}
+include ("lang.inc.php");
 
 $js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
 
@@ -67,32 +52,16 @@ if (AUTO_LOGOUT_MINUTES !== false)
 }
 
 
+xhtml_head(T_("Respondent Selection - Business answers"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
 
-xhtml_head(T_("Respondent Selection - Project end"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
 
-$case_id = get_case_id($operator_id);
-$questionnaire_id = get_questionnaire_id($operator_id);
+?>
+<p class='rstext'><? echo T_("Sorry to bother you, I have called the wrong number")?></p>
 
-//display introduction text
-$sql = "SELECT rs_project_end
-	FROM questionnaire
-	WHERE questionnaire_id = '$questionnaire_id'";
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=16&endcase=endcase'"><? echo T_("End call with outcome: Business number"); ?></a></p>
+<p class='rsoption'><a href="rs_intro_interface2.php"><? echo T_("Go Back"); ?></a></p>
+<?
 
-$r = $db->GetRow($sql);
-
-print "<p class='rstext'>" . template_replace($r['rs_project_end'],$operator_id,$case_id) . "</p>";
-
-if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
-{
-	end_call($operator_id,10);
-	print "<p class='rsoption'>" . T_("Call automatically ended with outcome: Complete") . "</p>";
-}
-else
-{
-	?>
-	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><? echo T_("End call with outcome: Complete"); ?></a></p>
-	<?
-}
 xhtml_foot();
 
 ?>

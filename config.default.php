@@ -233,6 +233,11 @@ if (!defined('HEADER_EXPANDER')) define('HEADER_EXPANDER', false);
 if (!defined('HEADER_EXPANDER_MANUAL')) define('HEADER_EXPANDER_MANUAL', false);
 
 /**
+ * Contract header at start of questionnaire
+ */
+if (!defined('HEADER_EXPANDER_QUESTIONNAIRE')) define('HEADER_EXPANDER_QUESTIONNAIRE', false);
+
+/**
  * Define how many minutes between each system sort (defaults to 5 as this is a common interval for appointments)
  */
 if (!defined('SYSTEM_SORT_MINUTES')) define ('SYSTEM_SORT_MINUTES',5);
@@ -246,6 +251,11 @@ if (!defined('ALLOW_PAGE_REFRESH')) define ('ALLOW_PAGE_REFRESH',true);
  * Allow operator to select respondent from list or add respondents
  */
 if (!defined('ALLOW_RESPONDENT_SELECTOR')) define ('ALLOW_RESPONDENT_SELECTOR',true);
+
+/**
+ * Display a faster alternate interface where VoIP is disabled
+ */
+if (!defined('ALTERNATE_INTERFACE')) define ('ALTERNATE_INTERFACE',false);
 
 /**
  * Number of log records to display

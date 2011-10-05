@@ -147,6 +147,12 @@ if ($questionnaire_id != false)
 			print "<h3>" . T_("Copied quotas") . "</h3>";
 		}
 
+        if (isset($_POST['copy_sample_import_id_with_adjustment']))
+		{
+			copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,bigintval($_POST['copy_sample_import_id_with_adjustment']));
+			print "<h3>" . T_("Copied quotas") . "</h3>";
+		}
+
 		print "<h1>" . T_("Current row quotas (click to delete)") . "</h1>";
 		
 		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,current_completions
@@ -196,6 +202,10 @@ if ($questionnaire_id != false)
 				print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking): ");
 				display_chooser($ss,"copy_sample_import_id","copy_sample_import_id",false,false,false,false);
 				print "<input type='submit' id='submit' value='" . T_("Copy") . "'/></p></form>";
+
+                print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking) with adjusting: ");
+				display_chooser($ss,"copy_sample_import_id_with_adjustment","copy_sample_import_id_with_adjustment",false,false,false,false);
+				print "<input type='submit' id='submit' value='" . T_("Copy adjustments") . "'/></p></form>";
 			}
 
 		}

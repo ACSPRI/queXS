@@ -1,6 +1,6 @@
 <?
 /**
- * Respondent selection - Project End
+ * Respondent selection - Answering machine
  *
  *
  *	This file is part of queXS
@@ -34,14 +34,13 @@
  */
 include ("config.inc.php");
 
-
 /**
  * Database file
  */
 include ("db.inc.php");
 
 /**
- * XHTML functions
+ * XHTML
  */
 include ("functions/functions.xhtml.php");
 
@@ -51,48 +50,47 @@ include ("functions/functions.xhtml.php");
 include ("functions/functions.operator.php");
 
 $operator_id = get_operator_id();
-
-//check for alternate interface
-if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
-{
-	include_once("rs_project_end_interface2.php");
-	die();
-}
+$case_id = get_case_id($operator_id);
+$questionnaire_id = get_questionnaire_id($operator_id);
+$leavemessage = leave_message($case_id);
 
 $js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
 
 if (AUTO_LOGOUT_MINUTES !== false)
-{  
-        $js[] = "js/childnap.js";
+{
+	$js[] = "js/childnap.js";
 }
 
+xhtml_head(T_("Respondent Selection - Answering machine"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"),$js);
 
-
-xhtml_head(T_("Respondent Selection - Project end"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
-
-$case_id = get_case_id($operator_id);
-$questionnaire_id = get_questionnaire_id($operator_id);
-
-//display introduction text
-$sql = "SELECT rs_project_end
-	FROM questionnaire
-	WHERE questionnaire_id = '$questionnaire_id'";
-
-$r = $db->GetRow($sql);
-
-print "<p class='rstext'>" . template_replace($r['rs_project_end'],$operator_id,$case_id) . "</p>";
-
-if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
+if ($leavemessage)
 {
-	end_call($operator_id,10);
-	print "<p class='rsoption'>" . T_("Call automatically ended with outcome: Complete") . "</p>";
+	//display answering machine text
+	$sql = "SELECT rs_answeringmachine
+		FROM questionnaire
+		WHERE questionnaire_id = '$questionnaire_id'";
+	
+	$r = $db->GetRow($sql);
+	
+	print "<p class='rstext'>" . template_replace($r['rs_answeringmachine'],$operator_id,$case_id) . "</p>";
 }
 else
+	print "<p class='rstext'>" . T_("Do not leave a message, please hang up") . "</p>";
+
+?>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=29&endcase=endcase'"><? echo T_("End call with outcome: Business answering machine"); ?></a></p>
+<?
+if ($leavemessage)
 {
-	?>
-	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><? echo T_("End call with outcome: Complete"); ?></a></p>
-	<?
+?>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=23&endcase=endcase'"><? echo T_("End call with outcome: Answering machine Message left"); ?></a></p>
+<?
 }
+?>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=24&endcase=endcase'"><? echo T_("End call with outcome: Answering machine No message left"); ?></a></p>
+<p class='rsoption'><a href="rs_intro_interface2.php"><? echo T_("Go Back"); ?></a></p>
+<?
+
 xhtml_foot();
 
 ?>

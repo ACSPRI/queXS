@@ -1,0 +1,81 @@
+.headerexpand {
+    position: absolute; 
+    height: 20px;
+    bottom: 0px;
+    right: 0px;
+}
+#headerexpandimage {
+	height: 20px;
+}.box {
+ margin: 18px;	
+}
+.online {
+ background: #00FF00;
+}
+.offline {
+ background: #FF0000;
+}
+a {
+ padding: 3px 0.5em;
+ margin-left: 3px;
+ border: 1px solid #778;
+ background: #DDE;
+ text-decoration: none;
+ color: black;
+}
+a:active {
+  border: 4px inset;
+}
+
+#header {
+  position : absolute;
+  width : 20%;
+  height : 30%;
+  top : 0;
+  right : 0;
+  bottom : auto;
+  left : 0;
+  /*border-bottom: 1px solid #aaa;*/
+}
+#calllist {
+  position : absolute;
+  width : 50%;
+  height : 30%;
+  left : 50%;
+  top : 0;
+  right : 0;
+  bottom : auto;
+}
+#qstatus {
+  position : absolute;
+  width : 30%;
+  height : 30%;
+  top : 0;
+  right : 0;
+  left: 20%;
+  bottom : auto;
+  /*border: 1px solid #aaa;*/
+}
+#casefunctions {
+  position : absolute;
+  width : 20%;
+  height : 30%;
+  top : 0;
+  right : 0;
+  left: 0;
+  bottom : auto;
+}
+#content {
+  position : absolute;
+  top : 30%;
+  left : 0;
+  bottom : auto;
+  width : 100%;
+  height : 70%;
+}
+.embeddedobject {
+  width:100%;
+  height:100%;
+  position:absolute;
+}
+

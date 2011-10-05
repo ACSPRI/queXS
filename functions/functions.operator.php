@@ -1056,10 +1056,11 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "",$creat
  *
  * @param int $operator_id The operator id
  * @param bool $escape Whether to escape the ampersands default true
+ * @param bool $interface2 Whether we are using the alternate interface
  * @return string The URL of the LimeSurvey questionnaire, or the URL of an error screen if none available
  *
  */
-function get_respondentselection_url($operator_id,$escape = true)
+function get_respondentselection_url($operator_id,$escape = true,$interface2 = false)
 {
 	global $db;
 
@@ -1078,7 +1079,12 @@ function get_respondentselection_url($operator_id,$escape = true)
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
 			$url = LIME_URL . "index.php?loadall=reload" . $amp . "sid=$sid" . $amp . "token=$call_id" . $amp . "lang=" . DEFAULT_LOCALE;
 		else
-			$url = 'rs_intro.php';
+		{
+			if ($interface2)
+				$url = 'rs_intro_interface2.php';
+			else
+				$url = 'rs_intro.php';
+		}
 	}
 
 	//if ($db->HasFailedTrans()) { print "FAILED in get_limesurvey_url"; exit; }
@@ -1376,6 +1382,94 @@ function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_
 
 	$db->CompleteTrans();
 }
+
+/**
+ * Copy row quotas from one sample to another with blocking
+ * Set quota_reached to 0 by default
+ *
+ * @param int $questionnaire_id
+ * @param int $sample_import_id
+ * @param int $copy_sample_import_id The sample_import_id to copy to
+ */
+function copy_row_quota_with_blocking($questionnaire_id,$sample_import_id,$copy_sample_import_id)
+{
+	global $db;
+
+	$db->StartTrans();
+
+	//Set quota_reached to 0 always
+
+	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description)
+		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description
+		FROM questionnaire_sample_quota_row
+		WHERE questionnaire_id = '$questionnaire_id'
+		AND sample_import_id = '$sample_import_id'";
+
+	$db->Execute($sql);
+
+
+	update_quotas($questionnaire_id);
+
+	$db->CompleteTrans();
+}
+
+/**
+ * Copy row quotas from one sample to another and adjust completion number appropriately to completed in the sample.
+ *
+ * @param int $questionnaire_id
+ * @param int $sample_import_id
+ * @param int $copy_sample_import_id The sample_import_id to copy to
+ */
+function copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,$copy_sample_import_id)
+{
+	global $db;
+
+    // Copy quotas (defalt Quexs function)
+    copy_row_quota_with_blocking($questionnaire_id,$sample_import_id,$copy_sample_import_id);
+
+	$db->StartTrans();
+
+    // Select quotas from the old sample rows and calculate
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val
+		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
+		WHERE qsq.questionnaire_id = '$questionnaire_id'
+		AND q.questionnaire_id = '$questionnaire_id'
+		#AND qsq.quota_reached != '1'
+		AND qsq.lime_sgqa != -1
+        AND sample_import_id='".$sample_import_id."'
+        ";
+
+	$rs = $db->GetAll($sql);
+
+	if (isset($rs) && !empty($rs))
+	{
+		//include limesurvey functions
+		include_once(dirname(__FILE__).'/functions.limesurvey.php');
+
+		//update all row quotas for this questionnaire
+		foreach($rs as $r)
+		{
+			$completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
+			if ($completions > 0)
+			{
+				//Update adjusting the completion number
+				$sql = "UPDATE questionnaire_sample_quota_row
+					SET completions = IF(completions>".$completions.",(completions-".$completions."),0), quota_reached = IF(quota_reached = 0,IF(completions=0,1,0),1)
+					WHERE questionnaire_id = '".$questionnaire_id."'
+                    AND sample_import_id='".$copy_sample_import_id."'
+                    AND lime_sgqa='".$r['lime_sgqa']."'
+                    AND value='".$r['value']."'
+                    AND comparison='".$r['comparison']."'";
+
+				$db->Execute($sql);
+			}
+
+		}
+	}
+
+	$db->CompleteTrans();
+}
+
 
 /**
  * Update the row quota table

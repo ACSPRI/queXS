@@ -45,35 +45,40 @@ include ("functions/functions.xhtml.php");
  */
 include("functions/functions.operator.php");
 
-$operator_id = get_operator_id();
-
-if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
-{
-	include_once("waitnextcase_interface2.php");
-	die();
-}
-
 $db->StartTrans();
+
+
+$popupcall = false;
+$operator_id = get_operator_id();
 
 if (isset($_GET['endwork']))
 {
-	
-	if (isset($_GET['note']))
+	$call_id = get_call($operator_id);
+
+	if ($call_id)
 	{
-		$case_id = get_case_id($operator_id,false);
-		$note = $db->qstr($_GET['note']);
-		$sql = "INSERT INTO `case_note` (case_note_id,case_id,operator_id,note,datetime)
-			VALUES (NULL,'$case_id','$operator_id',$note,CONVERT_TZ(NOW(),'System','UTC'))";
-		$db->Execute($sql);
+		//Don't end the case if we are on a call
+		$popupcall = true;
 	}
-	end_call_attempt($operator_id);
-	end_case($operator_id);
-
-	//if ($db->HasFailedTrans()){ print "<p>FAILED AT ENDWORK</p>";  exit();}
-	$db->CompleteTrans();
-
-	include("endwork.php");
-	exit();
+	else
+	{
+		if (isset($_GET['note']))
+		{
+			$case_id = get_case_id($operator_id,false);
+			$note = $db->qstr($_GET['note']);
+			$sql = "INSERT INTO `case_note` (case_note_id,case_id,operator_id,note,datetime)
+				VALUES (NULL,'$case_id','$operator_id',$note,CONVERT_TZ(NOW(),'System','UTC'))";
+			$db->Execute($sql);
+		}
+		end_call_attempt($operator_id);
+		end_case($operator_id);
+	
+		//if ($db->HasFailedTrans()){ print "<p>FAILED AT ENDWORK</p>";  exit();}
+		$db->CompleteTrans();
+	
+		include("waitnextcase_interface2.php");
+		exit();
+	}
 }
 
 
@@ -88,13 +93,34 @@ if (isset($_GET['endcase']))
 			VALUES (NULL,'$case_id','$operator_id',$note,CONVERT_TZ(NOW(),'System','UTC'))";
 		$db->Execute($sql);
 	}
-	end_call_attempt($operator_id);
-	end_case($operator_id);
 
-	$db->CompleteTrans(); //need to complete here otherwise getting the case later will fail
+	$endthecase = true;
 
-	$db->StartTrans();
-	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
+	if (isset($_GET['outcome']))
+	{
+		$outcome_id = intval($_GET['outcome']);
+		end_call($operator_id,$outcome_id);
+
+		$sql = "SELECT tryanother
+			FROM outcome
+			WHERE outcome_id = '$outcome_id'";
+
+		$rs = $db->GetRow($sql);
+
+		if (!empty($rs) && $rs['tryanother'] == 1)
+			$endthecase = false;
+	}
+
+	if ($endthecase)
+	{
+		end_call_attempt($operator_id);
+		end_case($operator_id);
+	
+		$db->CompleteTrans(); //need to complete here otherwise getting the case later will fail
+	
+		include("waitnextcase_interface2.php");
+		exit();
+	}
 }
 
 $js = array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
@@ -113,13 +139,17 @@ if (AUTO_LOGOUT_MINUTES !== false)
 			},
 			" . (AUTO_LOGOUT_MINUTES * 60) . "
 		);</script></head><body>";
+
 	$body = false;
 }
+
+if ($popupcall)
+	$js[] = "js/popupcallonload.js";
 
 if (HEADER_EXPANDER) 
 {
 	$js[] = "js/headerexpand.js";
-	$js[] = "js/headerexpandauto.js";
+	$js[] = "js/headerexpandmanual.js";
 }
 else if (HEADER_EXPANDER_MANUAL) 
 {
@@ -127,19 +157,19 @@ else if (HEADER_EXPANDER_MANUAL)
 	$js[] = "js/headerexpandmanual.js";
 }
 
-xhtml_head(T_("queXS"), $body, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
+
+
+
+xhtml_head(T_("queXS"), $body, array("css/index_interface2.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
 print $script;
 
 ?>
 
 <div id="casefunctions" class="header">
-	<div class='box'><a href="javascript:poptastic('call.php?end=end');"><? echo T_("End"); ?></a></div>
+	<div class='box important'><a href="javascript:poptastic('call_interface2.php');"><? echo T_("Assign outcome"); ?></a></div>
 	<div class='box'><a href="javascript:poptastic('appointment.php');"><? echo T_("Appointment"); ?></a></div>
-	<div class='box important'><a href="javascript:poptastic('call.php');"><? echo T_("Call/Hangup"); ?></a></div>
-	<div class='box'><a href="javascript:poptastic('supervisor.php');"><? echo T_("Supervisor"); ?></a></div>
-	<div class='box' id='recbox'><a id='reclink' class='offline' href="javascript:poptastic('record.php?start=start');"><? echo T_("Start REC"); ?></a></div>
+	<div class='box'><a href="?endwork=endwork"><? echo T_("End work"); ?></a></div>
 	<? if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.png' alt='<? echo T_('Arrow for expanding or contracting'); ?>'/></div> <? } ?>
-	<div class='box'><a href='index.php?'><? echo T_("Restart"); ?></a></div>
 </div>
 
 <div id="content" class="content">
@@ -147,32 +177,57 @@ print $script;
 
 $case_id = get_case_id($operator_id,true);
 $ca = get_call_attempt($operator_id,true);
+$call_id = get_call($operator_id);
 $appointment = false;
-$availability = is_using_availability($case_id);
 if ($ca)
 {
-	if (is_on_appointment($ca))
+	$appointment = is_on_appointment($ca);
+	$respondent_id  = get_respondent_id($ca);
+}
+
+if (!$call_id)
+{
+	if ($appointment)
 	{
-		$appointment= true;
+		//create a call on the appointment number
+		$sql = "SELECT cp.*
+			FROM contact_phone as cp, appointment as a
+			WHERE cp.case_id = '$case_id'
+			AND a.appointment_id = '$appointment'
+			AND a.contact_phone_id = cp.contact_phone_id";
+	}
+	else
+	{
+		//create a call on the first available number by priority
+		$sql = "SELECT *
+			FROM contact_phone
+			WHERE case_id = '$case_id'
+			ORDER BY priority ASC
+			LIMIT 1";
+	}
+	$rs = $db->GetRow($sql);
+
+	if (!empty($rs))
+	{
+		$contact_phone_id = $rs['contact_phone_id'];				
+
+		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
 	}
 }
+	
 
 if (!is_respondent_selection($operator_id))
 	$data = get_limesurvey_url($operator_id);
 else 
-	$data = get_respondentselection_url($operator_id);
+	$data = get_respondentselection_url($operator_id,true,true); //use second interface
 
 xhtml_object($data,"main-content"); 
 
 ?>
 </div>
 
-<div id="respondent" class="header">
-<?xhtml_object("respondent.php","main-respondent");?>
-</div>
-
 <div id="qstatus" class="header">
-<?xhtml_object("status.php","main-qstatus");?>
+<?xhtml_object("status_interface2.php","main-qstatus");?>
 </div>
 
 
@@ -188,16 +243,6 @@ xhtml_object($data,"main-content");
 	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("casenote.php","main-casenotes");?></div>
    </div>
 <? }?>
-
-<? if ($availability) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'availability' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'availability' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Availability"); ?></h2>
-	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("availability.php","main-casenotes");?></div>
-   </div>
-<? }?>
-
-
 
 <? if (TAB_CONTACTDETAILS) { ?>
      <div class="tabbertab <? if ((DEFAULT_TAB == 'contactdetails' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'contactdetails' && $appointment)) 
