@@ -20,11 +20,11 @@
  *	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *
- * @author Adam Zammit <adam.zammit@acspri.org.au>
- * @copyright Australian Consortium for Social and Political Research Inc 2007,2008
+ * @author Adam Zammit <adam.zammit@deakin.edu.au>
+ * @copyright Deakin University 2007,2008
  * @package queXS
  * @subpackage user
- * @link http://www.acspri.org.au/ queXS was writen for Australian Consortium for Social and Political Research Incorporated (ACSPRI)
+ * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
  * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
  * 
  */
@@ -67,7 +67,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 	$js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Status"),true,array("css/status.css"),$js);
+xhtml_head(T_("Status"),true,array("css/status_interface2.css"),$js);
 
 $ca = get_call_attempt($operator_id,false);
 if ($ca)
@@ -76,7 +76,7 @@ if ($ca)
 	$case_id = get_case_id($operator_id);
 	$fname = get_respondent_variable("firstName",$respondent_id);
 	$lname = get_respondent_variable("lastName",$respondent_id);
-	print "<p>" . T_("Name") . ": $fname $lname</p>";
+	print "<p class='text'>" . T_("Name") . ": $fname $lname</p>";
 
 	$appointment = is_on_appointment($ca);
 
@@ -114,31 +114,51 @@ if ($ca)
 		
 		if (!$call_id)
 		{
-			if ($appointment)
+			$sql = "SELECT c. *
+                                FROM contact_phone AS c
+                                LEFT JOIN (
+                                                SELECT contact_phone.contact_phone_id
+                                                FROM contact_phone
+                                                LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+                                                LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+                                                WHERE contact_phone.case_id = '$case_id'
+                                                AND outcome.tryagain =0
+                                          ) AS l ON l.contact_phone_id = c.contact_phone_id
+                                LEFT JOIN
+                                (
+                                 SELECT contact_phone_id
+                                 FROM `call`
+                                 WHERE call_attempt_id = '$ca'
+                                 AND outcome_id != 18
+                                ) as ca on ca.contact_phone_id = c.contact_phone_id
+                                WHERE c.case_id = '$case_id'
+                                AND l.contact_phone_id IS NULL
+                                AND ca.contact_phone_id IS NULL
+				order by c.priority ASC";
+			
+			$numsa = $db->GetRow($sql);
+
+			if (!empty($numsa))
 			{
-				//create a call on the appointment number
-				$sql = "SELECT cp.*
-					FROM contact_phone as cp, appointment as a
-					WHERE cp.case_id = '$case_id'
-					AND a.appointment_id = '$appointment'
-					AND a.contact_phone_id = cp.contact_phone_id";
-
+				if ($appointment)
+				{
+					//create a call on the appointment number
+					$sql = "SELECT cp.*
+						FROM contact_phone as cp, appointment as a
+						WHERE cp.case_id = '$case_id'
+						AND a.appointment_id = '$appointment'
+						AND a.contact_phone_id = cp.contact_phone_id";
+		
+					$rs = $db->GetRow($sql);
+					$contact_phone_id = $rs['contact_phone_id'];				
+				}
+				else
+				{
+					$contact_phone_id = $numsa['contact_phone_id'];
+				}
+			
+				$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
 			}
-			else
-			{
-				//create a call on the first available number by priority
-				$sql = "SELECT *
-					FROM contact_phone
-					WHERE case_id = '$case_id'
-					ORDER BY priority ASC
-					LIMIT 1";
-
-			}
-
-			$rs = $db->GetRow($sql);
-			$contact_phone_id = $rs['contact_phone_id'];				
-
-			$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
 		}
 		
 		if ($appointment)
@@ -157,48 +177,52 @@ if ($ca)
 			//if (missed_appointment($ca)) print "<div class='tobecoded statusbutton'>" . T_("MISSED") . "</div>";
 		}
 
-
-		$sql = "SELECT c.*, CASE WHEN c.contact_phone_id = ccc.contact_phone_id THEN 'checked=\"checked\"' ELSE '' END as checked
-			FROM contact_phone as c
-			LEFT JOIN `call` as ccc ON (ccc.call_id = '$call_id')
-			LEFT JOIN (
-				SELECT contact_phone.contact_phone_id
-				FROM contact_phone
-				LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
-				LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
-				WHERE contact_phone.case_id = '$case_id'
-				AND outcome.tryagain =0
-			) AS l ON l.contact_phone_id = c.contact_phone_id
-			LEFT JOIN
-				(
-				SELECT contact_phone_id
-				FROM `call`
-				WHERE call_attempt_id = '$ca'
-				AND outcome_id != 18
-				AND outcome_id != 0
-				) as ca on ca.contact_phone_id = c.contact_phone_id
-			WHERE c.case_id = '$case_id'
-			AND l.contact_phone_id IS NULL
-			AND ca.contact_phone_id IS NULL";
-
-
-		$rs = $db->GetAll($sql);
-
-
-		//Display all available numbers for this case as a list of radio buttons
-		//By default, the selected radio button should have a "call" started for it
-	 	//When then next one clicked, it should bring up call screen if no outcome otherwise start new call
-		print "<div>";
-		foreach($rs as $r)
+		if ($call_id)
 		{
-			print "<form method='post' action='?'><div>";
-			print "<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>";
-			print "<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
-			if (!empty($r['description'])) print " - " . $r['description'];
-			print "</label>";
-			print "</div></form>";
+			$sql = "SELECT c.*, CASE WHEN c.contact_phone_id = ccc.contact_phone_id THEN 'checked=\"checked\"' ELSE '' END as checked
+				FROM contact_phone as c
+				LEFT JOIN `call` as ccc ON (ccc.call_id = '$call_id')
+				LEFT JOIN (
+					SELECT contact_phone.contact_phone_id
+					FROM contact_phone
+					LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+					LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+					WHERE contact_phone.case_id = '$case_id'
+					AND outcome.tryagain =0
+				) AS l ON l.contact_phone_id = c.contact_phone_id
+				LEFT JOIN
+					(
+					SELECT contact_phone_id
+					FROM `call`
+					WHERE call_attempt_id = '$ca'
+					AND outcome_id != 18
+					AND outcome_id != 0
+					) as ca on ca.contact_phone_id = c.contact_phone_id
+				WHERE c.case_id = '$case_id'
+				AND l.contact_phone_id IS NULL
+				AND ca.contact_phone_id IS NULL";
+	
+	
+			$rs = $db->GetAll($sql);
+	
+
+			//Display all available numbers for this case as a list of radio buttons
+			//By default, the selected radio button should have a "call" started for it
+		 	//When then next one clicked, it should bring up call screen if no outcome otherwise start new call
+			print "<div>";
+			foreach($rs as $r)
+			{
+				print "<form method='post' action='?'><div class='text'>";
+				print "<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>";
+				print "<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
+				if (!empty($r['description'])) print " - " . $r['description'];
+				print "</label>";
+				print "</div></form><br />";
+			}
+			print "</div>";
 		}
-		print "</div>";
+		else
+			print "<div class='text'>" . T_("No more numbers to call") . "</div>";
 	}
 	else
 		print "<div class='text'>" . T_("No more numbers to call") . "</div>";

@@ -20,11 +20,11 @@
  *	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *
- * @author Adam Zammit <adam.zammit@acspri.org.au>
- * @copyright Australian Consortium for Social and Political Research Inc 2007,2008
+ * @author Adam Zammit <adam.zammit@deakin.edu.au>
+ * @copyright Deakin University 2007,2008
  * @package queXS
  * @subpackage user
- * @link http://www.acspri.org.au/ queXS was writen for Australian Consortium for Social and Political Research Incorporated (ACSPRI)
+ * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
  * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
  * 
  *
@@ -46,36 +46,15 @@ include_once("functions/functions.xhtml.php");
 include_once("functions/functions.operator.php");
 
 
-xhtml_head(T_("queXS"), false, array("css/index_interface2.css","css/tabber.css"),array("js/tabber.js"));
+xhtml_head(T_("queXS"), false, array("css/index_interface2.css","css/tabber_interface2.css"),array("js/tabber_interface2.js"));
 
 ?>
+<div id="header_line"></div>
+<ul class="wait_wrapper">
+	<li class="wait_li_1"><a href="index_interface2.php"><? echo T_("Get a new case"); ?> <img src="css/images/play.jpg" /></a></li>
+    <li class="wait_li_2"><a href="endwork.php"><? echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
 
-<div id="casefunctions">
-	<div class='box'><a href="index_interface2.php"><? echo T_("Get a new case"); ?></a></div>
-	<div class='box'><a href="endwork.php"><? echo T_("End work"); ?></a></div>
-</div>
-
-<div id="content">
-</div>
-
-<div id="respondent">
-</div>
-
-<div id="qstatus">
-</div>
-
-
-<div id="calllist">
-<div class="tabber" id="tab-main">
-     <div class="tabbertab">
-	  <h2><? echo T_("Info"); ?></h2>
-	  <div id="div-info" class="tabberdiv"><?xhtml_object("info.php","main-info");?></div>
-     </div>
-
-
-</div>
-</div>
-
+</ul>
 
 <?
 

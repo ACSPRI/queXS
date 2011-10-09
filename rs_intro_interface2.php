@@ -95,7 +95,7 @@ if (limesurvey_percent_complete($case_id) == false)
 	else
 	{
 		?>
-		<p class='rsoption'><a href="rs_project_intro.php"><? echo T_("Yes - Continue"); ?></a></p>
+		<p class='rsoption'><a href="rs_project_intro_interface2.php"><? echo T_("Yes - Continue"); ?></a></p>
 		<?
 	}
 } else {

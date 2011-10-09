@@ -108,7 +108,38 @@ if (isset($_GET['endcase']))
 		$rs = $db->GetRow($sql);
 
 		if (!empty($rs) && $rs['tryanother'] == 1)
-			$endthecase = false;
+		{
+			//we can try another number... 
+
+			$case_id = get_case_id($operator_id,false);
+			$call_attempt_id = get_call_attempt($operator_id,false);
+			//check if there is another number to try...
+                        $sql = "SELECT c. *
+                                FROM contact_phone AS c
+                                LEFT JOIN (
+                                                SELECT contact_phone.contact_phone_id
+                                                FROM contact_phone
+                                                LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+                                                LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+                                                WHERE contact_phone.case_id = '$case_id'
+                                                AND outcome.tryagain =0
+                                          ) AS l ON l.contact_phone_id = c.contact_phone_id
+                                LEFT JOIN
+                                (
+                                 SELECT contact_phone_id
+                                 FROM `call`
+                                 WHERE call_attempt_id = '$call_attempt_id'
+                                 AND outcome_id != 18
+                                ) as ca on ca.contact_phone_id = c.contact_phone_id
+                                WHERE c.case_id = '$case_id'
+                                AND l.contact_phone_id IS NULL
+                                AND ca.contact_phone_id IS NULL"; //only select numbers that should be tried again and have not been tried in this attempt which are not the accidental hang up outcome
+
+                        $rs = $db->GetAll($sql);
+
+			if (!empty($rs))			
+				$endthecase = false;
+		}
 	}
 
 	if ($endthecase)
@@ -121,6 +152,7 @@ if (isset($_GET['endcase']))
 		include("waitnextcase_interface2.php");
 		exit();
 	}
+
 }
 
 $js = array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
@@ -148,29 +180,30 @@ if ($popupcall)
 
 if (HEADER_EXPANDER) 
 {
-	$js[] = "js/headerexpand.js";
-	$js[] = "js/headerexpandmanual.js";
+	$js[] = "js/headerexpand_interface2.js";
+	$js[] = "js/headerexpandmanual_interface2.js";
 }
 else if (HEADER_EXPANDER_MANUAL) 
 {
-	$js[] = "js/headerexpand.js";
-	$js[] = "js/headerexpandmanual.js";
+	$js[] = "js/headerexpand_interface2.js";
+	$js[] = "js/headerexpandmanual_interface2.js";
 }
 
 
 
 
-xhtml_head(T_("queXS"), $body, array("css/index_interface2.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
+xhtml_head(T_("queXS"), $body, array("css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
 print $script;
 
 ?>
 
-<div id="casefunctions" class="header">
-	<div class='box important'><a href="javascript:poptastic('call_interface2.php');"><? echo T_("Assign outcome"); ?></a></div>
-	<div class='box'><a href="javascript:poptastic('appointment.php');"><? echo T_("Appointment"); ?></a></div>
-	<div class='box'><a href="?endwork=endwork"><? echo T_("End work"); ?></a></div>
-	<? if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.png' alt='<? echo T_('Arrow for expanding or contracting'); ?>'/></div> <? } ?>
-</div>
+<ul id="casefunctions" class="header">
+       <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><? echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
+    <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><? echo T_("Appointment"); ?> <img src="css/images/plius.jpg" /></a></li>
+    <li id="item_3_e" class="item_3_full_height"><a href="?endwork=endwork"><? echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
+</ul>
+
+
 
 <div id="content" class="content">
 <? 
@@ -199,11 +232,29 @@ if (!$call_id)
 	else
 	{
 		//create a call on the first available number by priority
-		$sql = "SELECT *
-			FROM contact_phone
-			WHERE case_id = '$case_id'
-			ORDER BY priority ASC
-			LIMIT 1";
+		$sql = "SELECT c. *
+			FROM contact_phone AS c
+			LEFT JOIN (
+					SELECT contact_phone.contact_phone_id
+					FROM contact_phone
+					LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+					LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+					WHERE contact_phone.case_id = '$case_id'
+					AND outcome.tryagain =0
+				  ) AS l ON l.contact_phone_id = c.contact_phone_id
+			LEFT JOIN
+			(
+			 SELECT contact_phone_id
+			 FROM `call`
+			 WHERE call_attempt_id = '$ca'
+			 AND outcome_id != 18
+			) as ca on ca.contact_phone_id = c.contact_phone_id
+			WHERE c.case_id = '$case_id'
+			AND l.contact_phone_id IS NULL
+			AND ca.contact_phone_id IS NULL
+			order by c.priority ASC";
+
+
 	}
 	$rs = $db->GetRow($sql);
 
@@ -228,6 +279,7 @@ xhtml_object($data,"main-content");
 
 <div id="qstatus" class="header">
 <?xhtml_object("status_interface2.php","main-qstatus");?>
+<? if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.jpg' alt='<? echo T_('Arrow for expanding or contracting'); ?>'/></div> <? } ?>
 </div>
 
 
