@@ -11,7 +11,7 @@ function headerexpand()
 function headercontract()
 {
 	$(".header").css("height","13%");
-	$(".content").css("height","80%");
+	$(".content").css("height","85%");
 	$(".content").css("top","15%");
 	$(".box:not(.important)").css("display","none");
 //	$(".item_2_full_height").removeClass("item_2_full_height").addClass("item_2_half_height");
