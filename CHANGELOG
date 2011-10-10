@@ -1,3 +1,12 @@
+queXS 1.5.1 - Changes since 1.5.0:
+
+New features:
+*Alternate interface avaialble to operators that aren't using VoIP (enable with ALTERNATE_INTERFACE directive in config file) - sponsor: Zimi
+
+Updates:
+*Updated Limesurvey to 1.91+ Revision 11132
+*Translations updated (thank you to everyone who contributed on Launchpad)
+
 queXS 1.5.0 - Changes since 1.4.0:
 
 New features:
