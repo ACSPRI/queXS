@@ -1,6 +1,7 @@
 //$Id: admin_core.js 10855 2011-08-26 13:30:41Z mot3 $    
 
 $(document).ready(function(){
+    setupAllTabs();
     if(typeof(userdateformat) !== 'undefined') 
     {
         $(".popupdate").datepicker({ dateFormat: userdateformat,  

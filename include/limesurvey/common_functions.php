@@ -2390,8 +2390,25 @@ function createFieldMap($surveyid, $style='short', $force_refresh=false, $questi
             $usedinconditions = "Y";
         }
         else
-        {
-            $usedinconditions = "N";
+        {   
+            // This question is not directly used in a condition, however we should
+            // check if its SGQA code is not used as a value in another condition
+            // as a @SGQA@ code
+            $atsgqaQuery = "SELECT count(1) as sgqausedincondition "
+                        . "FROM ".db_table_name('questions')." as q, "
+                        . db_table_name('conditions')." as c "
+                        . "WHERE c.qid=q.qid AND q.sid=".$arow['sid']." AND "
+                        . "c.value like '@".$arow['sid']."X".$arow['gid']."X".$arow['qid']."%'";
+            $atsgqaResult = db_execute_assoc($atsgqaQuery) or safe_die ("Couldn't get list @sgqa@ conditions in createFieldMap function.<br />$atsgqaQuery<br />".$connect->ErrorMsg()); //Checked
+            $atsgqaRow = $atsgqaResult->FetchRow();
+            if ($atsgqaRow['sgqausedincondition'] == 0 )
+            {
+                $usedinconditions = "N";
+            }
+            else
+            {
+                $usedinconditions = "Y";
+            }
         }
 
         // Field identifier
@@ -7815,5 +7832,22 @@ function sDefaultSubmitHandler()
     </script>
 EOS;
 }
+
+/**
+* This function fixes the group ID and type on all subquestions
+*
+*/
+function fixSubquestions()
+{
+    $surveyidresult=db_execute_assoc("select sq.qid, sq.parent_qid, sq.gid as sqgid, q.gid, sq.type as sqtype, q.type
+                                    from ".db_table_name('questions')." sq JOIN ".db_table_name('questions')." q on sq.parent_qid=q.qid
+                                    where sq.parent_qid>0 and  (sq.gid!=q.gid or sq.type!=q.type)");
+    foreach($surveyidresult->GetRows() as $sv)
+    {
+      db_execute_assoc('update '.db_table_name('questions')." set type='{$sv['type']}', gid={$sv['gid']} where qid={$sv['qid']}");
+    }
+
+}
+
 
 // Closing PHP tag intentionally omitted - yes, it is okay

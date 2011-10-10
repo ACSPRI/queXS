@@ -1102,6 +1102,7 @@ function makelanguagechanger()
         $lang = GetBaseLanguageFromSurveyID($surveyid);
 
         $htmlcode ="<select name=\"select\" class='languagechanger' onchange=\"javascript:window.location=this.value\">\n";
+        $htmlcode .= "<option value=\"$relativeurl/index.php?sid=". $surveyid ."&amp;lang=". $lang ."$tokenparam\">".getLanguageNameFromCode($lang,false)."</option>\n";
         $sAddToURL = "";
         $sTargetURL = "$relativeurl/index.php";
         if ($previewgrp){
@@ -1756,7 +1757,7 @@ function checkUploadedFileValidity($move, $backok=null)
                     else
                         $filecount = 0;
 
-                    if ($filecount < $validation['min_num_of_files'])
+                    if ($filecount < $validation['min_num_of_files'] && checkquestionfordisplay($fieldmap[$field]['qid']))
                     {
                         $filenotvalidated = array();
                         $filenotvalidated[$field] = $clang->gT("The minimum number of files has not been uploaded.");

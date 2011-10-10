@@ -110,6 +110,14 @@ $(document).ready(function()
             });
         }
     }
+    /*replacement for inline javascript for #index */
+    /*
+    $("#index").parents(".outerframe").addClass("withindex");
+     if ($("#index").size() && $("#index .row.current").size()){
+         var idx = $("#index");
+         var row = $("#index .row.current");
+         idx.scrollTop(row.position().top - idx.height() / 2 - row.height() / 2);
+    */
 });
 
 gmaps = new Object;

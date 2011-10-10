@@ -4529,12 +4529,9 @@ function do_multiplenumeric($ia)
                 . "<div id=\"slider-$myfname\" class=\"ui-slider-1\">\n"
                 .  $slider_showmin
                 . "<div class=\"slider_callout\" id=\"slider-callout-$myfname\"></div>\n"
-                . "<div class=\"ui-slider-handle\" id=\"slider-handle-$myfname\"></div>\n"
-                . $slider_showmax
-                . "\t</div>"
-                . "</div>$sliderright\n"
-                . "<input class=\"text\" type=\"text\" name=\"$myfname\" id=\"answer$myfname\" style=\"display: none;\" value=\"";
-                if (isset($_SESSION[$myfname]))
+                . "<div class=\"ui-slider-handle\" id=\"slider-handle-$myfname\"></div>\n";
+                $answer_main .= "<input class=\"text\" type=\"text\" name=\"$myfname\" id=\"answer$myfname\" value=\"";
+                if (isset($_SESSION[$myfname]) && $_SESSION[$myfname] != '')
                 {
                     $answer_main .= $_SESSION[$myfname];
                 }
@@ -4542,8 +4539,11 @@ function do_multiplenumeric($ia)
                 {
                     $answer_main .= $slider_default;
                 }
-                $answer_main .= "\"/>\n"
-                . "\t</li>\n";
+                $answer_main .= "\"/>\n";
+                $answer_main .=  $slider_showmax
+                . "\t</div>"
+                . "</div>$sliderright\n";
+                $answer_main .=   "\t</li>\n";
             }
 
             //			$answer .= "\t</tr>\n";
