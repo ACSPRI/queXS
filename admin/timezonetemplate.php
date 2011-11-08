@@ -84,23 +84,36 @@ if (isset($_GET['tz']))
 }
 
 
-xhtml_head(T_("Add/Remove Timezones"),true,false,array("../js/window.js"));
+xhtml_head(T_("Add/Remove Timezones"),true,array("../css/shifts.css"),array("../js/window.js"));
+
+$sql = "SELECT name as value, name as description, 
+		CASE WHEN name LIKE '" . DEFAULT_TIME_ZONE . "' THEN 'selected=\'selected\'' ELSE '' END AS selected
+	FROM mysql.time_zone_name";
+
+$tzl = $db->GetAll($sql);
+
+if (empty($tzl) || !$tzl)
+{
+        print "<div class='warning'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
+}
+
+
 print "<h1>" . T_("Click to remove a Timezone from the default list") . "</h1>";
 
 $sql = "SELECT Time_zone_name
 	FROM timezone_template";
 
-	$qs = $db->GetAll($sql);
+$qs = $db->GetAll($sql);
 
-	foreach($qs as $q)
-	{
-		print "<p><a href=\"?tz={$q['Time_zone_name']}\">{$q['Time_zone_name']} </a></p>";
-	}
+foreach($qs as $q)
+{
+	print "<p><a href=\"?tz={$q['Time_zone_name']}\">{$q['Time_zone_name']} </a></p>";
+}
 
-	print "<h1>" . T_("Add a Timezone:") . "</h1>";
+print "<h1>" . T_("Add a Timezone:") . "</h1>";
 		?>
 		<form action="" method="get"><p>
-		<label for="time_zone"><? echo T_("Timezone: "); ?></label><input type="text" name="time_zone" id="time_zone" value="<? echo DEFAULT_TIME_ZONE; ?>"/>
+		<label for="time_zone"><? echo T_("Timezone: "); ?></label><? display_chooser($tzl, 'time_zone', 'time_zone', false,  false, false, false, false); ?>
 		<input type="submit" name="add_timezone" value="<? echo T_("Add Timezone"); ?>"/></p>
 		</form>
 		<?
