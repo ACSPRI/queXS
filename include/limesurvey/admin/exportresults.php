@@ -676,7 +676,7 @@ if ($answers == "short") //Nice and easy. Just dump the data straight
         $rowcounter++;
         if ($type == "csv")
         {
-            $exportoutput .= "\"".implode("\"$separator\"", str_replace("\"", "\"\"", str_replace("\r\n", " ", $drow))) . "\"\n"; //create dump from each row
+            $exportoutput .= "\"".implode("\"$separator\"", str_replace("\"", "\"\"", $drow)) . "\"\n";
         }
         elseif ($type == "xls")
         {
@@ -1130,11 +1130,6 @@ exit;
 
 
 function strip_tags_full($string) {
-    $string=html_entity_decode($string, ENT_QUOTES, "UTF-8");
-    mb_regex_encoding('utf-8');
-    $pattern = array('\r', '\n', '-oth-');
-    for ($i=0; $i<sizeof($pattern); $i++) {
-        $string = mb_ereg_replace($pattern[$i], '', $string);
-    }
-    return strip_tags($string);
+    $string=str_replace('-oth-','',$string);
+    return FlattenText($string,true,'UTF-8',false);
 }

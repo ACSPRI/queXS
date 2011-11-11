@@ -89,7 +89,7 @@ function upgrade_survey_table145()
         $oLanguage = new limesurvey_lang($aSurveyRow['surveyls_language']);      
         $aDefaultTexts=aTemplateDefaultTexts($oLanguage,'unescaped'); 
         unset($oLanguage);
-        $aDefaultTexts['admin_detailed_notification_subject']=$aDefaultTexts['admin_detailed_notification'].$aDefaultTexts['admin_detailed_notification_css'];
+        $aDefaultTexts['admin_detailed_notification']=$aDefaultTexts['admin_detailed_notification'].$aDefaultTexts['admin_detailed_notification_css'];
         $aDefaultTexts=array_map('db_quoteall',$aDefaultTexts);
         $sSurveyUpdateQuery= "update ".db_table_name('surveys_languagesettings')." set 
                               email_admin_responses_subj={$aDefaultTexts['admin_detailed_notification_subject']}, 

@@ -710,6 +710,7 @@ function XMLImportQuestion($sFullFilepath, $newsid, $newgid)
     if ($xml->LimeSurveyDocType!='Question') safe_die('This is not a valid LimeSurvey question structure XML file.');
     $dbversion = (int) $xml->DBVersion;
     $aQIDReplacements=array();     
+    $aSQIDReplacements=array(0=>0);
     $results['defaultvalues']=0;
     $results['answers']=0;
     $results['question_attributes']=0;

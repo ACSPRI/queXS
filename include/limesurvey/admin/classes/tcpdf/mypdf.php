@@ -183,6 +183,12 @@ class MyPDF extends TCPDF
             else{$fill=0;}
             for($b=0;$b<sizeof($array[$a]);$b++)
             {
+                    $bEndOfCell=0;
+                    if ($b==sizeof($array[$a])-1)
+                    {
+                        $bEndOfCell=1;
+                    }
+
                 if($a==0)
                 {
                     $oldStyle = $this->FontStyle;
@@ -190,7 +196,7 @@ class MyPDF extends TCPDF
                     
                     if ($maxwidth[$b] > 140) $maxwidth[$b]=130;
                     if ($maxwidth[$b] < 20) $maxwidth[$b]=20;
-                    $this->MultiCell($maxwidth[$b],6,$this->delete_html($array[$a][$b]),0,'L',1,0);
+                        $this->MultiCell($maxwidth[$b],6,$this->delete_html($array[$a][$b]),0,'L',1,$bEndOfCell);
                     
                     $this->SetFont($this->FontFamily, $oldStyle, $this->FontSizePt);
                 }
@@ -205,16 +211,15 @@ class MyPDF extends TCPDF
                     if ($maxwidth[$b] > 140) $maxwidth[$b]=130;
                     if ($b==0)
                     {
-                        $iLines=$this->MultiCell($maxwidth[$b],6,$this->delete_html($array[$a][$b]),0,'L',$fill,0); 
+                            $iLines=$this->MultiCell($maxwidth[$b],6,$this->delete_html($array[$a][$b]),0,'L',$fill,$bEndOfCell);
                 }
                     else
                     {
-                       $this->MultiCell($maxwidth[$b],$iLines,$this->delete_html($array[$a][$b]),0,'L',$fill,0);   
+                            $this->MultiCell($maxwidth[$b],$iLines,$this->delete_html($array[$a][$b]),0,'L',$fill,$bEndOfCell);
             }
 
                 }
             }
-            $this->ln();
         }
         $this->ln(5);
     }

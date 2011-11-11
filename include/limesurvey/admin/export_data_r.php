@@ -148,7 +148,7 @@ if  ($subaction=='dldata')
     header("Pragma: public");
 
     $na="";	//change to empty string instead of two double quotes to fix warnings on NA
-    spss_export_data($na, true); // this true indicates that the format is .csv
+    spss_export_data($na);
 
     exit;
 }

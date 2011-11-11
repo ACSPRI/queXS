@@ -106,14 +106,19 @@ $tokenoutput = "";
 
 if ($subaction == "export" && ( bHasSurveyPermission($surveyid, 'tokens', 'export')) )//EXPORT FEATURE SUBMITTED BY PIETERJAN HEYSE
 {
-    header("Content-Disposition: attachment; filename=tokens_".$surveyid.".csv");
-    header("Content-type: text/comma-separated-values; charset=UTF-8");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Pragma: cache");
 
 
 
-    $bquery = "SELECT * FROM ".db_table_name("tokens_$surveyid").' where 1=1';
+        $bquery = "SELECT * FROM ".db_table_name("tokens_$surveyid").' t';
+        if ($_POST['tokenstatus']==3 && $thissurvey['anonymized']=='N')
+        {
+            $bquery .= " JOIN ".db_table_name("survey_$surveyid")." s on t.token=s.token ";
+        }
+        if ($_POST['tokenstatus']==2 && $thissurvey['anonymized']=='N')
+        {
+            $bquery .= " LEFT JOIN ".db_table_name("survey_$surveyid")." s on t.token=s.token ";
+        }
+        $bquery.=' where 1=1';
     if (trim($_POST['filteremail'])!='')
     {
         if ($databasetype=='odbc_mssql' || $databasetype=='odbtp' || $databasetype=='mssql_n' || $connect->databaseType == 'mssqlnative')
@@ -134,14 +139,13 @@ if ($subaction == "export" && ( bHasSurveyPermission($surveyid, 'tokens', 'expor
         $bquery .= " and completed='N'";
         if ($thissurvey['anonymized']=='N')
         {
-            $bquery .=" and token not in (select token from ".db_table_name("survey_$surveyid")." group by token)";
+                $bquery .=" and s.token is null ";
         }
     }
     if ($_POST['tokenstatus']==3 && $thissurvey['anonymized']=='N')
     {
-        $bquery .= " and completed='N' and token in (select token from ".db_table_name("survey_$surveyid")." group by token)";
+            $bquery .= " and completed='N' and s.token is not null";
     }
-
     if ($_POST['invitationstatus']==1)
     {
         $bquery .= " and sent<>'N'";
@@ -165,6 +169,11 @@ if ($subaction == "export" && ( bHasSurveyPermission($surveyid, 'tokens', 'expor
         $bquery .= " and language=".db_quoteall($_POST['tokenlanguage']);
     }
     $bquery .= " ORDER BY tid";
+
+        header("Content-Disposition: attachment; filename=tokens_".$surveyid.".csv");
+        header("Content-type: text/comma-separated-values; charset=UTF-8");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Pragma: cache");
 
     $bresult = db_execute_assoc($bquery) or die ("$bquery<br />".htmlspecialchars($connect->ErrorMsg()));
     $bfieldcount=$bresult->FieldCount();
@@ -1557,7 +1566,12 @@ if ($subaction == "email" && bHasSurveyPermission($surveyid, 'tokens','update'))
             while ($emrow = $emresult->FetchRow())
             {
                 unset($fieldsarray);
-                $to = $emrow['firstname']." ".$emrow['lastname']." <".$emrow['email'].">";
+                    $to=array();
+                    $aEmailaddresses=explode(';',$emrow['email']);
+                    foreach($aEmailaddresses as $sEmailaddress)
+                    {
+                        $to[]=$emrow['firstname']." ".$emrow['lastname']." <{$sEmailaddress}>";
+                    }
                 $fieldsarray["{EMAIL}"]=$emrow['email'];
                 $fieldsarray["{FIRSTNAME}"]=$emrow['firstname'];
                 $fieldsarray["{LASTNAME}"]=$emrow['lastname'];
@@ -1577,7 +1591,6 @@ if ($subaction == "email" && bHasSurveyPermission($surveyid, 'tokens','update'))
                 if ($found==false) {$emrow['language']=$baselanguage;}
 
                 $from = $_POST['from_'.$emrow['language']];
-
 
                 if ($ishtml === false)
                 {
@@ -1628,7 +1641,7 @@ if ($subaction == "email" && bHasSurveyPermission($surveyid, 'tokens','update'))
                     ."SET sent='$today' WHERE tid={$emrow['tid']}";
                     //
                     $uderesult = $connect->Execute($udequery) or safe_die ("Could not update tokens<br />$udequery<br />".$connect->ErrorMsg());
-                    $tokenoutput .= $clang->gT("Invitation sent to:")." {$emrow['firstname']} {$emrow['lastname']} ($to)<br />\n";
+                        $tokenoutput .= $clang->gT("Invitation sent to:")." {$emrow['firstname']} {$emrow['lastname']} (".htmlspecialchars(implode(',',$to)).")<br />\n";
                     if ($emailsmtpdebug==2)
                     {
                         $tokenoutput .=$maildebug;
@@ -1885,7 +1898,12 @@ if ($subaction == "remind" && bHasSurveyPermission($surveyid, 'tokens','update')
             while ($emrow = $emresult->FetchRow())
             {
                 unset($fieldsarray);
-                $to = $emrow['firstname']." ".$emrow['lastname']." <".$emrow['email'].">";
+                    $to=array();
+                    $aEmailaddresses=explode(';',$emrow['email']);
+                    foreach($aEmailaddresses as $sEmailaddress)
+                    {
+                        $to[]=$emrow['firstname']." ".$emrow['lastname']." <{$sEmailaddress}>";
+                    }
                 $fieldsarray["{EMAIL}"]=$emrow['email'];
                 $fieldsarray["{FIRSTNAME}"]=$emrow['firstname'];
                 $fieldsarray["{LASTNAME}"]=$emrow['lastname'];

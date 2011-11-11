@@ -68,7 +68,7 @@ if (isset($_POST['fieldnames']) && $_POST['fieldnames'])
     // Remove invalid fieldnames from fieldnames array
     for($x=count($postedfieldnames)-1;$x>=0;$x--)
     {
-        if (strpos($postedfieldnames[$x],$surveyid.'X')===false)
+            if (!isset($_SESSION['fieldmap'][$postedfieldnames[$x]]))
         {
             array_remval($postedfieldnames[$x],$postedfieldnames);
         }
@@ -220,7 +220,7 @@ if (isset($_POST['saveprompt']))  //Value submitted when clicking on 'Save Now' 
 // Show 'SAVE FORM' only when click the 'Save so far' button the first time
 if ($thissurvey['allowsave'] == "Y"  && isset($_POST['saveall']) && !isset($_SESSION['scid']))
 {
-    if($thissurvey['tokenanswerspersistence'] != 'Y')
+        if($thissurvey['tokenanswerspersistence'] != 'Y' || !tableExists('tokens_'.$surveyid))
     {
         //showsaveform();
     }
@@ -516,20 +516,23 @@ function createinsertquery()
                     // move the files from tmp to the files folder
 
                     $tmp = $tempdir.'/upload/';
-                    if (!is_null($phparray) && count($phparray) > 0 && file_exists($tmp.$phparray[0]->filename))
+                            if (!is_null($phparray) && count($phparray) > 0)
                     {
-                        // move files from temp to files directory
-
+                                // Move the (unmoved, temp) files from temp to files directory.
+                                // Check all possible file uploads
                         for ($i = 0; $i < count($phparray); $i++)
                         {
+                                    if (file_exists($tmp.$phparray[$i]->filename))
+                                    {
                             $sDestinationFileName='fu_'.sRandomChars(15);
                             if (!rename($tmp . $phparray[$i]->filename, $target . $sDestinationFileName))
                                 echo "Error moving file to its destination";
                             $phparray[$i]->filename=$sDestinationFileName;
                         }
+                            }
                         $_SESSION[$value] = json_encode($phparray);
                     }
-                    $values[] = $connect->qstr($_SESSION[$value], get_magic_quotes_gpc());
+                        $values[] = $connect->qstr($_SESSION[$value]);
                     // filename is changed from undefined to a random value
                     // update uses $_POST for saving responses
                     $_POST[$value] = $_SESSION[$value];

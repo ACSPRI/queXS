@@ -4224,7 +4224,7 @@ function ReplaceFields ($text,$fieldsarray, $bReplaceInsertans=false)
  * @param mixed $mail This is an PHPMailer object. If null, one will be created automatically and unset afterwards. If supplied it won't be unset.
  * @param string $body Body text of the email in plain text or HTML
  * @param mixed $subject Email subject
- * @param mixed $to
+* @param mixed $to Array with several email addresses or single string with one email address
  * @param mixed $from
  * @param mixed $sitename
  * @param mixed $ishtml
@@ -4237,7 +4237,9 @@ function SendEmailMessage($mail, $body, $subject, $to, $from, $sitename, $ishtml
 
     global $emailmethod, $emailsmtphost, $emailsmtpuser, $emailsmtppassword, $defaultlang, $emailsmtpdebug;
     global $rootdir, $maildebug, $maildebugbody, $emailsmtpssl, $clang, $demoModeOnly, $emailcharset;
-
+    if (!is_array($to)){
+        $to=array($to);
+    }
     if (!is_array($customheaders) && $customheaders == '')
     {
         $customheaders=array();
@@ -4302,7 +4304,7 @@ function SendEmailMessage($mail, $body, $subject, $to, $from, $sitename, $ishtml
     		$mail->IsSMTP();
 			if ($emailsmtpdebug>0)
 		        {
-		            $mail->SMTPDebug = true;
+                $mail->SMTPDebug = $emailsmtpdebug;
 		        }
 	        if (strpos($emailsmtphost,':')>0)
 	        {
@@ -4330,8 +4332,7 @@ function SendEmailMessage($mail, $body, $subject, $to, $from, $sitename, $ishtml
 
     $mail->SetFrom($fromemail, $fromname);
     $mail->Sender = $senderemail; // Sets Return-Path for error notifications
-    $toemails = explode(";", $to);
-    foreach ($toemails as $singletoemail)
+    foreach ($to as $singletoemail)
     {
         if (strpos($singletoemail, '<') )
         {
@@ -4397,31 +4398,26 @@ function SendEmailMessage($mail, $body, $subject, $to, $from, $sitename, $ishtml
  *
  * @return string  Cleaned text
  */
-function FlattenText($sTextToFlatten, $bDecodeHTMLEntities=false, $sCharset='UTF-8',$is_csv=false)
+function FlattenText($sTextToFlatten, $bDecodeHTMLEntities=false, $sCharset='UTF-8', $bStripNewLines=true)
 {
     $sNicetext = strip_javascript($sTextToFlatten);
     $sNicetext = strip_tags($sNicetext);
-    if($is_csv==true)
-    {
-       $sNicetext = str_replace(array("\r\n","\r","\n"),array(PHP_EOL,PHP_EOL,PHP_EOL), $sNicetext);
+
+    if ($bStripNewLines ){
+        $sNicetext = preg_replace('~\Ru~', '', $sNicetext);
     }
-    elseif ($sCharset=='UTF-8')
+    else // unify newlines
     {
-        $sNicetext = preg_replace('/[\x0a\x0b\x0c\x0d\x85\x{2028}\x{2029}]/u', ' ', $sNicetext);
-        $sNicetext = str_replace(array("\n","\r"),array('',''), $sNicetext);
-    }
-    else
-    {
-        $sNicetext = str_replace(array("\n","\r"),array('',''), $sNicetext);
+        $sNicetext = preg_replace('~\Ru~', "\r\n", $sNicetext);
     }
     if ($bDecodeHTMLEntities==true)
     {
-        $sNicetext = str_replace('&nbsp;',' ', $sNicetext); // html_entity_decode does not properly convert &nbsp; to spaces
+        $sNicetext = str_replace('&nbsp;',' ', $sNicetext); // html_entity_decode does not convert &nbsp; to spaces
         $sNicetext = html_entity_decode($sNicetext, ENT_QUOTES, $sCharset);
     }
-    $sNicetext = trim($sNicetext);
-    return  $sNicetext;
+    return trim($sNicetext); ;
 }
+
 
 /**
  * getArrayFiltersForGroup() queries the database and produces a list of array_filter questions and targets with in the same group
@@ -5961,9 +5957,12 @@ function retrieve_Answer($code, $phpdateformat=null)
         //extracted from a "fieldname" - ie: 1X2X3a
         // also returns question type
 
-        if ($questiondetails['type'] == "M" ||
-        $questiondetails['type'] == "P")
+        if ($questiondetails['type'] == "M" || $questiondetails['type'] == "P")
         {
+            if (strpos($code,'comment')>0 && isset($_SESSION[$code]))
+            {
+                return $_SESSION[$code];
+            }
             $query="SELECT * FROM {$dbprefix}questions WHERE parent_qid='".$questiondetails['qid']."' AND language='".$_SESSION['s_lang']."'";
             $result=db_execute_assoc($query) or safe_die("Error getting answer<br />$query<br />".$connect->ErrorMsg());  //Checked
             while($row=$result->FetchRow())
@@ -7641,8 +7640,9 @@ function SSL_mode()
 * @param mixed $iSurveyID
 * @param mixed $iResponseID
 * @param mixed $sLanguageCode
+* @param boolean $bHonorConditions Apply conditions
 */
-function aGetFullResponseTable($iSurveyID,$iResponseID,$sLanguageCode)
+function aGetFullResponseTable($iSurveyID, $iResponseID, $sLanguageCode, $bHonorConditions=false)
 {
     global $connect;
     $aFieldMap = createFieldMap($iSurveyID,'full',false,false,$sLanguageCode);
@@ -7671,14 +7671,27 @@ function aGetFullResponseTable($iSurveyID,$iResponseID,$sLanguageCode)
             if ($oldgid !== $fname['gid'])
             {
                 $oldgid = $fname['gid'];
+                if (!$bHonorConditions || checkgroupfordisplay($fname['gid']))
+                {
                 $aResultTable['gid_'.$fname['gid']]=array($fname['group_name']);
             }
         }
+        }
         if (isset($fname['qid']) && !empty($fname['qid']))
         {
+            if ($bHonorConditions)
+            {
+                 $isQuestionVisible=checkquestionfordisplay($fname['qid'],null);
+            }
+            else
+            {
+                 $isQuestionVisible=true;
+            }
             if ($oldqid !== $fname['qid'])
             {
                 $oldqid = $fname['qid'];
+                if ($isQuestionVisible)
+                {
                 if (isset($fname['subquestion']) || isset($fname['subquestion1']) || isset($fname['subquestion2']))
                 {
                     $aResultTable['qid_'.$fname['sid'].'X'.$fname['gid'].'X'.$fname['qid']]=array($fname['question'],'','');
@@ -7689,6 +7702,13 @@ function aGetFullResponseTable($iSurveyID,$iResponseID,$sLanguageCode)
                     $aResultTable[$fname['fieldname']]=array($question,'',$answer);
                     continue;
                 }
+
+            }
+                else
+                {
+                    continue;
+        }
+
             }
         }
         else
@@ -7705,9 +7725,12 @@ function aGetFullResponseTable($iSurveyID,$iResponseID,$sLanguageCode)
 
         if (isset($fname['subquestion2']))
         $subquestion .= "[{$fname['subquestion2']}]";
-
+        if ($isQuestionVisible)
+        {
         $answer=getextendedanswer($fname['fieldname'], $idrow[$fname['fieldname']]);
         $aResultTable[$fname['fieldname']]=array('',$subquestion,$answer);
+    }
+
     }
     return $aResultTable;
 }
@@ -7754,40 +7777,79 @@ function aArrayInvert($aArr)
  */
 function bCheckQuestionForAnswer($q, $aFieldnamesInfoInv)
 {
-	if (@$_SESSION['fieldmap'][$aFieldnamesInfoInv[$q][0]]['type'] == 'X')
-    {
-        // boilerplate have no answers
-        return true;
-    }
-    else if (@$_SESSION['fieldmap'][$aFieldnamesInfoInv[$q][0]]['type'] == 'M' || @$_SESSION['fieldmap'][$aFieldnamesInfoInv[$q][0]]['type'] == 'P' || @$_SESSION['fieldmap'][$aFieldnamesInfoInv[$q][0]]['type'] == 'O')
-    {
-        // multiple choice and list with comments question types - just one answer is required and comments are not required
-        $bAnsw = false;
-        foreach($aFieldnamesInfoInv[$q] as $sField)
-        {
-            if(!strstr($sField, 'comment') && isset($_SESSION[$sField]) && trim($_SESSION[$sField])!='')
-            {
-                $bAnsw = true;
-                break;
-            }
-        }
-    }
-    else
-    {
-        // all answers required for all other question types
-        $bAnsw = true;
-        foreach($aFieldnamesInfoInv[$q] as $sField)
-        {
-            if(!isset($_SESSION[$sField]) || trim($_SESSION[$sField])=='')
-            {
-                $bAnsw = false;
-                break;
-            }
-        }
-    }
-    return $bAnsw;
-}
+    $qtype = @$_SESSION['fieldmap'][$aFieldnamesInfoInv[$q][0]]['type'];
 
+    switch ($qtype) {
+        case 'X':
+        return true;
+        case 'M':
+        case 'P':
+        case 'O':
+        // multiple choice and list with comments question types - just one answer is required and comments are not required
+        foreach($aFieldnamesInfoInv[$q] as $sField)
+            if(!strstr($sField, 'comment') && isset($_SESSION[$sField]) && trim($_SESSION[$sField])!='')
+                    return true;
+                return false;
+        case 'L': // List questions only need one answer (including the 'other' option)
+            foreach($aFieldnamesInfoInv[$q] as $sField)
+            {
+                if(isset($_SESSION[$sField]) && trim($_SESSION[$sField])!='')
+                    return true;
+            }
+            return false;
+
+        case 'F':
+        case ':':
+        case ';':
+        case '1':
+        case 'C':
+        case 'B':
+        case 'A':
+        case 'E':
+            // array question types - if filtered only displayed answer are required
+            $qattr = getQuestionAttributes(@$_SESSION['fieldmap'][$aFieldnamesInfoInv[$q][0]]['qid'], $qtype);
+
+            $qcodefilter = @$qattr['array_filter'];
+
+            $sgqfilter = '';
+
+            foreach($_SESSION['fieldarray'] as $field)
+                //look for the multiple choice filter
+                if ($field[2] == $qcodefilter && $field[4] == 'M')
+                {
+                    //filter SQG
+                    $sgqfilter = $field[1];
+                break;
+            }
+
+                //if filter not found checkall answers
+                if ($sgqfilter == '')
+            {
+                // all answers required
+                foreach($aFieldnamesInfoInv[$q] as $sField)
+                    if(!isset($_SESSION[$sField]) || trim($_SESSION[$sField])=='')
+                        return false;
+                    return true;
+        }
+
+            foreach($aFieldnamesInfoInv[$q] as $sField)
+            {
+                //keep only first subquestion code for multiple scale answer
+                $aid = explode('_',$_SESSION['fieldmap'][$sField]['aid']);
+                $aid = explode('#',$aid[0]);
+                //if a checked answer in the multiple choice is not present
+                if ($_SESSION[$sgqfilter.$aid[0]] == 'Y' && $_SESSION[$sField] == '')
+                    return false;
+    }
+            return true;
+        default:
+        // all answers required for all other question types
+        foreach($aFieldnamesInfoInv[$q] as $sField)
+            if(!isset($_SESSION[$sField]) || trim($_SESSION[$sField])=='')
+                    return false;
+                return true;
+            }
+        }
 /**
  * Include Keypad headers
  */
@@ -7849,5 +7911,64 @@ function fixSubquestions()
 
 }
 
+
+function checkgroupfordisplay($gid)
+{
+    //This function checks all the questions in a group to see if they have
+    //conditions, and if the do - to see if the conditions are met.
+    //If none of the questions in the group are set to display, then
+    //the function will return false, to indicate that the whole group
+    //should not display at all.
+    global $dbprefix, $connect;
+    $countQuestionsInThisGroup=0;
+    $countConditionalQuestionsInThisGroup=0;
+    foreach ($_SESSION['fieldarray'] as $ia) //Run through all the questions
+
+    {
+        if ($ia[5] == $gid) //If the question is in the group we are checking:
+
+        {
+            // Check if this question is hidden
+            $qidattributes=getQuestionAttributes($ia[0]);
+            if ($qidattributes!==false && $qidattributes['hidden']==0)
+            {
+                $countQuestionsInThisGroup++;
+                if ($ia[7] == "Y") //This question is conditional
+
+                {
+                    $countConditionalQuestionsInThisGroup++;
+                    $QuestionsWithConditions[]=$ia; //Create an array containing all the conditional questions
+                }
+            }
+        }
+    }
+    if ($countQuestionsInThisGroup===0)
+    {
+        return false;
+    }
+    elseif ($countQuestionsInThisGroup != $countConditionalQuestionsInThisGroup || !isset($QuestionsWithConditions) )
+    {
+        //One of the questions in this group is NOT conditional, therefore
+        //the group MUST be displayed
+        return true;
+    }
+    else
+    {
+        //All of the questions in this group are conditional. Now we must
+        //check every question, to see if the condition for each has been met.
+        //If 1 or more have their conditions met, then the group should
+        //be displayed.
+        foreach ($QuestionsWithConditions as $cc)
+        {
+            if (checkquestionfordisplay($cc[0], $gid) === true)
+            {
+                return true;
+            }
+        }
+        //Since we made it this far, there mustn't have been any conditions met.
+        //Therefore the group should not be displayed.
+        return false;
+    }
+}
 
 // Closing PHP tag intentionally omitted - yes, it is okay
