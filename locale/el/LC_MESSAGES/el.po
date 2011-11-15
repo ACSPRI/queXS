@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-08 12:11+1000\n"
+"POT-Creation-Date: 2011-10-10 11:04+1000\n"
 "PO-Revision-Date: 2011-01-07 23:40+0000\n"
 "Last-Translator: Panos Panayiotopoulos <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-10 00:12+0000\n"
-"X-Generator: Launchpad (build 14123)\n"
+"X-Launchpad-Export-Date: 2011-11-15 03:24+0000\n"
+"X-Generator: Launchpad (build 14291)\n"
 
 #: callhistory.php:56
 msgid "Case History List"
@@ -35,6 +35,7 @@ msgid "Case ID"
 msgstr "Διακριτικό περίπτωσης"
 
 #: callhistory.php:83
+#: index_interface2.php:201
 #: calllist.php:84
 msgid "Outcome"
 msgstr ""
@@ -46,6 +47,119 @@ msgstr "Αποκρινόμενος"
 #: callhistory.php:87
 msgid "No operator"
 msgstr ""
+
+#: rs_answeringmachine_interface2.php:64
+#: rs_answeringmachine.php:64
+msgid "Respondent Selection - Answering machine"
+msgstr "Επιλογή παραλήπτη - Αυτόματος τηλεφωνητής"
+
+#: rs_answeringmachine_interface2.php:78
+#: rs_answeringmachine.php:78
+msgid "Do not leave a message, please hang up"
+msgstr "Μην αφήσετε μήνυμα, παρακαλώ κλείστε το τηλέφωνο"
+
+#: rs_answeringmachine_interface2.php:81
+#: rs_answeringmachine.php:81
+msgid "End call with outcome: Business answering machine"
+msgstr "Τέλος κλήσης με αποτέλεσμα: Επαγγελματικός αυτόματος τηλεφωνητής"
+
+#: rs_answeringmachine_interface2.php:86
+#: rs_answeringmachine.php:86
+msgid "End call with outcome: Answering machine Message left"
+msgstr "Τέλος κλήσης με αποτέλεσμα: Αυτόματος τηλεφωνητής Αφέθηκε μήνυμα"
+
+#: rs_answeringmachine_interface2.php:90
+#: rs_answeringmachine.php:90
+msgid "End call with outcome: Answering machine No message left"
+msgstr "Τέλος κλήσης με αποτέλεσμα: Αυτόματος τηλεφωνητής Δεν αφέθηκε μήνυμα"
+
+#: rs_answeringmachine_interface2.php:91
+#: rs_business_interface2.php:62
+#: rs_callback_interface2.php:89
+#: rs_project_intro.php:85
+#: rs_answeringmachine.php:91
+msgid "Go Back"
+msgstr "Επιστροφή"
+
+#: rs_business_interface2.php:55
+msgid "Respondent Selection - Business answers"
+msgstr ""
+
+#: rs_business_interface2.php:59
+msgid "Sorry to bother you, I have called the wrong number"
+msgstr ""
+
+#: rs_business_interface2.php:61
+msgid "End call with outcome: Business number"
+msgstr ""
+
+#: index_interface2.php:195
+#: waitnextcase_interface2.php:49
+#: index.php:130
+msgid "queXS"
+msgstr "queXS"
+
+#: index_interface2.php:202
+#: appointment.php:119
+#: index.php:137
+msgid "Appointment"
+msgstr "Ραντεβού"
+
+#: index_interface2.php:203
+#: waitnextcase_interface2.php:55
+msgid "End work"
+msgstr "Τέλος εργασίας"
+
+#: index_interface2.php:282
+#: index.php:141
+msgid "Arrow for expanding or contracting"
+msgstr ""
+
+#: index_interface2.php:294
+#: index.php:187
+msgid "Notes"
+msgstr "Σημειώσεις"
+
+#: index_interface2.php:302
+#: index.php:205
+msgid "Contact details"
+msgstr ""
+
+#: index_interface2.php:311
+#: index.php:214
+msgid "Call history"
+msgstr "Ιστορικό κλήσεων"
+
+#: index_interface2.php:320
+#: index.php:223
+msgid "Shifts"
+msgstr "Βάρδιες"
+
+#: index_interface2.php:329
+#: index.php:232
+msgid "Appointments"
+msgstr "Ραντεβού"
+
+#: index_interface2.php:338
+#: index.php:241
+msgid "Performance"
+msgstr "Απόδοση"
+
+#: index_interface2.php:346
+#: index.php:249
+msgid "Work history"
+msgstr "Ιστορικό εργασίας"
+
+#: index_interface2.php:354
+#: project_info.php:61
+#: index.php:257
+msgid "Project information"
+msgstr ""
+
+#: index_interface2.php:363
+#: index.php:266
+msgid "Info"
+msgstr "Πληροφορίες"
 
 #: record.php:55
 msgid "Stop REC"
@@ -71,9 +185,7 @@ msgid "Begin the manual recording now..."
 msgstr "Εκκίνηση της χειροκίνητης εγγραφής τώρα"
 
 #: record.php:78
-#: index.php:134
-#: call.php:197
-#: call.php:215
+#: index.php:140
 msgid "Start REC"
 msgstr "Έναρξη εγγραφής"
 
@@ -85,23 +197,35 @@ msgstr "Διακοπή εγγραφής"
 msgid "Stop the manual recording now..."
 msgstr "Διακοπή της χειροκίνητης εγγραφής τώρα"
 
+#: rs_callback_interface2.php:66
+msgid "Respondent Selection - Call back"
+msgstr "Επιλογή παραλήπτη - Κλήση"
+
+#: rs_callback_interface2.php:80
+msgid "You are: "
+msgstr "Είσαι ο/η: "
+
+#: rs_callback_interface2.php:80
+#, php-format
+msgid "% complete"
+msgstr ""
+
+#: rs_callback_interface2.php:87
+msgid "Yes - Continue where we left off"
+msgstr "Ναι - Συνέχεια από το σημείο που το αφήσαμε"
+
+#: rs_callback_interface2.php:88
+#: rs_project_intro.php:81
+msgid "End call with outcome: Refusal by respondent"
+msgstr "Τέλος κλήσης με αποτέλεσμα: Άρνηση από τον αποκρινόμενο"
+
 #: rs_project_intro.php:59
 msgid "Respondent Selection - Project Introduction"
 msgstr "Επιλογή αποκρινόμενου - Παρουσίαση εργασίας"
 
 #: rs_project_intro.php:79
-#: rs_intro.php:92
-#: rs_intro.php:98
-#: rs_intro.php:106
-#: rs_intro.php:112
 msgid "Yes - Continue"
 msgstr "Ναι - Συνέχεια"
-
-#: rs_project_intro.php:81
-#: rs_callback.php:88
-#: rs_intro.php:122
-msgid "End call with outcome: Refusal by respondent"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Άρνηση από τον αποκρινόμενο"
 
 #: rs_project_intro.php:82
 msgid ""
@@ -112,17 +236,10 @@ msgstr ""
 "σε αυτό τον αριθμό)"
 
 #: rs_project_intro.php:83
-#: rs_intro.php:125
 msgid ""
 "End call with outcome: Out of sample (already completed in another mode)"
 msgstr ""
 "Τέλος κλήσης με αποτέλεσμα: Εκτός δείγματος (ήδη ολοκληρώθηκε σε άλλο τύπο)"
-
-#: rs_project_intro.php:85
-#: rs_answeringmachine.php:91
-#: rs_callback.php:89
-msgid "Go Back"
-msgstr "Επιστροφή"
 
 #: appointment.php:69
 msgid "Appointment error"
@@ -138,11 +255,6 @@ msgstr ""
 #: appointment.php:107
 msgid "Appointment made"
 msgstr "Συνάντηση πραγματοποιήθηκε"
-
-#: appointment.php:119
-#: index.php:131
-msgid "Appointment"
-msgstr "Ραντεβού"
 
 #: appointment.php:122
 msgid "Select a respondent"
@@ -218,97 +330,40 @@ msgstr "Λειτουργός"
 msgid "No case"
 msgstr "Καμία περίπτωση"
 
-#: project_info.php:61
-#: index.php:251
-msgid "Project information"
-msgstr ""
-
-#: index.php:124
-msgid "queXS"
-msgstr "queXS"
-
-#: index.php:130
-#: shifts.php:82
-#: shifts.php:103
-msgid "End"
-msgstr "Λήξη"
-
-#: index.php:132
-msgid "Call/Hangup"
-msgstr "Κλήση/Απόρριψη"
-
-#: index.php:133
-msgid "Supervisor"
-msgstr "Επιβλέπων"
-
-#: index.php:135
-msgid "Arrow for expanding or contracting"
+#: waitnextcase_interface2.php:54
+msgid "Get a new case"
 msgstr ""
 
 #: index.php:136
+msgid "End"
+msgstr "Λήξη"
+
+#: index.php:138
+msgid "Call/Hangup"
+msgstr "Κλήση/Απόρριψη"
+
+#: index.php:139
+msgid "Supervisor"
+msgstr "Επιβλέπων"
+
+#: index.php:142
 msgid "Restart"
 msgstr ""
 
-#: index.php:181
-msgid "Notes"
-msgstr "Σημειώσεις"
-
-#: index.php:189
+#: index.php:195
 msgid "Availability"
 msgstr ""
-
-#: index.php:199
-msgid "Contact details"
-msgstr ""
-
-#: index.php:208
-msgid "Call history"
-msgstr "Ιστορικό κλήσεων"
-
-#: index.php:217
-msgid "Shifts"
-msgstr "Βάρδιες"
-
-#: index.php:226
-msgid "Appointments"
-msgstr "Ραντεβού"
-
-#: index.php:235
-msgid "Performance"
-msgstr "Απόδοση"
-
-#: index.php:243
-msgid "Work history"
-msgstr "Ιστορικό εργασίας"
-
-#: index.php:260
-msgid "Info"
-msgstr "Πληροφορίες"
-
-#: rs_answeringmachine.php:64
-msgid "Respondent Selection - Answering machine"
-msgstr "Επιλογή παραλήπτη - Αυτόματος τηλεφωνητής"
-
-#: rs_answeringmachine.php:78
-msgid "Do not leave a message, please hang up"
-msgstr "Μην αφήσετε μήνυμα, παρακαλώ κλείστε το τηλέφωνο"
-
-#: rs_answeringmachine.php:81
-msgid "End call with outcome: Business answering machine"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Επαγγελματικός αυτόματος τηλεφωνητής"
-
-#: rs_answeringmachine.php:86
-msgid "End call with outcome: Answering machine Message left"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Αυτόματος τηλεφωνητής Αφέθηκε μήνυμα"
-
-#: rs_answeringmachine.php:90
-msgid "End call with outcome: Answering machine No message left"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Αυτόματος τηλεφωνητής Δεν αφέθηκε μήνυμα"
 
 #: info.php:56
 msgid "Information"
 msgstr "Πληροφορίες"
 
+#: call_interface2.php:181
+#: call_interface2.php:210
+#: call_interface2.php:242
+#: call_interface2.php:246
+#: call_interface2.php:264
+#: call_interface2.php:295
 #: call.php:182
 #: call.php:202
 #: call.php:218
@@ -316,19 +371,16 @@ msgstr "Πληροφορίες"
 msgid "Call"
 msgstr "Κλήση"
 
+#: call_interface2.php:302
 #: call.php:256
 msgid "Not on a call"
 msgstr "Όχι σε κλήση"
 
-#: call.php:267
-#: call.php:269
-#: call.php:385
-#: call.php:390
-#: call.php:406
-#: call.php:412
-msgid "End work"
-msgstr "Τέλος εργασίας"
-
+#: call_interface2.php:314
+#: call_interface2.php:430
+#: call_interface2.php:435
+#: call_interface2.php:451
+#: call_interface2.php:457
 #: call.php:268
 #: call.php:384
 #: call.php:389
@@ -337,14 +389,18 @@ msgstr "Τέλος εργασίας"
 msgid "End case"
 msgstr "Τερματισμός περίπτωσης"
 
+#: call_interface2.php:339
 #: call.php:293
 msgid "Press the call button to dial the number for this appointment:"
 msgstr "Πίεσε το πλήκτρο κλήσης για το σχηματισμό του αριθμού της περίπτωσης"
 
+#: call_interface2.php:342
 #: call.php:296
 msgid "Number to call:"
 msgstr "Αριθμός για κλήση:"
 
+#: call_interface2.php:346
+#: call_interface2.php:417
 #: call.php:300
 #: call.php:371
 msgid ""
@@ -354,21 +410,41 @@ msgstr ""
 "Η VoIP extension δεν είναι ενεργοποιημένη. Παρακαλώ κλείστε το παράθυρο και "
 "ενεργοποιήστε κάνοντας άπαξ κλικ στο κόκκινο κουμπί που γράφει \"VoIP Off\""
 
+#: call_interface2.php:407
 #: call.php:361
 msgid "Select phone number to dial:"
 msgstr "Επιλέξτε αριθμό τηλεφώνου για κλήση:"
 
+#: call_interface2.php:422
+#: call_interface2.php:456
 #: call.php:376
 #: call.php:410
 msgid "The last call completed this call attempt"
 msgstr "Η προηγούμενη κλήση ολοκλήρωσε την προσπάθεια αυτής της κλήσης."
 
+#: call_interface2.php:426
+#: call_interface2.php:449
 #: call.php:380
 #: call.php:403
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr ""
 "Πληκτρολογήστε έναν λόγο για αυτό το πόρισμα πριν την ολοκλήρωση της "
 "προσπάθειας"
+
+#: call_interface2.php:467
+#: call.php:439
+msgid "Requires coding"
+msgstr "Απαίτηση κωδικοποίησης"
+
+#: call_interface2.php:470
+#: call.php:442
+msgid "Assign outcome"
+msgstr "Ανάθεση πορίσματος"
+
+#: call_interface2.php:474
+#: call.php:446
+msgid "Error: Close window"
+msgstr "Σφάλμα: Κλείστε το παράθυρο."
 
 #: call.php:418
 msgid "Requesting call"
@@ -397,35 +473,6 @@ msgstr "Απαντήθηκε"
 msgid "Not Answered"
 msgstr "Δεν απαντήθηκε"
 
-#: call.php:439
-msgid "Requires coding"
-msgstr "Απαίτηση κωδικοποίησης"
-
-#: call.php:442
-msgid "Assign outcome"
-msgstr "Ανάθεση πορίσματος"
-
-#: call.php:446
-msgid "Error: Close window"
-msgstr "Σφάλμα: Κλείστε το παράθυρο."
-
-#: rs_callback.php:66
-msgid "Respondent Selection - Call back"
-msgstr "Επιλογή παραλήπτη - Κλήση"
-
-#: rs_callback.php:80
-msgid "You are: "
-msgstr "Είσαι ο/η: "
-
-#: rs_callback.php:80
-#, php-format
-msgid "% complete"
-msgstr ""
-
-#: rs_callback.php:87
-msgid "Yes - Continue where we left off"
-msgstr "Ναι - Συνέχεια από το σημείο που το αφήσαμε"
-
 #: endwork.php:45
 msgid "End of work"
 msgstr "Τέλος εργασίας"
@@ -442,37 +489,58 @@ msgstr "Η εργασία τελείωσε."
 msgid "Go back to work"
 msgstr "Επιστροφή στην εργασία"
 
+#: status_interface2.php:70
+msgid "Status"
+msgstr ""
+
+#: status_interface2.php:79
+msgid "Name"
+msgstr ""
+
+#: status_interface2.php:225
+#: status_interface2.php:228
+msgid "No more numbers to call"
+msgstr ""
+
 #: rs_intro.php:65
+#: rs_intro_interface2.php:65
 msgid "Respondent Selection - Introduction"
 msgstr ""
 
 #: rs_intro.php:117
+#: rs_intro_interface2.php:117
 msgid "Business number"
 msgstr ""
 
 #: rs_intro.php:118
+#: rs_intro_interface2.php:118
 msgid "Answering machine"
 msgstr "Τηλεφωνητής"
 
 #: rs_intro.php:119
+#: rs_intro_interface2.php:119
 msgid "End call with outcome: No answer (ring out or busy) "
 msgstr ""
 
 #: rs_intro.php:120
+#: rs_intro_interface2.php:120
 msgid "End call with outcome: Accidental hang up"
 msgstr ""
 
 #: rs_intro.php:121
+#: rs_intro_interface2.php:121
 msgid "End call with outcome: Refusal by unknown person"
 msgstr ""
 
 #: rs_intro.php:123
+#: rs_intro_interface2.php:123
 msgid ""
 "End call with outcome: No eligible respondent (person never available on "
 "this number)"
 msgstr ""
 
 #: rs_intro.php:124
+#: rs_intro_interface2.php:124
 msgid ""
 "End call with outcome: Non contact (person not currently available on this "
 "number: no appointment made)"
@@ -496,8 +564,21 @@ msgid "No future shifts scheduled"
 msgstr ""
 
 #: shifts.php:103
+#: nocaseavailable.php:115
 msgid "Questionnaire"
 msgstr "Ερωτηματολόγιο"
+
+#: rs_project_end_interface2.php:62
+msgid "Respondent Selection - Project end"
+msgstr ""
+
+#: rs_project_end_interface2.php:80
+msgid "Call automatically ended with outcome: Complete - End case"
+msgstr ""
+
+#: rs_project_end_interface2.php:85
+msgid "End call with outcome: Complete"
+msgstr ""
 
 #: contactdetails.php:90
 #: contactdetails.php:128
@@ -673,52 +754,40 @@ msgstr ""
 msgid "This project"
 msgstr ""
 
-#: status.php:68
-msgid "Status"
-msgstr ""
-
-#: status.php:86
+#: status.php:95
 msgid "VoIP On"
 msgstr ""
 
-#: status.php:88
+#: status.php:97
 msgid "VoIP Off"
 msgstr ""
 
-#: status.php:91
+#: status.php:100
 msgid "No VoIP"
 msgstr ""
 
-#: status.php:95
+#: status.php:104
 msgid "No call"
 msgstr ""
 
-#: status.php:99
+#: status.php:108
 msgid "To be coded"
 msgstr ""
 
-#: status.php:103
+#: status.php:112
 msgid "Requesting"
 msgstr ""
 
-#: status.php:119
+#: status.php:128
 msgid "APPT"
 msgstr ""
 
-#: status.php:120
+#: status.php:129
 msgid "MISSED"
 msgstr ""
 
-#: rs_project_end.php:62
-msgid "Respondent Selection - Project end"
-msgstr ""
-
-#: rs_project_end.php:80
+#: rs_project_end.php:88
 msgid "Call automatically ended with outcome: Complete"
-msgstr ""
-
-#: rs_project_end.php:85
-msgid "End call with outcome: Complete"
 msgstr ""
 
 #: nocallavailable.php:51
@@ -733,23 +802,12 @@ msgstr ""
 msgid "to display call script"
 msgstr ""
 
-#: rs_business.php:55
-msgid "Respondent Selection - Business answers"
-msgstr ""
-
-#: rs_business.php:59
-msgid "Sorry to bother you, I have called the wrong number"
-msgstr ""
-
-#: rs_business.php:61
-msgid "End call with outcome: Business number"
-msgstr ""
-
 #: rs_quota_end.php:61
 msgid "Respondent Selection - Project Quota End"
 msgstr ""
 
-#: rs_quota_end.php:70
+#: rs_quota_end.php:72
+#: rs_quota_end.php:78
 msgid "End call with outcome: Quota filled"
 msgstr ""
 
@@ -758,6 +816,7 @@ msgid "Appointment List"
 msgstr ""
 
 #: appointmentlist.php:70
+#: admin/displayappointments.php:210
 msgid "Not yet called"
 msgstr ""
 
@@ -869,25 +928,18 @@ msgstr ""
 
 #: admin/clientquestionnaire.php:150
 #: admin/clientquestionnaire.php:271
-#: admin/index.php:89
 msgid "Assign clients to questionnaires"
 msgstr ""
 
 #: admin/quotareport.php:110
-#: admin/index.php:80
 msgid "Quota report"
 msgstr ""
 
 #: admin/quotareport.php:112
-#: admin/quota.php:110
-#: admin/assignsample.php:101
-#: admin/questionnaireavailability.php:94
 msgid "Select a questionnaire from the list below"
 msgstr ""
 
 #: admin/quotareport.php:119
-#: admin/quota.php:123
-#: admin/samplesearch.php:84
 msgid "Select a sample from the list below"
 msgstr ""
 
@@ -1060,8 +1112,6 @@ msgstr ""
 
 #: admin/displayappointments.php:210
 #: admin/displayappointments.php:223
-#: admin/shiftreport.php:97
-#: admin/shiftreport.php:105
 msgid "Edit"
 msgstr ""
 
@@ -1108,10 +1158,12 @@ msgid "Stop calling this sample when:"
 msgstr ""
 
 #: admin/quota.php:152
+#: admin/quotarow.php:177
 msgid "for"
 msgstr ""
 
 #: admin/quota.php:152
+#: admin/quotarow.php:177
 msgid "completions"
 msgstr ""
 
@@ -1124,6 +1176,7 @@ msgid "Quota not yet reached"
 msgstr ""
 
 #: admin/quota.php:159
+#: admin/quotarow.php:185
 msgid "Current completions: "
 msgstr ""
 
@@ -1136,26 +1189,32 @@ msgid "Enter the details for creating the quota:"
 msgstr ""
 
 #: admin/quota.php:191
+#: admin/quotarow.php:259
 msgid "Pre defined values for this question:"
 msgstr ""
 
 #: admin/quota.php:204
+#: admin/quotarow.php:272
 msgid "No labels defined for this question"
 msgstr ""
 
 #: admin/quota.php:206
+#: admin/quotarow.php:274
 msgid "Code value"
 msgstr ""
 
 #: admin/quota.php:212
+#: admin/quotarow.php:284
 msgid "The code value to compare"
 msgstr ""
 
 #: admin/quota.php:213
+#: admin/quotarow.php:285
 msgid "The type of comparison"
 msgstr ""
 
 #: admin/quota.php:214
+#: admin/quotarow.php:286
 msgid "The number of completions to stop calling at"
 msgstr ""
 
@@ -1320,6 +1379,7 @@ msgid "Set values in questionnaire to pre fill"
 msgstr ""
 
 #: admin/index.php:64
+#: admin/quotarow.php:119
 msgid "Quota row management"
 msgstr ""
 
@@ -1374,6 +1434,7 @@ msgid "Data output"
 msgstr ""
 
 #: admin/index.php:85
+#: admin/outcomes.php:259
 msgid "Operator performance"
 msgstr ""
 
@@ -1745,9 +1806,6 @@ msgid ""
 msgstr ""
 
 #: admin/addshift.php:151
-#: admin/availability.php:100
-#: admin/shifttemplate.php:93
-#: admin/callrestrict.php:93
 msgid ""
 "Your database does not have timezones installed, please see here for details"
 msgstr ""
@@ -1757,9 +1815,6 @@ msgid "Add shifts in your Time Zone"
 msgstr ""
 
 #: admin/addshift.php:235
-#: admin/availability.php:136
-#: admin/shifttemplate.php:118
-#: admin/callrestrict.php:118
 msgid "Day"
 msgstr ""
 
@@ -1772,85 +1827,95 @@ msgid "Submit changes"
 msgstr ""
 
 #: admin/quotarow.php:147
+#: admin/quotarow.php:153
 msgid "Copied quotas"
 msgstr ""
 
-#: admin/quotarow.php:150
+#: admin/quotarow.php:156
 msgid "Current row quotas (click to delete)"
 msgstr ""
 
-#: admin/quotarow.php:162
+#: admin/quotarow.php:168
 msgid "Currently no row quotas"
 msgstr ""
 
-#: admin/quotarow.php:169
+#: admin/quotarow.php:175
 msgid "Replicate: Where"
 msgstr ""
 
-#: admin/quotarow.php:169
-#: admin/quotarow.php:171
+#: admin/quotarow.php:175
+#: admin/quotarow.php:177
 msgid "like"
 msgstr ""
 
-#: admin/quotarow.php:171
+#: admin/quotarow.php:177
 msgid "Stop calling"
 msgstr ""
 
-#: admin/quotarow.php:171
+#: admin/quotarow.php:177
 msgid "rows from this sample when:"
 msgstr ""
 
-#: admin/quotarow.php:174
+#: admin/quotarow.php:180
 msgid "Row quota reached (Closed)"
 msgstr ""
 
-#: admin/quotarow.php:176
+#: admin/quotarow.php:182
 msgid "Row quota not yet reached (Open)"
 msgstr ""
 
-#: admin/quotarow.php:196
+#: admin/quotarow.php:202
 msgid "Copy quotas for this sample to (No error/duplicate checking): "
 msgstr ""
 
-#: admin/quotarow.php:198
+#: admin/quotarow.php:204
 msgid "Copy"
 msgstr ""
 
-#: admin/quotarow.php:204
+#: admin/quotarow.php:206
+msgid ""
+"Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
+msgstr ""
+
+#: admin/quotarow.php:208
+msgid "Copy adjustments"
+msgstr ""
+
+#: admin/quotarow.php:214
 msgid "Select a question for the row quota"
 msgstr ""
 
-#: admin/quotarow.php:226
+#: admin/quotarow.php:236
 msgid "No question (Replicate)"
 msgstr ""
 
-#: admin/quotarow.php:236
+#: admin/quotarow.php:246
 msgid "Select the sample variable to exclude"
 msgstr ""
 
-#: admin/quotarow.php:248
+#: admin/quotarow.php:258
 msgid "Enter the details for creating the row quota:"
 msgstr ""
 
-#: admin/quotarow.php:270
+#: admin/quotarow.php:280
 msgid "Describe this quota"
 msgstr ""
 
-#: admin/quotarow.php:271
+#: admin/quotarow.php:281
 msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
 msgstr ""
 
-#: admin/quotarow.php:272
+#: admin/quotarow.php:282
 msgid ""
 "Should the priority be automatically updated based on the number of "
 "completions in this quota?"
 msgstr ""
 
-#: admin/quotarow.php:282
+#: admin/quotarow.php:292
 msgid "Exclude from the sample where the value is like"
 msgstr ""
 
-#: admin/quotarow.php:300
+#: admin/quotarow.php:310
 msgid "Add row quota"
 msgstr ""
 
@@ -1885,7 +1950,6 @@ msgid "tool"
 msgstr ""
 
 #: admin/operators.php:188
-#: admin/clients.php:106
 msgid ""
 "Use this form to enter the username of a user based on your directory "
 "security system. For example, if you have secured the base directory of "
@@ -1938,7 +2002,6 @@ msgid "Is the operator a refusal converter?"
 msgstr ""
 
 #: admin/operators.php:205
-#: admin/clients.php:115
 msgid "Add user"
 msgstr ""
 
@@ -1963,6 +2026,7 @@ msgid "Error: Failed to insert questionnaire"
 msgstr ""
 
 #: admin/new.php:116
+#: admin/questionnairelist.php:164
 msgid "Name for questionnaire:"
 msgstr ""
 
@@ -1988,38 +2052,47 @@ msgid "Use basic respondent selection text (below)"
 msgstr ""
 
 #: admin/new.php:179
+#: admin/questionnairelist.php:165
 msgid "Restrict appointments to shifts?"
 msgstr ""
 
 #: admin/new.php:180
+#: admin/questionnairelist.php:166
 msgid "Restrict work to shifts?"
 msgstr ""
 
 #: admin/new.php:181
+#: admin/questionnairelist.php:167
 msgid "Questionnaire for testing only?"
 msgstr ""
 
 #: admin/new.php:183
+#: admin/questionnairelist.php:169
 msgid "Respondent selection introduction:"
 msgstr ""
 
 #: admin/new.php:184
+#: admin/questionnairelist.php:170
 msgid "Respondent selection project introduction:"
 msgstr ""
 
 #: admin/new.php:185
+#: admin/questionnairelist.php:171
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr ""
 
 #: admin/new.php:186
+#: admin/questionnairelist.php:172
 msgid "Message to leave on an answering machine:"
 msgstr ""
 
 #: admin/new.php:188
+#: admin/questionnairelist.php:174
 msgid "Project end text (thank you screen):"
 msgstr ""
 
 #: admin/new.php:189
+#: admin/questionnairelist.php:175
 msgid "Project information for interviewers/operators:"
 msgstr ""
 
@@ -2355,6 +2428,7 @@ msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
 #: admin/dataoutput.php:205
+#: admin/samplecallattempts.php:90
 msgid "Please select a sample"
 msgstr ""
 
@@ -2397,10 +2471,12 @@ msgid "*nix script file"
 msgstr ""
 
 #: admin/operatorlist.php:169
+#: admin/questionnairelist.php:189
 msgid "Enable"
 msgstr ""
 
 #: admin/operatorlist.php:171
+#: admin/questionnairelist.php:191
 msgid "Disable"
 msgstr ""
 
@@ -2421,6 +2497,7 @@ msgid "Username"
 msgstr ""
 
 #: admin/operatorlist.php:188
+#: admin/questionnairelist.php:184
 msgid "Enable/Disable"
 msgstr ""
 
@@ -2699,10 +2776,6 @@ msgstr ""
 
 #: functions/functions.import.php:127
 msgid "Import?"
-msgstr ""
-
-#: functions/functions.import.php:127
-msgid "Name"
 msgstr ""
 
 #: functions/functions.import.php:127
