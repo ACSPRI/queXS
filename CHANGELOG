@@ -1,3 +1,10 @@
+queXS 1.5.2 - Changes since 1.5.1:
+
+New Feature: Add a response via XML RPC. Using this revision of queXS and queXF 1.13.0 - you can export a paper form from queXS and once paper forms are scanned and verified, the data can be sent from queXF back to queXS using XMLRPC (can be on different servers)
+Fixed Bug: Timezones entered from list instead of manually
+Updates: Limesurvey to 1.91+ Revision 11354 
+Translations updated (thanks!)
+
 queXS 1.5.1 - Changes since 1.5.0:
 
 New features:
