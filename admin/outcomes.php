@@ -122,7 +122,7 @@ if ($questionnaire_id != false)
 	print "</table>";
 	
 	
-	$sql = "SELECT o.description as des, o.outcome_id, count( c.case_id ) as count, ROUND((count(c.case_id) / (SELECT count(case_id) FROM `case` WHERE questionnaire_id = '$questionnaire_id')) * 100,2) as perc
+	$sql = "SELECT CONCAT('<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;outcome_id=', o.outcome_id, '\'>', o.description, '</a>') as des, o.outcome_id, count( c.case_id ) as count, ROUND((count(c.case_id) / (SELECT count(case_id) FROM `case` WHERE questionnaire_id = '$questionnaire_id')) * 100,2) as perc
 		FROM `case` AS c, `outcome` AS o
 		WHERE c.questionnaire_id = '$questionnaire_id'
 		AND c.current_outcome_id = o.outcome_id
