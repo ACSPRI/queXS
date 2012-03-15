@@ -74,7 +74,7 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.display.php");
 
-if (isset($_GET['key']))
+if (isset($_GET['key']) || isset($_GET['sample']))
 {
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$sample_import_id = bigintval($_GET['sample_import_id']);
@@ -85,7 +85,10 @@ if (isset($_GET['key']))
 
 	$svars = $db->GetAll($sql);
 
-	$fn = "key_all_$questionnaire_id" . "_" . $sample_import_id .".csv";
+	$fn = "key_all_";
+	if (isset($_GET['sample'])) $fn = "sample_all_";
+
+	$fn .= $questionnaire_id . "_" . $sample_import_id .".csv";
 
 	header("Content-Type: text/csv");
 	header("Content-Disposition: attachment; filename=$fn");
@@ -99,9 +102,16 @@ if (isset($_GET['key']))
 	{
 		echo("," . $s['value']);
 	}
+	if (isset($_GET['sample']))
+	{
+		echo(",Outcome,AAPOR");
+	}
+
 	echo("\n");
 
 	$sql = "SELECT c.case_id ";
+
+	if (isset($_GET['sample'])) $sql .= ", o.description, o.aapor_id ";
 
 	$i = 0;
 	foreach ($svars as $s)
@@ -110,8 +120,14 @@ if (isset($_GET['key']))
 		$i++;
 	}
 
-	$sql .= " FROM sample
-		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id') ";
+	$sql .= " FROM sample ";
+
+	//left join if getting whole sample file
+	if (isset($_GET['sample'])) $sql .= "LEFT ";
+
+	$sql .= "JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id' AND c.sample_id = sample.sample_id) ";
+
+	if (isset($_GET['sample'])) $sql .= " LEFT JOIN `outcome` as o ON (o.outcome_id = c.current_outcome_id) ";
 
 	$i = 0;
 	foreach ($svars as $s)
@@ -120,8 +136,7 @@ if (isset($_GET['key']))
 		$i++;
 	}
 
-	$sql .= " WHERE sample.import_id = '$sample_import_id'
-		AND c.sample_id = sample.sample_id";
+	$sql .= " WHERE sample.import_id = '$sample_import_id'";
 
 	$list = $db->GetAll($sql);
 
@@ -136,6 +151,10 @@ if (isset($_GET['key']))
 			{
 				echo "," . str_replace(","," ",$l["v$i"]);
 				$i++;
+			}
+			if (isset($_GET['sample']))
+			{
+				echo "," . str_replace(","," ",$l['description']) . "," . $l['aapor_id'];
 			}
 			echo  "\n";
 		}
@@ -221,6 +240,9 @@ if ($questionnaire_id)
 		display_chooser($db->GetAll($sql),"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
 		//download complete key file
 		print "<p><a href='?key=key&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . T_("Download complete key file") . "</a></p>";
+
+		//download complete sample file with outcomes
+		print "<p><a href='?sample=sample&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . T_("Download complete sample file with current outcomes") . "</a></p>";
 
 
 	}
