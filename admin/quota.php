@@ -177,11 +177,13 @@ if ($questionnaire_id != false)
 		$sgqa = false;
 		if (isset($_GET['sgqa'])) 	$sgqa = $_GET['sgqa'];
 	
-		$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) AS value, CONCAT(q.question, ': ', IFNULL(a.answer,'')) as description, CASE WHEN CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
-			FROM `" . LIME_PREFIX . "questions` AS q
-			LEFT JOIN `" . LIME_PREFIX . "answers` AS a ON ( a.qid = q.qid )
-			WHERE q.sid = '$lime_sid'";
-	
+		$sql = "SELECT CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) as value, CASE WHEN lq.parent_qid = 0 THEN lq.question ELSE CONCAT(lq2.question, ': ', lq.question) END as description, CASE WHEN CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
+			FROM `" . LIME_PREFIX . "questions` AS lq
+			LEFT JOIN `" . LIME_PREFIX . "questions` AS lq2 ON ( lq2.qid = lq.parent_qid )
+			JOIN `" . LIME_PREFIX . "groups` as g ON (g.gid = lq.gid)
+			WHERE lq.sid = '$lime_sid'
+			ORDER BY g.group_order ASC, lq.question_order ASC";
+			
 	
 		display_chooser($db->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
 	
@@ -193,10 +195,9 @@ if ($questionnaire_id != false)
 			$qid = explode("X", $sgqa);
 			$qid = $qid[2];
 
-			$sql = "SELECT l.code,l.title
-				FROM `" . LIME_PREFIX . "labels` as l, `" . LIME_PREFIX . "questions` as q
-				WHERE q.qid = '$qid'
-				AND l.lid = q.lid";
+			$sql = "SELECT l.code,l.answer as title
+				FROM `" . LIME_PREFIX . "answers` as l 
+				WHERE l.qid = '$qid'";
 
 			$rs = $db->GetAll($sql);
 
