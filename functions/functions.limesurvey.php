@@ -107,6 +107,38 @@ function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison
 }
 
 /**
+ * Return whether the given case matches the replicate sample only quota
+ * 
+ * @param int $lime_sid The Limesurvey survey id
+ * @param int $case_id The case id
+ * @param string $val The sample value to compare
+ * @param string $var The sample variable to compare
+ * 
+ * @return bool|int False if failed, otherwise 1 if matched, 0 if doesn't
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2012-04-30
+ */
+function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var)
+{
+	global $db;
+	
+	$sql = "SELECT count(*) as c
+		FROM " . LIME_PREFIX . "survey_$lime_sid as s
+		JOIN `case` as c ON (c.case_id = '$case_id')
+		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
+		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
+		WHERE s.token = c.case_id";
+
+	$rs = $db->GetRow($sql);
+
+	if (isset($rs) && !empty($rs))
+		return $rs['c'];
+	
+	return false;
+
+}
+
+/**
  * Return the number of completions for a given
  * questionnaire, where the given question has
  * the given value

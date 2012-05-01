@@ -1509,7 +1509,10 @@ function update_row_quota($questionnaire_id,$case_id = false)
 			//the quota criteria, and if so, increment the quota completions counter
 			if ($case_id != false)
 			{
-				$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison']);
+				if ($r['lime_sgqa'] == -2)
+					$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var']);
+				else
+					$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison']);
 
 				if ($match == 1)
 				{
@@ -1527,7 +1530,10 @@ function update_row_quota($questionnaire_id,$case_id = false)
 			}
 			else
 			{
-				$completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
+				if ($r['lime_sgqa'] == -2)
+					$completions = limesurvey_quota_replicate_completions($r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['exclude_val'],$r['exclude_var']);
+				else
+					$completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
 				$updatequota = true;
 			}
 

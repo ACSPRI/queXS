@@ -85,9 +85,16 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['va
 	$sample_import_id = bigintval($_GET['sample_import_id']);
 	if ($_GET['sgqa'] != -1)
 	{
-		$sgqa = $db->quote($_GET['sgqa']);
-		$comparison = $db->quote($_GET['comparison']);
-		$value = $db->quote($_GET['value']);
+		if ($_GET['sgqa'] != -2)
+		{
+			$comparison = $db->quote($_GET['comparison']);
+			$value = $db->quote($_GET['value']);
+			$sgqa = $db->quote($_GET['sgqa']);
+		}
+		else
+		{
+			$sgqa = -2;
+		}
 		$completions = $db->quote($_GET['completions']);
 	}
 	$exclude_val = $db->quote($_GET['exclude_val']);
@@ -173,6 +180,9 @@ if ($questionnaire_id != false)
 			{
 				if ($v['lime_sgqa'] == -1)
 					print "<div><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;questionnaire_sample_quota_row_id={$v['questionnaire_sample_quota_row_id']}'>" . T_("Replicate: Where") . " " . $v['exclude_var'] . " " . T_("like") . " " . $v['exclude_val'] . "</a> - ";
+				else if ($v['lime_sgqa'] == -2)
+					print "<div><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;questionnaire_sample_quota_row_id={$v['questionnaire_sample_quota_row_id']}'>" . T_("Sample only. Stop calling where") . " " . $v['exclude_var'] . " " . T_("like") . " " . $v['exclude_val'] .  " " . T_("rows from this sample when:") . " {$v['completions']} " . T_("completions") .  "</a> - ";
+
 				else
 					print "<div><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;questionnaire_sample_quota_row_id={$v['questionnaire_sample_quota_row_id']}'>" . T_("Stop calling") . " " . $v['exclude_var'] . " " . T_("like") . " " . $v['exclude_val'] .  " " . T_("rows from this sample when:") . " {$v['lime_sgqa']} {$v['comparison']} {$v['value']} " . T_("for") .  ": {$v['completions']} " . T_("completions") ."</a> - ";
 			
@@ -236,6 +246,10 @@ if ($questionnaire_id != false)
 		$selected = "";
 		if ($sgqa == -1) $selected = "selected='selected'";
 		array_unshift($rs,array("value" => -1, "description" => T_("No question (Replicate)"), "selected" => $selected));
+		
+		$selected = "";
+		if ($sgqa == -2) $selected = "selected='selected'";
+		array_unshift($rs,array("value" => -2, "description" => T_("Sample only quota"), "selected" => $selected));
 
 		display_chooser($rs,"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
 	
@@ -281,9 +295,13 @@ if ($questionnaire_id != false)
 				<label for="description"><? echo T_("Describe this quota"); ?> </label><input type="text" name="description" id="description"/>		<br/>
 				<label for="priority"><? echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?> </label><input type="text" name="priority" id="priority" value="50"/>		<br/>
 				<label for="autoprioritise"><? echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> </label><input type="checkbox" name="autoprioritise" id="autoprioritise"/>		<br/>
-				<? if ($sgqa != -1) { ?>
+				<? if ($sgqa != -1) { if ($sgqa != -2) { ?>
 				<label for="value"><? echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
 				<label for="comparison"><? echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
+				<? } else { ?>
+				<input type="hidden" name="value" value="-2"/>
+				<input type="hidden" name="comparison" value="-2"/>
+				<? } ?>
 				<label for="completions"><? echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
 				<? } else { ?>
 				<input type="hidden" name="value" value="-1"/>
