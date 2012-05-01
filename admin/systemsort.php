@@ -68,6 +68,8 @@ if ($p)
 			end_process($p);
 		else
 			kill_process($p);
+		
+		set_setting('systemsort',false);
 	}
 
 	xhtml_head(T_("Monitor system wide case sorting"),true,array("../css/table.css"),false,false,false,true);
