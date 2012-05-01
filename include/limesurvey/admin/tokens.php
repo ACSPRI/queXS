@@ -494,7 +494,7 @@ if (!$tokenexists) //If no tokens table exists
             $tokenoutput .= "\t</div><p>\n"
             .$clang->gT("A token table has been created for this survey.")." (\"".$dbprefix."tokens_$surveyid\")<br /><br />\n"
             ."<input type='submit' value='"
-		    .$clang->gT("Continue")."' onclick=\"window.open('$scriptname?action=tokens&amp;sid=$surveyid', '_self')\" />\n";
+		    .$clang->gT("Continue")."' onclick=\"window.open('$scriptname?sid=$surveyid', '_self')\" />\n";
         }
         return;
     }

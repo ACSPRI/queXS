@@ -80,5 +80,11 @@ if (!isset($_POST['ok']) || !$_POST['ok'])
 else
 {
     $activateoutput = activateSurvey($postsid,$surveyid);
+    //also activate tokens queXS addition
+    if(bHasSurveyPermission($surveyid,'tokens','read'))
+    {
+	    $_POST['createtable'] = 'Y';
+            $_SESSION['FileManagerContext']="edit:emailsettings:$surveyid";
+            include('tokens.php');
+    }
 }
-
