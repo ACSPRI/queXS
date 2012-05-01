@@ -1,3 +1,14 @@
+queXS 1.5.3 - Changes since 1.5.2:
+
+New Feature: Automatically create tokens table when activating (as is required by queXS)
+New Feature: Sample only quota for row quota (set quotas based on sample record values)
+New Feature: Complete sample file output with caseid (if assigned) and current outcome
+New Feature: Added a listing of cases by outcome for a questionnaire when clicking on the outcome code. Can then link through to individual case management
+
+Fixed Bug: Make sure to mark system sort process as stopped when manually killed
+Fixed Bug: Question quota selections to work properly with Limesurvey 1.91+ database structure
+
+
 queXS 1.5.2 - Changes since 1.5.1:
 
 New Feature: Add a response via XML RPC. Using this revision of queXS and queXF 1.13.0 - you can export a paper form from queXS and once paper forms are scanned and verified, the data can be sent from queXF back to queXS using XMLRPC (can be on different servers)
