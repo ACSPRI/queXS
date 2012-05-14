@@ -117,9 +117,9 @@ if (isset($_POST['import_file']))
 	<p><? echo T_("Select limesurvey instrument:"); 
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
-	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
-	AND sl.surveyls_language = '" . DEFAULT_LOCALE . "' )
-	WHERE s.active = 'Y'";
+	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
+	WHERE s.active = 'Y'
+	GROUP BY s.sid";
 
 $surveys = $db->GetAll($sql);
 
