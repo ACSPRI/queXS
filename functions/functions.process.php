@@ -246,4 +246,33 @@ function process_get_last_data($type = 1)
 	return false;
 }
 
+
+/**
+ * Don't let the log get too big for this process
+ * 
+ * @param int $process_id The process id
+ *
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2012-09-27
+ */
+function process_clear_log($process_id)
+{
+	global $db;
+
+	$sql = 
+	"DELETE FROM process_log WHERE process_id = '$process_id' AND
+		process_log_id NOT IN ( 
+		SELECT process_log_id 
+		  FROM ( 
+		    SELECT process_log_id 
+		    FROM process_log
+		    WHERE process_id = '$process_id'
+		    ORDER BY process_log_id DESC 
+		    LIMIT " .  (PROCESS_LOG_LIMIT * 3) . " 
+		  ) x 
+		)";
+
+	$db->Execute($sql);
+}
+
 ?>

@@ -621,6 +621,10 @@ class voipWatch extends voip {
 				$time = time();
 			}
 
+			if ($process_id) {
+				process_clear_log($process_id);
+			}
+
 		} while ($this->keepWatching);
 		
 	} 

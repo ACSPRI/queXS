@@ -205,6 +205,8 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 		if (is_process_killed($process_id)){break;}
 		sleep($sleepinterval);
 	}
+
+	process_clear_log($process_id);
 }
 
 disable_systemsort();
