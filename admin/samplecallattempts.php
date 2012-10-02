@@ -54,17 +54,125 @@ include("../functions/functions.display.php");
  */
 include("../functions/functions.input.php");
 
+/**
+ * Generate the sample call attempt report
+ * 
+ * @param mixed  $questionnaire_id The quesitonnaire, if specified
+ * @param string $sample_id        The sample, if speified
+ * @param mixed  $qsqri            THe questionnaire sample quota row id, if specified
+ * 
+ * @return false if empty otherwise true if table drawn
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2012-10-02
+ */
+function sample_call_attempt_report($questionnaire_id = false, $sample_id = false, $qsqri  = false)
+{
+	global $db;
+
+	$q = "";
+	if ($questionnaire_id !== false)
+		$q = "AND c.questionnaire_id = $questionnaire_id";
+
+	$s = "";
+	if ($sample_id !== false)
+		$s = "JOIN sample as s ON (s.sample_id = c.sample_id AND s.import_id = '$sample_id')";
+
+	$qs = "";
+	if ($qsqri !== false)
+		$qs = "JOIN questionnaire_sample_quota_row as q ON (q.questionnaire_sample_quota_row_id = '$qsqri')
+			JOIN sample_var ON (sample_var.sample_id = c.sample_id AND sample_var.var LIKE q.exclude_var AND sample_var.val LIKE q.exclude_val)";
+
+	$sql = "SELECT ca1 AS callattempts, COUNT( ca1 ) AS sample
+		FROM (	SELECT count( ca.call_attempt_id ) AS ca1
+			FROM call_attempt as ca
+			JOIN `case` as c ON (c.case_id = ca.case_id $q)
+			$s
+			$qs
+			GROUP BY ca.case_id) AS t1
+		GROUP BY ca1";
+
+	$overall = $db->GetAll($sql);
+
+	if (empty($overall)) 
+		return false;
+
+
+	$sql = "SELECT outcome_id,description 
+		FROM outcome";
+
+	$outcomes = $db->GetAssoc($sql);
+
+	translate_array($outcomes,array("description"));
+
+	$rep = array("sample","callattempts");
+	$rept = array(T_("Number of cases"),T_("Call attempts made"));
+	$totals = array("sample");
+
+	$outcomesfilled = array();
+
+	foreach($outcomes as $key => $val)
+	{
+		$rep[] = $key;
+		$rept[] = $val;
+		$outcomesfilled[$key] = 0;
+	}
+
+	//Add breakdown by call attempt
+	for ($i = 0; $i < count($overall); $i++)
+	{
+		//break down by outcome
+		$sql = "SELECT oi1, ca1 as callattempts, count(ca1) as sample
+			FROM ( SELECT count( ca.call_attempt_id ) AS ca1, ca.case_id, c.current_outcome_id as oi1
+				FROM call_attempt AS ca
+				JOIN `case` AS c ON ( c.case_id = ca.case_id $q)
+				$s
+				$qs
+				GROUP BY ca.case_id
+				) as t1
+			GROUP BY ca1,oi1
+			HAVING ca1 = {$overall[$i]['callattempts']}";
+		
+		$byoutcome = $db->GetAssoc($sql);
+
+		foreach($outcomes as $key => $val)
+		{
+			$sample = 0;
+			if (isset($byoutcome[$key]))
+			{
+				$outcomesfilled[$key] = 1;
+				$sample = $byoutcome[$key]['sample'];
+			}
+
+			$overall[$i][$key] = $sample;
+		}
+	}
+
+	//Remove columns that are empty
+	$count = 2;
+	foreach ($outcomesfilled as $key => $val)
+	{
+		if ($val == 0)
+		{
+			unset($rep[$count]);
+			unset($rept[$count]);
+		}
+		else
+			$totals[] = $key;
+
+		$count++;
+	}
+
+	xhtml_table($overall,$rep,$rept,"tclass",false,$totals);
+	
+	return true;
+}
+
+
 xhtml_head(T_("Sample call attempt"),true,array("../css/table.css"),array("../js/window.js"));
 
 print "<h2>" . T_("Overall") . "</h2>";
 
-$sql = "SELECT ca1 AS callattempts, COUNT( ca1 ) AS sample
-	FROM (	SELECT count( call_attempt_id ) AS ca1
-		FROM call_attempt
-		GROUP BY case_id) AS t1
-	GROUP BY ca1";
-
-xhtml_table($db->GetAll($sql),array("sample","callattempts"),array(T_("Number of cases"),T_("Call attempts made")),"tclass",false,array("sample"));
+sample_call_attempt_report(false,false,false);
 
 print "<h2>" . T_("Please select a questionnaire") . "</h2>";
 $questionnaire_id = false;
@@ -73,20 +181,8 @@ display_questionnaire_chooser($questionnaire_id);
 
 if ($questionnaire_id)
 {
-	$sql = "SELECT ca1 AS callattempts, COUNT( ca1 ) AS sample
-		FROM (	SELECT count( call_attempt.call_attempt_id ) AS ca1
-			FROM call_attempt
-			JOIN `case` ON (`case`.case_id = call_attempt.case_id AND `case`.questionnaire_id = '$questionnaire_id')
-			GROUP BY call_attempt.case_id) AS t1
-		GROUP BY ca1";
-
-	$cal = $db->GetAll($sql);
-
-	if (!empty($cal))
+	if (sample_call_attempt_report($questionnaire_id,false,false))
 	{
-
-		xhtml_table($cal,array("sample","callattempts"),array(T_("Number of cases"),T_("Call attempts made")),"tclass",false,array("sample"));
-	
 		print "<h2>" . T_("Please select a sample") . "</h2>";
 		$sample_import_id = false;
 		if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
@@ -94,20 +190,8 @@ if ($questionnaire_id)
 
 		if ($sample_import_id)
 		{
-			$sql = "SELECT ca1 AS callattempts, COUNT( ca1 ) AS sample
-				FROM (	SELECT count( call_attempt.call_attempt_id ) AS ca1
-					FROM call_attempt
-					JOIN `case` ON (`case`.case_id = call_attempt.case_id AND `case`.questionnaire_id = '$questionnaire_id')
-					JOIN sample ON (sample.sample_id = `case`.sample_id AND sample.import_id = '$sample_import_id')
-					GROUP BY call_attempt.case_id) AS t1
-				GROUP BY ca1";
-
-			$cal = $db->GetAll($sql);
-
-			if (!empty($cal))
+			if (sample_call_attempt_report($questionnaire_id,$sample_import_id,false))
 			{
-				xhtml_table($cal,array("sample","callattempts"),array(T_("Number of cases"),T_("Call attempts made")),"tclass",false,array("sample"));
-	
 				$questionnaire_sample_quota_row_id = false;
 				if (isset($_GET['questionnaire_sample_quota_row_id'])) $questionnaire_sample_quota_row_id = bigintval($_GET['questionnaire_sample_quota_row_id']);
 				print "<h2>" . T_("Please select a quota") . "</h2>";
@@ -115,21 +199,8 @@ if ($questionnaire_id)
 	
 				if ($questionnaire_sample_quota_row_id)
 				{
-					$sql = "SELECT ca1 AS callattempts, COUNT( ca1 ) AS sample
-						FROM (	SELECT count( call_attempt.call_attempt_id ) AS ca1
-							FROM call_attempt
-							JOIN `case` ON (`case`.case_id = call_attempt.case_id AND `case`.questionnaire_id = '$questionnaire_id')
-							JOIN sample ON (sample.sample_id = `case`.sample_id AND sample.import_id = '$sample_import_id')
-							JOIN questionnaire_sample_quota_row as q ON (q.questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id')
-							JOIN sample_var ON (sample_var.sample_id = `case`.sample_id AND sample_var.var LIKE q.exclude_var AND sample_var.val LIKE q.exclude_val)
-							GROUP BY call_attempt.case_id) AS t1
-						GROUP BY ca1";
-
-					$cal = $db->GetAll($sql);
-					if (empty($cal))
+					if (!sample_call_attempt_report($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id))
 						print "<p>" . T_("No calls for this quota") . "</p>";
-					else
-						xhtml_table($cal,array("sample","callattempts"),array(T_("Number of cases"),T_("Call attempts made")),"tclass",false,array("sample"));
 				}
 			}
 			else
