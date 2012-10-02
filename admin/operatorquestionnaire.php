@@ -140,7 +140,7 @@ if (isset($_POST['submit']))
 $sql = "SELECT questionnaire_id,description
 	FROM questionnaire
 	WHERE enabled = 1
-	ORDER by questionnaire_id ASC";
+	ORDER by questionnaire_id DESC";
 
 $questionnaires = $db->GetAll($sql);
 
