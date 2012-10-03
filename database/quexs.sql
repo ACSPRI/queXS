@@ -1463,7 +1463,7 @@ CREATE TABLE `sample_postcode_timezone` (
 --
 
 CREATE TABLE `sample_prefix_timezone` (
-  `val` int(10) NOT NULL,
+  `val` char(10) NOT NULL,
   `Time_zone_name` char(64) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`val`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

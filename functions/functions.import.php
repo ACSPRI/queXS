@@ -264,7 +264,7 @@ function import_file($file, $description, $fields, $firstrow = 2)
 						if (!empty($tname))
 						{
 		
-							$value = $db->Quote($data[$key - 1]);
+							$value = $db->Quote(only_numbers($data[$key - 1]));
 			
 							$sql = "SELECT Time_zone_name as tz
 								FROM `$tname`

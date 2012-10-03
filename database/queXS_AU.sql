@@ -3362,7 +3362,29 @@ INSERT INTO `sample_prefix_timezone` VALUES(886, 'Australia/Adelaide');
 INSERT INTO `sample_prefix_timezone` VALUES(887, 'Australia/Adelaide');
 INSERT INTO `sample_prefix_timezone` VALUES(888, 'Australia/Adelaide');
 INSERT INTO `sample_prefix_timezone` VALUES(889, 'Australia/Darwin');
-
+INSERT INTO `sample_prefix_timezone` VALUES('024', 'Australia/NSW');
+INSERT INTO `sample_prefix_timezone` VALUES('026', 'Australia/NSW');
+INSERT INTO `sample_prefix_timezone` VALUES('028', 'Australia/NSW');
+INSERT INTO `sample_prefix_timezone` VALUES('029', 'Australia/NSW');
+INSERT INTO `sample_prefix_timezone` VALUES('035', 'Australia/Victoria');
+INSERT INTO `sample_prefix_timezone` VALUES('036', 'Australia/Tasmania');
+INSERT INTO `sample_prefix_timezone` VALUES('038', 'Australia/Victoria');
+INSERT INTO `sample_prefix_timezone` VALUES('039', 'Australia/Victoria');
+INSERT INTO `sample_prefix_timezone` VALUES('073', 'Australia/Queensland');
+INSERT INTO `sample_prefix_timezone` VALUES('074', 'Australia/Queensland');
+INSERT INTO `sample_prefix_timezone` VALUES('075', 'Australia/Queensland');
+INSERT INTO `sample_prefix_timezone` VALUES('086', 'Australia/West');
+INSERT INTO `sample_prefix_timezone` VALUES('089', 'Australia/West');
+INSERT INTO `sample_prefix_timezone` VALUES('0880', 'Australia/Broken_Hill');
+INSERT INTO `sample_prefix_timezone` VALUES('0881', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0882', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0883', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0884', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0885', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0886', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0887', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0888', 'Australia/Adelaide');
+INSERT INTO `sample_prefix_timezone` VALUES('0889', 'Australia/Darwin');
 
 --
 -- Dumping data for table `timezone_template`
