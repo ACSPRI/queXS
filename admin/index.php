@@ -92,7 +92,8 @@ print "<li><h3>" . T_("Supervisor functions") . "</h3>";
 print "<ul><li><a href=\"?page=supervisor.php\">" . T_("Assign outcomes to cases") . "</a></li>";
 print "<li><a href=\"?page=samplesearch.php\">" . T_("Search the sample") . "</a></li>";
 print "<li><a href=\"?page=callhistory.php\">" . T_("Call history") . "</a></li>";
-print "<li><a href=\"?page=shiftreport.php\">" . T_("Shift reports") . "</a></li></ul></li>";
+print "<li><a href=\"?page=shiftreport.php\">" . T_("Shift reports") . "</a></li>";
+print "<li><a href=\"?page=bulkappointment.php\">" . T_("Bulk appointment generator") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("System settings") . "</h3>";
 print "<ul><li><a href=\"?page=timezonetemplate.php\">" . T_("Set default timezone list") . "</a></li>";
