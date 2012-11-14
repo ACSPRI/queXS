@@ -55,7 +55,14 @@ $operator_id = get_operator_id();
 
 if ($operator_id)
 {
-	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as start,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as des, (CONCAT(r.firstName,' ',r.lastName)) as firstName, opp.firstName as opname, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, q.description as qd
+	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as start,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as des, (CONCAT(r.firstName,' ',r.lastName)) as firstName, opp.firstName as opname, ";
+
+	if (isset($_GET['csv']))
+		$sql .= " c.case_id ";
+	else
+		$sql .= " CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') ";
+
+	$sql .=	" as case_id, q.description as qd
 		FROM `call` as c
 		JOIN (operator as op, respondent as r) on (op.operator_id = '$operator_id' and r.respondent_id = c.respondent_id)
 		JOIN (`case` as ca, questionnaire as q) ON (ca.case_id = c.case_id AND q.questionnaire_id = ca.questionnaire_id)
@@ -66,7 +73,7 @@ if ($operator_id)
 	if (!isset($_GET['csv'])) 
 		$sql .= " LIMIT 500";
 		
-	$rs = $db->GetAll($sql);
+	$rs = $db->Execute($sql);
 	
 	if (empty($rs))
 	{
@@ -75,7 +82,6 @@ if ($operator_id)
 	}
 	else
 	{
-		translate_array($rs,array("des"));
 		if (isset($_GET['csv']))
 		{
 			$fn = "callhistory.csv";
@@ -89,14 +95,17 @@ if ($operator_id)
 
 			echo(T_("Date/Time call start") . "," . T_("Time end") . "," . T_("Case ID") . "," . T_("Questionnaire") . "," . T_("Operator") . "," . T_("Outcome") . "," . T_("Respondent") . "\n");
 
-			foreach($rs as $r)
+			while ($r = $rs->FetchRow())
 			{
-				echo $r['start'] . "," . $r['end'] . "," . strip_tags($r['case_id']) . "," . $r['qd'] . "," . $r['opname'] . ",\"" . $r['des'] . "\"," . $r['firstName'] . "\n";
+				translate_array($r,array("des"));
+				echo $r['start'] . "," . $r['end'] . "," . $r['case_id'] . "," . $r['qd'] . "," . $r['opname'] . ",\"" . $r['des'] . "\"," . $r['firstName'] . "\n";
 			}
 			exit;
 		}			
 		else
 		{
+			$rs = $rs->GetArray();
+			translate_array($rs,array("des"));
 			xhtml_head(T_("Call History List"),true,array("../css/table.css"));
 			print "<p><a href='?csv=csv'>" . T_("Download Call History List") . "</a></p>";
 			xhtml_table($rs,array("start","end","case_id","qd","opname","des","firstName"),array(T_("Date/Time call start"),T_("Time end"),T_("Case ID"),T_("Questionnaire"),T_("Operator"),T_("Outcome"),T_("Respondent")));
