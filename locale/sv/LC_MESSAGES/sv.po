@@ -6,24 +6,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-10-10 11:04+1000\n"
-"PO-Revision-Date: 2011-07-06 10:19+0000\n"
-"Last-Translator: Erik Granberg <Unknown>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-14 11:25+1000\n"
+"PO-Revision-Date: 2012-08-21 20:49+0000\n"
+"Last-Translator: Tony Jansson <tonyj@gavle.to>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-11-15 03:24+0000\n"
-"X-Generator: Launchpad (build 14291)\n"
+"X-Launchpad-Export-Date: 2012-11-14 05:06+0000\n"
+"X-Generator: Launchpad (build 16251)\n"
+"Language: sv\n"
 
 #: callhistory.php:56
 msgid "Case History List"
-msgstr ""
+msgstr "Historiklista intervjuer"
 
 #: callhistory.php:79
 msgid "No calls ever made"
-msgstr "Inga samtal genomförda"
+msgstr "Inga samtal genomf&ouml;rda"
 
 #: callhistory.php:83
 #: calllist.php:84
@@ -32,7 +33,7 @@ msgstr "Datum/Tid"
 
 #: callhistory.php:83
 msgid "Case ID"
-msgstr ""
+msgstr "Intervju ID"
 
 #: callhistory.php:83
 #: index_interface2.php:201
@@ -42,36 +43,40 @@ msgstr "Resultat"
 
 #: callhistory.php:83
 msgid "Respondent"
-msgstr ""
+msgstr "Kontaktperson"
 
 #: callhistory.php:87
 msgid "No operator"
-msgstr "Ingen operatör"
+msgstr "Ingen intervjuare"
 
 #: rs_answeringmachine_interface2.php:64
 #: rs_answeringmachine.php:64
 msgid "Respondent Selection - Answering machine"
-msgstr ""
+msgstr "Val kontaktperson - Telefonsvarare"
 
 #: rs_answeringmachine_interface2.php:78
 #: rs_answeringmachine.php:78
 msgid "Do not leave a message, please hang up"
-msgstr ""
+msgstr "L&auml;mna ej n&aring;got meddelande, v&auml;nligen l&auml;gg på"
 
 #: rs_answeringmachine_interface2.php:81
 #: rs_answeringmachine.php:81
 msgid "End call with outcome: Business answering machine"
-msgstr ""
+msgstr "Avsluta samtal med resultatet: Telefonsvarare"
 
 #: rs_answeringmachine_interface2.php:86
 #: rs_answeringmachine.php:86
 msgid "End call with outcome: Answering machine Message left"
 msgstr ""
+"Avsluta samtal med resultatet: L&auml;mnat meddelande p&aring; "
+"telefonsvararen"
 
 #: rs_answeringmachine_interface2.php:90
 #: rs_answeringmachine.php:90
 msgid "End call with outcome: Answering machine No message left"
 msgstr ""
+"Avsluta samtal med resultatet: Ej l&auml;mnat meddelande p&aring; "
+"telefonsvararen"
 
 #: rs_answeringmachine_interface2.php:91
 #: rs_business_interface2.php:62
@@ -79,87 +84,87 @@ msgstr ""
 #: rs_project_intro.php:85
 #: rs_answeringmachine.php:91
 msgid "Go Back"
-msgstr ""
+msgstr "Tillbaka"
 
 #: rs_business_interface2.php:55
 msgid "Respondent Selection - Business answers"
-msgstr ""
+msgstr "Val kontaktperson - F&ouml;retagssvar"
 
 #: rs_business_interface2.php:59
 msgid "Sorry to bother you, I have called the wrong number"
-msgstr ""
+msgstr "F&ouml;rl&aring;t att jag st&ouml;rde, jag ringde fel nummer"
 
 #: rs_business_interface2.php:61
 msgid "End call with outcome: Business number"
-msgstr ""
+msgstr "Avsluta samtal med resultatet: F&ouml;retagsnummer"
 
 #: index_interface2.php:195
 #: waitnextcase_interface2.php:49
 #: index.php:130
 msgid "queXS"
-msgstr ""
+msgstr "Find´Em"
 
 #: index_interface2.php:202
 #: appointment.php:119
 #: index.php:137
 msgid "Appointment"
-msgstr ""
+msgstr "&Aringterkontakt"
 
 #: index_interface2.php:203
 #: waitnextcase_interface2.php:55
 msgid "End work"
-msgstr ""
+msgstr "Avsluta jobb"
 
 #: index_interface2.php:282
 #: index.php:141
 msgid "Arrow for expanding or contracting"
-msgstr ""
+msgstr "Pil f&ouml;r att expandera eller dra ihop"
 
 #: index_interface2.php:294
 #: index.php:187
 msgid "Notes"
-msgstr ""
+msgstr "Kommentarer"
 
 #: index_interface2.php:302
 #: index.php:205
 msgid "Contact details"
-msgstr ""
+msgstr "Kontaktinformation"
 
 #: index_interface2.php:311
 #: index.php:214
 msgid "Call history"
-msgstr ""
+msgstr "Samtalshistorik"
 
 #: index_interface2.php:320
 #: index.php:223
 msgid "Shifts"
-msgstr ""
+msgstr "Skift"
 
 #: index_interface2.php:329
 #: index.php:232
 msgid "Appointments"
-msgstr ""
+msgstr "&Aringterkontakter"
 
 #: index_interface2.php:338
 #: index.php:241
 msgid "Performance"
-msgstr ""
+msgstr "Prestanda"
 
 #: index_interface2.php:346
 #: index.php:249
 msgid "Work history"
-msgstr ""
+msgstr "Arbetshistoria"
 
 #: index_interface2.php:354
 #: project_info.php:61
 #: index.php:257
 msgid "Project information"
-msgstr ""
+msgstr "Projektinformation"
 
 #: index_interface2.php:363
 #: index.php:266
 msgid "Info"
-msgstr ""
+msgstr "Information"
 
 #: record.php:55
 msgid "Stop REC"
@@ -173,16 +178,16 @@ msgstr "Spela in"
 
 #: record.php:66
 msgid "Beginning recording..."
-msgstr "Startar inspelning"
+msgstr "Startar inspelning..."
 
 #: record.php:69
 #: record.php:97
 msgid "Not on a call, so not beginning a recording"
-msgstr ""
+msgstr "Inte i ett samtal, p&aring;b&ouml;rja inte en inspelning"
 
 #: record.php:73
 msgid "Begin the manual recording now..."
-msgstr ""
+msgstr "P&aring;b&ouml;rja manuell inspelning nu..."
 
 #: record.php:78
 #: index.php:140
@@ -191,166 +196,173 @@ msgstr "Starta inspelning"
 
 #: record.php:86
 msgid "Stopping recording..."
-msgstr "Stoppar inspelning"
+msgstr "Stoppar inspelning..."
 
 #: record.php:90
 msgid "Stop the manual recording now..."
-msgstr "Stoppa manuella inspelningen"
+msgstr "Stoppa manuella inspelningen..."
 
 #: rs_callback_interface2.php:66
 msgid "Respondent Selection - Call back"
-msgstr ""
+msgstr "Val kontaktperson - Ring tillbaka"
 
 #: rs_callback_interface2.php:80
 msgid "You are: "
-msgstr ""
+msgstr "Du &auml;r: "
 
 #: rs_callback_interface2.php:80
 #, php-format
 msgid "% complete"
-msgstr ""
+msgstr "% complete"
 
 #: rs_callback_interface2.php:87
 msgid "Yes - Continue where we left off"
-msgstr ""
+msgstr "Ja - Forts&auml;tt d&auml;r vi slutade"
 
 #: rs_callback_interface2.php:88
 #: rs_project_intro.php:81
 msgid "End call with outcome: Refusal by respondent"
-msgstr ""
+msgstr "Avsluta samtal med resultatet: Kontaktperson v&auml;grade"
 
 #: rs_project_intro.php:59
 msgid "Respondent Selection - Project Introduction"
-msgstr "Respondentval - Projektintroduktion"
+msgstr "Val kontaktperson - Projektinledning"
 
 #: rs_project_intro.php:79
 msgid "Yes - Continue"
-msgstr "Ja, fortsätt"
+msgstr "Ja, forts&auml;tt"
 
 #: rs_project_intro.php:82
 msgid ""
 "End call with outcome: No eligible respondent (person not available on this "
 "number)"
 msgstr ""
+"Avsluta samtal med resultatet: Ingen giltig kontaktperson (personen finns "
+"inte tillg&auml;nglig p&aring; detta nummer)"
 
 #: rs_project_intro.php:83
 msgid ""
 "End call with outcome: Out of sample (already completed in another mode)"
 msgstr ""
+"Avsluta samtal med resultatet: Slut p&aring; test (redan slutf&ouml;rt via "
+"annan)"
 
 #: appointment.php:69
 msgid "Appointment error"
-msgstr ""
+msgstr "Error &aringterkontakt"
 
 #: appointment.php:70
 msgid ""
 "You have not been assigned a case therefore cannot create an appointment"
 msgstr ""
+"Du har inte tilldelats ett &auml;rende kan d&auml;rför inte skapa ett "
+"m&ouml;te"
 
 #: appointment.php:107
 msgid "Appointment made"
-msgstr ""
+msgstr "&Aringterkontakt skapad"
 
 #: appointment.php:122
 msgid "Select a respondent"
-msgstr ""
+msgstr "V&auml;lj en kontaktperson"
 
 #: appointment.php:132
 msgid "Create new respondent:"
-msgstr ""
+msgstr "Skapa ny kontaktperson"
 
 #: appointment.php:135
 msgid "Add this respondent"
-msgstr ""
+msgstr "L&auml;gg till denna kontaktperson"
 
 #: appointment.php:157
 msgid "Select phone number:"
-msgstr ""
+msgstr "V&auml;lj telefonnummer"
 
 #: appointment.php:162
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: appointment.php:171
 msgid "Add new phone number"
-msgstr ""
+msgstr "L&auml;gg till ett nytt telefonnummer"
 
 #: appointment.php:182
 msgid "Add new phone number (with area code, eg 0398761234):"
 msgstr ""
+"L&auml;gg till ett nytt telefonnummer (med riktnummer, tex. 0264569600"
 
 #: appointment.php:185
 msgid "Add this phone number"
-msgstr ""
+msgstr "L&auml;gg till detta telefonnummer"
 
 #: appointment.php:204
 msgid "Appointment:"
-msgstr ""
+msgstr "&Aringterkontakt:"
 
 #: appointment.php:206
 msgid "Accept appointment from "
-msgstr ""
+msgstr "Acceptera &aringterkontakt fr&aring;n "
 
 #: appointment.php:206
 msgid " till "
-msgstr ""
+msgstr " tills "
 
 #: appointment.php:206
 msgid " on "
-msgstr ""
+msgstr " fr&aring;n "
 
 #: appointment.php:206
 msgid "on"
-msgstr ""
+msgstr "den"
 
 #: calllist.php:56
 msgid "Call List"
-msgstr ""
+msgstr "Samtalslista"
 
 #: calllist.php:80
 msgid "No calls made"
-msgstr ""
+msgstr "Inga samtal gjorda"
 
 #: calllist.php:84
 msgid "Number called"
-msgstr ""
+msgstr "Uppringt nummer"
 
 #: calllist.php:84
 msgid "Operator"
-msgstr ""
+msgstr "Intervjuare"
 
 #: calllist.php:88
 #: project_info.php:82
 msgid "No case"
-msgstr ""
+msgstr "Ingen intervju"
 
 #: waitnextcase_interface2.php:54
 msgid "Get a new case"
-msgstr ""
+msgstr "G&ouml;r en ny intervju"
 
 #: index.php:136
 msgid "End"
-msgstr ""
+msgstr "Slut"
 
 #: index.php:138
 msgid "Call/Hangup"
-msgstr ""
+msgstr "Ring/l&auml;gg på"
 
 #: index.php:139
 msgid "Supervisor"
-msgstr ""
+msgstr "Handledare"
 
 #: index.php:142
 msgid "Restart"
-msgstr ""
+msgstr "Starta om"
 
 #: index.php:195
 msgid "Availability"
-msgstr ""
+msgstr "Tillg&auml;nglighet"
 
 #: info.php:56
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #: call_interface2.php:181
 #: call_interface2.php:210
@@ -363,12 +375,12 @@ msgstr ""
 #: call.php:218
 #: call.php:249
 msgid "Call"
-msgstr ""
+msgstr "Ring"
 
 #: call_interface2.php:302
 #: call.php:256
 msgid "Not on a call"
-msgstr ""
+msgstr "Inte i samtal"
 
 #: call_interface2.php:314
 #: call_interface2.php:430
@@ -381,17 +393,19 @@ msgstr ""
 #: call.php:405
 #: call.php:411
 msgid "End case"
-msgstr ""
+msgstr "Avsluta &auml;rende"
 
 #: call_interface2.php:339
 #: call.php:293
 msgid "Press the call button to dial the number for this appointment:"
 msgstr ""
+"Tryck p&aring; samtalsknappen f&ouml;r att ringa numret f&ouml;r denna "
+"&aringterkontakt:"
 
 #: call_interface2.php:342
 #: call.php:296
 msgid "Number to call:"
-msgstr ""
+msgstr "Nummer att ringa:"
 
 #: call_interface2.php:346
 #: call_interface2.php:417
@@ -401,18 +415,21 @@ msgid ""
 "Your VoIP extension is not enabled. Please close this window and enable VoIP "
 "by clicking once on the red button that says 'VoIP Off'"
 msgstr ""
+"Din VoIP &auml;r inte aktiverat. St&auml;ng detta f&ouml;nster och starta "
+"VoIP genom att klicka en g&aring;ng p&aring; den r&ouml;da knappen som "
+"s&auml;ger \"VoIP Off\""
 
 #: call_interface2.php:407
 #: call.php:361
 msgid "Select phone number to dial:"
-msgstr ""
+msgstr "V&auml;lj telefonnummer att ringa:"
 
 #: call_interface2.php:422
 #: call_interface2.php:456
 #: call.php:376
 #: call.php:410
 msgid "The last call completed this call attempt"
-msgstr ""
+msgstr "Det sista samtalet avslutade detta uppringningsf&ouml;rs&ouml;k"
 
 #: call_interface2.php:426
 #: call_interface2.php:449
@@ -420,107 +437,110 @@ msgstr ""
 #: call.php:403
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr ""
+"Ange en anledning till detta resultat innan du avslutar detta &auml;rende:"
 
 #: call_interface2.php:467
 #: call.php:439
 msgid "Requires coding"
-msgstr ""
+msgstr "Kr&auml;ver kodande"
 
 #: call_interface2.php:470
 #: call.php:442
 msgid "Assign outcome"
-msgstr ""
+msgstr "Tilldela resultat"
 
 #: call_interface2.php:474
 #: call.php:446
 msgid "Error: Close window"
-msgstr ""
+msgstr "Error: St&auml;ng fönster"
 
 #: call.php:418
 msgid "Requesting call"
-msgstr ""
+msgstr "Beg&auml;r samtal"
 
 #: call.php:419
 #: call.php:426
 msgid "Call Answered"
-msgstr ""
+msgstr "Kontaktperson svarade"
 
 #: call.php:422
 #: call.php:429
 #: call.php:436
 msgid "Hangup"
-msgstr ""
+msgstr "L&auml;gg på"
 
 #: call.php:425
 msgid "Ringing"
-msgstr ""
+msgstr "Ringer"
 
 #: call.php:432
 msgid "Answered"
-msgstr ""
+msgstr "Besvarat"
 
 #: call.php:433
 msgid "Not Answered"
-msgstr ""
+msgstr "Inte besvarat"
 
 #: endwork.php:45
 msgid "End of work"
-msgstr ""
+msgstr "Slut p&aring; arbete"
 
 #: endwork.php:49
 msgid "You have been automatically logged out of work due to inactivity"
 msgstr ""
+"Du har automatiskt loggats ut fr&aring;n arbetet p&aring; grund av "
+"inaktivitet"
 
 #: endwork.php:52
 msgid "Work has ended. That is it"
-msgstr ""
+msgstr "Arbetet har avslutats."
 
 #: endwork.php:54
 msgid "Go back to work"
-msgstr ""
+msgstr "G&aring; tillbaka till arbete"
 
 #: status_interface2.php:70
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: status_interface2.php:79
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #: status_interface2.php:225
 #: status_interface2.php:228
 msgid "No more numbers to call"
-msgstr ""
+msgstr "Inga fler nummer att ringa"
 
 #: rs_intro.php:65
 #: rs_intro_interface2.php:65
 msgid "Respondent Selection - Introduction"
-msgstr ""
+msgstr "Val kontaktperson - Introduktion"
 
 #: rs_intro.php:117
 #: rs_intro_interface2.php:117
 msgid "Business number"
-msgstr ""
+msgstr "F&ouml;retagsnummer"
 
 #: rs_intro.php:118
 #: rs_intro_interface2.php:118
 msgid "Answering machine"
-msgstr ""
+msgstr "Telefonsvarare"
 
 #: rs_intro.php:119
 #: rs_intro_interface2.php:119
 msgid "End call with outcome: No answer (ring out or busy) "
-msgstr ""
+msgstr "Avsluta samtal med resultatet: Inget svar (samtal eller upptagen) "
 
 #: rs_intro.php:120
 #: rs_intro_interface2.php:120
 msgid "End call with outcome: Accidental hang up"
-msgstr ""
+msgstr "Avsluta samtal med resultatet: R&aring;kade l&auml;gga p&aring;"
 
 #: rs_intro.php:121
 #: rs_intro_interface2.php:121
 msgid "End call with outcome: Refusal by unknown person"
-msgstr ""
+msgstr "Avsluta samtal med resultatet: V&auml;gran av ok&auml;nd person"
 
 #: rs_intro.php:123
 #: rs_intro_interface2.php:123
@@ -528,154 +548,161 @@ msgid ""
 "End call with outcome: No eligible respondent (person never available on "
 "this number)"
 msgstr ""
+"Avsluta samtal med resultatet: Ingen giltig kontaktperson (personen finns "
+"inte p&aring; detta nummer)"
 
 #: rs_intro.php:124
 #: rs_intro_interface2.php:124
 msgid ""
 "End call with outcome: Non contact (person not currently available on this "
 "number: no appointment made)"
-msgstr ""
+msgstr "Avsluta samtal med resultatet: Ingen kontakt"
 
 #: shifts.php:57
 msgid "Shift List"
-msgstr ""
+msgstr "Skiftlista"
 
 #: shifts.php:80
 msgid "No shifts for this project"
-msgstr ""
+msgstr "Inga skift f&ouml;r detta projekt"
 
 #: shifts.php:82
 #: shifts.php:103
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: shifts.php:101
 msgid "No future shifts scheduled"
-msgstr ""
+msgstr "Inga framtida skift schemalagda"
 
 #: shifts.php:103
 #: nocaseavailable.php:115
 msgid "Questionnaire"
-msgstr ""
+msgstr "Fr&aring;geformul&auml;r"
 
 #: rs_project_end_interface2.php:62
 msgid "Respondent Selection - Project end"
-msgstr ""
+msgstr "Kontaktperson val - Projekt slut"
 
 #: rs_project_end_interface2.php:80
 msgid "Call automatically ended with outcome: Complete - End case"
-msgstr ""
+msgstr "Samtal automatiskt slutade med resultatet: Klar - avsluta intervju"
 
 #: rs_project_end_interface2.php:85
 msgid "End call with outcome: Complete"
-msgstr ""
+msgstr "Avsluta samtal med resultat: Klar"
 
 #: contactdetails.php:90
 #: contactdetails.php:128
 #: respondent.php:94
 #: respondent.php:132
 msgid "Add respondent"
-msgstr ""
+msgstr "L&auml;gg till kontaktperson"
 
 #: contactdetails.php:92
 #: respondent.php:96
 #: casenote.php:69
 msgid "Go back"
-msgstr ""
+msgstr "G&aring; tillbaka"
 
 #: contactdetails.php:98
 #: respondent.php:102
 msgid "Case id:"
-msgstr ""
+msgstr "Intervju ID:"
 
 #: contactdetails.php:99
 #: respondent.php:103
 msgid "Respondent:"
-msgstr ""
+msgstr "Kontaktperson:"
 
 #: contactdetails.php:161
 #: respondent.php:168
 msgid "Var"
-msgstr ""
+msgstr "Var"
 
 #: contactdetails.php:161
 #: respondent.php:168
 msgid "Value"
-msgstr ""
+msgstr "V&auml;rde"
 
 #: availability.php:123
 msgid ""
 "Select groups to limit availability (Selecting none means always available)"
 msgstr ""
+"V&auml;lj grupp f&ouml;r att begr&auml;nsa tillg&auml;nglighet (Ingen vald "
+"menas alltid tillg&auml;ngliga)"
 
 #: availability.php:143
 msgid "Availability groups not defined for this questionnaire"
 msgstr ""
+"Tillg&auml;ngligehtsgrupper inte definierade f&ouml;r denna enk&auml;t"
 
 #: respondent.php:70
 msgid "Respondent Selector"
-msgstr ""
+msgstr "Val kontaktperson"
 
 #: respondent.php:164
 msgid "Show details"
-msgstr ""
+msgstr "Visa detaljer"
 
 #: nocaseavailable.php:63
 msgid "No case available"
-msgstr ""
+msgstr "Ingen intervju tillg&auml;nglig"
 
 #: nocaseavailable.php:68
 msgid "There is no case currently available"
-msgstr ""
+msgstr "Det finns ingen intervju tillg&auml;nglig just nu"
 
 #: nocaseavailable.php:69
 msgid "Reasons:"
-msgstr ""
+msgstr "Orsak:"
 
 #: nocaseavailable.php:88
 msgid "Assigned questionnaires:"
-msgstr ""
+msgstr "Tilldelade fr&aring;geformul&auml;r:"
 
 #: nocaseavailable.php:91
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: nocaseavailable.php:91
 msgid "Description"
-msgstr ""
+msgstr "Beskrivning"
 
 #: nocaseavailable.php:94
 msgid "ERROR: No questionnaires assigned to you"
-msgstr ""
+msgstr "Fel: Ingen enk&auml;t tilldelad till dig"
 
 #: nocaseavailable.php:112
 msgid "Current shifts available:"
-msgstr ""
+msgstr "Aktuella skift finns:"
 
 #: nocaseavailable.php:115
 msgid "Shift start"
-msgstr ""
+msgstr "Skift start"
 
 #: nocaseavailable.php:115
 msgid "Shift end"
-msgstr ""
+msgstr "Skift slut"
 
 #: nocaseavailable.php:118
 msgid "ERROR: No shifts at this time"
-msgstr ""
+msgstr "Fel: Inga skift just nu"
 
 #: nocaseavailable.php:138
 msgid "Call restrictions:"
-msgstr ""
+msgstr "Samtalsbegr&auml;nsning:"
 
 #: nocaseavailable.php:142
 msgid ""
 "ERROR: There are no cases available that fall within call restrictions"
 msgstr ""
+"FEL: Det finns inga intervjuer tillg&auml;ngliga som faller inom "
+"samtalsrestriktioner"
 
 #: nocaseavailable.php:146
 msgid "There are "
-msgstr ""
+msgstr "Det &auml;r "
 
 #: nocaseavailable.php:146
 msgid " unassigned case(s) available within the specified call restrictions"
@@ -683,214 +710,220 @@ msgstr ""
 
 #: nocaseavailable.php:152
 msgid "Limesurvey links:"
-msgstr ""
+msgstr "Enk&auml;t l&auml;kar"
 
 #: nocaseavailable.php:172
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
-msgstr ""
+msgstr "FEL: Ingen token table definierad f&ouml;r enk&auml;ten"
 
 #: nocaseavailable.php:172
 msgid "from questionnaire:"
-msgstr ""
+msgstr "fr&aring;n enk&auml;t"
 
 #: nocaseavailable.php:174
 msgid "Tokens table exists for Limesurvey questionnaire:"
-msgstr ""
+msgstr "Token tabell existerar f&ouml;r enk&auml;t:"
 
 #: nocaseavailable.php:179
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
-msgstr ""
+msgstr "FEL: Kan inte hitta enk&auml;ten med token ID"
 
 #: nocaseavailable.php:198
 msgid "ERROR: Quota reached for this question"
-msgstr ""
+msgstr "FEL: Kvot fylld f&ouml;r denna fr&aring;ga"
 
 #: nocaseavailable.php:218
 msgid "POSSIBLE ERROR: Row quota reached for this question"
-msgstr ""
+msgstr "ANTAGLIGEN FEL: Rad kvot fylld f&ouml;r denna fr&aring;ga"
 
 #: casenote.php:56
 msgid "Case Notes"
-msgstr ""
+msgstr "Intervju kommentarer"
 
 #: casenote.php:66
 #: casenote.php:105
 msgid "Add note"
-msgstr ""
+msgstr "L&auml;gg till kommentar"
 
 #: casenote.php:108
 msgid "No notes"
-msgstr ""
+msgstr "Inga kommentarer"
 
 #: casenote.php:110
 msgid "Note"
-msgstr ""
+msgstr "Kommentar"
 
 #: performance.php:77
 msgid "This shift"
-msgstr ""
+msgstr "Detta skift"
 
 #: performance.php:78
 #: performance.php:85
 msgid "Completions"
-msgstr ""
+msgstr "Intervjuer"
 
 #: performance.php:78
 #: performance.php:85
 msgid "Completions per hour"
-msgstr ""
+msgstr "Intervjuer per timme"
 
 #: performance.php:84
 msgid "This project"
-msgstr ""
+msgstr "Detta projekt"
 
 #: status.php:95
 msgid "VoIP On"
-msgstr ""
+msgstr "VoIP p&aring;"
 
 #: status.php:97
 msgid "VoIP Off"
-msgstr ""
+msgstr "VoIP Av"
 
 #: status.php:100
 msgid "No VoIP"
-msgstr ""
+msgstr "Ingen VoIP"
 
 #: status.php:104
 msgid "No call"
-msgstr ""
+msgstr "Inga samtal"
 
 #: status.php:108
 msgid "To be coded"
-msgstr ""
+msgstr "Ska kodas"
 
 #: status.php:112
 msgid "Requesting"
-msgstr ""
+msgstr "Beg&auml;rande"
 
 #: status.php:128
 msgid "APPT"
-msgstr ""
+msgstr "APPT"
 
 #: status.php:129
 msgid "MISSED"
-msgstr ""
+msgstr "MISSADE"
 
 #: rs_project_end.php:88
 msgid "Call automatically ended with outcome: Complete"
-msgstr ""
+msgstr "Samtal automatiskt slutade med resultatet: Klar"
 
 #: nocallavailable.php:51
 msgid "No call available"
-msgstr ""
+msgstr "Inga samtal tillg&auml;ngliga"
 
 #: nocallavailable.php:54
 msgid "Please click on:"
-msgstr ""
+msgstr "V&auml;nligen klicka på:"
 
 #: nocallavailable.php:54
 msgid "to display call script"
-msgstr ""
+msgstr "f&ouml;r att visa samtalsmanus"
 
 #: rs_quota_end.php:61
 msgid "Respondent Selection - Project Quota End"
-msgstr ""
+msgstr "Kontaktperson val - Projekt kvot slut"
 
 #: rs_quota_end.php:72
 #: rs_quota_end.php:78
 msgid "End call with outcome: Quota filled"
-msgstr ""
+msgstr "Avsluta samtal med resultatet: Kvot fylld"
 
 #: appointmentlist.php:56
 msgid "Appointment List"
-msgstr ""
+msgstr "&Aringterkontaktlista"
 
 #: appointmentlist.php:70
 #: admin/displayappointments.php:210
 msgid "Not yet called"
-msgstr ""
+msgstr "Inte ringd &auml;nnu"
 
 #: appointmentlist.php:82
 msgid "No appointments made"
-msgstr ""
+msgstr "Inga &aringterkontakter gjorda"
 
 #: appointmentlist.php:84
 msgid "No future appointments scheduled"
-msgstr ""
+msgstr "Inga framtida &aringterkontakter schemalagda"
 
 #: supervisor.php:61
 msgid "Please wait till you have ended this call to call the supervisor"
 msgstr ""
+"V&auml;nligen v&auml;nta tills du avslutat detta samtal fouml;r att ringa "
+"till handledare"
 
 #: supervisor.php:105
 msgid "You may now close this window"
-msgstr ""
+msgstr "Du kan nu st&auml;nga detta f&ouml;nster"
 
 #: supervisor.php:110
 msgid "Calling the supervisor, you may close this window"
-msgstr ""
+msgstr "Ringer chefen, du kan nu st&auml;nga detta f&ouml;nster"
 
 #: supervisor.php:115
 msgid ""
 "Click here to call the supervisor's phone. Otherwise close this window"
 msgstr ""
+"Klicka h&auml;r f&ouml;r att ringa chefen. Annars st&auml;ng detta "
+"f&ouml;nster"
 
 #: supervisor.php:116
 msgid "Hangup when calling the supervisor"
-msgstr ""
+msgstr "L&auml;gg p&aring n&auml;r du ringer chefen"
 
 #: supervisor.php:121
 msgid "Try calling the supervisor"
-msgstr ""
+msgstr "F&ouml;rs&ouml;ker ringa chefen"
 
 #: supervisor.php:128
 msgid ""
 "Please wait for this call to answer before attempting to call the supervisor"
 msgstr ""
 
-#: admin/systemsort.php:73
-#: admin/systemsort.php:96
-#: admin/systemsort.php:97
+#: admin/systemsort.php:75
+#: admin/systemsort.php:98
+#: admin/systemsort.php:99
 msgid "Monitor system wide case sorting"
 msgstr ""
 
-#: admin/systemsort.php:75
+#: admin/systemsort.php:77
 msgid "Running process:"
-msgstr ""
+msgstr "Running process:"
 
-#: admin/systemsort.php:79
+#: admin/systemsort.php:81
 msgid "Kill signal sent: Please wait..."
-msgstr ""
+msgstr "D&ouml;d signal skickad: V&auml;nligen v&auml;nta"
 
-#: admin/systemsort.php:80
+#: admin/systemsort.php:82
 msgid ""
 "Process is already closed (eg. server was rebooted) - click here to confirm"
 msgstr ""
 
-#: admin/systemsort.php:84
+#: admin/systemsort.php:86
 msgid "Kill the running process"
-msgstr ""
+msgstr "D&ouml;da process"
 
-#: admin/systemsort.php:90
-#: admin/systemsort.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Log id"
-msgstr ""
+msgstr "Logg ID"
 
-#: admin/systemsort.php:90
-#: admin/systemsort.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
-#: admin/systemsort.php:90
-#: admin/systemsort.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Log entry"
-msgstr ""
+msgstr "Loggpost"
 
-#: admin/systemsort.php:98
+#: admin/systemsort.php:100
 msgid "Click here to enable and begin system wide case sorting"
 msgstr ""
+"Klicka h&auml;r f&ouml;r att aktivera och starta sortering av intervjuer i "
+"hela systemet"
 
-#: admin/systemsort.php:99
+#: admin/systemsort.php:101
 msgid ""
 "System wide case sorting is periodically (via SYSTEM_SORT_MINUTES "
 "configuration directive) sorting cases on a system wide basis instead of "
@@ -900,52 +933,60 @@ msgid ""
 "problems, it is not recommended to use this feature."
 msgstr ""
 
-#: admin/systemsort.php:100
+#: admin/systemsort.php:102
 msgid "Outcome of last process run (if any)"
 msgstr ""
 
-#: admin/callhistory.php:52
+#: admin/callhistory.php:73
+#: admin/callhistory.php:100
+#: admin/callhistory.php:108
 msgid "Call History List"
-msgstr ""
+msgstr "Samtalshistorik"
 
-#: admin/callhistory.php:74
+#: admin/callhistory.php:90
+#: admin/callhistory.php:102
 msgid "Date/Time call start"
-msgstr ""
+msgstr "Datum/Tid samtalstart"
 
-#: admin/callhistory.php:74
+#: admin/callhistory.php:90
+#: admin/callhistory.php:102
 msgid "Time end"
+msgstr "Sluttid"
+
+#: admin/callhistory.php:101
+msgid "Download Call History List"
 msgstr ""
 
 #: admin/clientquestionnaire.php:150
 #: admin/clientquestionnaire.php:271
 msgid "Assign clients to questionnaires"
-msgstr ""
+msgstr "Tilldela klienter till enkäter"
 
 #: admin/quotareport.php:110
 msgid "Quota report"
-msgstr ""
+msgstr "Kvot rapport"
 
 #: admin/quotareport.php:112
 msgid "Select a questionnaire from the list below"
-msgstr ""
+msgstr "V&auml;lj en enk&auml;t fr&aring;n listan nedan"
 
 #: admin/quotareport.php:119
 msgid "Select a sample from the list below"
-msgstr ""
+msgstr "V&auml;lj en kontakt fr&auml;n listan nedan"
 
 #: admin/quotareport.php:179
 msgid "Total sample"
-msgstr ""
+msgstr "Kontakter totalt"
 
 #: admin/quotareport.php:234
 #: admin/quotareport.php:241
 msgid "closed"
-msgstr ""
+msgstr "st&auml;ngd"
 
 #: admin/quotareport.php:236
 #: admin/quotareport.php:243
 msgid "open"
-msgstr ""
+msgstr "&ouml;ppen"
 
 #: admin/quotareport.php:285
 msgid "Strata"
@@ -953,19 +994,19 @@ msgstr ""
 
 #: admin/quotareport.php:285
 msgid "Quota"
-msgstr ""
+msgstr "Kvoter"
 
 #: admin/quotareport.php:285
 msgid "Sample"
-msgstr ""
+msgstr "Kontakter"
 
 #: admin/quotareport.php:285
 msgid "Sample Used"
-msgstr ""
+msgstr "Anv&auml;nda kontakter"
 
 #: admin/quotareport.php:285
 msgid "Sample Remaining"
-msgstr ""
+msgstr "Kontakter kvar"
 
 #: admin/quotareport.php:285
 msgid "% Complete"
@@ -973,55 +1014,56 @@ msgstr ""
 
 #: admin/quotareport.php:285
 msgid "Set priority"
-msgstr ""
+msgstr "S&auml;tt prioritet"
 
 #: admin/quotareport.php:285
 msgid "Auto prioritise"
-msgstr ""
+msgstr "Automatisk prioritering"
 
 #: admin/quotareport.php:286
 msgid "Update priorities"
-msgstr ""
+msgstr "Uppdatera prioriteringar"
 
 #: admin/import.php:51
 msgid "Import: Validating and uploading"
-msgstr ""
+msgstr "Importera: Validera och ladda upp"
 
 #: admin/import.php:67
 msgid "Successfully imported file"
-msgstr ""
+msgstr "Framg&aring;ngsrikt importerad fil"
 
 #: admin/import.php:71
 msgid "Error importing file. Please try again"
-msgstr ""
+msgstr "Fel vid import av filen. V&auml;nligen f&ouml;rs&ouml;k igen"
 
 #: admin/import.php:75
 msgid "Error:"
-msgstr ""
+msgstr "Fel:"
 
 #: admin/import.php:75
 msgid "Please go back in your browser and fix the problem"
 msgstr ""
+"G&aring; tillbaka i din webbl&auml;sare och &aring;tg&auml;rda problemet"
 
 #: admin/import.php:87
 msgid "Import: Select columns to import"
-msgstr ""
+msgstr "Importera: V&auml;lj kolumner att importera"
 
 #: admin/import.php:112
 msgid "Import: Select file to upload"
-msgstr ""
+msgstr "Importera: V&auml;lj fil att importera"
 
 #: admin/import.php:117
 msgid "Choose the CSV sample file to upload:"
-msgstr ""
+msgstr "V&auml;lj CSV kontaktsfil f&ouml;r uppladdning"
 
 #: admin/import.php:118
 msgid "Description for file:"
-msgstr ""
+msgstr "Beskrivning f&ouml;r fil:"
 
 #: admin/import.php:119
 msgid "Add sample"
-msgstr ""
+msgstr "L&auml;gg till kontakter"
 
 #: admin/systemsortprocess.php:86
 msgid "Sorting cases process starting"
@@ -1029,29 +1071,29 @@ msgstr ""
 
 #: admin/systemsortprocess.php:95
 msgid "Sorting cases"
-msgstr ""
+msgstr "Sortera intervjuer"
 
 #: admin/systemsortprocess.php:199
 msgid "Completed sort"
-msgstr ""
+msgstr "Sortering klar"
 
 #: admin/systemsortprocess.php:199
 #: admin/systemsortprocess.php:201
 msgid "This task took"
-msgstr ""
+msgstr "Denna uppgift tog"
 
 #: admin/systemsortprocess.php:199
 #: admin/systemsortprocess.php:201
 msgid "seconds"
-msgstr ""
+msgstr "sekunder"
 
 #: admin/systemsortprocess.php:201
 msgid "Failed to complete sort"
-msgstr ""
+msgstr "Misslyckades med att slutf&ouml;ra sortering"
 
 #: admin/displayappointments.php:147
 msgid "Now modify case outcome"
-msgstr ""
+msgstr "Nu &auml;ndra intervjuresultat"
 
 #: admin/displayappointments.php:149
 msgid ""
@@ -1060,84 +1102,84 @@ msgstr ""
 
 #: admin/displayappointments.php:150
 msgid "Modify case outcome"
-msgstr ""
+msgstr "&Auml;ndra intervju resultat"
 
 #: admin/displayappointments.php:157
 #: admin/displayappointments.php:193
 msgid "Edit appointment"
-msgstr ""
+msgstr "Redigera &aring;terkontakt"
 
 #: admin/displayappointments.php:182
 msgid "Contact phone"
-msgstr ""
+msgstr "Telefon"
 
 #: admin/displayappointments.php:190
 msgid "Start time"
-msgstr ""
+msgstr "Starttid"
 
 #: admin/displayappointments.php:191
 msgid "End time"
-msgstr ""
+msgstr "Sluttid"
 
 #: admin/displayappointments.php:196
 msgid "Cancel edit"
-msgstr ""
+msgstr "Avbryt redigering"
 
 #: admin/displayappointments.php:197
 msgid "Delete this appointment"
-msgstr ""
+msgstr "Radera denna &aringterkontakt"
 
 #: admin/displayappointments.php:206
 msgid "Display Appointments"
-msgstr ""
+msgstr "Visa &aringterkontakter"
 
 #: admin/displayappointments.php:208
 msgid "All appointments (with times displayed in your time zone)"
-msgstr ""
+msgstr "Alla &aringterkontakter (med visad tid i din tidszon)"
 
 #: admin/displayappointments.php:210
 #: admin/displayappointments.php:223
 msgid "Delete"
-msgstr ""
+msgstr "Radera"
 
 #: admin/displayappointments.php:210
 #: admin/displayappointments.php:223
 msgid "Edit"
-msgstr ""
+msgstr "Redigera"
 
 #: admin/displayappointments.php:223
 msgid "Operator Name"
-msgstr ""
+msgstr "Namn intervjuare"
 
 #: admin/displayappointments.php:223
 msgid "Respondent Name"
-msgstr ""
+msgstr "Namn kontaktperson"
 
 #: admin/displayappointments.php:223
 msgid "Surname"
-msgstr ""
+msgstr "Efternamn"
 
 #: admin/displayappointments.php:223
 msgid "Current outcome"
-msgstr ""
+msgstr "Nuvarande resultat"
 
 #: admin/displayappointments.php:223
 msgid "Operator who called"
-msgstr ""
+msgstr "Intervjuare som ringde"
 
 #: admin/displayappointments.php:226
 msgid "No appointments in the future"
-msgstr ""
+msgstr "Inga framtida &aringterkontakter"
 
 #: admin/quota.php:109
 #: admin/index.php:62
 #: admin/index.php:63
 msgid "Quota management"
-msgstr ""
+msgstr "Kvothanterare"
 
 #: admin/quota.php:134
 msgid "Current quotas (click to delete)"
-msgstr ""
+msgstr "Nuvarande kvot (klicka f&ouml;r att radera)"
 
 #: admin/quota.php:146
 msgid "Currently no quotas"
@@ -1145,139 +1187,140 @@ msgstr ""
 
 #: admin/quota.php:152
 msgid "Stop calling this sample when:"
-msgstr ""
+msgstr "Sluta ring denna kontakt n&auml;r:"
 
 #: admin/quota.php:152
-#: admin/quotarow.php:177
+#: admin/quotarow.php:187
 msgid "for"
-msgstr ""
+msgstr "f&ouml;r"
 
 #: admin/quota.php:152
-#: admin/quotarow.php:177
+#: admin/quotarow.php:184
+#: admin/quotarow.php:187
 msgid "completions"
-msgstr ""
+msgstr "Intervjuer"
 
 #: admin/quota.php:155
 msgid "Quota reached"
-msgstr ""
+msgstr "Kvot n&aringdd"
 
 #: admin/quota.php:157
 msgid "Quota not yet reached"
 msgstr ""
 
 #: admin/quota.php:159
-#: admin/quotarow.php:185
+#: admin/quotarow.php:195
 msgid "Current completions: "
-msgstr ""
+msgstr "Aktuella intervjuer: "
 
 #: admin/quota.php:167
 msgid "Select a question for the quota"
-msgstr ""
+msgstr "V&auml;lj en fr&aring;ga fouml;r denna kvot"
 
-#: admin/quota.php:190
+#: admin/quota.php:192
 msgid "Enter the details for creating the quota:"
 msgstr ""
 
-#: admin/quota.php:191
-#: admin/quotarow.php:259
+#: admin/quota.php:193
+#: admin/quotarow.php:275
 msgid "Pre defined values for this question:"
 msgstr ""
 
-#: admin/quota.php:204
-#: admin/quotarow.php:272
+#: admin/quota.php:205
+#: admin/quotarow.php:287
 msgid "No labels defined for this question"
 msgstr ""
 
-#: admin/quota.php:206
-#: admin/quotarow.php:274
+#: admin/quota.php:207
+#: admin/quotarow.php:289
 msgid "Code value"
-msgstr ""
-
-#: admin/quota.php:212
-#: admin/quotarow.php:284
-msgid "The code value to compare"
-msgstr ""
+msgstr "Kod v&auml;rde"
 
 #: admin/quota.php:213
-#: admin/quotarow.php:285
-msgid "The type of comparison"
-msgstr ""
+#: admin/quotarow.php:299
+msgid "The code value to compare"
+msgstr "Kodv&auml;rdet som ska j&auml;mf&ouml;ras"
 
 #: admin/quota.php:214
-#: admin/quotarow.php:286
-msgid "The number of completions to stop calling at"
-msgstr ""
+#: admin/quotarow.php:300
+msgid "The type of comparison"
+msgstr "Typen av j&auml;mf&ouml;relse"
 
-#: admin/quota.php:218
+#: admin/quota.php:215
+#: admin/quotarow.php:305
+msgid "The number of completions to stop calling at"
+msgstr "Antal intervjuer innan projektet ska brytas"
+
+#: admin/quota.php:219
 msgid "Add quota"
-msgstr ""
+msgstr "L&auml;gg till kvot"
 
 #: admin/operatorskill.php:149
 msgid "Assign operators to Skills"
-msgstr ""
+msgstr "Tilldela intervjuare r&auml;ttigheter"
 
 #: admin/operatorskill.php:270
 #: admin/index.php:70
 msgid "Modify operator skills"
-msgstr ""
+msgstr "&Auml;ndra intervjuar r&auml;ttigheter"
 
 #: admin/operatorperformance.php:67
 msgid "Operator Performance"
-msgstr ""
+msgstr "Intervjuare statistik"
 
 #: admin/operatorperformance.php:74
 #: admin/shiftreport.php:66
 msgid "Please select a questionnaire"
-msgstr ""
+msgstr "V&auml;nligen v&auml;lj en enk&auml;t"
 
 #: admin/operatorperformance.php:82
 #: admin/operatorperformance.php:105
 msgid "Calls"
-msgstr ""
+msgstr "Samtal"
 
 #: admin/operatorperformance.php:82
 #: admin/operatorperformance.php:105
 msgid "Total time"
-msgstr ""
+msgstr "Totaltid"
 
 #: admin/operatorperformance.php:82
 #: admin/operatorperformance.php:105
 msgid "Call time"
-msgstr ""
+msgstr "Samtalstid"
 
 #: admin/operatorperformance.php:82
 #: admin/operatorperformance.php:105
 msgid "Completions p/h"
-msgstr ""
+msgstr "Intervjuer/h"
 
 #: admin/operatorperformance.php:82
 #: admin/operatorperformance.php:105
 msgid "Calls p/h"
-msgstr ""
+msgstr "Samtal/h"
 
 #: admin/operatorperformance.php:82
 #: admin/operatorperformance.php:105
 msgid "Effectiveness"
-msgstr ""
+msgstr "Effektivitet"
 
 #: admin/operatorperformance.php:89
 msgid "till"
-msgstr ""
+msgstr "tills"
 
 #: admin/operatorperformance.php:97
 #: admin/shiftreport.php:73
 msgid "Please select a shift"
-msgstr ""
+msgstr "V&auml;nligen v&auml;lj ett skift"
 
 #: admin/availabilitygroup.php:70
 #: admin/availabilitygroup.php:89
 msgid "Availability groups"
-msgstr ""
+msgstr "Tillg&auml;ngligehtsgrupper"
 
 #: admin/availabilitygroup.php:84
 #: admin/availabilitygroup.php:94
 msgid "Modify"
-msgstr ""
+msgstr "&Auml;ndra"
 
 #: admin/availabilitygroup.php:92
 msgid "No availability groups"
@@ -1285,28 +1328,28 @@ msgstr ""
 
 #: admin/availabilitygroup.php:94
 msgid "Availablity group"
-msgstr ""
+msgstr "Tillg&auml;ngligehtsgrupper"
 
 #: admin/availabilitygroup.php:100
 msgid "Add availability group"
-msgstr ""
+msgstr "L&auml;gg till tillg&auml;nglighetsgrupp"
 
 #: admin/shiftreport.php:62
 #: admin/index.php:95
 msgid "Shift reports"
-msgstr ""
+msgstr "Skift rapport"
 
 #: admin/shiftreport.php:93
 msgid "Reports for this shift"
-msgstr ""
+msgstr "Rapport f&ouml;r detta skift"
 
 #: admin/shiftreport.php:105
 msgid "Report"
-msgstr ""
+msgstr "Rapport"
 
 #: admin/shiftreport.php:108
 msgid "Create new report for this shift"
-msgstr ""
+msgstr "Skapa ny rapport f&ouml;r detta skift"
 
 #: admin/shiftreport.php:114
 msgid "Enter report for this shift"
@@ -1314,47 +1357,47 @@ msgstr ""
 
 #: admin/shiftreport.php:118
 msgid "Add report"
-msgstr ""
+msgstr "L&auml;gg till rapport"
 
 #: admin/shiftreport.php:154
 msgid "This report does not exist in the database"
-msgstr ""
+msgstr "Denna rapport existerar ej i databasen"
 
 #: admin/shiftreport.php:159
 msgid "Edit report for this shift"
-msgstr ""
+msgstr "Redigera rapport f&ouml;r detta skift"
 
 #: admin/shiftreport.php:164
 msgid "Modify report"
-msgstr ""
+msgstr "&Auml;ndra rapport"
 
 #: admin/index.php:47
 msgid "Administrative Tools"
-msgstr ""
+msgstr "Adminverktyg"
 
 #: admin/index.php:51
 msgid "Questionnaire creation and management"
-msgstr ""
+msgstr "Enk&auml;t framtagning och hantering"
 
 #: admin/index.php:52
 msgid "Create an instrument in Limesurvey"
-msgstr ""
+msgstr "Skapa nytt instrument"
 
 #: admin/index.php:53
 msgid "Create a new questionnaire"
-msgstr ""
+msgstr "Skapa ny enk&auml;t"
 
 #: admin/index.php:54
 msgid "Questionnaire management"
-msgstr ""
+msgstr "Enk&auml;t hanterare"
 
 #: admin/index.php:55
 msgid "Administer instruments with Limesurvey"
-msgstr ""
+msgstr "Administrera instrument f&ouml;r enk&auml;ter"
 
 #: admin/index.php:57
 msgid "Sample/List management"
-msgstr ""
+msgstr "Kontakt/lista hanterare"
 
 #: admin/index.php:58
 msgid "Import a sample file (in CSV form)"
@@ -1362,34 +1405,34 @@ msgstr ""
 
 #: admin/index.php:59
 msgid "Assign samples to questionnaires"
-msgstr ""
+msgstr "Tilldela kontakter till enk&auml;t"
 
 #: admin/index.php:60
 msgid "Set values in questionnaire to pre fill"
 msgstr ""
 
 #: admin/index.php:64
-#: admin/quotarow.php:119
+#: admin/quotarow.php:126
 msgid "Quota row management"
 msgstr ""
 
 #: admin/index.php:66
 #: admin/index.php:68
-#: admin/index.php:108
+#: admin/index.php:109
 msgid "Operator management"
-msgstr ""
+msgstr "Intervjuare hanterare"
 
 #: admin/index.php:67
 msgid "Add operators to the system"
-msgstr ""
+msgstr "L&auml;gg till intervjuare i systemet"
 
 #: admin/index.php:69
 msgid "Assign operators to questionnaires"
-msgstr ""
+msgstr "Tilldela intervjuare till enkäter"
 
 #: admin/index.php:72
 msgid "Availability and shift management"
-msgstr ""
+msgstr "Tillg&auml;nglighet och skift hanterare"
 
 #: admin/index.php:73
 msgid "Manage availablity groups"
@@ -1397,15 +1440,15 @@ msgstr ""
 
 #: admin/index.php:74
 msgid "Assign availabilities to questionnaires"
-msgstr ""
+msgstr "Tlldela tillg&auml;nglighet till enkäter"
 
 #: admin/index.php:75
 msgid "Shift management (add/remove)"
-msgstr ""
+msgstr "Skift hanterare (l&auml;gg till/ta bort)"
 
 #: admin/index.php:77
 msgid "Questionnaire progress"
-msgstr ""
+msgstr "Enk&auml;t framsteg"
 
 #: admin/index.php:78
 msgid "Display all future appointments"
@@ -1413,85 +1456,90 @@ msgstr ""
 
 #: admin/index.php:79
 msgid "Sample call attempts report"
-msgstr ""
+msgstr "Kontakt samtalsf&ouml;rs&ouml;ksrapport"
 
 #: admin/index.php:81
 msgid "Questionnaire outcomes"
-msgstr ""
+msgstr "Enk&auml;t resultat"
 
 #: admin/index.php:82
 msgid "Data output"
-msgstr ""
+msgstr "Skriv ut data"
 
 #: admin/index.php:85
 #: admin/outcomes.php:259
 msgid "Operator performance"
-msgstr ""
+msgstr "Intervjuare statistik"
 
 #: admin/index.php:87
 msgid "Client management"
-msgstr ""
+msgstr "Klient hanterare"
 
 #: admin/index.php:88
 msgid "Add clients to the system"
-msgstr ""
+msgstr "L&auml;gg till klienter i systemet"
 
 #: admin/index.php:91
 msgid "Supervisor functions"
-msgstr ""
+msgstr "Chefsfunktioner"
 
 #: admin/index.php:92
 msgid "Assign outcomes to cases"
-msgstr ""
+msgstr "Tilldela resultat till intervju"
 
 #: admin/index.php:93
 msgid "Search the sample"
-msgstr ""
+msgstr "S&ouml;k kontakter"
 
-#: admin/index.php:97
-msgid "System settings"
+#: admin/index.php:96
+#: admin/bulkappointment.php:250
+msgid "Bulk appointment generator"
 msgstr ""
 
 #: admin/index.php:98
+msgid "System settings"
+msgstr "Systeminst&auml;llningar"
+
+#: admin/index.php:99
 msgid "Set default timezone list"
 msgstr ""
 
-#: admin/index.php:99
+#: admin/index.php:100
 msgid "Set default shift times"
 msgstr ""
 
-#: admin/index.php:100
+#: admin/index.php:101
 msgid "Set call restriction times"
 msgstr ""
 
-#: admin/index.php:101
+#: admin/index.php:102
 #: admin/centreinfo.php:62
 msgid "Set centre information"
 msgstr ""
 
-#: admin/index.php:102
+#: admin/index.php:103
 msgid "Start and monitor system wide case sorting"
 msgstr ""
 
-#: admin/index.php:106
+#: admin/index.php:107
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:107
+#: admin/index.php:108
 msgid "Start and monitor VoIP"
 msgstr ""
 
-#: admin/index.php:109
+#: admin/index.php:110
 msgid "Extension status"
 msgstr ""
 
 #: admin/assignsample.php:100
 msgid "Assign Sample: Select sample to assign"
-msgstr ""
+msgstr "Tilldela kontakter: V&auml;lj kontakter att tilldela"
 
 #: admin/assignsample.php:107
 msgid "Samples selected for this questionnaire"
-msgstr ""
+msgstr "Kontakter valda f&ouml;r denna enk&auml;t"
 
 #: admin/assignsample.php:118
 msgid "Sequentially selected"
@@ -1499,36 +1547,36 @@ msgstr ""
 
 #: admin/assignsample.php:119
 msgid "Randomly selected"
-msgstr ""
+msgstr "Slumpm&auml;ssigt valda"
 
 #: admin/assignsample.php:120
 msgid "Max calls:"
-msgstr ""
+msgstr "Max antal samtal:"
 
 #: admin/assignsample.php:120
 msgid "Max call attempts:"
-msgstr ""
+msgstr "Max antal samtalsf&ouml;rs&ouml;k"
 
 #: admin/assignsample.php:120
 #: admin/questionnaireavailability.php:117
 msgid "Click to unassign"
-msgstr ""
+msgstr "Klicka f&ouml;r att ta bort tilldelning"
 
 #: admin/assignsample.php:135
 msgid "Add a sample to this questionnaire:"
-msgstr ""
+msgstr "L&auml;gg till kontakter till denna enk&auml;t"
 
 #: admin/assignsample.php:138
 msgid "Select sample:"
-msgstr ""
+msgstr "V&auml;lj kontakter:"
 
 #: admin/assignsample.php:148
 msgid "Max calls (0 for unlimited)"
-msgstr ""
+msgstr "Max antal samtal (0 f&ouml;r o&auml;ndligt)"
 
 #: admin/assignsample.php:149
 msgid "Max call attempts (0 for unlimited)"
-msgstr ""
+msgstr "Max antal samtalsf&ouml;rs&ouml;k (0 f&ouml;r o&auml;ndligt)"
 
 #: admin/assignsample.php:150
 msgid "Number of answering machine messages to leave per case (0 for never)"
@@ -1537,6 +1585,7 @@ msgstr ""
 #: admin/assignsample.php:151
 msgid "Select from sample randomly? (otherwise sequentially)"
 msgstr ""
+"V&auml;lj fr&aring;n kontakter slumpm&auml;ssigt? (annars i f&ouml;ljd)"
 
 #: admin/centreinfo.php:66
 msgid "Set centre information: "
@@ -1544,11 +1593,11 @@ msgstr ""
 
 #: admin/centreinfo.php:67
 msgid "Update centre information"
-msgstr ""
+msgstr "Uppdatera callcenter information"
 
 #: admin/questionnaireavailability.php:93
 msgid "Assign availability group to questionnaire"
-msgstr ""
+msgstr "Tlldela tillg&auml;nglighetsgrupper till enkäter"
 
 #: admin/questionnaireavailability.php:110
 msgid "There are no availability groups selected for this questionnaire"
@@ -1556,19 +1605,19 @@ msgstr ""
 
 #: admin/questionnaireavailability.php:114
 msgid "Availability groups selected for this questionnaire"
-msgstr ""
+msgstr "Tillg&auml;ngligehtsgrupper valda f&auml;r denna enk&auml;t"
 
 #: admin/questionnaireavailability.php:132
 msgid "Add an availability group to this questionnaire:"
-msgstr ""
+msgstr "L&auml;gg till en tillg&auml;nglighetsgrupp till denna enk&auml;t"
 
 #: admin/questionnaireavailability.php:135
 msgid "Select availability group:"
-msgstr ""
+msgstr "V&auml;lj tillg&auml;nglighetsgrupp"
 
 #: admin/samplesearch.php:83
 msgid "Search sample"
-msgstr ""
+msgstr "S&ouml;k kontakter"
 
 #: admin/samplesearch.php:100
 msgid "No cases yet assigned: Delete this sample record"
@@ -1576,7 +1625,7 @@ msgstr ""
 
 #: admin/samplesearch.php:100
 msgid "Assigned to questionnaire: "
-msgstr ""
+msgstr "Tilldelad till enk&auml;t "
 
 #: admin/samplesearch.php:110
 msgid "No records in this sample match this search criteria"
@@ -1584,15 +1633,15 @@ msgstr ""
 
 #: admin/samplesearch.php:121
 msgid "Sample id"
-msgstr ""
+msgstr "Kontakt ID"
 
 #: admin/samplesearch.php:130
 msgid "Link"
-msgstr ""
+msgstr "L&auml;nk"
 
 #: admin/samplesearch.php:149
 msgid "Search within this sample"
-msgstr ""
+msgstr "S&ouml;k inom dessa kontakter"
 
 #: admin/samplesearch.php:151
 #, php-format
@@ -1601,25 +1650,25 @@ msgstr ""
 
 #: admin/samplesearch.php:156
 msgid "Search for:"
-msgstr ""
+msgstr "S&ouml;k efter:"
 
 #: admin/samplesearch.php:158
 msgid "Start search"
-msgstr ""
+msgstr "Starta s&ouml;kning"
 
 #: admin/outcomes.php:78
 msgid "Questionnaire Outcomes"
-msgstr ""
+msgstr "Enk&auml;t resultat"
 
 #: admin/outcomes.php:87
 #: admin/outcomes.php:206
 msgid "Outcomes"
-msgstr ""
+msgstr "Resultat"
 
 #: admin/outcomes.php:89
 #: admin/outcomes.php:193
 msgid "Sample status"
-msgstr ""
+msgstr "Kontaktstatus"
 
 #: admin/outcomes.php:91
 #: admin/outcomes.php:195
@@ -1634,7 +1683,7 @@ msgstr ""
 #: admin/outcomes.php:98
 #: admin/outcomes.php:203
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: admin/outcomes.php:104
 msgid "Average time on a completed questionnaire"
@@ -1646,11 +1695,11 @@ msgstr ""
 
 #: admin/outcomes.php:104
 msgid "Secs"
-msgstr ""
+msgstr "sekunder"
 
 #: admin/outcomes.php:117
 msgid "Rate"
-msgstr ""
+msgstr "Rank"
 
 #: admin/outcomes.php:118
 msgid "Response Rate 1"
@@ -1658,7 +1707,7 @@ msgstr ""
 
 #: admin/outcomes.php:119
 msgid "Refusal Rate 1"
-msgstr ""
+msgstr "V&auml;gran rank 1"
 
 #: admin/outcomes.php:120
 msgid "Cooperation Rate 1"
@@ -1666,13 +1715,13 @@ msgstr ""
 
 #: admin/outcomes.php:121
 msgid "Contact Rate 1"
-msgstr ""
+msgstr "Kontakt rank 1"
 
 #: admin/outcomes.php:136
 #: admin/outcomes.php:170
 #: admin/outcomes.php:223
 msgid "Count"
-msgstr ""
+msgstr "R&auml;kna"
 
 #: admin/outcomes.php:136
 #: admin/outcomes.php:170
@@ -1682,7 +1731,7 @@ msgstr ""
 
 #: admin/outcomes.php:155
 msgid "Operator call outcomes"
-msgstr ""
+msgstr "Intervjuar samtalsresultat"
 
 #: admin/outcomes.php:226
 msgid "No outcomes recorded for this sample"
@@ -1698,11 +1747,11 @@ msgstr ""
 
 #: admin/outcomes.php:238
 msgid "View shift reports"
-msgstr ""
+msgstr "Visa skift rapport"
 
 #: admin/outcomes.php:238
 msgid "View operator performance"
-msgstr ""
+msgstr "Visa intervjuar statistik"
 
 #: admin/outcomes.php:257
 msgid "No shifts defined for this questionnaire"
@@ -1710,11 +1759,11 @@ msgstr ""
 
 #: admin/outcomes.php:259
 msgid "Shift"
-msgstr ""
+msgstr "Skift"
 
 #: admin/outcomes.php:259
 msgid "Shift report"
-msgstr ""
+msgstr "Skift rapport"
 
 #: admin/voipmonitor.php:73
 #: admin/voipmonitor.php:95
@@ -1750,7 +1799,7 @@ msgstr ""
 
 #: admin/questionnaireprefill.php:132
 msgid "Select a question to pre fill"
-msgstr ""
+msgstr "V&auml;lj en fr&aring;ga att fylla i f&ouml;rv&auml;g"
 
 #: admin/questionnaireprefill.php:155
 msgid "Enter a value to pre fill this question with:"
@@ -1774,7 +1823,7 @@ msgstr ""
 
 #: admin/questionnaireprefill.php:174
 msgid "The value to pre fill"
-msgstr ""
+msgstr "V&auml;rdet som ska fyllas i f&ouml;rv&auml;g"
 
 #: admin/questionnaireprefill.php:175
 msgid "or: Select pre fill from sample list"
@@ -1782,12 +1831,68 @@ msgstr ""
 
 #: admin/questionnaireprefill.php:181
 msgid "Add pre fill"
+msgstr "L&auml;gg till fyll i f&ouml;rv&auml;"
+
+#: admin/bulkappointment.php:199
+msgid "Added appointment"
+msgstr ""
+
+#: admin/bulkappointment.php:203
+msgid ""
+"No such case id, or case set to a final outcome, or case currently assigned "
+"to an operator"
+msgstr ""
+
+#: admin/bulkappointment.php:209
+#: admin/bulkappointment.php:230
+msgid "Case id"
+msgstr "Intervju ID"
+
+#: admin/bulkappointment.php:209
+msgid "Result"
+msgstr ""
+
+#: admin/bulkappointment.php:229
+msgid ""
+"Please check the case id's, appointment start and end times and notes are "
+"correct before accepting below"
+msgstr ""
+
+#: admin/bulkappointment.php:235
+msgid "Accept and generate bulk appointments"
+msgstr ""
+
+#: admin/bulkappointment.php:240
+msgid ""
+"The file does not contain at least caseid, starttime and endtime columns. "
+"Please try again."
+msgstr ""
+
+#: admin/bulkappointment.php:251
+msgid ""
+"Provide a headered CSV file containing at least 3 columns - caseid, "
+"starttime and endtime. Optionally you can include a note column to attach a "
+"note to the case in addition to setting an appointment. Only cases that have "
+"temporary (non final) outcomes will have appointments generated, and the "
+"outcome of the case will be updated to an appointment outcome."
+msgstr ""
+
+#: admin/bulkappointment.php:252
+msgid "Example CSV file:"
+msgstr ""
+
+#: admin/bulkappointment.php:261
+msgid "Choose the CSV file to upload:"
+msgstr ""
+
+#: admin/bulkappointment.php:262
+msgid "Load bulk appointment CSV"
 msgstr ""
 
 #: admin/addshift.php:87
 #: admin/addshift.php:140
 msgid "Add shifts"
-msgstr ""
+msgstr "L&auml;gg till skift"
 
 #: admin/addshift.php:88
 msgid ""
@@ -1802,116 +1907,126 @@ msgstr ""
 
 #: admin/addshift.php:163
 msgid "Add shifts in your Time Zone"
-msgstr ""
+msgstr "L&auml;gg till skift i din tidszon"
 
 #: admin/addshift.php:235
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #: admin/addshift.php:235
 msgid "Use shift?"
-msgstr ""
+msgstr "Anv&auml;nda skift?"
 
 #: admin/addshift.php:260
 msgid "Submit changes"
-msgstr ""
+msgstr "Skicka förändringar"
 
-#: admin/quotarow.php:147
-#: admin/quotarow.php:153
+#: admin/quotarow.php:154
+#: admin/quotarow.php:160
 msgid "Copied quotas"
 msgstr ""
 
-#: admin/quotarow.php:156
+#: admin/quotarow.php:163
 msgid "Current row quotas (click to delete)"
 msgstr ""
 
-#: admin/quotarow.php:168
+#: admin/quotarow.php:175
 msgid "Currently no row quotas"
 msgstr ""
 
-#: admin/quotarow.php:175
+#: admin/quotarow.php:182
 msgid "Replicate: Where"
 msgstr ""
 
-#: admin/quotarow.php:175
-#: admin/quotarow.php:177
+#: admin/quotarow.php:182
+#: admin/quotarow.php:184
+#: admin/quotarow.php:187
 msgid "like"
-msgstr ""
+msgstr "som"
 
-#: admin/quotarow.php:177
-msgid "Stop calling"
-msgstr ""
+#: admin/quotarow.php:184
+msgid "Sample only. Stop calling where"
+msgstr "Endast kontakt. Sluta ring vart"
 
-#: admin/quotarow.php:177
+#: admin/quotarow.php:184
+#: admin/quotarow.php:187
 msgid "rows from this sample when:"
 msgstr ""
 
-#: admin/quotarow.php:180
+#: admin/quotarow.php:187
+msgid "Stop calling"
+msgstr "Sluta ring"
+
+#: admin/quotarow.php:190
 msgid "Row quota reached (Closed)"
 msgstr ""
 
-#: admin/quotarow.php:182
+#: admin/quotarow.php:192
 msgid "Row quota not yet reached (Open)"
 msgstr ""
 
-#: admin/quotarow.php:202
+#: admin/quotarow.php:212
 msgid "Copy quotas for this sample to (No error/duplicate checking): "
 msgstr ""
 
-#: admin/quotarow.php:204
+#: admin/quotarow.php:214
 msgid "Copy"
-msgstr ""
+msgstr "Kopiera"
 
-#: admin/quotarow.php:206
+#: admin/quotarow.php:216
 msgid ""
 "Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
 msgstr ""
 
-#: admin/quotarow.php:208
+#: admin/quotarow.php:218
 msgid "Copy adjustments"
-msgstr ""
+msgstr "Kopiera justeringar"
 
-#: admin/quotarow.php:214
+#: admin/quotarow.php:224
 msgid "Select a question for the row quota"
-msgstr ""
+msgstr "V&auml;lj en fr&aring;ga f&ouml;r denna rad kvot"
 
-#: admin/quotarow.php:236
+#: admin/quotarow.php:248
 msgid "No question (Replicate)"
 msgstr ""
 
-#: admin/quotarow.php:246
-msgid "Select the sample variable to exclude"
-msgstr ""
+#: admin/quotarow.php:252
+msgid "Sample only quota"
+msgstr "Kontakt endast kvot"
 
-#: admin/quotarow.php:258
+#: admin/quotarow.php:262
+msgid "Select the sample variable to exclude"
+msgstr "V&auml;lj kontaktvariabel som ska uteslutas"
+
+#: admin/quotarow.php:274
 msgid "Enter the details for creating the row quota:"
 msgstr ""
 
-#: admin/quotarow.php:280
+#: admin/quotarow.php:295
 msgid "Describe this quota"
-msgstr ""
+msgstr "Beskriv denna kvot"
 
-#: admin/quotarow.php:281
+#: admin/quotarow.php:296
 msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
 msgstr ""
 
-#: admin/quotarow.php:282
+#: admin/quotarow.php:297
 msgid ""
 "Should the priority be automatically updated based on the number of "
 "completions in this quota?"
 msgstr ""
 
-#: admin/quotarow.php:292
+#: admin/quotarow.php:311
 msgid "Exclude from the sample where the value is like"
 msgstr ""
 
-#: admin/quotarow.php:310
+#: admin/quotarow.php:329
 msgid "Add row quota"
-msgstr ""
+msgstr "L&auml;gg till rad kvot"
 
 #: admin/operators.php:135
 msgid "Added:"
-msgstr ""
+msgstr "Inlagt:"
 
 #: admin/operators.php:138
 msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
@@ -1925,7 +2040,7 @@ msgstr ""
 #: admin/operators.php:171
 #: admin/operators.php:186
 msgid "Add an operator"
-msgstr ""
+msgstr "L&auml;gg till en intervjuare"
 
 #: admin/operators.php:187
 msgid "Adding an operator here will give the user the ability to call cases"
@@ -1933,13 +2048,14 @@ msgstr ""
 
 #: admin/operators.php:187
 msgid "Assign Operator to Questionnaire"
-msgstr ""
+msgstr "Tilldela intervjuare till enkäter"
 
 #: admin/operators.php:187
 msgid "tool"
-msgstr ""
+msgstr "verktyg"
 
 #: admin/operators.php:188
+#: admin/clients.php:106
 msgid ""
 "Use this form to enter the username of a user based on your directory "
 "security system. For example, if you have secured the base directory of "
@@ -1981,35 +2097,36 @@ msgstr ""
 
 #: admin/operators.php:202
 msgid "Is the operator a normal interviewer?"
-msgstr ""
+msgstr "&Auml;r intervjuaren en normal intervjuare?"
 
 #: admin/operators.php:203
 msgid "Is the operator a supervisor?"
-msgstr ""
+msgstr "&Auml;r intervjuaren en chef"
 
 #: admin/operators.php:204
 msgid "Is the operator a refusal converter?"
-msgstr ""
+msgstr "&Auml;r intervjuaren en v&auml;gran omvandlare"
 
 #: admin/operators.php:205
+#: admin/clients.php:115
 msgid "Add user"
-msgstr ""
+msgstr "L&auml;gg till anv&auml;ndare"
 
 #: admin/new.php:59
 msgid "New: Create new questionnaire"
-msgstr ""
+msgstr "Ny: Skapa ny enk&auml;t"
 
 #: admin/new.php:102
 msgid "Successfully inserted"
-msgstr ""
+msgstr "Framg&aring;ngsrikt infogad"
 
 #: admin/new.php:102
 msgid "as questionnaire"
-msgstr ""
+msgstr "som enk&auml;t"
 
 #: admin/new.php:102
 msgid "linked to"
-msgstr ""
+msgstr "l&auml;nkad till"
 
 #: admin/new.php:105
 msgid "Error: Failed to insert questionnaire"
@@ -2018,11 +2135,11 @@ msgstr ""
 #: admin/new.php:116
 #: admin/questionnairelist.php:164
 msgid "Name for questionnaire:"
-msgstr ""
+msgstr "Namn p&aring; enk&auml;t:"
 
 #: admin/new.php:117
 msgid "Select limesurvey instrument:"
-msgstr ""
+msgstr "V&auml;lj enk&auml;tinstrument"
 
 #: admin/new.php:131
 #: admin/new.php:155
@@ -2054,7 +2171,7 @@ msgstr ""
 #: admin/new.php:181
 #: admin/questionnairelist.php:167
 msgid "Questionnaire for testing only?"
-msgstr ""
+msgstr "Enk&auml;t f&ouml;r enbart test?"
 
 #: admin/new.php:183
 #: admin/questionnairelist.php:169
@@ -2088,7 +2205,7 @@ msgstr ""
 
 #: admin/new.php:190
 msgid "Create Questionnaire"
-msgstr ""
+msgstr "Skapa enk&auml;t"
 
 #: admin/extensionstatus.php:47
 msgid "Display extension status"
@@ -2104,15 +2221,15 @@ msgstr ""
 
 #: admin/extensionstatus.php:49
 msgid "Not called"
-msgstr ""
+msgstr "Ej ringd"
 
 #: admin/extensionstatus.php:49
 msgid "Done"
-msgstr ""
+msgstr "Klar"
 
 #: admin/extensionstatus.php:62
 msgid "Extension"
-msgstr ""
+msgstr "Till&auml;gg"
 
 #: admin/extensionstatus.php:62
 msgid "VoIP Status"
@@ -2120,103 +2237,103 @@ msgstr ""
 
 #: admin/extensionstatus.php:62
 msgid "Call state"
-msgstr ""
+msgstr "Samtalstillst&aring;nd"
 
 #: admin/extensionstatus.php:62
 msgid "Time on call"
-msgstr ""
+msgstr "Tid i samtal"
 
 #: admin/extensionstatus.php:65
 msgid "No operators"
-msgstr ""
+msgstr "Inga intervjuare"
 
 #: admin/databasestrings.php:32
 msgid "Not attempted or worked"
-msgstr ""
+msgstr "Inte p&aring; jobbet"
 
 #: admin/databasestrings.php:33
 msgid "No answer"
-msgstr ""
+msgstr "Inget svar"
 
 #: admin/databasestrings.php:34
 msgid "Technical phone problems"
-msgstr ""
+msgstr "Tekniskt telefonproblem"
 
 #: admin/databasestrings.php:35
 msgid "Other, Referred to Supervisor (Eligible)"
-msgstr ""
+msgstr "Annat, h&auml;nvisad till handledare (Kvalificerad)"
 
 #: admin/databasestrings.php:36
 msgid "Other, Referred to Supervisor (Unknown eligibility)"
-msgstr ""
+msgstr "Annat, h&auml;nvisad till handledare (ok&auml;nt Kvalificering)"
 
 #: admin/databasestrings.php:37
 msgid "Soft Refusal, Other"
-msgstr ""
+msgstr "Mjuk v&auml;gran, annan person"
 
 #: admin/databasestrings.php:38
 msgid "Hard Refusal, Other"
-msgstr ""
+msgstr "H&aring;rd v&auml;gran, annan person"
 
 #: admin/databasestrings.php:39
 msgid "Soft Refusal, Respondent"
-msgstr ""
+msgstr "Mjuk v&auml;gran, Kontaktperson"
 
 #: admin/databasestrings.php:40
 msgid "Hard Refusal, Respondent"
-msgstr ""
+msgstr "H&aring;rd v&auml;gran, Kontaktperson"
 
 #: admin/databasestrings.php:41
 msgid "Complete"
-msgstr ""
+msgstr "Klar"
 
 #: admin/databasestrings.php:42
 msgid "Known respondent refusal"
-msgstr ""
+msgstr "V&auml;gran kontaktperson"
 
 #: admin/databasestrings.php:43
 msgid "Household-level refusal"
-msgstr ""
+msgstr "V&auml;gran f&ouml;retagsniv&aring;"
 
 #: admin/databasestrings.php:44
 msgid "Broken appointment (Implicit refusal)"
-msgstr ""
+msgstr "Bruten &aringterkontakt (v&auml;gran)"
 
 #: admin/databasestrings.php:45
 msgid "Disconnected number"
-msgstr ""
+msgstr "Bortkopplat nummer"
 
 #: admin/databasestrings.php:46
 msgid "Fax/data line"
-msgstr ""
+msgstr "Fax/data"
 
 #: admin/databasestrings.php:47
 msgid "Business, government office, other organization"
-msgstr ""
+msgstr "F&ouml;retag"
 
 #: admin/databasestrings.php:48
 msgid "No eligible respondent"
-msgstr ""
+msgstr "Inte r&auml;tt kontaktperson"
 
 #: admin/databasestrings.php:49
 msgid "Accidental hang up or temporary phone problem"
-msgstr ""
+msgstr "R&aring;kade l&auml;gga p&aring;"
 
 #: admin/databasestrings.php:50
 msgid "Definite Appointment - Respondent"
-msgstr ""
+msgstr "&Aringterkontakt - Kontaktperson"
 
 #: admin/databasestrings.php:51
 msgid "Definite Appointment - Other"
-msgstr ""
+msgstr "&Aringterkontakt - Annan person"
 
 #: admin/databasestrings.php:52
 msgid "Unspecified Appointment - Respondent"
-msgstr ""
+msgstr "Eventuell &aringterkontakt - Kontaktperson"
 
 #: admin/databasestrings.php:53
 msgid "Unspecified Appointment - Other"
-msgstr ""
+msgstr "Eventuell &aringterkontakt - Annan person"
 
 #: admin/databasestrings.php:54
 msgid "Household answering machine - Message left"
@@ -2228,7 +2345,7 @@ msgstr ""
 
 #: admin/databasestrings.php:56
 msgid "Respondent Dead"
-msgstr ""
+msgstr "Kontaktperson d&ouml;d"
 
 #: admin/databasestrings.php:57
 msgid "Physically or mentally unable/incompetent"
@@ -2240,23 +2357,23 @@ msgstr ""
 
 #: admin/databasestrings.php:59
 msgid "Respondent language problem"
-msgstr ""
+msgstr "Kontaktperson spr&aring;kproblem"
 
 #: admin/databasestrings.php:60
 msgid "Answering machine - Not a household"
-msgstr ""
+msgstr "Telefonsvarare - Inte hush&aring;ll"
 
 #: admin/databasestrings.php:61
 msgid "Out of sample"
-msgstr ""
+msgstr "Slut p&aring; kontakter"
 
 #: admin/databasestrings.php:62
 msgid "Non contact"
-msgstr ""
+msgstr "Ingen kontakt"
 
 #: admin/databasestrings.php:63
 msgid "Temporary Outcomes (normal cases)"
-msgstr ""
+msgstr "Tempor&auml;rt resultat (normal &auml;rende)"
 
 #: admin/databasestrings.php:64
 msgid "Supervisor Outcomes (referred to supervisor)"
@@ -2264,7 +2381,7 @@ msgstr ""
 
 #: admin/databasestrings.php:65
 msgid "Refusal Outcomes (respondent refused)"
-msgstr ""
+msgstr "V&auml;gran resultat (kontaktperson v&auml;grade)"
 
 #: admin/databasestrings.php:66
 msgid "Final Outcomes (completed, final refusal, etc)"
@@ -2272,39 +2389,39 @@ msgstr ""
 
 #: admin/databasestrings.php:67
 msgid "Miscellaneous - Unavailable for a week"
-msgstr ""
+msgstr "&Ouml;vrigt - Ej tillg&auml;nglig f&ouml;r en vecka"
 
 #: admin/databasestrings.php:69
 msgid "Monday"
-msgstr ""
+msgstr "M&aring;ndag"
 
 #: admin/databasestrings.php:70
 msgid "Tuesday"
-msgstr ""
+msgstr "Tisdag"
 
 #: admin/databasestrings.php:71
 msgid "Wednesday"
-msgstr ""
+msgstr "Onsdag"
 
 #: admin/databasestrings.php:72
 msgid "Thursday"
-msgstr ""
+msgstr "Torsdag"
 
 #: admin/databasestrings.php:73
 msgid "Friday"
-msgstr ""
+msgstr "Fredag"
 
 #: admin/databasestrings.php:74
 msgid "Saturday"
-msgstr ""
+msgstr "L&ouml;rdag"
 
 #: admin/databasestrings.php:75
 msgid "Sunday"
-msgstr ""
+msgstr "S&ouml;ndag"
 
 #: admin/databasestrings.php:76
 msgid "Quota filled"
-msgstr ""
+msgstr "Kvot fylld"
 
 #: admin/databasestrings.php:77
 msgid "Weekday mornings (Before 12pm)"
@@ -2320,6 +2437,26 @@ msgstr ""
 
 #: admin/databasestrings.php:80
 msgid "Saturdays"
+msgstr "L&ouml;rdagar"
+
+#: admin/casesbyoutcome.php:52
+msgid "Cases by outcome"
+msgstr "Intervjuer genom resultat"
+
+#: admin/casesbyoutcome.php:72
+msgid "Project"
+msgstr "Projekt"
+
+#: admin/casesbyoutcome.php:73
+msgid "Current outcome:"
+msgstr "Aktuellt resultat:"
+
+#: admin/casesbyoutcome.php:84
+msgid "No cases with this outcome"
+msgstr "Inga intervjuer med detta resultat"
+
+#: admin/casesbyoutcome.php:91
+msgid "Error with input"
 msgstr ""
 
 #: admin/process.php:90
@@ -2332,7 +2469,7 @@ msgstr ""
 
 #: admin/availability.php:89
 msgid "Modify availability"
-msgstr ""
+msgstr "&Auml;ndra tillg&auml;nglighet"
 
 #: admin/availability.php:114
 #: admin/callrestrict.php:96
@@ -2345,24 +2482,24 @@ msgstr ""
 #: admin/shifttemplate.php:134
 #: admin/callrestrict.php:134
 msgid "Add row"
-msgstr ""
+msgstr "L&auml;gg till rad"
 
 #: admin/availability.php:153
 msgid "Save changes to availabilities"
-msgstr ""
+msgstr "Spara &auml;ndringar f&ouml;r tillg&auml;ngligheter"
 
 #: admin/clients.php:84
 msgid "Could not add"
-msgstr ""
+msgstr "Kunde ej l&auml;gga till"
 
 #: admin/clients.php:84
 msgid "There may already be a client of this name"
-msgstr ""
+msgstr "Det kanske redan finns en klient med samma namn"
 
 #: admin/clients.php:89
 #: admin/clients.php:104
 msgid "Add a client"
-msgstr ""
+msgstr "L&auml;gg till klient"
 
 #: admin/clients.php:105
 msgid ""
@@ -2370,14 +2507,17 @@ msgid ""
 "client subdirectory. You can assign a client to a particular project using "
 "the"
 msgstr ""
+"L&auml;gga till en klient h&auml;r ger dom tillg&aring;ng till projekt "
+"information i klient mappen. Du kan tilldela en klient ett specifikt projekt "
+"genom att anv&auml;nda"
 
 #: admin/clients.php:105
 msgid "Assign client to Questionnaire"
-msgstr ""
+msgstr "Tilldela klienter till enkäter"
 
 #: admin/clients.php:105
 msgid "tool."
-msgstr ""
+msgstr "verktyg."
 
 #: admin/clients.php:108
 msgid "Enter the username of a client to add:"
@@ -2401,7 +2541,7 @@ msgstr ""
 
 #: admin/shifttemplate.php:82
 msgid "Modify shift template"
-msgstr ""
+msgstr "&Auml;ndra skift mall"
 
 #: admin/shifttemplate.php:96
 msgid ""
@@ -2411,46 +2551,50 @@ msgstr ""
 
 #: admin/shifttemplate.php:135
 msgid "Save changes to shifts"
-msgstr ""
+msgstr "Spara &auml;ndringar f&ouml;r skift"
 
-#: admin/dataoutput.php:203
+#: admin/dataoutput.php:222
 msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
-#: admin/dataoutput.php:205
-#: admin/samplecallattempts.php:90
+#: admin/dataoutput.php:224
+#: admin/samplecallattempts.php:186
 msgid "Please select a sample"
-msgstr ""
+msgstr "V&auml;nligen v&auml;lj kontakter"
 
-#: admin/dataoutput.php:212
+#: admin/dataoutput.php:231
 msgid "Download data for this sample via Limesurvey"
 msgstr ""
 
-#: admin/dataoutput.php:219
+#: admin/dataoutput.php:238
 msgid "Download key file: select sample var"
 msgstr ""
 
-#: admin/dataoutput.php:223
+#: admin/dataoutput.php:242
 msgid "Download complete key file"
+msgstr ""
+
+#: admin/dataoutput.php:245
+msgid "Download complete sample file with current outcomes"
 msgstr ""
 
 #: admin/callrestrict.php:82
 msgid "Modify call restriction times"
-msgstr ""
+msgstr "&Auml;ndra samtalsrestriktionstider"
 
 #: admin/callrestrict.php:135
 msgid "Save changes to restriction times"
-msgstr ""
+msgstr "Spara &auml;ndringar f&ouml;r restriktionstider"
 
 #: admin/operatorlist.php:159
 #: admin/operatorlist.php:208
 msgid "Update password"
-msgstr ""
+msgstr "Uppdatera l&ouml;senord"
 
 #: admin/operatorlist.php:165
 #: admin/operatorlist.php:188
 msgid "Update timezone"
-msgstr ""
+msgstr "Uppdatera tidszon"
 
 #: admin/operatorlist.php:166
 msgid "Windows bat file"
@@ -2463,12 +2607,12 @@ msgstr ""
 #: admin/operatorlist.php:169
 #: admin/questionnairelist.php:189
 msgid "Enable"
-msgstr ""
+msgstr "Aktivera"
 
 #: admin/operatorlist.php:171
 #: admin/questionnairelist.php:191
 msgid "Disable"
-msgstr ""
+msgstr "Inaktivera"
 
 #: admin/operatorlist.php:175
 msgid "Enable VoIP"
@@ -2480,16 +2624,16 @@ msgstr ""
 
 #: admin/operatorlist.php:185
 msgid "Operator list"
-msgstr ""
+msgstr "Intervjuarelista"
 
 #: admin/operatorlist.php:188
 msgid "Username"
-msgstr ""
+msgstr "Anv&auml;ndarnamn"
 
 #: admin/operatorlist.php:188
 #: admin/questionnairelist.php:184
 msgid "Enable/Disable"
-msgstr ""
+msgstr "Aktivera/inaktivera"
 
 #: admin/operatorlist.php:192
 msgid ""
@@ -2518,79 +2662,74 @@ msgstr ""
 msgid "*nix VoIP"
 msgstr ""
 
-#: admin/samplecallattempts.php:57
-msgid "Sample call attempt"
-msgstr ""
+#: admin/samplecallattempts.php:108
+msgid "Number of cases"
+msgstr "Antal intervjuer"
 
-#: admin/samplecallattempts.php:59
+#: admin/samplecallattempts.php:108
+msgid "Call attempts made"
+msgstr "Antal samtalsf&ouml;rs&ouml;k"
+
+#: admin/samplecallattempts.php:171
+msgid "Sample call attempt"
+msgstr "Kontakt samtalsf&ouml;rs&ouml;k"
+
+#: admin/samplecallattempts.php:173
 msgid "Overall"
 msgstr ""
 
-#: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:88
-#: admin/samplecallattempts.php:109
-#: admin/samplecallattempts.php:132
-msgid "Number of cases"
-msgstr ""
-
-#: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:88
-#: admin/samplecallattempts.php:109
-#: admin/samplecallattempts.php:132
-msgid "Call attempts made"
-msgstr ""
-
-#: admin/samplecallattempts.php:113
+#: admin/samplecallattempts.php:197
 msgid "Please select a quota"
-msgstr ""
+msgstr "V&auml;lj en kvot"
 
-#: admin/samplecallattempts.php:130
+#: admin/samplecallattempts.php:203
 msgid "No calls for this quota"
-msgstr ""
+msgstr "Inga samtal f&ouml;r denna kvot"
 
-#: admin/samplecallattempts.php:136
+#: admin/samplecallattempts.php:207
 msgid "No calls for this sample"
-msgstr ""
+msgstr "Inga samtal f&ouml;r denna kontakt"
 
-#: admin/samplecallattempts.php:140
+#: admin/samplecallattempts.php:211
 msgid "No calls for this questionnaire"
-msgstr ""
+msgstr "Inga samtal gjorda f&ouml;r denna enk&auml;t"
 
 #: admin/questionnairelist.php:122
 msgid "Questionnaire list"
-msgstr ""
+msgstr "Enk&auml;tlista"
 
 #: admin/questionnairelist.php:161
 msgid "Edit instrument in Limesurvey"
-msgstr ""
+msgstr "Redigera instrument i Limesurvey"
 
 #: admin/questionnairelist.php:173
 msgid "Edit respondent selection instrument in Limesurvey"
-msgstr ""
+msgstr "Redigera kontaktperson i Limesurvey"
 
 #: admin/questionnairelist.php:176
 msgid "Update Questionnaire"
-msgstr ""
+msgstr "Uppdatera enk&auml;t"
 
 #: admin/timezonetemplate.php:87
 msgid "Add/Remove Timezones"
-msgstr ""
+msgstr "L&auml;gg till/Ta bort tidszoner"
 
-#: admin/timezonetemplate.php:88
+#: admin/timezonetemplate.php:101
 msgid "Click to remove a Timezone from the default list"
 msgstr ""
+"Klicka h&auml;r f&ouml;r att ta bort ett tidszon fr&aring;n standardlistan"
 
-#: admin/timezonetemplate.php:100
+#: admin/timezonetemplate.php:113
 msgid "Add a Timezone:"
-msgstr ""
+msgstr "L&auml;gg till tidszon:"
 
-#: admin/timezonetemplate.php:103
+#: admin/timezonetemplate.php:116
 msgid "Timezone: "
-msgstr ""
+msgstr "Tidszon: "
 
-#: admin/timezonetemplate.php:104
+#: admin/timezonetemplate.php:117
 msgid "Add Timezone"
-msgstr ""
+msgstr "L&auml;gg till tidszon"
 
 #: admin/supervisor.php:89
 msgid "Enter a case id or select a case from the list below:"
@@ -2602,24 +2741,16 @@ msgstr ""
 
 #: admin/supervisor.php:109
 msgid "Select case"
-msgstr ""
+msgstr "Välj intervju"
 
 #: admin/supervisor.php:126
 msgid "Set an outcome for this call"
-msgstr ""
+msgstr "S&auml;tt resultat f&ouml;r detta samtal"
 
 #: admin/supervisor.php:139
 #: admin/supervisor.php:321
 msgid "Set outcome"
-msgstr ""
-
-#: admin/supervisor.php:220
-msgid "Project"
-msgstr ""
-
-#: admin/supervisor.php:223
-msgid "Current outcome:"
-msgstr ""
+msgstr "S&auml;tt resultat"
 
 #: admin/supervisor.php:247
 msgid "No appointments for this case"
@@ -2627,63 +2758,65 @@ msgstr ""
 
 #: admin/supervisor.php:249
 msgid "Create appointment for this case"
-msgstr ""
+msgstr "Skapa &aring;terkontakt f&ouml;r denna intervju"
 
 #: admin/supervisor.php:261
 msgid "Call list"
-msgstr ""
+msgstr "Samtalslista"
 
 #: admin/supervisor.php:267
 msgid "Phone number"
-msgstr ""
+msgstr "Telefonnummer"
 
 #: admin/supervisor.php:267
 msgid "Change outcome"
-msgstr ""
+msgstr "&Auml;ndra resultat"
 
 #: admin/supervisor.php:280
 msgid "Case notes"
-msgstr ""
+msgstr "Intervju kommentarer"
 
 #: admin/supervisor.php:302
 msgid "Modify responses for this case"
-msgstr ""
+msgstr "&Auml;ndra svar f&ouml;r detta &auml;rende"
 
 #: admin/supervisor.php:304
 msgid "Case not yet started in Limesurvey"
-msgstr ""
+msgstr "Intervju inte p&aring;b&ouml;rjad &auml;nnu i projektet"
 
 #: admin/supervisor.php:308
 msgid "Set a case outcome"
-msgstr ""
+msgstr "S&auml;tt &auml;rende resultat"
 
 #: admin/supervisor.php:358
 msgid "Update case availability"
-msgstr ""
+msgstr "Uppdatera intervju tillg&auml;nglighet"
 
 #: admin/supervisor.php:370
 msgid "Assign this case to operator (will appear as next case for them)"
 msgstr ""
+"Tilldela denna intervju till en intervjuare (kommer upp som n&auml;sta "
+"intervju för dom)"
 
 #: admin/supervisor.php:382
 msgid "Assign this case to operator"
-msgstr ""
+msgstr "Tilldela denna intervju till en intervjuare"
 
 #: admin/supervisor.php:390
 msgid "Case does not exist"
-msgstr ""
+msgstr "Intervju finns ej"
 
 #: functions/functions.operator.php:121
 msgid "morning"
-msgstr ""
+msgstr "f&ouml;rmiddag"
 
 #: functions/functions.operator.php:122
 msgid "afternoon"
-msgstr ""
+msgstr "eftermiddag"
 
 #: functions/functions.operator.php:123
 msgid "evening"
-msgstr ""
+msgstr "kv&auml;ll"
 
 #: functions/functions.operator.php:744
 msgid ""
@@ -2693,100 +2826,101 @@ msgstr ""
 
 #: functions/functions.calendar.php:261
 msgid "First name:"
-msgstr ""
+msgstr "F&ouml;rnamn:"
 
 #: functions/functions.calendar.php:262
 msgid "Last  name:"
-msgstr ""
+msgstr "Efternamn:"
 
 #: functions/functions.calendar.php:267
 msgid "Time Zone:"
-msgstr ""
+msgstr "Tidszon:"
 
 #: functions/functions.calendar.php:324
 msgid "Shift from:"
-msgstr ""
+msgstr "Skift fr&aring;n:"
 
 #: functions/functions.calendar.php:331
 msgid "Start Time"
-msgstr ""
+msgstr "Starttid"
 
 #: functions/functions.calendar.php:381
 msgid "End Time"
-msgstr ""
+msgstr "Sluttid"
 
 #: functions/functions.performance.php:469
 msgid "No shift"
-msgstr ""
+msgstr "Inga skift"
 
 #: functions/functions.performance.php:492
 msgid "Total completions"
-msgstr ""
+msgstr "Totalt intervjuer"
 
 #: functions/functions.performance.php:521
 msgid "Completions this shift"
-msgstr ""
+msgstr "Intervjuer detta skift"
 
 #: functions/functions.performance.php:544
 #: functions/functions.performance.php:590
 msgid "No previous shift"
-msgstr ""
+msgstr "Inga f&ouml;reg&aring;ende skift"
 
 #: functions/functions.performance.php:564
 msgid "Completions on the previous shift"
-msgstr ""
+msgstr "Intervjuer på f&ouml;reg&aring;ende skift"
 
 #: functions/functions.performance.php:611
 msgid "Completions this time on the previous shift"
 msgstr ""
+"Intervjuer denna g&aring;ng j&auml;mf&ouml;rt med f&ouml;reg&aring;ende skift"
 
 #: functions/functions.performance.php:629
 msgid "No calls made for this shift"
-msgstr ""
+msgstr "Inga samtal gjorda f&ouml;r detta skift"
 
 #: functions/functions.performance.php:631
 msgid "Top CPH for this shift"
-msgstr ""
+msgstr "H&ouml;gsta CPH f&ouml;r detta skift"
 
 #: functions/functions.performance.php:648
 msgid "No calls made for this project"
-msgstr ""
+msgstr "Inga samtal gjorda f&ouml;r detta projekt"
 
 #: functions/functions.performance.php:650
 msgid "Top CPH"
-msgstr ""
+msgstr "H&ouml;gsta CPH"
 
 #: functions/functions.import.php:89
 msgid "Duplicate name"
-msgstr ""
+msgstr "Dubblett namn"
 
 #: functions/functions.import.php:111
 msgid "You must select one and one only Primary Phone number"
-msgstr ""
+msgstr "Du m&aring;ste v&auml;lja ett prim&auml;rt telefonnummer"
 
 #: functions/functions.import.php:127
 msgid "Import?"
-msgstr ""
+msgstr "Importera?"
 
 #: functions/functions.import.php:127
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: functions/functions.voip.php:449
 msgid "online"
-msgstr ""
+msgstr "Uppkopplad"
 
 #: functions/functions.voip.php:449
 msgid "offline"
-msgstr ""
+msgstr "Inte uppkopplad"
 
 #: functions/functions.voip.php:530
 msgid "Disconnected"
-msgstr ""
+msgstr "Fr&aring;nkopplad"
 
 #: functions/functions.voip.php:532
 msgid "Reconnected"
-msgstr ""
+msgstr "Kopplas om"
 
 #: functions/functions.voip.php:555
 #: functions/functions.voip.php:567
@@ -2794,21 +2928,15 @@ msgstr ""
 #: functions/functions.voip.php:589
 #: functions/functions.voip.php:598
 msgid " Extension "
-msgstr ""
-
-#: functions/functions.voip.php:555
-#: functions/functions.voip.php:567
-#: functions/functions.voip.php:579
-msgid "Case id"
-msgstr ""
+msgstr " Till&auml;gg "
 
 #: functions/functions.voip.php:589
 msgid "Unregistered"
-msgstr ""
+msgstr "Oregistrerad"
 
 #: functions/functions.voip.php:598
 msgid "Registered"
-msgstr ""
+msgstr "Registrerad"
 
 #: functions/functions.freepbx.php:138
 #, php-format
@@ -2838,15 +2966,15 @@ msgstr ""
 
 #: display/index.php:111
 msgid "Display"
-msgstr ""
+msgstr "Visa"
 
 #: client/index.php:73
 msgid "There are no questionnaires assigned to you"
-msgstr ""
+msgstr "Det finns inga fr&aring;geformul&auml;r som tilldelats dig"
 
 #: client/index.php:124
 msgid "You are not a valid client"
-msgstr ""
+msgstr "Du har inte ett giltigt klientcertifikat"
 
 #: include/php-gettext-1.0.11/examples/pigs_dropin.php:77
 #: include/php-gettext-1.0.11/examples/pigs_fallback.php:76
@@ -2854,3 +2982,5 @@ msgid ""
 "This is how the story goes.\n"
 "\n"
 msgstr ""
+"Detta %auml;r hur historien g&aring;r.\n"
+"\n"

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-10-10 11:04+1000\n"
+"POT-Creation-Date: 2012-11-14 11:25+1000\n"
 "PO-Revision-Date: 2011-08-03 19:33+0000\n"
 "Last-Translator: Baptiste Fontaine <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-11-15 03:24+0000\n"
-"X-Generator: Launchpad (build 14291)\n"
+"X-Launchpad-Export-Date: 2012-11-14 05:05+0000\n"
+"X-Generator: Launchpad (build 16251)\n"
 
 #: callhistory.php:56
 msgid "Case History List"
@@ -852,49 +852,49 @@ msgid ""
 "Please wait for this call to answer before attempting to call the supervisor"
 msgstr ""
 
-#: admin/systemsort.php:73
-#: admin/systemsort.php:96
-#: admin/systemsort.php:97
+#: admin/systemsort.php:75
+#: admin/systemsort.php:98
+#: admin/systemsort.php:99
 msgid "Monitor system wide case sorting"
 msgstr ""
 
-#: admin/systemsort.php:75
+#: admin/systemsort.php:77
 msgid "Running process:"
 msgstr ""
 
-#: admin/systemsort.php:79
+#: admin/systemsort.php:81
 msgid "Kill signal sent: Please wait..."
 msgstr ""
 
-#: admin/systemsort.php:80
+#: admin/systemsort.php:82
 msgid ""
 "Process is already closed (eg. server was rebooted) - click here to confirm"
 msgstr ""
 
-#: admin/systemsort.php:84
+#: admin/systemsort.php:86
 msgid "Kill the running process"
 msgstr ""
 
-#: admin/systemsort.php:90
-#: admin/systemsort.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Log id"
 msgstr ""
 
-#: admin/systemsort.php:90
-#: admin/systemsort.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Date"
 msgstr "Date"
 
-#: admin/systemsort.php:90
-#: admin/systemsort.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Log entry"
 msgstr ""
 
-#: admin/systemsort.php:98
+#: admin/systemsort.php:100
 msgid "Click here to enable and begin system wide case sorting"
 msgstr ""
 
-#: admin/systemsort.php:99
+#: admin/systemsort.php:101
 msgid ""
 "System wide case sorting is periodically (via SYSTEM_SORT_MINUTES "
 "configuration directive) sorting cases on a system wide basis instead of "
@@ -904,20 +904,28 @@ msgid ""
 "problems, it is not recommended to use this feature."
 msgstr ""
 
-#: admin/systemsort.php:100
+#: admin/systemsort.php:102
 msgid "Outcome of last process run (if any)"
 msgstr ""
 
-#: admin/callhistory.php:52
+#: admin/callhistory.php:73
+#: admin/callhistory.php:100
+#: admin/callhistory.php:108
 msgid "Call History List"
 msgstr ""
 
-#: admin/callhistory.php:74
+#: admin/callhistory.php:90
+#: admin/callhistory.php:102
 msgid "Date/Time call start"
 msgstr ""
 
-#: admin/callhistory.php:74
+#: admin/callhistory.php:90
+#: admin/callhistory.php:102
 msgid "Time end"
+msgstr ""
+
+#: admin/callhistory.php:101
+msgid "Download Call History List"
 msgstr ""
 
 #: admin/clientquestionnaire.php:150
@@ -1152,12 +1160,13 @@ msgid "Stop calling this sample when:"
 msgstr ""
 
 #: admin/quota.php:152
-#: admin/quotarow.php:177
+#: admin/quotarow.php:187
 msgid "for"
 msgstr "pour"
 
 #: admin/quota.php:152
-#: admin/quotarow.php:177
+#: admin/quotarow.php:184
+#: admin/quotarow.php:187
 msgid "completions"
 msgstr ""
 
@@ -1170,7 +1179,7 @@ msgid "Quota not yet reached"
 msgstr ""
 
 #: admin/quota.php:159
-#: admin/quotarow.php:185
+#: admin/quotarow.php:195
 msgid "Current completions: "
 msgstr ""
 
@@ -1178,41 +1187,41 @@ msgstr ""
 msgid "Select a question for the quota"
 msgstr ""
 
-#: admin/quota.php:190
+#: admin/quota.php:192
 msgid "Enter the details for creating the quota:"
 msgstr ""
 
-#: admin/quota.php:191
-#: admin/quotarow.php:259
+#: admin/quota.php:193
+#: admin/quotarow.php:275
 msgid "Pre defined values for this question:"
 msgstr ""
 
-#: admin/quota.php:204
-#: admin/quotarow.php:272
+#: admin/quota.php:205
+#: admin/quotarow.php:287
 msgid "No labels defined for this question"
 msgstr ""
 
-#: admin/quota.php:206
-#: admin/quotarow.php:274
+#: admin/quota.php:207
+#: admin/quotarow.php:289
 msgid "Code value"
 msgstr ""
 
-#: admin/quota.php:212
-#: admin/quotarow.php:284
+#: admin/quota.php:213
+#: admin/quotarow.php:299
 msgid "The code value to compare"
 msgstr ""
 
-#: admin/quota.php:213
-#: admin/quotarow.php:285
+#: admin/quota.php:214
+#: admin/quotarow.php:300
 msgid "The type of comparison"
 msgstr ""
 
-#: admin/quota.php:214
-#: admin/quotarow.php:286
+#: admin/quota.php:215
+#: admin/quotarow.php:305
 msgid "The number of completions to stop calling at"
 msgstr ""
 
-#: admin/quota.php:218
+#: admin/quota.php:219
 msgid "Add quota"
 msgstr ""
 
@@ -1373,13 +1382,13 @@ msgid "Set values in questionnaire to pre fill"
 msgstr ""
 
 #: admin/index.php:64
-#: admin/quotarow.php:119
+#: admin/quotarow.php:126
 msgid "Quota row management"
 msgstr ""
 
 #: admin/index.php:66
 #: admin/index.php:68
-#: admin/index.php:108
+#: admin/index.php:109
 msgid "Operator management"
 msgstr ""
 
@@ -1452,40 +1461,45 @@ msgstr ""
 msgid "Search the sample"
 msgstr ""
 
-#: admin/index.php:97
+#: admin/index.php:96
+#: admin/bulkappointment.php:250
+msgid "Bulk appointment generator"
+msgstr ""
+
+#: admin/index.php:98
 msgid "System settings"
 msgstr "Configuration du système"
 
-#: admin/index.php:98
+#: admin/index.php:99
 msgid "Set default timezone list"
 msgstr ""
 
-#: admin/index.php:99
+#: admin/index.php:100
 msgid "Set default shift times"
 msgstr ""
 
-#: admin/index.php:100
+#: admin/index.php:101
 msgid "Set call restriction times"
 msgstr ""
 
-#: admin/index.php:101
+#: admin/index.php:102
 #: admin/centreinfo.php:62
 msgid "Set centre information"
 msgstr ""
 
-#: admin/index.php:102
+#: admin/index.php:103
 msgid "Start and monitor system wide case sorting"
 msgstr ""
 
-#: admin/index.php:106
+#: admin/index.php:107
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:107
+#: admin/index.php:108
 msgid "Start and monitor VoIP"
 msgstr ""
 
-#: admin/index.php:109
+#: admin/index.php:110
 msgid "Extension status"
 msgstr ""
 
@@ -1788,6 +1802,62 @@ msgstr ""
 msgid "Add pre fill"
 msgstr ""
 
+#: admin/bulkappointment.php:199
+msgid "Added appointment"
+msgstr ""
+
+#: admin/bulkappointment.php:203
+msgid ""
+"No such case id, or case set to a final outcome, or case currently assigned "
+"to an operator"
+msgstr ""
+
+#: admin/bulkappointment.php:209
+#: admin/bulkappointment.php:230
+msgid "Case id"
+msgstr ""
+
+#: admin/bulkappointment.php:209
+msgid "Result"
+msgstr ""
+
+#: admin/bulkappointment.php:229
+msgid ""
+"Please check the case id's, appointment start and end times and notes are "
+"correct before accepting below"
+msgstr ""
+
+#: admin/bulkappointment.php:235
+msgid "Accept and generate bulk appointments"
+msgstr ""
+
+#: admin/bulkappointment.php:240
+msgid ""
+"The file does not contain at least caseid, starttime and endtime columns. "
+"Please try again."
+msgstr ""
+
+#: admin/bulkappointment.php:251
+msgid ""
+"Provide a headered CSV file containing at least 3 columns - caseid, "
+"starttime and endtime. Optionally you can include a note column to attach a "
+"note to the case in addition to setting an appointment. Only cases that have "
+"temporary (non final) outcomes will have appointments generated, and the "
+"outcome of the case will be updated to an appointment outcome."
+msgstr ""
+
+#: admin/bulkappointment.php:252
+msgid "Example CSV file:"
+msgstr ""
+
+#: admin/bulkappointment.php:261
+msgid "Choose the CSV file to upload:"
+msgstr ""
+
+#: admin/bulkappointment.php:262
+msgid "Load bulk appointment CSV"
+msgstr ""
+
 #: admin/addshift.php:87
 #: admin/addshift.php:140
 msgid "Add shifts"
@@ -1820,96 +1890,106 @@ msgstr ""
 msgid "Submit changes"
 msgstr "Valider les modifications"
 
-#: admin/quotarow.php:147
-#: admin/quotarow.php:153
+#: admin/quotarow.php:154
+#: admin/quotarow.php:160
 msgid "Copied quotas"
 msgstr ""
 
-#: admin/quotarow.php:156
+#: admin/quotarow.php:163
 msgid "Current row quotas (click to delete)"
 msgstr ""
 
-#: admin/quotarow.php:168
+#: admin/quotarow.php:175
 msgid "Currently no row quotas"
 msgstr ""
 
-#: admin/quotarow.php:175
+#: admin/quotarow.php:182
 msgid "Replicate: Where"
 msgstr ""
 
-#: admin/quotarow.php:175
-#: admin/quotarow.php:177
+#: admin/quotarow.php:182
+#: admin/quotarow.php:184
+#: admin/quotarow.php:187
 msgid "like"
 msgstr "comme"
 
-#: admin/quotarow.php:177
-msgid "Stop calling"
+#: admin/quotarow.php:184
+msgid "Sample only. Stop calling where"
 msgstr ""
 
-#: admin/quotarow.php:177
+#: admin/quotarow.php:184
+#: admin/quotarow.php:187
 msgid "rows from this sample when:"
 msgstr ""
 
-#: admin/quotarow.php:180
+#: admin/quotarow.php:187
+msgid "Stop calling"
+msgstr ""
+
+#: admin/quotarow.php:190
 msgid "Row quota reached (Closed)"
 msgstr ""
 
-#: admin/quotarow.php:182
+#: admin/quotarow.php:192
 msgid "Row quota not yet reached (Open)"
 msgstr ""
 
-#: admin/quotarow.php:202
+#: admin/quotarow.php:212
 msgid "Copy quotas for this sample to (No error/duplicate checking): "
 msgstr ""
 
-#: admin/quotarow.php:204
+#: admin/quotarow.php:214
 msgid "Copy"
 msgstr "Copie"
 
-#: admin/quotarow.php:206
+#: admin/quotarow.php:216
 msgid ""
 "Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
 msgstr ""
 
-#: admin/quotarow.php:208
+#: admin/quotarow.php:218
 msgid "Copy adjustments"
 msgstr ""
 
-#: admin/quotarow.php:214
+#: admin/quotarow.php:224
 msgid "Select a question for the row quota"
 msgstr ""
 
-#: admin/quotarow.php:236
+#: admin/quotarow.php:248
 msgid "No question (Replicate)"
 msgstr ""
 
-#: admin/quotarow.php:246
+#: admin/quotarow.php:252
+msgid "Sample only quota"
+msgstr ""
+
+#: admin/quotarow.php:262
 msgid "Select the sample variable to exclude"
 msgstr ""
 
-#: admin/quotarow.php:258
+#: admin/quotarow.php:274
 msgid "Enter the details for creating the row quota:"
 msgstr ""
 
-#: admin/quotarow.php:280
+#: admin/quotarow.php:295
 msgid "Describe this quota"
 msgstr ""
 
-#: admin/quotarow.php:281
+#: admin/quotarow.php:296
 msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
 msgstr ""
 
-#: admin/quotarow.php:282
+#: admin/quotarow.php:297
 msgid ""
 "Should the priority be automatically updated based on the number of "
 "completions in this quota?"
 msgstr ""
 
-#: admin/quotarow.php:292
+#: admin/quotarow.php:311
 msgid "Exclude from the sample where the value is like"
 msgstr ""
 
-#: admin/quotarow.php:310
+#: admin/quotarow.php:329
 msgid "Add row quota"
 msgstr ""
 
@@ -1944,6 +2024,7 @@ msgid "tool"
 msgstr "outil"
 
 #: admin/operators.php:188
+#: admin/clients.php:106
 msgid ""
 "Use this form to enter the username of a user based on your directory "
 "security system. For example, if you have secured the base directory of "
@@ -1996,6 +2077,7 @@ msgid "Is the operator a refusal converter?"
 msgstr ""
 
 #: admin/operators.php:205
+#: admin/clients.php:115
 msgid "Add user"
 msgstr "Ajouter un utilisateur"
 
@@ -2326,6 +2408,26 @@ msgstr ""
 msgid "Saturdays"
 msgstr ""
 
+#: admin/casesbyoutcome.php:52
+msgid "Cases by outcome"
+msgstr ""
+
+#: admin/casesbyoutcome.php:72
+msgid "Project"
+msgstr "Projet"
+
+#: admin/casesbyoutcome.php:73
+msgid "Current outcome:"
+msgstr ""
+
+#: admin/casesbyoutcome.php:84
+msgid "No cases with this outcome"
+msgstr ""
+
+#: admin/casesbyoutcome.php:91
+msgid "Error with input"
+msgstr ""
+
 #: admin/process.php:90
 msgid "Cannot connect to VoIP Server"
 msgstr ""
@@ -2417,25 +2519,29 @@ msgstr ""
 msgid "Save changes to shifts"
 msgstr ""
 
-#: admin/dataoutput.php:203
+#: admin/dataoutput.php:222
 msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
-#: admin/dataoutput.php:205
-#: admin/samplecallattempts.php:90
+#: admin/dataoutput.php:224
+#: admin/samplecallattempts.php:186
 msgid "Please select a sample"
 msgstr ""
 
-#: admin/dataoutput.php:212
+#: admin/dataoutput.php:231
 msgid "Download data for this sample via Limesurvey"
 msgstr ""
 
-#: admin/dataoutput.php:219
+#: admin/dataoutput.php:238
 msgid "Download key file: select sample var"
 msgstr ""
 
-#: admin/dataoutput.php:223
+#: admin/dataoutput.php:242
 msgid "Download complete key file"
+msgstr ""
+
+#: admin/dataoutput.php:245
+msgid "Download complete sample file with current outcomes"
 msgstr ""
 
 #: admin/callrestrict.php:82
@@ -2522,41 +2628,35 @@ msgstr ""
 msgid "*nix VoIP"
 msgstr ""
 
-#: admin/samplecallattempts.php:57
-msgid "Sample call attempt"
-msgstr ""
-
-#: admin/samplecallattempts.php:59
-msgid "Overall"
-msgstr "Tous"
-
-#: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:88
-#: admin/samplecallattempts.php:109
-#: admin/samplecallattempts.php:132
+#: admin/samplecallattempts.php:108
 msgid "Number of cases"
 msgstr ""
 
-#: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:88
-#: admin/samplecallattempts.php:109
-#: admin/samplecallattempts.php:132
+#: admin/samplecallattempts.php:108
 msgid "Call attempts made"
 msgstr ""
 
-#: admin/samplecallattempts.php:113
+#: admin/samplecallattempts.php:171
+msgid "Sample call attempt"
+msgstr ""
+
+#: admin/samplecallattempts.php:173
+msgid "Overall"
+msgstr "Tous"
+
+#: admin/samplecallattempts.php:197
 msgid "Please select a quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:130
+#: admin/samplecallattempts.php:203
 msgid "No calls for this quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:136
+#: admin/samplecallattempts.php:207
 msgid "No calls for this sample"
 msgstr ""
 
-#: admin/samplecallattempts.php:140
+#: admin/samplecallattempts.php:211
 msgid "No calls for this questionnaire"
 msgstr ""
 
@@ -2580,19 +2680,19 @@ msgstr ""
 msgid "Add/Remove Timezones"
 msgstr ""
 
-#: admin/timezonetemplate.php:88
+#: admin/timezonetemplate.php:101
 msgid "Click to remove a Timezone from the default list"
 msgstr ""
 
-#: admin/timezonetemplate.php:100
+#: admin/timezonetemplate.php:113
 msgid "Add a Timezone:"
 msgstr ""
 
-#: admin/timezonetemplate.php:103
+#: admin/timezonetemplate.php:116
 msgid "Timezone: "
 msgstr "Fuseau horaire : "
 
-#: admin/timezonetemplate.php:104
+#: admin/timezonetemplate.php:117
 msgid "Add Timezone"
 msgstr "Tous les fuseaux horaires"
 
@@ -2615,14 +2715,6 @@ msgstr ""
 #: admin/supervisor.php:139
 #: admin/supervisor.php:321
 msgid "Set outcome"
-msgstr ""
-
-#: admin/supervisor.php:220
-msgid "Project"
-msgstr "Projet"
-
-#: admin/supervisor.php:223
-msgid "Current outcome:"
 msgstr ""
 
 #: admin/supervisor.php:247
@@ -2798,12 +2890,6 @@ msgstr ""
 #: functions/functions.voip.php:589
 #: functions/functions.voip.php:598
 msgid " Extension "
-msgstr ""
-
-#: functions/functions.voip.php:555
-#: functions/functions.voip.php:567
-#: functions/functions.voip.php:579
-msgid "Case id"
 msgstr ""
 
 #: functions/functions.voip.php:589
