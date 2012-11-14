@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-01 10:40+1000\n"
+"POT-Creation-Date: 2012-11-14 11:25+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -880,16 +881,24 @@ msgstr ""
 msgid "Outcome of last process run (if any)"
 msgstr ""
 
-#: admin/callhistory.php:52
+#: admin/callhistory.php:73
+#: admin/callhistory.php:100
+#: admin/callhistory.php:108
 msgid "Call History List"
 msgstr ""
 
-#: admin/callhistory.php:74
+#: admin/callhistory.php:90
+#: admin/callhistory.php:102
 msgid "Date/Time call start"
 msgstr ""
 
-#: admin/callhistory.php:74
+#: admin/callhistory.php:90
+#: admin/callhistory.php:102
 msgid "Time end"
+msgstr ""
+
+#: admin/callhistory.php:101
+msgid "Download Call History List"
 msgstr ""
 
 #: admin/clientquestionnaire.php:150
@@ -1351,7 +1360,7 @@ msgstr ""
 
 #: admin/index.php:66
 #: admin/index.php:68
-#: admin/index.php:108
+#: admin/index.php:109
 msgid "Operator management"
 msgstr ""
 
@@ -1424,40 +1433,45 @@ msgstr ""
 msgid "Search the sample"
 msgstr ""
 
-#: admin/index.php:97
-msgid "System settings"
+#: admin/index.php:96
+#: admin/bulkappointment.php:250
+msgid "Bulk appointment generator"
 msgstr ""
 
 #: admin/index.php:98
-msgid "Set default timezone list"
+msgid "System settings"
 msgstr ""
 
 #: admin/index.php:99
-msgid "Set default shift times"
+msgid "Set default timezone list"
 msgstr ""
 
 #: admin/index.php:100
-msgid "Set call restriction times"
+msgid "Set default shift times"
 msgstr ""
 
 #: admin/index.php:101
+msgid "Set call restriction times"
+msgstr ""
+
+#: admin/index.php:102
 #: admin/centreinfo.php:62
 msgid "Set centre information"
 msgstr ""
 
-#: admin/index.php:102
+#: admin/index.php:103
 msgid "Start and monitor system wide case sorting"
 msgstr ""
 
-#: admin/index.php:106
+#: admin/index.php:107
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:107
+#: admin/index.php:108
 msgid "Start and monitor VoIP"
 msgstr ""
 
-#: admin/index.php:109
+#: admin/index.php:110
 msgid "Extension status"
 msgstr ""
 
@@ -1758,6 +1772,51 @@ msgstr ""
 msgid "Add pre fill"
 msgstr ""
 
+#: admin/bulkappointment.php:199
+msgid "Added appointment"
+msgstr ""
+
+#: admin/bulkappointment.php:203
+msgid "No such case id, or case set to a final outcome, or case currently assigned to an operator"
+msgstr ""
+
+#: admin/bulkappointment.php:209
+#: admin/bulkappointment.php:230
+msgid "Case id"
+msgstr ""
+
+#: admin/bulkappointment.php:209
+msgid "Result"
+msgstr ""
+
+#: admin/bulkappointment.php:229
+msgid "Please check the case id's, appointment start and end times and notes are correct before accepting below"
+msgstr ""
+
+#: admin/bulkappointment.php:235
+msgid "Accept and generate bulk appointments"
+msgstr ""
+
+#: admin/bulkappointment.php:240
+msgid "The file does not contain at least caseid, starttime and endtime columns. Please try again."
+msgstr ""
+
+#: admin/bulkappointment.php:251
+msgid "Provide a headered CSV file containing at least 3 columns - caseid, starttime and endtime. Optionally you can include a note column to attach a note to the case in addition to setting an appointment. Only cases that have temporary (non final) outcomes will have appointments generated, and the outcome of the case will be updated to an appointment outcome."
+msgstr ""
+
+#: admin/bulkappointment.php:252
+msgid "Example CSV file:"
+msgstr ""
+
+#: admin/bulkappointment.php:261
+msgid "Choose the CSV file to upload:"
+msgstr ""
+
+#: admin/bulkappointment.php:262
+msgid "Load bulk appointment CSV"
+msgstr ""
+
 #: admin/addshift.php:87
 #: admin/addshift.php:140
 msgid "Add shifts"
@@ -1917,6 +1976,7 @@ msgid "tool"
 msgstr ""
 
 #: admin/operators.php:188
+#: admin/clients.php:106
 msgid "Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."
 msgstr ""
 
@@ -1965,6 +2025,7 @@ msgid "Is the operator a refusal converter?"
 msgstr ""
 
 #: admin/operators.php:205
+#: admin/clients.php:115
 msgid "Add user"
 msgstr ""
 
@@ -2300,12 +2361,10 @@ msgid "Cases by outcome"
 msgstr ""
 
 #: admin/casesbyoutcome.php:72
-#: admin/supervisor.php:220
 msgid "Project"
 msgstr ""
 
 #: admin/casesbyoutcome.php:73
-#: admin/supervisor.php:223
 msgid "Current outcome:"
 msgstr ""
 
@@ -2406,7 +2465,7 @@ msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
 #: admin/dataoutput.php:224
-#: admin/samplecallattempts.php:90
+#: admin/samplecallattempts.php:186
 msgid "Please select a sample"
 msgstr ""
 
@@ -2507,41 +2566,35 @@ msgstr ""
 msgid "*nix VoIP"
 msgstr ""
 
-#: admin/samplecallattempts.php:57
-msgid "Sample call attempt"
-msgstr ""
-
-#: admin/samplecallattempts.php:59
-msgid "Overall"
-msgstr ""
-
-#: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:88
-#: admin/samplecallattempts.php:109
-#: admin/samplecallattempts.php:132
+#: admin/samplecallattempts.php:108
 msgid "Number of cases"
 msgstr ""
 
-#: admin/samplecallattempts.php:67
-#: admin/samplecallattempts.php:88
-#: admin/samplecallattempts.php:109
-#: admin/samplecallattempts.php:132
+#: admin/samplecallattempts.php:108
 msgid "Call attempts made"
 msgstr ""
 
-#: admin/samplecallattempts.php:113
+#: admin/samplecallattempts.php:171
+msgid "Sample call attempt"
+msgstr ""
+
+#: admin/samplecallattempts.php:173
+msgid "Overall"
+msgstr ""
+
+#: admin/samplecallattempts.php:197
 msgid "Please select a quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:130
+#: admin/samplecallattempts.php:203
 msgid "No calls for this quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:136
+#: admin/samplecallattempts.php:207
 msgid "No calls for this sample"
 msgstr ""
 
-#: admin/samplecallattempts.php:140
+#: admin/samplecallattempts.php:211
 msgid "No calls for this questionnaire"
 msgstr ""
 
@@ -2773,12 +2826,6 @@ msgstr ""
 #: functions/functions.voip.php:589
 #: functions/functions.voip.php:598
 msgid " Extension "
-msgstr ""
-
-#: functions/functions.voip.php:555
-#: functions/functions.voip.php:567
-#: functions/functions.voip.php:579
-msgid "Case id"
 msgstr ""
 
 #: functions/functions.voip.php:589
