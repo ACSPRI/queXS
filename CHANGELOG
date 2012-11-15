@@ -1,3 +1,20 @@
+queXS 1.5.4 - Changes since 1.5.3:
+
+New Feature: Added bulk appointment generator from CSV 
+New Feature: Added questionnaire to call history and CSV download option
+New Feature: List questionnaires from newest first
+New Feature: Added count of outcomes by call attempt
+New Feature: Add process_clear_log function to make sure process_log table doesn't get too big
+Fixed Bug: Use less memory when exporting CSV call history
+Fixed Bug: Fixed timezone assignment in AU database by phone number prefix
+Fixed Bug: List questionnaires even if not in default language
+Fixed Bug: Updated jquery in Limesurvey due to Firefox 12 scroll bug: https://bugzilla.mozilla.org/show_bug.cgi?id=749935
+Translations updated (Thanks to those who contributed on Launchpad)
+
+Database changes suggested:
+
+ALTER TABLE sample_prefix_timezone MODIFY val char(10) NOT NULL;
+
 queXS 1.5.3 - Changes since 1.5.2:
 
 New Feature: Automatically create tokens table when activating (as is required by queXS)
