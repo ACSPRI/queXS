@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: export_data_functions.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: export_data_functions.php 11664 2011-12-16 05:19:42Z tmswhite $
  */
 
 /**
@@ -25,7 +25,7 @@ function strip_tags_full($string) {
     //$string = str_replace(array("\r\n","\r","\n",'-oth-'), '', $string);
     //The backslashes must be escaped twice, once for php, and again for the regexp
     //$string = str_replace("'|\\\\'", "&apos;", $string);
-	return FlattenText($string);	
+    return FlattenText($string);
 }
 
 /**
@@ -306,7 +306,7 @@ function spss_fieldmap($prefix = 'V') {
         foreach ($tokenattributes as $attributefield=>$attributedescription)
         {
             //Drop the token field, since it is in the survey too
-            if($attributefield!='token' && $attributefield!='callattempts' && $attributefield!='onappointment') {
+	    if($attributefield!='token' && $attributefield!='callattempts' && $attributefield!='onappointment') {
                 $fieldno++;
                 $fields[] = array('id'=>"$prefix$fieldno",'name'=>mb_substr($attributefield, 0, 8),
 			    'qid'=>0,'code'=>'','SPSStype'=>'A','LStype'=>'Undef',
@@ -444,7 +444,7 @@ function spss_getquery() {
         $tokenattributes=GetTokenFieldsAndNames($surveyid,false,false);
         foreach ($tokenattributes as $attributefield=>$attributedescription) {
             //Drop the token field, since it is in the survey too
-            if($attributefield!='token' && $attributefield!='callattempts' && $attributefield!='onappointment') {
+	    if($attributefield!='token' && $attributefield!='callattempts' && $attributefield!='onappointment') {
                 $query .= "{$dbprefix}tokens_$surveyid.$attributefield, ";
             }
         }
@@ -455,6 +455,7 @@ function spss_getquery() {
         $query = "SELECT *
 	    FROM {$dbprefix}survey_$surveyid";
     }
+
     $qfs = questionnaireSampleFilterstate();
     if ($qfs != false)
     {
@@ -463,6 +464,7 @@ function spss_getquery() {
 	if ($qfs[1] != 0) //if a sample is selected
 		$query .= "	JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";	
     }
+
     switch (incompleteAnsFilterstate()) {
         case 'inc':
             //Inclomplete answers only

@@ -141,6 +141,15 @@ height:12px;
   background-color: #F0F0F0;
 }
 
+.welcome-table td.welcome-language-changer {
+	text-align: center;
+	padding: 0;
+}
+
+.welcome-table td.welcome-language-changer select {
+	margin: 3px 0;
+}
+
 .languagechanger {
   font-size: 1em;
 }
@@ -157,7 +166,7 @@ table.question {
 }
 
 .innergraph {
-  direction: ltr;
+
 }
 
 .innergraph,.question {
@@ -229,8 +238,8 @@ td.welcome-content {
 }
 
 .privacy td {
-	text-align: 
-	center; font-size: 100%;
+	text-align: center; 
+	font-size: 100%;
 	padding: 20px 0;
 }
 
@@ -525,7 +534,7 @@ table.clearall-result td {
   margin: 0% 0% 0.5em 0.5em;
 }
 
-.choice-5-pt-radio .question-answer li,.list-radio-flexible .question-answer li,.list-radio .question-answer li,.list-with-comment .question-answer li,.yes-no .question-answer li,.gender .question-answer li
+.choice-5-pt-radio .question-answer li,.list-radio-flexible .question-answer li,.yes-no .question-answer li,.gender .question-answer li
   {
   margin-left: 2em;
   text-indent: -2.2em;
@@ -538,14 +547,14 @@ table.clearall-result td {
 */
 .choice-5-pt-radio .question-answer ul,.yes-no .question-answer ul,.gender .question-answer ul {
   text-align: left;
-  margin-left: 0% auto;
-  padding-left: 0.5em;
+  margin: 0 auto;
+  padding: 0 0.5em;
 }
 
 .choice-5-pt-radio .question-answer ul li,.yes-no .question-answer ul li,.gender .question-answer ul li {
   display: inline;
-  margin-left: 0%;
-  padding: 0% 2em 0% 0%;
+  margin-left: 0;
+  padding: 0 2em 0 0;
 }
 
 /* STYLES NOT YET DEFINED - - - - -
@@ -598,6 +607,24 @@ table.clearall-result td {
 .list-radio-flexible
 .list-radio
 */
+.list-radio .question-answer li label,
+.list-with-comment .question-answer li label {
+  display: inline-block;
+  width: 85%;
+}
+.list-radio .question-answer li.other label,
+.list-with-comment .question-answer li.other label {
+  display: inline;
+  width: auto;
+}
+
+.list-radio .question-answer li input,
+.list-with-comment .question-answer li input {
+  vertical-align: top !important;
+  margin-top: 1px;
+  margin-top: -3px\9; /* IE9 and below */
+}
+
 ul.cols-2,table.cols-2,ul.cols-3,table.cols-3,ul.cols-4,table.cols-4,ul.cols-5,table.cols-5,ul.cols-6,table.cols-6,ul.cols-7,table.cols-7,ul.cols-8,table.cols-8
   {
   width: 98%;
@@ -691,10 +718,20 @@ table.rank td.helptext {
 /* DEFINED ABOVE UNDER "General list styles" - - - - -
 .multiple-opt
 */
-.language {
-  
+.multiple-opt .question-answer li input, .multiple-opt-comments .question-answer li .option input {
+  vertical-align: top !important;
+  margin-top: 1px;
+  margin-top: -3px\9; /* IE9 and below */
 }
 
+.multiple-opt .question-answer li label, .multiple-opt-comments .question-answer li .option label {
+  display: inline-block;
+  width: 90%;
+}
+.multiple-opt .question-answer li.other label, .multiple-opt-comments .question-answer li.other .option label {
+  display: inline;
+  width: auto;
+}
 /* The following styles only apply to modern (relatively) complete CSS2 compliant browsers. (Not less than IE 8) */
 .multiple-opt-comments td.answer,.multiple-short-txt td.answer,.numeric-multi td.answer
   {
@@ -708,7 +745,7 @@ table.rank td.helptext {
 }
 
 .numeric-multi ul {
-  margin: 0% 1em 1.5em 1em;
+  margin: 0 1em 1.5em 1em;
 }
 
 .numeric-multi ul.computed {
@@ -726,21 +763,20 @@ table.rank td.helptext {
 }
 
 .multiple-opt-comments ul li span.option {
-  padding: 0.3em 1em 0% 2.3em;
-  text-indent: -2.3em;
+  padding: 0 0 0.5em 0.5em;
   display: table-cell;
   vertical-align: baseline;
 }
 
 .multiple-short-txt ul li label,.numeric-multi ul li label {
-  padding: 0.3em 1em 0% 0%;
+  padding: 0.3em 1em 0 0;
   display: table-cell;
   vertical-align: middle;
 }
 
 .numeric-multi ul.computed li label
 .numeric-multi ul.slider.computed li label {
-  padding-right: 0%;
+  padding-right: 0;
 }
 
 .multiple-opt-comments ul li span.comment,.multiple-short-txt ul li span,.numeric-multi ul li span
@@ -762,32 +798,15 @@ table.rank td.helptext {
   margin-bottom: 0.2em;
 }
 
-.numeric-multi ul.multiplenumerichelp.slider {
-  display: table;
+.numeric-multi li.multiplenumerichelp span {
+	text-align: center;
+	background: transparent none;
 }
 
-.numeric-multi ul.multiplenumerichelp.slider li {
-  display: table-row;
-}
-
-.numeric-multi ul.multiplenumerichelp li label,.numeric-multi ul.multiplenumerichelp.slider li label
-  {
-  padding: 0.3em 0% 0% 0%;
-  display: table-cell;
-}
-
-.numeric-multi ul.multiplenumerichelp li span,.numeric-multi ul.multiplenumerichelp.slider li span
-  {
-  padding: 0% 0% 0% 0.3em;
-  display: table-cell;
-}
-
-.numeric-multi ul.multiplenumerichelp span input {
-  border: none;
-  background-color: #fff;
-  color: #222;
-  padding: 0%;
-  width: 7em;
+.numeric-multi li.multiplenumerichelp span span {
+	display: inline;
+	padding: 0;
+	font-size: 125%;
 }
 
 .text-short input,.text-short textarea,.text-long textarea,.text-huge textarea
@@ -1207,3 +1226,111 @@ td.statsImageholder {
 #index .container .row.current { background: #000; color: #fff; }
 #index .container .row.missing { background: #CC0000; color: #fff; }
 #index .container input { margin: 1em; }
+
+/* Tips / Validation Messages */
+/* If the question is invalid, but has not been submitted, give it a pleasant warning color */
+div.em_num_answers.good {
+ color: green;
+}
+
+div.em_num_answers.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_value_range.good {
+  color: green;
+}
+div.em_value_range.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_sum_range.good {
+  color: green;
+}
+div.em_sum_range.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_regex_validation {
+  display: none;
+}
+div.em_regex_validation.good {
+  color: green;
+}
+div.em_regex_validation.error {
+  color: #FF00FF;
+}
+
+div.em_q_fn_validation.good {
+  color: green;
+}
+div.em_q_fn_validation.error {
+  color: #FF00FF;
+}
+
+div.em_sq_fn_validation.good {
+  color: green;
+}
+div.em_sq_fn_validation.error {
+  color: #FF00FF;
+}
+
+div.em_other_comment_mandatory.good {
+  display: none;
+}
+div.em_other_comment_mandatory.error {
+  color: #FF00FF;
+  display: block;
+}
+
+input.em_sq_validation.good, textarea.em_sq_validation.good {
+}
+
+input.em_sq_validation.error, textarea.em_sq_validation.error {
+  color: black;
+  background-color:  pink;
+}
+
+span.dynamic_sum {
+  font-weight: bold;
+  background-color: #d3d3d3;
+}
+span.dynamic_sum.good {
+  color: green;
+}
+span.dynamic_sum.error {
+  color: red;
+}
+
+span.dynamic_remaining {
+  font-weight: bold;
+  background-color: #d3d3d3;
+}
+span.dyanamic_remaining.good {
+  color: green;
+}
+span.dynamic_remaining.error {
+  color: red;
+}
+
+/* If  it is still invalid after submit, flag it in red */
+.input-error div.error {
+  color: red;
+  display: block;
+}
+
+span.hide-tip div.good {
+    display: none;
+}
+
+span.hide-tip div.error {
+    color: #FF00FF;
+}
+
+.input-error span.hide-tip div.error {
+    color: red;
+    display: block;
+}

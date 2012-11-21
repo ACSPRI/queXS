@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: templates.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: templates.php 12211 2012-01-26 17:02:27Z shnoulle $
  */
 
 
@@ -827,7 +827,7 @@ $templatesoutput.= "</div>\n"
 //Logout Button
 
 ."<font style='boxcaption'><strong>".$clang->gT("Template:")."</strong> </font>"
-."<select class=\"listboxtemplates\" name='templatedir' onchange='javascript: window.open(\"admin.php?action=templates&amp;editfile=$editfile&amp;screenname=".urlencode($screenname)."&amp;templatename=\"+escape(this.value), \"_top\")'>\n"
+."<select class=\"listboxtemplates\" name='templatedir' onchange='javascript: window.open(\"admin.php?action=templates&amp;editfile=$editfile&amp;screenname=".urlencode($screenname)."&amp;templatename=\"+escape(this.value), \"_self\")'>\n"
 .templateoptions($templates, $templatename)
 ."</select>\n"
 . "<a href='#' onclick=\"javascript: copyprompt('".$clang->gT("Create new template called:")."', '".$clang->gT("NewTemplate")."', 'default', 'copy')\""
@@ -866,17 +866,17 @@ else
     "<img name='RenameTemplate' src='$imageurl/edit.png' alt='".$clang->gT("Rename this template")."'" .
     " /></a>";
    $templatesoutput.= "<a href='#' title='".$clang->gTview("Delete this template")."'"
-   ." onclick='if (confirm(\"".$clang->gT("Are you sure you want to delete this template?", "js")."\")) window.open(\"admin.php?action=templates&amp;subaction=delete&amp;templatename=$templatename\", \"_top\")' >" .
+   ." onclick='if (confirm(\"".$clang->gT("Are you sure you want to delete this template?", "js")."\")) window.open(\"admin.php?action=templates&amp;subaction=delete&amp;templatename=$templatename\", \"_self\")' >" .
     "<img name='DeleteTemplate' src='$imageurl/delete.png' alt='".$clang->gT("Delete this template")."' " .
     " /></a>";
 }
 $templatesoutput.= "\t<img src='$imageurl/blank.gif' alt='' width='20' height='10' />\n";
 if(is_writable($tempdir) && is_writable($usertemplaterootdir))
 {
-$templatesoutput.="\t<a href='#' onclick='javascript:window.open(\"admin.php?action=templatezip&amp;editfile=$editfile&amp;screenname=".urlencode($screenname)."&amp;templatename=$templatename\", \"_top\")'"
+$templatesoutput.="\t<a href='#' onclick='javascript:window.open(\"admin.php?action=templatezip&amp;editfile=$editfile&amp;screenname=".urlencode($screenname)."&amp;templatename=$templatename\", \"_self\")'"
     ." title=\"".$clang->gTview("Export Template")."\" >" 
     ."<img name='Export' src='$imageurl/export.png' alt='".$clang->gT("Export Template")."' /></a>\n"
-    ."<a href='#' onclick='javascript:window.open(\"admin.php?action=templates&amp;subaction=templateupload\", \"_top\")'"
+    ."<a href='#' onclick='javascript:window.open(\"admin.php?action=templates&amp;subaction=templateupload\", \"_self\")'"
     ." title=\"".$clang->gTview("Import template")."\" >" 
     ."<img name='ImportTemplate' src='$imageurl/import.png' alt='".$clang->gT("Import template")."' title='' /></a>\n"
     ."\t<img src='$imageurl/seperator.gif' alt='' border='0' />\n"
@@ -902,7 +902,7 @@ else
 	."<img name='MakeCopy' src='$imageurl/copy_disabled.png' alt='".$clang->gT("Copy template").' - '.$clang->gT("Please change the directory permissions of the folders /tmp and /upload/templates in order to enable this option.")."' />";}
 				$templatesoutput.= "</div>\n<div class='menubar-right'>\n"
                                ."<font style='boxcaption'><strong>".$clang->gT("Screen:")."</strong> </font>"
-                               . "<select class=\"listboxtemplates\" name='screenname' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;editfile=$editfile&amp;screenname=\"+escape(this.value), \"_top\")'>\n"
+                               . "<select class=\"listboxtemplates\" name='screenname' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;editfile=$editfile&amp;screenname=\"+escape(this.value), \"_self\")'>\n"
                                . makeoptions($screens, "id", "name", html_escape($screenname) )
                                . "</select>\n"
                                ."<img src='$imageurl/blank.gif' width='45' height='10' alt='' />"
@@ -955,7 +955,7 @@ else
                                        ."\t<input type='hidden' name='screenname' value='".html_escape($screenname)."' />\n"
                                        ."\t<input type='hidden' name='editfile' value='$editfile' />\n"
                                        ."\t<input type='hidden' name='action' value='templatesavechanges' />\n"
-                                       ."<textarea name='changes' id='changes' rows='15' cols='40' class='codepress html'>";
+                                       ."<textarea name='changes' id='changes' rows='15' cols='40' class='codepress html ".getTemplateEditorMode()."'>";
                                        if ($editfile) {
         $templatesoutput.= textarea_encode(filetext($templatename,$editfile));
                                        }
@@ -975,11 +975,11 @@ else
                                        ."</form></td>";
                                        $templatesoutput.= "<th class='subheader' colspan='2' align='right' width='200'>".$clang->gT("Other Files:")."</th></tr>\n";
 
-                                       $templatesoutput.="<tr><td valign='top' rowspan='2' class='subheader'><select size='6' name='editfile' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;screenname=".urlencode($screenname)."&amp;editfile=\"+escape(this.value), \"_top\")'>\n"
+                                       $templatesoutput.="<tr><td valign='top' rowspan='2' class='subheader'><select size='6' name='editfile' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;screenname=".urlencode($screenname)."&amp;editfile=\"+escape(this.value), \"_self\")'>\n"
                                        .makeoptions($files, "name", "name", $editfile)
                                        ."</select><br /><br/>\n"
                                        .$clang->gT("CSS & Javascript files:")
-                                       ."<br/><select size='8' name='cssfiles' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;screenname=".urlencode($screenname)."&amp;editfile=\"+escape(this.value), \"_top\")'>\n"
+                                       ."<br/><select size='8' name='cssfiles' onchange='javascript: window.open(\"admin.php?action=templates&amp;templatename=$templatename&amp;screenname=".urlencode($screenname)."&amp;editfile=\"+escape(this.value), \"_self\")'>\n"
                                        .makeoptions($cssfiles, "name", "name", $editfile)
                                        . "</select>\n"
         
@@ -1255,4 +1255,18 @@ function is_template_editable($templatename)
    {
        return true;
    }
+}
+
+function getTemplateEditorMode()
+{
+    global $defaulttemplateeditormode;
+    //TODO : put it on globalsettings  $defaultquestionselectormode=getGlobalSetting('defaultquestionselectormode');
+    if (isset($_SESSION['templateeditormode']) && ($_SESSION['templateeditormode']=='full' || $_SESSION['templateeditormode']=='none'))
+    {
+        return $_SESSION['templateeditormode'];
+    }
+    else
+    {
+        return $defaulttemplateeditormode;
+    }
 }

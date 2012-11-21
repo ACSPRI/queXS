@@ -10,13 +10,13 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: userrighthandling.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id$
  */
 //Security Checked: POST/GET/DB/SESSION
 //Ensure script is not run directly, avoid path disclosure
 if (!isset($dbprefix) || isset($_REQUEST['dbprefix'])) {die("Cannot run this script directly");}
-if (isset($_POST['uid'])) {$postuserid=sanitize_int($_POST['uid']);}
-if (isset($_POST['ugid'])) {$postusergroupid=sanitize_int($_POST['ugid']);}
+if (isset($_POST['uid'])) {$postuserid=intval($_POST['uid']);}
+if (isset($_POST['ugid'])) {$postusergroupid=intval($_POST['ugid']);}
 
 if (get_magic_quotes_gpc())
 {$_POST  = array_map('recursive_stripslashes', $_POST);}
@@ -27,7 +27,6 @@ $js_admin_includes[]='scripts/users.js';
 
 if (($ugid && !$surveyid) || $action == "editusergroups" || $action == "addusergroup" || $action=="usergroupindb" || $action == "editusergroup" || $action == "mailusergroup")
 {
-
     if($ugid)
     {
         $grpquery = "SELECT gp.* FROM ".db_table_name('user_groups')." AS gp, ".db_table_name('user_in_groups')." AS gu WHERE gp.ugid=gu.ugid AND gp.ugid = $ugid AND gu.uid=".$_SESSION['loginID'];
@@ -445,8 +444,10 @@ if ($action == "editusers")
     . "</tr></thead><tbody>\n";
 
     $userlist = getuserlist();
+
     $ui = count($userlist);
     $usrhimself = $userlist[0];
+    $usrhimself =array_map('htmlspecialchars',$usrhimself);
     unset($userlist[0]);
 
     //	output users
@@ -511,6 +512,8 @@ if ($action == "editusers")
     {
 
         $usr = $usr_arr[$i];
+        $usr =array_map('htmlspecialchars',$usr);
+
         $usersummary .= "<tr>\n";
 
         $usersummary .= "<td align='center' style='padding:3px;'>\n";
@@ -620,7 +623,7 @@ if ($action == "addusergroup")
         . "<form action='$scriptname' id='usergroupform' class='form30' method='post'>"
         . "<ul>\n"
         . "<li><label for='group_name'>".$clang->gT("Name:")."</label>\n"
-        . "<input type='text' size='50' id='group_name' name='group_name' /><font color='red' face='verdana' size='1'> ".$clang->gT("Required")."</font></li>\n"
+        . "<input type='text' size='50' maxlength='20' id='group_name' name='group_name' /><font color='red' face='verdana' size='1'> ".$clang->gT("Required")."</font></li>\n"
         . "<li><label for='group_description'>".$clang->gT("Description:")."</label>\n"
         . "<textarea cols='50' rows='4' id='group_description' name='group_description'></textarea></li>\n"
         . "</ul><p><input type='submit' value='".$clang->gT("Add Group")."' />\n"
@@ -633,7 +636,7 @@ if ($action == "editusergroup")
 {
     if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1)
     {
-        $query = "SELECT * FROM ".db_table_name('user_groups')." WHERE ugid = ".$_GET['ugid']." AND owner_id = ".$_SESSION['loginID'];
+        $query = "SELECT * FROM ".db_table_name('user_groups')." WHERE ugid = ".$ugid." AND owner_id = ".$_SESSION['loginID'];
         $result = db_select_limit_assoc($query, 1);
         $esrow = $result->FetchRow();
         $usersummary = "<div class='header ui-widget-header'>".sprintf($clang->gT("Editing user group (Owner: %s)"),$_SESSION['user'])."</div>"

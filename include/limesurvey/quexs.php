@@ -513,6 +513,43 @@ function get_respondent_id($case_id,$operator_id)
 	return false;
 }
 
+
+/**
+ * Return an array of replacement items
+ * 
+ * @return array An array with the key being the replacement string and the value being its value
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2012-11-20
+ */
+function quexs_core_replace()
+{
+	$operator_id = get_operator_id();
+	$case_id = get_case_id($operator_id);
+	$respondent_id = get_respondent_id($case_id,$operator_id);
+
+	$core = array();
+
+	$core['CALLATTEMPTS'] = get_call_attempts($case_id);
+		
+	$on_appointment = is_on_appointment($case_id,$operator_id);
+	//todo: These must be internationalised, but I think I need to use Limesurveys so as not to conflict?
+	$str = "Not on an appointment";
+	if ($on_appointment)
+		$str = "On an appointment";
+	$core['ONAPPOINTMENT'] = $str;
+
+	$core['PERIODOFDAY'] =  get_period_of_day($respondent_id);
+	$core['APPOINTMENTDATE'] = get_appointment_date($respondent_id);
+	$core['APPOINTMENTTIME'] = get_appointment_time($respondent_id);
+	$core['APPOINTMENTNUMBER'] = get_appointment_number($respondent_id);
+	$core['PERCCOMPLETE'] = round(get_percent_complete($case_id),0);
+	$core['ENDINTERVIEWURL'] = get_end_interview_url();
+	$core['STARTINTERVIEWURL'] = get_start_interview_url();
+	
+
+	return $core;
+}
+
 /**
  * Replace placeholders in a string with data for this case/operator
  * 
@@ -671,7 +708,7 @@ function get_respondent_selection_url()
 
 	$url = QUEXS_URL . "nocallavailable.php";
 
-	$operator_id = get_operator_id($operator_id);
+	$operator_id = get_operator_id();
 	$call_id = get_call($operator_id);
 
 	if ($call_id)

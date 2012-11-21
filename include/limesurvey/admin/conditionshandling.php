@@ -1,17 +1,17 @@
 <?php
 /*
- * LimeSurvey
- * Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
- * All rights reserved.
- * License: GNU/GPL License v2 or later, see LICENSE.php
- * LimeSurvey is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
- *
- * $Id: conditionshandling.php 10925 2011-09-02 14:12:02Z c_schmitz $
- */
+* LimeSurvey
+* Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
+* All rights reserved.
+* License: GNU/GPL License v2 or later, see LICENSE.php
+* LimeSurvey is free software. This version may have been modified pursuant
+* to the GNU General Public License, and as distributed it includes or
+* is derivative of works licensed under the GNU General Public License or
+* other free or open source software licenses.
+* See COPYRIGHT.php for copyright notices and details.
+*
+* $Id: conditionshandling.php 11664 2011-12-16 05:19:42Z tmswhite $
+*/
 
 //
 // TODO
@@ -34,7 +34,7 @@ if (!isset($gid)) {$gid=returnglobal('gid');}
 if (!isset($p_scenario)) {$p_scenario=returnglobal('scenario');}
 if (!isset($p_cqid))
 {
-    $p_cqid=returnglobal('cqid');
+    $p_cqid=(int)returnglobal('cqid');
     if ($p_cqid == '') $p_cqid=0; // we are not using another question as source of condition
 }
 if (!isset($p_cid)) {$p_cid=returnglobal('cid');}
@@ -60,30 +60,30 @@ if (!isset($p_canswers))
 if (isset($stringcomparizonoperators) && $stringcomparizonoperators == 1)
 {
     $method = array(
-            "<"  => $clang->gT("Less than"),
-            "<=" => $clang->gT("Less than or equal to"),
-            "==" => $clang->gT("equals"),
-            "!=" => $clang->gT("Not equal to"),
-            ">=" => $clang->gT("Greater than or equal to"),
-            ">"  => $clang->gT("Greater than"),
-            "RX" => $clang->gT("Regular expression"),
-            "a<b"  => $clang->gT("Less than (Strings)"),
-            "a<=b" => $clang->gT("Less than or equal to (Strings)"),
-            "a>=b" => $clang->gT("Greater than or equal to (Strings)"),
-            "a>b"  => $clang->gT("Greater than (Strings)")
-            );
+    "<"  => $clang->gT("Less than"),
+    "<=" => $clang->gT("Less than or equal to"),
+    "==" => $clang->gT("equals"),
+    "!=" => $clang->gT("Not equal to"),
+    ">=" => $clang->gT("Greater than or equal to"),
+    ">"  => $clang->gT("Greater than"),
+    "RX" => $clang->gT("Regular expression"),
+    "a<b"  => $clang->gT("Less than (Strings)"),
+    "a<=b" => $clang->gT("Less than or equal to (Strings)"),
+    "a>=b" => $clang->gT("Greater than or equal to (Strings)"),
+    "a>b"  => $clang->gT("Greater than (Strings)")
+    );
 }
 else
 {
     $method = array(
-            "<"  => $clang->gT("Less than"),
-            "<=" => $clang->gT("Less than or equal to"),
-            "==" => $clang->gT("equals"),
-            "!=" => $clang->gT("Not equal to"),
-            ">=" => $clang->gT("Greater than or equal to"),
-            ">"  => $clang->gT("Greater than"),
-            "RX" => $clang->gT("Regular expression")
-            );
+    "<"  => $clang->gT("Less than"),
+    "<=" => $clang->gT("Less than or equal to"),
+    "==" => $clang->gT("equals"),
+    "!=" => $clang->gT("Not equal to"),
+    ">=" => $clang->gT("Greater than or equal to"),
+    ">"  => $clang->gT("Greater than"),
+    "RX" => $clang->gT("Regular expression")
+    );
 }
 
 if (isset($_POST['method']))
@@ -200,11 +200,11 @@ if (isset($p_subaction) && $p_subaction == "insertcondition")
 
                 if ($count_caseinsensitivedupes == 0)
                 {
-                $query = "INSERT INTO {$dbprefix}conditions (qid, scenario, cqid, cfieldname, method, value) VALUES "
-                . "('{$qid}', '{$p_scenario}', '{$p_cqid}', '{$conditionCfieldname}', '{$p_method}', '$ca')";
-                $result = $connect->Execute($query) or safe_die ("Couldn't insert new condition<br />$query<br />".$connect->ErrorMsg());
+                    $query = "INSERT INTO {$dbprefix}conditions (qid, scenario, cqid, cfieldname, method, value) VALUES "
+                    . "('{$qid}', '{$p_scenario}', '{$p_cqid}', '{$conditionCfieldname}', '{$p_method}', '$ca')";
+                    $result = $connect->Execute($query) or safe_die ("Couldn't insert new condition<br />$query<br />".$connect->ErrorMsg());
+                }
             }
-        }
         }
 
         unset($posted_condition_value);
@@ -234,6 +234,7 @@ if (isset($p_subaction) && $p_subaction == "insertcondition")
             $result = $connect->Execute($query) or safe_die ("Couldn't insert new condition<br />$query<br />".$connect->ErrorMsg());
         }
     }
+    LimeExpressionManager::UpgradeConditionsToRelevance(NULL,$qid);
 }
 
 // UPDATE ENTRY IF THIS IS AN EDIT
@@ -296,32 +297,39 @@ if (isset($p_subaction) && $p_subaction == "updatecondition")
             $result = $connect->Execute($query) or safe_die ("Couldn't insert new condition<br />$query<br />".$connect->ErrorMsg());
         }
     }
+    LimeExpressionManager::UpgradeConditionsToRelevance(NULL,$qid);
 }
 
 // DELETE ENTRY IF THIS IS DELETE
 if (isset($p_subaction) && $p_subaction == "delete")
 {
+    LimeExpressionManager::RevertUpgradeConditionsToRelevance(NULL,$qid);   // in case deleted the last condition
     $query = "DELETE FROM {$dbprefix}conditions WHERE cid={$p_cid}";
     $result = $connect->Execute($query) or safe_die ("Couldn't delete condition<br />$query<br />".$connect->ErrorMsg());
+    LimeExpressionManager::UpgradeConditionsToRelevance(NULL,$qid);
 }
 
 // DELETE ALL CONDITIONS IN THIS SCENARIO
 if (isset($p_subaction) && $p_subaction == "deletescenario")
 {
+    LimeExpressionManager::RevertUpgradeConditionsToRelevance(NULL,$qid);   // in case deleted the last condition
     $query = "DELETE FROM {$dbprefix}conditions WHERE qid={$qid} AND scenario={$p_scenario}";
     $result = $connect->Execute($query) or safe_die ("Couldn't delete scenario<br />$query<br />".$connect->ErrorMsg());
+    LimeExpressionManager::UpgradeConditionsToRelevance(NULL,$qid);
 }
 
 // UPDATE SCENARIO
 if (isset($p_subaction) && $p_subaction == "updatescenario" && isset($p_newscenarionum))
 {
     $query = "UPDATE {$dbprefix}conditions SET scenario=$p_newscenarionum WHERE qid={$qid} AND scenario={$p_scenario}";
-    $result = $connect->Execute($query) or safe_die ("Couldn't delete scenario<br />$query<br />".$connect->ErrorMsg());
+    $result = $connect->Execute($query) or safe_die ("Couldn't update scenario<br />$query<br />".$connect->ErrorMsg());
+    LimeExpressionManager::UpgradeConditionsToRelevance(NULL,$qid);
 }
 
 // DELETE ALL CONDITIONS FOR THIS QUESTION
 if (isset($p_subaction) && $p_subaction == "deleteallconditions")
 {
+    LimeExpressionManager::RevertUpgradeConditionsToRelevance(NULL,$qid);
     $query = "DELETE FROM {$dbprefix}conditions WHERE qid={$qid}";
     $result = $connect->Execute($query) or safe_die ("Couldn't delete scenario<br />$query<br />".$connect->ErrorMsg());
 }
@@ -338,7 +346,7 @@ if (isset($p_subaction) && $p_subaction == "renumberscenarios")
         $result2 = $connect->Execute($query2) or safe_die ("Couldn't renumber scenario<br />$query<br />".$connect->ErrorMsg());
         $newindex++;
     }
-
+    LimeExpressionManager::UpgradeConditionsToRelevance(NULL,$qid);
 }
 
 // COPY CONDITIONS IF THIS IS COPY
@@ -358,10 +366,10 @@ if (isset($p_subaction) && $p_subaction == "copyconditions")
         while($row=$result->FetchRow())
         {
             $proformaconditions[]=array("scenario"=>$row['scenario'],
-			"cqid"=>$row['cqid'],
-			"cfieldname"=>$row['cfieldname'],
-			"method"=>$row['method'],
-			"value"=>$row['value']);
+            "cqid"=>$row['cqid'],
+            "cfieldname"=>$row['cfieldname'],
+            "method"=>$row['method'],
+            "value"=>$row['value']);
         } // while
         foreach ($copyconditionsto as $copyc)
         {
@@ -419,7 +427,7 @@ if (isset($p_subaction) && $p_subaction == "copyconditions")
             $CopyConditionsMessage = "<div class='warningheader'>(".$clang->gT("No conditions could be copied (due to duplicates)").")</div>";
         }
     }
-
+    LimeExpressionManager::UpgradeConditionsToRelevance($surveyid); // do for whole survey, since don't know which questions affected.
 }
 //END PROCESS ACTIONS
 
@@ -534,13 +542,13 @@ if (isset($questionlist) && is_array($questionlist))
         while ($myrows=$result->FetchRow())
         {                   //key => value
             $theserows[]=array("qid"=>$myrows['qid'],
-					"sid"=>$myrows['sid'],
-					"gid"=>$myrows['gid'],
-					"question"=>$myrows['question'],
-					"type"=>$myrows['type'],
-					"mandatory"=>$myrows['mandatory'],
-					"other"=>$myrows['other'],
-					"title"=>$myrows['title']);
+            "sid"=>$myrows['sid'],
+            "gid"=>$myrows['gid'],
+            "question"=>$myrows['question'],
+            "type"=>$myrows['type'],
+            "mandatory"=>$myrows['mandatory'],
+            "other"=>$myrows['other'],
+            "title"=>$myrows['title']);
         }
     }
 }
@@ -573,13 +581,13 @@ if (isset($postquestionlist) && is_array($postquestionlist))
         while($myrows=$result->FetchRow())
         {
             $postrows[]=array("qid"=>$myrows['qid'],
-                        "sid"=>$myrows['sid'],
-                        "gid"=>$myrows['gid'],
-                        "question"=>$myrows['question'],
-                        "type"=>$myrows['type'],
-                        "mandatory"=>$myrows['mandatory'],
-                        "other"=>$myrows['other'],
-                        "title"=>$myrows['title']);
+            "sid"=>$myrows['sid'],
+            "gid"=>$myrows['gid'],
+            "question"=>$myrows['question'],
+            "type"=>$myrows['type'],
+            "mandatory"=>$myrows['mandatory'],
+            "other"=>$myrows['other'],
+            "title"=>$myrows['title']);
         } // while
     }
     $postquestionscount=count($postrows);
@@ -589,11 +597,11 @@ $questionscount=count($theserows);
 
 if (isset($postquestionscount) && $postquestionscount > 0)
 { //Build the array used for the questionNav and copyTo select boxes
-foreach ($postrows as $pr)
-{
-    $pquestions[]=array("text"=>$pr['title'].": ".substr(strip_tags($pr['question']), 0, 80),
-		"fieldname"=>$pr['sid']."X".$pr['gid']."X".$pr['qid']);
-}
+    foreach ($postrows as $pr)
+    {
+        $pquestions[]=array("text"=>$pr['title'].": ".substr(strip_tags($pr['question']), 0, 80),
+        "fieldname"=>$pr['sid']."X".$pr['gid']."X".$pr['qid']);
+    }
 }
 
 // Previous question parsing ==> building cquestions[] and canswers[]
@@ -679,17 +687,18 @@ if ($questionscount > 0)
             //Get question attribute for $canswers
             $qidattributes=getQuestionAttributes($rows['qid'], $rows['type']);
             if (isset($qidattributes['multiflexible_max']) && trim($qidattributes['multiflexible_max'])!='') {
-                $maxvalue=$qidattributes['multiflexible_max'];
+                $maxvalue=floatval($qidattributes['multiflexible_max']);
             } else {
                 $maxvalue=10;
             }
             if (isset($qidattributes['multiflexible_min']) && trim($qidattributes['multiflexible_min'])!='') {
-                $minvalue=$qidattributes['multiflexible_min'];
+                $minvalue=floatval($qidattributes['multiflexible_min']);
             } else {
                 $minvalue=1;
             }
             if (isset($qidattributes['multiflexible_step']) && trim($qidattributes['multiflexible_step'])!='') {
-                $stepvalue=$qidattributes['multiflexible_step'];
+                $stepvalue=floatval($qidattributes['multiflexible_step']);
+                if ($stepvalue==0) $stepvalue=1;
             } else {
                 $stepvalue=1;
             }
@@ -707,21 +716,21 @@ if ($questionscount > 0)
             . "AND q.language='".GetBaseLanguageFromSurveyID($surveyid)."'"
             ." AND sq.language='".GetBaseLanguageFromSurveyID($surveyid)."'"
             ." AND q.qid={$rows['qid']}
-               AND sq.scale_id=0
-               ORDER BY sq.question_order";
+            AND sq.scale_id=0
+            ORDER BY sq.question_order";
 
             $y_axis_db = db_execute_assoc($fquery);
 
-             // Get the X-Axis
-             $aquery = "SELECT sq.*
-                         FROM ".db_table_name('questions')." q, ".db_table_name('questions')." sq
-                         WHERE q.sid=$surveyid
-                         AND sq.parent_qid=q.qid
-                         AND q.language='".GetBaseLanguageFromSurveyID($surveyid)."'
-                         AND sq.language='".GetBaseLanguageFromSurveyID($surveyid)."'
-                         AND q.qid=".$rows['qid']."
-                         AND sq.scale_id=1
-                         ORDER BY sq.question_order";
+            // Get the X-Axis
+            $aquery = "SELECT sq.*
+            FROM ".db_table_name('questions')." q, ".db_table_name('questions')." sq
+            WHERE q.sid=$surveyid
+            AND sq.parent_qid=q.qid
+            AND q.language='".GetBaseLanguageFromSurveyID($surveyid)."'
+            AND sq.language='".GetBaseLanguageFromSurveyID($surveyid)."'
+            AND q.qid=".$rows['qid']."
+            AND sq.scale_id=1
+            ORDER BY sq.question_order";
 
             $x_axis_db=db_execute_assoc($aquery) or safe_die ("Couldn't get answers to Array questions<br />$aquery<br />".$connect->ErrorMsg());
 
@@ -741,7 +750,7 @@ if ($questionscount > 0)
                     {
                         for($ii=$minvalue; $ii<=$maxvalue; $ii+=$stepvalue)
                         {
-                            $canswers[]=array($rows['sid'].$X.$rows['gid'].$X.$rows['qid'].$arows['title'], $ii, $ii);
+                            $canswers[]=array($rows['sid'].$X.$rows['gid'].$X.$rows['qid'].$arows['title']."_".$key, $ii, $ii);
                         }
                     }
                 }
@@ -1082,7 +1091,7 @@ if (isset($canswers))
 {
     foreach($canswers as $can)
     {
-        $an=json_encode(FlattenText($can[2]));
+        $an=ls_json_encode(FlattenText($can[2]));
         $conditionsoutput_main_content .= "Fieldnames[$jn]='$can[0]';\n"
         ."Codes[$jn]='$can[1]';\n"
         ."Answers[$jn]={$an};\n";
@@ -1274,7 +1283,7 @@ $subaction=='copyconditionsform' || $subaction=='copyconditions')
             ."AND {$dbprefix}conditions.qid=$qid "
             ."AND {$dbprefix}conditions.scenario={$scenarionr['scenario']}\n"
             ."AND {$dbprefix}conditions.cfieldname NOT LIKE '{%' \n" // avoid catching SRCtokenAttr conditions
-            ."ORDER BY {$dbprefix}groups.group_order,{$dbprefix}questions.question_order";
+            ."ORDER BY {$dbprefix}groups.group_order,{$dbprefix}questions.question_order, {$dbprefix}conditions.cfieldname";
             $result = db_execute_assoc($query) or safe_die ("Couldn't get other conditions for question $qid<br />$query<br />".$connect->ErrorMsg());
             $conditionscount=$result->RecordCount();
 
@@ -1376,7 +1385,7 @@ $subaction=='copyconditionsform' || $subaction=='copyconditions')
                         $conditionsoutput_main_content .= "\t$thisAttrName\n";
                         // TIBO not sure this is used anymore !!
                         $conditionsList[]=array("cid"=>$rows['cid'],
-								"text"=>$thisAttrName);
+                        "text"=>$thisAttrName);
                     }
                     else
                     {
@@ -1387,7 +1396,7 @@ $subaction=='copyconditionsform' || $subaction=='copyconditions')
                             {
                                 $conditionsoutput_main_content .= "\t$cqn[0] (qid{$rows['cqid']})\n";
                                 $conditionsList[]=array("cid"=>$rows['cid'],
-									"text"=>$cqn[0]." ({$rows['value']})");
+                                "text"=>$cqn[0]." ({$rows['value']})");
                             }
                             else
                             {
@@ -1633,7 +1642,7 @@ if ($subaction == "copyconditionsform" || $subaction == "copyconditions")
         }
 
         $conditionsoutput_main_content .= "\t<div class='condition-tbl-full'>\n"
-//        ."\t\t<input type='submit' value='".$clang->gT("Copy conditions")."' onclick=\"if (confirm('".$clang->gT("Are you sure you want to copy these condition(s) to the questions you have selected?","js")."')){prepareCopyconditions(); return true;} else {return false;}\" $disableCopyCondition/>\n"
+        //        ."\t\t<input type='submit' value='".$clang->gT("Copy conditions")."' onclick=\"if (confirm('".$clang->gT("Are you sure you want to copy these condition(s) to the questions you have selected?","js")."')){prepareCopyconditions(); return true;} else {return false;}\" $disableCopyCondition/>\n"
         ."\t\t<input type='submit' value='".$clang->gT("Copy conditions")."' onclick=\"prepareCopyconditions(); return true;\" $disableCopyCondition/>\n"
         ."<input type='hidden' name='subaction' value='copyconditions' />\n"
         ."<input type='hidden' name='sid' value='$surveyid' />\n"
@@ -1797,10 +1806,10 @@ $subaction == "editthiscondition" || $subaction == "delete")
     ."<select name='method' id='method' style='font-family:verdana; font-size:10' >\n";
     foreach ($method as $methodCode => $methodTxt)
     {
-    	$selected=$methodCode=="==" ? " selected='selected'" : "";
+        $selected=$methodCode=="==" ? " selected='selected'" : "";
         $conditionsoutput_main_content .= "\t<option value='".$methodCode."'$selected>".$methodTxt."</option>\n";
     }
-/**
+    /**
     ."\t<option value='<'>".$clang->gT("Less than")."</option>\n"
     ."\t<option value='<='>".$clang->gT("Less than or equal to")."</option>\n"
     ."\t<option selected='selected' value='=='>".$clang->gT("Equals")."</option>\n"
@@ -1812,7 +1821,7 @@ $subaction == "editthiscondition" || $subaction == "delete")
     ."\t<option value='a<=b'>".$clang->gT("Less than or equal to (Strings)")."</option>\n"
     ."\t<option value='a>=b'>".$clang->gT("Greater than or equal to (Strings)")."</option>\n"
     ."\t<option value='a>b'>".$clang->gT("Greater than (Strings)")."</option>\n"
-**/
+    **/
     $conditionsoutput_main_content .="</select>\n"
     ."</div>\n"
     ."</div>\n";
@@ -2119,5 +2128,3 @@ function showSpeaker($hinttext)
     return $reshtml;
 
 }
-
-?>

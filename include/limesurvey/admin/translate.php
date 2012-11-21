@@ -11,7 +11,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 *
-* $Id: translate.php 9652 2010-12-16 20:25:39Z c_schmitz $
+* $Id: translate.php 11974 2012-01-10 16:34:56Z c_schmitz $
 *
 */
 
@@ -23,8 +23,6 @@
   include_once('translate_functions.php');
   $js_admin_includes[]= $homeurl.'/scripts/translation.js';
 
-
-//  $js_admin_includes[]= $homeurl.'/scripts/translation.js';
 
   // TODO need to do some validation here on surveyid
 
@@ -204,7 +202,7 @@ END;
         $translateoutput .="<div class='translate'>\n";
         $translateoutput .="<input type='button' class='auto-trans' value='".$clang->gT("Auto Translate")."' id='auto-trans-tab-$type' />";
         $translateoutput .="<img src='../images/ajax-loader.gif' style='display: none' class='ajax-loader' alt='".$clang->gT("Loading...")."' />\n";
-        $translateoutput .= displayTranslateFieldsHeader($baselangdesc, $tolangdesc);
+        $translateoutput .= displayTranslateFieldsHeader($baselangdesc, $tolangdesc, $type);
         while ($rowfrom = $resultbase->FetchRow())
         {
           $textfrom = htmlspecialchars_decode($rowfrom[$amTypeOptions["dbColumn"]]);

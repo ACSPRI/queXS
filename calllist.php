@@ -53,7 +53,7 @@ $js = false;
 if (AUTO_LOGOUT_MINUTES !== false)
         $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
 
-xhtml_head(T_("Call List"),true,array("css/table.css"),$js,false,15);
+xhtml_head(T_("Call List"),true,array("css/table.css"),$js,false,60);
 
 //List the case call history
 // display in respondent time so that the operator will be able to

@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: vvexport.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: vvexport.php 11664 2011-12-16 05:19:42Z tmswhite $
  */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
@@ -72,6 +72,7 @@ $quexsfilterstate = questionnaireSampleFilterstate();
     ."</select></li>\n";
 
     $vvoutput .=
+
     "<li>\n"
     ." <label for='extension'>".$clang->gT("File Extension").": </label>\n"
     ." <input type='text' id='extension' name='extension' size='3' value='csv' /><span style='font-size: 7pt'>*</span>\n"

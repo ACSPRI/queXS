@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: deletesurvey.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: deletesurvey.php 11664 2011-12-16 05:19:42Z tmswhite $
  */
 
 //Ensure script is not run directly, avoid path disclosure

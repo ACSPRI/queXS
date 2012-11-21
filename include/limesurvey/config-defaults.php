@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: config-defaults.php 10474 2011-07-11 15:51:19Z c_schmitz $
+ * $Id: config-defaults.php 12242 2012-01-27 23:41:13Z c_schmitz $
  */
 
 // CAUTION
@@ -154,6 +154,13 @@ $emailcharset       = "utf-8";          // You can change this to change the cha
 // If you don't know what this is better leave this setting alone.
 $modrewrite         =   0;
 
+// CMS Integration Settings
+// Set $embedded to true and specify the header and footer functions - for example if the survey is to be displayed embedded in a CMS
+$embedded = false;
+$embedded_inc = '';             // path to a php file to include
+$embedded_headerfunc = '';      // e.g. COM_siteHeader for geeklog
+$embedded_footerfunc = '';      // e.g. COM_siteFooter for geeklog
+
 // Enable or Disable LDAP feature
 $enableLdap = false;
 
@@ -182,6 +189,20 @@ $filterout_incomplete_answers = 'show';
 //     --> faster, but html code is displayed on the form
 //  * none: no html editor
 $defaulthtmleditormode = 'inline';
+
+// $defaultquestionselectormode
+// * sets the default for the question-type selector : full or none
+//    users without specific preference inherit this setup
+// * full : javascript selector with picture of the question type
+// * none : basic html selector
+$defaultquestionselectormode = 'full';
+
+// $defaulttemplateeditormode
+// * sets the default for the template editor : full or none
+//    users without specific preference inherit this setup
+// * full : javascript editor mode, with Editarea (text formatting, search and replace and real-time syntax highlight)
+// * none : basic textarea
+$defaulttemplateeditormode = 'full';
 
 // $surveyPreview_require_Auth
 // Enforce Authentication to the LS system
@@ -451,13 +472,13 @@ $chartfontsize =10;
 $updatecheckperiod=0;
 
 /**
- * @var $showXquestions string allows you to control whether or not
+ * @var $showxquestions string allows you to control whether or not
  * {THEREAREXQUESTIONS} is displayed (if it is included in a template)
  *	hide = always hide {THEREAREXQUESTIONS}
  *	show = always show {THEREAREXQUESTIONS}
  *	choose = allow survey admins to choose
  */
-$showXquestions = 'choose';
+$showxquestions = 'choose';
 
 
 /**
@@ -532,6 +553,18 @@ $ipInfoDbAPIKey = '';
 
 $googleMapsAPIKey = '';
 
+// Google Analytics API key:  http://www.google.com/analytics/
+$googleAnalyticsAPIKey = '';
+
+// Style for using Google Analytics
+// 0 = Don't use Analytics
+// 1 = Default
+// 2 = SurveyName-[SID]/GroupName
+$googleAnalyticsStyle = '0';
+
+// Google Translate API key:  https://code.google.com/apis/language/translate/v2/getting_started.html
+$googletranslateapikey = '';
+
 /**
 * This variable defines the total space available to the file upload question across all surveys. If set to 0 then no limit applies.
 *
@@ -539,6 +572,15 @@ $googleMapsAPIKey = '';
 *
 */
 $iFileUploadTotalSpaceMB=0;
+
+/**
+* Set this variable to true to indicate that your server is behind a proxy.
+* This will ensure the correct captioning of IP addresses instead of just the proxy address
+*
+* @var $bServerBehindProxy  Default: false
+*
+*/
+$bServerBehindProxy=false;
 
 //DO NOT EVER CHANGE THE FOLLOWING 5 LINES ---------------
 require_once(dirname(__FILE__).'/config.php');

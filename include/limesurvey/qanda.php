@@ -1,17 +1,17 @@
 <?php
 /*
- * LimeSurvey
- * Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
- * All rights reserved.
- * License: GNU/GPL License v2 or later, see LICENSE.php
- * LimeSurvey is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
- *
- * $Id: qanda.php 10949 2011-09-05 16:22:35Z tpartner $
- */
+* LimeSurvey
+* Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
+* All rights reserved.
+* License: GNU/GPL License v2 or later, see LICENSE.php
+* LimeSurvey is free software. This version may have been modified pursuant
+* to the GNU General Public License, and as distributed it includes or
+* is derivative of works licensed under the GNU General Public License or
+* other free or open source software licenses.
+* See COPYRIGHT.php for copyright notices and details.
+*
+* $Id: qanda.php 12439 2012-02-10 17:38:30Z tmswhite $
+*/
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
 
@@ -19,34 +19,34 @@ if (!isset($homedir) || isset($_REQUEST['$homedir'])) {die("Cannot run this scri
 global $thissurvey;
 
 /*
- * Let's explain what this strange $ia var means
- *
- * The $ia string comes from the $_SESSION['insertarray'] variable which is built at the commencement of the survey.
- * See index.php, function "buildsurveysession()"
- * One $ia array exists for every question in the survey. The $_SESSION['insertarray']
- * string is an array of $ia arrays.
- *
- * $ia[0] => question id
- * $ia[1] => fieldname
- * $ia[2] => title
- * $ia[3] => question text
- * $ia[4] => type --  text, radio, select, array, etc
- * $ia[5] => group id
- * $ia[6] => mandatory Y || N
- * $ia[7] => conditions exist for this question
- * $ia[8] => other questions have conditions which rely on this question (including array_filter and array_filter_exclude attributes)
- * $ia[9] => incremental question count (used by {QUESTION_NUMBER})
- *
- * $conditions element structure
- * $condition[n][0] => qid = question id
- * $condition[n][1] => cqid = question id of the target question, or 0 for TokenAttr leftOperand
- * $condition[n][2] => field name of element [1] (Except for type M or P)
- * $condition[n][3] => value to be evaluated on answers labeled.
- * $condition[n][4] => type of question
- * $condition[n][5] => SGQ code of element [1] (sub-part of [2])
- * $condition[n][6] => method used to evaluate
- * $condition[n][7] => scenario *NEW BY R.L.J. van den Burg*
- */
+* Let's explain what this strange $ia var means
+*
+* The $ia string comes from the $_SESSION['insertarray'] variable which is built at the commencement of the survey.
+* See index.php, function "buildsurveysession()"
+* One $ia array exists for every question in the survey. The $_SESSION['insertarray']
+* string is an array of $ia arrays.
+*
+* $ia[0] => question id
+* $ia[1] => fieldname
+* $ia[2] => title
+* $ia[3] => question text
+* $ia[4] => type --  text, radio, select, array, etc
+* $ia[5] => group id
+* $ia[6] => mandatory Y || N
+* $ia[7] => conditions exist for this question
+* $ia[8] => other questions have conditions which rely on this question (including array_filter and array_filter_exclude attributes)
+* $ia[9] => incremental question count (used by {QUESTION_NUMBER})
+*
+* $conditions element structure
+* $condition[n][0] => qid = question id
+* $condition[n][1] => cqid = question id of the target question, or 0 for TokenAttr leftOperand
+* $condition[n][2] => field name of element [1] (Except for type M or P)
+* $condition[n][3] => value to be evaluated on answers labeled.
+* $condition[n][4] => type of question
+* $condition[n][5] => SGQ code of element [1] (sub-part of [2])
+* $condition[n][6] => method used to evaluate
+* $condition[n][7] => scenario *NEW BY R.L.J. van den Burg*
+*/
 
 if($shownoanswer > 0 && $thissurvey['shownoanswer'] != 'N')
 {
@@ -105,480 +105,18 @@ function quexs_outcome($outcome)
 	return $r;
 }
 
-
-
-
-
-function retrieveConditionInfo($ia)
-{
-    //This function returns an array containing all related conditions
-    //for a question - the array contains the fields from the conditions table
-    global $dbprefix, $connect;
-
-    if ($ia[7] == "Y")
-    {	//DEVELOP CONDITIONS ARRAY FOR THIS QUESTION
-        $cquery =	"SELECT {$dbprefix}conditions.qid, "
-        ."{$dbprefix}conditions.scenario, "
-        ."{$dbprefix}conditions.cqid, "
-        ."{$dbprefix}conditions.cfieldname, "
-        ."{$dbprefix}conditions.value, "
-        ."{$dbprefix}questions.type, "
-        ."{$dbprefix}questions.sid, "
-        ."{$dbprefix}questions.gid, "
-        ."{$dbprefix}conditions.method, "
-        ."questionssrc.gid as srcgid "
-        ."FROM {$dbprefix}conditions, "
-        ."{$dbprefix}questions ,"
-        ."{$dbprefix}questions as questionssrc "
-        ."WHERE {$dbprefix}conditions.cqid={$dbprefix}questions.qid "
-        ."AND {$dbprefix}conditions.qid=questionssrc.qid "
-        ."AND {$dbprefix}conditions.qid=$ia[0] "
-        ."AND {$dbprefix}questions.language='".$_SESSION['s_lang']."' "
-        ."AND {$dbprefix}conditions.cfieldname NOT LIKE '{%' "
-        ."ORDER BY {$dbprefix}conditions.scenario, "
-        ."{$dbprefix}conditions.cqid, "
-        ."{$dbprefix}conditions.cfieldname";
-        $cresult = db_execute_assoc($cquery) or safe_die ("OOPS<br />$cquery<br />".$connect->ErrorMsg());     //Checked
-
-        $cquerytoken =	"SELECT c.qid, c.scenario, c.cqid, c.cfieldname, c.value, '' as type, 0 as sid, 0 as gid, c.method, q.gid as srcgid "
-        ."FROM {$dbprefix}conditions c, {$dbprefix}questions q "
-        ."WHERE c.qid=q.qid "
-        ."AND c.qid=$ia[0] "
-        ."AND c.cfieldname LIKE '{%' "
-        ."ORDER BY c.scenario, c.cqid, c.cfieldname";
-
-        $cresulttoken = db_execute_assoc($cquerytoken) or safe_die ("OOPS<br />$cquerytoken<br />".$connect->ErrorMsg());     //Checked
-
-        while ($tempcrow = $cresulttoken->FetchRow())
-        {
-            $aAllConditions[] = $tempcrow;
-        }
-        while ($tempcrow = $cresult->FetchRow())
-        {
-            $aAllConditions[] = $tempcrow;
-        }
-        //		while ($crow = $cresult->FetchRow())
-        foreach ($aAllConditions as $crow)
-        {
-            if (preg_match("/^\+(.*)$/",$crow['cfieldname'],$cfieldnamematch))
-            { // this condition uses a single checkbox as source
-                $crow['type'] = "+".$crow['type'];
-                $crow['cfieldname'] = $cfieldnamematch[1];
-            }
-
-            $conditions[] = array ($crow['qid'],
-            $crow['cqid'],
-            $crow['cfieldname'],
-            $crow['value'],
-            $crow['type'],
-            $crow['sid']."X".$crow['gid']."X".$crow['cqid'],
-            $crow['method'],
-            $crow['scenario'],
-            $crow['srcgid']);
-        }
-
-
-        foreach ($conditions as $condkey => $condarr)
-        { // We need to sort the merged array by Ascending scenario, cqid, then cfieldname
-          // otherwise condition evaluations of Tokens in Scenarii won't work in "live" Javascript eval
-            $scenariolist[$condkey] = $condarr[7];
-            $cqidlist[$condkey] = $condarr[1];
-            $cfieldnamelist[$condkey] = $condarr[2];
-        }
-        array_multisort($scenariolist,SORT_ASC,$cqidlist,SORT_ASC,$cfieldnamelist,SORT_ASC,$conditions);
-
-        return $conditions;
-    }
-    else
-    {
-        return null;
-    }
-}
-
-// returns the Javascript IdName of a question used in conditions
-// $cd = Array (
-//   0 => Unused
-//   1 => qid of the question
-//   2 => fieldname of the question
-//   3 => value used in comparison (only usd for type M and P egals 'Y', optionnal for other types)
-//   4 => type of the question
-//   5 => SGQ code corresponding to the fieldname
-// if $currentgid is not null (Group by group survey), the fieldname depends on the groupId
-function retrieveJSidname($cd,$currentgid=null)
-{
-    global $dbprefix, $connect, $dropdownthreshold;
-
-    if (preg_match("/^\+{0,1}[0-9]+X([0-9]+)X(.*)$/",$cd[2]) == 0)
-    { // This is not a true fieldname (for instance a {TOKEN:ATTR..}
-      // placeholder
-        return "NoJSidname";
-    }
-    //preg_match("/^[0-9]+X([0-9]+)X([0-9]+)$/",$cd[2],$matchFields);
-    //^^^^^does not seem to work, explode below should
-    $matchFields = explode('X', $cd[2], 3);
-    $questiongid=$matchFields[1];
-    $questionFieldpart=$matchFields[2];
-
-
-    if ($cd[4] == "L")
-    {
-        $cccquery="SELECT code FROM {$dbprefix}answers WHERE qid={$cd[1]} AND language='".$_SESSION['s_lang']."'";
-        $cccresult=$connect->Execute($cccquery); // Checked
-        $cccount=$cccresult->RecordCount();
-    }
-    if ($cd[4] == "R")
-    {
-        if (!isset($currentgid) || $questiongid == $currentgid)
-        { // if question is on same page then field is fvalue_XXXX
-        //$idname="fvalue_".$cd[1].substr($cd[2], strlen($cd[2])-1,1); // broken when ranking more than 9 items
-            $idname="fvalue_".$questionFieldpart;
-        }
-        else
-        { // If question is on another page then field if javaXXXX
-        $idname="java$cd[2]";
-        }
-    }
-    elseif ($cd[4] == "5" ||
-    $cd[4] == "A" ||
-    $cd[4] == "B" ||
-    $cd[4] == "C" ||
-    $cd[4] == "E" ||
-    $cd[4] == "F" ||
-    $cd[4] == "H" ||
-    $cd[4] == "G" ||
-    $cd[4] == "Y" ||
-    $cd[4] == "1" ||
-    ($cd[4] == "L" && $cccount <= $dropdownthreshold))
-    {
-        $idname="java$cd[2]";
-    }
-    elseif ($cd[4] == "M" ||
-    $cd[4] == "P")
-    {
-        $idname="java$cd[5]$cd[3]";
-    }
-    elseif ($cd[4] == "+M" ||
-    $cd[4] == "+P")
-    {
-        $idname="java$cd[2]";
-    }
-    elseif ($cd[4] == "D" ||
-    $cd[4] == "N" ||
-    $cd[4] == "S" ||
-    $cd[4] == "T" ||
-    $cd[4] == "U" ||
-    $cd[4] == "Q" ||
-    $cd[4] == "K" )
-    {
-        if (!isset($currentgid) || $questiongid == $currentgid)
-        { // if question is on same page then field is answerXXXX
-        $idname="answer$cd[2]";
-        }
-        else
-        { // If question is on another page then field if javaXXXX
-        $idname="java$cd[2]";
-        }
-    }
-    else
-    {
-        $idname="java".$cd[2];
-    }
-
-    return $idname;
-}
-
-function create_mandatorylist($ia)
-{
-    //Checks current question and returns required mandatory arrays if required
-    if ($ia[6] == 'Y')
-    {
-        switch($ia[4])
-        {
-            case 'R':
-                $thismandatory = setman_ranking($ia);
-                break;
-            case 'M':
-                $thismandatory = setman_questionandcode($ia);
-                break;
-            case 'J':
-            case 'P':
-            case 'Q':
-            case 'K':
-            case 'A':
-            case 'B':
-            case 'C':
-            case 'E':
-            case 'F':
-            case 'H':
-                $thismandatory = setman_questionandcode($ia);
-                break;
-            case ':':
-            case ';':
-                $thismandatory = setman_multiflex($ia);
-                break;
-            case '1':
-                $thismandatory = setman_questionandcode_multiscale($ia);
-                break;
-            case 'X':
-                //Do nothing - boilerplate questions CANNOT be mandatory
-                break;
-            default:
-                $thismandatory = setman_normal($ia);
-        }
-
-        if ($ia[7] != 'Y' && isset($thismandatory)) //Question is not conditional - addto mandatory arrays
-        {
-            $mandatory=$thismandatory;
-        }
-        if ($ia[7] == 'Y' && isset($thismandatory)) //Question IS conditional - add to conmandatory arrays
-        {
-            $conmandatory=$thismandatory;
-        }
-    }
-
-    if (isset($mandatory))
-    {
-        return array($mandatory, null);
-    }
-    elseif (isset($conmandatory))
-    {
-        return array(null, $conmandatory);
-    }
-    else
-    {
-        return array(null, null);
-    }
-}
-
-function setman_normal($ia)
-{
-    $mandatorys[]=$ia[1];
-    $mandatoryfns[]=$ia[1];
-    return array($mandatorys, $mandatoryfns);
-}
-
-function setman_ranking($ia)
-{
-    global $dbprefix, $connect;
-    $ansquery = "SELECT * FROM {$dbprefix}answers WHERE qid={$ia[0]} AND language='".$_SESSION['s_lang']."' ORDER BY sortorder, answer";
-    $ansresult = $connect->Execute($ansquery);  //Checked
-    $anscount = $ansresult->RecordCount();
-    $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
-
-    if (trim($qidattributes['max_answers'])!='') {
-        $max_answers = $qidattributes['max_answers'];
-    }
-    else
-    {
-        $max_answers = $anscount;
-    }
-
-    for ($i=1; $i<=$max_answers; $i++)
-    {
-        $mandatorys[]=$ia[1].$i;
-        $mandatoryfns[]=$ia[1];
-    }
-
-    return array($mandatorys, $mandatoryfns);
-}
-
-function setman_questionandcode($ia)
-{
-    global $dbprefix, $connect;
-    $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid=".$ia[0]." AND language='".$_SESSION['s_lang']."' and parent_qid=0";
-    $qresult = db_execute_assoc($qquery);     //Checked
-    while ($qrow = $qresult->FetchRow()) {$other = $qrow['other'];}
-    $subquestionquery = "SELECT title FROM {$dbprefix}questions WHERE parent_qid={$ia[0]} AND language='".$_SESSION['s_lang']."' ORDER BY question_order";
-    $sqresult = db_execute_assoc($subquestionquery); //Checked
-
-    while ($subquestionrow = $sqresult->FetchRow())
-    {
-        $mandatorys[]=$ia[1].$subquestionrow['title'];
-        $mandatoryfns[]=$ia[1];
-    }
-
-    if ($other == "Y" and ($ia[4]=="!" or $ia[4]=="L" or $ia[4]=="M" or $ia[4]=="P"))
-    {
-        $mandatorys[]=$ia[1]."other";
-        $mandatoryfns[]=$ia[1];
-    }
-
-    return array($mandatorys, $mandatoryfns);
-}
-
-
 /**
- * The point of these functions (setman) is to return an array containing two arrays.
- * The first ($mandatorys) is an array containing question, so they can all be checked
- * The second ($mandatoryfns) is an arry containing the fieldnames of every question
- * What's the difference? The difference arises from multiple option questions, and came
- * about when trying to distinguish between answering just one option (which satisfies
- * the mandatory requirement, and answering them all). The "mandatorys" input contains the
- * actual specific response items that could be filled in.. ie: in a multiple option
- * question, there will be a unique one for every possible answer. The "mandatoryfns" array
- * contains the generic question fieldname for the question as a whole (it will be repeated
- *  for multiple option qeustions, but won't contain unique items.
- *
- * @param mixed $ia
- * @return array See explanation above
- */
-function setman_multiflex($ia)
-{
-
-    global $dbprefix, $connect;
-
-    $mandatorys=array();
-    $mandatoryfns=array();
-    $ansquery = "SELECT * FROM {$dbprefix}questions
-                 WHERE parent_qid={$ia[0]} AND language='".$_SESSION['s_lang']."' and scale_id=0
-                 ORDER BY question_order, title";
-    $ansresult = db_execute_assoc($ansquery);
-    $ans2query = "SELECT * FROM {$dbprefix}questions
-                  WHERE parent_qid={$ia[0]} AND language='".$_SESSION['s_lang']."' and scale_id=1
-                  ORDER BY question_order, title";
-    $ans2result = db_execute_assoc($ans2query);
-
-    while ($ans2row=$ans2result->FetchRow())
-    {
-        $lset[]=$ans2row;
-    }
-
-    $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
-    while ($ansrow = $ansresult->FetchRow())
-    {
-        //Don't add to mandatory list if the row is filtered out with the array_filter option
-        if (trim($qidattributes['array_filter'])!='')
-        {
-            //This particular one may not be mandatory if it's hidden
-            $selected = getArrayFiltersForQuestion($ia[0]);
-            if (!in_array($ansrow['title'],$selected))
-            {
-                //This one's hidden, so don't add it to the mandatory list
-            }
-            else
-            {
-                //This one's not hidden. so add it to the mandatory list
-                foreach($lset as $ls)
-                {
-                    $mandatorys[]=$ia[1].$ansrow['title']."_".$ls['title'];
-                    $mandatoryfns[]=$ia[1];
-                }
-            }
-        }
-        elseif (trim($qidattributes['array_filter_exclude'])!='')
-        {
-            //This particular one may not be mandatory if it's hidden
-            $selected = getArrayFilterExcludesForQuestion($ia[0]);
-            if ($selected!=false && in_array($ansrow['title'],$selected))
-            {
-                //This one's hidden, so don't add it to the mandatory list
-            }
-            else
-            {
-                //This one's not hidden. so add it to the mandatory list
-                foreach($lset as $ls)
-                {
-                    $mandatorys[]=$ia[1].$ansrow['title']."_".$ls['title'];
-                    $mandatoryfns[]=$ia[1];
-                }
-            }
-        } else { //There is no array_filter option, so we should definitely add to the mandatory list here!
-            foreach($lset as $ls)
-            {
-                $mandatorys[]=$ia[1].$ansrow['title']."_".$ls['title'];
-                $mandatoryfns[]=$ia[1];
-            }
-        }
-    }
-
-    return array($mandatorys, $mandatoryfns);
-}
-
-function setman_questionandcode_multiscale($ia)
-{
-    global $dbprefix, $connect;
-    $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid=".$ia[0]." AND language='".$_SESSION['s_lang']."'";
-    $qresult = db_execute_assoc($qquery);   //Checked
-    while ($qrow = $qresult->FetchRow())
-    {
-        $other = $qrow['other'];
-    }
-
-    // Get Subquestions
-    $subquery="SELECT * "
-            ."FROM {$dbprefix}questions "
-            ."WHERE parent_qid={$ia[0]} "
-            ."AND language='".$_SESSION['s_lang']."' "
-            ."ORDER BY question_order";
-    $subresult = db_execute_assoc($subquery); //Checked
-
-    // Get Answer Scale 1
-    $ans1query="SELECT qid "
-            ."FROM {$dbprefix}answers "
-            ."WHERE qid={$ia[0]} "
-            ."AND scale_id=0 "
-            ."AND language='".$_SESSION['s_lang']."' "
-            ."ORDER BY sortorder";
-    $ans1result = db_execute_assoc($ans1query);   //Checked
-    $ans1count = $ans1result->RowCount();
-
-    // Get Answer Scale 2
-    $ans2query="SELECT qid "
-            ."FROM {$dbprefix}answers "
-            ."WHERE qid={$ia[0]} "
-            ."AND scale_id=1 "
-            ."AND language='".$_SESSION['s_lang']."' "
-            ."ORDER BY sortorder";
-    $ans2result = db_execute_assoc($ans2query);   //Checked
-    $ans2count = $ans2result->RowCount();
-
-    while ($subrow = $subresult->FetchRow())
-    {
-        // first answer set
-        if ($ans1count > 0)
-        {
-            $mandatorys[]=$ia[1].$subrow['title']."#0";
-            $mandatoryfns[]=$ia[1];
-        }
-        else
-        {
-            $mandatorys[]=$ia[1].$subrow['title'];
-            $mandatoryfns[]=$ia[1];
-        }
-
-        // second answer set
-        if ($ans2count > 0)
-        {
-            $mandatorys[]=$ia[1].$subrow['title']."#1";
-            $mandatoryfns[]=$ia[1];
-        }
-        else
-        {
-            $mandatorys[]=$ia[1].$subrow['title'];
-            $mandatoryfns[]=$ia[1];
-        }
-    }
-
-    if ($other == "Y" and ($ia[4]=="!" or $ia[4]=="L" or $ia[4]=="M" or $ia[4]=="P" or $ia[4]=="1"))
-    {
-        $mandatorys[]=$ia[1]."other";
-        $mandatoryfns[]=$ia[1];
-    }
-    return array($mandatorys, $mandatoryfns);
-}
-
-/**
- * This function returns an array containing the "question/answer" html display
- * and a list of the question/answer fieldnames associated. It is called from
- * question.php, group.php or survey.php
- *
- * @param mixed $ia
- * @param mixed $notanswered
- * @param mixed $notvalidated
- * @param mixed $filenotvalidated
- * @return mixed
- */
-function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotvalidated=null)
+* This function returns an array containing the "question/answer" html display
+* and a list of the question/answer fieldnames associated. It is called from
+* question.php, group.php or survey.php
+*
+* @param mixed $ia
+* @param mixed $notanswered
+* @param mixed $notvalidated
+* @param mixed $filenotvalidated
+* @return mixed
+*/
+function retrieveAnswers($ia)
 {
     //globalise required config variables
     global $dbprefix, $clang; //These are from the config-defaults.php file
@@ -592,27 +130,20 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
     $name = $ia[0];
 
     $qtitle=$ia[3];
-    //Replace INSERTANS statements with previously provided answers;
-    $qtitle=dTexts::run($qtitle);
+    $inputnames=array();
 
-
-    //GET HELP
-    $hquery="SELECT help FROM {$dbprefix}questions WHERE qid=$ia[0] AND language='".$_SESSION['s_lang']."'";
-    $hresult=db_execute_num($hquery) or safe_die($connect->ErrorMsg());       //Checked
-    $help="";
-    while ($hrow=$hresult->FetchRow()) {$help=$hrow[0];}
-
+    // TMSW - eliminate this - get from LEM
     //A bit of housekeeping to stop PHP Notices
     $answer = "";
     if (!isset($_SESSION[$ia[1]])) {$_SESSION[$ia[1]] = "";}
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
-    //echo "<pre>";print_r($qidattributes);echo "</pre>";
     //Create the question/answer html
 
     // Previously in limesurvey, it was virtually impossible to control how the start of questions were formatted.
     // this is an attempt to allow users (or rather system admins) some control over how the starting text is formatted.
     $number = isset($ia[9]) ? $ia[9] : '';
 
+    // TMSW - populate this directly from LEM? - this this is global
     $question_text = array(
 				 'all' => '' // All has been added for backwards compatibility with templates that use question_start.pstpl (now redundant)
     ,'text' => $qtitle
@@ -672,12 +203,6 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
             if (count($values[1]) > 1 && $qidattributes['hide_tip']==0)
             {
                 $question_text['help'] = $clang->gT("Click on an item in the list on the left, starting with your highest ranking item, moving through to your lowest ranking item.");
-                if (trim($qidattributes['min_answers'])!='')
-                {
-                    $qtitle .= "<br />\n<span class=\"questionhelp\">"
-                    . sprintf($clang->ngT("Check at least %d item","Check at least %d items",$qidattributes['min_answers']),$qidattributes['min_answers'])."</span>";
-                    $question_text['help'] .=' '.sprintf($clang->ngT("Check at least %d item","Check at least %d items",$qidattributes['min_answers']),$qidattributes['min_answers']);
-                }
             }
             break;
         case 'M': //Multiple choice checkbox
@@ -691,25 +216,6 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
                     $qtitle .= "<br />\n<span class=\"questionhelp\">"
                     . $clang->gT('Check any that apply').'</span>';
                     $question_text['help'] = $clang->gT('Check any that apply');
-                }
-                else
-                {
-                    if ($maxansw && $minansw)
-                    {
-                        $qtitle .= "<br />\n<span class=\"questionhelp\">"
-                        . sprintf($clang->gT("Check between %d and %d answers"), $minansw, $maxansw)."</span>";
-                        $question_text['help'] = sprintf($clang->gT("Check between %d and %d answers"), $minansw, $maxansw);
-                    } elseif ($maxansw)
-                    {
-                        $qtitle .= "<br />\n<span class=\"questionhelp\">"
-                        . sprintf($clang->gT("Check at most %d answers"), $maxansw)."</span>";
-                        $question_text['help'] = sprintf($clang->gT("Check at most %d answers"), $maxansw);
-                    } else
-                    {
-                        $qtitle .= "<br />\n<span class=\"questionhelp\">"
-                        . sprintf($clang->ngT("Check at least %d answer","Check at least %d answers",$minansw),$minansw)."</span>";
-                        $question_text['help'] = sprintf($clang->ngT("Check at least %d answer","Check at least %d answers",$minansw),$minansw);
-                    }
                 }
             }
             break;
@@ -735,38 +241,10 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
                     . $clang->gT('Check any that apply').'</span>';
                     $question_text['help'] = $clang->gT('Check any that apply');
                 }
-                else
-                {
-                    if ($maxansw && $minansw)
-                    {
-                        $qtitle .= "<br />\n<span class=\"questionhelp\">"
-                        . sprintf($clang->gT("Check between %d and %d answers"), $minansw, $maxansw)."</span>";
-                        $question_text['help'] = sprintf($clang->gT("Check between %d and %d answers"), $minansw, $maxansw);
-                    } elseif ($maxansw)
-                    {
-                        $qtitle .= "<br />\n<span class=\"questionhelp\">"
-                        . sprintf($clang->gT("Check at most %d answers"), $maxansw)."</span>";
-                        $question_text['help'] = sprintf($clang->gT("Check at most %d answers"), $maxansw);
-                    } else
-                    {
-                        $qtitle .= "<br />\n<span class=\"questionhelp\">"
-                        . sprintf($clang->gT("Check at least %d answers"), $minansw)."</span>";
-                        $question_text['help'] = sprintf($clang->gT("Check at least %d answers"), $minansw);
-                    }
-                }
             }
             break;
         case '|': //File Upload
             $values=do_file_upload($ia);
-            if ($qidattributes['min_num_of_files'] != 0)
-            {
-                if (trim($qidattributes['min_num_of_files']) != 0)
-                {
-                    $qtitle .= "<br />\n<span class = \"questionhelp\">"
-                    .sprintf($clang->gT("At least %d files must be uploaded for this question"), $qidattributes['min_num_of_files'])."<span>";
-                    $question_text['help'] .= ' '.sprintf($clang->gT("At least %d files must be uploaded for this question"), $qidattributes['min_num_of_files']);
-                }
-            }
             break;
         case 'Q': //MULTIPLE SHORT TEXT
             $values=do_multipleshorttext($ia);
@@ -819,6 +297,9 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
         case '1': //Array (Flexible Labels) dual scale
             $values=do_array_dual($ia);
             break;
+        case '*': // Equation
+            $values=do_equation($ia);
+            break;
     } //End Switch
 
     if (isset($values)) //Break apart $values array returned from switch
@@ -828,10 +309,6 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
         list($answer, $inputnames)=$values;
     }
 
-    $answer .= "\n\t<input type='hidden' name='display$ia[1]' id='display$ia[0]' value='";
-    $answer .= 'on'; //If this is single format, then it must be showing. Needed for checking conditional mandatories
-    $answer .= "' />\n"; //for conditional mandatory questions
-
     if ($ia[6] == 'Y')
     {
         $qtitle = '<span class="asterisk">'.$clang->gT('*').'</span>'.$qtitle;
@@ -839,16 +316,38 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
     }
     //If this question is mandatory but wasn't answered in the last page
     //add a message HIGHLIGHTING the question
-    $qtitle .= mandatory_message($ia);
-    $question_text['man_message'] = mandatory_message($ia);
+    if (($_SESSION['step'] != $_SESSION['maxstep']) || ($_SESSION['step'] == $_SESSION['prevstep']) && returnglobal('action')!='previewquestion' && returnglobal('action')!='previewgroup') {
+        $mandatory_msg = mandatory_message($ia);
+    }
+    else {
+        $mandatory_msg = '';
+    }
+    $qtitle .= $mandatory_msg;
+    $question_text['man_message'] = $mandatory_msg;
 
-    $qtitle .= validation_message($ia);
-    $question_text['valid_message'] = validation_message($ia);
 
-    $qtitle .= $ia[4] == "|" ? file_validation_message($ia) : "";
-    $question_text['file_valid_message'] = $ia[4] == "|" ? file_validation_message($ia) : "";
+    if (!isset($qidattributes['hide_tip']) || $qidattributes['hide_tip']==0) {
+        $_vshow = true; // whether should initially be visible - TODO should also depend upon 'hidetip'?
+    }
+    else {
+        $_vshow = false;
+    }
+    list($validation_msg,$isValid) = validation_message($ia,$_vshow);
 
-    if(!empty($question_text['man_message']) || !empty($question_text['valid_message']) || !empty($question_text['file_valid_message']))
+    $qtitle .= $validation_msg;
+    $question_text['valid_message'] = $validation_msg;
+
+    if (($_SESSION['step'] != $_SESSION['maxstep']) || ($_SESSION['step'] == $_SESSION['prevstep'])) {
+        $file_validation_msg = file_validation_message($ia);
+    }
+    else {
+        $file_validation_msg = '';
+        $isValid = true;    // don't want to show any validation messages.
+    }
+    $qtitle .= $ia[4] == "|" ? $file_validation_msg : "";
+    $question_text['file_valid_message'] = $ia[4] == "|" ? $file_validation_msg : "";
+
+    if(!empty($question_text['man_message']) || !$isValid || !empty($question_text['file_valid_message']))
     {
         $question_text['input_error_class'] = ' input-error';// provides a class to style question wrapper differently if there is some kind of user input error;
     }
@@ -898,7 +397,6 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
             $c = ($qtitle_custom!=$oldtitle)?1:0;
         };
 
-        //		$qtitle = $qtitle_custom;
         $question_text['all'] = $qtitle_custom;
     }
     else
@@ -907,101 +405,44 @@ function retrieveAnswers($ia, $notanswered=null, $notvalidated=null, $filenotval
     };
     // END: legacy question_start.pstpl code
     //===================================================================
-    //	echo '<pre>[qanda.php] line '.__LINE__.": $question_text =\n".htmlspecialchars(print_r($question_text,true)).'</pre>';
     $qtitle = $question_text;
     // =====================================================
 
-    $qanda=array($qtitle, $answer, $help, $display, $name, $ia[2], $gl[0], $ia[1] );
+    $qanda=array($qtitle, $answer, 'help', $display, $name, $ia[2], $gl[0], $ia[1] );
     //New Return
     return array($qanda, $inputnames);
 }
 
 function mandatory_message($ia)
 {
-    //This function checks to see if this question is mandatory and
-    //is being re-displayed because it wasn't answered. It returns
-    global $notanswered, $clang, $dbprefix;
-    $qtitle="";
-    if (isset($notanswered) && is_array($notanswered)) //ADD WARNINGS TO QUESTIONS IF THEY WERE MANDATORY BUT NOT ANSWERED
-    {
-        global $mandatorypopup, $popup;
-        if (in_array($ia[1], $notanswered))
-        {
-            $qtitle .= "<strong><br /><span class='errormandatory'>".$clang->gT('This question is mandatory').'.';
-            switch($ia[4])
-            {
-                case 'A':
-                case 'B':
-                case 'C':
-                case 'Q':
-                case 'K':
-                case 'F':
-                case 'J':
-                case 'H':
-                case ':':
-                    $qtitle .= "<br />\n".$clang->gT('Please complete all parts').'.';
-                    break;
-                case '1':
-                    $qtitle .= "<br />\n".$clang->gT('Please check the items').'.';
-                    break;
-                case 'R':
-                    $qtitle .= "<br />\n".$clang->gT('Please rank all items').'.';
-                    break;
-                case 'M':
-                case 'P':
-                    $qtitle .= ' '.$clang->gT('Please check at least one item.').'.';
-                    $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid=".$ia[0];
-                    $qresult = db_execute_assoc($qquery);    //Checked
-                    $qrow = $qresult->FetchRow();
-                    if ($qrow['other']=='Y')
-                    {
-                        $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
-                        if (trim($qidattributes['other_replace_text'])!='')
-                        {
-                            $othertext=$qidattributes['other_replace_text'];
-                        }
-                        else
-                        {
-                            $othertext=$clang->gT('Other:');
-                        }
-                        $qtitle .= "<br />\n".sprintf($clang->gT("If you choose '%s' you must provide a description."), $othertext);
-                    }
-                    break;
-            } // end switch
-            $qtitle .= "</span></strong><br />\n";
-        }
+    $qinfo = LimeExpressionManager::GetQuestionStatus($ia[0]);
+    if ($qinfo['mandViolation']) {
+        return $qinfo['mandTip'];
     }
-    return $qtitle;
+    else {
+        return "";
+    }
 }
 
-function validation_message($ia)
+/**
+ *
+ * @param <type> $ia
+ * @param <type> $show - true if should initially be visible
+ * @return <type>
+ */
+function validation_message($ia,$show)
 {
-    //This function checks to see if this question requires validation and
-    //that validation has not been met.
-    global $notvalidated, $dbprefix, $connect, $clang;
-    $qtitle="";
-    if (isset($notvalidated) && is_array($notvalidated)) //ADD WARNINGS TO QUESTIONS IF THEY ARE NOT VALID
-    {
-        global $validationpopup, $popup;
-        if (in_array($ia[1], $notvalidated))
-        {
-            $help='';
-            $helpselect="SELECT help\n"
-            ."FROM {$dbprefix}questions\n"
-            ."WHERE qid={$ia[0]} AND language='".$_SESSION['s_lang']."'";
-            $helpresult=db_execute_assoc($helpselect) or safe_die($helpselect.'<br />'.$connect->ErrorMsg());     //Checked
-            while ($helprow=$helpresult->FetchRow())
-            {
-                $help=' <span class="questionhelp">'.$helprow['help'].'</span>';
-            }
-            $qtitle .= '<br /><span class="errormandatory">'.$clang->gT('This question must be answered correctly').'.'.$help.'</span><br />
-';
-        }
+    $qinfo = LimeExpressionManager::GetQuestionStatus($ia[0]);
+    $class = "questionhelp";
+    if (!$show) {
+        $class .= ' hide-tip';
     }
-
-    return $qtitle;
+    $tip = '<span class="' . $class . '" id="vmsg_' . $ia[0] . '">' . $qinfo['validTip'] . "</span>";
+    $isValid = $qinfo['valid'];
+    return array($tip,$isValid);
 }
 
+// TMSW Validation -> EM
 function file_validation_message($ia)
 {
     global $filenotvalidated, $clang;
@@ -1019,13 +460,13 @@ function file_validation_message($ia)
     return $qtitle;
 }
 
+// TMSW Mandatory -> EM
 function mandatory_popup($ia, $notanswered=null)
 {
     global $showpopups;
     //This sets the mandatory popup message to show if required
-    //Called from question.php, group.php or survey.php
     if ($notanswered === null) {unset($notanswered);}
-    if (isset($notanswered) && is_array($notanswered) && isset($showpopups) && $showpopups == 1) //ADD WARNINGS TO QUESTIONS IF THEY WERE MANDATORY BUT NOT ANSWERED
+    if (isset($notanswered) && $notanswered && isset($showpopups) && $showpopups == 1) //ADD WARNINGS TO QUESTIONS IF THEY WERE MANDATORY BUT NOT ANSWERED
     {
         global $mandatorypopup, $popup, $clang;
         //POPUP WARNING
@@ -1052,14 +493,14 @@ function mandatory_popup($ia, $notanswered=null)
     }
 }
 
+// TMSW Validation -> EM
 function validation_popup($ia, $notvalidated=null)
 {
     global $showpopups;
     //This sets the validation popup message to show if required
-    //Called from question.php, group.php or survey.php
     if ($notvalidated === null) {unset($notvalidated);}
     $qtitle="";
-    if (isset($notvalidated) && is_array($notvalidated) && isset($showpopups) && $showpopups == 1)  //ADD WARNINGS TO QUESTIONS IF THEY ARE NOT VALID
+    if (isset($notvalidated) && $notvalidated && isset($showpopups) && $showpopups == 1)  //ADD WARNINGS TO QUESTIONS IF THEY ARE NOT VALID
     {
         global $validationpopup, $vpopup, $clang;
         //POPUP WARNING
@@ -1079,6 +520,7 @@ function validation_popup($ia, $notvalidated=null)
     }
 }
 
+// TMSW Validation -> EM
 function file_validation_popup($ia, $filenotvalidated = null)
 {
     global $showpopups;
@@ -1205,11 +647,8 @@ function return_timer_script($qidattributes, $ia, $disable=null) {
 		function freezeFrame(elementid) {
 			if(document.getElementById(elementid) !== null) {
 				var answer=document.getElementById(elementid);
-				if(answer.value == '') {
-					answer.value=' ';
-				}
 				answer.blur();
-				answer.onfocus=function() {answer.blur();};
+				answer.onfocus=function() { answer.blur();};
 			}
 		};
 	//-->
@@ -1218,11 +657,11 @@ function return_timer_script($qidattributes, $ia, $disable=null) {
     <script type='text/javascript'>
 	<!--\n
 		function countdown(questionid,timer,action,warning,warning2,warninghide,warning2hide,disable){
-		    if(!timeleft) {var timeleft=timer;}
-			if(!warning) {var warning=0;}
-			if(!warning2) {var warning2=0;}
-			if(!warninghide) {var warninghide=0;}
-			if(!warning2hide) {var warning2hide=0;}";
+		    if(!timeleft) { var timeleft=timer;}
+			if(!warning) { var warning=0;}
+			if(!warning2) { var warning2=0;}
+			if(!warninghide) { var warninghide=0;}
+			if(!warning2hide) { var warning2hide=0;}";
 
         if($thissurvey['format'] == "G")
         {
@@ -1378,7 +817,7 @@ function return_timer_script($qidattributes, $ia, $disable=null) {
 						    if(document.getElementById('moveprevbtn').disabled==true && '$disable_prev' > 0) document.getElementById('moveprevbtn').disabled=false;
 						}
 						freezeFrame(disable);
-						this.onsubmit=function() {subcookiejar.crumble('limesurvey_timers', timersessionname);};
+						this.onsubmit=function() { subcookiejar.crumble('limesurvey_timers', timersessionname);};
 						break;
 					default: //Warn and move on
 						document.getElementById(expireddisplay).style.display='';
@@ -1408,244 +847,58 @@ function return_timer_script($qidattributes, $ia, $disable=null) {
 	$(document).ready(function() {
 		countdown(".$ia[0].", ".$time_limit.", ".$time_limit_action.", ".$time_limit_warning.", ".$time_limit_warning_2.", ".$time_limit_warning_display_time.", ".$time_limit_warning_2_display_time.", '".$disable."');
 	});
-</script>\n\n";
+    </script>\n\n";
     return $output;
 }
 
-function return_array_filter_selected($ia, $qidattributes, $thissurvey, $ansrow, $rowname, $trbc='', $valuename, $method="tbody", $class=null)
-// function which returns TRUE if the given $ansrow contains a row which is selected, ie, not filtered out in previous answer
-{
-	$filter_select = TRUE;
-	if
-    (
-    (trim($qidattributes['array_filter'])!='' && 		// The array filter attribute is set
-    $thissurvey['format'] == 'S'						// and the survey is being presented in question-by-question mode
-    ) || 												// OR
-    (trim($qidattributes['array_filter'])!='' && 		// The array filter attribute is set
-    $thissurvey['format'] == 'G' && 					// and the survey is being presented in group-by-group mode
-    getArrayFiltersOutGroup($ia[0]) == true			// and the source question for the array filter is in a different group than this question
-    )
-    )
-    {
-        $selected = getArrayFiltersForQuestion($ia[0]);
-        if (isset($ansrow['code'])) $ansrow['title'] = $ansrow['code'];
-        if (!empty($selected) && !in_array($ansrow['title'],$selected))
-        {
-			$filter_select = FALSE;
-		}
-		else
-		{
-			$filter_select = TRUE;
-		}
-	}
-
-	if
-    (isset($qidattributes['array_filter_exclude']) &&
-	(
-    (trim($qidattributes['array_filter_exclude'])!='' &&
-    $thissurvey['format'] == 'S'
-    ) ||
-    (trim($qidattributes['array_filter_exclude'])!='' &&
-    $thissurvey['format'] == 'G' &&
-    getArrayFiltersExcludesOutGroup($ia[0]) == true
-    )
-	)
-    )
-    {
-        $selected = getArrayFilterExcludesForQuestion($ia[0]);
-        if (isset($ansrow['code'])) $ansrow['title'] = $ansrow['code'];
-        if (!empty($selected) && !in_array($ansrow['title'],$selected))
-        {
-			$filter_select = TRUE;
-		}
-		else
-		{
-			$filter_select = FALSE;
-		}
-	}
-	return $filter_select;
-}
-
 function return_array_filter_strings($ia, $qidattributes, $thissurvey, $ansrow, $rowname, $trbc='', $valuename, $method="tbody", $class=null) {
-    /* We're just going to work out whether to do the include or exclude version of the function at this point */
-    if(isset($qidattributes['array_filter_exclude']) && trim($qidattributes['array_filter_exclude']) != '') {
-        list($html2body, $hiddenfield) = return_array_filter_exclude_strings($ia, $qidattributes, $thissurvey, $ansrow, $rowname, $trbc, $valuename, $method, $class);
-    } else {
-        list($html2body, $hiddenfield) = return_array_filter_include_strings($ia, $qidattributes, $thissurvey, $ansrow, $rowname, $trbc, $valuename, $method, $class);
-    }
-    return array($html2body, $hiddenfield);
-}
-
-function return_array_filter_include_strings($ia, $qidattributes, $thissurvey, $ansrow, $rowname, $trbc='', $valuename, $method="tbody", $class=null) {
-    /* DO ARRAY_FILTER ATTRIBUTE
-     We set the $hiddenfield for each answer, and the value of this is available to java to let javascripts
-     know whether each answer is currently being displayed. $htmltbody2 determines whether the answer row
-     should be displayed initially. If no answers for the source question have been selected then the whole
-     answer row should start in the display-off position for array_filter or the display-on position
-     for array_filter_exclude. */
-
-    //Are we doing array_filter, or array_filter_exclude. Where a conflict occurs, do array_filter
-
-    $htmltbody2 = '';
-    $hiddenfield= '';
-    if  (
-    (trim($qidattributes['array_filter'])!='' && 	// the array_filter attribute is set
-    $thissurvey['format'] == 'G' && 				// and the survey is being presented group by group
-    getArrayFiltersOutGroup($ia[0]) == false		// and the source question is in the same group (ie displayed on same page)
-    ) ||											// OR
-    (trim($qidattributes['array_filter'])!='' &&	// the array_filter attribute is set
-    $thissurvey['format'] == 'A'					// and the survey is being presented all on one page
-    )
-    )
+    $htmltbody2 = "\n\n\t<$method id='javatbd$rowname'";
+    $htmltbody2 .= ($class !== null) ? " class='$class'": "";
+    if (isset($_SESSION['relevanceStatus'][$rowname]) && !$_SESSION['relevanceStatus'][$rowname])
     {
-        $htmltbody2 = "\n\n\t<$method id='javatbd$rowname' style='display: none'";
-        $htmltbody2 .= ($class !== null) ? " class='$class'": "";
-        $htmltbody2 .= ">\n";
-        if($ia[4]=="1") {
-        //This is an array dual scale question and we have to massage the tbidpslay rowname
-            $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='off' />\n";
-            $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='off' />\n";
-        } else {
-            $hiddenfield = "<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='off' />\n";
-        }
-    } else if
-    (
-    (trim($qidattributes['array_filter'])!='' && 		// The array filter attribute is set
-    $thissurvey['format'] == 'S'						// and the survey is being presented in question-by-question mode
-    ) || 												// OR
-    (trim($qidattributes['array_filter'])!='' && 		// The array filter attribute is set
-    $thissurvey['format'] == 'G' && 					// and the survey is being presented in group-by-group mode
-    getArrayFiltersOutGroup($ia[0]) == true			// and the source question for the array filter is in a different group than this question
-    )
-    )
-    {
-        $selected = getArrayFiltersForQuestion($ia[0]);
-        if (isset($ansrow['code'])) $ansrow['title'] = $ansrow['code'];
-        if (!empty($selected) && !in_array($ansrow['title'],$selected))
+        // If using exclude_all_others, then need to know whether irrelevant rows should be hidden or disabled
+        if (isset($qidattributes['exclude_all_others']))
         {
-            $htmltbody2 = "\n\n\t<$method id='javatbd$rowname' style='display: none'";
-            $htmltbody2 .= ($class !== null) ? " class='$class'": "";
-            $htmltbody2 .= ">\n";
-            if($ia[4]=="1") {
-            //This is an array dual scale question and we have to massage the tbidpslay rowname
-                $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='off' />\n";
-                $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='off' />\n";
-            } else {
-                $hiddenfield = "<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='off' />\n";
+            $disableit=false;
+            foreach(explode(';',trim($qidattributes['exclude_all_others'])) as $eo)
+            {
+                $eorow = $ia[1] . $eo;
+                if ((!isset($_SESSION['relevanceStatus'][$eorow]) || $_SESSION['relevanceStatus'][$eorow])
+                    && (isset($_SESSION[$eorow]) && $_SESSION[$eorow] == "Y"))
+                {
+                    $disableit = true;
+                }
             }
-            $_SESSION[$valuename] = ''; //Remove any saved results for this since it is no longer being displayed
+            if ($disableit)
+            {
+                $htmltbody2 .= " disabled='disabled'";
+            }
+            else
+            {
+                if (!isset($qidattributes['array_filter_style']) || $qidattributes['array_filter_style'] == '0')
+                {
+                    $htmltbody2 .= " style='display: none'";
+                }
+                else
+                {
+                    $htmltbody2 .= " disabled='disabled'";
+                }
+            }
         }
         else
         {
-            $htmltbody2 = "\n\n\t<$method id='javatbd$rowname'";
-            $htmltbody2 .= ($class !== null) ? " class='$class'": "";
-            $htmltbody2 .= ">";
-            if($ia[4]=="1") {
-            //This is an array dual scale question and we have to massage the tbidpslay rowname
-                $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='on' />\n";
-                $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='on' />\n";
-            } else {
-                $hiddenfield = "<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='on' />\n";
-        }
-    }
-    }
-    else
-    {
-        $htmltbody2 = "\n\n\t<$method id='javatbd$rowname'";
-        $htmltbody2 .= ($class !== null) ? " class='$class'": "";
-        $htmltbody2 .= ">\n";
-        if($ia[4]=="1") {
-        //This is an array dual scale question and we have to massage the tbidpslay rowname
-            $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='on' />\n";
-            $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='on' />\n";
-        } else {
-            $hiddenfield = "<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='on' />\n";
-        }
-    }
-
-    //End of array_filter attribute
-
-    return array($htmltbody2, $hiddenfield);
-}
-
-function return_array_filter_exclude_strings($ia, $qidattributes, $thissurvey, $ansrow, $rowname, $trbc='', $valuename, $method="tbody", $class=null) {
-    /* DO ARRAY_FILTER_EXCLUDE ATTRIBUTE
-     We set the $hiddenfield for each answer, and the value of this is available to java to let javascripts
-     know whether each answer is currently being displayed. $htmltbody2 determines whether the answer row
-     should be displayed initially. If no answers for the source question have been selected then the whole
-     answer row should start in the display-on position. */
-
-    $htmltbody2 = '';
-    $hiddenfield= '';
-    if  (
-    (trim($qidattributes['array_filter_exclude'])!='' && 	// the array_filter attribute is set
-    $thissurvey['format'] == 'G' && 						// and the survey is being presented group by group
-    getArrayFiltersExcludesOutGroup($ia[0]) == false		// and this question _is_ in the current group for the array filter (ie it's on the same page)
-    ) ||													// OR
-    (trim($qidattributes['array_filter_exclude'])!='' &&	// the array_filter attribute is set
-    $thissurvey['format'] == 'A'							// and the survey is being presented all on one page
-    )
-    )
-    {
-        $htmltbody2 = "\n\n\t<$method id='javatbd$rowname'>\n";
-        if($ia[4]=="1") {
-            //This is an array dual scale question and we have to massage the tbidpslay rowname
-            $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='on' />\n";
-            $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='on' />\n";
-        } else {
-        $hiddenfield = "<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='on' />\n";
-        }
-    } else if
-    (
-    (trim($qidattributes['array_filter_exclude'])!='' &&
-    $thissurvey['format'] == 'S'
-    ) ||
-    (trim($qidattributes['array_filter_exclude'])!='' &&
-    $thissurvey['format'] == 'G' &&
-    getArrayFiltersExcludesOutGroup($ia[0]) == true
-    )
-    )
-    {
-        $selected = getArrayFilterExcludesForQuestion($ia[0]);
-        if (isset($ansrow['code'])) $ansrow['title'] = $ansrow['code'];
-        if (!empty($selected) && !in_array($ansrow['title'],$selected))
-        {
-            $htmltbody2 = "\n\n\t<$method id='javatbd$rowname'>\n";
-            if($ia[4]=="1") {
-                //This is an array dual scale question and we have to massage the tbidpslay rowname
-                $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='on' />\n";
-                $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='on' />\n";
-            } else {
-            $hiddenfield="<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='on' />";
-        }
-        }
-        else
-        {
-            $htmltbody2 = "\n\n\t<$method id='javatbd$rowname' style='display: none'>";
-            if($ia[4]=="1") {
-                //This is an array dual scale question and we have to massage the tbidpslay rowname
-                $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='off' />\n";
-                $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='off' />\n";
-            } else {
-            $hiddenfield="\n<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='off' />";
+            if (!isset($qidattributes['array_filter_style']) || $qidattributes['array_filter_style'] == '0')
+            {
+                $htmltbody2 .= " style='display: none'";
             }
-            $_SESSION[$valuename]=''; //Remove any saved results for this since it is no longer being displayed
+            else
+            {
+                $htmltbody2 .= " disabled='disabled'";
+            }
         }
     }
-    else
-    {
-        $htmltbody2 = "\n\n\t<$method id='javatbd$rowname' style='display: none'>\n";
-        if($ia[4]=="1") {
-            //This is an array dual scale question and we have to massage the tbidpslay rowname
-            $hiddenfield = "<input type='hidden' name='tbdisp$rowname#0' id='tbdisp$rowname#0' value='off' />\n";
-            $hiddenfield .= "<input type='hidden' name='tbdisp$rowname#1' id='tbdisp$rowname#1' value='off' />\n";
-        } else {
-        $hiddenfield = "<input type='hidden' name='tbdisp$rowname' id='tbdisp$rowname' value='off' />";
-    }
-    }
-    //End of array_filter attribute
-
-    return array($htmltbody2, $hiddenfield);
+    $htmltbody2 .= ">\n";
+    return array($htmltbody2, "");
 }
 
 // ==================================================================
@@ -1668,8 +921,23 @@ function do_boilerplate($ia)
         $answer .= return_timer_script($qidattributes, $ia);
     }
 
-    $answer .= '<input type="hidden" name="$ia[1]" id="answer'.$ia[1].'" value="" />';
+    $answer .= '<input type="hidden" name="'.$ia[1].'" id="answer'.$ia[1].'" value="" />';
     $inputnames[]=$ia[1];
+
+    return array($answer, $inputnames);
+}
+
+
+function do_equation($ia)
+{
+    $answer='<input type="hidden" name="'.$ia[1].'" id="java'.$ia[1].'" value="';
+    if (isset($_SESSION[$ia[1]]))
+    {
+        $answer .= htmlspecialchars($_SESSION[$ia[1]],ENT_QUOTES);
+    }
+    $answer .= '">';
+    $inputnames[]=$ia[1];
+    $mandatory=null;
 
     return array($answer, $inputnames);
 }
@@ -1681,14 +949,7 @@ function do_5pointchoice($ia)
     global $clang, $imageurl;
 	global $js_header_includes, $css_header_includes;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
     //print_r($qidattributes);
 	$id = 'slider'.time().rand(0,100);
@@ -1705,12 +966,12 @@ function do_5pointchoice($ia)
 
     if ($ia[6] != "Y"  && SHOW_NO_ANSWER == 1) // Add "No Answer" option if question is not mandatory
     {
-        $answer .= "\t<li>\n<input class=\"radio\" type=\"radio\" name=\"$ia[1]\" id=\"NoAnswer\" value=\"\"";
+        $answer .= "\t<li>\n<input class=\"radio noAnswer\" type=\"radio\" name=\"$ia[1]\" id=\"answer".$ia[1]."NANS\" value=\"\"";
         if (!$_SESSION[$ia[1]])
         {
             $answer .= CHECKED;
         }
-        $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click() . "\" />\n<label for=\"NoAnswer\" class=\"answertext\">".$clang->gT('No answer')."</label>\n\t</li>\n";
+        $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click() . "\" />\n<label for=\"answer".$ia[1]."NANS\" class=\"answertext\">".$clang->gT('No answer')."</label>\n\t</li>\n";
 
     }
     $answer .= "</ul>\n<input type=\"hidden\" name=\"java$ia[1]\" id=\"java$ia[1]\" value=\"{$_SESSION[$ia[1]]}\" />\n";
@@ -1718,7 +979,14 @@ function do_5pointchoice($ia)
     if($qidattributes['slider_rating']==1){
     	$css_header_includes[]= '/admin/scripts/rating/jquery.rating.css';
     	$js_header_includes[]='/admin/scripts/rating/jquery.rating.js';
-    	$answer.='<br/><center><div id="'.$id.'div"><input type="radio" id="stars1" name="stars" class="'.$id.'st" value="1"/><input type="radio" id="stars2" name="stars" class="'.$id.'st" value="2"/><input type="radio" name="stars" id="stars3" class="'.$id.'st" value="3"/><input type="radio" id="stars4" name="stars" class="'.$id.'st" value="4"/><input type="radio" name="stars" id="stars5" class="'.$id.'st" value="5"/></div></center><br/>';
+    	//  write the alternative HTML only for activated javascript
+	    $answer.="
+			<script type=\"text/javascript\">
+			document.write('";
+	    $answer.='<ul id="'.$id.'div" class="answers-list stars-wrapper"><li class="item-list answer-star"><input type="radio" id="stars1" name="stars" class="'.$id.'st" value="1"/></li><li class="item-list answer-star"><input type="radio" id="stars2" name="stars" class="'.$id.'st" value="2"/></li><li class="item-list answer-star"><input type="radio" name="stars" id="stars3" class="'.$id.'st" value="3"/></li><li class="item-list answer-star"><input type="radio" id="stars4" name="stars" class="'.$id.'st" value="4"/></li><li class="item-list answer-star"><input type="radio" name="stars" id="stars5" class="'.$id.'st" value="5"/></li><li class="item-list answer-star"></u>';
+	    $answer.="');
+			</script>
+			";
 	    $answer.="
 			<script type=\"text/javascript\">
 				$('#$id').hide();
@@ -1736,6 +1004,7 @@ function do_5pointchoice($ia)
     						$('#$id input').each(function(){ $(this).removeAttr('checked');});
     						$('#answer$ia[1]'+value).attr('checked','checked');
     					}
+                        checkconditions(value,'$ia[1]','radio');
     				}
 
     			});
@@ -1749,15 +1018,23 @@ function do_5pointchoice($ia)
 	    }else{
 	    	$value=$_SESSION[$ia[1]];
 	    }
-    	$answer.="
-    		<div style=\"float:left;\">
-    		<div style=\"text-align:center; margin-bottom:6px; width:370px;\"><div style=\"width:2%; float:left;\">1</div><div style=\"width:46%;float:left;\">2</div><div style=\"width:4%;float:left;\">3</div><div style=\"width:46%;float:left;\">4</div><div style=\"width:2%;float:left;\">5</div></div><br/>
-    	 	<div id=\"{$id}sliderBg\" style=\"background-image:url('{$imageurl}/sliderBg.png'); text-align:center; background-repeat:no-repeat; height:22px; width:396px;\">
-    	 	<center>
-    		<div id=\"{$id}slider\" style=\"width:365px;\"></div>
-    		</center>
-    		</div></div>
-    	 	<div id=\"{$id}emoticon\" style=\"text-align:left; margin:10px; padding-left:10px;\"><img id=\"{$id}img1\" style=\"margin-left:10px;\" src=\".{$imageurl}/emoticons/{$value}.png\"/><img id=\"{$id}img2\" style=\"margin-left:-31px;margin-top:-31px;\" src=\"{$imageurl}/emoticons/{$value}.png\" /></div>
+	    // write the alternative HTML only for activated javascript
+	    $answer.="
+			<script type=\"text/javascript\">
+			document.write('";
+	    $answer.="<div style=\"float:left;\">'+
+    		'<div style=\"text-align:center; margin-bottom:6px; width:370px;\"><div style=\"width:2%; float:left;\">1</div><div style=\"width:46%;float:left;\">2</div><div style=\"width:4%;float:left;\">3</div><div style=\"width:46%;float:left;\">4</div><div style=\"width:2%;float:left;\">5</div></div><br/>'+
+    		'<div id=\"{$id}sliderBg\" style=\"background-image:url(\'{$imageurl}/sliderBg.png\'); text-align:center; background-repeat:no-repeat; height:22px; width:396px;\">'+
+    		'<center>'+
+    		'<div id=\"{$id}slider\" style=\"width:365px;\"></div>'+
+    		'</center>'+
+    		'</div></div>'+
+    		'<div id=\"{$id}emoticon\" style=\"text-align:left; margin:10px; padding-left:10px;\"><img id=\"{$id}img1\" style=\"margin-left:10px;\" src=\".{$imageurl}/emoticons/{$value}.png\"/><img id=\"{$id}img2\" style=\"margin-left:-31px;margin-top:-31px;\" src=\"{$imageurl}/emoticons/{$value}.png\" />'+
+    		'</div>";
+	    $answer.="');
+			</script>
+			";
+	    $answer.="
 			<script type=\"text/javascript\">
 				$('#$id').hide();
 				var value=$value;
@@ -1782,6 +1059,7 @@ function do_5pointchoice($ia)
     						$('#{$id}img1').show();
     						$('#{$id}img2').hide();
     					});
+        $checkconditionFunction(ui.value,'$ia[1]','radio');
     				}
 				});
 				$('#{$id}slider a').css('background-image', 'url(\'{$imageurl}/slider.png\')');
@@ -1809,14 +1087,7 @@ function do_date($ia)
     $js_header_includes[] = '/scripts/jquery/lime-calendar.js';
 
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $dateformatdetails=getDateFormatData($thissurvey['surveyls_dateformat']);
     $numberformatdatat = getRadixPointData($thissurvey['surveyls_numberformat']);
@@ -1839,7 +1110,7 @@ function do_date($ia)
             {
                 // Show day select box
                 case 'j':
-                case 'd':   $answer .= ' <select id="day'.$ia[1].'" class="day">
+                case 'd':   $answer .= ' <label for="day'.$ia[1].'" class="hide">'.$clang->gT('Day').'</label><select id="day'.$ia[1].'" class="day">
                                                 <option value="">'.$clang->gT('Day')."</option>\n";
                 for ($i=1; $i<=31; $i++) {
                     if ($i == $currentdate)
@@ -1856,7 +1127,7 @@ function do_date($ia)
                 break;
                 // Show month select box
                 case 'n':
-                case 'm':   $answer .= ' <select id="month'.$ia[1].'" class="month">
+                case 'm':   $answer .= ' <label for="month'.$ia[1].'" class="hide">'.$clang->gT('Month').'</label><select id="month'.$ia[1].'" class="month">
                                             <option value="">'.$clang->gT('Month')."</option>\n";
                 $montharray=array(
                 $clang->gT('Jan'),
@@ -1886,7 +1157,7 @@ function do_date($ia)
                 $answer .= '    </select>';
                 break;
                 // Show year select box
-                case 'Y':   $answer .= ' <select id="year'.$ia[1].'" class="year">
+                case 'Y':   $answer .= ' <label for="year'.$ia[1].'" class="hide">'.$clang->gT('Year').'</label><select id="year'.$ia[1].'" class="year">
                                             <option value="">'.$clang->gT('Year').'</option>';
 
                 /*
@@ -1998,7 +1269,8 @@ function do_date($ia)
         $goodchars = "0123456789".$goodchars[0];
 
         $answer ="<p class=\"question\">
-                        <input class='popupdate' type=\"text\" alt=\"".$clang->gT('Date picker')."\" size=\"10\" name=\"{$ia[1]}\" id=\"answer{$ia[1]}\" value=\"$dateoutput\" maxlength=\"10\" onkeypress=\"return goodchars(event,'".$goodchars."')\" onchange=\"$checkconditionFunction(this.value, this.name, this.type)\" />
+                        <label for='answer{$ia[1]}' class='hide label'>{$clang->gT('Date picker')}</label>
+                        <input class='popupdate' type=\"text\" title=\"".sprintf($clang->gT('Format: %s'),$dateformatdetails['dateformat'])."\" size=\"10\" name=\"{$ia[1]}\" id=\"answer{$ia[1]}\" value=\"$dateoutput\" maxlength=\"10\" onkeypress=\"return goodchars(event,'".$goodchars."')\" onchange=\"$checkconditionFunction(this.value, this.name, this.type)\" />
                         <input  type='hidden' name='dateformat{$ia[1]}' id='dateformat{$ia[1]}' value='{$dateformatdetails['jsdate']}'  />
                         <input  type='hidden' name='datelanguage{$ia[1]}' id='datelanguage{$ia[1]}' value='{$clang->langcode}'  />
                         <input  type='hidden' name='dateyearrange{$ia[1]}' id='dateyearrange{$ia[1]}' value='{$minyear}:{$maxyear}'  />
@@ -2021,18 +1293,11 @@ function do_language($ia)
 {
     global $dbprefix, $surveyid, $clang;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $answerlangs = GetAdditionalLanguagesFromSurveyID($surveyid);
     $answerlangs [] = GetBaseLanguageFromSurveyID($surveyid);
-    $answer = "\n\t<p class=\"question\">\n<select name=\"$ia[1]\" id=\"answer$ia[1]\" onchange=\"document.getElementById('lang').value=this.value; $checkconditionFunction(this.value, this.name, this.type);\">\n";
+    $answer = "\n\t<p class=\"question\">\n<label for='answer{$ia[1]}' class='hide label'>{$clang->gT('Choose your language')}</label><select name=\"$ia[1]\" id=\"answer$ia[1]\" onchange=\"document.getElementById('lang').value=this.value; $checkconditionFunction(this.value, this.name, this.type);\">\n";
     if (!$_SESSION[$ia[1]]) {$answer .= "\t<option value=\"\" selected=\"selected\">".$clang->gT('Please choose...')."</option>\n";}
     foreach ($answerlangs as $ansrow)
     {
@@ -2056,18 +1321,12 @@ function do_language($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_list_dropdown($ia)
 {
     global $dbprefix,  $dropdownthreshold, $lwcdropdowns, $connect;
     global $clang;
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
     if (trim($qidattributes['other_replace_text'])!='')
@@ -2111,6 +1370,35 @@ function do_list_dropdown($ia)
 
     $ansresult = db_execute_assoc($ansquery) or safe_die('Couldn\'t get answers<br />'.$ansquery.'<br />'.$connect->ErrorMsg());    //Checked
 
+    $dropdownSize = '';
+    if (isset($qidattributes['dropdown_size']) && $qidattributes['dropdown_size'] > 0)
+    {
+        $_height = sanitize_int($qidattributes['dropdown_size']) ;
+        $_maxHeight = $ansresult->RowCount();
+        if ((isset($_SESSION[$ia[1]]) || $_SESSION[$ia[1]] != '') && $ia[6] != 'Y' && $ia[6] != 'Y' && SHOW_NO_ANSWER == 1) {
+            ++$_maxHeight;  // for No Answer
+        }
+        if (isset($other) && $other=='Y') {
+            ++$_maxHeight;  // for Other
+        }
+        if (!$_SESSION[$ia[1]]) {
+            ++$_maxHeight;  // for 'Please choose:'
+        }
+
+        if ($_height > $_maxHeight) {
+            $_height = $_maxHeight;
+        }
+        $dropdownSize = ' size="'.$_height.'"';
+    }
+
+    $prefixStyle = 0;
+    if (isset($qidattributes['dropdown_prefix']))
+    {
+        $prefixStyle = sanitize_int($qidattributes['dropdown_prefix']) ;
+    }
+    $_rowNum=0;
+    $_prefix='';
+
     if (!isset($optCategorySeparator))
     {
         while ($ansrow = $ansresult->FetchRow())
@@ -2120,7 +1408,10 @@ function do_list_dropdown($ia)
             {
                 $opt_select = SELECTED;
             }
-            $answer .= "<option value='{$ansrow['code']}' {$opt_select}>{$ansrow['answer']}</option>\n";
+            if ($prefixStyle == 1) {
+                $_prefix = ++$_rowNum . ') ';
+            }
+            $answer .= "<option value='{$ansrow['code']}' {$opt_select}>{$_prefix}{$ansrow['answer']}</option>\n";
         }
     }
     else
@@ -2198,15 +1489,20 @@ function do_list_dropdown($ia)
         {
             $opt_select = '';
         }
-        $answer .= '					<option value="-oth-"'.$opt_select.'>'.$othertext."</option>\n";
+        if ($prefixStyle == 1) {
+            $_prefix = ++$_rowNum . ') ';
+        }
+        $answer .= '<option value="-oth-"'.$opt_select.'>'.$_prefix.$othertext."</option>\n";
     }
 
     if ((isset($_SESSION[$ia[1]]) || $_SESSION[$ia[1]] != '') && $ia[6] != 'Y' && $ia[6] != 'Y' && SHOW_NO_ANSWER == 1)
     {
-        $answer .= '<option value="">'.$clang->gT('No answer')."</option>\n";
+        if ($prefixStyle == 1) {
+            $_prefix = ++$_rowNum . ') ';
+        }
+        $answer .= '<option value="">'.$_prefix.$clang->gT('No answer')."</option>\n";
     }
-    $answer .= '				</select>
-				<input type="hidden" name="java'.$ia[1].'" id="java'.$ia[1].'" value="'.$_SESSION[$ia[1]].'" />';
+    $answer .= '</select><input type="hidden" name="java'.$ia[1].'" id="java'.$ia[1].'" value="'.$_SESSION[$ia[1]].'" />';
 
     if (isset($other) && $other=='Y')
     {
@@ -2218,8 +1514,9 @@ function do_list_dropdown($ia)
     }
     $sselect = '
 			<p class="question">
-				<select name="'.$ia[1].'" id="answer'.$ia[1].'" onchange="'.$checkconditionFunction.'(this.value, this.name, this.type);'.$sselect_show_hide.'">
-';
+                <label for="answer'.$ia[1].'" class="hide label">'.$clang->gT('Please choose').'</label>
+				<select name="'.$ia[1].'" id="answer'.$ia[1].'"'.$dropdownSize.' onchange="'.$checkconditionFunction.'(this.value, this.name, this.type);'.$sselect_show_hide.'">
+    ';
     $answer = $sselect.$answer;
 
     if (isset($other) && $other=='Y')
@@ -2241,7 +1538,7 @@ function do_list_dropdown($ia)
         ."}\n"
         ."\t}\n"
         ."//--></script>\n".$answer;
-        $answer .= '				<input type="text" id="othertext'.$ia[1].'" name="'.$ia[1].'other" style="display:';
+        $answer .= '				<label for="othertext'.$ia[1].'"><input type="text" id="othertext'.$ia[1].'" name="'.$ia[1].'other" style="display:';
 
         $inputnames[]=$ia[1].'other';
 
@@ -2250,51 +1547,19 @@ function do_list_dropdown($ia)
             $answer .= 'none';
         }
 
-        //		// --> START BUG FIX - text field for other was not repopulating when returning to page via << PREV
         $answer .= '"';
-        //		$thisfieldname=$ia[1].'other';
-        //		if (isset($_SESSION[$thisfieldname])) { $answer .= ' value="'.htmlspecialchars($_SESSION[$thisfieldname],ENT_QUOTES).'" ';}
-        //		// --> END BUG FIX
 
-        // --> START NEW FEATURE - SAVE
         $answer .= "  alt='".$clang->gT('Other answer')."' onchange='$checkconditionFunction(this.value, this.name, this.type);'";
         $thisfieldname="$ia[1]other";
         if (isset($_SESSION[$thisfieldname])) { $answer .= " value='".htmlspecialchars($_SESSION[$thisfieldname],ENT_QUOTES)."' ";}
-        $answer .= ' />';
+        $answer .= ' /></label>';
         $answer .= "</p>";
-        // --> END NEW FEATURE - SAVE
         $inputnames[]=$ia[1]."other";
     }
     else
     {
         $answer .= "</p>";
     }
-
-    $checkotherscript = "";
-    if (isset($other) && $other == 'Y' && $qidattributes['other_comment_mandatory']==1)
-    {
-        $checkotherscript = "\n<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "oldonsubmitOther_{$ia[0]} = document.limesurvey.onsubmit;\n"
-        . "function ensureOther_{$ia[0]}()\n"
-        . "{\n"
-        . "\tothercommentval=document.getElementById('othertext{$ia[1]}').value;\n"
-        . "\totherval=document.getElementById('answer{$ia[1]}').value;\n"
-        . "\tif (otherval == '-oth-' && othercommentval == '') {\n"
-        . "alert('".sprintf($clang->gT("You've selected the \"%s\" answer for question \"%s\". Please also fill in the accompanying \"other comment\" field.","js"),trim(javascript_escape($othertext,true,true)),trim(javascript_escape($ia[3],true,true)))."');\n"
-        . "return false;\n"
-        . "\t}\n"
-        . "\telse {\n"
-        . "if(typeof oldonsubmitOther_{$ia[0]} == 'function') {\n"
-        . "\treturn oldonsubmitOther_{$ia[0]}();\n"
-        . "}\n"
-        . "\t}\n"
-        . "}\n"
-        . "document.limesurvey.onsubmit = ensureOther_{$ia[0]};\n"
-        . "\t-->\n"
-        . "</script>\n";
-    }
-    $answer = $checkotherscript . $answer;
 
     $inputnames[]=$ia[1];
     return array($answer, $inputnames);
@@ -2308,6 +1573,7 @@ function do_list_dropdown($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_list_radio($ia)
 {
     global $dbprefix, $dropdownthreshold, $lwcdropdowns, $connect, $clang;
@@ -2323,14 +1589,7 @@ function do_list_radio($ia)
         $kpclass = "";
     }
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
@@ -2435,7 +1694,7 @@ function do_list_radio($ia)
 
         $answer .= $startitem;
         $answer .= "\t$hiddenfield\n";
-        $answer .='		<input class="radio" type="radio" value="'.$ansrow['code'].'" name="'.$ia[1].'" id="answer'.$ia[1].$ansrow['code'].'"'.$check_ans.' onclick="if (document.getElementById(\'answer'.$ia[1].'othertext\') != null) document.getElementById(\'answer'.$ia[1].'othertext\').value=\'\';'.$checkconditionFunction.'(this.value, this.name, this.type)'.quexs_submit_on_click(!$quexs_outcome && !$quexs_appointment).quexs_outcome($quexs_outcome_code).quexs_appointment($quexs_appointment).'" />
+        $answer .='		<input class="radio" type="radio" value="'.$ansrow['code'].'" name="'.$ia[1].'" id="answer'.$ia[1].$ansrow['code'].'"'.$check_ans.' onclick="if (document.getElementById(\'answer'.$ia[1].'othertext\') != null) document.getElementById(\'answer'.$ia[1].'othertext\').value=\'\';'.$checkconditionFunction.'(this.value, this.name, this.type)' . quexs_submit_on_click(!$quexs_outcome && !$quexs_appointment).quexs_outcome($quexs_outcome_code).quexs_appointment($quexs_appointment)  . '" />
 		<label for="answer'.$ia[1].$ansrow['code'].'" class="answertext">'.$ansrow['answer'].'</label>
         '.$wrapper['item-end'];
 
@@ -2463,11 +1722,11 @@ function do_list_radio($ia)
 
         if ($qidattributes['other_numbers_only']==1)
         {
-            $numbersonly = 'onkeypress="return goodchars(event,\'-0123456789'.$sSeperator.'\')"';
+            $oth_checkconditionFunction = 'fixnum_checkconditions';
         }
         else
         {
-            $numbersonly = '';
+            $oth_checkconditionFunction = 'checkconditions';
         }
 
 
@@ -2483,7 +1742,12 @@ function do_list_radio($ia)
         $thisfieldname=$ia[1].'other';
         if (isset($_SESSION[$thisfieldname]))
         {
-            $answer_other = ' value="'.htmlspecialchars($_SESSION[$thisfieldname],ENT_QUOTES).'"';
+            $dispVal = $_SESSION[$thisfieldname];
+            if ($qidattributes['other_numbers_only']==1)
+            {
+                $dispVal = str_replace('.',$sSeperator,$dispVal);
+            }
+            $answer_other = ' value="'.htmlspecialchars($dispVal,ENT_QUOTES).'"';
         }
         else
         {
@@ -2503,7 +1767,7 @@ function do_list_radio($ia)
         $answer .= '		<input class="radio" type="radio" value="-oth-" name="'.$ia[1].'" id="SOTH'.$ia[1].'"'.$check_ans.' onclick="'.$checkconditionFunction.'(this.value, this.name, this.type)" />
 		<label for="SOTH'.$ia[1].'" class="answertext">'.$othertext.'</label>
 		<label for="answer'.$ia[1].'othertext">
-			<input type="text" class="text '.$kpclass.'" id="answer'.$ia[1].'othertext" name="'.$ia[1].'other" title="'.$clang->gT('Other').'"'.$answer_other.' '.$numbersonly.' onkeyup="javascript:document.getElementById(\'SOTH'.$ia[1].'\').checked=true; '.$checkconditionFunction.'(document.getElementById(\'SOTH'.$ia[1].'\').value, document.getElementById(\'SOTH'.$ia[1].'\').name, document.getElementById(\'SOTH'.$ia[1].'\').type);" />
+			<input type="text" class="text '.$kpclass.'" id="answer'.$ia[1].'othertext" name="'.$ia[1].'other" title="'.$clang->gT('Other').'"'.$answer_other.' onkeyup="if($.trim($(this).val())!=\'\'){ $(\'#SOTH'.$ia[1].'\').attr(\'checked\',\'checked\'); }; '.$oth_checkconditionFunction.'(this.value, this.name, this.type);" />
 		</label>
         '.$wrapper['item-end'];
 
@@ -2539,8 +1803,6 @@ function do_list_radio($ia)
         $answer .= $wrapper['item-start'].'		<input class="radio" type="radio" name="'.$ia[1].'" id="answer'.$ia[1].'NANS" value=""'.$check_ans.' onclick="if (document.getElementById(\'answer'.$ia[1].'othertext\') != null) document.getElementById(\'answer'.$ia[1].'othertext\').value=\'\';'.$checkconditionFunction.'(this.value, this.name, this.type)" />
 		<label for="answer'.$ia[1].'NANS" class="answertext">'.$clang->gT('No answer').'</label>
         '.$wrapper['item-end'];
-        // --> END NEW FEATURE - SAVE
-
 
         ++$rowcounter;
         if ($rowcounter == $wrapper['maxrows'] && $colcounter < $wrapper['cols'])
@@ -2560,41 +1822,14 @@ function do_list_radio($ia)
     }
     //END OF ITEMS
     $answer .= $wrapper['whole-end'].'
-<input type="hidden" name="java'.$ia[1].'" id="java'.$ia[1]."\" value=\"{$_SESSION[$ia[1]]}\" />\n";
-
-    $checkotherscript = "";
-
-    if (isset($other) && $other == 'Y' && $qidattributes['other_comment_mandatory']==1)
-    {
-        $checkotherscript = "<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "oldonsubmitOther_{$ia[0]} = document.limesurvey.onsubmit;\n"
-        . "function ensureOther_{$ia[0]}()\n"
-        . "{\n"
-        . "\tothercommentval=document.getElementById('answer{$ia[1]}othertext').value;\n"
-        . "\totherval=document.getElementById('SOTH{$ia[1]}').checked;\n"
-        . "\tif (otherval == true && othercommentval == '') {\n"
-        . "alert('".sprintf($clang->gT("You've selected the \"%s\" answer for question \"%s\". Please also fill in the accompanying \"other comment\" field.","js"),trim(javascript_escape($othertext,true,true)),trim(javascript_escape($ia[3],true,true)))."');\n"
-        . "return false;\n"
-        . "\t}\n"
-        . "\telse {\n"
-        . "if(typeof oldonsubmitOther_{$ia[0]} == 'function') {\n"
-        . "\treturn oldonsubmitOther_{$ia[0]}();\n"
-        . "}\n"
-        . "\t}\n"
-        . "}\n"
-        . "document.limesurvey.onsubmit = ensureOther_{$ia[0]};\n"
-        . "\t-->\n"
-        . "</script>\n";
-    }
-
-    $answer = $checkotherscript . $answer;
+    <input type="hidden" name="java'.$ia[1].'" id="java'.$ia[1]."\" value=\"{$_SESSION[$ia[1]]}\" />\n";
 
     $inputnames[]=$ia[1];
     return array($answer, $inputnames);
 }
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_listwithcomment($ia)
 {
     global $maxoptionsize, $dbprefix, $dropdownthreshold, $lwcdropdowns, $thissurvey;
@@ -2610,14 +1845,7 @@ function do_listwithcomment($ia)
         $kpclass = "";
     }
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $answer = '';
 
@@ -2662,7 +1890,7 @@ function do_listwithcomment($ia)
 			<input type="radio" name="'.$ia[1].'" id="answer'.$ia[1].$ansrow['code'].'" value="'.$ansrow['code'].'" class="radio" '.$check_ans.' onclick="'.$checkconditionFunction.'(this.value, this.name, this.type)" />
 			<label for="answer'.$ia[1].$ansrow['code'].'" class="answertext">'.$ansrow['answer'].'</label>
 		</li>
-';
+            ';
         }
 
         if ($ia[6] != 'Y' && SHOW_NO_ANSWER == 1)
@@ -2679,43 +1907,35 @@ function do_listwithcomment($ia)
 			<input class="radio" type="radio" name="'.$ia[1].'" id="answer'.$ia[1].'" value=" " onclick="'.$checkconditionFunction.'(this.value, this.name, this.type)"'.$check_ans.' />
 			<label for="answer'.$ia[1].'" class="answertext">'.$clang->gT('No answer').'</label>
 		</li>
-';
+            ';
         }
 
         $fname2 = $ia[1].'comment';
         if ($anscount > 8) {$tarows = $anscount/1.2;} else {$tarows = 4;}
-        // --> START NEW FEATURE - SAVE
-        //    --> START ORIGINAL
-        //        $answer .= "\t<td valign='top'>\n"
-        //                 . "<textarea class='textarea' name='$ia[1]comment' id='answer$ia[1]comment' rows='$tarows' cols='30'>";
-        //    --> END ORIGINAL
         $answer .= '	</ul>
-</div>
+        </div>
 
-<p class="comment">
+        <p class="comment">
 	<label for="answer'.$ia[1].'comment">'.$hint_comment.':</label>
 
 	<textarea class="textarea '.$kpclass.'" name="'.$ia[1].'comment" id="answer'.$ia[1].'comment" rows="'.floor($tarows).'" cols="30" >';
-        // --> END NEW FEATURE - SAVE
         if (isset($_SESSION[$fname2]) && $_SESSION[$fname2])
         {
-            $answer .= str_replace("\\", "", $_SESSION[$fname2]);
+            $answer .= htmlspecialchars(htmlspecialchars(str_replace("\\", "", $_SESSION[$fname2])));
         }
         $answer .= '</textarea>
-</p>
+        </p>
 
-<input class="radio" type="hidden" name="java'.$ia[1].'" id="java'.$ia[1]."\" value=\"{$_SESSION[$ia[1]]}\" />
-";
+        <input class="radio" type="hidden" name="java'.$ia[1].'" id="java'.$ia[1]."\" value=\"{$_SESSION[$ia[1]]}\" />
+        ";
         $inputnames[]=$ia[1];
         $inputnames[]=$ia[1].'comment';
     }
     else //Dropdown list
     {
-        // --> START NEW FEATURE - SAVE
         $answer .= '<p class="select">
-	<select class="select" name="'.$ia[1].'" id="answer'.$ia[1].'" onclick="'.$checkconditionFunction.'(this.value, this.name, this.type)" >
-';
-        // --> END NEW FEATURE - SAVE
+        <select class="select" name="'.$ia[1].'" id="answer'.$ia[1].'" onchange="'.$checkconditionFunction.'(this.value, this.name, this.type)" >
+        ';
         while ($ansrow=$ansresult->FetchRow())
         {
             $check_ans = '';
@@ -2743,8 +1963,8 @@ function do_listwithcomment($ia)
             $answer .= '<option value=""'.$check_ans.'>'.$clang->gT('No answer')."</option>\n";
         }
         $answer .= '	</select>
-</p>
-';
+        </p>
+        ';
         $fname2 = $ia[1].'comment';
         if ($anscount > 8) {$tarows = $anscount/1.2;} else {$tarows = 4;}
         if ($tarows > 15) {$tarows=15;}
@@ -2754,10 +1974,9 @@ function do_listwithcomment($ia)
         $answer .= '<p class="comment">
 	'.$hint_comment.'
 	<textarea class="textarea '.$kpclass.'" name="'.$ia[1].'comment" id="answer'.$ia[1].'comment" rows="'.$tarows.'" cols="'.$maxoptionsize.'" >';
-        // --> END NEW FEATURE - SAVE
         if (isset($_SESSION[$fname2]) && $_SESSION[$fname2])
         {
-            $answer .= str_replace("\\", "", $_SESSION[$fname2]);
+            $answer .= htmlspecialchars(htmlspecialchars(str_replace("\\", "", $_SESSION[$fname2])));
         }
         $answer .= '</textarea>
 	<input class="radio" type="hidden" name="java'.$ia[1].'" id="java'.$ia[1]." value=\"{$_SESSION[$ia[1]]}\" />\n</p>\n";
@@ -2771,18 +1990,12 @@ function do_listwithcomment($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_ranking($ia)
 {
     global $dbprefix, $imageurl, $clang, $thissurvey, $showpopups;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
     $answer="";
@@ -2796,16 +2009,38 @@ function do_ranking($ia)
     if (trim($qidattributes["max_answers"])!='')
     {
         $max_answers=trim($qidattributes["max_answers"]);
+        $max_ans_val = LimeExpressionManager::ProcessString('{'.$max_answers.'}',$ia[0]);
+        if (!is_numeric($max_ans_val))  // this happens when try to do dynamic max ranking values and the starting value is blank
+        {
+            $max_ans_val = $anscount;
+        }
     } else {
         $max_answers=$anscount;
+        $max_ans_val = $anscount;
     }
-    $finished=$anscount-$max_answers;
+    if (trim($qidattributes["min_answers"])!='')
+    {
+        $min_answers = trim($qidattributes["min_answers"]);
+    }
+    else
+    {
+        $min_answers = 0;
+    }
+
     $answer .= "\t<script type='text/javascript'>\n"
     . "\t<!--\n"
     . "function rankthis_{$ia[0]}(\$code, \$value)\n"
     . "\t{\n"
     . "\t\$index=document.getElementById('CHOICES_{$ia[0]}').selectedIndex;\n"
-    . "\tfor (i=1; i<=$max_answers; i++)\n"
+    . "\tvar _maxans = $.trim(LEMstrip_tags($('#RANK_{$ia[0]}_maxans').html()));\n"
+    . "\tvar _minans = $.trim(LEMstrip_tags($('#RANK_{$ia[0]}_minans').html()));\n"
+    . "\tvar maxval = (LEMempty(_maxans) ? $anscount : Math.floor(_maxans));\n"
+    . "\tif (($anscount - document.getElementById('CHOICES_{$ia[0]}').options.length) >= maxval) {\n"
+    . "\t\tdocument.getElementById('CHOICES_{$ia[0]}').disabled=true;\n"
+    . "\t\tdocument.getElementById('CHOICES_{$ia[0]}').selectedIndex=-1;\n"
+    . "\t\treturn true;\n"
+    . "\t}\n"
+    . "\tfor (i=1; i<=maxval; i++)\n"
     . "{\n"
     . "\$b=i;\n"
     . "\$b += '';\n"
@@ -2825,10 +2060,10 @@ function do_ranking($ia)
     . "\t\t\t\t\t\t\t\t\tdocument.getElementById('CHOICES_{$ia[0]}').options[b] = null;\n"
     . "\t\t\t\t\t\t\t\t\t}\n"
     . "\t\t\t\t\t\t\t\t}\n"
-    . "\t\t\t\t\t\t\ti=$max_answers;\n"
+    . "\t\t\t\t\t\t\ti=maxval;\n"
     . "\t\t\t\t\t\t\t}\n"
     . "\t\t\t\t\t\t}\n"
-    . "\t\t\t\t\tif (document.getElementById('CHOICES_{$ia[0]}').options.length == $finished)\n"
+    . "\t\t\t\t\tif (document.getElementById('CHOICES_{$ia[0]}').options.length == ($anscount - maxval))\n"
     . "\t\t\t\t\t\t{\n"
     . "\t\t\t\t\t\tdocument.getElementById('CHOICES_{$ia[0]}').disabled=true;\n"
     . "\t\t\t\t\t\t}\n"
@@ -2882,7 +2117,7 @@ function do_ranking($ia)
             $existing++;
         }
     }
-    for ($i=1; $i<=$max_answers; $i++)
+    for ($i=1; $i<=floor($max_ans_val); $i++)
     {
         $myfname = $ia[1].$i;
         if (isset($_SESSION[$myfname]) && $_SESSION[$myfname])
@@ -2926,13 +2161,14 @@ function do_ranking($ia)
     $maxselectlength=0;
     $choicelist = "<select size=\"$anscount\" name=\"CHOICES_{$ia[0]}\" ";
     if (isset($choicewidth)) {$choicelist.=$choicewidth;}
-    $choicelist .= " id=\"CHOICES_{$ia[0]}\" onclick=\"if (this.options.length>0 && this.selectedIndex<0) {this.options[this.options.length-1].selected=true;}; rankthis_{$ia[0]}(this.options[this.selectedIndex].value, this.options[this.selectedIndex].text)\" class=\"select\">\n";
+
+    $choicelist .= " id=\"CHOICES_{$ia[0]}\" onchange=\"if (this.options.length>0 && this.selectedIndex<0) { this.options[this.options.length-1].selected=true; }; rankthis_{$ia[0]}(this.options[this.selectedIndex].value, this.options[this.selectedIndex].text)\" class=\"select\">\n";
 
         foreach ($answers as $ans)
         {
             if (!in_array($ans, $chosen))
             {
-                $choicelist .= "\t\t\t\t\t\t\t<option value='{$ans[0]}'>{$ans[1]}</option>\n";
+                $choicelist .= "\t\t\t\t\t\t\t<option id='javatbd{$ia[1]}{$ans[0]}' value='{$ans[0]}'>{$ans[1]}</option>\n";
             }
         if (strlen($ans[1]) > $maxselectlength) {$maxselectlength = strlen($ans[1]);}
         }
@@ -2952,7 +2188,10 @@ function do_ranking($ia)
     $ranklist = str_replace("<input class=\"text\"", "<input size='{$maxselectlength}' class='text'", $ranklist);
     $answer .= "\t<td style=\"text-align:left; white-space:nowrap;\" class='rank output'>\n"
         . "\t<table border='0' cellspacing='1' cellpadding='0'>\n"
-        . "\t<tr><td></td><td><strong>".$clang->gT("Your Ranking").":</strong></td></tr>\n";
+        . "\t<tr><td></td><td><strong>".$clang->gT("Your Ranking").":</strong>"
+        . "<div style='display:none' id='RANK_{$ia[0]}_maxans'>{".$max_answers."}</div>"
+        . "<div style='display:none' id='RANK_{$ia[0]}_minans'>{".$min_answers."}</div>"
+        . "</td></tr>\n";
 
     $answer .= $ranklist
     . "\t</table>\n"
@@ -2965,44 +2204,6 @@ function do_ranking($ia)
     . "</tr>\n"
     . "\t</table>\n";
 
-    if (trim($qidattributes["min_answers"])!='')
-    {
-        $minansw=trim($qidattributes["min_answers"]);
-        if(!isset($showpopups) || $showpopups == 0)
-        {
-            $answer .= "<div id='rankingminanswarning{$ia[0]}' style='display: none; color: red' class='errormandatory'>"
-                       .sprintf($clang->ngT("Please rank at least %d item for question \"%s\"","Please rank at least %d items for question \"%s\".",$minansw),$minansw, trim(str_replace(array("\n", "\r"), "", $ia[3])))."</div>";
-        }
-        $minanswscript = "<script type='text/javascript'>\n"
-        . "  <!--\n"
-        . "  oldonsubmit_{$ia[0]} = document.limesurvey.onsubmit;\n"
-        . "  function ensureminansw_{$ia[0]}()\n"
-        . "  {\n"
-        . "     count={$anscount} - document.getElementById('CHOICES_{$ia[0]}').options.length;\n"
-        . "     if (count < {$minansw} && document.getElementById('display{$ia[0]}').value == 'on'){\n";
-        if(!isset($showpopups) || $showpopups == 0)
-        {
-            $minanswscript .= "\n
-			document.getElementById('rankingminanswarning{$ia[0]}').style.display='';\n";
-        } else {
-            $minanswscript .="
-                    alert('".sprintf($clang->ngT("Please rank at least %d item for question \"%s\"","Please rank at least %d items for question \"%s\"",$minansw,'js'),$minansw, trim(javascript_escape(str_replace(array("\n", "\r"), "",$ia[3]),true,true)))."');\n";
-        }
-        $minanswscript .= ""
-        . "     return false;\n"
-        . "   } else {\n"
-        . "     if (oldonsubmit_{$ia[0]}){\n"
-        . "         return oldonsubmit_{$ia[0]}();\n"
-        . "     }\n"
-        . "     return true;\n"
-        . "     }\n"
-        . "  }\n"
-        . "  document.limesurvey.onsubmit = ensureminansw_{$ia[0]}\n"
-        . "  -->\n"
-        . "  </script>\n";
-        $answer = $minanswscript . $answer;
-    }
-
     return array($answer, $inputnames);
 }
 
@@ -3010,6 +2211,7 @@ function do_ranking($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_multiplechoice($ia)
 {
     global $dbprefix, $clang, $connect, $thissurvey;
@@ -3042,14 +2244,7 @@ function do_multiplechoice($ia)
         }
     }
 
-    if ($ia[8] == 'Y' || $attribute_ref === true)
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
@@ -3075,72 +2270,11 @@ function do_multiplechoice($ia)
     {
         $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
         $sSeperator= $sSeperator['seperator'];
-        $numbersonly = 'return goodchars(event,"0123456789'.$sSeperator.'")';
+        $oth_checkconditionFunction = "fixnum_checkconditions";
     }
     else
     {
-        $numbersonly = '';
-    }
-
-    // Check if the max_answers attribute is set
-    $maxansw = 0;
-    $callmaxanswscriptcheckbox = '';
-    $callmaxanswscriptother = '';
-    $maxanswscript = '';
-
-    $exclude_all_others_auto = trim($qidattributes["exclude_all_others_auto"]);
-
-    if ($exclude_all_others_auto=='1'){
-        $autoArray['list'][]=$ia[1];
-        $autoArray[$ia[1]]['parent'] = $ia[1];
-    }
-
-    if (trim($qidattributes['exclude_all_others'])!='')
-    {
-        $excludeallothers=explode(';',trim($qidattributes['exclude_all_others']));
-        $excludeallotherscript = "
-		<script type='text/javascript'>
-		<!--
-		function excludeAllOthers$ia[1](value, doconditioncheck)
-		{\n";
-        $excludeallotherscripton='';
-        $excludeallotherscriptoff='';
-    }
-    else
-    {
-        $excludeallothers=array();
-    }
-
-
-    if (((int)$qidattributes['max_answers']>0) && $exclude_all_others_auto=='0')
-    {
-        $maxansw=$qidattributes['max_answers'];
-        $callmaxanswscriptcheckbox = "limitmaxansw_{$ia[0]}(this);";
-        $callmaxanswscriptother = "onkeyup='limitmaxansw_{$ia[0]}(this)'";
-        $maxanswscript = "\t<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "function limitmaxansw_{$ia[0]}(me)\n"
-        . "{\n"
-        . "\tmax=$maxansw\n"
-        . "\tcount=0;\n"
-        . "\tif (max == 0) { return count; }\n";
-    }
-
-
-    // Check if the min_answers attribute is set
-    $minansw=0;
-    $minanswscript = "";
-
-    if ((int)$qidattributes['min_answers']>0)
-    {
-        $minansw=trim($qidattributes["min_answers"]);
-        $minanswscript = "<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "oldonsubmit_{$ia[0]} = document.limesurvey.onsubmit;\n"
-        . "function ensureminansw_{$ia[0]}()\n"
-        . "{\n"
-        . "\tcount=0;\n"
-        ;
+        $oth_checkconditionFunction = "checkconditions";
     }
 
     $qquery = "SELECT other FROM ".db_table_name('questions')." WHERE qid=".$ia[0]." AND language='".$_SESSION['s_lang']."' and parent_qid=0";
@@ -3201,15 +2335,6 @@ function do_multiplechoice($ia)
     {
         $myfname = $ia[1].$ansrow['title'];
 
-        if ($exclude_all_others_auto==1){
-            if ($ansrow['title']==trim($qidattributes['exclude_all_others'])){
-                $autoArray[$ia[1]]['focus'] = $ia[1].trim($qidattributes['exclude_all_others']);
-            }
-            else{
-                $autoArray[$ia[1]]['children'][] = $myfname;
-            }
-        }
-
         $trbc='';
         /* Check for array_filter */
         list($htmltbody2, $hiddenfield)=return_array_filter_strings($ia, $qidattributes, $thissurvey, $ansrow, $myfname, $trbc, $myfname, "li");
@@ -3232,49 +2357,16 @@ function do_multiplechoice($ia)
             if ($_SESSION[$myfname] == 'Y')
             {
                 $answer .= CHECKED;
-                if(in_array($ansrow['title'], $excludeallothers))
-                {
-                    $postrow.="\n\n<script type='text/javascript'>\n<!--\nexcludeAllOthers$ia[1]('answer$ia[1]{$ansrow['title']}', 'no');\n-->\n</script>\n";
-                }
             }
         }
         $answer .= " onclick='cancelBubbleThis(event);";
-        /* Exclude all others coding */
-        if(in_array($ansrow['title'], $excludeallothers))
-        {
-            $answer .= "excludeAllOthers$ia[1](this.id, \"yes\");"; // was "this.id"
-            $excludeallotherscripton .= "/* SKIPPING QUESTION {$ia[1]} */\n";
-            //			$excludeallotherscripton .= "alert(value+'---'+'answer$ia[1]{$ansrow['code']}');\n";
-            $excludeallotherscripton .= "if( value != 'answer$ia[1]{$ansrow['title']}') {\n"
-            . "\tthiselt=document.getElementById('answer$ia[1]{$ansrow['title']}');\n"
-            . "thiselt.checked='';\n"
-            . "thiselt.disabled='true';\n"
-            . "if (doconditioncheck == 'yes') {\n"
-            . "\t$checkconditionFunction(thiselt.value, thiselt.name, thiselt.type);\n"
-            . "}\n}\n";
-            $excludeallotherscriptoff .= "document.getElementById('answer$ia[1]{$ansrow['title']}').disabled='';\n";
-        }
-        elseif (count($excludeallothers)>0)
-        {
-            $excludeallotherscripton .= "\tthiselt=document.getElementById('answer$ia[1]{$ansrow['title']}');\n"
-            . "thiselt.checked='';\n"
-            . "thiselt.disabled='true';\n"
-            . "if (doconditioncheck == 'yes') {\n"
-            . "\t$checkconditionFunction(thiselt.value, thiselt.name, thiselt.type);\n"
-            . "}\n";
-            $excludeallotherscriptoff.= "document.getElementById('answer$ia[1]{$ansrow['title']}').disabled='';\n";
-        }
-        /* End of exclude all others coding */
 
-        $answer .= $callmaxanswscriptcheckbox    	/* Include checkbox for script for maxanswers if that attribute is selected */
+        $answer .= ''
         .  "$checkconditionFunction(this.value, this.name, this.type)' />\n"
         .  "<label for=\"answer$ia[1]{$ansrow['title']}\" class=\"answertext\">"
         .  $ansrow['question']
         .  "</label>\n";
 
-
-        if ($maxansw > 0) {$maxanswscript .= "\tif (document.getElementById('answer".$myfname."').checked) { count += 1; }\n";}
-        if ($minansw > 0) {$minanswscript .= "\tif (document.getElementById('answer".$myfname."').checked) { count += 1; }\n";}
 
         ++$fn;
         /* Now add the hidden field to contain information about this answer */
@@ -3302,27 +2394,11 @@ function do_multiplechoice($ia)
             ++$colcounter;
         }
     }
-    if ($exclude_all_others_auto==1){
-        $answer .= "<script type='text/javascript'>autoArray = ".json_encode($autoArray).";</script>";
-    }
     if ($other == 'Y')
     {
         $myfname = $ia[1].'other';
-        list($htmltbody2, $hiddenfield)=return_array_filter_strings($ia, $qidattributes, $thissurvey, array("code"=>"other"), $myfname, $trbc, $myfname, "li");
-        if(count($excludeallothers) > 0)
-        {
-            $excludeallotherscripton .= "thiselt=document.getElementById('answer{$ia[1]}othercbox');\n"
-            . "thiselt.checked='';\n"
-            . "thiselt.disabled='true';\n";
-            $excludeallotherscripton .= "thiselt=document.getElementById('answer$ia[1]other');\n"
-            . "thiselt.value='';\n"
-            . "thiselt.disabled='true';\n"
-            . "if (doconditioncheck == 'yes') {\n"
-            . "\t$checkconditionFunction(thiselt.value, thiselt.name, thiselt.type);\n"
-            . "}\n";
-            $excludeallotherscriptoff .="document.getElementById('answer$ia[1]other').disabled='';\n";
-            $excludeallotherscriptoff .="document.getElementById('answer{$ia[1]}othercbox').disabled='';\n";
-        }
+        list($htmltbody2, $hiddenfield)=return_array_filter_strings($ia, $qidattributes, $thissurvey, array("code"=>"other"), $myfname, $trbc, $myfname, "li","other");
+
         if($wrapper['item-start'] == "\t<li>\n")
         {
             $startitem = "\t$htmltbody2\n";
@@ -3331,46 +2407,44 @@ function do_multiplechoice($ia)
         }
         $answer .= $startitem;
 		$answer .= $hiddenfield.'
-		<input class="checkbox" type="checkbox" name="'.$myfname.'cbox" alt="'.$clang->gT('Other').'" id="answer'.$myfname.'cbox"';
+		<input class="checkbox other-checkbox" type="checkbox" name="'.$myfname.'cbox" alt="'.$clang->gT('Other').'" id="answer'.$myfname.'cbox" ';
+		// othercbox can not be display, Can use css to hide it.
 
         if (isset($_SESSION[$myfname]) && trim($_SESSION[$myfname])!='')
         {
             $answer .= CHECKED;
         }
-        $answer .= " onclick='cancelBubbleThis(event);".$callmaxanswscriptcheckbox."if(this.checked===false) document.getElementById(\"answer$myfname\").value=\"\";";
-        $answer .= " if(this.checked===true) document.getElementById(\"answer$myfname\").focus();";
-        $answer .= " $checkconditionFunction(document.getElementById(\"answer$myfname\").value, document.getElementById(\"answer$myfname\").name, document.getElementById(\"answer$myfname\").type);";
+        $answer .= " onclick='cancelBubbleThis(event);if(this.checked===false){ document.getElementById(\"answer$myfname\").value=\"\"; document.getElementById(\"java$myfname\").value=\"\"; $checkconditionFunction(\"\", \"$myfname\", \"text\"); }";
+        $answer .= " if(this.checked===true) { document.getElementById(\"answer$myfname\").focus(); }; LEMflagMandOther(\"$myfname\",this.checked);";
         $answer .= "' />
 		<label for=\"answer$myfname\" class=\"answertext\">".$othertext."</label>
 		<input class=\"text ".$kpclass."\" type=\"text\" name=\"$myfname\" id=\"answer$myfname\"";
         if (isset($_SESSION[$myfname]))
         {
-            $answer .= ' value="'.htmlspecialchars($_SESSION[$myfname],ENT_QUOTES).'"';
+            $dispVal = $_SESSION[$myfname];
+            if ($qidattributes['other_numbers_only']==1)
+            {
+                $dispVal = str_replace('.',$sSeperator,$dispVal);
+            }
+            $answer .= ' value="'.htmlspecialchars($dispVal,ENT_QUOTES).'"';
         }
-        $answer .= " onkeyup='$checkconditionFunction(this.value, this.name, this.type);if ($.trim($(\"#answer{$myfname}\").val())!=\"\" && !document.getElementById(\"answer{$myfname}cbox\").checked) {\$(\"#answer{$myfname}cbox\").attr(\"checked\",\"checked\");} $numbersonly ".$callmaxanswscriptcheckbox."' />";
+#        $answer .= " onkeyup='if ($.trim(this.value)!=\"\") { \$(\"#answer{$myfname}cbox\").attr(\"checked\",\"checked\"); } else { \$(\"#answer{$myfname}cbox\").attr(\"checked\",\"\"); }; $(\"#java{$myfname}\").val(this.value);$oth_checkconditionFunction(this.value, this.name, this.type); LEMflagMandOther(\"$myfname\",\$(\"#answer{$myfname}cbox\").attr(\"checked\"));' />";
+        $answer .=" />";
+        $answer .="<script type='text/javascript'>\n";
+        $answer .="$('#answer{$myfname}').bind('keyup blur',function(){\n";
+        $answer .= " if ($.trim($(this).val())!=\"\") { \$(\"#answer{$myfname}cbox\").attr(\"checked\",true); } else { \$(\"#answer{$myfname}cbox\").attr(\"checked\",false); }; $(\"#java{$myfname}\").val($(this).val());$oth_checkconditionFunction(this.value, this.name, this.type); LEMflagMandOther(\"$myfname\",\$(\"#answer{$myfname}cbox\").attr(\"checked\"));\n";
+        $answer .="});\n";
+        $answer .="</script>\n";
         $answer .= '<input type="hidden" name="java'.$myfname.'" id="java'.$myfname.'" value="';
-
-        if ($maxansw > 0)
-        {
-            // For multiplechoice question there is no DB field for the other Checkbox
-            // I've added a javascript which will warn a user if no other comment is given while the other checkbox is checked
-            // For the maxanswer script, I will alert the participant
-            // if the limit is reached when he checks the other cbox
-            // even if the -other- input field is still empty
-            $maxanswscript .= "\tif (document.getElementById('answer".$myfname."cbox').checked ) { count += 1; }\n";
-        }
-        if ($minansw > 0)
-        {
-            //
-            // For multiplechoice question there is no DB field for the other Checkbox
-            // We only count the -other- as valid if both the cbox and the other text is filled
-            $minanswscript .= "\tif (document.getElementById('answer".$myfname."').value != '' && document.getElementById('answer".$myfname."cbox').checked ) { count += 1; }\n";
-        }
-
 
         if (isset($_SESSION[$myfname]))
         {
-            $answer .= htmlspecialchars($_SESSION[$myfname],ENT_QUOTES);
+            $dispVal = $_SESSION[$myfname];
+            if ($qidattributes['other_numbers_only']==1)
+            {
+                $dispVal = str_replace('.',$sSeperator,$dispVal);
+            }
+            $answer .= htmlspecialchars($dispVal,ENT_QUOTES);
         }
 
         $answer .= "\" />\n{$wrapper['item-end']}";
@@ -3393,94 +2467,38 @@ function do_multiplechoice($ia)
         }
     }
     $answer .= $wrapper['whole-end'];
-    if ( $maxansw > 0 )
-    {
-        $maxanswscript .= "
-        if (count > max)
-        {
-            alert('".sprintf($clang->gT("Please choose at most %d answers for question \"%s\"","js"), $maxansw, trim(javascript_escape(str_replace(array("\n", "\r"), "", $ia[3]),true,true)))."');
-            if (me.type == 'checkbox') {me.checked = false;}
-            if (me.type == 'text') {
-                me.value = '';
-                if (document.getElementById('answer'+me.name + 'cbox') ){
-                    document.getElementById('answer'+me.name + 'cbox').checked = false;
-                }
-            }
-            return max;
-        }
-}
-//-->
-</script>\n";
-        $answer = $maxanswscript . $answer;
-    }
 
+#   No need $checkotherscript : already done by check mandatory
+#    $checkotherscript = "";
+#    if ($other == 'Y')
+#    {
+#        // Multiple choice with 'other' is a specific case as the checkbox isn't recorded into DB
+#        // this means that if it is cehcked We must force the end-user to enter text in the input
+#        // box
+#        $checkotherscript = "<script type='text/javascript'>\n"
+#        . "\t<!--\n"
+#        . "oldonsubmitOther_{$ia[0]} = document.limesurvey.onsubmit;\n"
+#        . "function ensureOther_{$ia[0]}()\n"
+#        . "{\n"
+#        . "\tothercboxval=document.getElementById('answer".$myfname."cbox').checked;\n"
+#        . "\totherval=document.getElementById('answer".$myfname."').value;\n"
+#        . "\tif (otherval != '' || othercboxval != true) {\n"
+#        . "if(typeof oldonsubmitOther_{$ia[0]} == 'function') {\n"
+#        . "\treturn oldonsubmitOther_{$ia[0]}();\n"
+#        . "}\n"
+#        . "\t}\n"
+#        . "\telse {\n"
+#        . "alert('".sprintf($clang->gT("You've marked the '%s' field, please also fill in the accompanying comment field.","js"),$othertext)."');\n"
+#        . "return false;\n"
+#        . "\t}\n"
+#        . "}\n"
+#        . "document.limesurvey.onsubmit = ensureOther_{$ia[0]};\n"
+#        . "\t-->\n"
+#        . "</script>\n";
+#    }
 
-    if ( $minansw > 0 )
-    {
-        $minanswscript .=
-			"\tif (count < {$minansw} && document.getElementById('display{$ia[0]}').value == 'on'){\n"
-        . "alert('".sprintf($clang->gT("Please choose at least %d answer(s) for question \"%s\"","js"),
-        $minansw, trim(javascript_escape(str_replace(array("\n", "\r"), "",$ia[3]),true,true)))."');\n"
-        . "return false;\n"
-        . "\t} else {\n"
-        . "if (oldonsubmit_{$ia[0]}){\n"
-        . "\treturn oldonsubmit_{$ia[0]}();\n"
-        . "}\n"
-        . "return true;\n"
-        . "\t}\n"
-        . "}\n"
-        . "document.limesurvey.onsubmit = ensureminansw_{$ia[0]}\n"
-        . "-->\n"
-        . "\t</script>\n";
-        //$answer = $minanswscript . $answer;
-    }
+#    $answer = $checkotherscript . $answer;
 
-    $checkotherscript = "";
-    if ($other == 'Y')
-    {
-        // Multiple choice with 'other' is a specific case as the checkbox isn't recorded into DB
-        // this means that if it is cehcked We must force the end-user to enter text in the input
-        // box
-        $checkotherscript = "<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "oldonsubmitOther_{$ia[0]} = document.limesurvey.onsubmit;\n"
-        . "function ensureOther_{$ia[0]}()\n"
-        . "{\n"
-        . "\tothercboxval=document.getElementById('answer".$myfname."cbox').checked;\n"
-        . "\totherval=document.getElementById('answer".$myfname."').value;\n"
-        . "\tif (otherval != '' || othercboxval != true) {\n"
-        . "if(typeof oldonsubmitOther_{$ia[0]} == 'function') {\n"
-        . "\treturn oldonsubmitOther_{$ia[0]}();\n"
-        . "}\n"
-        . "\t}\n"
-        . "\telse {\n"
-        . "alert('".sprintf($clang->gT("You've marked the \"other\" field for question \"%s\". Please also fill in the accompanying \"other comment\" field.","js"),trim(javascript_escape($ia[3],true,true)))."');\n"
-        . "return false;\n"
-        . "\t}\n"
-        . "}\n"
-        . "document.limesurvey.onsubmit = ensureOther_{$ia[0]};\n"
-        . "\t-->\n"
-        . "</script>\n";
-    }
-
-    $answer = $minanswscript . $checkotherscript . $answer;
-
-    if (count($excludeallothers)>0)
-    {
-        $excludeallotherscript .= "
-		    if (document.getElementById(value).checked)
-		    {
-		        $excludeallotherscripton
-		    }
-		    else
-		    {
-		        $excludeallotherscriptoff
-		    }
-		}
-		//-->
-		</script>";
-		$answer = $excludeallotherscript . $answer;
-    }
     $answer .= $postrow;
     return array($answer, $inputnames);
 }
@@ -3489,6 +2507,7 @@ function do_multiplechoice($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_multiplechoice_withcomments($ia)
 {
     global $dbprefix, $clang, $thissurvey;
@@ -3503,6 +2522,7 @@ function do_multiplechoice_withcomments($ia)
         $kpclass = "";
     }
 
+    $inputnames = array();
     $attribute_ref=false;
     $qaquery = "SELECT qid,attribute FROM ".db_table_name('question_attributes')." WHERE value LIKE '".strtolower($ia[2])."'";
     $qaresult = db_execute_assoc($qaquery);     //Checked
@@ -3517,14 +2537,7 @@ function do_multiplechoice_withcomments($ia)
         }
     }
 
-    if ($ia[8] == 'Y' || $attribute_ref == true)
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
@@ -3532,11 +2545,11 @@ function do_multiplechoice_withcomments($ia)
     {
         $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
         $sSeperator = $sSeperator['seperator'];
-        $numbersonly = 'onkeypress="return goodchars(event,\'-0123456789'.$sSeperator.'\')"';
+        $oth_checkconditionFunction = "fixnum_checkconditions";
     }
     else
     {
-        $numbersonly = '';
+        $oth_checkconditionFunction = "checkconditions";
     }
 
     if (trim($qidattributes['other_replace_text'])!='')
@@ -3548,40 +2561,7 @@ function do_multiplechoice_withcomments($ia)
         $othertext=$clang->gT('Other:');
     }
     // Check if the max_answers attribute is set
-    $maxansw=0;
-    $callmaxanswscriptcheckbox = '';
-    $callmaxanswscriptcheckbox2 = '';
     $callmaxanswscriptother = '';
-    $maxanswscript = '';
-    if (trim($qidattributes['max_answers'])!='') {
-        $maxansw=$qidattributes['max_answers'];
-        $callmaxanswscriptcheckbox = "limitmaxansw_{$ia[0]}(this);";
-        $callmaxanswscriptcheckbox2= "limitmaxansw_{$ia[0]}";
-        $callmaxanswscriptother = "onkeyup=\"limitmaxansw_{$ia[0]}(this)\"";
-
-        $maxanswscript = "\t<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "function limitmaxansw_{$ia[0]}(me)\n"
-        . "\t{\n"
-        . "\tmax=$maxansw\n"
-        . "\tcount=0;\n"
-        . "\tif (max == 0) { return count; }\n";
-    }
-
-    // Check if the min_answers attribute is set
-    $minansw=0;
-    $minanswscript = "";
-    if (trim($qidattributes["min_answers"])!='')
-    {
-        $minansw=trim($qidattributes["min_answers"]);
-        $minanswscript = "<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "oldonsubmit_{$ia[0]} = document.limesurvey.onsubmit;\n"
-        . "function ensureminansw_{$ia[0]}()\n"
-        . "{\n"
-        . "\tcount=0;\n"
-        ;
-    }
 
     $qquery = "SELECT other FROM {$dbprefix}questions
                WHERE qid=".$ia[0]." AND language='".$_SESSION['s_lang']."' and parent_qid=0";
@@ -3603,6 +2583,9 @@ function do_multiplechoice_withcomments($ia)
     $answer_main = '';
 
     $fn = 1;
+    if (!isset($other)){
+        $other = 'N';
+    }
     if($other == 'Y')
     {
         $label_width = 25;
@@ -3631,7 +2614,6 @@ function do_multiplechoice_withcomments($ia)
         $answer_main .= $startitem;
         $answer_main .= "\t$hiddenfield\n";
         $answer_main .= "<span class=\"option\">\n"
-        . "\t<label for=\"answer$myfname\" class=\"answertext\">\n"
         . "\t<input class=\"checkbox\" type=\"checkbox\" name=\"$myfname\" id=\"answer$myfname\" value=\"Y\"";
 
         /* If the question has already been ticked, check the checkbox */
@@ -3642,12 +2624,9 @@ function do_multiplechoice_withcomments($ia)
                 $answer_main .= CHECKED;
             }
         }
-        $answer_main .=" onclick='cancelBubbleThis(event);".$callmaxanswscriptcheckbox."$checkconditionFunction(this.value, this.name, this.type);' "
-        . " onchange='document.getElementById(\"answer$myfname2\").value=\"\";' />\n"
+        $answer_main .=" onclick='cancelBubbleThis(event);$checkconditionFunction(this.value, this.name, this.type);if (!$(this).attr(\"checked\")) { $(\"#answer$myfname2\").val(\"\"); $checkconditionFunction(document.getElementById(\"answer{$myfname2}\").value,\"$myfname2\",\"checkbox\");}' />\n"
+        . "\t<label for=\"answer$myfname\" class=\"answertext\">\n"
         . $ansrow['question']."</label>\n";
-
-        if ($maxansw > 0) {$maxanswscript .= "\tif (document.getElementById('answer".$myfname."').checked) { count += 1; }\n";}
-        if ($minansw > 0) {$minanswscript .= "\tif (document.getElementById('answer".$myfname."').checked) { count += 1; }\n";}
 
         $answer_main .= "<input type='hidden' name='java$myfname' id='java$myfname' value='";
         if (isset($_SESSION[$myfname]))
@@ -3656,14 +2635,12 @@ function do_multiplechoice_withcomments($ia)
         }
         $answer_main .= "' />\n";
         $fn++;
-        $answer_main .= "</span>\n<span class=\"comment\">\n\t<label for='answer$myfname2' class=\"answer-comment\">\n"
+        $answer_main .= "</span>\n<span class=\"comment\">\n\t<label for='answer$myfname2' class=\"answer-comment hide\">".$clang->gT("Make a comment on your choice here:")."</label>\n"
         ."<input class='text ".$kpclass."' type='text' size='40' id='answer$myfname2' name='$myfname2' title='".$clang->gT("Make a comment on your choice here:")."' value='";
         if (isset($_SESSION[$myfname2])) {$answer_main .= htmlspecialchars($_SESSION[$myfname2],ENT_QUOTES);}
-        // --> START NEW FEATURE - SAVE
-        $answer_main .= "'  onclick='cancelBubbleThis(event);' onkeyup='if (jQuery.trim($(\"#answer{$myfname2}\").val())!=\"\") { document.getElementById(\"answer{$myfname}\").checked=true;$checkconditionFunction(document.getElementById(\"answer{$myfname}\").value,\"$myfname\",\"checkbox\");}' onkeyup='".$callmaxanswscriptcheckbox2."(document.getElementById(\"answer{$myfname}\"))' />\n\t</label>\n</span>\n"
+        $answer_main .= "' onkeyup='if (jQuery.trim($(\"#answer{$myfname2}\").val())!=\"\") { document.getElementById(\"answer{$myfname}\").checked=true;$checkconditionFunction(document.getElementById(\"answer{$myfname2}\").value,\"$myfname2\",\"text\");}' />\n</span>\n"
 
         . "\t</li>\n";
-        // --> END NEW FEATURE - SAVE
 
         $fn++;
         $inputnames[]=$myfname;
@@ -3674,132 +2651,35 @@ function do_multiplechoice_withcomments($ia)
         $myfname = $ia[1].'other';
         $myfname2 = $myfname.'comment';
         $anscount = $anscount + 2;
-        $answer_main .= "\t<li class=\"other\">\n<span class=\"option\">\n"
-        . "\t<label for=\"answer$myfname\" class=\"answertext\">\n".$othertext."\n<input class=\"text other ".$kpclass."\" $numbersonly type=\"text\" name=\"$myfname\" id=\"answer$myfname\" title=\"".$clang->gT('Other').'" size="10"';
+        $answer_main .= "\t<li class=\"other\" id=\"javatbd$myfname\">\n<span class=\"option\">\n"
+        . "\t<label for=\"answer$myfname\" class=\"answertext\">\n".$othertext."\n<input class=\"text other ".$kpclass."\" type=\"text\" name=\"$myfname\" id=\"answer$myfname\" title=\"".$clang->gT('Other').'" size="10"';
+        $answer_main .= " onkeyup='$oth_checkconditionFunction(this.value, this.name, this.type); if($.trim(this.value)==\"\") { $(\"#answer$myfname2\").val(\"\"); $checkconditionFunction(\"\",\"$myfname2\",\"text\"); }'";
         if (isset($_SESSION[$myfname]) && $_SESSION[$myfname])
         {
-            $answer_main .= ' value="'.htmlspecialchars($_SESSION[$myfname],ENT_QUOTES).'"';
+            $dispVal = $_SESSION[$myfname];
+            if ($qidattributes['other_numbers_only']==1)
+            {
+                $dispVal = str_replace('.',$sSeperator,$dispVal);
+            }
+            $answer_main .= ' value="'.htmlspecialchars($dispVal,ENT_QUOTES).'"';
         }
         $fn++;
-        // --> START NEW FEATURE - SAVE
         $answer_main .= "  $callmaxanswscriptother />\n\t</label>\n</span>\n"
         . "<span class=\"comment\">\n\t<label for=\"answer$myfname2\" class=\"answer-comment\">\n"
-        . '
-				<input class="text '.$kpclass.'" type="text" size="40" name="'.$myfname2.'" id="answer'.$myfname2.'" title="'.$clang->gT('Make a comment on your choice here:').'" value="';
-        // --> END NEW FEATURE - SAVE
+        . '<input class="text '.$kpclass.'" type="text" size="40" name="'.$myfname2.'" id="answer'.$myfname2.'"'
+        . " onkeyup='$checkconditionFunction(this.value,this.name,this.type);'"
+        . ' title="'.$clang->gT('Make a comment on your choice here:').'" value="';
 
         if (isset($_SESSION[$myfname2])) {$answer_main .= htmlspecialchars($_SESSION[$myfname2],ENT_QUOTES);}
-        // --> START NEW FEATURE - SAVE
-        $answer_main .= '" onkeyup="'.$callmaxanswscriptcheckbox2.'(document.getElementById(\'answer'.$myfname."'))\" />\n";
-
-        if ($maxansw > 0)
-        {
-            if ($qidattributes['other_comment_mandatory']==1)
-            {
-                $maxanswscript .= "\tif (document.getElementById('answer".$myfname."').value != '' && document.getElementById('answer".$myfname2."').value != '') { count += 1; }\n";
-            }
-            else
-            {
-                $maxanswscript .= "\tif (document.getElementById('answer".$myfname."').value != '') { count += 1; }\n";
-            }
-        }
-
-        if ($minansw > 0)
-        {
-            if ($qidattributes['other_comment_mandatory']==1)
-            {
-                $minanswscript .= "\tif (document.getElementById('answer".$myfname."').value != '' && document.getElementById('answer".$myfname2."').value != '') { count += 1; }\n";
-            }
-            else
-            {
-                $minanswscript .= "\tif (document.getElementById('answer".$myfname."').value != '') { count += 1; }\n";
-            }
-        }
+        $answer_main .= "\"/>\n";
 
         $answer_main .= "\t</label>\n</span>\n\t</li>\n";
-        // --> END NEW FEATURE - SAVE
 
         $inputnames[]=$myfname;
         $inputnames[]=$myfname2;
     }
     $answer .= "<ul>\n".$answer_main."</ul>\n";
 
-
-    if ( $maxansw > 0 )
-    {
-        $maxanswscript .= "\tif (count > max)\n"
-        . "{\n"
-        . "alert('".sprintf($clang->gT("Please choose at most %d answers for question \"%s\"","js"), $maxansw, trim(javascript_escape($ia[3],true,true)))."');\n"
-        . "var commentname='answer'+me.name+'comment';\n"
-        . "if (me.type == 'checkbox') {\n"
-        . "\tme.checked = false;\n"
-        . "\tvar commentname='answer'+me.name+'comment';\n"
-        . "}\n"
-        . "if (me.type == 'text') {\n"
-        . "\tme.value = '';\n"
-        . "\tif (document.getElementById(me.name + 'cbox') ){\n"
-        . " document.getElementById(me.name + 'cbox').checked = false;\n"
-        . "\t}\n"
-        . "}"
-        . "document.getElementById(commentname).value='';\n"
-        . "return max;\n"
-        . "}\n"
-        . "\t}\n"
-        . "\t//-->\n"
-        . "\t</script>\n";
-        $answer = $maxanswscript . $answer;
-    }
-
-    if ( $minansw > 0 )
-    {
-        $minanswscript .=
-			"\tif (count < {$minansw} && document.getElementById('display{$ia[0]}').value == 'on'){\n"
-        . "alert('".sprintf($clang->gT("Please choose at least %d answer(s) for question \"%s\"","js"),
-        $minansw, trim(javascript_escape(str_replace(array("\n", "\r"), "",$ia[3]),true,true)))."');\n"
-        . "return false;\n"
-        . "\t} else {\n"
-        . "if (oldonsubmit_{$ia[0]}){\n"
-        . "\treturn oldonsubmit_{$ia[0]}();\n"
-        . "}\n"
-        . "return true;\n"
-        . "\t}\n"
-        . "}\n"
-        . "document.limesurvey.onsubmit = ensureminansw_{$ia[0]}\n"
-        . "-->\n"
-        . "\t</script>\n";
-        //$answer = $minanswscript . $answer;
-    }
-
-    $checkotherscript = "";
-    //if ($other == 'Y' && $qidattributes['other_comment_mandatory']==1) //TIBO
-    if ($other == 'Y' && $qidattributes['other_comment_mandatory']==1) //TIBO
-    {
-        // Multiple choice with 'other' is a specific case as the checkbox isn't recorded into DB
-        // this means that if it is cehcked We must force the end-user to enter text in the input
-        // box
-        $checkotherscript = "<script type='text/javascript'>\n"
-        . "\t<!--\n"
-        . "oldonsubmitOther_{$ia[0]} = document.limesurvey.onsubmit;\n"
-        . "function ensureOther_{$ia[0]}()\n"
-        . "{\n"
-        . "\tothercommentval=document.getElementById('answer".$myfname2."').value;\n"
-        . "\totherval=document.getElementById('answer".$myfname."').value;\n"
-        . "\tif (otherval != '' && othercommentval == '') {\n"
-        . "alert('".sprintf($clang->gT("You've marked the \"other\" field for question \"%s\". Please also fill in the accompanying \"other comment\" field.","js"),trim(javascript_escape($ia[3],true,true)))."');\n"
-        . "return false;\n"
-        . "\t}\n"
-        . "\telse {\n"
-        . "if(typeof oldonsubmitOther_{$ia[0]} == 'function') {\n"
-        . "\treturn oldonsubmitOther_{$ia[0]}();\n"
-        . "}\n"
-        . "\t}\n"
-        . "}\n"
-        . "document.limesurvey.onsubmit = ensureOther_{$ia[0]};\n"
-        . "\t-->\n"
-        . "</script>\n";
-    }
-
-    $answer = $minanswscript . $checkotherscript . $answer;
 
     return array($answer, $inputnames);
 }
@@ -3809,12 +2689,9 @@ function do_multiplechoice_withcomments($ia)
 // ---------------------------------------------------------------
 function do_file_upload($ia)
 {
-    global $clang, $js_header_includes, $thissurvey, $surveyid;
+    global $rooturl,$clang, $js_header_includes, $thissurvey, $surveyid;
 
-    if ($ia[8] == 'Y')
-        $checkconditionFunction = "checkconditions";
-    else
-        $checkconditionFunction = "noop_checkconditions";
+    $checkconditionFunction = "checkconditions";
 
    	$qidattributes=getQuestionAttributes($ia[0]);
 
@@ -3842,7 +2719,7 @@ function do_file_upload($ia)
                         .'<td>&nbsp;&nbsp;</td>';
          if ($_SESSION['show_comment'])
              $basic .=  '<td>'
-                            .'<input class="basic_'.$ia[1].'" type="textarea" name="'.$ia[1].'_comment_'.$i
+                            .'<input class="basic_'.$ia[1].'" type="/extarea" name="'.$ia[1].'_comment_'.$i
                             .'" id="'.$ia[1].'_comment_'.$i.'" value="'.$_SESSION[$ia[1]]
                             .'" maxlength="100" />'
                         .'</td>'
@@ -3858,42 +2735,54 @@ function do_file_upload($ia)
 
     $basic .= '</tbody></table>';
     $basic .= '<br /><br /><a href="#" onclick="hideBasic()">Hide Simple Uploader</a>';
-*/
+    */
     $currentdir = getcwd();
-    $pos = stripos($currentdir, "admin");
+    $bIsPreview = (substr($currentdir,strlen(dirname($currentdir))+1)=="admin");
+    $scriptloc = $rooturl.'/uploader.php';
 
-    if ($pos)
+    if ($bIsPreview)
     {
         $_SESSION['preview'] = 1;
         $questgrppreview = 1;   // Preview is launched from Question or group level
-        $scriptloc = '../uploader.php';
+
     }
     else if ($thissurvey['active'] != "Y")
-    {
-        $_SESSION['preview'] = 1;
-        $questgrppreview = 0;
-        $scriptloc = 'uploader.php';
-    }
-    else
-    {
-        $_SESSION['preview'] = 0;
-        $questgrppreview = 0;
-        $scriptloc = 'uploader.php';
+        {
+            $_SESSION['preview'] = 1;
+            $questgrppreview = 0;
+        }
+        else
+        {
+            $_SESSION['preview'] = 0;
+            $questgrppreview = 0;
     }
 
-    $uploadbutton = "<h2><a id='upload_".$ia[1]."' class='upload' href='{$scriptloc}?sid={$surveyid}&amp;fieldname={$ia[1]}&amp;qid={$ia[0]}&amp;preview="
-    ."{$questgrppreview}&amp;show_title={$qidattributes['show_title']}&amp;show_comment={$qidattributes['show_comment']}&amp;pos=".($pos?1:0)."'>" .$clang->gT('Upload files'). "</a></h2><br /><br />";
+    $uploadbutton = "<h2><a id='upload_".$ia[1]."' class='upload' ";
+    $uploadbutton .= " href='#' onclick='javascript:upload_$ia[1]();'";
+    $uploadbutton .=">" .$clang->gT('Upload files'). "</a></h2><br /><br />";
 
     $answer = "<script type='text/javascript'>
+        function upload_$ia[1]() {
+            var uploadurl = '{$scriptloc}?sid={$surveyid}&amp;fieldname={$ia[1]}&amp;qid={$ia[0]}';
+            uploadurl += '&amp;preview={$questgrppreview}&amp;show_title={$qidattributes['show_title']}';
+            uploadurl += '&amp;show_comment={$qidattributes['show_comment']}&amp;pos=".($bIsPreview?1:0)."';
+            uploadurl += '&amp;minfiles=' + LEMval('{$qidattributes['min_num_of_files']}');
+            uploadurl += '&amp;maxfiles=' + LEMval('{$qidattributes['max_num_of_files']}');
+            $('#upload_$ia[1]').attr('href',uploadurl);
+        }
         var translt = {
-             title: '" . $clang->gT('Upload your files') . "',
-             returnTxt: '" . $clang->gT('Return to survey') . "'
+             title: '" . $clang->gT('Upload your files','js') . "',
+             returnTxt: '" . $clang->gT('Return to survey','js') . "',
+             headTitle: '" . $clang->gT('Title','js') . "',
+             headComment: '" . $clang->gT('Comment','js') . "',
+             headFileName: '" . $clang->gT('File name','js') . "'
             };
     </script>\n";
-    if ($pos)
-        $answer .= "<script type='text/javascript' src='../scripts/modaldialog.js'></script>";
+    /*if ($pos)
+        $answer .= "<script type='text/javascript' src='{$rooturl}/scripts/modaldialog.js'></script>";
     else
-        $answer .= "<script type='text/javascript' src='scripts/modaldialog.js'></script>";
+        $answer .= "<script type='text/javascript' src='{$rooturl}/scripts/modaldialog.js'></script>";*/
+    $js_header_includes[]= '/scripts/modaldialog.js';
 
     // Modal dialog
     $answer .= $uploadbutton;
@@ -3921,13 +2810,14 @@ function do_file_upload($ia)
 
     $answer .= '<script type="text/javascript">
                     var surveyid = '.$surveyid.';
+                    var rooturl = "'.$rooturl.'";
                     $(document).ready(function(){
                         var fieldname = "'.$ia[1].'";
                         var filecount = $("#"+fieldname+"_filecount").val();
                         var json = $("#"+fieldname).val();
                         var show_title = "'.$qidattributes["show_title"].'";
                         var show_comment = "'.$qidattributes["show_comment"].'";
-                        var pos = "'.($pos ? 1 : 0).'";
+                        var pos = "'.($bIsPreview ? 1 : 0).'";
                         displayUploadedFiles(json, filecount, fieldname, show_title, show_comment, pos);
                     });
                 </script>';
@@ -3937,7 +2827,7 @@ function do_file_upload($ia)
                         var i;
                         var jsonstring = "[";
 
-                        for (i = 1, filecount = 0; i <= '.$qidattributes['max_num_of_files'].'; i++)
+                        for (i = 1, filecount = 0; i <= LEMval("'.$qidattributes['max_num_of_files'].'"); i++)
                         {
                             if ($("#'.$ia[1].'_"+i).val() == "")
                                 continue;
@@ -3947,7 +2837,7 @@ function do_file_upload($ia)
                                 jsonstring += ", ";
 
                             if ($("#answer'.$ia[1].'_"+i).val() != "")
-                                jsonstring += "{';
+                                jsonstring += "{ ';
 
     if ($qidattributes['show_title'])
         $answer .= '\"title\":\""+$("#'.$ia[1].'_title_"+i).val()+"\",';
@@ -3977,18 +2867,11 @@ function do_file_upload($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_multipleshorttext($ia)
 {
     global $dbprefix, $clang, $thissurvey;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
     $answer='';
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
@@ -3996,19 +2879,21 @@ function do_multipleshorttext($ia)
     {
         $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
         $sSeperator = $sSeperator['seperator'];
-		$numbersonly = 'onkeypress="return goodchars(event,\'-0123456789'.$sSeperator.'\')"';
+        $checkconditionFunction = "fixnum_checkconditions";
     }
     else
     {
-        $numbersonly = '';
+        $checkconditionFunction = "checkconditions";
     }
-    if (trim($qidattributes['maximum_chars'])!='')
+    if (intval(trim($qidattributes['maximum_chars']))>0)
     {
-        $maxsize=$qidattributes['maximum_chars'];
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
     }
     else
     {
-        $maxsize=255;
+        $maxlength= "";
     }
     if (trim($qidattributes['text_input_width'])!='')
     {
@@ -4074,12 +2959,6 @@ function do_multipleshorttext($ia)
             //question attribute "display_rows" is set -> we need a textarea to be able to show several rows
             $drows=$qidattributes['display_rows'];
 
-            //extend maximum chars if this is set to short text default of 255
-            if($maxsize == 255)
-            {
-                $maxsize=65525;
-            }
-
             while ($ansrow = $ansresult->FetchRow())
             {
                 $myfname = $ia[1].$ansrow['title'];
@@ -4105,12 +2984,13 @@ function do_multipleshorttext($ia)
 		}
 
 
-                //NEW: textarea instead of input=text field
-                $answer_main .= "\t<li>\n"
+                list($htmltbody2, $hiddenfield)=return_array_filter_strings($ia, $qidattributes, $thissurvey, $ansrow, $myfname, '', $myfname, "li");
+
+                $answer_main .= "\t$htmltbody2\n"
                 . "<label for=\"answer$myfname\">{$ansrow['question']}</label>\n"
                 . "\t<span>\n".$prefix."\n".'
 				<textarea class="textarea '.$kpclass.'" name="'.$myfname.'" id="answer'.$myfname.'"
-				rows="'.$drows.'" cols="'.$tiwidth.'" maxlength="'.$maxsize.'" onchange="textLimit(\'answer'.$myfname.'\', '.$maxsize.');" onkeyup="textLimit(\'answer'.$myfname.'\', '.$maxsize.'); '.$checkconditionFunction.'(this.value, this.name, this.type);" '.$numbersonly.'>';
+				rows="'.$drows.'" cols="'.$tiwidth.'" '.$maxlength.' onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type);" >';
 
                 if($label_width < strlen(trim(strip_tags($ansrow['question']))))
                 {
@@ -4119,11 +2999,16 @@ function do_multipleshorttext($ia)
 
 		if ($quexs_answer !== false)
 		{
-		    $answer_main .= $quexs_answer;
-		}
+			$answer_main .= $quexs_answer;
+		}	
                 else if (isset($_SESSION[$myfname]))
                 {
-                    $answer_main .= $_SESSION[$myfname];
+                    $dispVal = $_SESSION[$myfname];
+                    if ($qidattributes['numbers_only']==1)
+                    {
+                        $dispVal = str_replace('.',$sSeperator,$dispVal);
+                    }
+                    $answer_main .= htmlspecialchars(htmlspecialchars($dispVal));
                 }
 
                 $answer_main .= "</textarea>\n".$suffix."\n\t</span>\n"
@@ -4140,7 +3025,6 @@ function do_multipleshorttext($ia)
             {
                 $myfname = $ia[1].$ansrow['title'];
                 if ($ansrow['question'] == "") {$ansrow['question'] = "&nbsp;";}
-
 
 		$quexs_answer = false;
 
@@ -4159,8 +3043,14 @@ function do_multipleshorttext($ia)
 		}
 
 
+                list($htmltbody2, $hiddenfield)=return_array_filter_strings($ia, $qidattributes, $thissurvey, $ansrow, $myfname, '', $myfname, "li");
 
-                $answer_main .= "\t<li>\n"
+                // color code missing mandatory questions red
+                if ($ia[6]=='Y' && (($_SESSION['step'] == $_SESSION['prevstep']) || ($_SESSION['maxstep'] > $_SESSION['step'])) && $_SESSION[$myfname] == '') {
+                    $ansrow['question'] = "<span class='errormandatory'>{$ansrow['question']}</span>";
+                }
+
+                $answer_main .= "\t$htmltbody2\n"
                 . "<label for=\"answer$myfname\">{$ansrow['question']}</label>\n"
                 . "\t<span>\n".$prefix."\n".'<input class="text '.$kpclass.'" type="text" size="'.$tiwidth.'" name="'.$myfname.'" id="answer'.$myfname.'" value="';
 
@@ -4171,17 +3061,20 @@ function do_multipleshorttext($ia)
 
 		if ($quexs_answer !== false)
 		{
-		    $answer_main .= $quexs_answer;
+			$answer_main .= $quexs_answer;
 		}
-		else if (isset($_SESSION[$myfname]))
+                else if (isset($_SESSION[$myfname]))
                 {
-                    $answer_main .= $_SESSION[$myfname];
+                    $dispVal = $_SESSION[$myfname];
+                    if ($qidattributes['numbers_only']==1)
+                    {
+                        $dispVal = str_replace('.',$sSeperator,$dispVal);
+                    }
+                    $answer_main .= htmlspecialchars($dispVal,ENT_QUOTES,'UTF-8');
                 }
 
-                // --> START NEW FEATURE - SAVE
-                $answer_main .= '" onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type);" '.$numbersonly.' maxlength="'.$maxsize.'" />'."\n".$suffix."\n\t</span>\n"
+                $answer_main .= '" onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type);" '.$maxlength.' />'."\n".$suffix."\n\t</span>\n"
                 . "\t</li>\n";
-                // --> END NEW FEATURE - SAVE
 
                 $fn++;
                 $inputnames[]=$myfname;
@@ -4197,80 +3090,26 @@ function do_multipleshorttext($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_multiplenumeric($ia)
 {
     global $dbprefix, $clang, $js_header_includes, $css_header_includes, $thissurvey;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "fixnum_checkconditions";
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
     $answer='';
     $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
     $sSeperator = $sSeperator['seperator'];
-    //Must turn on the "numbers only javascript"
-    $numbersonly = 'onkeypress="inputField = event.srcElement ? event.srcElement : event.target || event.currentTarget; if (inputField.value.indexOf(\''.$sSeperator.'\')>0 && String.fromCharCode(getkey(event))==\''.$sSeperator.'\') return false; return goodchars(event,\'0123456789'.$sSeperator.'\')"';
-    if (trim($qidattributes['maximum_chars'])!='')
+    $numbersonly = '';  // 'onkeypress="inputField = event.srcElement ? event.srcElement : event.target || event.currentTarget; if (inputField.value.indexOf(\''.$sSeperator.'\')>0 && String.fromCharCode(getkey(event))==\''.$sSeperator.'\') return false; return goodchars(event,\'-0123456789'.$sSeperator.'\')"';
+    if (intval(trim($qidattributes['maximum_chars']))>0)
     {
-        $maxsize=$qidattributes['maximum_chars'];
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
     }
     else
     {
-        $maxsize = 25;
-    }
-
-    //EQUALS VALUE
-    if (trim($qidattributes['equals_num_value'])!=''){
-        $equals_num_value=$qidattributes['equals_num_value'];
-        $numbersonlyonblur[]='calculateValue'.$ia[1].'(3)';
-        $calculateValue[]=3;
-    }
-    elseif (trim($qidattributes['num_value_equals_sgqa'])!='' && isset($_SESSION[$qidattributes['num_value_equals_sgqa']]))
-    {
-        $equals_num_value=$_SESSION[$qidattributes['num_value_equals_sgqa']];
-        $numbersonlyonblur[]='calculateValue'.$ia[1].'(3)';
-        $calculateValue[]=3;
-    }
-    else
-    {
-        $equals_num_value=0;
-    }
-
-    //MIN VALUE
-    if (trim($qidattributes['min_num_value'])!=''){
-        $min_num_value=$qidattributes['min_num_value'];
-        $numbersonlyonblur[]='calculateValue'.$ia[1].'(2)';
-        $calculateValue[]=2;
-    }
-    elseif (trim($qidattributes['min_num_value_sgqa'])!='' && isset($_SESSION[$qidattributes['min_num_value_sgqa']])){
-        $min_num_value=$_SESSION[$qidattributes['min_num_value_sgqa']];
-        $numbersonlyonblur[]='calculateValue'.$ia[1].'(2)';
-        $calculateValue[]=2;
-    }
-    else
-    {
-        $min_num_value=0;
-    }
-
-    //MAX VALUE
-    if (trim($qidattributes['max_num_value'])!=''){
-        $max_num_value = $qidattributes['max_num_value'];
-        $numbersonlyonblur[]='calculateValue'.$ia[1].'(1)';
-        $calculateValue[]=1;
-    }
-    elseif (trim($qidattributes['max_num_value_sgqa'])!='' && isset($_SESSION[$qidattributes['max_num_value_sgqa']])){
-        $max_num_value = $_SESSION[$qidattributes['max_num_value_sgqa']];
-        $numbersonlyonblur[]='calculateValue'.$ia[1].'(1)';
-        $calculateValue[]=1;
-    }
-    else
-    {
-        $max_num_value = 0;
+        $maxlength= "maxlength='25'";
     }
 
     if (trim($qidattributes['prefix'])!='') {
@@ -4447,14 +3286,22 @@ function do_multiplenumeric($ia)
                 $sliderright="<div class=\"slider_righttext\">$sliderright</div>";
             }
 
+            // color code missing mandatory questions red
+            if ($ia[6]=='Y' && (($_SESSION['step'] == $_SESSION['prevstep']) || ($_SESSION['maxstep'] > $_SESSION['step'])) && $_SESSION[$myfname] == '') {
+                $theanswer = "<span class='errormandatory'>{$theanswer}</span>";
+            }
+
+            list($htmltbody2, $hiddenfield)=return_array_filter_strings($ia, $qidattributes, $thissurvey, $ansrow, $myfname, '', $myfname, "li");
+            $answer_main .= "\t$htmltbody2\n";
+
             if ($slider_layout === false)
             {
-                $answer_main .= "\t<li>\n<label for=\"answer$myfname\">{$theanswer}</label>\n";
+                $answer_main .= "<label for=\"answer$myfname\">{$theanswer}</label>\n";
 
             }
             else
             {
-                $answer_main .= "\t<li>\n<label for=\"answer$myfname\" class=\"slider-label\">{$theanswer}</label>\n";
+                $answer_main .= "<label for=\"answer$myfname\" class=\"slider-label\">{$theanswer}</label>\n";
 
             }
 
@@ -4472,11 +3319,11 @@ function do_multiplenumeric($ia)
                 $answer_main .= "<span class=\"input\">\n\t".$prefix."\n\t<input class=\"text $kpclass\" type=\"text\" size=\"".$tiwidth.'" name="'.$myfname.'" id="answer'.$myfname.'" value="';
                 if (isset($_SESSION[$myfname]))
                 {
-                    $_SESSION[$myfname] = str_replace('.',$sSeperator,$_SESSION[$myfname]);
-                    $answer_main .= $_SESSION[$myfname];
+                    $dispVal = str_replace('.',$sSeperator,$_SESSION[$myfname]);
+                    $answer_main .= $dispVal;
                 }
 
-                $answer_main .= '" onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type);" '.$numbersonly.' maxlength="'.$maxsize."\" />\n\t".$suffix."\n</span>\n\t</li>\n";
+                $answer_main .= '" onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type);" '." {$numbersonly} {$maxlength} />\n\t".$suffix."\n</span>\n\t</li>\n";
 
             }
             else
@@ -4556,29 +3403,30 @@ function do_multiplenumeric($ia)
         {
             $question_tip .= '<p class="tip">'.$clang->gT('Only numbers may be entered in these fields')."</p>\n";
         }
-        if ($max_num_value)
+        if (trim($qidattributes['equals_num_value'])!=''
+            || trim($qidattributes['min_num_value'])!=''
+            || trim($qidattributes['max_num_value'])!=''
+            )
         {
-            $question_tip .= '<p id="max_num_value_'.$ia[1].'" class="tip">'.sprintf($clang->gT('Total of all entries must not exceed %d'), $max_num_value)."</p>\n";
-        }
-        if ($equals_num_value)
-        {
-            $question_tip .= '<p id="equals_num_value_'.$ia[1].'" class="tip">'.sprintf($clang->gT('Total of all entries must equal %d'),$equals_num_value)."</p>\n";
-        }
-        if ($min_num_value)
-        {
-            $question_tip .= '<p id="min_num_value_'.$ia[1].'" class="tip">'.sprintf($clang->gT('Total of all entries must be at least %s'),$min_num_value)."</p>\n";
+            $qinfo = LimeExpressionManager::GetQuestionStatus($ia[0]);
+            if (trim($qidattributes['equals_num_value'])!='')
+            {
+                $answer_main .= "\t<li class='multiplenumerichelp'>\n"
+                    . "<label for=\"remainingvalue_{$ia[0]}\">".$clang->gT('Remaining: ')."</label>\n"
+                    . "<span id=\"remainingvalue_{$ia[0]}\" class=\"dynamic_remaining\">$prefix\n"
+                    . "{" . $qinfo['sumRemainingEqn'] . "}\n"
+                    . "$suffix</span>\n"
+                    . "\t</li>\n";
+            }
+            $answer_main .= "\t<li class='multiplenumerichelp'>\n"
+                . "<label for=\"totalvalue_{$ia[0]}\">".$clang->gT('Total: ')."</label>\n"
+                . "<span id=\"totalvalue_{$ia[0]}\" class=\"dynamic_sum\">$prefix\n"
+                . "{" . $qinfo['sumEqn'] . "}\n"
+                . "$suffix</span>\n"
+                . "\t</li>\n";
+
         }
 
-        if ($max_num_value || $equals_num_value || $min_num_value)
-        {
-            $answer_computed = '';
-            if ($equals_num_value)
-            {
-                $answer_computed .= "\t<li class='multiplenumerichelp'>\n<label for=\"remainingvalue_{$ia[1]}\">\n\t".$clang->gT('Remaining: ')."\n</label>\n<span>\n\t$prefix\n\t<input size=10 type='text' id=\"remainingvalue_{$ia[1]}\" disabled=\"disabled\" />\n\t$suffix\n</span>\n\t</li>\n";
-            }
-            $answer_computed .= "\t<li class='multiplenumerichelp'>\n<label for=\"totalvalue_{$ia[1]}\">\n\t".$clang->gT('Total: ')."\n</label>\n<span>\n\t$prefix\n\t<input size=10  type=\"text\" id=\"totalvalue_{$ia[1]}\" disabled=\"disabled\" />\n\t$suffix\n</span>\n\t</li>\n";
-            $answer_main.=$answer_computed;
-        }
         $answer .= $question_tip."<ul>\n".$answer_main."</ul>\n";
     }
     //just added these here so its easy to change in one place
@@ -4597,100 +3445,6 @@ function do_multiplenumeric($ia)
      */
     $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
     $sSeperator = $sSeperator['seperator'];
-    if ($max_num_value || $equals_num_value || $min_num_value)
-    { //Do value validation
-        $answer .= '<input type="hidden" name="qattribute_answer[]" value="'.$ia[1]."\" />\n";
-        $answer .= '<input type="hidden" name="qattribute_answer'.$ia[1]."\" />\n";
-
-        $answer .= "<script type='text/javascript'>\n";
-        $answer .= "    function calculateValue".$ia[1]."(method) {\n";
-        //Make all empty fields 0 (or else calculation won't work
-        foreach ($inputnames as $inputname)
-        {
-            $answer .= "       if(document.limesurvey.answer".$inputname.".value == '') { document.limesurvey.answer".$inputname.".value = 0; }\n";
-            $javainputnames[]="parseInt(parseFloat((document.limesurvey.answer".$inputname.".value).split(',').join('.'))*1000)";
-        }
-        $answer .= "       bob = eval('document.limesurvey.qattribute_answer".$ia[1]."');\n";
-        $answer .= "       totalvalue_".$ia[1]."=(";
-        $answer .= implode(" + ", $javainputnames);
-        $answer .= ")/1000;\n";
-        $answer .= "       $('#totalvalue_{$ia[1]}').val((parseFloat(totalvalue_{$ia[1]})+'').split('.').join('{$sSeperator}'));\n";
-        $answer .= "       var ua = navigator.appVersion.indexOf('MSIE');\n";
-        $answer .= "       var ieAtt = ua != -1 ? 'className' : 'class';\n";
-        $answer .= "       switch(method)\n";
-        $answer .= "       {\n";
-        $answer .= "       case 1:\n";
-        $answer .= "          if (totalvalue_".$ia[1]." > $max_num_value)\n";
-        $answer .= "             {\n";
-        $answer .= "               bob.value = '".$clang->gT("Answer is invalid. The total of all entries should not add up to more than ").$max_num_value."';\n";
-        $answer .= "               document.getElementById('totalvalue_{$ia[1]}').setAttribute(ieAtt,'" . $errorClass . "');\n";
-        $answer .= "               document.getElementById('max_num_value_{$ia[1]}').setAttribute(ieAtt,'" . $errorClass . "');\n";
-        $answer .= "             }\n";
-        $answer .= "             else\n";
-        $answer .= "             {\n";
-        $answer .= "               if (bob.value == '' || bob.value == '".$clang->gT("Answer is invalid. The total of all entries should not add up to more than ").$max_num_value."')\n";
-        $answer .= "               {\n";
-        $answer .= "                 bob.value = '';\n";
-        //		$answer .= "                 document.getElementById('totalvalue_{$ia[1]}').style.color='black';\n";
-        $answer .= "                 document.getElementById('totalvalue_{$ia[1]}').setAttribute(ieAtt,'" . $goodClass . "');\n";
-        $answer .= "               }\n";
-        //		$answer .= "               document.getElementById('max_num_value_{$ia[1]}').style.color='black';\n";
-        $answer .= "               document.getElementById('max_num_value_{$ia[1]}').setAttribute(ieAtt,'" . $goodClass . "');\n";
-        $answer .= "             }\n";
-        $answer .= "          break;\n";
-        $answer .= "       case 2:\n";
-        $answer .= "          if (totalvalue_".$ia[1]." < $min_num_value)\n";
-        $answer .= "             {\n";
-        $answer .= "               bob.value = '".sprintf($clang->gT("Answer is invalid. The total of all entries should add up to at least %s.",'js'),$min_num_value)."';\n";
-        //		$answer .= "               document.getElementById('totalvalue_".$ia[1]."').style.color='red';\n";
-        //		$answer .= "               document.getElementById('min_num_value_".$ia[1]."').style.color='red';\n";
-        $answer .= "               document.getElementById('totalvalue_".$ia[1]."').setAttribute(ieAtt,'" . $errorClass . "');\n";
-        $answer .= "               document.getElementById('min_num_value_".$ia[1]."').setAttribute(ieAtt,'" . $errorClass . "');\n";
-        $answer .= "             }\n";
-        $answer .= "             else\n";
-        $answer .= "             {\n";
-        $answer .= "               if (bob.value == '' || bob.value == '".sprintf($clang->gT("Answer is invalid. The total of all entries should add up to at least %s.",'js'),$min_num_value)."')\n";
-        $answer .= "               {\n";
-        $answer .= "                 bob.value = '';\n";
-        //		$answer .= "                 document.getElementById('totalvalue_".$ia[1]."').style.color='black';\n";
-        $answer .= "                 document.getElementById('totalvalue_".$ia[1]."').setAttribute(ieAtt,'" . $goodClass . "');\n";
-        $answer .= "               }\n";
-        //		$answer .= "               document.getElementById('min_num_value_".$ia[1]."').style.color='black';\n";
-        $answer .= "               document.getElementById('min_num_value_".$ia[1]."').setAttribute(ieAtt,'" . $goodClass . "');\n";
-        $answer .= "             }\n";
-        $answer .= "          break;\n";
-        $answer .= "       case 3:\n";
-        $answer .= "          remainingvalue = (parseInt(parseFloat($equals_num_value)*1000) - parseInt(parseFloat(totalvalue_".$ia[1].")*1000))/1000;\n";
-        $answer .= "          document.getElementById('remainingvalue_".$ia[1]."').value=remainingvalue;\n";
-        $answer .= "          if (totalvalue_".$ia[1]." == $equals_num_value)\n";
-        $answer .= "             {\n";
-        $answer .= "               if (bob.value == '' || bob.value == '".$clang->gT("Answer is invalid. The total of all entries should not add up to more than ").$equals_num_value."')\n";
-        $answer .= "               {\n";
-        $answer .= "                 bob.value = '';\n";
-        //		$answer .= "                 document.getElementById('totalvalue_".$ia[1]."').style.color='black';\n";
-        //		$answer .= "                 document.getElementById('equals_num_value_".$ia[1]."').style.color='black';\n";
-        $answer .= "                 document.getElementById('totalvalue_".$ia[1]."').setAttribute(ieAtt,'" . $goodClass . "');\n";
-        $answer .= "                 document.getElementById('equals_num_value_".$ia[1]."').setAttribute(ieAtt,'" . $goodClass . "');\n";
-        $answer .= "               }\n";
-        $answer .= "             }\n";
-        $answer .= "             else\n";
-        $answer .= "             {\n";
-        $answer .= "             bob.value = '".$clang->gT("Answer is invalid. The total of all entries should not add up to more than ").$equals_num_value."';\n";
-        //		$answer .= "             document.getElementById('totalvalue_".$ia[1]."').style.color='red';\n";
-        //		$answer .= "             document.getElementById('equals_num_value_".$ia[1]."').style.color='red';\n";
-        $answer .= "             document.getElementById('totalvalue_".$ia[1]."').setAttribute(ieAtt,'" . $errorClass . "');\n";
-        $answer .= "             document.getElementById('equals_num_value_".$ia[1]."').setAttribute(ieAtt,'" . $errorClass . "');\n";
-        $answer .= "             }\n";
-        $answer .= "             break;\n";
-        $answer .= "       }\n";
-        $answer .= "    }\n";
-        foreach($calculateValue as $cValue)
-        {
-            $answer .= "    calculateValue".$ia[1]."($cValue);\n";
-        }
-        $answer .= "</script>\n";
-
-    }
 
     return array($answer, $inputnames);
 }
@@ -4704,14 +3458,7 @@ function do_numerical($ia)
 {
     global $clang, $thissurvey;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "fixnum_checkconditions";
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
     if (trim($qidattributes['prefix'])!='') {
         $prefix=$qidattributes['prefix'];
@@ -4727,17 +3474,15 @@ function do_numerical($ia)
     {
         $suffix = '';
     }
-    if (trim($qidattributes['maximum_chars'])!='')
+    if (intval(trim($qidattributes['maximum_chars']))>0 && intval(trim($qidattributes['maximum_chars']))<20) // Limt to 20 chars for numeric
     {
-        $maxsize=$qidattributes['maximum_chars'];
-        if ($maxsize>20)
-        {
-            $maxsize=20;
-        }
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
     }
     else
     {
-        $maxsize=20;  // The field length for numerical fields is 20
+        $maxlength= "maxlength='20' ";
     }
     if (trim($qidattributes['text_input_width'])!='')
     {
@@ -4751,16 +3496,18 @@ function do_numerical($ia)
     if (trim($qidattributes['num_value_int_only'])==1)
     {
         $acomma="";
+        $intonly=1;
     }
     else
     {
         $acomma=getRadixPointData($thissurvey['surveyls_numberformat']);
         $acomma = $acomma['seperator'];
+        $intonly=0;
 
     }
     $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
     $sSeperator = $sSeperator['seperator'];
-    $_SESSION[$ia[1]] = str_replace('.',$sSeperator,$_SESSION[$ia[1]]);
+    $dispVal = str_replace('.',$sSeperator,$_SESSION[$ia[1]]);
 
     if ($thissurvey['nokeyboard']=='Y')
     {
@@ -4771,16 +3518,13 @@ function do_numerical($ia)
     {
         $kpclass = "";
     }
-    // --> START NEW FEATURE - SAVE
-    $answer = "<p class=\"question\">\n\t$prefix\n\t<input class=\"text $kpclass\" type=\"text\" size=\"$tiwidth\" name=\"$ia[1]\" "
-    . "id=\"answer{$ia[1]}\" value=\"{$_SESSION[$ia[1]]}\" alt=\"".$clang->gT('Answer')."\" onkeypress=\"return goodchars(event,'-0123456789{$acomma}')\" onchange='$checkconditionFunction(this.value, this.name, this.type)'"
-    . "maxlength=\"{$maxsize}\" />\n\t{$suffix}\n</p>\n";
+    $answer = "<p class=\"question\"><label for='answer{$ia[1]}' class='hide label'>{$clang->gT('Answer')}</label>\n$prefix\t<input class=\"text $kpclass\" type=\"text\" size=\"$tiwidth\" name=\"$ia[1]\" "
+    . "id=\"answer{$ia[1]}\" value=\"{$dispVal}\" title=\"".$clang->gT('Only numbers may be entered in this field')."\" onkeyup='$checkconditionFunction(this.value, this.name, this.type,null, $intonly)' "
+    . " {$maxlength} />\n\t{$suffix}\n</p>\n";
     if ($qidattributes['hide_tip']==0)
     {
         $answer .= "<p class=\"tip\">".$clang->gT('Only numbers may be entered in this field')."</p>\n";
     }
-
-    // --> END NEW FEATURE - SAVE
 
     $inputnames[]=$ia[1];
     $mandatory=null;
@@ -4795,34 +3539,27 @@ function do_shortfreetext($ia)
 {
     global $clang, $js_header_includes, $thissurvey,$googleMapsAPIKey;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
-
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
     if ($qidattributes['numbers_only']==1)
     {
         $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
         $sSeperator = $sSeperator['seperator'];
-        $numbersonly = 'onkeypress="return goodchars(event,\'0123456789'.$sSeperator.'\')"';
+        $checkconditionFunction = "fixnum_checkconditions";
     }
     else
     {
-        $numbersonly = '';
+        $checkconditionFunction = "checkconditions";
     }
-    if (trim($qidattributes['maximum_chars'])!='')
+    if (intval(trim($qidattributes['maximum_chars']))>0)
     {
-        $maxsize=$qidattributes['maximum_chars'];
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
     }
     else
     {
-        $maxsize=255;
+        $maxlength= "";
     }
     if (trim($qidattributes['text_input_width'])!='')
     {
@@ -4860,12 +3597,6 @@ function do_shortfreetext($ia)
         //question attribute "display_rows" is set -> we need a textarea to be able to show several rows
         $drows=$qidattributes['display_rows'];
 
-        //extend maximum chars if this is set to short text default of 255
-        if($maxsize == 255)
-        {
-            $maxsize=65525;
-        }
-
         //if a textarea should be displayed we make it equal width to the long text question
         //this looks nicer and more continuous
         if($tiwidth == 50)
@@ -4873,14 +3604,17 @@ function do_shortfreetext($ia)
             $tiwidth=40;
         }
 
-        //NEW: textarea instead of input=text field
+        $answer = '<label for="answer'.$ia[1].'" class="hide label">'.$clang->gT('Answer').'</label><textarea class="textarea '.$kpclass.'" name="'.$ia[1].'" id="answer'.$ia[1].'"'
+        .'rows="'.$drows.'" cols="'.$tiwidth.'" '.$maxlength.' onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type);">';
 
-        // --> START NEW FEATURE - SAVE
-        $answer = '<textarea class="textarea '.$kpclass.'" name="'.$ia[1].'" id="answer'.$ia[1].'" '
-        .'rows="'.$drows.'" cols="'.$tiwidth.'" maxlength="'.$maxsize.'" onchange="textLimit(\'answer'.$ia[1].'\', '.$maxsize.');" onkeyup="textLimit(\'answer'.$ia[1].'\', '.$maxsize.'); '.$checkconditionFunction.'(this.value, this.name, this.type);" '.$numbersonly.'>';
-        // --> END NEW FEATURE - SAVE
-
-        if ($_SESSION[$ia[1]]) {$answer .= str_replace("\\", "", $_SESSION[$ia[1]]);}
+        if ($_SESSION[$ia[1]]) {
+            $dispVal = str_replace("\\", "", $_SESSION[$ia[1]]);
+            if ($qidattributes['numbers_only']==1)
+            {
+                $dispVal = str_replace('.',$sSeperator,$dispVal);
+            }
+            $answer .= htmlspecialchars(htmlspecialchars($dispVal));
+        }
 
         $answer .= "</textarea>\n";
     }
@@ -4900,7 +3634,7 @@ function do_shortfreetext($ia)
         }
         else{
             if ((int)($qidattributes['location_nodefaultfromip'])==0)
-                $currentLatLong = getLatLongFromIp($_SERVER['REMOTE_ADDR']);
+                $currentLatLong = getLatLongFromIp(getIPAddress());
             if (!isset($currentLatLong) || $currentLatLong==false){
                 $floatLat = 0;
                 $floatLng = 0;
@@ -4935,7 +3669,7 @@ function do_shortfreetext($ia)
 
             <input class=\"text location ".$kpclass."\" type=\"text\" size=\"20\" name=\"$ia[1]_c\"
                 id=\"answer$ia[1]_c\" value=\"$currentLocation\"
-                onkeyup=\"$checkconditionFunction(this.value, this.name, this.type)\" />
+                onchange=\"$checkconditionFunction(this.value, this.name, this.type)\" />
             </p>
 
             <input type=\"hidden\" name=\"boycott_$ia[1]\" id=\"boycott_$ia[1]\"
@@ -4963,9 +3697,17 @@ function do_shortfreetext($ia)
     else
     {
         //no question attribute set, use common input text field
-        $answer = "<p class=\"question\">\n\t$prefix\n\t<input class=\"text $kpclass\" type=\"text\" size=\"$tiwidth\" name=\"$ia[1]\" id=\"answer$ia[1]\" value=\""
-        .htmlspecialchars($_SESSION[$ia[1]],ENT_QUOTES,'UTF-8')
-        ."\" maxlength=\"$maxsize\" onkeyup=\"$checkconditionFunction(this.value, this.name, this.type)\" $numbersonly />\n\t$suffix\n</p>\n";
+        $answer = "<p class=\"question\">\n<label for='answer{$ia[1]}' class='hide label'>{$clang->gT('Answer')}</label>\t$prefix\n\t<input class=\"text $kpclass\" type=\"text\" size=\"$tiwidth\" name=\"$ia[1]\" id=\"answer$ia[1]\"";
+
+        $dispVal = $_SESSION[$ia[1]];
+        if ($qidattributes['numbers_only']==1)
+        {
+            $dispVal = str_replace('.',$sSeperator,$dispVal);
+        }
+        $dispVal = htmlspecialchars($dispVal,ENT_QUOTES,'UTF-8');
+        $answer .= " value=\"$dispVal\"";
+
+        $answer .=" {$maxlength} onkeyup=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n\t$suffix\n</p>\n";
     }
 
 
@@ -5010,27 +3752,21 @@ function do_longfreetext($ia)
         $kpclass = "";
     }
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
    	$qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
-    if (trim($qidattributes['maximum_chars'])!='')
+    if (intval(trim($qidattributes['maximum_chars']))>0)
     {
-        $maxsize=$qidattributes['maximum_chars'];
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
     }
     else
     {
-        $maxsize=65525;
+        $maxlength= "";
     }
 
-    // --> START ENHANCEMENT - DISPLAY ROWS
     if (trim($qidattributes['display_rows'])!='')
     {
         $drows=$qidattributes['display_rows'];
@@ -5039,9 +3775,7 @@ function do_longfreetext($ia)
     {
         $drows=5;
     }
-    // <-- END ENHANCEMENT - DISPLAY ROWS
 
-    // --> START ENHANCEMENT - TEXT INPUT WIDTH
     if (trim($qidattributes['text_input_width'])!='')
     {
         $tiwidth=$qidattributes['text_input_width'];
@@ -5050,14 +3784,11 @@ function do_longfreetext($ia)
     {
         $tiwidth=40;
     }
-    // <-- END ENHANCEMENT - TEXT INPUT WIDTH
 
-    // --> START NEW FEATURE - SAVE
-    $answer = '<textarea class="textarea '.$kpclass.'" name="'.$ia[1].'" id="answer'.$ia[1].'" alt="'.$clang->gT('Answer').'" '
-    .'rows="'.$drows.'" cols="'.$tiwidth.'" maxlength="'.$maxsize.'" onchange="textLimit(\'answer'.$ia[1].'\', '.$maxsize.');" onkeyup="textLimit(\'answer'.$ia[1].'\', '.$maxsize.'); '.$checkconditionFunction.'(this.value, this.name, this.type)">';
-    // --> END NEW FEATURE - SAVE
+    $answer = '<label for="answer'.$ia[1].'" class="hide label">'.$clang->gT('Answer').'</label><textarea class="textarea '.$kpclass.'" name="'.$ia[1].'" id="answer'.$ia[1].'" '
+    .'rows="'.$drows.'" cols="'.$tiwidth.'" '.$maxlength.' onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type)" >';
 
-    if ($_SESSION[$ia[1]]) {$answer .= str_replace("\\", "", $_SESSION[$ia[1]]);}
+    if ($_SESSION[$ia[1]]) {$answer .= htmlspecialchars(htmlspecialchars(str_replace("\\", "", $_SESSION[$ia[1]])));}
 
     $answer .= "</textarea>\n";
 
@@ -5089,27 +3820,21 @@ function do_hugefreetext($ia)
         $kpclass = "";
     }
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
-    if (trim($qidattributes['maximum_chars'])!='')
+    if (intval(trim($qidattributes['maximum_chars']))>0)
     {
-        $maxsize=$qidattributes['maximum_chars'];
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
     }
     else
     {
-        $maxsize=65525;
+        $maxlength= "";
     }
 
-    // --> START ENHANCEMENT - DISPLAY ROWS
     if (trim($qidattributes['display_rows'])!='')
     {
         $drows=$qidattributes['display_rows'];
@@ -5118,9 +3843,7 @@ function do_hugefreetext($ia)
     {
         $drows=30;
     }
-    // <-- END ENHANCEMENT - DISPLAY ROWS
 
-    // --> START ENHANCEMENT - TEXT INPUT WIDTH
     if (trim($qidattributes['text_input_width'])!='')
     {
         $tiwidth=$qidattributes['text_input_width'];
@@ -5129,14 +3852,11 @@ function do_hugefreetext($ia)
     {
         $tiwidth=70;
     }
-    // <-- END ENHANCEMENT - TEXT INPUT WIDTH
 
-    // --> START NEW FEATURE - SAVE
-    $answer = '<textarea class="textarea '.$kpclass.'" name="'.$ia[1].'" id="answer'.$ia[1].'" alt="'.$clang->gT('Answer').'" '
-    .'rows="'.$drows.'" cols="'.$tiwidth.'" maxlength="'.$maxsize.'" onchange="textLimit(\'answer'.$ia[1].'\', '.$maxsize.');" onkeyup="textLimit(\'answer'.$ia[1].'\', '.$maxsize.'); '.$checkconditionFunction.'(this.value, this.name, this.type)">';
-    // --> END NEW FEATURE - SAVE
+    $answer = '<label for="answer'.$ia[1].'" class="hide label">'.$clang->gT('Answer').'</label><textarea class="textarea '.$kpclass.'" name="'.$ia[1].'" id="answer'.$ia[1].'" '
+    .'rows="'.$drows.'" cols="'.$tiwidth.'" '.$maxlength.' onkeyup="'.$checkconditionFunction.'(this.value, this.name, this.type)" >';
 
-    if ($_SESSION[$ia[1]]) {$answer .= str_replace("\\", "", $_SESSION[$ia[1]]);}
+    if ($_SESSION[$ia[1]]) {$answer .= htmlspecialchars(htmlspecialchars(str_replace("\\", "", $_SESSION[$ia[1]])));}
 
     $answer .= "</textarea>\n";
 
@@ -5158,14 +3878,7 @@ function do_yesno($ia)
 {
     global $clang;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $answer = "<ul>\n"
     . "\t<li>\n<input class=\"radio\" type=\"radio\" name=\"{$ia[1]}\" id=\"answer{$ia[1]}Y\" value=\"Y\"";
@@ -5174,18 +3887,14 @@ function do_yesno($ia)
     {
         $answer .= CHECKED;
     }
-    // --> START NEW FEATURE - SAVE
     $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click() . "\" />\n<label for=\"answer{$ia[1]}Y\" class=\"answertext\">\n\t".$clang->gT('Yes')."\n</label>\n\t</li>\n"
     . "\t<li>\n<input class=\"radio\" type=\"radio\" name=\"{$ia[1]}\" id=\"answer{$ia[1]}N\" value=\"N\"";
-    // --> END NEW FEATURE - SAVE
 
     if ($_SESSION[$ia[1]] == 'N')
     {
         $answer .= CHECKED;
     }
-    // --> START NEW FEATURE - SAVE
     $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click() . "\" />\n<label for=\"answer{$ia[1]}N\" class=\"answertext\" >\n\t".$clang->gT('No')."\n</label>\n\t</li>\n";
-    // --> END NEW FEATURE - SAVE
 
     if ($ia[6] != 'Y' && SHOW_NO_ANSWER == 1)
     {
@@ -5194,9 +3903,7 @@ function do_yesno($ia)
         {
             $answer .= CHECKED;
         }
-        // --> START NEW FEATURE - SAVE
         $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click() . "\" />\n<label for=\"answer{$ia[1]}\" class=\"answertext\">\n\t".$clang->gT('No answer')."\n</label>\n\t</li>\n";
-        // --> END NEW FEATURE - SAVE
     }
 
     $answer .= "</ul>\n\n<input type=\"hidden\" name=\"java{$ia[1]}\" id=\"java{$ia[1]}\" value=\"{$_SESSION[$ia[1]]}\" />\n";
@@ -5212,14 +3919,7 @@ function do_gender($ia)
 {
     global $clang;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
@@ -5230,7 +3930,7 @@ function do_gender($ia)
     {
         $answer .= CHECKED;
     }
-    $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click() . "\" />\n"
+    $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click()  ."\" />\n"
     . '		<label for="answer'.$ia[1].'F" class="answertext">'.$clang->gT('Female')."</label>\n\t</li>\n";
 
     $answer .= "\t<li>\n<input class=\"radio\" type=\"radio\" name=\"$ia[1]\" id=\"answer".$ia[1].'M" value="M"';
@@ -5243,28 +3943,12 @@ function do_gender($ia)
 
     if ($ia[6] != 'Y' && SHOW_NO_ANSWER == 1)
     {
-        /* columns now done by CSS
-         if ($dcols > 2)
-         {
-         $answer .= "\n</td><td>\n";
-         }
-         elseif ($dcols > 1)
-         {
-         $answer .= "\n</td></tr><tr><td colspan='2' align='center'>\n";
-         }
-         else
-         {
-         $answer .= "<br />";
-         }
-         */
         $answer .= "\t<li>\n<input class=\"radio\" type=\"radio\" name=\"$ia[1]\" id=\"answer".$ia[1].'" value=""';
         if ($_SESSION[$ia[1]] == '')
         {
             $answer .= CHECKED;
         }
-        // --> START NEW FEATURE - SAVE
         $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)" . quexs_submit_on_click() . "\" />\n<label for=\"answer$ia[1]\" class=\"answertext\">".$clang->gT('No answer')."</label>\n\t</li>\n";
-        // --> END NEW FEATURE - SAVE
 
     }
     $answer .= "</ul>\n\n<input type=\"hidden\" name=\"java$ia[1]\" id=\"java$ia[1]\" value=\"{$_SESSION[$ia[1]]}\" />\n";
@@ -5278,25 +3962,18 @@ function do_gender($ia)
 
 // ---------------------------------------------------------------
 /**
- * DONE: well-formed valid HTML is appreciated
- * Enter description here...
- * @param $ia
- * @return unknown_type
- */
+* DONE: well-formed valid HTML is appreciated
+* Enter description here...
+* @param $ia
+* @return unknown_type
+*/
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array_5point($ia)
 {
     global $dbprefix, $notanswered, $thissurvey, $clang;
     $inputnames=array();
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
-
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
 
@@ -5372,13 +4049,13 @@ function do_array_5point($ia)
     {
         $myfname = $ia[1].$ansrow['title'];
 
-        $answertext=dTexts::run($ansrow['question']);
+        $answertext=dTexts__run($ansrow['question']);
         if (strpos($answertext,'|')) {$answertext=substr($answertext,0,strpos($answertext,'|'));}
 
         /* Check if this item has not been answered: the 'notanswered' variable must be an array,
          containing a list of unanswered questions, the current question must be in the array,
          and there must be no answer available for the item in this session. */
-        if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
+        if ($ia[6]=='Y' && (is_array($notanswered)) && (array_search($myfname, $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
             $answertext = "<span class=\"errormandatory\">{$answertext}</span>";
         }
 
@@ -5409,7 +4086,7 @@ function do_array_5point($ia)
             $answer_t_content .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n</label>\n\t</td>\n";
         }
 
-        $answertext2=dTexts::run($ansrow['question']);
+        $answertext2=dTexts__run($ansrow['question']);
         if (strpos($answertext2,'|'))
         {
             $answertext2=substr($answertext2,strpos($answertext2,'|')+1);
@@ -5446,23 +4123,17 @@ function do_array_5point($ia)
 
 // ---------------------------------------------------------------
 /**
- * DONE: well-formed valid HTML is appreciated
- * Enter description here...
- * @param $ia
- * @return unknown_type
- */
+* DONE: well-formed valid HTML is appreciated
+* Enter description here...
+* @param $ia
+* @return unknown_type
+*/
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array_10point($ia)
 {
     global $dbprefix, $notanswered, $thissurvey, $clang;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid=".$ia[0]."  AND language='".$_SESSION['s_lang']."'";
     $qresult = db_execute_assoc($qquery);      //Checked
@@ -5527,11 +4198,11 @@ function do_array_10point($ia)
     while ($ansrow = $ansresult->FetchRow())
     {
         $myfname = $ia[1].$ansrow['title'];
-        $answertext=dTexts::run($ansrow['question']);
+        $answertext=dTexts__run($ansrow['question']);
         /* Check if this item has not been answered: the 'notanswered' variable must be an array,
          containing a list of unanswered questions, the current question must be in the array,
          and there must be no answer available for the item in this session. */
-        if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == "") ) {
+        if ($ia[6]=='Y' && (is_array($notanswered)) && (array_search($myfname, $notanswered) !== FALSE) && ($_SESSION[$myfname] == "") ) {
             $answertext = "<span class='errormandatory'>{$answertext}</span>";
         }
         $trbc = alternation($trbc , 'row');
@@ -5559,9 +4230,7 @@ function do_array_10point($ia)
             {
                 $answer_t_content .= CHECKED;
             }
-            // --> START NEW FEATURE - SAVE
             $answer_t_content .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n</label>\n\t</td>\n";
-            // --> END NEW FEATURE - SAVE
 
         }
         if ($ia[6] != "Y" && SHOW_NO_ANSWER == 1)
@@ -5587,18 +4256,12 @@ function do_array_10point($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array_yesnouncertain($ia)
 {
     global $dbprefix, $notanswered, $thissurvey, $clang;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid=".$ia[0]." AND language='".$_SESSION['s_lang']."'";
     $qresult = db_execute_assoc($qquery);	//Checked
@@ -5666,11 +4329,11 @@ function do_array_yesnouncertain($ia)
         while ($ansrow = $ansresult->FetchRow())
         {
             $myfname = $ia[1].$ansrow['title'];
-            $answertext=dTexts::run($ansrow['question']);
+            $answertext=dTexts__run($ansrow['question']);
             /* Check if this item has not been answered: the 'notanswered' variable must be an array,
              containing a list of unanswered questions, the current question must be in the array,
              and there must be no answer available for the item in this session. */
-            if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
+            if ($ia[6]=='Y' && (is_array($notanswered)) && (array_search($myfname, $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
                 $answertext = "<span class='errormandatory'>{$answertext}</span>";
             }
             $trbc = alternation($trbc , 'row');
@@ -5690,30 +4353,24 @@ function do_array_yesnouncertain($ia)
             {
                 $answer_t_content .= CHECKED;
             }
-            // --> START NEW FEATURE - SAVE
             $answer_t_content .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n\t</label>\n\t</td>\n"
             . "\t<td class=\"answer_cell_U\">\n<label for=\"answer$myfname-U\">\n"
             . "<input class=\"radio\" type=\"radio\" name=\"$myfname\" id=\"answer$myfname-U\" value=\"U\" title=\"".$clang->gT('Uncertain')."\"";
-            // --> END NEW FEATURE - SAVE
 
             if (isset($_SESSION[$myfname]) && $_SESSION[$myfname] == 'U')
             {
                 $answer_t_content .= CHECKED;
             }
-            // --> START NEW FEATURE - SAVE
             $answer_t_content .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n</label>\n\t</td>\n"
             . "\t<td class=\"answer_cell_N\">\n<label for=\"answer$myfname-N\">\n"
             . "<input class=\"radio\" type=\"radio\" name=\"$myfname\" id=\"answer$myfname-N\" value=\"N\" title=\"".$clang->gT('No').'"';
-            // --> END NEW FEATURE - SAVE
 
             if (isset($_SESSION[$myfname]) && $_SESSION[$myfname] == 'N')
             {
                 $answer_t_content .= CHECKED;
             }
-            // --> START NEW FEATURE - SAVE
             $answer_t_content .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n</label>\n"
             . "<input type=\"hidden\" name=\"java$myfname\" id=\"java$myfname\" value=\"";
-            // --> END NEW FEATURE - SAVE
             if (isset($_SESSION[$myfname]))
             {
                 $answer_t_content .= $_SESSION[$myfname];
@@ -5728,9 +4385,7 @@ function do_array_yesnouncertain($ia)
                 {
                     $answer_t_content .= CHECKED;
                 }
-                // --> START NEW FEATURE - SAVE
                 $answer_t_content .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n</label>\n\t</td>\n";
-                // --> END NEW FEATURE - SAVE
             }
             $answer_t_content .= "</tr>\n</tbody>";
             $inputnames[]=$myfname;
@@ -5741,19 +4396,13 @@ function do_array_yesnouncertain($ia)
     return array($answer, $inputnames);
 }
 
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array_increasesamedecrease($ia)
 {
     global $dbprefix, $thissurvey, $clang;
     global $notanswered;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid=".$ia[0]." AND language='".$_SESSION['s_lang']."'";
     $qresult = db_execute_assoc($qquery);   //Checked
@@ -5822,11 +4471,11 @@ function do_array_increasesamedecrease($ia)
     while ($ansrow = $ansresult->FetchRow())
     {
         $myfname = $ia[1].$ansrow['title'];
-        $answertext=dTexts::run($ansrow['question']);
+        $answertext=dTexts__run($ansrow['question']);
         /* Check if this item has not been answered: the 'notanswered' variable must be an array,
          containing a list of unanswered questions, the current question must be in the array,
          and there must be no answer available for the item in this session. */
-        if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == "") )
+        if ($ia[6]=='Y' && (is_array($notanswered)) && (array_search($myfname, $notanswered) !== FALSE) && ($_SESSION[$myfname] == "") )
         {
             $answertext = "<span class=\"errormandatory\">{$answertext}</span>";
         }
@@ -5875,7 +4524,6 @@ function do_array_increasesamedecrease($ia)
         . "\t<td class=\"answer_cell_D\">\n"
         . "<label for=\"answer$myfname-D\">\n"
         . "\t<input class=\"radio\" type=\"radio\" name=\"$myfname\" id=\"answer$myfname-D\" value=\"D\" title=\"".$clang->gT('Decrease').'"';
-        // --> END NEW FEATURE - SAVE
         if (isset($_SESSION[$myfname]) && $_SESSION[$myfname] == 'D')
         {
             $answer_body .= CHECKED;
@@ -5910,6 +4558,7 @@ function do_array_increasesamedecrease($ia)
 }
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array($ia)
 {
     global $dbprefix, $connect, $thissurvey, $clang;
@@ -5917,14 +4566,7 @@ function do_array($ia)
     global $notanswered;
     global $minrepeatheadings;
 
-    if (isset($ia[8]) && $ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid={$ia[0]} AND language='".$_SESSION['s_lang']."'";
     $qresult = db_execute_assoc($qquery);     //Checked
@@ -6027,7 +4669,7 @@ function do_array($ia)
                 }
             }
             $myfname = $ia[1].$ansrow['title'];
-            $answertext=dTexts::run($ansrow['question']);
+            $answertext=dTexts__run($ansrow['question']);
             $answertextsave=$answertext;
             if (strpos($answertext,'|'))
             {
@@ -6039,17 +4681,14 @@ function do_array($ia)
 
             if (strpos($answertext,'|')) {$answerwidth=$answerwidth/2;}
 
-            if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
+            if ($ia[6]=='Y' && (is_array($notanswered)) && (array_search($myfname, $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
                 $answertext = '<span class="errormandatory">'.$answertext.'</span>';
             }
             // Get array_filter stuff
+            //
             list($htmltbody2, $hiddenfield)=return_array_filter_strings($ia, $qidattributes, $thissurvey, $ansrow, $myfname, $trbc, $myfname);
-            $row_selected = return_array_filter_selected($ia, $qidattributes, $thissurvey, $ansrow, $myfname, $trbc, $myfname);
-			if($row_selected)
-			{
 				$trbc = alternation($trbc , 'row');
 				$fn++;
-			}
 			$answer .= $htmltbody2;
 
             $answer .= "<tr class=\"$trbc\">\n"
@@ -6073,11 +4712,9 @@ function do_array($ia)
                 {
                     $answer .= CHECKED;
                 }
-                // --> START NEW FEATURE - SAVE
                 $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n"
                 . "</label>\n"
                 . "\t</td>\n";
-                // --> END NEW FEATURE - SAVE
 
                 $thiskey++;
             }
@@ -6099,9 +4736,7 @@ function do_array($ia)
                 {
                     $answer .= CHECKED;
                 }
-                // --> START NEW FEATURE - SAVE
                 $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\"  />\n</label>\n\t</td>\n";
-                // --> END NEW FEATURE - SAVE
             }
 
             $answer .= "</tr>\n";
@@ -6173,7 +4808,7 @@ function do_array($ia)
        {
            $myfname = $ia[1].$ansrow['title'];
            $trbc = alternation($trbc , 'row');
-           $answertext=answer_replace($ansrow['question']);
+           $answertext=$ansrow['question'];
             $answertextsave=$answertext;
            if (strpos($answertext,'|'))
            {
@@ -6185,7 +4820,7 @@ function do_array($ia)
 
            if (strpos($answertext,'|')) {$answerwidth=$answerwidth/2;}
 
-           if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
+           if ($ia[6]=='Y' && (is_array($notanswered)) && (array_search($myfname, $notanswered) !== FALSE) && ($_SESSION[$myfname] == '') ) {
                $answertext = '<span class="errormandatory">'.$answertext.'</span>';
            }
            // Get array_filter stuff
@@ -6261,6 +4896,7 @@ function do_array($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array_multitext($ia)
 {
     global $dbprefix, $connect, $thissurvey, $clang;
@@ -6278,14 +4914,9 @@ function do_array_multitext($ia)
         $kpclass = "";
     }
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
+    $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
+    $sSeperator = $sSeperator['seperator'];
 
     //echo "<pre>"; print_r($_POST); echo "</pre>";
     $defaultvaluescript = "";
@@ -6294,6 +4925,17 @@ function do_array_multitext($ia)
     while($qrow = $qresult->FetchRow()) {$other = $qrow['other'];}
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
+
+    if (intval(trim($qidattributes['maximum_chars']))>0)
+    {
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
+    }
+    else
+    {
+        $maxlength= "";
+    }
 
     $show_grand = $qidattributes['show_grand_total'];
     $totals_class = '';
@@ -6307,13 +4949,12 @@ function do_array_multitext($ia)
     $grand_total = '';
     $q_table_id = '';
     $q_table_id_HTML = '';
-    $numbersonly = '';
 
     if ($qidattributes['numbers_only']==1)
     {
+        $checkconditionFunction = "fixnum_checkconditions";
         $q_table_id = 'totals_'.$ia[0];
 	$q_table_id_HTML = ' id="'.$q_table_id.'"';
-//	$numbersonly = 'onkeypress="return goodchars(event,\'-0123456789.\')"';
         $num_class = ' numbers-only';
 	switch ($qidattributes['show_totals'])
 	{
@@ -6510,19 +5151,19 @@ function do_array_multitext($ia)
                 }
             }
             $myfname = $ia[1].$ansrow['title'];
-            $answertext=dTexts::run($ansrow['question']);
+            $answertext=dTexts__run($ansrow['question']);
             $answertextsave=$answertext;
             /* Check if this item has not been answered: the 'notanswered' variable must be an array,
              containing a list of unanswered questions, the current question must be in the array,
              and there must be no answer available for the item in this session. */
-            if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE))
+            if ($ia[6]=='Y' && is_array($notanswered))
             {
                 //Go through each labelcode and check for a missing answer! If any are found, highlight this line
                 $emptyresult=0;
                 foreach($labelcode as $ld)
                 {
                     $myfname2=$myfname.'_'.$ld;
-                    if($_SESSION[$myfname2] == '')
+                    if((array_search($myfname2, $notanswered) !== FALSE) && $_SESSION[$myfname2] == '')
                     {
                         $emptyresult=1;
                     }
@@ -6556,7 +5197,7 @@ function do_array_multitext($ia)
                 $answer .= "\t<td class=\"answer_cell_00$ld\">\n"
                 . "\t\t\t\t<label for=\"answer{$myfname2}\">\n"
                 . "\t\t\t\t<input type=\"hidden\" name=\"java{$myfname2}\" id=\"java{$myfname2}\" />\n"
-                . "\t\t\t\t<input type=\"text\" name=\"$myfname2\" id=\"answer{$myfname2}\" class=\"".$kpclass."\" title=\""
+                . "\t\t\t\t<input type=\"text\" name=\"$myfname2\" id=\"answer{$myfname2}\" {$maxlength} class=\"".$kpclass."\" title=\""
                 . FlattenText($labelans[$thiskey]).'" '
                 . 'size="'.$inputwidth.'" '
                 . ' value="'.str_replace ('"', "'", str_replace('\\', '', $myfname2value))."\" />\n";
@@ -6575,25 +5216,51 @@ function do_array_multitext($ia)
             }
 
             $answer .= str_replace(array('[[ROW_NAME]]','[[INPUT_WIDTH]]') , array(strip_tags($answertext),$inputwidth) , $row_total);
-	    $answer .= "\n\t\t</tr>\n";
+            $answer .= "\n\t\t</tr>\n";
             $answer .= "</tbody>\n";
             //IF a MULTIPLE of flexi-redisplay figure, repeat the headings
             $fn++;
         }
-	if($show_totals == 'col' || $show_totals = 'both' || $grand_total == true)
-	{
-            $answer .= "\t\t<tr class=\"total\">$row_head";
-	    for( $a = 0; $a < count($labelcode) ; ++$a )
-	    {
-	        $answer .= str_replace(array('[[ROW_NAME]]','[[INPUT_WIDTH]]') , array(strip_tags($answertext),$inputwidth) , $col_total);
-	    };
-	    $answer .= str_replace(array('[[ROW_NAME]]','[[INPUT_WIDTH]]') , array(strip_tags($answertext),$inputwidth) , $grand_total)."\n\t\t</tr>\n";
-        };
-        $answer .= "\t</tbody>\n</table>\n";
-	if(!empty($q_table_id))
-	{
-            $answer .= "\n<script type=\"text/javascript\">new multi_set('$q_table_id');</script>\n";
-	};
+        if($show_totals == 'col' || $show_totals = 'both' || $grand_total == true)
+        {
+                $answer .= "\t\t<tr class=\"total\">$row_head";
+            for( $a = 0; $a < count($labelcode) ; ++$a )
+            {
+                $answer .= str_replace(array('[[ROW_NAME]]','[[INPUT_WIDTH]]') , array(strip_tags($answertext),$inputwidth) , $col_total);
+            };
+            $answer .= str_replace(array('[[ROW_NAME]]','[[INPUT_WIDTH]]') , array(strip_tags($answertext),$inputwidth) , $grand_total)."\n\t\t</tr>\n";
+            };
+            $answer .= "\t</tbody>\n</table>\n";
+        if(!empty($q_table_id))
+        {
+                if ($qidattributes['numbers_only']==1)
+                {
+                    $radix = $sSeperator;
+                }
+                else {
+                    $radix = 'X';   // to indicate that should not try to change entered values
+                }
+                $answer .= "\n<script type=\"text/javascript\">new multi_set('$q_table_id','$radix');</script>\n";
+        }
+        else
+        {
+            $addcheckcond = <<< EOD
+<script type="text/javascript">
+<!--
+$(document).ready(function()
+{
+    $('#question{$ia[0]} :input:visible:enabled').each(function(index){
+        $(this).bind('keyup',function(e) {
+            checkconditions($(this).attr('value'), $(this).attr('name'), $(this).attr('type'));
+            return true;
+        })
+    })
+})
+// -->
+</script>
+EOD;
+            $answer .= $addcheckcond;
+        }
     }
     else
     {
@@ -6605,6 +5272,7 @@ function do_array_multitext($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array_multiflexi($ia)
 {
     global $dbprefix, $connect, $thissurvey, $clang;
@@ -6612,14 +5280,7 @@ function do_array_multiflexi($ia)
     global $notanswered;
     global $minrepeatheadings;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "fixnum_checkconditions";
 
     //echo '<pre>'; print_r($_POST); echo '</pre>';
     $defaultvaluescript = '';
@@ -6683,13 +5344,15 @@ function do_array_multiflexi($ia)
         $inputboxlayout=true;
     }
 
-    if (trim($qidattributes['maximum_chars'])!='')
+    if (intval(trim($qidattributes['maximum_chars']))>0)
     {
-        $maxsize=$qidattributes['maximum_chars'];
+        // Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+        $maxlength= "maxlength='{$maximum_chars}' ";
     }
     else
     {
-        $maxsize=255;
+        $maxlength= "";
     }
 
     if ($thissurvey['nokeyboard']=='Y')
@@ -6786,19 +5449,19 @@ function do_array_multiflexi($ia)
                 }
             }
             $myfname = $ia[1].$ansrow['title'];
-            $answertext=dTexts::run($ansrow['question']);
+            $answertext=dTexts__run($ansrow['question']);
             $answertextsave=$answertext;
             /* Check if this item has not been answered: the 'notanswered' variable must be an array,
              containing a list of unanswered questions, the current question must be in the array,
              and there must be no answer available for the item in this session. */
-            if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE))
+            if ($ia[6]=='Y' && is_array($notanswered))
             {
                 //Go through each labelcode and check for a missing answer! If any are found, highlight this line
                 $emptyresult=0;
                 foreach($labelcode as $ld)
                 {
                     $myfname2=$myfname.'_'.$ld;
-                    if($_SESSION[$myfname2] == "")
+                    if((array_search($myfname2, $notanswered) !== FALSE) && $_SESSION[$myfname2] == "")
                     {
                         $emptyresult=1;
                     }
@@ -6866,12 +5529,13 @@ function do_array_multiflexi($ia)
                     {
                         $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
                         $sSeperator = $sSeperator['seperator'];
-                        $answer .= "\t<input type='text' class=\"multiflexitext $kpclass\" name=\"$myfname2\" id=\"answer{$myfname2}\" maxlength=\"{$maxsize}\" size=5 title=\""
+                        $answer .= "\t<input type='text' class=\"multiflexitext $kpclass\" name=\"$myfname2\" id=\"answer{$myfname2}\" {$maxlength} size=5 title=\""
                         . html_escape($labelans[$thiskey]).'"'
-                        . " onchange=\"$checkconditionFunction(this.value, this.name, this.type)\" onkeypress=\"return goodchars(event,'0123456789$sSeperator')\""
+                        . " onkeyup=\"$checkconditionFunction(this.value, this.name, this.type)\""
                         . " value=\"";
                         if(isset($_SESSION[$myfname2]) && $_SESSION[$myfname2]) {
-                            $answer .= $_SESSION[$myfname2];
+                            $dispVal = str_replace('.',$sSeperator,$_SESSION[$myfname2]);
+                            $answer .= $dispVal;
                         }
                         $answer .= "\" />\n";
                     }
@@ -6891,7 +5555,7 @@ function do_array_multiflexi($ia)
                     }
                     else
                     {
-                        $myvalue = '0';
+                        $myvalue = '';
                         $setmyvalue = '';
                     }
                     $answer .= "\t<td class=\"answer_cell_00$ld\">\n"
@@ -6903,9 +5567,9 @@ function do_array_multiflexi($ia)
                     . " aelt=document.getElementById('answer{$myfname2}');"
                     . " jelt=document.getElementById('java{$myfname2}');"
                     . " if(this.checked) {"
-                    . "  aelt.value=1;jelt.value=1;$checkconditionFunction(1,'answer{$myfname2}',aelt.type);"
+                    . "  aelt.value=1;jelt.value=1;$checkconditionFunction(1,'{$myfname2}',aelt.type);"
                     . " } else {"
-                    . "  aelt.value=0;jelt.value=0;$checkconditionFunction(0,'answer{$myfname2}',aelt.type);"
+                    . "  aelt.value=0;jelt.value=0;$checkconditionFunction(0,'{$myfname2}',aelt.type);"
                     . " }; return true;\" "
                     //					. " onchange=\"checkconditions(this.value, this.name, this.type)\" "
                     . " />\n";
@@ -6942,19 +5606,13 @@ function do_array_multiflexi($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_arraycolumns($ia)
 {
     global $dbprefix;
     global $notanswered, $clang;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $qidattributes=getQuestionAttributes($ia[0],$ia[4]);
     $qquery = "SELECT other FROM {$dbprefix}questions WHERE qid=".$ia[0]." AND language='".$_SESSION['s_lang']."'";
@@ -7006,18 +5664,19 @@ function do_arraycolumns($ia)
             while ($ansrow = $ansresult->FetchRow())
             {
                 $anscode[]=$ansrow['title'];
-                $answers[]=dTexts::run($ansrow['question']);
+                $answers[]=dTexts__run($ansrow['question']);
             }
             $trbc = '';
             $odd_even = '';
-            foreach ($answers as $ld)
+            for ($_i=0;$_i<count($answers);++$_i)
             {
-                $myfname = $ia[1].$ansrow['code'];
+                $ld = $answers[$_i];
+                $myfname = $ia[1].$anscode[$_i];
                 $trbc = alternation($trbc , 'row');
                 /* Check if this item has not been answered: the 'notanswered' variable must be an array,
                  containing a list of unanswered questions, the current question must be in the array,
                  and there must be no answer available for the item in this session. */
-                if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == "") )
+                if ($ia[6]=='Y' && (is_array($notanswered)) && (array_search($myfname, $notanswered) !== FALSE) && ($_SESSION[$myfname] == "") )
                 {
                     $ld = "<span class=\"errormandatory\">{$ld}</span>";
                 }
@@ -7094,6 +5753,7 @@ function do_arraycolumns($ia)
 
 
 // ---------------------------------------------------------------
+// TMSW TODO - Can remove DB query by passing in answer list from EM
 function do_array_dual($ia)
 {
     global $dbprefix, $connect, $thissurvey, $clang;
@@ -7101,14 +5761,7 @@ function do_array_dual($ia)
     global $notanswered;
     global $minrepeatheadings;
 
-    if ($ia[8] == 'Y')
-    {
-        $checkconditionFunction = "checkconditions";
-    }
-    else
-    {
-        $checkconditionFunction = "noop_checkconditions";
-    }
+    $checkconditionFunction = "checkconditions";
 
     $inputnames=array();
     $labelans1=array();
@@ -7203,23 +5856,22 @@ function do_array_dual($ia)
         // unselect second scale when using "no answer"
         $answer = "<script type='text/javascript'>\n"
         . "<!--\n"
-        . "\tfunction noanswer_checkconditions(value, name, type)\n"
+        . "function noanswer_checkconditions(value, name, type)\n"
         . "{\n"
         . "\tvar vname;\n"
-        . "\tvname = name.replace(/#0/g,\"#1\");\n"
-        . "\tfor(var i=0, n=document.getElementsByName(vname).length; i<n; ++i)\n"
-        . "\t{\n"
-        . "document.getElementsByName(vname)[i].checked=false;\n"
-        . "\t}\n"
+        . "\tvname = name.replace(/#.*$/,\"\");\n"
+        . "\t$('input[name^=\"' + vname + '\"]').attr('checked',false);\n"
+        . "\t$('input[id=\"answer' + vname + '#0-\"]').attr('checked',true);\n"
+        . "\t$('input[name^=\"java' + vname + '\"]').val('');\n"
         . "\t$checkconditionFunction(value, name, type);\n"
         . "}\n"
-        . "\tfunction secondlabel_checkconditions(value, name, type)\n"
+        . "function secondlabel_checkconditions(value, name, type)\n"
         . "{\n"
         . "\tvar vname;\n"
         . "\tvname = \"answer\"+name.replace(/#1/g,\"#0-\");\n"
         . "\tif(document.getElementById(vname))\n"
         . "\t{\n"
-        . "document.getElementById(vname).checked=false;\n"
+        . "\tdocument.getElementById(vname).checked=false;\n"
         . "\t}\n"
         . "\t$checkconditionFunction(value, name, type);\n"
         . "}\n"
@@ -7347,7 +5999,7 @@ function do_array_dual($ia)
             }
 
             $trbc = alternation($trbc , 'row');
-            $answertext=dTexts::run($ansrow['question']);
+            $answertext=dTexts__run($ansrow['question']);
             $answertextsave=$answertext;
 
             $dualgroup=0;
@@ -7357,7 +6009,7 @@ function do_array_dual($ia)
             /* Check if this item has not been answered: the 'notanswered' variable must be an array,
             containing a list of unanswered questions, the current question must be in the array,
             and there must be no answer available for the item in this session. */
-            if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && (($_SESSION[$myfname] == '') || ($_SESSION[$myfname1] == '')) )
+            if ($ia[6]=='Y' && (is_array($notanswered)) && ((array_search($myfname, $notanswered) !== FALSE) || (array_search($myfname1, $notanswered) !== FALSE)) && (($_SESSION[$myfname] == '') || ($_SESSION[$myfname1] == '')) )
             {
                 $answertext = "<span class='errormandatory'>{$answertext}</span>";
             }
@@ -7390,9 +6042,7 @@ function do_array_dual($ia)
                 {
                     $answer .= CHECKED;
                 }
-                // --> START NEW FEATURE - SAVE
                 $answer .= " onclick=\"$checkconditionFunction(this.value, this.name, this.type)\" />\n</label>\n";
-                // --> END NEW FEATURE - SAVE
                 $answer .= "\n\t</td>\n";
                 $thiskey++;
             }
@@ -7421,9 +6071,7 @@ function do_array_dual($ia)
                     {
                         $answer .= CHECKED;
                     }
-                    // --> START NEW FEATURE - SAVE
                     $answer .= " onclick=\"secondlabel_checkconditions(this.value, this.name, this.type)\" />\n</label>\n";
-                    // --> END NEW FEATURE - SAVE
 
                     $answer .= "\t</td>\n";
                     $thiskey++;
@@ -7450,11 +6098,9 @@ function do_array_dual($ia)
                 {
                     $answer .= CHECKED;
                 }
-                // --> START NEW FEATURE - SAVE
                 $answer .= " onclick=\"noanswer_checkconditions(this.value, this.name, this.type)\" />\n"
                 . "</label>\n"
                 . "\t</td>\n";
-                // --> END NEW FEATURE - SAVE
             }
 
             $answer .= "</tr>\n";
@@ -7591,13 +6237,13 @@ function do_array_dual($ia)
                 $dualgroup1=1;
                 $myfname1 = $ia[1].$ansrow['title']."#".$dualgroup1;
 
-                if ((is_array($notanswered)) && (array_search($ia[1], $notanswered) !== FALSE) && ($_SESSION[$myfname] == "" || $_SESSION[$myfname1] == "") )
+                if ($ia[6]=='Y' && (is_array($notanswered)) && ((array_search($myfname, $notanswered) !== FALSE) || (array_search($myfname1, $notanswered) !== FALSE)) && (($_SESSION[$myfname] == '') || ($_SESSION[$myfname1] == '')) )
                 {
-                    $answertext="<span class='errormandatory'>".dTexts::run($ansrow['question'])."</span>";
+                    $answertext="<span class='errormandatory'>".dTexts__run($ansrow['question'])."</span>";
                 }
                 else
                 {
-                    $answertext=dTexts::run($ansrow['question']);
+                    $answertext=dTexts__run($ansrow['question']);
                 }
 
                 $trbc = alternation($trbc , 'row');
@@ -7732,22 +6378,5 @@ function do_array_dual($ia)
     }
     return array($answer, $inputnames);
 }
-
-
-
-
-// ---------------------------------------------------------------
-function answer_replace($text)
-{
-    while (strpos($text, "{INSERTANS:") !== false)
-    {
-        $replace=substr($text, strpos($text, "{INSERTANS:"), strpos($text, "}", strpos($text, "{INSERTANS:"))-strpos($text, "{INSERTANS:")+1);
-        $replace2=substr($replace, 11, strpos($replace, "}", strpos($replace, "{INSERTANS:"))-11);
-        $replace3=retrieve_Answer($replace2, $_SESSION['dateformats']['phpdate']);
-        $text=str_replace($replace, $replace3, $text);
-    } //while
-    return $text;
-}
-
 
 // Closing PHP tag intentionally left out - yes, it is okay

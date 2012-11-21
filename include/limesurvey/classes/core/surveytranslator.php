@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: surveytranslator.php 9719 2011-01-26 21:44:40Z c_schmitz $
+ * $Id: surveytranslator.php 11664 2011-12-16 05:19:42Z tmswhite $
  */
 
 
@@ -65,7 +65,7 @@ function getDateFormatData($format=0)
 
 function getRadixPointData($format=-1)
 {
-    global $clang;      
+    global $clang;
     $aRadixFormats = array (
             0=>array('seperator'=> '.', 'desc'=> $clang->gT('Dot (.)')),
             1=>array('seperator'=> ',', 'desc'=> $clang->gT('Comma (,)'))
@@ -152,6 +152,21 @@ function getLanguageData($orderbynative=false) {
     if (isset($result[$orderbynative])) return $result[$orderbynative];
 
     if (!isset($supportedLanguages)) {
+
+    // Afrikaans
+    $supportedLanguages['af']['description'] = $clang->gT('Afrikaans');
+    $supportedLanguages['af']['nativedescription'] = 'Afrikaans';
+    $supportedLanguages['af']['rtl'] = false;
+    $supportedLanguages['af']['dateformat'] = 2;
+    $supportedLanguages['af']['radixpoint'] = 1;
+
+    // Amharic
+    $supportedLanguages['am']['description'] = $clang->gT('Amharic');
+    $supportedLanguages['am']['nativedescription'] = '&#4768;&#4635;&#4653;&#4763;';
+    $supportedLanguages['am']['rtl'] = false;
+    $supportedLanguages['am']['dateformat'] = 2;
+    $supportedLanguages['am']['radixpoint'] = 1;
+
     // Albanian
     $supportedLanguages['sq']['description'] = $clang->gT('Albanian');
     $supportedLanguages['sq']['nativedescription'] = 'Shqipe';
@@ -178,8 +193,8 @@ function getLanguageData($orderbynative=false) {
     $supportedLanguages['be']['nativedescription'] = '&#1041;&#1077;&#1083;&#1072;&#1088;&#1091;&#1089;&#1082;&#1110;';
     $supportedLanguages['be']['rtl'] = false;
     $supportedLanguages['be']['dateformat'] = 1;
-    $supportedLanguages['be']['radixpoint'] = 1;    
-    
+    $supportedLanguages['be']['radixpoint'] = 1;
+
     // Bosnian
     $supportedLanguages['bs']['description'] = $clang->gT('Bosnian');
     $supportedLanguages['bs']['nativedescription'] = 'Bosanski';
@@ -358,7 +373,7 @@ function getLanguageData($orderbynative=false) {
     // Irish
     $supportedLanguages['ie']['description'] = $clang->gT('Irish');
     $supportedLanguages['ie']['nativedescription'] = 'Gaeilge';
-    $supportedLanguages['ie']['rtl'] = false;    
+    $supportedLanguages['ie']['rtl'] = false;
     $supportedLanguages['ie']['dateformat'] = 2;
     $supportedLanguages['ie']['radixpoint'] = 0;
 
@@ -466,7 +481,7 @@ function getLanguageData($orderbynative=false) {
     $supportedLanguages['pt-BR']['rtl'] = false;
     $supportedLanguages['pt-BR']['dateformat'] = 5;
     $supportedLanguages['pt-BR']['radixpoint'] = 1;
-	
+
 	// Punjabi
     $supportedLanguages['pa']['description'] = $clang->gT('Punjabi');
     $supportedLanguages['pa']['nativedescription'] = '&#2602;&#2672;&#2588;&#2622;&#2604;&#2624;';
@@ -523,9 +538,16 @@ function getLanguageData($orderbynative=false) {
     $supportedLanguages['es']['dateformat'] = 5;
     $supportedLanguages['es']['radixpoint'] = 1;
 
+    // Spanish (Chile)
+    $supportedLanguages['es-CL']['description'] = $clang->gT('Spanish (Chile)');
+    $supportedLanguages['es-CL']['nativedescription'] = 'Espa&#241;ol chileno';
+    $supportedLanguages['es-CL']['rtl'] = false;
+    $supportedLanguages['es-CL']['dateformat'] = 5;
+    $supportedLanguages['es-CL']['radixpoint'] = 0;
+
     // Spanish (Mexico)
     $supportedLanguages['es-MX']['description'] = $clang->gT('Spanish (Mexico)');
-    $supportedLanguages['es-MX']['nativedescription'] = 'Espa&#241;ol Mejicano';
+    $supportedLanguages['es-MX']['nativedescription'] = 'Espa&#241;ol mejicano';
     $supportedLanguages['es-MX']['rtl'] = false;
     $supportedLanguages['es-MX']['dateformat'] = 5;
     $supportedLanguages['es-MX']['radixpoint'] = 0;
@@ -557,8 +579,8 @@ function getLanguageData($orderbynative=false) {
     $supportedLanguages['ur']['nativedescription'] = '&#1575;&#1585;&#1583;&#1608;';
     $supportedLanguages['ur']['rtl'] = true;
     $supportedLanguages['ur']['dateformat'] = 2;
-    $supportedLanguages['ur']['radixpoint'] = 0;    
-    
+    $supportedLanguages['ur']['radixpoint'] = 0;
+
     // Vietnamese
     $supportedLanguages['vi']['description'] = $clang->gT('Vietnamese');
     $supportedLanguages['vi']['nativedescription'] = 'Ti&#7871;ng Vi&#7879;t';
@@ -582,7 +604,7 @@ function getLanguageData($orderbynative=false) {
 }
 
 function user_sort($a, $b) {
-    
+
     // smarts is all-important, so sort it first
     if($a['description'] >$b['description']) {
         return 1;

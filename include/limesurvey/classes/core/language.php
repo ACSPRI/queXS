@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: language.php 9648 2011-01-07 13:06:39Z c_schmitz $
+ * $Id: language.php 9247 2010-10-14 21:09:05Z c_schmitz $
  *
 
 

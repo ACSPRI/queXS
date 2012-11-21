@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: dataentry.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: dataentry.php 12452 2012-02-14 11:33:25Z maziminke $
  */
 
 /*
@@ -267,7 +267,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             }
 
                             $columns[] .= db_quote_id($fieldname);
-                            $values[] .= db_quoteall(json_encode($phparray), true);
+                            $values[] .= db_quoteall(ls_json_encode($phparray), true);
                         }
                         else
                         {
@@ -351,7 +351,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
 				"identifier"=>$saver['identifier'],
 				"access_code"=>$password,
 				"email"=>$saver['email'],
-				"ip"=>$_SERVER['REMOTE_ADDR'],
+				"ip"=>getIPAddress(),
 				"refurl"=>getenv("HTTP_REFERER"),
 				'saved_thisstep' => 0,
 				"status"=>"S",
@@ -553,6 +553,10 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                 //$dataentryoutput .= "<pre>"; print_r($fname);$dataentryoutput .= "</pre>";
                 if (isset($idrow[$fname['fieldname']])) $answer = $idrow[$fname['fieldname']];
                 $question=$fname['question'];
+
+                //get survey details
+                $thissurvey=getSurveyInfo($surveyid);
+
                 $dataentryoutput .= "\t<tr";
                 if ($highlight) $dataentryoutput .=" class='odd'";
                    else $dataentryoutput .=" class='even'";
@@ -596,7 +600,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                     case "Q":
                     case "K":
                         $dataentryoutput .= "\t{$fname['subquestion']}&nbsp;<input type='text' name='{$fname['fieldname']}' value='"
-                        .$idrow[$fname['fieldname']] . "' />\n";
+                        .htmlspecialchars($idrow[$fname['fieldname']],ENT_QUOTES) . "' />\n";
                         break;
                     case "id":
                         $dataentryoutput .= "<span style='font-weight:bold;'>&nbsp;{$idrow[$fname['fieldname']]}</span>";
@@ -605,7 +609,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                         for ($x=1; $x<=5; $x++)
                         {
                             $dataentryoutput .= "\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='$x'";
-                            if ($idrow[$fname['fieldname']] == $x) {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == $x) {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />$x \n";
                         }
                         break;
@@ -925,7 +929,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             else
                             {
                                 $dataentryoutput .= "\t<input type='checkbox' class='checkboxbtn' name='{$fname['fieldname']}' value='Y'";
-                                if ($idrow[$fname['fieldname']] == "Y") {$dataentryoutput .= " checked";}
+                                if ($idrow[$fname['fieldname']] == "Y") {$dataentryoutput .= " checked='checked'";}
                                 $dataentryoutput .= " />{$fname['subquestion']}<br />\n";
                             }
 
@@ -987,7 +991,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             {
                                 $dataentryoutput .= "\t<tr>\n"
                                 ."<td><input type='checkbox' class='checkboxbtn' name=\"{$fname['fieldname']}\" value='Y'";
-                                if ($idrow[$fname['fieldname']] == "Y") {$dataentryoutput .= " checked";}
+                                if ($idrow[$fname['fieldname']] == "Y") {$dataentryoutput .= " checked='checked'";}
                                 $dataentryoutput .= " />{$fname['subquestion']}</td>\n";
                             }
                             $fname=next($fnames);
@@ -1014,7 +1018,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                                                    .'<tr><td></td><td><input type="hidden" class="'.$fname['fieldname'].'" id="'.$fname['fieldname'].'_ext_'.$i     .'" name="ext"      size=50 value="'.htmlspecialchars($metadata[$i]["ext"])     .'" /></td></tr>'
                                                    .'<tr><td></td><td><input type="hidden"  class="'.$fname['fieldname'].'" id="'.$fname['fieldname'].'_filename_'.$i    .'" name="filename" size=50 value="'.htmlspecialchars(rawurldecode($metadata[$i]["filename"]))    .'" /></td></tr>';
                             }
-                            $dataentryoutput .= '<tr><td></td><td><input type="hidden" id="'.$fname['fieldname'].'" name="'.$fname['fieldname'].'" size=50 value="'.htmlspecialchars($idrow[$fname['fieldname']]).'" /></td></tr>';
+                            $dataentryoutput .= '<tr><td></td><td><input type="hidden" id="'.$fname['fieldname'].'" name="'.$fname['fieldname'].'" size=50 value="'.htmlspecialchars($idrow[$fname['fieldname']],ENT_QUOTES).'" /></td></tr>';
                             $dataentryoutput .= '</table>';
                             $dataentryoutput .= '<script type="text/javascript">
                                                      $(function() {
@@ -1042,25 +1046,233 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                         }
                         else
                         {//file count
-                            $dataentryoutput .= '<input readonly id="'.$fname['fieldname'].'" name="'.$fname['fieldname'].'" value ="'.htmlspecialchars($idrow[$fname['fieldname']]).'" /></td></table>';
+                            $dataentryoutput .= '<input readonly id="'.$fname['fieldname'].'" name="'.$fname['fieldname'].'" value ="'.htmlspecialchars($idrow[$fname['fieldname']],ENT_QUOTES).'" /></td></table>';
                         }
                         break;
+
+
                     case "N": //NUMERICAL TEXT
-                        $dataentryoutput .= "\t<input type='text' name='{$fname['fieldname']}' value='{$idrow[$fname['fieldname']]}' "
-                        ."onkeypress=\"return goodchars(event,'0123456789.,')\" />\n";
+
+                    	//get question attributes to change some style and validation settings
+                    	$qidattributes = getQuestionAttributes($fname['qid']);
+					    if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='') {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='')
+					    {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+
+					    if (intval(trim($qidattributes['maximum_chars']))>0 && intval(trim($qidattributes['maximum_chars']))<20) // Limt to 20 chars for numeric
+					    {
+					        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+					        $maxlength= "maxlength='{$maximum_chars}' ";
+					    }
+					    else
+					    {
+					        $maxlength= "maxlength='20' ";
+					    }
+
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=10;
+					    }
+
+					    if (trim($qidattributes['num_value_int_only'])==1)
+					    {
+					        $acomma="";
+					    }
+					    else
+					    {
+					        $acomma=getRadixPointData($thissurvey['surveyls_numberformat']);
+					        $acomma = $acomma['seperator'];
+
+					    }
+					    $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
+
+					    $dataentryoutput .= $prefix. "<input type='text' size='".$tiwidth."' name='{$fname['fieldname']}' value='".htmlspecialchars($idrow[$fname['fieldname']],ENT_QUOTES)."'
+    					title='".$clang->gT('Only numbers may be entered in this field')."' $maxlength onkeypress=\"return goodchars(event,'-0123456789{$acomma}')\" />".$suffix;
                         break;
+
                     case "S": //SHORT FREE TEXT
-                        $dataentryoutput .= "\t<input type='text' name='{$fname['fieldname']}' value='"
-                        .htmlspecialchars($idrow[$fname['fieldname']], ENT_QUOTES) . "' />\n";
+
+                        //get question attributes to change some style and validation settings
+                    	$qidattributes = getQuestionAttributes($fname['qid']);
+
+	                    if ($qidattributes['numbers_only']==1)
+					    {
+					        $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
+					        $sSeperator = $sSeperator['seperator'];
+					        $numbersonly = 'onkeypress="return goodchars(event,\'-0123456789'.$sSeperator.'\')"';
+					    }
+					    else
+					    {
+					        $numbersonly = '';
+					    }
+
+					    if (intval(trim($qidattributes['maximum_chars']))>0)
+					    {
+					    	// Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+					        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+					        $maxlength= "maxlength='{$maximum_chars}' ";
+					    }
+					    else
+					    {
+					        $maxlength= "";
+					    }
+
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=50;
+					    }
+
+                        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='')
+                        {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='')
+					    {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+
+                    	if (trim($qidattributes['display_rows'])!='')
+					    {
+					        //question attribute "display_rows" is set -> we need a textarea to be able to show several rows
+					        $drows=$qidattributes['display_rows'];
+
+					        //if a textarea should be displayed we make it equal width to the long text question
+					        //this looks nicer and more continuous
+					        if($tiwidth == 50)
+					        {
+					            $tiwidth=40;
+					        }
+
+					        $dataentryoutput .= $prefix."<textarea $numbersonly name='{$fname['fieldname']}' rows='".$drows."' cols='".$tiwidth."' >";
+					        $dataentryoutput .= htmlspecialchars($idrow[$fname['fieldname']], ENT_QUOTES) ."</textarea>$suffix\n";
+					    }
+                    	else
+					    {
+					        //no question attribute set, use common input text field
+					       	$dataentryoutput .= $prefix."<input type=\"text\" size=\"$tiwidth\"
+					       	name='{$fname['fieldname']}' value='"
+                        	.htmlspecialchars($idrow[$fname['fieldname']], ENT_QUOTES) . "' ";
+					        $dataentryoutput .=" {$maxlength} $numbersonly />\n\t$suffix\n\n";
+					    }
                         break;
+
+
                     case "T": //LONG FREE TEXT
-                        $dataentryoutput .= "\t<textarea rows='5' cols='45' name='{$fname['fieldname']}'>"
-                        .htmlspecialchars($idrow[$fname['fieldname']], ENT_QUOTES) . "</textarea>\n";
+
+                    	//get question attributes to change some style and validation settings
+                        $qidattributes=getQuestionAttributes($fname['qid']);
+
+                        if (trim($qidattributes['display_rows'])!='')
+					    {
+					        $drows=$qidattributes['display_rows'];
+					    }
+					    else
+					    {
+					        $drows=5;
+					    }
+
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=40;
+					    }
+
+                        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='')
+                        {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='')
+					    {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+
+					    $dataentryoutput .= $prefix."<textarea name='{$fname['fieldname']}' rows='$drows' cols='$tiwidth' >"
+                        .htmlspecialchars($idrow[$fname['fieldname']], ENT_QUOTES) ."</textarea>$suffix\n";
+
                         break;
+
+
                     case "U": //HUGE FREE TEXT
-                        $dataentryoutput .= "\t<textarea rows='50' cols='70' name='{$fname['fieldname']}'>"
-                        .htmlspecialchars($idrow[$fname['fieldname']], ENT_QUOTES) . "</textarea>\n";
+
+                    	//get question attributes to change some style and validation settings
+	                    $qidattributes=getQuestionAttributes($fname['qid']);
+
+					    if (trim($qidattributes['display_rows'])!='')
+					    {
+					        $drows=$qidattributes['display_rows'];
+					    }
+					    else
+					    {
+					        $drows=70;
+					    }
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=50;
+					    }
+                        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='') {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='') {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+					    $dataentryoutput .= $prefix.'<textarea name="'.$fname['fieldname'].'" rows="'.$drows.'" cols="'.$tiwidth.'">';
+					    $dataentryoutput .= htmlspecialchars($idrow[$fname['fieldname']], ENT_QUOTES) . "</textarea>$suffix\n";
                         break;
+
+
                     case "Y": //YES/NO radio-buttons
                         $dataentryoutput .= "\t<select name='{$fname['fieldname']}'>\n"
                         ."<option value=''";
@@ -1085,7 +1297,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             for ($j=1; $j<=5; $j++)
                             {
                                 $dataentryoutput .= "\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='$j'";
-                                if ($idrow[$fname['fieldname']] == $j) {$dataentryoutput .= " checked";}
+                                if ($idrow[$fname['fieldname']] == $j) {$dataentryoutput .= " checked='checked'";}
                                 $dataentryoutput .= " />$j&nbsp;\n";
                             }
                             $dataentryoutput .= "</td>\n"
@@ -1107,7 +1319,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             for ($j=1; $j<=10; $j++)
                             {
                                 $dataentryoutput .= "\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='$j'";
-                                if ($idrow[$fname['fieldname']] == $j) {$dataentryoutput .= " checked";}
+                                if ($idrow[$fname['fieldname']] == $j) {$dataentryoutput .= " checked='checked'";}
                                 $dataentryoutput .= " />$j&nbsp;\n";
                             }
                             $dataentryoutput .= "</td>\n"
@@ -1127,13 +1339,13 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             ."<td align='right'>{$fname['subquestion']}</td>\n"
                             ."<td>\n"
                             ."\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='Y'";
-                            if ($idrow[$fname['fieldname']] == "Y") {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == "Y") {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />".$clang->gT("Yes")."&nbsp;\n"
                             ."\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='U'";
-                            if ($idrow[$fname['fieldname']] == "U") {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == "U") {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />".$clang->gT("Uncertain")."&nbsp;\n"
                             ."\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='N'";
-                            if ($idrow[$fname['fieldname']] == "N") {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == "N") {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />".$clang->gT("No")."&nbsp;\n"
                             ."</td>\n"
                             ."\t</tr>\n";
@@ -1152,13 +1364,13 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             ."<td align='right'>{$fname['subquestion']}</td>\n"
                             ."<td>\n"
                             ."\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='I'";
-                            if ($idrow[$fname['fieldname']] == "I") {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == "I") {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />Increase&nbsp;\n"
                             ."\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='S'";
-                            if ($idrow[$fname['fieldname']] == "I") {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == "I") {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />Same&nbsp;\n"
                             ."\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='D'";
-                            if ($idrow[$fname['fieldname']] == "D") {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == "D") {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />Decrease&nbsp;\n"
                             ."</td>\n"
                             ."\t</tr>\n";
@@ -1190,12 +1402,12 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             while ($frow=$fresult->FetchRow())
                             {
                                 $dataentryoutput .= "\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value='{$frow['code']}'";
-                                if ($idrow[$fname['fieldname']] == $frow['code']) {$dataentryoutput .= " checked";}
+                                if ($idrow[$fname['fieldname']] == $frow['code']) {$dataentryoutput .= " checked='checked'";}
                                 $dataentryoutput .= " />".$frow['answer']."&nbsp;\n";
                             }
                             //Add 'No Answer'
                             $dataentryoutput .= "\t<input type='radio' class='radiobtn' name='{$fname['fieldname']}' value=''";
-                            if ($idrow[$fname['fieldname']] == '') {$dataentryoutput .= " checked";}
+                            if ($idrow[$fname['fieldname']] == '') {$dataentryoutput .= " checked='checked'";}
                             $dataentryoutput .= " />".$clang->gT("No answer")."&nbsp;\n";
 
                             $dataentryoutput .= "</td>\n"
@@ -1247,17 +1459,18 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             $dataentryoutput .= "<td>\n";
                             if ($qidattributes['input_boxes']!=0) {
                                 $dataentryoutput .= "\t<input type='text' name='{$fname['fieldname']}' value='";
-                                if (!empty($idrow[$fname['fieldname']])) {$datentryoutput .= $idrow[$fname['fieldname']];}
-                                $dataentryoutput .= "' size=4 />";
+                                if (!empty($idrow[$fname['fieldname']])) {$dataentryoutput .= htmlspecialchars($idrow[$fname['fieldname']],ENT_QUOTES);}
+                                $dataentryoutput .= "' size=\"4\" />";
                             } else {
                                 $dataentryoutput .= "\t<select name='{$fname['fieldname']}'>\n";
                                 $dataentryoutput .= "<option value=''>...</option>\n";
                                 for($ii=$minvalue;$ii<=$maxvalue;$ii+=$stepvalue)
                                 {
                                     $dataentryoutput .= "<option value='$ii'";
-                                    if($idrow[$fname['fieldname']] == $ii) {$dataentryoutput .= " selected";}
+                                    if($idrow[$fname['fieldname']] == $ii) {$dataentryoutput .= " selected='selected'";}
                                     $dataentryoutput .= ">$ii</option>\n";
                                 }
+                                $dataentryoutput .= "</select>\n";
                             }
 
                             $dataentryoutput .= "</td>\n"
@@ -1277,7 +1490,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             . "<td align='right' valign='top'>{$fname['subquestion1']}:{$fname['subquestion2']}</td>\n";
                             $dataentryoutput .= "<td>\n";
                             $dataentryoutput .= "\t<input type='text' name='{$fname['fieldname']}' value='";
-                            if(!empty($idrow[$fname['fieldname']])) {$dataentryoutput .= $idrow[$fname['fieldname']];}
+                            if(!empty($idrow[$fname['fieldname']])) {$dataentryoutput .= htmlspecialchars($idrow[$fname['fieldname']],ENT_QUOTES);}
                             $dataentryoutput .= "' /></td>\n"
                             ."\t</tr>\n";
                             $fname=next($fnames);
@@ -1296,19 +1509,19 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
             } while ($fname=next($fnames));
             }
         $dataentryoutput .= "</table>\n"
-        ."<p>\n";
+        ."\n";
         if (!bHasSurveyPermission($surveyid, 'responses','update'))
         { // if you are not survey owner or super admin you cannot modify responses
-            $dataentryoutput .= "<input type='button' value='".$clang->gT("Save")."' disabled='disabled'/>\n";
+            $dataentryoutput .= "<p><input type='button' value='".$clang->gT("Save")."' disabled='disabled'/></p>\n";
         }
         elseif ($subaction == "edit" && bHasSurveyPermission($surveyid,'responses','update'))
         {
-            $dataentryoutput .= "
+            $dataentryoutput .= "<p>
 						 <input type='submit' value='".$clang->gT("Save")."' />
 						 <input type='hidden' name='id' value='$id' />
 						 <input type='hidden' name='sid' value='$surveyid' />
 						 <input type='hidden' name='subaction' value='update' />
-						 <input type='hidden' name='language' value='".$sDataEntryLanguage."' />";
+						 <input type='hidden' name='language' value='".$sDataEntryLanguage."' /></p>";
         }
         elseif ($subaction == "editsaved" && bHasSurveyPermission($surveyid,'responses','update'))
         {
@@ -1333,11 +1546,11 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
 				  //-->
 				  </script>\n";
             $dataentryoutput .= "<table><tr><td align='left'>\n";
-            $dataentryoutput .= "\t<input type='checkbox' class='checkboxbtn' name='closerecord' id='closerecord' /><label for='closerecord'>".$clang->gT("Finalize response submission")."</label></td></tr>\n";
             $dataentryoutput .="<input type='hidden' name='closedate' value='".date_shift(date("Y-m-d H:i:s"), "Y-m-d H:i:s", $timeadjust)."' />\n";
+            $dataentryoutput .= "\t<input type='checkbox' class='checkboxbtn' name='closerecord' id='closerecord' /><label for='closerecord'>".$clang->gT("Finalize response submission")."</label></td></tr>\n";
             $dataentryoutput .= "\t<tr><td align='left'><input type='checkbox' class='checkboxbtn' name='save' id='save' onclick='saveshow(this.id)' /><label for='save'>".$clang->gT("Save for further completion by survey user")."</label>\n";
             $dataentryoutput .= "</td></tr></table>\n";
-            $dataentryoutput .= "<div name='saveoptions' id='saveoptions' style='display: none'>\n";
+            $dataentryoutput .= "<div id='saveoptions' style='display: none'>\n";
             $dataentryoutput .= "<table align='center' class='outlinetable' cellspacing='0'>
 				  <tr><td align='right'>".$clang->gT("Identifier:")."</td>
 				  <td><input type='text' name='save_identifier'";
@@ -1493,6 +1706,10 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
         $thissurvey=getSurveyInfo($surveyid);
         //This is the default, presenting a blank dataentry form
         $fieldmap=createFieldMap($surveyid);
+
+        LimeExpressionManager::StartSurvey($surveyid, 'survey',NULL,false,LEM_PRETTY_PRINT_ALL_SYNTAX);
+        $moveResult = LimeExpressionManager::NavigateForwards();
+
         // PRESENT SURVEY DATAENTRY SCREEN
         $dataentryoutput .= $surveyoptions;
 
@@ -1604,159 +1821,34 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                 //GET ANY CONDITIONS THAT APPLY TO THIS QUESTION
                 $explanation = ""; //reset conditions explanation
                 $s=0;
-                $scenarioquery="SELECT DISTINCT scenario FROM ".db_table_name("conditions")." WHERE ".db_table_name("conditions").".qid={$deqrow['qid']} ORDER BY scenario";
-                $scenarioresult=db_execute_assoc($scenarioquery);
-                while ($scenariorow=$scenarioresult->FetchRow())
+
+                $qinfo = LimeExpressionManager::GetQuestionStatus($deqrow['qid']);
+                $relevance = trim($qinfo['info']['relevance']);
+                $explanation = trim($qinfo['relEqn']);
+                $validation = trim($qinfo['prettyValidTip']);
+                $qidattributes=getQuestionAttributes($deqrow['qid']);
+                $array_filter_help = FlattenText(array_filter_help($qidattributes, $sDataEntryLanguage, $surveyid));
+
+                if (($relevance != '' && $relevance != '1') || ($validation != '') || ($array_filter_help != ''))
                 {
-                    if ($s == 0 && $scenarioresult->RecordCount() > 1) { $explanation .= " <br />-------- <i>Scenario {$scenariorow['scenario']}</i> --------<br />";}
-                    if ($s > 0) { $explanation .= " <br />-------- <i>".$clang->gT("OR")." Scenario {$scenariorow['scenario']}</i> --------<br />";}
-
-                    $x=0;
-                    $distinctquery="SELECT DISTINCT cqid, ".db_table_name("questions").".title FROM ".db_table_name("conditions").", ".db_table_name("questions")." WHERE ".db_table_name("conditions").".cqid=".db_table_name("questions").".qid AND ".db_table_name("conditions").".qid={$deqrow['qid']} AND ".db_table_name("conditions").".scenario={$scenariorow['scenario']} ORDER BY cqid";
-                    $distinctresult=db_execute_assoc($distinctquery);
-
-                    while ($distinctrow=$distinctresult->FetchRow())
-                    {
-                        if ($x > 0) {$explanation .= " <i>".$blang->gT("AND")."</i><br />";}
-                        $conquery="SELECT cid, cqid, cfieldname, ".db_table_name("questions").".title, ".db_table_name("questions").".question, value, ".db_table_name("questions").".type, method FROM ".db_table_name("conditions").", ".db_table_name("questions")." WHERE ".db_table_name("conditions").".cqid=".db_table_name("questions").".qid AND ".db_table_name("conditions").".cqid={$distinctrow['cqid']} AND ".db_table_name("conditions").".qid={$deqrow['qid']} AND ".db_table_name("conditions").".scenario={$scenariorow['scenario']}";
-                        $conresult=db_execute_assoc($conquery);
-                        while ($conrow=$conresult->FetchRow())
-                        {
-                            if ($conrow['method']=="==") {$conrow['method']="= ";} else {$conrow['method']=$conrow['method']." ";}
-                            switch($conrow['type'])
-                            {
-                                case "Y":
-                                    switch ($conrow['value'])
-                                    {
-                                        case "Y": $conditions[]=$conrow['method']."'".$blang->gT("Yes")."'"; break;
-                                        case "N": $conditions[]=$conrow['method']."'".$blang->gT("No")."'"; break;
-                                    }
-                                    break;
-                                case "G":
-                                    switch($conrow['value'])
-                                    {
-                                        case "M": $conditions[]=$conrow['method']."'".$blang->gT("Male")."'"; break;
-                                        case "F": $conditions[]=$conrow['method']."'".$blang->gT("Female")."'"; break;
-                                    } // switch
-                                    break;
-                                case "A":
-                                case "B":
-                                    $conditions[]=$conrow['method']."'".$conrow['value']."'";
-                                    break;
-                                case "C":
-                                    switch($conrow['value'])
-                                    {
-                                        case "Y": $conditions[]=$conrow['method']."'".$blang->gT("Yes")."'"; break;
-                                        case "U": $conditions[]=$conrow['method']."'".$blang->gT("Uncertain")."'"; break;
-                                        case "N": $conditions[]=$conrow['method']."'".$blang->gT("No")."'"; break;
-                                    } // switch
-                                    break;
-                                case "1":
-                                    $value=substr($conrow['cfieldname'], strpos($conrow['cfieldname'], "X".$conrow['cqid'])+strlen("X".$conrow['cqid']), strlen($conrow['cfieldname']));
-                                    $fquery = "SELECT * FROM ".db_table_name("labels")."\n"
-                                    . "WHERE lid='{$conrow['lid']}'\n and language='$sDataEntryLanguage' "
-                                    . "AND code='{$conrow['value']}'";
-                                    $fresult=db_execute_assoc($fquery) or safe_die("$fquery<br />".$connect->ErrorMsg());
-                                    while($frow=$fresult->FetchRow())
-                                    {
-                                        $postans=$frow['title'];
-                                        $conditions[]=$conrow['method']."'".$frow['title']."'";
-                                    } // while
-                                    break;
-
-                                case "E":
-                                    switch($conrow['value'])
-                                    {
-                                        case "I": $conditions[]=$conrow['method']."'".$blang->gT("Increase")."'"; break;
-                                        case "D": $conditions[]=$conrow['method']."'".$blang->gT("Decrease")."'"; break;
-                                        case "S": $conditions[]=$conrow['method']."'".$blang->gT("Same")."'"; break;
-                                    }
-                                    break;
-                                case "F":
-                                case "H":
-                                default:
-                                    $value=substr($conrow['cfieldname'], strpos($conrow['cfieldname'], "X".$conrow['cqid'])+strlen("X".$conrow['cqid']), strlen($conrow['cfieldname']));
-                                    $fquery = "SELECT * FROM ".db_table_name("questions")."\n"
-                                    . "WHERE qid='{$conrow['cqid']}'\n and language='$sDataEntryLanguage' "
-                                    . "AND title='{$conrow['title']}' and scale_id=0";
-                                    $fresult=db_execute_assoc($fquery) or safe_die("$fquery<br />".$connect->ErrorMsg());
-                                    if ($fresult->RecordCount() <= 0) die($fquery);
-                                    while($frow=$fresult->FetchRow())
-                                    {
-                                        $postans=$frow['title'];
-                                        $conditions[]=$conrow['method']."'".$frow['title']."'";
-                                    } // while
-                                    break;
-                            } // switch
-                            $answer_section="";
-                            switch($conrow['type'])
-                            {
-
-                                case "1":
-                                    $ansquery="SELECT answer FROM ".db_table_name("answers")." WHERE qid='{$conrow['cqid']}' AND code='{$conrow['value']}' AND language='{$baselang}'";
-                                    $ansresult=db_execute_assoc($ansquery);
-                                    while ($ansrow=$ansresult->FetchRow())
-                                    {
-                                        $conditions[]=$conrow['method']."'".$ansrow['answer']."'";
-                                    }
-                                    $operator=$clang->gT("OR");
-                                    if (isset($conditions)) $conditions = array_unique($conditions);
-                                    break;
-
-                                case "A":
-                                case "B":
-                                case "C":
-                                case "E":
-                                case "F":
-                                case "H":
-                                case ":":
-                                case ";":
-                                    $thiscquestion=$fieldmap[$conrow['cfieldname']];
-                                    $ansquery="SELECT answer FROM ".db_table_name("answers")." WHERE qid='{$conrow['cqid']}' AND code='{$thiscquestion['aid']}' AND language='{$sDataEntryLanguage}'";
-                                    $ansresult=db_execute_assoc($ansquery);
-                                    $i=0;
-                                    while ($ansrow=$ansresult->FetchRow())
-                                    {
-                                        if (isset($conditions) && count($conditions) > 0)
-                                        {
-                                            $conditions[sizeof($conditions)-1]="(".$ansrow['answer'].") : ".end($conditions);
-                                        }
-                                    }
-                                    $operator=$blang->gT("AND");	// this is a dirty, DIRTY fix but it works since only array questions seem to be ORd
-                                    break;
-                                default:
-                                    $ansquery="SELECT answer FROM ".db_table_name("answers")." WHERE qid='{$conrow['cqid']}' AND code='{$conrow['value']}' AND language='{$sDataEntryLanguage}'";
-                                    $ansresult=db_execute_assoc($ansquery);
-                                    while ($ansrow=$ansresult->FetchRow())
-                                    {
-                                        $conditions[]=$conrow['method']."'".$ansrow['answer']."'";
-                                    }
-                                    $operator=$blang->gT("OR");
-                                    if (isset($conditions)) $conditions = array_unique($conditions);
-                                    break;
-                            }
-                        }
-                        if (isset($conditions) && count($conditions) > 1)
-                        {
-                            $conanswers = implode(" ".$operator." ", $conditions);
-                            $explanation .= " -" . str_replace("{ANSWER}", $conanswers, $blang->gT("to question {QUESTION}, answer {ANSWER}"));
-                        }
-                        else
-                        {
-                            if(empty($conditions[0])) $conditions[0] = "'".$blang->gT("No Answer")."'";
-                            $explanation .= " -" . str_replace("{ANSWER}", $conditions[0], $blang->gT("to question {QUESTION}, answer {ANSWER}"));
-                        }
-                        unset($conditions);
-                        $explanation = str_replace("{QUESTION}", "'{$distinctrow['title']}$answer_section'", $explanation);
-                        $x++;
-                    }
-                    $s++;
-                }
-                if ($explanation)
-                {
+                    $showme = '';
                     if ($bgc == "even") {$bgc = "odd";} else {$bgc = "even";} //Do no alternate on explanation row
-                    $explanation = "[".$blang->gT("Only answer this if the following conditions are met:")."]<br />$explanation\n";
-                    $dataentryoutput .= "<tr class ='data-entry-explanation'><td class='data-entry-small-text' colspan='3' align='left'>$explanation</td></tr>\n";
+                    if ($relevance != '' && $relevance != '1') {
+                        $showme = "[".$blang->gT("Only answer this if the following conditions are met:")."]<br />$explanation\n";
+                    }
+                    if ($showme != '' && $validation != '') {
+                        $showme .= '<br/>';
+                    }
+                    if ($validation != '') {
+                        $showme .= "[".$blang->gT("The answer(s) must meet these validation criteria:")."]<br />$validation\n";
+                    }
+                    if ($showme != '' && $array_filter_help != '') {
+                        $showme .= '<br/>';
+                    }
+                    if ($array_filter_help != '') {
+                        $showme .= "[".$blang->gT("The answer(s) must meet these array_filter criteria:")."]<br />$array_filter_help\n";
+                    }
+                    $dataentryoutput .= "<tr class ='data-entry-explanation'><td class='data-entry-small-text' colspan='3' align='left'>$showme</td></tr>\n";
                 }
 
                 //END OF GETTING CONDITIONS
@@ -1772,6 +1864,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                 $dataentryoutput .= "\t<tr class='$bgc'>\n"
                 ."<td class='data-entry-small-text' valign='top' width='1%'>{$deqrow['title']}</td>\n"
                 ."<td valign='top' align='right' width='30%'>";
+                // TMSW - Mandatory->EM
                 if ($deqrow['mandatory']=="Y") //question is mandatory
                 {
                     $dataentryoutput .= "<font color='red'>*</font>";
@@ -1873,7 +1966,8 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             .$clang->gT("Other").":"
                             ."<input type='text' name='{$fieldname}other' value='' />\n";
                         }
-                        $dataentryoutput .= "</tr></table>";
+                        //OLD: invalid HTML -> $dataentryoutput .= "</tr></table>";
+                        $dataentryoutput .= "</table>";
                         break;
 
                     case "L": //LIST drop-down/radio-button list
@@ -2190,7 +2284,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             while ($mearow = $mearesult->FetchRow())
                             {
                                 $dataentryoutput .= "\t<input type='checkbox' class='checkboxbtn' name='$fieldname{$mearow['code']}' id='answer$fieldname{$mearow['code']}' value='Y'";
-                                if ($mearow['default_value'] == "Y") {$dataentryoutput .= " checked";}
+                                if ($mearow['default_value'] == "Y") {$dataentryoutput .= " checked='checked'";}
                                 $dataentryoutput .= " /><label for='$fieldname{$mearow['code']}'>{$mearow['answer']}</label><br />\n";
                             }
                             if ($deqrow['other'] == "Y")
@@ -2220,7 +2314,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                         break;
                     case "P": //Multiple choice with comments checkbox + text
                         $dataentryoutput .= "<table border='0'>\n";
-                        $meaquery = "SELECT * FROM ".db_table_name("questions")." WHERE parent_qid={$deqrow['qid']} AND language='{$sDataEntryLanguage}' ORDER BY question_order, question";
+                        $meaquery = "SELECT * FROM ".db_table_name("questions")." WHERE parent_qid={$deqrow['qid']} AND language='{$sDataEntryLanguage}' ORDER BY question_order";
                         $mearesult = db_execute_assoc($meaquery);
                         while ($mearow = $mearesult->FetchRow())
                         {
@@ -2277,7 +2371,13 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                         else
                             $dataentryoutput .= "jsonstr += '\"comment\":\"\",';";
 
-                        $dataentryoutput .= "jsonstr += '\"name\":\"'+$('#".$fieldname."_file_'+i).val()+'\"}';";
+                        $dataentryoutput .= "filename = $('#".$fieldname."_file_'+i).val();";
+                        $dataentryoutput .= "if( filename.indexOf('\\\') != '-1' ) {
+                            file = filename.split('\\\');
+                            var max = file.length;
+                            filename = file[max-1];
+                        }";
+                        $dataentryoutput .= "jsonstr += '\"name\":\"'+filename+'\"}';";
 
                         $dataentryoutput .= "jsonstr += ',';\n
                             filecount++;
@@ -2321,17 +2421,198 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                         $dataentryoutput .= "<tr><td align='center'><input type='hidden' name='".$fieldname."_filecount' id='".$fieldname."_filecount' value='' /></td>\n</tr>\n";
                         $dataentryoutput .= "</table>\n";
                         break;
+
                     case "N": //NUMERICAL TEXT
-                        $dataentryoutput .= "\t<input type='text' name='$fieldname' onkeypress=\"return goodchars(event,'0123456789.,')\" />";
+                        //get question attributes to change some style and validation settings
+                    	$qidattributes = getQuestionAttributes($qid);
+					    if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='') {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='')
+					    {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+					    if (intval(trim($qidattributes['maximum_chars']))>0 && intval(trim($qidattributes['maximum_chars']))<20) // Limt to 20 chars for numeric
+					    {
+					        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+					        $maxlength= "maxlength='{$maximum_chars}' ";
+					    }
+					    else
+					    {
+					        $maxlength= "maxlength='20' ";
+					    }
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=10;
+					    }
+
+					    if (trim($qidattributes['num_value_int_only'])==1)
+					    {
+					        $acomma="";
+					    }
+					    else
+					    {
+					        $acomma=getRadixPointData($thissurvey['surveyls_numberformat']);
+					        $acomma = $acomma['seperator'];
+
+					    }
+					    $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
+
+					    $dataentryoutput .= $prefix. "<input type='text' size='".$tiwidth."' name='".$fieldname."'
+    					title='".$clang->gT('Only numbers may be entered in this field')."' $maxlength onkeypress=\"return goodchars(event,'-0123456789{$acomma}')\" />".$suffix;
                         break;
+
                     case "S": //SHORT FREE TEXT
-                        $dataentryoutput .= "\t<input type='text' name='$fieldname' />\n";
+                    	//get question attributes to change some style and validation settings
+                    	$qidattributes = getQuestionAttributes($qid);
+	                    if ($qidattributes['numbers_only']==1)
+					    {
+					        $sSeperator = getRadixPointData($thissurvey['surveyls_numberformat']);
+					        $sSeperator = $sSeperator['seperator'];
+					        $numbersonly = 'onkeypress="return goodchars(event,\'-0123456789'.$sSeperator.'\')"';
+					    }
+					    else
+					    {
+					        $numbersonly = '';
+					    }
+					    if (intval(trim($qidattributes['maximum_chars']))>0)
+					    {
+					    	// Only maxlength attribute, use textarea[maxlength] jquery selector for textarea
+					        $maximum_chars= intval(trim($qidattributes['maximum_chars']));
+					        $maxlength= "maxlength='{$maximum_chars}' ";
+					    }
+					    else
+					    {
+					        $maxlength= "";
+					    }
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=50;
+					    }
+                        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='') {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='') {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+                    	if (trim($qidattributes['display_rows'])!='')
+					    {
+					        //question attribute "display_rows" is set -> we need a textarea to be able to show several rows
+					        $drows=$qidattributes['display_rows'];
+
+					        //if a textarea should be displayed we make it equal width to the long text question
+					        //this looks nicer and more continuous
+					        if($tiwidth == 50)
+					        {
+					            $tiwidth=40;
+					        }
+					        $dataentryoutput .= $prefix."<textarea $numbersonly name='".$fieldname."' rows='".$drows."'
+					        cols='".$tiwidth."' >";
+					        $dataentryoutput .= "</textarea>$suffix\n";
+					    }
+                    	else
+					    {
+					        //no question attribute set, use common input text field
+					       	$dataentryoutput .= $prefix."<input type=\"text\" size=\"$tiwidth\" name=\"$fieldname\" ";
+					        $dataentryoutput .=" {$maxlength} $numbersonly />\n\t$suffix\n\n";
+					    }
                         break;
+
                     case "T": //LONG FREE TEXT
-                        $dataentryoutput .= "\t<textarea cols='40' rows='5' name='$fieldname'></textarea>\n";
+                    	$qidattributes=getQuestionAttributes($qid);
+					    if (trim($qidattributes['display_rows'])!='')
+					    {
+					        $drows=$qidattributes['display_rows'];
+					    }
+					    else
+					    {
+					        $drows=5;
+					    }
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=40;
+					    }
+                        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='') {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='') {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+					    $dataentryoutput .= $prefix.'<textarea name="'.$fieldname.'" rows="'.$drows.'" cols="'.$tiwidth.'" >';
+					    $dataentryoutput .= "</textarea>$suffix\n";
                         break;
-                    case "U": //LONG FREE TEXT
-                        $dataentryoutput .= "\t<textarea cols='50' rows='70' name='$fieldname'></textarea>\n";
+
+                    case "U": //HUGE FREE TEXT
+                        $qidattributes=getQuestionAttributes($qid);
+
+					    if (trim($qidattributes['display_rows'])!='')
+					    {
+					        $drows=$qidattributes['display_rows'];
+					    }
+					    else
+					    {
+					        $drows=70;
+					    }
+					    if (trim($qidattributes['text_input_width'])!='')
+					    {
+					        $tiwidth=$qidattributes['text_input_width'];
+					    }
+					    else
+					    {
+					        $tiwidth=50;
+					    }
+                        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'])!='') {
+					        $prefix=$qidattributes['prefix'];
+					    }
+					    else
+					    {
+					        $prefix = '';
+					    }
+					    if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'])!='') {
+					        $suffix=$qidattributes['suffix'];
+					    }
+					    else
+					    {
+					        $suffix = '';
+					    }
+					    $dataentryoutput .= $prefix.'<textarea name="'.$fieldname.'" rows="'.$drows.'" cols="'.$tiwidth.'">';
+					    $dataentryoutput .= "</textarea>$suffix\n";
                         break;
                     case "Y": //YES/NO radio-buttons
                         $dataentryoutput .= "\t<select name='$fieldname'>\n";
@@ -2489,7 +2770,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                             {
                                 $dataentryoutput .= "<td>\n";
                                 if ($qidattributes['input_boxes']!=0) {
-                                    $dataentryoutput .= "\t<input type='text' name='$fieldname{$mearow['title']}_$ld' size=4 />";
+                                    $dataentryoutput .= "\t<input type='text' name='$fieldname{$mearow['title']}_$ld' size='4' />";
                                 } else {
                                     $dataentryoutput .= "\t<select name='$fieldname{$mearow['title']}_$ld'>\n";
                                     $dataentryoutput .= "<option value=''>...</option>\n";
@@ -2625,7 +2906,7 @@ if (bHasSurveyPermission($surveyid, 'responses','read') || bHasSurveyPermission(
                 //Show Save Option
                 $dataentryoutput .= "\t<tr><td align='left'><input type='checkbox' class='checkboxbtn' name='save' id='save' onclick='saveshow(this.id)' /><label for='save'>".$clang->gT("Save for further completion by survey user")."</label>\n";
                 $dataentryoutput .= "</td></tr></table>\n";
-                $dataentryoutput .= "<div name='saveoptions' id='saveoptions' style='display: none'>\n";
+                $dataentryoutput .= "<div id='saveoptions' style='display: none'>\n";
                 $dataentryoutput .= "<table align='center' class='outlinetable' cellspacing='0'>
 					  <tr><td align='right'>".$clang->gT("Identifier:")."</td>
 					  <td><input type='text' name='save_identifier' /></td></tr>
@@ -2717,6 +2998,33 @@ function array_in_array($needle, $haystack)
         return true;
     }
     return false;
+}
+
+/*
+ * This is a duplicate of the array_filter_help function in printablesurvey.php
+ */
+function array_filter_help($qidattributes, $surveyprintlang, $surveyid) {
+    global $clang;
+    $output = "";
+    if(!empty($qidattributes['array_filter']))
+    {
+        $newquery="SELECT question FROM ".db_table_name("questions")." WHERE title='{$qidattributes['array_filter']}' AND language='{$surveyprintlang}' AND sid = '$surveyid'";
+        $newresult=db_execute_assoc($newquery);
+        $newquestiontext=$newresult->fetchRow();
+        $output .= "\n<p class='extrahelp'>
+		    ".sprintf($clang->gT("Only answer this question for the items you selected in question *%s* ('%s')"),$qidattributes['array_filter'], FlattenText(br2nl($newquestiontext['question'])))."
+		</p>\n";
+    }
+    if(!empty($qidattributes['array_filter_exclude']))
+    {
+        $newquery="SELECT question FROM ".db_table_name("questions")." WHERE title='{$qidattributes['array_filter_exclude']}' AND language='{$surveyprintlang}' AND sid = '$surveyid'";
+        $newresult=db_execute_assoc($newquery);
+        $newquestiontext=$newresult->fetchRow();
+        $output .= "\n    <p class='extrahelp'>
+		    ".sprintf($clang->gT("Only answer this question for the items you did not select in question *%s* ('%s')"),$qidattributes['array_filter_exclude'], br2nl($newquestiontext['question']))."
+		</p>\n";
+    }
+    return $output;
 }
 
 ?>

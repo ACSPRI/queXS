@@ -21,20 +21,20 @@ $(document).ready(function(){
                     "<table align='center'><tr>"+
                        "<td  align='center' width='50%' padding='20px' >";
 
-            if (isValueInArray(image_extensions, json[i-1].ext))
-                previewblock += "<img src='uploader.php?filegetcontents="+json[i-1].filename+"' height='60px' />"+decodeURIComponent(json[i-1].name);
+            if (isValueInArray(image_extensions, json[i-1].ext.toLowerCase()))
+                previewblock += "<img src='"+rooturl+"/uploader.php?sid="+surveyid+"&amp;filegetcontents="+json[i-1].filename+"' height='60px' />"+decodeURIComponent(json[i-1].name);
             else
-                previewblock += "<img src='images/placeholder.png' height='60px' /><br />"+decodeURIComponent(json[i-1].name);
+                previewblock += "<img src='"+rooturl+"'/images/placeholder.png' height='60px' /><br />"+decodeURIComponent(json[i-1].name);
 
             previewblock += "</td>";
             if ($('#'+fieldname+'_show_title').val() == 1 && $('#'+fieldname+'_show_comment').val() == 1)
-                previewblock += "<td align='center'><label>"+translt.titleFld+"</label><br /><br /><label>"+translt.commentFld+"</label></td><td align='center'><input type='text' value='"+json[i-1].title+"' id='"+fieldname+"_title_"+i+"' /><br /><br /><input type='text' value='"+json[i-1].comment+"' id='"+fieldname+"_comment_"+i+"' /></td>";
+                previewblock += "<td align='center'><label>"+translt.titleFld+"</label><br /><br /><label>"+translt.commentFld+"</label></td><td align='center'><input type='text' value='"+escapeHtml(json[i-1].title)+"' id='"+fieldname+"_title_"+i+"' /><br /><br /><input type='text' value='"+escapeHtml(json[i-1].comment)+"' id='"+fieldname+"_comment_"+i+"' /></td>";
             else if ($('#'+fieldname+'_show_title').val() == 1)
-                previewblock += "<td align='center'><label>"+translt.titleFld+"</label></td><td align='center'><input type='text' value='"+json[i-1].title+"' id='"+fieldname+"_title_"+i+"' /></td>";
+                previewblock += "<td align='center'><label>"+translt.titleFld+"</label></td><td align='center'><input type='text' value='"+escapeHtml(json[i-1].title)+"' id='"+fieldname+"_title_"+i+"' /></td>";
             else if ($('#'+fieldname+'_show_comment').val() == 1)
-                previewblock += "<td align='center'><label>"+translt.commentFld+"</label></td><td align='center'><input type='text' value='"+json[i-1].comment+"' id='"+fieldname+"_comment_"+i+"' /></td>";
+                previewblock += "<td align='center'><label>"+translt.commentFld+"</label></td><td align='center'><input type='text' value='"+escapeHtml(json[i-1].comment)+"' id='"+fieldname+"_comment_"+i+"' /></td>";
 
-            previewblock += "<td align='center' width='20%' ><img style='cursor:pointer' src='images/delete.png' onclick='deletefile(\""+fieldname+"\", "+i+")' /></td></tr></table>"+
+            previewblock += "<td align='center' width='20%' ><img style='cursor:pointer' src='"+rooturl+"/images/delete.png' onclick='deletefile(\""+fieldname+"\", "+i+")' /></td></tr></table>"+
                     "<input type='hidden' id='"+fieldname+"_size_"    +i+"' value="+json[i-1].size+" />"+
                     "<input type='hidden' id='"+fieldname+"_name_"    +i+"' value="+json[i-1].name+" />"+
                     "<input type='hidden' id='"+fieldname+"_file_index_"+i+"' value="+i+" />"+
@@ -134,10 +134,10 @@ $(document).ready(function(){
                                             "<td  align='center' width='50%'>";
 
                 // If the file is not an image, use a placeholder
-                if (isValueInArray(image_extensions, metadata.ext))
-                    previewblock += "<img src='uploader.php?filegetcontents="+decodeURIComponent(metadata.filename)+"' height='60px' />";
+                if (isValueInArray(image_extensions, metadata.ext.toLowerCase()))
+                    previewblock += "<img src='"+rooturl+"/uploader.php?sid="+surveyid+"&amp;filegetcontents="+decodeURIComponent(metadata.filename)+"' height='60px' />";
                 else
-                    previewblock += "<img src='images/placeholder.png' height='60px' />";
+                    previewblock += "<img src='"+rooturl+"/images/placeholder.png' height='60px' />";
 
                 previewblock += "<br />"+decodeURIComponent(metadata.name)+"</td>";
                 if ($("#"+fieldname+"_show_title").val() == 1 && $("#"+fieldname+"_show_comment").val() == 1)
@@ -147,7 +147,7 @@ $(document).ready(function(){
                 else if ($("#"+fieldname+"_show_comment").val() == 1)
                     previewblock += "<td align='center'><label>"+translt.commentFld+"</label></td><td align='center'><input type='text' value='' id='"+fieldname+"_comment_"+count+"' /></td>";
 
-                previewblock += "<td  align='center' width='20%'><img style='cursor:pointer' src='images/delete.png' onclick='deletefile(\""+fieldname+"\", "+count+")'/></td>"+
+                previewblock += "<td  align='center' width='20%'><img style='cursor:pointer' src='"+rooturl+"/images/delete.png' onclick='deletefile(\""+fieldname+"\", "+count+")'/></td>"+
                                         "</tr></table>"+
                                         "<input type='hidden' id='"+fieldname+"_size_"+count+"' value="+metadata.size+" />"+
                                         "<input type='hidden' id='"+fieldname+"_file_index_"+count+"' value="+metadata.file_index+" />"+
@@ -203,29 +203,25 @@ function passJSON(fieldname, show_title, show_comment, pos) {
 
     while (i <= licount)
     {
-        if (filecount > 0)
-            json += ",";
 
         if ($("#"+fieldname+"_li_"+i).is(':visible'))
         {
+            if (filecount > 0)
+                json += ",";
             json += '{';
 
             if ($("#"+fieldname+"_show_title").val() == 1)
-                json += '"title":"' +$("#"+fieldname+"_title_"  +i).val()+'",';
+                json += '"title":"' +$("#"+fieldname+"_title_"  +i).val().replace(/"/g, '\\"')+'",';
             if ($("#"+fieldname+"_show_comment").val() == 1)
-                json += '"comment":"'+$("#"+fieldname+"_comment_"+i).val()+'",';
+                json += '"comment":"'+$("#"+fieldname+"_comment_"+i).val().replace(/"/g, '\\"')+'",';
             json += '"size":"'   +$("#"+fieldname+"_size_"   +i).val()+'",'+
                     '"name":"'   +$("#"+fieldname+"_name_"   +i).val()+'",'+
                     '"filename":"'   +$("#"+fieldname+"_filename_"   +i).val()+'",'+
                     '"ext":"'    +$("#"+fieldname+"_ext_"    +i).val()+'"}';
 
             filecount += 1;
-            i += 1;
         }
-        else
-        {
-            i += 1;
-        }
+        i += 1;
     }
     json += "]";
     window.parent.window.copyJSON(json, filecount, fieldname, show_title, show_comment, pos);
@@ -302,4 +298,14 @@ function deletefile(fieldname, count) {
     name=$("#"+fieldname+"_name_"+count).val();
     xmlhttp.open('GET','delete.php?sid='+surveyid+'&fieldname='+fieldname+'&filename='+filename+'&name='+encodeURI(name), true);
     xmlhttp.send();
+}
+
+
+function escapeHtml(unsafe) {
+  return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 }

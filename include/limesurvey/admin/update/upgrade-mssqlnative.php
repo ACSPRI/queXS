@@ -22,7 +22,7 @@ function db_upgrade($oldversion) {
 /// older versions to match current functionality
     global $modifyoutput, $dbprefix, $clang;
     if ($oldversion < 111) {
-    
+
     // Language upgrades from version 110 to 111 since the language names did change
 
        $oldnewlanguages=array('german_informal'=>'german-informal',
@@ -240,7 +240,7 @@ function db_upgrade($oldversion) {
         // copy any valid codes from code field to assessment field
         modify_database("","update [prefix_answers] set [assessment_value]=CAST([code] as int)");// no output here is intended
         modify_database("","update [prefix_labels] set [assessment_value]=CAST([code] as int)");// no output here is intended
-        // activate assessment where assesment rules exist
+        // activate assessment where assessment rules exist
         modify_database("","update [prefix_surveys] set [assessments]='Y' where [sid] in (SELECT [sid] FROM [prefix_assessments] group by [sid])"); echo $modifyoutput; flush();ob_flush();
         // add language field to assessment table
         modify_database("","ALTER TABLE [prefix_assessments] ADD [language] varchar(20) NOT NULL default 'en'"); echo $modifyoutput; flush();ob_flush();
@@ -251,8 +251,9 @@ function db_upgrade($oldversion) {
         // drop the old link field
          modify_database("","ALTER TABLE [prefix_assessments] DROP COLUMN [link]"); echo $modifyoutput; flush();ob_flush();
         // change the primary index to include language
-        // and fix missing translations for assessments
-        upgrade_survey_tables133a();
+        mssql_drop_primary_index('assessments');
+        // add the new primary key
+        modify_database("","ALTER TABLE [prefix_assessments] ADD CONSTRAINT pk_assessments_id_lang PRIMARY KEY ([id],[language])"); echo $modifyoutput; flush();ob_flush();
 
         // Add new fields to survey language settings
         modify_database("","ALTER TABLE [prefix_surveys_languagesettings] ADD [surveyls_url] varchar(255)"); echo $modifyoutput; flush();ob_flush();
@@ -385,7 +386,7 @@ function db_upgrade($oldversion) {
                               created DATETIME NOT NULL ,
                               modified DATETIME NOT NULL ,
                               sessdata varchar(max),
-                              CONSTRAINT pk_sessions_sesskey PRIMARY KEY ( [sesskey] ))"); echo $modifyoutput; flush();ob_flush();          
+                              CONSTRAINT pk_sessions_sesskey PRIMARY KEY ( [sesskey] ))"); echo $modifyoutput; flush();ob_flush();
         modify_database("", "create index [idx_expiry] on [prefix_sessions] ([expiry])"); echo $modifyoutput;
         modify_database("", "create index [idx_expireref] on [prefix_sessions] ([expireref])"); echo $modifyoutput;
         modify_database("", "UPDATE [prefix_settings_global] SET stg_value='143' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
@@ -399,7 +400,7 @@ function db_upgrade($oldversion) {
 
     if ($oldversion < 145) //Modify surveys table
     {
-        modify_database("", "ALTER TABLE [prefix_surveys] ADD showXquestions CHAR(1) NULL default 'Y'"); echo $modifyoutput; flush();ob_flush();
+        modify_database("", "ALTER TABLE [prefix_surveys] ADD showxquestions CHAR(1) NULL default 'Y'"); echo $modifyoutput; flush();ob_flush();
         modify_database("", "ALTER TABLE [prefix_surveys] ADD showgroupinfo CHAR(1) NULL default 'B' "); echo $modifyoutput; flush();ob_flush();
         modify_database("", "ALTER TABLE [prefix_surveys] ADD shownoanswer CHAR(1) NULL default 'Y' "); echo $modifyoutput; flush();ob_flush();
         modify_database("", "ALTER TABLE [prefix_surveys] ADD showqnumcode CHAR(1) NULL default 'X'"); echo $modifyoutput; flush();ob_flush();
@@ -417,47 +418,48 @@ function db_upgrade($oldversion) {
         modify_database("", "ALTER TABLE [prefix_surveys] ADD nokeyboard CHAR(1) NULL default 'N'"); echo $modifyoutput; flush();ob_flush();
         modify_database("", "ALTER TABLE [prefix_surveys] ADD alloweditaftercompletion CHAR(1) NULL default 'N'"); echo $modifyoutput; flush();ob_flush();
         modify_database("", "CREATE TABLE [prefix_survey_permissions] (
-                            [sid] INT NOT NULL,         
-                            [uid] INT NOT NULL,         
-                            [permission] VARCHAR(20) NOT NULL,       
-                            [create_p] TINYINT NOT NULL default '0', 
-                            [read_p] TINYINT NOT NULL default '0', 
-                            [update_p] TINYINT NOT NULL default '0', 
-                            [delete_p] TINYINT NOT NULL default '0', 
-                            [import_p] TINYINT NOT NULL default '0', 
-                            [export_p] TINYINT NOT NULL default '0', 
+                            [sid] INT NOT NULL,
+                            [uid] INT NOT NULL,
+                            [permission] VARCHAR(20) NOT NULL,
+                            [create_p] TINYINT NOT NULL default '0',
+                            [read_p] TINYINT NOT NULL default '0',
+                            [update_p] TINYINT NOT NULL default '0',
+                            [delete_p] TINYINT NOT NULL default '0',
+                            [import_p] TINYINT NOT NULL default '0',
+                            [export_p] TINYINT NOT NULL default '0',
                             PRIMARY KEY ([sid], [uid],[permission])
                         );"); echo $modifyoutput; flush();ob_flush();
         upgrade_surveypermissions_table145();
         modify_database("", "DROP TABLE [prefix_surveys_rights]"); echo $modifyoutput; flush();ob_flush();
-        
+
         // Add new fields for email templates
-        modify_database("", "ALTER TABLE prefix_surveys_languagesettings ADD 
-                              email_admin_notification_subj  VARCHAR(255) NULL,    
-                              email_admin_notification varchar(max) NULL,        
-                              email_admin_responses_subj VARCHAR(255) NULL,    
+        modify_database("", "ALTER TABLE prefix_surveys_languagesettings ADD
+                              email_admin_notification_subj  VARCHAR(255) NULL,
+                              email_admin_notification varchar(max) NULL,
+                              email_admin_responses_subj VARCHAR(255) NULL,
                               email_admin_responses varchar(max) NULL");
-        
+
         //Add index to questions table to speed up subquestions
         modify_database("", "create index [parent_qid_idx] on [prefix_questions] ([parent_qid])"); echo $modifyoutput; flush();ob_flush();
 
-        modify_database("", "ALTER TABLE prefix_surveys ADD emailnotificationto text DEFAULT NULL"); echo $modifyoutput; flush();ob_flush();
-        upgrade_survey_table145();                               
+        modify_database("", "ALTER TABLE prefix_surveys ADD emailnotificationto varchar(max) DEFAULT NULL"); echo $modifyoutput; flush();ob_flush();
+        upgrade_survey_table145();
         mssql_drop_constraint('notification','surveys');
         modify_database("", "ALTER TABLE [prefix_surveys] DROP COLUMN [notification]"); echo $modifyoutput; flush();ob_flush();
-                   
+
         // modify length of method in conditions
         modify_database("","ALTER TABLE [prefix_conditions] ALTER COLUMN [method] CHAR(5) NOT NULL"); echo $modifyoutput; flush();ob_flush();
 
         //Add index to questions table to speed up subquestions
         modify_database("", "create index [parent_qid] on [prefix_questions] ([parent_qid])"); echo $modifyoutput; flush();ob_flush();
-        
+
         modify_database("","UPDATE prefix_surveys set [private]='N' where [private] is NULL;"); echo $modifyoutput; flush();ob_flush();
 
         modify_database("","EXEC sp_rename 'prefix_surveys.private','anonymized'"); echo $modifyoutput; flush();ob_flush();
         modify_database("","ALTER TABLE [prefix_surveys] ALTER COLUMN [anonymized] char(1) NOT NULL;"); echo $modifyoutput; flush();ob_flush();
         mssql_drop_constraint('anonymized','surveys');
         modify_database("","ALTER TABLE [prefix_surveys] ADD CONSTRAINT DF_surveys_anonymized DEFAULT 'N' FOR [anonymized];"); echo $modifyoutput; flush();ob_flush();
+
         modify_database("", "CREATE TABLE [prefix_failed_login_attempts] (
                               [id] INT NOT NULL IDENTITY (1,1) PRIMARY KEY,
                       [ip] varchar(37) NOT NULL,
@@ -465,7 +467,7 @@ function db_upgrade($oldversion) {
                               [number_attempts] int NOT NULL );"); echo $modifyoutput; flush();ob_flush();
 
         modify_database("", "ALTER TABLE  [prefix_surveys_languagesettings] ADD  [surveyls_numberformat] INT default 0 NOT NULL"); echo $modifyoutput; flush();ob_flush();
-        
+
         upgrade_token_tables145();
         modify_database("", "UPDATE [prefix_settings_global] SET stg_value='145' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
 
@@ -474,10 +476,125 @@ function db_upgrade($oldversion) {
     if ($oldversion < 146) //Modify surveys table
     {
         upgrade_timing_tables146();
+        modify_database("", "INSERT into [prefix_survey_permissions] (sid,uid,permission,read_p,update_p) SELECT sid,owner_id,'translations','1','1' from [prefix_surveys]"); echo $modifyoutput; flush();ob_flush();
         modify_database("", "UPDATE [prefix_settings_global] SET stg_value='146' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
     }
 
-    
+    if ($oldversion < 147)
+    {
+        modify_database("", "ALTER TABLE [prefix_users] ADD templateeditormode VARCHAR( 7 ) NOT NULL default 'default'"); echo $modifyoutput; flush();ob_flush();
+        modify_database("", "ALTER TABLE [prefix_users] ADD questionselectormode VARCHAR( 7 ) NOT NULL default 'default'"); echo $modifyoutput; flush();ob_flush();
+        modify_database("", "UPDATE [prefix_settings_global] SET stg_value='147' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
+    }
+    if ($oldversion < 148)
+    {
+        modify_database("","CREATE TABLE [prefix_participants] (
+            [participant_id] varchar(50) NOT NULL,
+            [firstname] varchar(40) NOT NULL,
+            [lastname] varchar(40) NOT NULL,
+            [email] varchar(80) NOT NULL,
+            [language] varchar(2) NOT NULL,
+            [blacklisted] varchar(1) NOT NULL,
+            [owner_uid] integer NOT NULL,
+            PRIMARY KEY  ([participant_id])
+            );");echo $modifyoutput; flush();ob_flush();
+       modify_database("","CREATE TABLE [prefix_participant_attribute] (
+                            [participant_id] varchar(50) NOT NULL,
+                            [attribute_id] integer NOT NULL,
+                            [value] varchar(50) NOT NULL,
+                            PRIMARY KEY  ([participant_id],[attribute_id])
+                            );");echo $modifyoutput; flush();ob_flush();
+       modify_database("","CREATE TABLE [prefix_participant_attribute_names] (
+			   [attribute_id] integer NOT NULL IDENTITY (1,1),
+            [attribute_type] varchar(4) NOT NULL,
+                           [visible] char(5) NOT NULL,
+                           PRIMARY KEY  ([attribute_id],[attribute_type])
+			   );");echo $modifyoutput; flush();ob_flush();
+       modify_database("","CREATE TABLE [prefix_participant_attribute_names_lang] (
+                           [attribute_id] integer NOT NULL,
+                           [attribute_name] varchar(30) NOT NULL,
+                           [lang] varchar(20) NOT NULL,
+                           PRIMARY KEY  ([attribute_id],[lang])
+                           ); ");echo $modifyoutput; flush();ob_flush();
+       modify_database("","CREATE TABLE [prefix_participant_attribute_values] (
+                          [attribute_id] integer NOT NULL,
+                          [value_id] integer NOT NULL IDENTITY (1,1),
+                          [value] varchar(20) NOT NULL,
+                          PRIMARY KEY  ([value_id])
+                          ); ");echo $modifyoutput; flush();ob_flush();
+       modify_database("","CREATE TABLE [prefix_participant_shares] (
+                          [participant_id] varchar(50) NOT NULL,
+            [share_uid] integer NOT NULL,
+                          [date_added] datetime,
+            [can_edit] varchar(max) NOT NULL,
+            PRIMARY KEY  ([participant_id],[share_uid])
+                          ); ");echo $modifyoutput; flush();ob_flush();
+      modify_database("","CREATE TABLE [prefix_survey_links] (
+                          [participant_id] varchar(50) NOT NULL,
+                          [token_id] integer NOT NULL,
+                          [survey_id] integer NOT NULL,
+                          [date_created] datetime,
+                          PRIMARY KEY  ([participant_id],[token_id],[survey_id])
+                          ); ");echo $modifyoutput; flush();ob_flush();
+        modify_database("", "ALTER TABLE [prefix_users] ADD [participant_panel] int NOT NULL default '0'"); echo $modifyoutput; flush();ob_flush();
+
+        // Add language field to question_attributes table
+        modify_database("","ALTER TABLE [prefix_question_attributes] ADD [language] varchar(20)"); echo $modifyoutput; flush();ob_flush();
+        upgrade_question_attributes148();
+        fixSubquestions();
+        modify_database("", "UPDATE [prefix_settings_global] SET stg_value='148' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
+    }
+
+    if ($oldversion < 150)
+    {
+        modify_database("","ALTER TABLE [prefix_questions] ADD [relevance] varchar(max);"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("","update [prefix_settings_global] set [stg_value]='150' where stg_name='DBVersion'"); echo $modifyoutput; flush();@ob_flush();
+    }
+    if ($oldversion < 151)
+    {
+        modify_database("","ALTER TABLE [prefix_groups] ADD [randomization_group] VARCHAR(20) NOT NULL DEFAULT '';"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("","update [prefix_settings_global] set [stg_value]='151' where stg_name='DBVersion'"); echo $modifyoutput; flush();@ob_flush();
+    }
+    if ($oldversion < 152)
+    {
+        modify_database("","CREATE INDEX [question_attributes_idx3] ON [prefix_question_attributes] ([attribute]);"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("","update [prefix_settings_global] set [stg_value]='152' where stg_name='DBVersion'"); echo $modifyoutput; flush();@ob_flush();
+    }
+    if ($oldversion < 153)
+    {
+        modify_database("","CREATE TABLE [prefix_expression_errors] (
+        [id] integer NOT NULL IDENTITY (1,1),
+        [errortime] varchar(50) DEFAULT NULL,
+        [sid] integer DEFAULT NULL,
+        [gid] integer DEFAULT NULL,
+        [qid] integer DEFAULT NULL,
+        [gseq] integer DEFAULT NULL,
+        [qseq] integer DEFAULT NULL,
+        [type] varchar(50) ,
+        [eqn] varchar(max),
+        [prettyprint] varchar(max),
+        PRIMARY KEY ([id])
+        );"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("", "UPDATE [prefix_settings_global] SET stg_value='153' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
+    }
+    if ($oldversion < 154)
+    {
+        modify_database("","ALTER TABLE [prefix_groups] ADD [grelevance] varchar(max) DEFAULT NULL;"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("","update [prefix_settings_global] set [stg_value]='154' where stg_name='DBVersion'"); echo $modifyoutput; flush();@ob_flush();
+    }
+    if ($oldversion < 155)
+    {
+        modify_database("","ALTER TABLE [prefix_surveys] ADD [googleanalyticsstyle] char(1) DEFAULT NULL;"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("","ALTER TABLE [prefix_surveys] ADD [googleanalyticsapikey] varchar(25) DEFAULT NULL;"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("","EXEC sp_rename 'prefix_surveys.showXquestions','showxquestions'"); echo $modifyoutput; flush();@ob_flush();
+        modify_database("", "UPDATE [prefix_settings_global] SET [stg_value]='155' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
+    }
+    if ($oldversion < 155.6)
+    {
+        LimeExpressionManager::UpgradeConditionsToRelevance();
+        modify_database("", "UPDATE [prefix_settings_global] SET [stg_value]='155.6' WHERE stg_name='DBVersion'"); echo $modifyoutput; flush();ob_flush();
+    }
+
     echo '<br /><br />'.sprintf($clang->gT('Database update finished (%s)'),date('Y-m-d H:i:s')).'<br />';
   	return true;
 }
@@ -532,12 +649,9 @@ function upgrade_token_tables128()
 }
 
 
-function upgrade_survey_tables133a()
+function fixLanguageConsistencyAllSurveys()
 {
     global $dbprefix, $connect, $modifyoutput;
-    mssql_drop_primary_index('assessments');
-    // add the new primary key
-    modify_database("","ALTER TABLE [prefix_assessments] ADD CONSTRAINT pk_assessments_id_lang PRIMARY KEY ([id],[language])"); echo $modifyoutput; flush();ob_flush();
     $surveyidquery = "SELECT sid,additional_languages FROM ".db_table_name('surveys');
     $surveyidresult = db_execute_num($surveyidquery);
     while ( $sv = $surveyidresult->FetchRow() )
@@ -638,7 +752,7 @@ function upgrade_question_attributes142()
         $record['value']=implode(';',$attributevalues);
         $record['attribute']='exclude_all_other';
         $record['qid']=$questionid;
-        $connect->AutoExecute("{$dbprefix}question_attributes", $record, 'INSERT'); 
+        $connect->AutoExecute("{$dbprefix}question_attributes", $record, 'INSERT');
     }
 }
 
@@ -660,7 +774,7 @@ function upgrade_tables143()
     }
 
     // Convert answers to subquestions
-    
+
     $answerquery = "select a.*, q.sid, q.gid, q.type from {$dbprefix}answers a,{$dbprefix}questions q where a.qid=q.qid and a.language=q.language and q.type in ('1','A','B','C','E','F','H','K',';',':','M','P','Q')";
     $answerresult = db_execute_assoc($answerquery);
     if (!$answerresult) {return "Database Error";}
@@ -668,12 +782,12 @@ function upgrade_tables143()
     {
         while ( $row = $answerresult->FetchRow() )
         {
-            
+
             $insertarray=array();
             if (isset($aQIDReplacements[$row['qid'].'_'.$row['code']]))
             {
                 $insertarray['qid']=$aQIDReplacements[$row['qid'].'_'.$row['code']];
-                db_switchIDInsert('questions',true);                
+                db_switchIDInsert('questions',true);
             }
             $insertarray['sid']=$row['sid'];
             $insertarray['gid']=$row['gid'];
@@ -688,13 +802,13 @@ function upgrade_tables143()
             modify_database("",$query); echo $modifyoutput; flush();ob_flush();
             if (!isset($insertarray['qid']))
             {
-               $aQIDReplacements[$row['qid'].'_'.$row['code']]=$connect->Insert_ID("{$dbprefix}questions","qid"); 
+               $aQIDReplacements[$row['qid'].'_'.$row['code']]=$connect->Insert_ID("{$dbprefix}questions","qid");
                $iSaveSQID=$aQIDReplacements[$row['qid'].'_'.$row['code']];
             }
             else
             {
                $iSaveSQID=$insertarray['qid'];
-                db_switchIDInsert('questions',false);                
+                db_switchIDInsert('questions',false);
             }
             if (($row['type']=='M' || $row['type']=='P') && $row['default_value']=='Y')
             {
@@ -753,8 +867,8 @@ function upgrade_tables143()
                 if (isset($aQIDReplacements[$row['qid'].'_'.$lrow['code'].'_1']))
                 {
                     $insertarray['qid']=$aQIDReplacements[$row['qid'].'_'.$lrow['code'].'_1'];
-                    db_switchIDInsert('questions',true);                
-                    
+                    db_switchIDInsert('questions',true);
+
                 }
                 $insertarray['sid']=$row['sid'];
                 $insertarray['gid']=$row['gid'];
@@ -770,10 +884,10 @@ function upgrade_tables143()
                 modify_database("",$query); echo $modifyoutput; flush();ob_flush();
                 if (isset($insertarray['qid']))
                 {
-                   $aQIDReplacements[$row['qid'].'_'.$lrow['code'].'_1']=$connect->Insert_ID("{$dbprefix}questions","qid"); 
-                   db_switchIDInsert('questions',false);                
+                   $aQIDReplacements[$row['qid'].'_'.$lrow['code'].'_1']=$connect->Insert_ID("{$dbprefix}questions","qid");
+                   db_switchIDInsert('questions',false);
 
-                }                
+                }
             }
         }
     }
@@ -783,7 +897,7 @@ function upgrade_tables143()
     modify_database("",$updatequery); echo $modifyoutput; flush();ob_flush();
     $updatequery = "update {$dbprefix}questions set type='L' where type='Z'";
     modify_database("",$updatequery); echo $modifyoutput; flush();ob_flush();
-    
+
     // Now move all non-standard templates to the /upload dir
     global $usertemplaterootdir, $standardtemplates,$standardtemplaterootdir;
 
@@ -801,7 +915,7 @@ function upgrade_tables143()
             }
         }
         closedir($handle);
-    }        
+    }
 
 }
 

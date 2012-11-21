@@ -64,11 +64,6 @@ define('AUTO_POPUP',false);
 define('QUEXS_PATH', '/quexs/');
 
 /**
- * Path to ADODB
- */
-define('ADODB_PATH',dirname(__FILE__).'/../adodb/');
-
-/**
  * Database configuration for queXS
  */
 define('DB_USER', 'quexs');

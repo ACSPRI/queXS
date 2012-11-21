@@ -1,4 +1,7 @@
 <?php
+if (!isset($dbprefix) || isset($_REQUEST['dbprefix'])) {safe_die("Cannot run this script directly");}
+global $rootdir;
+include_once($rootdir.'/classes/expressions/LimeExpressionManager.php');
 
 /**
  * This function replaces keywords in a text and is mainly intended for templates
@@ -12,14 +15,14 @@
  * @param boolean $anonymized Determines if token data is being used or just replaced with blanks
  * @return string  Text with replaced strings
  */
-function templatereplace($line, $replacements=array(), $anonymized=false)
+function templatereplace($line, $replacements=array(), $anonymized=false, $questionNum=NULL)
 {
     global $surveylist, $sitename, $clienttoken, $rooturl;
     global $thissurvey, $imageurl, $defaulttemplate;
     global $percentcomplete, $move;
     global $groupname, $groupdescription;
     global $question;
-    global $showXquestions, $showgroupinfo, $showqnumcode;
+    global $showxquestions, $showgroupinfo, $showqnumcode;
     global $answer, $navigator;
     global $help, $surveyformat;
     global $completed, $register_errormsg;
@@ -41,7 +44,7 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
     {
         $_templatename = $defaulttemplate;
     }
-    $_templatename = validate_templatedir($_templatename);
+#    $_templatename = validate_templatedir($_templatename); // Not needed: sGetTemplateURL and sgetTemplatePath do validation
 
     // create absolute template URL and template dir vars
     $_templateurl = sGetTemplateURL($_templatename) . '/';
@@ -91,7 +94,7 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
     // Only continue in this routine if there are bracketed items to replace {}
     if (strpos($line, "{") === false)
     {
-        return $line;
+        return LimeExpressionManager::ProcessString($line, $questionNum, NULL, false, 1, 1, true);
     }
 
     if (
@@ -132,14 +135,27 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
         $_question_man_message = $question['man_message'];
         $_question_valid_message = $question['valid_message'];
         $_question_file_valid_message = $question['file_valid_message'];
-        $_question_sgq = (isset($question['sgq']) ? $question['sgq'] : '');
+        if (isset($question['sgq']))
+        {
+            $_question_sgq = $question['sgq'];
+            $_parts = explode('X',$_question_sgq);
+            $_question_gid = $_parts[1];
+        }
+        else
+        {
+            $_question_sgq = '';
+            $_question_gid = '';
+        }
         $_question_essentials = $question['essentials'];
         $_question_class = $question['class'];
         $_question_man_class = $question['man_class'];
         $_question_input_error_class = $question['input_error_class'];
-        }
-        else
-        {
+        $_aid = (isset($question['aid']) ? $question['aid'] : '');
+        $_sqid = (isset($question['sqid']) ?  $question['sqid'] : '');
+        $_question_type = (isset($question['type']) ? $question['type'] : '');
+    }
+    else
+    {
         $_question = $question;
         $_question_text = '';
         $_question_help = '';
@@ -147,12 +163,23 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
         $_question_man_message = '';
         $_question_valid_message = '';
         $_question_file_valid_message = '';
+        $_question_gid = '';
         $_question_sgq = '';
         $_question_essentials = '';
         $_question_class = '';
         $_question_man_class = '';
         $_question_input_error_class = '';
+        $_aid = '';
+        $_sqid = '';
+        $_question_type = '';
     };
+
+    global $answer_id;
+
+    if ($_question_type == '*')
+    {
+        $_question_text = '<div class="em_equation">' .$_question_text. '</div>';
+    }
 
     if (
         $showqnumcode == 'both' ||
@@ -191,9 +218,9 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
         $_totalquestionsAsked = 0;
     }
     if (
-      $showXquestions == 'show' ||
-      ($showXquestions == 'choose' && !isset($thissurvey['showXquestions'])) ||
-      ($showXquestions == 'choose' && $thissurvey['showXquestions'] == 'Y')
+      $showxquestions == 'show' ||
+      ($showxquestions == 'choose' && !isset($thissurvey['showxquestions'])) ||
+      ($showxquestions == 'choose' && $thissurvey['showxquestions'] == 'Y')
     )
     {
         if ($_totalquestionsAsked < 1)
@@ -277,14 +304,21 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
     {
         $_s_lang = $_SESSION['s_lang'];
     }
-
-    $_clearall = "<input type='button' name='clearallbtn' value='" . $clang->gT("Exit and Clear Survey") . "' class='clearall' "
-            . "onclick=\"if (confirm('" . $clang->gT("Are you sure you want to clear all your responses?", 'js') . "')) {window.open('{$publicurl}/index.php?sid=$surveyid&amp;move=clearall&amp;lang=" . $_s_lang;
+    // CLEARALL
+    if( $surveyid && !isCompleted($surveyid,$saved_id))
+    {
+        $_clearall = "<input type='button' name='clearallbtn' value='" . $clang->gT("Exit and Clear Survey") . "' class='clearall' "
+            . "onclick=\"if (confirm('" . $clang->gT("Are you sure you want to clear all your responses?", 'js') . "')) {\nwindow.open('{$publicurl}/index.php?sid=$surveyid&amp;move=clearall&amp;lang=" . $_s_lang;
         if (returnglobal('token'))
         {
-        $_clearall .= "&amp;token=" . urlencode(trim(sanitize_token(strip_tags(returnglobal('token')))));
+        $_clearall .= "&amp;token={$_token}";
         }
         $_clearall .= "', '_self')}\" />";
+    }
+    else
+    {
+        $_clearall=""; // This survey are already completed or surveyid not set, then don't have access to clearallbtn
+    }
 
     if (isset($_SESSION['datestamp']))
     {
@@ -301,9 +335,9 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
 
         if ($thissurvey['format'] == 'A')
             {
-            if ($thissurvey['tokenanswerspersistence'] != 'Y')
+            if ($thissurvey['tokenanswerspersistence'] != 'Y' || !tableExists('tokens_'.$surveyid))
                 {
-                $_saveall = "\t\t\t<input type='submit' name='loadall' value='" . $clang->gT("Load Unfinished Survey") . "' class='saveall' " . (($thissurvey['active'] != "Y") ? "disabled='disabled'" : "") . "/>"
+                $_saveall = "\t\t\t<input type='button' name='loadall' value='" . $clang->gT("Load Unfinished Survey") . "' class='saveall' onclick=\"javascript:addHiddenField(document.getElementById('limesurvey'),'loadall',this.value);document.getElementById('limesurvey').submit();\" " . (($thissurvey['active'] != "Y") ? "disabled='disabled'" : "") . "/>"
                         . "\n\t\t\t<input type='button' name='saveallbtn' value='" . $clang->gT("Resume Later") . "' class='saveall' onclick=\"javascript:document.limesurvey.move.value = this.value;addHiddenField(document.getElementById('limesurvey'),'saveall',this.value);document.getElementById('limesurvey').submit();\" " . (($thissurvey['active'] != "Y") ? "disabled='disabled'" : "") . "/>";  // Show Save So Far button
                 }
                 else
@@ -313,9 +347,9 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
             }
         elseif (!isset($_SESSION['step']) || !$_SESSION['step'])
         {  //First page, show LOAD
-            if ($thissurvey['tokenanswerspersistence'] != 'Y')
+            if ($thissurvey['tokenanswerspersistence'] != 'Y' || !tableExists('tokens_'.$surveyid))
             {
-                $_saveall = "\t\t\t<input type='submit' name='loadall' value='" . $clang->gT("Load Unfinished Survey") . "' class='saveall' " . (($thissurvey['active'] != "Y") ? "disabled='disabled'" : "") . "/>";
+                $_saveall = "\t\t\t<input type='button' name='loadall' value='" . $clang->gT("Load Unfinished Survey") . "' class='saveall' onclick=\"javascript:addHiddenField(document.getElementById('limesurvey'),'loadall',this.value);document.getElementById('limesurvey').submit();\" " . (($thissurvey['active'] != "Y") ? "disabled='disabled'" : "") . "/>";
                 }
 		else
 		{
@@ -542,8 +576,89 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
         $_assessment_current_total = '';
     }
 
+    if (isset($thissurvey['googleanalyticsapikey']) && trim($thissurvey['googleanalyticsapikey']) != '')
+    {
+        $_googleAnalyticsAPIKey = trim($thissurvey['googleanalyticsapikey']);
+    }
+    else
+    {
+        $_googleAnalyticsAPIKey = trim(getGlobalSetting('googleanalyticsapikey'));
+    }
+    $_googleAnalyticsStyle = (isset($thissurvey['googleanalyticsstyle']) ? $thissurvey['googleanalyticsstyle'] : '0');
+    $_googleAnalyticsJavaScript = '';
+
+    if ($_googleAnalyticsStyle != '' && $_googleAnalyticsStyle != 0 && $_googleAnalyticsAPIKey != '')
+    {
+        switch ($_googleAnalyticsStyle)
+        {
+            case '1':
+                // Default Google Tracking
+                $_googleAnalyticsJavaScript = <<<EOD
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '$_googleAnalyticsAPIKey']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+EOD;
+                break;
+            case '2':
+                // SurveyName-[SID]/[GSEQ]-GroupName - create custom GSEQ based upon page step
+                $moveInfo = LimeExpressionManager::GetLastMoveResult();
+                if (is_null($moveInfo)) {
+                    $gseq='welcome';
+                }
+                else if ($moveInfo['finished'])
+                {
+                    $gseq='finished';
+                }
+                else if (isset($moveInfo['at_start']) && $moveInfo['at_start'])
+                {
+                    $gseq='welcome';
+                }
+                else if (is_null($_groupname))
+                {
+                    $gseq='printanswers';
+                }
+                else
+                {
+                    $gseq=$moveInfo['gseq']+1;
+                }
+                $_trackURL = htmlentities($thissurvey['name'] . '-[' . $surveyid . ']/[' . $gseq . ']-' . $_groupname, ENT_QUOTES);
+                $_googleAnalyticsJavaScript = <<<EOD
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '$_googleAnalyticsAPIKey']);
+  _gaq.push(['_trackPageview','$_trackURL']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+EOD;
+                break;
+        }
+    }
+
+    $_endtext = '';
+    if (isset($thissurvey['surveyls_endtext']) && trim($thissurvey['surveyls_endtext'])!='')
+    {
+        $_endtext = $thissurvey['surveyls_endtext'];
+    }
+
     // Set the array of replacement variables here - don't include curly braces
-	$corecoreReplacements = array();
+    // Please put any conditional logic above this section.  Here below should just be an alphabetical list of replacement values with no embedded logic.
+
+	$coreReplacements = array();
+	$coreReplacements['ACTIVE'] = (isset($thissurvey['active']) && !($thissurvey['active'] != "Y"));
+	$coreReplacements['AID'] = $_aid;  // global
 	$coreReplacements['ANSWER'] = $answer;  // global
 	$coreReplacements['ANSWERSCLEARED'] = $clang->gT("Answers Cleared");
 	$coreReplacements['ASSESSMENTS'] = $assessments;    // global
@@ -554,7 +669,11 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
 	$coreReplacements['CLOSEWINDOW']  =  "<a href='javascript:%20self.close()'>".$clang->gT("Close this window")."</a>";
 	$coreReplacements['COMPLETED'] = $completed;    // global
 	$coreReplacements['DATESTAMP'] = $_datestamp;
+	$coreReplacements['ENDTEXT'] = $_endtext;
 	$coreReplacements['EXPIRY'] = $_dateoutput;
+    $coreReplacements['GID'] = $_question_gid;
+    $coreReplacements['GOOGLE_ANALYTICS_API_KEY'] = $_googleAnalyticsAPIKey;
+    $coreReplacements['GOOGLE_ANALYTICS_JAVASCRIPT'] = $_googleAnalyticsJavaScript;
 	$coreReplacements['GROUPDESCRIPTION'] = $_groupdescription;
 	$coreReplacements['GROUPNAME'] = $_groupname;
 	$coreReplacements['LANG'] = $clang->getlangcode();
@@ -566,9 +685,12 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
 	$coreReplacements['NAVIGATOR'] = $navigator;    // global
 	$coreReplacements['NOSURVEYID'] = $surveylist['nosid']; // global
 	$coreReplacements['NUMBEROFQUESTIONS'] = $_totalquestionsAsked;
+    $coreReplacements['PASSTHRULABEL'] = '';
+    $coreReplacements['PASSTHRUVALUE'] = '';
 	$coreReplacements['PERCENTCOMPLETE'] = $percentcomplete;    // global
 	$coreReplacements['PRIVACY'] = $privacy;    // global
 	$coreReplacements['PRIVACYMESSAGE'] = "<span style='font-weight:bold; font-style: italic;'>".$clang->gT("A Note On Privacy")."</span><br />".$clang->gT("This survey is anonymous.")."<br />".$clang->gT("The record kept of your survey responses does not contain any identifying information about you unless a specific question in the survey has asked for this. If you have responded to a survey that used an identifying token to allow you to access the survey, you can rest assured that the identifying token is not kept with your responses. It is managed in a separate database, and will only be updated to indicate that you have (or haven't) completed this survey. There is no way of matching identification tokens with survey responses in this survey.");
+    $coreReplacements['QID'] = isset($questionNum) ? $questionNum : '';
 	$coreReplacements['QUESTION'] = $_question;
 	$coreReplacements['QUESTIONHELP'] = $_questionhelp;
 	$coreReplacements['QUESTIONHELPPLAINTEXT'] = strip_tags(addslashes($help)); // global
@@ -582,7 +704,7 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
 	$coreReplacements['QUESTION_MAN_CLASS'] = $_question_man_class;
 	$coreReplacements['QUESTION_MAN_MESSAGE'] = $_question_man_message;
 	$coreReplacements['QUESTION_NUMBER'] = $_question_number;
-	$coreReplacements['QUESTION_TEXT'] = $_question_text;
+    $coreReplacements['QUESTION_TEXT'] = $_question_text;
 	$coreReplacements['QUESTION_VALID_MESSAGE'] = $_question_valid_message;
 	$coreReplacements['REGISTERERROR'] = $register_errormsg;    // global
 	$coreReplacements['REGISTERFORM'] = $_registerform;
@@ -600,13 +722,15 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
 	$coreReplacements['SGQ'] = $_question_sgq;
 	$coreReplacements['SID'] = $surveyid;   // global
 	$coreReplacements['SITENAME'] = $sitename;  // global
+	$coreReplacements['SQID'] = $_sqid;  // global
 	$coreReplacements['SUBMITBUTTON'] = $_submitbutton;
 	$coreReplacements['SUBMITCOMPLETE'] = "<strong>".$clang->gT("Thank you!")."<br /><br />".$clang->gT("You have completed answering the questions in this survey.")."</strong><br /><br />".$clang->gT("Click on 'Submit' now to complete the process and save your answers.");
 	$coreReplacements['SUBMITREVIEW'] = $_strreview;
 	$coreReplacements['SURVEYCONTACT'] = $_surveycontact;
 	$coreReplacements['SURVEYDESCRIPTION'] = (isset($thissurvey['description']) ? $thissurvey['description'] : '');
 	$coreReplacements['SURVEYFORMAT'] = $surveyformat;  // global
-	$coreReplacements['SURVEYLANGAGE'] = $clang->langcode;
+	$coreReplacements['SURVEYLANGAGE'] = $clang->langcode;  // this misspelling is kept for legacy reasons
+	$coreReplacements['SURVEYLANGUAGE'] = $clang->langcode;
 	$coreReplacements['SURVEYLIST'] = $surveylist['list'];  // global
 	$coreReplacements['SURVEYLISTHEADING'] =  $surveylist['listheading'];   // global
 	$coreReplacements['SURVEYNAME'] = $thissurvey['name'];  // global
@@ -617,33 +741,22 @@ function templatereplace($line, $replacements=array(), $anonymized=false)
 	$coreReplacements['URL'] = $_linkreplace;
 	$coreReplacements['WELCOME'] = (isset($thissurvey['welcome']) ? $thissurvey['welcome'] : '');
 
-    $tokenAndAnswerMap = getAnswerAndTokenMappings(false,$anonymized);
-    $doTheseReplacements = array_merge($coreReplacements, $tokenAndAnswerMap, $replacements);   // so $replacements overrides core values
+        //queXS Addition
+        include_once("quexs.php");
+        $coreReplacements = array_merge($coreReplacements,quexs_core_replace());
 
-    $line = doReplacements($line,$doTheseReplacements);
-    // Do replacements twice since some reference others
-    $line = doReplacements($line,$doTheseReplacements);
-
-    //queXS Addition
-    include_once("quexs.php");
-    $line = quexs_template_replace($line);
-
-    return $line;
-}
-
-/**
- * Takes array mappings of key=>value and replaces all occurances of {key} with value in $line
- * @param <type> $line
- * @param <type> $doTheseReplacements
- * @return <type>
- */
-
-function doReplacements($line, $doTheseReplacements)
-{
-    foreach ($doTheseReplacements as $key => $value )
+    if (!is_null($replacements) && is_array($replacements))
     {
-        $line=str_replace('{' . $key . '}', $value, $line);
+        $doTheseReplacements = array_merge($coreReplacements, $replacements);   // so $replacements overrides core values
     }
+    else
+    {
+        $doTheseReplacements = $coreReplacements;
+    }
+
+    // Now do all of the replacements - In rare cases, need to do 3 deep recursion, that that is default
+    $line = LimeExpressionManager::ProcessString($line, $questionNum, $doTheseReplacements, false, 3, 1);
+
 
     return $line;
 }
@@ -664,8 +777,7 @@ function doReplacements($line, $doTheseReplacements)
  */
 function insertansReplace($line)
 {
-    $doTheseReplacements = getAnswerAndTokenMappings();
-    return doReplacements($line,$doTheseReplacements);
+    return $line;
 }
 
 /**
@@ -685,8 +797,7 @@ function insertansReplace($line)
  */
 function tokenReplace($line, $anonymized=false)
 {
-    $doTheseReplacements = getAnswerAndTokenMappings(false,$anonymized);
-    return doReplacements($line,$doTheseReplacements);
+    return $line;
 }
 
 /**
@@ -741,90 +852,14 @@ function PassthruReplace($line, $thissurvey)
 }
 
 /**
- * Create the arrays of answer and token replacement fields
- * This function should only be called once per page display (e.g. only if $fieldMap changes)
+ * Replacement of old dTexts::run for compatibility issue
+ * To be removed from other scriptq
+ * replace by ReplaceFields function OR
+ * LimeExpressionManager::ProcessString($text,$questionNum);
  *
- * @param <type> $forceRefresh
- * @return boolean - true if $fieldmap had been re-created, so ExpressionManager variables need to be re-set
  */
-
-function getAnswerAndTokenMappings($forceRefresh=false,$anonymized=false)
+function dTexts__run($text,$questionNum=NULL)
 {
-    global $globalfieldmap, $clang, $surveyid;
-
-    //checks to see if fieldmap has already been built for this page.
-    if (isset($globalfieldmap[$surveyid]['full'][$clang->langcode])) {
-        if (isset($globalfieldmap[$surveyid]['full-VarMap'][$clang->langcode]) && !$forceRefresh) {
-            return $globalfieldmap[$surveyid]['full-VarMap'][$clang->langcode];   // means the mappings have already been set and don't need to be re-created
-        }
-    }
-
-    if (!isset($surveyid))
-    {
-        return array(); // will happen on public root view
-    }
-    $fieldmap=createFieldMap($surveyid,$style='full',$forceRefresh);
-    if (!isset($fieldmap)) {
-        return array(); // implies an error occurred
-    }
-
-    $sgqaMap = array();  // mapping of SGQA to Value
-    foreach($fieldmap as $fielddata)
-    {
-        $code = $fielddata['fieldname'];
-        if (!preg_match('#^\d+X\d+X\d+#',$code))
-        {
-            continue;   // not an SGQA value
-        }
-        if (isset($_SESSION[$code]))
-        {
-            $displayValue= retrieve_Answer($code, $_SESSION['dateformats']['phpdate']);
-            $sgqaMap['INSERTANS:' . $code] = $displayValue;
-        }
-        else
-        {
-            $sgqaMap['INSERTANS:' . $code] = ""; // so if know value has been set, replace with blank - is that the desired behavior?
-        }
-    }
-
-    // Now set tokens
-    $tokenMap = array();      // mapping of TOKENS to values
-    if (isset($_SESSION['token']) && $_SESSION['token'] != '')
-    {
-        //Gather survey data for tokenised surveys, for use in presenting questions
-        $_SESSION['thistoken']=getTokenData($surveyid, $_SESSION['token']);
-    }
-    if (isset($_SESSION['thistoken']))
-    {
-        foreach (array_keys($_SESSION['thistoken']) as $tokenkey)
-        {
-            if ($anonymized)
-            {
-                $val = "";
-            }
-            else
-            {
-                $val = $_SESSION['thistoken'][$tokenkey];
-            }
-            $key = "TOKEN:" . strtoupper($tokenkey);
-            $tokenMap[$key] = $val;
-        }
-    }
-    else
-    {
-        // Explicitly set all tokens to blank
-        $tokenMap['TOKEN:FIRSTNAME'] = "";
-        $tokenMap['TOKEN:LASTNAME'] = "";
-        $tokenMap['TOKEN:EMAIL'] = "";
-        $tokenMap['TOKEN:USESLEFT'] = "";
-        for ($i=1;$i<=100;++$i) // TODO - is there a way to know  how many attributes are set?  Looks like max is 100
-        {
-            $tokenMap['TOKEN:ATTRIBUTE_' . $i] = "";
-        }
-
-    }
-    $fullMap = array_merge($sgqaMap, $tokenMap);
-
-    $globalfieldmap[$surveyid]['full-VarMap'][$clang->langcode] = $fullMap;
-    return $fullMap;
+    //return LimeExpressionManager::ProcessString($text,$questionNum);
+    return $text;
 }

@@ -103,7 +103,7 @@ td.graph {
 
 #progress-graph div.zero {
   width: 2.6em;
-  margin-right: 0%;
+  margin-right: 0;
 }
 
 #progress-graph div.graph {
@@ -170,6 +170,11 @@ height:12px;
 .surveytitle {
   font-size: 1.2em;
   height: 1.5em;
+}
+
+td.language-changer {
+	text-align: center;
+	padding: 0;
 }
 
 .languagechanger {
@@ -435,18 +440,18 @@ td.clearall-result .warning-text {
    START: General list styles - - -  - - -  - - - - */
 .choice-5-pt-radio .answer ul,.list-radio-flexible .answer ul,.list-radio .answer ul,.list-with-comment .answer ul,.multiple-opt .answer ul,.multiple-opt-comments .answer ul,.multiple-short-txt .answer ul,.numeric-multi .answer ul,.yes-no .answer ul,.gender .answer ul
   {
-  margin-left: 0%;
-  padding-left: 0%;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .choice-5-pt-radio .answer li,.list-radio-flexible .answer li,.list-radio .answer li,.list-with-comment .answer li,.multiple-opt .answer li,.multiple-opt-comments .answer li,.multiple-short-txt .answer li,.numeric-multi .answer li,.yes-no .answer li,.gender .answer li
   {
   list-style-type: none;
   text-align: left;
-  margin: 0% 0% 0.5em 0.5em;
+  margin: 0 0 0.5em 0.5em;
 }
 
-.choice-5-pt-radio .answer li,.list-radio-flexible .answer li,.list-radio .answer li,.list-with-comment .answer li,.yes-no .answer li,.gender .answer li
+.choice-5-pt-radio .answer li,.list-radio-flexible .answer li,.yes-no .answer li,.gender .answer li
   {
   margin-left: 2em;
   text-indent: -1.8em;
@@ -469,7 +474,7 @@ td.clearall-result .warning-text {
 /* STYLES NOT YET DEFINED - - - - -
 .date {}
 */
-.date p.question {
+p.question {
   margin-left: 1em;
 }
 
@@ -483,10 +488,6 @@ td.clearall-result .warning-text {
 
 .date p.question select.year {
   
-}
-
-.numeric p.question {
-  margin-left: 1em;
 }
 
 .date p.tip,.numeric-multi p.tip,.numeric p.tip {
@@ -510,6 +511,23 @@ td.clearall-result .warning-text {
 .list-radio-flexible
 .list-radio
 */
+.list-radio .answer li label,
+.list-with-comment .answer li label {
+  display: inline-block;
+  width: 85%;
+}
+.list-radio .answer li.other label,
+.list-with-comment .answer li.other label {
+  display: inline;
+  width: auto;
+}
+.list-radio .answer li input,
+.list-with-comment .answer li input {
+  vertical-align: top !important;
+  margin-top: 2px;
+  margin-top: -2px\9; /* IE9 and below */
+}
+
 ul.cols-2,table.cols-2,ul.cols-3,table.cols-3,ul.cols-4,table.cols-4,ul.cols-5,table.cols-5,ul.cols-6,table.cols-6,ul.cols-7,table.cols-7,ul.cols-8,table.cols-8
   {
   width: 98%;
@@ -591,8 +609,19 @@ ul.cols-8 li,ul.cols-8-ul,table.cols-8 td {
 /* DEFINED ABOVE UNDER "General list styles" - - - - -
 .multiple-opt
 */
-.language {
-  
+.multiple-opt .answer li input, .multiple-opt-comments .answer li .option input {
+  vertical-align: top !important;
+  margin-top: 2px;
+  margin-top: -2px\9; /* IE9 and below */
+}
+
+.multiple-opt .answer li label, .multiple-opt-comments .answer li .option label {
+  display: inline-block;
+  width: 90%;
+}
+.multiple-opt .answer li.other label, .multiple-opt-comments .answer li.other .option label {
+  display: inline;
+  width: auto;
 }
 
 /* The following styles only apply to modern (relatively) complete CSS2 compliant browsers. (Not less than IE 8) */
@@ -628,7 +657,7 @@ ul.cols-8 li,ul.cols-8-ul,table.cols-8 td {
 
 .multiple-short-txt td.answer ul li label,.multiple-short-txt td.answer ul li label,.numeric-multi td.answer ul li label
   {
-  padding: 0.3em 1em 0% 0%;
+  padding: 0.3em 1em 0 0;
   display: table-cell;
   vertical-align: middle;
 }
@@ -658,34 +687,15 @@ ul.cols-8 li,ul.cols-8-ul,table.cols-8 td {
   margin-bottom: 0.2em;
 }
 
-.numeric-multi td.answer ul.multiplenumerichelp,.numeric-multi td.answer ul.multiplenumerichelp.slider
-  {
-  display: table;
-  font-size: 80%;
+.numeric-multi td.answer li.multiplenumerichelp span {
+	text-align: center;
+	background: transparent none;
 }
 
-.numeric-multi td.answer ul.multiplenumerichelp.slider li {
-  display: table-row;
-}
-
-.numeric-multi td.answer ul.multiplenumerichelp li label,.numeric-multi td.answer ul.multiplenumerichelp.slider li label
-  {
-  padding: 0.3em 0% 0% 0%;
-  display: table-cell;
-}
-
-.numeric-multi td.answer ul.multiplenumerichelp li span,.numeric-multi td.answer ul.multiplenumerichelp.slider li span
-  {
-  padding: 0% 0% 0% 0.3em;
-  display: table-cell;
-}
-
-.numeric-multi td.answer ul.multiplenumerichelp span input {
-  border: none;
-  background-color: #fff;
-  color: #222;
-  padding: 0%;
-  width: 7em;
+.numeric-multi td.answer li.multiplenumerichelp span span {
+	display: inline;
+	padding: 0;
+	font-size: 125%;
 }
 
 .text-short input,.text-short textarea,.text-long textarea,.text-huge textarea
@@ -1044,3 +1054,112 @@ span.qnumcode {
 #index .container .row.current { background: #000; color: #fff; }
 #index .container .row.missing { background: #CC0000; color: #fff; }
 #index .container input { margin: 1em; }
+
+
+/* Tips / Validation Messages */
+/* If the question is invalid, but has not been submitted, give it a pleasant warning color */
+div.em_num_answers.good {
+ color: green;
+}
+
+div.em_num_answers.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_value_range.good {
+  color: green;
+}
+div.em_value_range.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_sum_range.good {
+  color: green;
+}
+div.em_sum_range.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_regex_validation {
+  display: none;
+}
+div.em_regex_validation.good {
+  color: green;
+}
+div.em_regex_validation.error {
+  color: #FF00FF;
+}
+
+div.em_q_fn_validation.good {
+  color: green;
+}
+div.em_q_fn_validation.error {
+  color: #FF00FF;
+}
+
+div.em_sq_fn_validation.good {
+  color: green;
+}
+div.em_sq_fn_validation.error {
+  color: #FF00FF;
+}
+
+div.em_other_comment_mandatory.good {
+  display: none;
+}
+div.em_other_comment_mandatory.error {
+  color: #FF00FF;
+  display: block;
+}
+
+input.em_sq_validation.good, textarea.em_sq_validation.good {
+}
+
+input.em_sq_validation.error, textarea.em_sq_validation.error {
+  color: black;
+  background-color:  pink;
+}
+
+span.dynamic_sum {
+  font-weight: bold;
+  background-color: #d3d3d3;
+}
+span.dynamic_sum.good {
+  color: green;
+}
+span.dynamic_sum.error {
+  color: red;
+}
+
+span.dynamic_remaining {
+  font-weight: bold;
+  background-color: #d3d3d3;
+}
+span.dyanamic_remaining.good {
+  color: green;
+}
+span.dynamic_remaining.error {
+  color: red;
+}
+
+/* If  it is still invalid after submit, flag it in red */
+.input-error div.error {
+  color: red;
+  display: block;
+}
+
+span.hide-tip div.good {
+    display: none;
+}
+
+span.hide-tip div.error {
+    color: #FF00FF;
+}
+
+.input-error span.hide-tip div.error {
+    color: red;
+    display: block;
+}

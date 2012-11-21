@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: activate.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: activate.php 11607 2011-12-06 23:19:52Z tmswhite $
  */
 
 
@@ -88,3 +88,4 @@ else
             include('tokens.php');
     }
 }
+

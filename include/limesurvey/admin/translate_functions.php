@@ -10,7 +10,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 *
-* $Id: translate_functions.php 9586 2010-12-06 03:08:07Z c_schmitz $
+* $Id: translate_functions.php 12366 2012-02-06 15:13:47Z shnoulle $
 *
 */
 
@@ -46,7 +46,7 @@ function menuSeparator()
 /**
  * showTranslateAdminmenu() creates the main menu options for the survey translation page
  * @param string $surveyid The survey ID
- * @param string $survey_title 
+ * @param string $survey_title
  * @param string $tolang
  * @param string $activated
  * @param string $scriptname
@@ -79,7 +79,7 @@ function menuSeparator()
 
   // Separator
   $adminmenu .= menuSeparator();
-  
+
   // Test / execute survey button
 
   if ($tolang != "")
@@ -187,23 +187,23 @@ function menuSeparator()
 function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id2="", $new="")
 {
   global $dbprefix, $clang;
-  
+
   switch ( $type )
   {
     case 'title':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                    ." WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                      ." AND surveyls_language=".db_quoteall($baselang),
-        "queryto"   => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                    ." WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                      ." AND surveyls_language=".db_quoteall($tolang),
+        "querybase" =>   "SELECT * "
+                        ." FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language=".db_quoteall($baselang,true),
+        "queryto"   =>   "SELECT * "
+                        ." FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language=".db_quoteall($tolang,true),
         "queryupdate" => "UPDATE ".db_table_name('surveys_languagesettings')
-                         ." SET surveyls_title = ".db_quoteall($new)
-                         ." WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                           ." AND surveyls_language=".db_quoteall($tolang),
+                        ." SET surveyls_title = ".db_quoteall($new,true)
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language=".db_quoteall($tolang,true),
         "id1"  => "",
         "id2"  => "",
         "gid"  => FALSE,
@@ -218,18 +218,18 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'description':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                    ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                      ."AND surveyls_language='{$baselang}'  ",
-        "queryto"   => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                     ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                       ."AND surveyls_language='{$tolang}'  ",
+        "querybase" =>   "SELECT * "
+                        ." FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$baselang}'  ",
+        "queryto"   =>   "SELECT * "
+                        ." FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$tolang}'  ",
         "queryupdate" => "UPDATE ".db_table_name('surveys_languagesettings')
-                         ."SET surveyls_description = ".db_quoteall($new)
-                         ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                           ."AND surveyls_language='{$tolang}'",
+                        ." SET surveyls_description = ".db_quoteall($new,true)
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$tolang}'",
         "id1"  => "",
         "id2"  => "",
         "gid"  => FALSE,
@@ -244,18 +244,18 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'welcome':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                    ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                      ."AND surveyls_language='{$baselang}'  ",
-        "queryto"   => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                     ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                       ."AND surveyls_language='{$tolang}'  ",
+        "querybase" =>   "SELECT * "
+                        ." FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$baselang}'  ",
+        "queryto"   =>   "SELECT * "
+                        ." FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$tolang}'  ",
         "queryupdate" => "UPDATE ".db_table_name('surveys_languagesettings')
-                         ."SET surveyls_welcometext = ".db_quoteall($new)
-                         ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                           ."AND surveyls_language='{$tolang}'",
+                        ." SET surveyls_welcometext = ".db_quoteall($new,true)
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ."AND surveyls_language='{$tolang}'",
         "id1"  => "",
         "id2"  => "",
         "gid"  => FALSE,
@@ -270,18 +270,18 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'end':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                    ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                      ."AND surveyls_language='{$baselang}'  ",
-        "queryto"   => "SELECT * "
-                                    ."FROM ".db_table_name('surveys_languagesettings')
-                                     ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                                       ."AND surveyls_language='{$tolang}'  ",
+        "querybase" =>   "SELECT * "
+                        ." FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$baselang}'  ",
+        "queryto"   =>   "SELECT * "
+                        ."FROM ".db_table_name('surveys_languagesettings')
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$tolang}'  ",
         "queryupdate" => "UPDATE ".db_table_name('surveys_languagesettings')
-                         ."SET surveyls_endtext = ".db_quoteall($new)
-                         ."WHERE surveyls_survey_id=".db_quoteall($surveyid)
-                           ."AND surveyls_language='{$tolang}'",
+                        ." SET surveyls_endtext = ".db_quoteall($new,true)
+                        ." WHERE surveyls_survey_id=".db_quoteall($surveyid,true)
+                        ." AND surveyls_language='{$tolang}'",
         "id1"  => "",
         "id2"  => "",
         "gid"  => FALSE,
@@ -296,21 +296,21 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'group':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                     ."FROM ".db_table_name('groups')
-                                     ."WHERE sid=".db_quoteall($surveyid)
-                                       ."AND language='{$baselang}' "
-                                     ."ORDER BY gid ",
-        "queryto"   => "SELECT * "
-                                     ."FROM ".db_table_name('groups')
-                                     ."WHERE sid=".db_quoteall($surveyid)
-                                       ."AND language=".db_quoteall($tolang)
-                                     ."ORDER BY gid ",
+        "querybase" =>   "SELECT * "
+                        ." FROM ".db_table_name('groups')
+                        ." WHERE sid=".db_quoteall($surveyid,true)
+                        ." AND language='{$baselang}' "
+                        ." ORDER BY group_order ",
+        "queryto"   =>   "SELECT * "
+                        ."FROM ".db_table_name('groups')
+                        ." WHERE sid=".db_quoteall($surveyid,true)
+                        ." AND language=".db_quoteall($tolang,true)
+                        ." ORDER BY group_order ",
         "queryupdate" => "UPDATE ".db_table_name('groups')
-                         ."SET group_name = ".db_quoteall($new)
-                         ."WHERE gid = '{$id1}' "
-                           ."AND sid=".db_quoteall($surveyid)
-                           ."AND language='{$tolang}'",
+                        ." SET group_name = ".db_quoteall($new,true)
+                        ." WHERE gid = '{$id1}' "
+                        ." AND sid=".db_quoteall($surveyid,true)
+                        ." AND language='{$tolang}'",
         "id1"  => "gid",
         "id2"  => "",
         "gid"  => TRUE,
@@ -325,21 +325,21 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'group_desc':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                     ."FROM ".db_table_name('groups')
-                                     ."WHERE sid=".db_quoteall($surveyid)
-                                       ."AND language='{$baselang}' "
-                                     ."ORDER BY gid ",
-        "queryto"   => "SELECT *"
-                                     ."FROM ".db_table_name('groups')
-                                     ."WHERE sid=".db_quoteall($surveyid)
-                                       ."AND language=".db_quoteall($tolang)
-                                     ."ORDER BY gid ",
+        "querybase" =>   "SELECT * "
+                        ." FROM ".db_table_name('groups')
+                        ." WHERE sid=".db_quoteall($surveyid,true)
+                        ." AND language='{$baselang}' "
+                ."ORDER BY group_order ",
+        "queryto"   =>   "SELECT *"
+                        ." FROM ".db_table_name('groups')
+                        ." WHERE sid=".db_quoteall($surveyid,true)
+                        ."AND language=".db_quoteall($tolang,true)
+                        ."ORDER BY group_order ",
         "queryupdate" => "UPDATE ".db_table_name('groups')
-                         ."SET description = ".db_quoteall($new)
-                         ."WHERE gid = '{$id1}' "
-                           ."AND sid=".db_quoteall($surveyid)
-                           ."AND language='{$tolang}'",
+                        ."SET description = ".db_quoteall($new,true)
+                        ."WHERE gid = '{$id1}' "
+                        ."AND sid=".db_quoteall($surveyid,true)
+                        ."AND language='{$tolang}'",
         "id1"  => "gid",
         "id2"  => "",
         "gid"  => TRUE,
@@ -352,48 +352,30 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
       );
       break;
 
-//    case 'label':
-//      $amTypeOptions = array(
-//        "querybase" => "SELECT * "
-//                                   ."FROM ".db_table_name('labels')
-//                                   ."WHERE language='{$baselang}' "
-//                                   .  "AND lid='$code' ",
-//        "queryto"   => "SELECT * "
-//                                    ."FROM ".db_table_name('labels')
-//                                    ."WHERE language=".db_quoteall($tolang)
-//                                    .  "AND lid='$code' ",
-//        "queryupdate" => "UPDATE ".db_table_name('labels')
-//                   ."SET title = ".db_quoteall($new)
-//                         ."WHERE lid = '{$id1}' "
-//                           ."AND code='{$id2}' "
-//                           ."AND language='{$tolang}' LIMIT 1",
-//        "dbColumn" => 'title',
-//        "id1"  => 'lid',
-//        "id2"  => 'code',
-//        "description" => $clang->gT("Label sets")
-//      );
-//      break;
-
     case 'question':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                   ."FROM ".db_table_name('questions')
-                                   ."WHERE sid=".db_quoteall($surveyid)
-                                     ."AND language='{$baselang}' "
-                                     ."AND parent_qid=0 "
-                                   ."ORDER BY qid ",
-        "queryto"   => "SELECT * "
-                                    ."FROM ".db_table_name('questions')
-                                    ."WHERE sid=".db_quoteall($surveyid)
-                                      ."AND language='{$tolang}' "
-                                     ." AND parent_qid=0 "
-                                    ."ORDER BY qid ",
+        "querybase" =>   "SELECT q.qid as questionid, q.title, q.question, q.qid, q.gid "
+                        ." FROM ".db_table_name('questions')." q "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE q.sid=".db_quoteall($surveyid,true)
+                        ." AND q.language='{$baselang}' "
+                        ." AND g.language='{$baselang}' "
+                        ." AND q.parent_qid=0 "
+                        ." ORDER BY g.group_order,q.question_order, q.scale_id ",
+        "queryto" =>     "SELECT q.qid as questionid, q.title, q.question, q.qid, q.gid "
+                        ." FROM ".db_table_name('questions')." q "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE q.sid=".db_quoteall($surveyid,true)
+                        ." AND q.language='{$tolang}' "
+                        ." AND g.language='{$tolang}' "
+                        ." AND q.parent_qid=0 "
+                        ." ORDER BY g.group_order,q.question_order, q.scale_id ",
         "queryupdate" => "UPDATE ".db_table_name('questions')
-                         ."SET question = ".db_quoteall($new)
-                         ."WHERE qid = '{$id1}' "
-                           ."AND sid=".db_quoteall($surveyid)
-                          ." AND parent_qid=0 "
-                           ."AND language='{$tolang}'",
+                        ." SET question = ".db_quoteall($new,true)
+                        ." WHERE qid = '{$id1}' "
+                        ." AND sid=".db_quoteall($surveyid,true)
+                        ." AND parent_qid=0 "
+                        ." AND language='{$tolang}'",
         "dbColumn" => 'question',
         "id1"  => 'qid',
         "id2"  => "",
@@ -408,24 +390,28 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'question_help':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                   ."FROM ".db_table_name('questions')
-                                   ."WHERE sid=".db_quoteall($surveyid)
-                                     ."AND language='{$baselang}' "
-                                     ."AND parent_qid=0 "
-                                   ."ORDER BY qid ",
-        "queryto"   => "SELECT * "
-                                    ."FROM ".db_table_name('questions')
-                                    ."WHERE sid=".db_quoteall($surveyid)
-                                      ."AND language='{$tolang}' "
-                                     ." AND parent_qid=0 "
-                                    ."ORDER BY qid ",
+        "querybase" =>   "SELECT q.qid as questionid, q.help, q.qid, q.title "
+                        ." FROM ".db_table_name('questions')." q "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE g.sid=".db_quoteall($surveyid,true)
+                        ." AND q.language='{$baselang}' "
+                        ." AND g.language='{$baselang}' "
+                        ." AND parent_qid=0 "
+                        ." ORDER BY g.group_order,q.question_order ",
+        "queryto" =>     "SELECT q.qid as questionid, q.help, q.qid, q.title "
+                        ." FROM ".db_table_name('questions')." q "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE g.sid=".db_quoteall($surveyid,true)
+                        ." AND q.language='{$tolang}' "
+                        ." AND g.language='{$tolang}' "
+                        ." AND parent_qid=0 "
+                        ." ORDER BY g.group_order,q.question_order ",
         "queryupdate" => "UPDATE ".db_table_name('questions')
-                         ."SET help = ".db_quoteall($new)
-                         ."WHERE qid = '{$id1}' "
-                           ."AND sid=".db_quoteall($surveyid)
-                          ." AND parent_qid=0 "
-                           ."AND language='{$tolang}'",
+                        ." SET help = ".db_quoteall($new,true)
+                        ." WHERE qid = '{$id1}' "
+                        ." AND sid=".db_quoteall($surveyid,true)
+                        ." AND parent_qid=0 "
+                        ." AND language='{$tolang}'",
         "dbColumn" => 'help',
         "id1"  => 'qid',
         "id2"  => "",
@@ -440,21 +426,25 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'subquestion':
       $amTypeOptions = array(
-        "querybase" => "SELECT * "
-                                   ."FROM ".db_table_name('questions')
-                                   ."WHERE sid=".db_quoteall($surveyid)
-                                     ."AND language='{$baselang}' AND parent_qid>0 "
-                                   ."ORDER BY parent_qid,qid ",
-        "queryto"   => "SELECT * "
-                                    ."FROM ".db_table_name('questions')
-                                    ."WHERE sid=".db_quoteall($surveyid)
-                                      ."AND language=".db_quoteall($tolang)
-                                    ." AND parent_qid>0 ORDER BY parent_qid,qid ",
+        "querybase" =>   "SELECT q.qid as questionid, q.title, sq.qid, sq.question, sq.gid "
+                        ." FROM ".db_table_name('questions')." sq "
+                        ." JOIN ".db_table_name('questions')." q ON sq.parent_qid=q.qid  "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE sq.sid=".db_quoteall($surveyid,true)
+                        ." AND sq.language='{$baselang}' AND q.language='{$baselang}' AND g.language='{$baselang}' AND sq.parent_qid>0 "
+                        ." ORDER BY g.group_order, q.question_order,q.scale_id, sq.scale_id, sq.question_order ",
+        "queryto"   =>   "SELECT sq.question "
+                        ." FROM ".db_table_name('questions')." sq "
+                        ." JOIN ".db_table_name('questions')." q ON sq.parent_qid=q.qid  "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE sq.sid=".db_quoteall($surveyid,true)
+                        ." AND sq.language=".db_quoteall($tolang,true)." AND q.language=".db_quoteall($tolang,true)." AND g.language=".db_quoteall($tolang,true)." AND sq.parent_qid>0 "
+                        ." ORDER BY g.group_order, q.question_order,q.scale_id, sq.scale_id, sq.question_order ",
         "queryupdate" => "UPDATE ".db_table_name('questions')
-                         ."SET question = ".db_quoteall($new)
-                         ."WHERE qid = '{$id1}' "
-                           ."AND sid=".db_quoteall($surveyid)
-                           ."AND language='{$tolang}'",
+                        ." SET question = ".db_quoteall($new,true)
+                        ." WHERE qid = '{$id1}' "
+                        ." AND sid=".db_quoteall($surveyid,true)
+                        ." AND language='{$tolang}'",
         "dbColumn" => 'question',
         "id1"  => 'qid',
         "id2"  => "",
@@ -469,25 +459,31 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'answer':
       $amTypeOptions = array(
-        "querybase" => "SELECT".db_table_name('answers').".*, ".db_table_name('questions').".gid "
-                                     ." FROM ".db_table_name('answers').", ".db_table_name('questions')
-                                    ." WHERE ".db_table_name('questions').".sid ='{$surveyid}' "
-                                      ." AND ".db_table_name('questions').".qid = ".db_table_name('answers').".qid "
-                                      ." AND ".db_table_name('questions').".language = ".db_table_name('answers').".language "
-                                      ." AND ".db_table_name('questions').".language='{$baselang}' "
-                                    ." ORDER BY qid,code,sortorder" ,
-        "queryto" => "SELECT".db_table_name('answers').".*, ".db_table_name('questions').".gid "
-                                     ." FROM ".db_table_name('answers').", ".db_table_name('questions')
-                                    ." WHERE ".db_table_name('questions').".sid ='{$surveyid}' "
-                                      ." AND ".db_table_name('questions').".qid = ".db_table_name('answers').".qid "
-                                      ." AND ".db_table_name('questions').".language = ".db_table_name('answers').".language "
-                                      ." AND ".db_table_name('questions').".language=".db_quoteall($tolang)
-                                  ."ORDER BY qid,code,sortorder" ,
+        "querybase" =>   "SELECT q.qid as questionid, a.code, a.answer, q.qid, q.title "
+                        ." FROM ".db_table_name('answers')." a "
+                        ." JOIN ".db_table_name('questions')." q ON a.qid=q.qid  "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE q.sid ='{$surveyid}' "
+                        ." AND q.qid = q.qid "
+                        ." AND a.language = '{$baselang}'"
+                        ." AND q.language = '{$baselang}'"
+                        ." AND g.language = '{$baselang}'"
+                        ." ORDER BY g.group_order, q.question_order, a.scale_id, a.sortorder",
+        "queryto" =>     "SELECT a.code, a.answer, q.qid, q.title "
+                        ." FROM ".db_table_name('answers')." a "
+                        ." JOIN ".db_table_name('questions')." q ON a.qid=q.qid  "
+                        ." JOIN ".db_table_name('groups')." g ON g.gid=q.gid "
+                        ." WHERE q.sid ='{$surveyid}' "
+                        ." AND q.qid = q.qid "
+                        ." AND a.language = ".db_quoteall($tolang,true)
+                        ." AND q.language = ".db_quoteall($tolang,true)
+                        ." AND g.language = ".db_quoteall($tolang,true)
+                        ." ORDER BY g.group_order, q.question_order, a.sortorder, a.scale_id",
         "queryupdate" => "UPDATE ".db_table_name('answers')
-                         ."SET answer = ".db_quoteall($new)
-                         ."WHERE qid = '{$id1}' "
-                           ."AND code='{$id2}' "
-                           ."AND language='{$tolang}'",
+                        ." SET answer = ".db_quoteall($new,true)
+                        ." WHERE qid = '{$id1}' "
+                        ." AND code='{$id2}' "
+                        ." AND language='{$tolang}'",
         "dbColumn" => 'answer',
         "id1"  => 'qid',
         "id2"  => 'code',
@@ -502,14 +498,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailinvite':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_invite_subj = ".db_quoteall($new)
+                        ." SET surveyls_email_invite_subj = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_invite_subj',
         "id1"  => '',
         "id2"  => '',
@@ -524,14 +520,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailinvitebody':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_invite = ".db_quoteall($new)
+                        ." SET surveyls_email_invite = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_invite',
         "id1"  => '',
         "id2"  => '',
@@ -546,14 +542,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailreminder':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_remind_subj = ".db_quoteall($new)
+                        ." SET surveyls_email_remind_subj = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_remind_subj',
         "id1"  => '',
         "id2"  => '',
@@ -568,14 +564,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailreminderbody':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_remind = ".db_quoteall($new)
+                        ." SET surveyls_email_remind = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_remind',
         "id1"  => '',
         "id2"  => '',
@@ -590,14 +586,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailconfirmation':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_confirm_subj = ".db_quoteall($new)
+                        ." SET surveyls_email_confirm_subj = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_confirm_subj',
         "id1"  => '',
         "id2"  => '',
@@ -612,14 +608,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailconfirmationbody':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_confirm = ".db_quoteall($new)
+                        ." SET surveyls_email_confirm = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_confirm',
         "id1"  => '',
         "id2"  => '',
@@ -634,14 +630,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailregistration':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_register_subj = ".db_quoteall($new)
+                        ." SET surveyls_email_register_subj = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_register_subj',
         "id1"  => '',
         "id2"  => '',
@@ -656,14 +652,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'emailregistrationbody':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_register = ".db_quoteall($new)
+                        ." SET surveyls_email_register = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_register',
         "id1"  => '',
         "id2"  => '',
@@ -678,14 +674,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'email_confirm':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_confirm_subj = ".db_quoteall($new)
+                        ." SET surveyls_email_confirm_subj = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_confirm_subj',
         "id1"  => '',
         "id2"  => '',
@@ -700,14 +696,14 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
 
     case 'email_confirmbody':
       $amTypeOptions = array(
-        "querybase" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                       ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
-        "queryto" => "SELECT * FROM ".db_table_name("surveys_languagesettings")
-                             ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
+        "querybase" =>   "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$baselang'" ,
+        "queryto" =>     "SELECT * FROM ".db_table_name("surveys_languagesettings")
+                        ." WHERE surveyls_survey_id=$surveyid and surveyls_language='$tolang'" ,
         "queryupdate" => "UPDATE ".db_table_name("surveys_languagesettings")
-                           ."SET surveyls_email_confirm = ".db_quoteall($new)
+                        ." SET surveyls_email_confirm = ".db_quoteall($new,true)
                         ." WHERE surveyls_survey_id=$surveyid "
-                           ."AND surveyls_language='$tolang'",
+                        ." AND surveyls_language='$tolang'",
         "dbColumn" => 'surveyls_email_confirm',
         "id1"  => '',
         "id2"  => '',
@@ -729,16 +725,26 @@ function setupTranslateFields($surveyid, $type, $tolang, $baselang, $id1="", $id
  * displayTranslateFieldsHeader() Formats and displays header of translation fields table
  * @param string $baselangdesc The source translation language, e.g. "English"
  * @param string $tolangdesc The target translation language, e.g. "German"
+    * @param string $type The target translation language, e.g. "German"
  * @return string $translateoutput
  */
-function displayTranslateFieldsHeader($baselangdesc, $tolangdesc)
+    function displayTranslateFieldsHeader($baselangdesc, $tolangdesc, $type)
 {
-  $translateoutput = '<table class="translate">'
-      . '<colgroup valign="top" width="45%" />'
+        global $clang;
+        $translateoutput = '<table class="translate">';
+        if ($type=='question' || $type=='subquestion' || $type=='question_help' || $type=='answer')
+        {
+            $translateoutput.='<colgroup valign="top" width="8%" />';
+        }
+        $translateoutput.='<colgroup valign="top" width="37%" />'
       . '<colgroup valign="top" width="55%" />'
-      . "<tr>\n"
-          . "<td><b>$baselangdesc</b></td>\n"
-          . "<td><b>$tolangdesc</b></td>\n"
+        . "<tr>\n";
+        if ($type=='question' || $type=='subquestion' || $type=='question_help' || $type=='answer')
+        {
+            $translateoutput.="<th>{$clang->gT('Question code / ID')}</th>\n";
+        }
+        $translateoutput.="<th>{$baselangdesc}</th>\n"
+        . "<th>{$tolangdesc}</th>\n"
       . "</tr>\n";
   return($translateoutput);
 }
@@ -795,8 +801,13 @@ function displayTranslateFields($surveyid, $gid, $qid, $type, $amTypeOptions,
 
   // Display text in original language
   // Display text in foreign language. Save a copy in type_oldvalue_i to identify changes before db update
+        if ($type=='question' || $type=='subquestion' || $type=='question_help' || $type=='answer')
+        {
   $translateoutput .= ""
-    . "<td class='_from_' id='${type}_from_${i}'>$textfrom</td>\n"
+            . "<td>".htmlspecialchars($rowfrom['title'])." ({$rowfrom['questionid']})</td>\n";
+        }
+
+        $translateoutput .= "<td class='_from_' id='${type}_from_${i}'>$textfrom</td>\n"
     . "<td>\n";
       $translateoutput .= "<input type='hidden' name='{$type}_id1_{$i}' value='{$value1}' />\n";
       $translateoutput .= "<input type='hidden' name='{$type}_id2_{$i}' value='{$value2}' />\n";
@@ -804,7 +815,7 @@ function displayTranslateFields($surveyid, $gid, $qid, $type, $amTypeOptions,
       $translateoutput .= "<input type='hidden' "
         ."name='".$type."_oldvalue_".$i."' "
         ."value='".htmlspecialchars($textto, ENT_QUOTES)."' />\n";
-      $translateoutput .= "<textarea cols='80' rows='".($nrows)."' "
+        $translateoutput .= "<textarea cols='75' rows='".($nrows)."' "
         ." name='{$type}_newvalue_{$i}' >".htmlspecialchars($textto)."</textarea>\n";
 
       if ($amTypeOptions["HTMLeditorDisplay"]=="Inline")

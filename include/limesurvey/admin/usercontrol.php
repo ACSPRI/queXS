@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: usercontrol.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: usercontrol.php 12260 2012-01-31 00:32:32Z c_schmitz $
  */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
@@ -73,7 +73,7 @@ if (!isset($_SESSION['loginID']))
                 $subject = $clang->gT("User data","unescaped");
                 $to = $emailaddr;
                 $from = $siteadminemail;
-                $sitename = $siteadminname;
+
 
                 if(SendEmailMessage(null, $body, $subject, $to, $from, $sitename, false,$siteadminbounce))
                 {
@@ -100,7 +100,7 @@ if (!isset($_SESSION['loginID']))
         {
             include("database.php");
 
-            $sIp=   $_SERVER['REMOTE_ADDR'];
+            $sIp = getIPAddress();
             $query = "SELECT * FROM ".db_table_name('failed_login_attempts'). " WHERE ip='$sIp';";
             $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
             $result = $connect->query($query);
@@ -176,6 +176,8 @@ if (!isset($_SESSION['loginID']))
                         $_SESSION['user'] = $fields['users_name'];
                         $_SESSION['full_name'] = $fields['full_name'];
                         $_SESSION['htmleditormode'] = $fields['htmleditormode'];
+                        $_SESSION['questionselectormode'] = $fields['questionselectormode'];
+                        $_SESSION['templateeditormode'] = $fields['templateeditormode'];
                         $_SESSION['dateformat'] = $fields['dateformat'];
                         // Compute a checksession random number to test POSTs
                         $_SESSION['checksessionpost'] = sRandomChars(10);
@@ -286,7 +288,7 @@ if (!isset($_SESSION['loginID']))
         }
 
         include("database.php");
-        $query = "SELECT uid, users_name, password, parent_id, email, lang, htmleditormode, dateformat FROM ".db_table_name('users')." WHERE users_name=".$connect->qstr($mappeduser);
+        $query = "SELECT uid, users_name, password, parent_id, email, lang, htmleditormode, questionselectormode, templateeditormode, dateformat FROM ".db_table_name('users')." WHERE users_name=".$connect->qstr($mappeduser);
         $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC; //Checked
         $result = $connect->SelectLimit($query, 1) or safe_die ($query."<br />".$connect->ErrorMsg());
         if ($result->RecordCount() < 1)
@@ -381,6 +383,8 @@ if (!isset($_SESSION['loginID']))
             $_SESSION['user'] = $fields['users_name'];
             $_SESSION['adminlang'] = $fields['lang'];
             $_SESSION['htmleditormode'] = $fields['htmleditormode'];
+            $_SESSION['questionselectormode'] = $fields['questionselectormode'];
+            $_SESSION['templateeditormode'] = $fields['templateeditormode'];
             $_SESSION['dateformat'] = $fields['dateformat'];
             $_SESSION['checksessionpost'] = sRandomChars(10);
             $_SESSION['pw_notify']=false;
@@ -454,25 +458,25 @@ elseif ($action == "adduser" && $_SESSION['USER_RIGHT_CREATE_USER'])
 			"manage_label"=>$srow['manage_label']));
 
             // send Mail
-            $body = sprintf($clang->gT("Hello %s,"), $new_full_name)."<br /><br />\n";
-            $body .= sprintf($clang->gT("this is an automated email to notify that a user has been created for you on the site '%s'."), $sitename)."<br /><br />\n";
-            $body .= $clang->gT("You can use now the following credentials to log into the site:")."<br />\n";
-            $body .= $clang->gT("Username") . ": " . $new_user . "<br />\n";
+            $body = sprintf($clang->gT("Hello %s,",'unescaped'), $new_full_name)."<br /><br />\n";
+            $body .= sprintf($clang->gT("this is an automated email to notify that a user has been created for you on the site '%s'.",'unescaped'), $sitename)."<br /><br />\n";
+            $body .= $clang->gT("You can use now the following credentials to log into the site:",'unescaped')."<br />\n";
+            $body .= $clang->gT("Username",'unescaped') . ": " . $new_user . "<br />\n";
             if ($useWebserverAuth === false)
             { // authent is not delegated to web server
                 // send password (if authorized by config)
                 if ($display_user_password_in_email === true)
                 {
-                    $body .= $clang->gT("Password") . ": " . $new_pass . "<br />\n";
+                    $body .= $clang->gT("Password",'unescaped') . ": " . $new_pass . "<br />\n";
                 }
                 else
                 {
-                    $body .= $clang->gT("Password") . ": " . $clang->gT("Please ask your LimeSurvey administrator for your password.") . "<br />\n";
+                    $body .= $clang->gT("Password",'unescaped') . ": " . $clang->gT("Please ask your LimeSurvey administrator for your password.") . "<br />\n";
                 }
             }
 
-            $body .= "<a href='" . $homeurl . "/admin.php'>".$clang->gT("Click here to log in.")."</a><br /><br />\n";
-            $body .=  sprintf($clang->gT('If you have any questions regarding this mail please do not hesitate to contact the site administrator at %s. Thank you!'),$siteadminemail)."<br />\n";
+            $body .= "<a href='" . $homeurl . "/admin.php'>".$clang->gT("Click here to log in.",'unescaped')."</a><br /><br />\n";
+            $body .=  sprintf($clang->gT('If you have any questions regarding this mail please do not hesitate to contact the site administrator at %s. Thank you!','unescaped'),$siteadminemail)."<br />\n";
 
             $subject = sprintf($clang->gT("User registration at '%s'","unescaped"),$sitename);
             $to = $new_user." <$new_email>";
@@ -583,7 +587,12 @@ elseif (($action == "deluser" || $action == "finaldeluser") && ($_SESSION['USER_
                     $dquery="DELETE FROM {$dbprefix}survey_permissions WHERE uid=".$postuserid;
                     $dresult=$connect->Execute($dquery); //Checked
 
-                    if($postuserid == $_SESSION['loginID']) killSession();	// user deleted himself
+                    if($postuserid == $_SESSION['loginID'])
+                    {
+                      killSession();    // user deleted himself
+                      header( "Location: " . $homeurl . "/admin.php");
+                      die();
+                    }
 
                     $addsummary .= "<br />".$clang->gT("Username").": {$postuser}<br /><br />\n";
                     $addsummary .= "<div class=\"successheader\">".$clang->gT("Success!")."</div>\n";

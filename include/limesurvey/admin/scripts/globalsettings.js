@@ -1,4 +1,4 @@
-// $Id: globalsettings.js 9648 2011-01-07 13:06:39Z c_schmitz $
+// $Id: globalsettings.js 8964 2010-07-20 20:46:47Z anishseth $
 
 $(document).ready(function(){
     $("#emailmethod").change(Emailchange);

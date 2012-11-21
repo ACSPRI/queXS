@@ -161,7 +161,7 @@ if (!defined('PHP_EXEC')) define('PHP_EXEC', "php");
 /**
  * Path to ADODB
  */
-if (!defined('ADODB_PATH')) define('ADODB_PATH',dirname(__FILE__).'/../adodb/');
+if (!defined('ADODB_PATH')) define('ADODB_PATH',dirname(__FILE__).'/include/limesurvey/classes/adodb/');
 
 /**
  * Path to the HTPASSWD file read/writable by the web server user for htpasswd integration

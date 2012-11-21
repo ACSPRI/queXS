@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: iterate_survey.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: iterate_survey.php 11664 2011-12-16 05:19:42Z tmswhite $
  */
 /*
  * Set completed answers to the incomplete state and reset the tokens to 'not used' so that
@@ -54,13 +54,12 @@ if  ($subaction=='unfinalizeanswers')
     $updateqr = "UPDATE $surveytable SET submitdate=NULL, lastpage=NULL;\n";
     $updateres = $connect->Execute($updateqr) or safe_die("UnFinilize answers failed:<br />\n" . $connect->ErrorMsg() . "<br />$updateqr");
     // Finally, reset the token completed and sent status
-    $updateqr="UPDATE ".db_table_name("tokens_$surveyid")." SET sent='N', remindersent='N', remindercount=0, completed='N', usesleft=1";
+    $updateqr="UPDATE ".db_table_name("tokens_$surveyid")." SET sent='N', remindersent='N', remindercount=0, completed='N', usesleft=1 where usesleft=0";
     $updateres=$connect->Execute($updateqr) or safe_die ("Couldn't reset token completed state<br />$updateqr<br />".$connect->ErrorMsg());
     $iteratesurveyoutput .= "<br />\n";
     $iteratesurveyoutput .= "<div class='header ui-widget-header'>".$clang->gT("Iterate survey")."</div>\n";
-    $iteratesurveyoutput .=  "<p style='width:100%;'>\n"
+    $iteratesurveyoutput .=  "<p>\n"
     . "<font class='successtitle'>".$clang->gT("Success")."</font><br />\n"
     . $clang->gT("Answers and tokens have been re-opened.")."<br />\n"
-    . "</p>\n"
-    . "<table><tr><td>";
+    . "</p>\n";
 }

@@ -12,7 +12,7 @@
  *
  * $Id: updater.php 8987 2010-07-27 12:59:34Z c_schmitz $
  */
-list(,$updaterversion)=explode(' ','$Rev: 10925 $');  // this is updated by subversion so don't change this string
+$updaterversion='120614';
 
 if (isset($_REQUEST['update'])) die();
 
@@ -229,13 +229,13 @@ function UpdateStep1()
     if ($error)
     {
         echo '<br /><br />'.$clang->gT('When checking your installation we found one or more problems. Please check for any error messages above and fix these before you can proceed.');
-        echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step1', '_self')\"";
+        echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step1', '_top')\"";
         echo ">".$clang->gT('Check again')."</button></p>";
     }
     else
     {
         echo '<br /><br />'.$clang->gT('Everything looks alright. Please proceed to the next step.');
-        echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step2', '_self')\"";
+        echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step2', '_top')\"";
         if ($updatekey==''){    echo "disabled='disabled'"; }
         echo ">".sprintf($clang->gT('Proceed to step %s'),'2')."</button></p>";
     }
@@ -304,7 +304,7 @@ function UpdateStep2()
             <div class='warningheader'>".$clang->gT('Update server busy')."</div>
             <p>".$clang->gT('The update server is currently busy. This usually happens when the update files for a new version are being prepared.')."<br /><br />
                ".$clang->gT('Please be patient and try again in about 10 minutes.')."</p></div>
-            <p><button onclick=\"window.open('$scriptname?action=globalsettings', '_self')\">".sprintf($clang->gT('Back to global settings'),'4')."</button></p>";
+            <p><button onclick=\"window.open('$scriptname?action=globalsettings', '_top')\">".sprintf($clang->gT('Back to global settings'),'4')."</button></p>";
 
     }
     else
@@ -390,13 +390,13 @@ function UpdateStep2()
         if (count($readonlyfiles)>0)
         {
             echo '<br />'.$clang->gT('When checking your file permissions we found one or more problems. Please check for any error messages above and fix these before you can proceed.');
-            echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step2', '_self')\"";
+            echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step2', '_top')\"";
             echo ">".$clang->gT('Check again')."</button></p>";
         }
         else
         {
             echo $clang->gT('Please check any problems above and then proceed to the next step.').'<br />';
-            echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step3', '_self')\" ";
+            echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step3', '_top')\" ";
             echo ">".sprintf($clang->gT('Proceed to step %s'),'3')."</button></p>";
 
         }
@@ -435,6 +435,7 @@ function UpdateStep3()
     $basefilename = date("YmdHis-").md5(uniqid(rand(), true));
     //Now create a backup of the files to be delete or modified
 
+    $filestozip=array();
     Foreach ($updateinfo['files'] as $file)
     {
         if (is_file($publicdir.$file['file'])===true) // Sort out directories
@@ -450,7 +451,6 @@ function UpdateStep3()
     //PclTraceOn(1);
 
     $archive = new PclZip($tempdir.DIRECTORY_SEPARATOR.'files-'.$basefilename.'.zip');
-
 
     $v_list = $archive->add($filestozip, PCLZIP_OPT_REMOVE_PATH, $publicdir);
 
@@ -482,7 +482,7 @@ function UpdateStep3()
     }
 
     echo $clang->gT('Please check any problems above and then proceed to the final step.');
-    echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step4', '_self')\" ";
+    echo "<p><button onclick=\"window.open('$scriptname?action=update&amp;subaction=step4', '_top')\" ";
     echo ">".sprintf($clang->gT('Proceed to step %s'),'4')."</button></p>";
     echo '</div>';
 }
@@ -609,7 +609,7 @@ function UpdateStep4()
     }
 
 
-    echo "<p><button onclick=\"window.open('$scriptname?action=globalsettings&amp;subaction=updatecheck', '_self')\" >".$clang->gT('Back to main menu')."</button></p>";
+    echo "<p><button onclick=\"window.open('$scriptname?action=globalsettings&amp;subaction=updatecheck', '_top')\" >".$clang->gT('Back to main menu')."</button></p>";
     echo '</div>';
     setGlobalSetting('updatelastcheck','1980-01-01 00:00');
     setGlobalSetting('updateavailable','0');
@@ -623,7 +623,7 @@ function CheckForDBUpgrades()
 {
     global $connect, $databasetype, $dbprefix, $dbversionnumber, $clang;
     $currentDBVersion=GetGlobalSetting('DBVersion');
-    if (intval($dbversionnumber)>intval($currentDBVersion))
+    if (floatval($dbversionnumber)>intval($currentDBVersion))
     {
         if(isset($_GET['continue']) && $_GET['continue']==1)
         {
@@ -635,8 +635,8 @@ function CheckForDBUpgrades()
             include ('upgrade-'.$upgradedbtype.'.php');
             include ('upgrade-all.php');
             $tables = $connect->MetaTables();
-            db_upgrade_all(intval($currentDBVersion));
-            db_upgrade(intval($currentDBVersion));
+            db_upgrade_all(floatval($currentDBVersion));
+            db_upgrade(floatval($currentDBVersion));
             echo "<br />".sprintf($clang->gT("Database has been successfully upgraded to version %s"),$dbversionnumber);
         }
         else {

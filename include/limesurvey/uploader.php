@@ -15,22 +15,6 @@ else
     $surveyid=sanitize_int($surveyid);
 }
 
-if (isset($_GET['filegetcontents']))
-{
-    $sFileName=sanitize_filename($_GET['filegetcontents']);
-    if (substr($sFileName,0,6)=='futmp_')
-    {
-        $sFileDir = $tempdir.'/upload/';
-    }
-    elseif(substr($sFileName,0,3)=='fu_'){
-        $sFileDir = "{$uploaddir}/surveys/{$surveyid}/files/";
-    }
-    readfile($sFileDir.$sFileName);
-    exit();
-}
-
-
-
 // Compute the Session name
 // Session name is based:
 // * on this specific limesurvey installation (Value SessionName in DB)
@@ -69,19 +53,39 @@ if (empty($_SESSION) || !isset($_SESSION['fieldname']))
     die("You don't have a valid session !");
 }
 
+if (isset($_GET['filegetcontents']))
+{
+    $sFileName=sanitize_filename($_GET['filegetcontents']);
+    if (substr($sFileName,0,6)=='futmp_')
+    {
+        $sFileDir = $tempdir.'/upload/';
+    }
+    elseif(substr($sFileName,0,3)=='fu_'){
+        $sFileDir = "{$uploaddir}/surveys/{$surveyid}/files/";
+    }
+    readfile($sFileDir.$sFileName);
+    exit();
+}
+
 $meta = '<script type="text/javascript">
     var surveyid = "'.$surveyid.'";
     var fieldname = "'.$_GET['fieldname'].'";
     var questgrppreview  = '.$_GET['preview'].';
+    var rooturl ="'.$rooturl.'";
 </script>';
 
 $meta .='<script type="text/javascript" src="scripts/ajaxupload.js"></script>
 <script type="text/javascript" src="scripts/uploader.js"></script>
 <link type="text/css" href="scripts/uploader.css" rel="stylesheet" />';
-
-$baselang = GetBaseLanguageFromSurveyID($surveyid);
-$clang = new limesurvey_lang($baselang);
-
+if (isset($_SESSION['s_lang']))
+{
+    $language = $_SESSION['s_lang'];
+}
+else
+{
+    $language = GetBaseLanguageFromSurveyID($surveyid);
+}
+$clang = new limesurvey_lang($language);
 $header = getHeader($meta);
 
 echo $header;
@@ -104,13 +108,15 @@ echo "<script type='text/javascript'>
 
 $fn = $_GET['fieldname'];
 $qid = $_GET['qid'];
+$minfiles = sanitize_int($_GET['minfiles']);
+$maxfiles = sanitize_int($_GET['maxfiles']);
 $qidattributes=getQuestionAttributes($qid);
 
 $body = '
         <div id="notice"></div>
         <input type="hidden" id="ia"                value="'.$fn.'" />
-        <input type="hidden" id="'.$fn.'_minfiles"          value="'.$qidattributes['min_num_of_files'].'" />
-        <input type="hidden" id="'.$fn.'_maxfiles"          value="'.$qidattributes['max_num_of_files'].'" />
+        <input type="hidden" id="'.$fn.'_minfiles"          value="'.$minfiles.'" />
+        <input type="hidden" id="'.$fn.'_maxfiles"          value="'.$maxfiles.'" />
         <input type="hidden" id="'.$fn.'_maxfilesize"       value="'.$qidattributes['max_filesize'].'" />
         <input type="hidden" id="'.$fn.'_allowed_filetypes" value="'.$qidattributes['allowed_filetypes'].'" />
         <input type="hidden" id="preview"                   value="'.$_SESSION['preview'].'" />
@@ -133,4 +139,3 @@ $body = '
     </body>
 </html>';
 echo $body;
-?>

@@ -10,14 +10,13 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: browse.php 10925 2011-09-02 14:12:02Z c_schmitz $
 */
 
 include_once("login_check.php");  //Login Check dies also if the script is started directly
 
-if (!isset($limit)) {$limit=returnglobal('limit');}
+if (!isset($limit)) {$limit=(int)returnglobal('limit');}
 if (!isset($surveyid)) {$surveyid=returnglobal('sid');}
-if (!isset($id)) {$id=returnglobal('id');}
+if (!isset($id)) {$id=(int)returnglobal('id');}
 if (!isset($order)) {$order=returnglobal('order');}
 if (!isset($browselang)) {$browselang=returnglobal('browselang');}
 
@@ -121,7 +120,7 @@ if ($subaction == "id")
     $dateformatdetails=getDateFormatData($_SESSION['dateformat']);
 
     //SHOW HEADER
-    if (!isset($_POST['sql']) || !$_POST['sql']) {$browseoutput .= $surveyoptions;} // Don't show options if coming from tokens/statistics script
+    if (!isset($_SESSION['sql']) || !$_SESSION['sql']) {$browseoutput .= $surveyoptions;} // Don't show options if coming from tokens/statistics script
     //FIRST LETS GET THE NAMES OF THE QUESTIONS AND MATCH THEM TO THE FIELD NAMES FOR THE DATABASE
 
     $fncount = 0;
@@ -188,19 +187,21 @@ if ($subaction == "id")
 
     $nfncount = count($fnames)-1;
     //SHOW INDIVIDUAL RECORD
-    $idquery = "SELECT * FROM $surveytable ";
+    $idquery = "SELECT * FROM {$surveytable} s";
     if ($surveyinfo['anonymized'] == "N" && db_tables_exist($tokentable))
-        $idquery .= "LEFT JOIN $tokentable ON $surveytable.token = $tokentable.token ";
+        $idquery .= " LEFT JOIN {$tokentable} t ON s.token = t.token ";
+
 
     //queXS Addition
     $qfs = questionnaireSampleFilterstate();
     if ($qfs != false)
     {
         //Limit responses by questionnaire and/or sample
-        $query .= "     JOIN `case` AS c ON ($surveytable.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+        $query .= "     JOIN `case` AS c ON (s.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
         if ($qfs[1] != 0) //if a sample is selected
-                $query .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
+                $query .= "     JOIN `sample` AS ss ON (ss.sample_id = c.sample_id AND ss.import_id = '{$qfs[1]}') ";
     }
+
 
     if (incompleteAnsFilterstate() == "inc")
         $idquery .= " WHERE (submitdate = ".$connect->DBDate('1980-01-01'). " OR submitdate IS NULL) AND ";
@@ -209,12 +210,7 @@ if ($subaction == "id")
     else
         $idquery .= " WHERE ";
     if ($id < 1) { $id = 1; }
-    if (isset($_POST['sql']) && $_POST['sql'])
-    {
-        if (get_magic_quotes_gpc()) {$idquery .= stripslashes($_POST['sql']);}
-        else {$idquery .= "{$_POST['sql']}";}
-    }
-    else {$idquery .= "$surveytable.id = $id";}
+    $idquery .= " s.id = $id";
     $idresult = db_execute_assoc($idquery) or safe_die ("Couldn't get entry<br />\n$idquery<br />\n".$connect->ErrorMsg());
     while ($idrow = $idresult->FetchRow())
     {
@@ -273,6 +269,10 @@ if ($subaction == "id")
         $highlight=false;
         for ($i = 0; $i < $nfncount+1; $i++)
         {
+            if ($fnames[$i][0] != 'completed' && is_null($idrow[$fnames[$i][0]]))
+            {
+                continue;   // irrelevant, so don't show
+            }
             $inserthighlight='';
             if ($highlight)
                 $inserthighlight="class='highlight'";
@@ -329,20 +329,21 @@ elseif ($subaction == "all")
                           var noFilesSelectedForDeletion = '".$clang->gT('Please select at least one file for deletion','js')."';
                           var noFilesSelectedForDnld = '".$clang->gT('Please select at least one file for download','js')."';
                         </script>\n";
-    if (!isset($_POST['sql']))
-    {$browseoutput .= $surveyoptions;} //don't show options when called from another script with a filter on
-    else
+    $browseoutput .= $surveyoptions;
+    $bClearFilter=returnglobal('clearfilter');
+    if ($bClearFilter)
     {
-        $browseoutput .= "\t<tr><td colspan='2' height='4'><strong>".$clang->gT("Browse Responses").":</strong> $surveyname</td></tr>\n"
-                ."\n<tr><td><table width='100%' align='center' border='0' bgcolor='#EFEFEF'>\n"
-                ."\t<tr>\n"
-                ."<td align='center'>\n"
-                ."".$clang->gT("Showing Filtered Results")."<br />\n"
-                ."&nbsp;[<a href=\"javascript:window.close()\">".$clang->gT("Close")."</a>]"
-                ."</font></td>\n"
-                ."\t</tr>\n"
-                ."</table></td></tr>\n";
-
+        unset($_SESSION['sql']);
+    }
+    if (isset($_SESSION['sql']))
+    {
+        $browseoutput .= "<form action='$scriptname?clearfilter=1' method='post'>
+        <p>".$clang->gT("Note:").'&nbsp;'.$clang->gT("Showing Filtered Results")." "
+        ."&nbsp;<input type='submit' value='".$clang->gT("Remove filter")."'>
+        <input type='hidden' name='sid' value='$surveyid' />
+        <input type='hidden' name='action' value='browse' />
+        <input type='hidden' name='subaction' value='all' />
+        </p></form>\n";
     }
 
     //Delete Individual answer using inrow delete buttons/links - checked
@@ -597,6 +598,7 @@ elseif ($subaction == "all")
     }
 
 
+
     $selectedgroup = returnglobal('selectgroup'); // group token id
 
     $sql_where = "";
@@ -624,9 +626,9 @@ elseif ($subaction == "all")
     if ($limit > $dtcount) {$limit=$dtcount;}
 
     //NOW LETS SHOW THE DATA
-    if (isset($_POST['sql']))
+    if (isset($_SESSION['sql']))
     {
-        if ($_POST['sql'] == "NULL" )
+        if ($_SESSION['sql'] == "NULL" )
         {
             if ($surveyinfo['anonymized'] == "N" && db_tables_exist($tokentable))
                 $dtquery = "SELECT * FROM $surveytable LEFT JOIN $tokentable ON $surveytable.token = $tokentable.token ";
@@ -657,6 +659,7 @@ elseif ($subaction == "all")
         }
         else
         {
+
             if ($surveytable['anonymized'] == "N" && db_tables_exist($tokentable))
                 $dtquery = "SELECT * FROM $surveytable LEFT JOIN $tokentable ON $surveytable.token = $tokentable.token WHERE 1=1 ";
             else
@@ -681,9 +684,9 @@ elseif ($subaction == "all")
             {
                 $dtquery .= " AND submitdate IS NOT NULL ";
             }
-            if (stripcslashes($_POST['sql']) !== "")
+            if ($_SESSION['sql'] !== "")
             {
-                $dtquery .= ' AND '.stripcslashes($_POST['sql'])." ";
+                $dtquery .= ' AND '.$_SESSION['sql']." ";
             }
             $dtquery .= " ORDER BY {$surveytable}.id";
         }
@@ -703,6 +706,7 @@ elseif ($subaction == "all")
 	        if ($qfs[1] != 0) //if a sample is selected
 	                $dtquery .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 	    }
+
 
         if (incompleteAnsFilterstate() == "inc")
         {
@@ -772,11 +776,12 @@ elseif ($subaction == "all")
 
     $browseoutput .="<form action='$scriptname?action=browse' id='browseresults' method='post'><font size='1' face='verdana'>\n"
             ."<img src='$imageurl/blank.gif' width='31' height='20' border='0' hspace='0' align='right' alt='' />\n"
-           ."&nbsp;&nbsp; ".$clang->gT("Display:")."<select name='filterinc' onchange='javascript:document.getElementById(\"limit\").value=\"\";submit();'>\n"
+            ."&nbsp;&nbsp; ".$clang->gT("Display:")."<select name='filterinc' onchange='javascript:document.getElementById(\"limit\").value=\"\";submit();'>\n"
             ."\t<option value='show' $selectshow>".$clang->gT("All responses")."</option>\n"
             ."\t<option value='filter' $selecthide>".$clang->gT("Completed responses only")."</option>\n"
             ."\t<option value='incomplete' $selectinc>".$clang->gT("Incomplete responses only")."</option>\n"
             ."</select>\n";
+
 
 
 $quexsfilterstate = questionnaireSampleFilterstate();
@@ -792,6 +797,7 @@ $quexsfilterstate = questionnaireSampleFilterstate();
             ."&nbsp;&nbsp; ".$clang->gT("Starting from:")."<input type='text' size='4' value='$start' name='start' id='start' />\n"
             ."&nbsp;&nbsp; <input type='submit' value='".$clang->gT("Show")."' />\n";
  
+
 
      $browseoutput .= "</font>\n"
             ."<input type='hidden' name='sid' value='$surveyid' />\n"

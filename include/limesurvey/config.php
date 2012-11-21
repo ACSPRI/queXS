@@ -10,7 +10,7 @@
  * free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: config.php 9651 2010-12-16 14:25:20Z c_schmitz $
+ * $Id$
  */
 
 /* IMPORTANT NOTICE
@@ -22,16 +22,18 @@
  *  All settings in config.php overwrite the default values from config-defaults.php
  */
 
+ 
 /**
  * queXS Configuration file - so you do not have to configure this file manually
  */
 require_once(dirname(__FILE__).'/../../config.inc.php');
 
+
 // Basic Setup
 
 $databasetype       =   'mysql';       // ADOdb database driver - valid values are mysql, mysqli, odbc_mssql, mssql_n, odbtp or postgres
                                        // mysql: Recommended driver for mysql
-                                       // mysqli: Slightly faster driver for mysql - not on all server systems available 
+                                       // mysqli: Slightly faster driver for mysql - not on all server systems available
                                        // odbc_mssql: MSSQL driver using ODBC with MS SQL Server
                                        // mssqlnative: Native SQL Server driver for SQL Server 2005+
                                        // mssql_n: Experimental driver for MS SQL Server which handles UTF-8 charsets
@@ -41,18 +43,18 @@ $databasetype       =   'mysql';       // ADOdb database driver - valid values a
 $databaselocation   =   LDB_HOST;   // Network location of your Database - for odbc_mssql or mssqlnative use the mssql servername, not localhost or IP
 $databasename       =   LDB_NAME;  // The name of the database that we will create
 $databaseuser       =   LDB_USER;        // The name of a user with rights to create db (or if db already exists, then rights within that db)
-$databasepass       =  	LDB_PASS;            // Password of db user
+$databasepass       =   LDB_PASS;            // Password of db user
 $dbprefix           =   LIME_PREFIX;       // A global prefix that can be added to all LimeSurvey tables. Use this if you are sharing
-                                       // a database with other applications. Suggested prefix is 'lime_'
+// a database with other applications. Suggested prefix is 'lime_'
 
 // File Locations
 $rooturl            =   substr(LIME_URL,0,-1); // The root web url for your limesurvey installation (without a trailing slash).
 // The double quotes (") are important.
 
-$rootdir            =   dirname(__FILE__);  // This is the physical disk location for your limesurvey installation. Normally you don't have to touch this
-                                            // setting. If you use IIS then you MUST enter the complete rootdir e.g. : $rootDir='C:\Inetpub\wwwroot\limesurvey'!
-                                            // Some IIS and OS/2 installations also require to use forward slashes
-                                            // instead of backslashes, e.g.  $rootDir='C:/Inetpub/wwwroot/limesurvey'!
+$rootdir            =   dirname(__FILE__); // This is the physical disk location for your limesurvey installation. Normally you don't have to touch this
+// setting. If you use IIS then you MUST enter the complete rootdir e.g. : $rootDir='C:\Inetpub\wwwroot\limesurvey'!
+// Some IIS and OS/2 installations also require to use forward slashes
+// instead of backslashes, e.g.  $rootDir='C:/Inetpub/wwwroot/limesurvey'!
 
 // Installation Setup
 $defaultuser        =   'admin';           // This is the username when LimeSurvey is installed and the administration user is created on installation

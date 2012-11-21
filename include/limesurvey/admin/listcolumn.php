@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: listcolumn.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: listcolumn.php 11664 2011-12-16 05:19:42Z tmswhite $
  */
 
 include_once("login_check.php");

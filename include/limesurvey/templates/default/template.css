@@ -175,7 +175,7 @@ a:link,a:visited {
 }
 
 .printouttable .printanswersgroup td{
-  text-align: center;        
+  text-align: center;
   font-weight:bold;
   padding-top:1em;
 }
@@ -197,7 +197,7 @@ a:link,a:visited {
 
 /* Format the language changer combobox on the public homepage */
 .languagechanger {
-  
+
 }
 
 /* Basic formatting for the four keyparts of an question */
@@ -323,7 +323,7 @@ span.surveydescription {
 
 td.survey-welcome {
 	text-align: center;
-	padding-top: 20px;
+	padding: 10px;
 }
 
 span.surveywelcome {
@@ -374,6 +374,10 @@ span.surveywelcome {
 
 .language-changer {
 	text-align: center;
+}
+
+select.languagechanger {
+	margin-top: 3px;
 }
 
 table.group {
@@ -470,8 +474,8 @@ table.clearall-result td {
 .register-table td {
 	text-align: center;
 }
-
-.register-message-1 {
+                     
+.register-message-1, strong {
 	font-weight: bold;
 }
 
@@ -607,13 +611,13 @@ table.clearall-result td {
 ,.array-5-pt
 ,.array-10-pt
 ,.array-yes-uncertain-no
-,.array-increase-same-decrease 
-,.array-flexible-row 
-,.array-flexible-column 
-,.slider 
-,.array-multi-flexi 
+,.array-increase-same-decrease
+,.array-flexible-row
+,.array-flexible-column
+,.slider
+,.array-multi-flexi
 ,.array-multi-flexi-text
-,.array-flexible-duel-scale 
+,.array-flexible-duel-scale
 */ /* - - -  - - -  - - -  - - - - - -  - - -  - - - -
    START: General list styles - - -  - - -  - - - - */
 .choice-5-pt-radio .answer ul,.list-radio-flexible .answer ul,.list-radio .answer ul,.list-with-comment .answer ul,.multiple-opt .answer ul,.multiple-opt-comments .answer ul,.multiple-short-txt .answer ul,.numeric-multi .answer ul,.yes-no .answer ul,.gender .answer ul
@@ -659,15 +663,15 @@ table.clearall-result td {
 }
 
 .date p.question select.day {
-  
+
 }
 
 .date p.question select.month {
-  
+
 }
 
 .date p.question select.year {
-  
+
 }
 
 .date p.tip,.numeric-multi p.tip,.numeric p.tip {
@@ -679,14 +683,6 @@ table.clearall-result td {
 
 .numeric p.question {
   margin-left: 1em;
-}
-
-.numeric-multi ul {
-  
-}
-
-.numeric-multi span,.multiple-short-txt .question .answer ul li span {
-  font-style: italic;
 }
 
 .numeric-multi p.tip.problem {
@@ -717,14 +713,21 @@ table.clearall-result td {
 .list-radio-flexible
 .list-radio
 */
-.list-radio .answer li label {
+.list-radio .answer li label,
+.list-with-comment .answer li label {
   display: inline-block;
   width: 85%;
 }
-
-.list-radio .answer li input {
+.list-radio .answer li.other label,
+.list-with-comment .answer li.other label {
+  display: inline;
+  width: auto;
+}
+.list-radio .answer li input,
+.list-with-comment .answer li input {
   vertical-align: top !important;
   margin-top: 2px;
+  *margin-top: -2px; /* IE7 and below */
 }
 
 ul.cols-2,table.cols-2,ul.cols-3,table.cols-3,ul.cols-4,table.cols-4,ul.cols-5,table.cols-5,ul.cols-6,table.cols-6,ul.cols-7,table.cols-7,ul.cols-8,table.cols-8
@@ -808,10 +811,20 @@ ul.cols-8 li,ul.cols-8-ul,table.cols-8 td {
 /* DEFINED ABOVE UNDER "General list styles" - - - - -
 .multiple-opt
 */
-.language {
-  
+.multiple-opt .answer li input, .multiple-opt-comments .answer li .option input {
+  vertical-align: top !important;
+  margin-top: 2px;
+  *margin-top: -2px; /* IE7 and below */
 }
 
+.multiple-opt .answer li label, .multiple-opt-comments .answer li .option label {
+  display: inline-block;
+  width: 85%;
+}
+.multiple-opt .answer li.other label, .multiple-opt-comments .answer li.other .option label {
+  display: inline;
+  width: auto;
+}
 /* The following styles only apply to modern (relatively) complete CSS2 compliant browsers. (Not less than IE 8) */
 .multiple-opt-comments ul,.multiple-short-txt ul,.numeric-multi ul {
   display: table;
@@ -877,28 +890,14 @@ ul.cols-8 li,ul.cols-8-ul,table.cols-8 td {
   margin-bottom: 0.2em;
 }
 
-.numeric-multi ul.multiplenumerichelp.slider {
-  display: table;
+.numeric-multi li.multiplenumerichelp span {
+	text-align: center;
+	background: transparent none;
 }
 
-.numeric-multi ul.multiplenumerichelp.slider li {
-  display: table-row;
-}
-
-.numeric-multi ul.multiplenumerichelp li label,.numeric-multi ul.multiplenumerichelp.slider li label
-  {
-  padding: 0.3em 0% 0% 0%;
-  display: table-cell;
-}
-
-.numeric-multi ul.multiplenumerichelp li span,.numeric-multi ul.multiplenumerichelp.slider li span
-  {
-  padding: 0% 0% 0% 0.3em;
-  display: table-cell;
-}
-
-.numeric-multi li.multiplenumerichelp span input {
-  
+.numeric-multi li.multiplenumerichelp span span {
+	display: inline;
+	padding: 0;
 }
 
 .text-short input,.text-short textarea,.text-long textarea,.text-huge textarea
@@ -1184,7 +1183,7 @@ td.rank label,td.rank td strong {
 }
 
 #tokenform input {
-  
+
 }
 
 #tokenform label {
@@ -1304,7 +1303,7 @@ div.questionTitle {
   border-left: 1px solid #ccc;
 }
 
-#index h2 { 
+#index h2 {
   padding: 1em;
   background: #eef6ff;
   text-align: center;
@@ -1341,3 +1340,111 @@ div.questionTitle {
 #index .container .row.current { background: #1D2D45; color: #fff; }
 #index .container .row.missing { background: #CC0000; color: #fff; }
 #index .container input { margin: 1em; }
+
+/* Tips / Validation Messages */
+/* If the question is invalid, but has not been submitted, give it a pleasant warning color */
+div.em_num_answers.good {
+ color: green;
+}
+
+div.em_num_answers.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_value_range.good {
+  color: green;
+}
+div.em_value_range.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_sum_range.good {
+  color: green;
+}
+div.em_sum_range.error {
+  color: #FF00FF;
+  display: block;
+}
+
+div.em_regex_validation {
+  display: none;
+}
+div.em_regex_validation.good {
+  color: green;
+}
+div.em_regex_validation.error {
+  color: #FF00FF;
+}
+
+div.em_q_fn_validation.good {
+  color: green;
+}
+div.em_q_fn_validation.error {
+  color: #FF00FF;
+}
+
+div.em_sq_fn_validation.good {
+  color: green;
+}
+div.em_sq_fn_validation.error {
+  color: #FF00FF;
+}
+
+div.em_other_comment_mandatory.good {
+  display: none;
+}
+div.em_other_comment_mandatory.error {
+  color: #FF00FF;
+  display: block;
+}
+
+input.em_sq_validation.good, textarea.em_sq_validation.good {
+}
+
+input.em_sq_validation.error, textarea.em_sq_validation.error {
+  color: black;
+  background-color:  pink;
+}
+
+span.dynamic_sum {
+  font-weight: bold;
+  background-color: #d3d3d3;
+}
+span.dynamic_sum.good {
+  color: green;
+}
+span.dynamic_sum.error {
+  color: red;
+}
+
+span.dynamic_remaining {
+  font-weight: bold;
+  background-color: #d3d3d3;
+}
+span.dyanamic_remaining.good {
+  color: green;
+}
+span.dynamic_remaining.error {
+  color: red;
+}
+
+/* If  it is still invalid after submit, flag it in red */
+.input-error div.error {
+  color: red;
+  display: block;
+}
+
+span.hide-tip div.good {
+    display: none;
+}
+
+span.hide-tip div.error {
+    color: #FF00FF;
+}
+
+.input-error span.hide-tip div.error {
+    color: red;
+    display: block;
+}

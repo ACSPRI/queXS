@@ -1,4 +1,4 @@
-// $Id: answers.js 10065 2011-05-15 09:28:52Z c_schmitz $
+// $Id: answers.js 12442 2012-02-11 00:07:00Z shnoulle $
 var labelcache=[];
 $(document).ready(function(){
        $('.tab-page:first .answertable tbody').sortable({   containment:'parent',
@@ -97,6 +97,12 @@ function addinput()
     newposition=Number(position)+1;
     languages=langs.split(';');
 
+    sNextCode=getNextCode($(this).parent().parent().find('.code').val());
+    while ($(this).parent().parent().parent().find('input[value="'+sNextCode+'"]').length>0 && sNextCode!=$(this).parent().parent().find('.code').val())
+    {
+        sNextCode=getNextCode(sNextCode);
+    }
+
     for (x in languages)
     {
         tablerow=$('#tabpage_'+languages[x]).find('#answers_'+languages[x]+'_'+scale_id+' .row_'+position);
@@ -110,7 +116,6 @@ function addinput()
             assessment_style='style="display:none;"';
             assessment_type='hidden';
         }
-        sNextCode=getNextCode($(this).parent().parent().find('.code').val());
         if (x==0) {
             inserthtml='<tr class="row_'+newposition+'" style="display:none;"><td><img class="handle" src="../images/handle.png" /></td><td><input class="code" onkeypress="return goodchars(event,\'1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWZYZ_\')" type="text" maxlength="5" size="5" value="'+htmlspecialchars(sNextCode)+'" /></td><td '+assessment_style+'><input class="assessment" type="'+assessment_type+'" maxlength="5" size="5" value="1"/></td><td><input type="text" size="100" class="answer" value="'+htmlspecialchars(newansweroption_text)+'"></input><a class="editorLink"><img class="btneditanswerena" src="../images/edithtmlpopup.png" width="16" height="16" border="0" /><img class="btneditanswerdis" alt="Give focus to the HTML editor popup window" src="../images/edithtmlpopup_disabled.png" style="display: none;" width="16" height="16" align="top" border="0" /></a></td><td><img src="../images/addanswer.png" class="btnaddanswer" /><img src="../images/deleteanswer.png" class="btndelanswer" /></td></tr>'
         }
@@ -314,8 +319,11 @@ function lsbrowser()
         }
         else
         {
+            $("#labelsetpreview").html("<p class='ui-state-highlight ui-corner-all ui-notify-message'>"+strNoLabelSet+"</p>");
             $('#btnlsreplace').addClass('ui-state-disabled');
             $('#btnlsinsert').addClass('ui-state-disabled');
+            $('#btnlsreplace').attr('disabled','disabled');
+            $('#btnlsinsert').attr('disabled','disabled');
         }
     });
 

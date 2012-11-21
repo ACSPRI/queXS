@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: statistics.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: statistics.php 11664 2011-12-16 05:19:42Z tmswhite $
  *
  */
 
@@ -270,6 +270,7 @@ $quexsfilterstate = questionnaireSampleFilterstate();
     . get_questionnaire_sample_list($surveyid,$quexsfilterstate)
     ."</select></li>\n";
 
+
 $statisticsoutput .= "<li><label for='viewsummaryall'>".$clang->gT("View summary of all available fields")."</label>
                 <input type='checkbox' id='viewsummaryall' name='viewsummaryall' ";
 if (isset($_POST['viewsummaryall'])) {$statisticsoutput .= "checked='checked'";}
@@ -291,7 +292,7 @@ $language_options="";
 foreach ($survlangs as $survlang)
 {
     $language_options .= "\t<option value=\"{$survlang}\"";
-    if ($_SESSION['adminlang'] == $survlang)
+    if ($statlang == $survlang)
     {
         $language_options .= "selected=\"selected\" " ;
     }
@@ -349,6 +350,12 @@ if ($grapherror!='')
 }
 $statisticsoutput.="</li>\n";
 
+//Show text responses inline
+$statisticsoutput .= "<li>
+    <label>".$clang->gT("Show text responses inline").":</label>
+    <input type='checkbox' id='showtextinline' name='showtextinline' ";
+if(isset($_POST['showtextinline'])) { $statisticsoutput .= "checked='checked'"; }
+$statisticsoutput .= "/><br /></li>\n";
 //Output selector
 $statisticsoutput .= "<li>"
 ."<label>"
@@ -1275,7 +1282,7 @@ foreach ($filters as $flt)
             for ($i=1; $i<=$count; $i++)
             {
                 //adjust layout depending on counter
-                if ($counter2 == 4) {$statisticsoutput .= "\t\t\t\t</tr>\n\t\t\t\t<tr>\n"; $counter=0;}
+                if ($counter2 == 4) {$statisticsoutput .= "\t\t\t\t</tr>\n\t\t\t\t<tr>\n"; $counter2=0;}
 
                 //myfield is the SGQ identifier
                 //myfield2 is just used as comment in HTML like "R40X34X1721-1"

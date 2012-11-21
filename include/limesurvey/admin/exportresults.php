@@ -1,17 +1,17 @@
 <?php
 /*
- * LimeSurvey
- * Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
- * All rights reserved.
- * License: GNU/GPL License v2 or later, see LICENSE.php
- * LimeSurvey is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
- *
- * $Id: exportresults.php 10925 2011-09-02 14:12:02Z c_schmitz $
- */
+* LimeSurvey
+* Copyright (C) 2007 The LimeSurvey Project Team / Carsten Schmitz
+* All rights reserved.
+* License: GNU/GPL License v2 or later, see LICENSE.php
+* LimeSurvey is free software. This version may have been modified pursuant
+* to the GNU General Public License, and as distributed it includes or
+* is derivative of works licensed under the GNU General Public License or
+* other free or open source software licenses.
+* See COPYRIGHT.php for copyright notices and details.
+*
+* $Id: exportresults.php 11664 2011-12-16 05:19:42Z tmswhite $
+*/
 
 
 //Ensure script is not run directly, avoid path disclosure
@@ -44,7 +44,7 @@ if (!$exportstyle)
 {
 
     //FIND OUT HOW MANY FIELDS WILL BE NEEDED - FOR 255 COLUMN LIMIT
-    $excesscols=createFieldMap($surveyid);
+    $excesscols=createFieldMap($surveyid,'full',false,false,$surveybaselang);
     if ($thissurvey['savetimings'] === "Y") {
         //Append survey timings to the fieldmap array
         $excesscols = $excesscols + createTimingsFieldMap($surveyid);
@@ -110,6 +110,7 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
 
     $exportoutput .='<fieldset><legend>'
+
     .$clang->gT("Questions")."</legend>\n"
     ."<ul>\n"
     ."<li><input type='radio' class='radiobtn' name='exportstyle' value='abrev' id='headabbrev' />"
@@ -292,13 +293,15 @@ switch ( $_POST["type"] ) {
         $workbook->send('results-survey'.$surveyid.'.xls');
         // Creating the first worksheet
 
-        $query="SELECT * FROM {$dbprefix}surveys_languagesettings WHERE surveyls_survey_id=".$surveyid;
+        $query="SELECT * FROM {$dbprefix}surveys_languagesettings WHERE surveyls_survey_id={$surveyid} AND surveyls_language='{$surveybaselang}'" ;
         $result=db_execute_assoc($query) or safe_die("Couldn't get privacy data<br />$query<br />".$connect->ErrorMsg());
         $row = $result->FetchRow();
 
         $row['surveyls_title']=substr(str_replace(array('*', ':', '/', '\\', '?', '[', ']'),array(' '),$row['surveyls_title']),0,31); // Remove invalid characters
-        $sheet =& $workbook->addWorksheet($row['surveyls_title']); // do not translate/change this - the library does not support any special chars in sheet name
+        $sheet =& $workbook->addWorksheet(); // do not translate/change this - the library does not support any special chars in sheet name
+//        $row['surveyls_title']
         $sheet->setInputEncoding('utf-8');
+        $sheet->name=$row['surveyls_title'] ;
         $separator="~|";
         break;
     case "csv":
@@ -311,7 +314,7 @@ switch ( $_POST["type"] ) {
         $pdf->SetFont($pdfdefaultfont,'',$pdffontsize);
         $pdf->AddPage();
         $pdf->intopdf("PDF Export ".date("Y.m.d-H:i",time()));
-        $query="SELECT * FROM {$dbprefix}surveys_languagesettings WHERE surveyls_survey_id=".$surveyid;
+        $query="SELECT * FROM {$dbprefix}surveys_languagesettings WHERE surveyls_survey_id={$surveyid}  AND surveyls_language='{$surveybaselang}'" ;
         $result=db_execute_assoc($query) or safe_die("Couldn't get privacy data<br />$query<br />".$connect->ErrorMsg());
         while ($row = $result->FetchRow())
         {
@@ -421,6 +424,7 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N')
     . " ON $surveytable.token = {$dbprefix}tokens_$surveyid.token";
 }
 
+
 $qfs = questionnaireSampleFilterstate();
 if ($qfs != false)
 {
@@ -507,57 +511,48 @@ for ($i=0; $i<$fieldcount; $i++)
     }
     else
     {
-        //Data field heading!
+        // Prepare the header line
         $fielddata=$fieldmap[$fieldinfo];
         $fqid=$fielddata['qid'];
         $ftype=$fielddata['type'];
         $fsid=$fielddata['sid'];
         $fgid=$fielddata['gid'];
         $faid=$fielddata['aid'];
-        $question=$fielddata['question'];
-        if (isset($fielddata['scale'])) $question = "[{$fielddata['scale']}] ". $question;
-        if (isset($fielddata['subquestion'])) $question = "[{$fielddata['subquestion']}] ". $question;
-        if (isset($fielddata['subquestion2'])) $question = "[{$fielddata['subquestion2']}] ". $question;
-        if (isset($fielddata['subquestion1'])) $question = "[{$fielddata['subquestion1']}] ". $question;
-        if ($exportstyle == "abrev")
+        switch ($exportstyle)
         {
-            $qname=strip_tags_full($question);
-            $qname=mb_substr($qname, 0, 15)."..";
-            $firstline = str_replace("\n", "", $firstline);
-            $firstline = str_replace("\r", "", $firstline);
-            if ($type == "csv") {$firstline .= "\"$qname";}
-            else {$firstline .= "$qname";}
-            if (isset($faid)) {$firstline .= " [{$faid}]"; $faid="";}
-            if ($type == "csv") {$firstline .= "\"";}
-            $firstline .= "$separator";
-        }
-        else    //headcode or full answer
-        {
-            if ($exportstyle == "headcodes")
-            {
+            case 'headcodes': // only question codes
                 $fquest=$fielddata['title'];
                 if (!empty($fielddata['aid'])) $fquest .= ' [' . $fielddata['aid'] . ']';
-            }
-            else
-            {
-                $fquest=$question;
-            }
-            $fquest=FlattenText($fquest,true);
-            if ($type == "csv")
-            {
-                $firstline .="\"$fquest\"$separator";
-            }
-            else
-            {
-                $firstline .= $fquest.$separator;
-            }
+                if (isset($fielddata['scale_id'])) $fquest = $fquest."[{$fielddata['scale_id']}]";
+                $fquest=FlattenText($fquest,true);
+                break;
+            case 'abrev': // Abbreviated question text
+                $fquest=FlattenText($fielddata['question']);
+                $fquest=mb_substr($fquest, 0, 15);
+                if (strlen($fquest)==15) $fquest.='...';
+                if (isset($faid)) {$fquest .= " [{$faid}]";}
+                if (isset($fielddata['scale_id'])) $fquest = $fquest."[{$fielddata['scale_id']}]";
+                break;
+            default: // Full question text
+                $fquest=$fielddata['question'];
+                if (isset($fielddata['scale_id'])) $fquest = "[{$fielddata['scale_id']}] ". $fquest;
+                if (isset($fielddata['subquestion'])) $fquest = "[{$fielddata['subquestion']}] ". $fquest;
+                if (isset($fielddata['subquestion2'])) $fquest = "[{$fielddata['subquestion2']}] ". $fquest;
+                if (isset($fielddata['subquestion1'])) $fquest = "[{$fielddata['subquestion1']}] ". $fquest;
+                $fquest=FlattenText($fquest,true);
+                break;
         }
-        if($convertspacetous == "Y")
+         if($convertspacetous == "Y")
         {
-            $firstline=str_replace(" ", "_", $firstline);
+            $fquest=str_replace(" ", "_", $fquest);
         }
+        if ($type == "csv") {$fquest = "\"$fquest\"";}
+        $firstline .= $fquest.$separator;
+
+
     }
 }
+
 if ($type == "csv") { $firstline = mb_substr(trim($firstline),0,strlen($firstline)-1);}
 else
 {
@@ -582,8 +577,8 @@ if ($type == "doc" || $type == "pdf")
         </style>';
 }
 else
-if ($type == "xls")
-{
+    if ($type == "xls")
+    {
     //var_dump ($firstline);
     $flarray=explode($separator, $firstline);
     $fli=0;
@@ -593,9 +588,9 @@ if ($type == "xls")
         $fli++;
     }
     //print_r($fieldmap);
-}
-else
-{
+    }
+    else
+    {
     $exportoutput .= $firstline; //Sending the header row
 }
 
@@ -627,7 +622,7 @@ if (isset($_POST['answerid']) && $_POST['answerid'] != "NULL") //this applies if
 {
     $where[] = "$surveytable.id=".stripcslashes($_POST['answerid']);
 }
- if (count($where)>0) $dquery .= ' WHERE ' . join(' AND ', $where);
+if (count($where)>0) $dquery .= ' WHERE ' . join(' AND ', $where);
 
 $dquery .= " ORDER BY $surveytable.id";
 
@@ -1115,15 +1110,15 @@ elseif ($answers == "long")        //chose complete answers
 }
 if ($type=='xls')
 {
-//    echo memory_get_peak_usage(true); die();
+    //    echo memory_get_peak_usage(true); die();
     $workbook->close();
 }
 else if($type=='pdf')
-{
+    {
     $pdf->Output($clang->gT($surveyname)." ".$surveyid.".pdf","D");
-}
-else
-{
+    }
+    else
+    {
     echo $exportoutput;
 }
 exit;

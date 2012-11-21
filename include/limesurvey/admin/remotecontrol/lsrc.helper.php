@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: lsrc.helper.php 9656 2011-01-07 20:48:39Z c_schmitz $
+ * $Id: lsrc.helper.php 12399 2012-02-07 20:37:00Z tmswhite $
  *
  */
 /**
@@ -240,6 +240,7 @@ class LsrcHelper {
                         while(isset($emrow["attribute_$c"]))
                         {
                             $fieldsarray["{ATTRIBUTE_$c}"]=$emrow["attribute_$c"];
+                            $fieldsarray["{TOKEN:ATTRIBUTE_$c}"]=$emrow["attribute_$c"];
                             ++$c;
                         }
                         $fieldsarray["{ADMINNAME}"]= $thissurvey['adminname'];
@@ -496,6 +497,7 @@ class LsrcHelper {
                         while(isset($emrow["attribute_$c"]))
                         {
                             $fieldsarray["{ATTRIBUTE_$c}"]=$emrow["attribute_$c"];
+                            $fieldsarray["{TOKEN:ATTRIBUTE_$c}"]=$emrow["attribute_$c"];
                             ++$c;
                         }
 
@@ -853,7 +855,7 @@ class LsrcHelper {
         {
             //$importgroup .= "<strong><font color='red'>".("Error")."</font></strong>\n";
             //$importgroup .= ("This file is not a LimeSurvey group file. Import failed.")."\n";
-            //$importgroup .= "<input type='submit' value='".("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
+            //$importgroup .= "<input type='submit' value='".("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
             //$importgroup .= "</td></tr></table>\n";
             //unlink($the_full_file_path);
             return false;
@@ -1034,7 +1036,7 @@ class LsrcHelper {
             {
                 //$importgroup .= "<strong><font color='red'>".("Error")."</font></strong>\n";
                 //$importgroup .= ("You can't import a group which doesn't support the current survey's base language.")."\n";
-                //$importgroup .= "<input type='submit' value='".("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
+                //$importgroup .= "<input type='submit' value='".("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
                 //$importgroup .= "</td></tr></table>\n";
                 //unlink($the_full_file_path);
                 return "Group does not support Surveys Baselanguage ($langcode)";
@@ -1050,7 +1052,7 @@ class LsrcHelper {
             {
                 //$importgroup .= "<strong><font color='red'>".("Error")."</font></strong>\n";
                 //$importgroup .= ("You can't import a question which doesn't support the current survey's base language.")."\n";
-                //$importgroup .= "<input type='submit' value='".("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_self')\">\n";
+                //$importgroup .= "<input type='submit' value='".("Main Admin Screen")."' onclick=\"window.open('$scriptname', '_top')\">\n";
                 //$importgroup .= "</td></tr></table>\n";
                 //unlink($the_full_file_path);
                 return "Group does not support Surveys Baselanguage ($langcode)";
@@ -2221,6 +2223,7 @@ class LsrcHelper {
 			. "remindersent C(17) DEFAULT 'N',\n "
 			. "remindercount int I DEFAULT 0,\n "
 			. "completed C(17) DEFAULT 'N',\n "
+			. "usesleft I DEFAULT 1,\n"
 			. "validfrom date ,\n "
 			. "validuntil date ,\n "
 			. "mpid I ";

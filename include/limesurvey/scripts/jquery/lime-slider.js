@@ -9,7 +9,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: lime-slider.js 9648 2011-01-07 13:06:39Z c_schmitz $
+ * $Id: lime-slider.js 12404 2012-02-08 19:30:28Z tmswhite $
  */
 
 
@@ -65,7 +65,7 @@ $(document).ready(function(){
 				//var thevalue = ui.value / slider_divisor;
 				var thevalue = slider_stepping * Math.round(ui.value / slider_stepping) / slider_divisor;
 				$('#answer'+basename).val(thevalue);
-				checkconditions( thevalue,'#answer'+basename,'text');
+				checkconditions( thevalue,basename,'text');
 				eval(slider_onchange);	
 			};
 

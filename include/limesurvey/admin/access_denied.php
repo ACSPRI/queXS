@@ -10,15 +10,15 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: access_denied.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: access_denied.php 11607 2011-12-06 23:19:52Z tmswhite $
  */
 
 
-if (!isset($dbprefix) || isset($_REQUEST['dbprefix'])) {die("Cannot run this script directly (access_denied)");}
+include_once("login_check.php");  //Login Check dies also if the script is started directly
 
 if (isset($_SESSION['loginID']))
 {
-
+    include('html.php'); // For showadminmenu
     $accesssummary = "<p><strong>".$clang->gT("Access denied!")."</strong><br />\n";
 
     $action=returnglobal('action');

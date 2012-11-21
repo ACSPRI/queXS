@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 07, 2011 at 02:42 PM
+-- Generation Time: Nov 16, 2012 at 12:35 PM
 -- Server version: 5.0.51
--- PHP Version: 5.2.6-1+lenny13
+-- PHP Version: 5.2.6-1+lenny16
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -18,7 +18,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `quexs`
 --
-
 -- --------------------------------------------------------
 
 --
@@ -475,6 +474,31 @@ CREATE TABLE `lime_defaultvalues` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lime_expression_errors`
+--
+
+CREATE TABLE `lime_expression_errors` (
+  `id` int(9) NOT NULL auto_increment,
+  `errortime` varchar(50) collate utf8_unicode_ci default NULL,
+  `sid` int(11) default NULL,
+  `gid` int(11) default NULL,
+  `qid` int(11) default NULL,
+  `gseq` int(11) default NULL,
+  `qseq` int(11) default NULL,
+  `type` varchar(50) collate utf8_unicode_ci default NULL,
+  `eqn` text collate utf8_unicode_ci,
+  `prettyprint` text collate utf8_unicode_ci,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_expression_errors`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lime_failed_login_attempts`
 --
 
@@ -504,6 +528,8 @@ CREATE TABLE `lime_groups` (
   `group_order` int(11) NOT NULL default '0',
   `description` text collate utf8_unicode_ci,
   `language` varchar(20) collate utf8_unicode_ci NOT NULL default 'en',
+  `randomization_group` varchar(20) collate utf8_unicode_ci NOT NULL default '',
+  `grelevance` text collate utf8_unicode_ci,
   PRIMARY KEY  (`gid`,`language`),
   KEY `groups_idx2` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -556,6 +582,119 @@ CREATE TABLE `lime_labelsets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lime_participants`
+--
+
+CREATE TABLE `lime_participants` (
+  `participant_id` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `firstname` varchar(40) collate utf8_unicode_ci default NULL,
+  `lastname` varchar(40) collate utf8_unicode_ci default NULL,
+  `email` varchar(80) collate utf8_unicode_ci default NULL,
+  `language` varchar(40) collate utf8_unicode_ci default NULL,
+  `blacklisted` varchar(1) collate utf8_unicode_ci NOT NULL,
+  `owner_uid` int(20) NOT NULL,
+  PRIMARY KEY  (`participant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_participants`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lime_participant_attribute`
+--
+
+CREATE TABLE `lime_participant_attribute` (
+  `participant_id` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `attribute_id` int(11) NOT NULL,
+  `value` varchar(50) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`participant_id`,`attribute_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_participant_attribute`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lime_participant_attribute_names`
+--
+
+CREATE TABLE `lime_participant_attribute_names` (
+  `attribute_id` int(11) NOT NULL auto_increment,
+  `attribute_type` varchar(4) collate utf8_unicode_ci NOT NULL,
+  `visible` char(5) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`attribute_id`,`attribute_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_participant_attribute_names`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lime_participant_attribute_names_lang`
+--
+
+CREATE TABLE `lime_participant_attribute_names_lang` (
+  `attribute_id` int(11) NOT NULL,
+  `attribute_name` varchar(30) collate utf8_unicode_ci NOT NULL,
+  `lang` varchar(20) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`attribute_id`,`lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_participant_attribute_names_lang`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lime_participant_attribute_values`
+--
+
+CREATE TABLE `lime_participant_attribute_values` (
+  `value_id` int(11) NOT NULL auto_increment,
+  `attribute_id` int(11) NOT NULL,
+  `value` varchar(20) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`value_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_participant_attribute_values`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lime_participant_shares`
+--
+
+CREATE TABLE `lime_participant_shares` (
+  `participant_id` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `share_uid` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `can_edit` varchar(5) collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`participant_id`,`share_uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_participant_shares`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lime_questions`
 --
 
@@ -575,6 +714,7 @@ CREATE TABLE `lime_questions` (
   `language` varchar(20) collate utf8_unicode_ci NOT NULL default 'en',
   `scale_id` tinyint(4) NOT NULL default '0',
   `same_default` tinyint(4) NOT NULL default '0' COMMENT 'Saves if user set to use the same default value across languages in default options dialog',
+  `relevance` text collate utf8_unicode_ci,
   PRIMARY KEY  (`qid`,`language`),
   KEY `questions_idx2` (`sid`),
   KEY `questions_idx3` (`gid`),
@@ -598,8 +738,10 @@ CREATE TABLE `lime_question_attributes` (
   `qid` int(11) NOT NULL default '0',
   `attribute` varchar(50) collate utf8_unicode_ci default NULL,
   `value` text collate utf8_unicode_ci,
+  `language` varchar(20) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`qaid`),
-  KEY `question_attributes_idx2` (`qid`)
+  KEY `question_attributes_idx2` (`qid`),
+  KEY `question_attributes_idx3` (`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -741,14 +883,9 @@ CREATE TABLE `lime_settings_global` (
 -- Dumping data for table `lime_settings_global`
 --
 
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('DBVersion', '146');
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('force_ssl', '');
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('SessionName', 'ls28629164789259281352');
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('showgroupinfo', 'choose');
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('showqnumcode', 'choose');
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('showXquestions', 'choose');
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('updateavailable', '0');
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('updatelastcheck', '2011-09-07 14:38:57');
+INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES
+('DBVersion', '155.6'),
+('SessionName', 'ls28629164789259281352');
 
 -- --------------------------------------------------------
 
@@ -795,7 +932,7 @@ CREATE TABLE `lime_surveys` (
   `emailresponseto` text collate utf8_unicode_ci,
   `emailnotificationto` text collate utf8_unicode_ci,
   `tokenlength` tinyint(2) default '15',
-  `showXquestions` char(1) collate utf8_unicode_ci default 'Y',
+  `showxquestions` char(1) collate utf8_unicode_ci default 'Y',
   `showgroupinfo` char(1) collate utf8_unicode_ci default 'B',
   `shownoanswer` char(1) collate utf8_unicode_ci default 'Y',
   `showqnumcode` char(1) collate utf8_unicode_ci default 'X',
@@ -812,6 +949,8 @@ CREATE TABLE `lime_surveys` (
   `navigationdelay` tinyint(2) default '0',
   `nokeyboard` char(1) collate utf8_unicode_ci default 'N',
   `alloweditaftercompletion` char(1) collate utf8_unicode_ci default 'N',
+  `googleanalyticsstyle` char(1) collate utf8_unicode_ci default NULL,
+  `googleanalyticsapikey` varchar(25) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -827,7 +966,7 @@ CREATE TABLE `lime_surveys` (
 --
 
 CREATE TABLE `lime_surveys_languagesettings` (
-  `surveyls_survey_id` int(10) unsigned NOT NULL default '0',
+  `surveyls_survey_id` int(11) NOT NULL default '0',
   `surveyls_language` varchar(45) collate utf8_unicode_ci NOT NULL default 'en',
   `surveyls_title` varchar(200) collate utf8_unicode_ci NOT NULL,
   `surveyls_description` text collate utf8_unicode_ci,
@@ -844,11 +983,11 @@ CREATE TABLE `lime_surveys_languagesettings` (
   `surveyls_email_confirm_subj` varchar(255) collate utf8_unicode_ci default NULL,
   `surveyls_email_confirm` text collate utf8_unicode_ci,
   `surveyls_dateformat` int(10) unsigned NOT NULL default '1',
-  `surveyls_numberformat` int(11) NOT NULL default '0',
   `email_admin_notification_subj` varchar(255) collate utf8_unicode_ci default NULL,
   `email_admin_notification` text collate utf8_unicode_ci,
   `email_admin_responses_subj` varchar(255) collate utf8_unicode_ci default NULL,
   `email_admin_responses` text collate utf8_unicode_ci,
+  `surveyls_numberformat` int(11) NOT NULL default '0',
   PRIMARY KEY  (`surveyls_survey_id`,`surveyls_language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -860,12 +999,31 @@ CREATE TABLE `lime_surveys_languagesettings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lime_survey_links`
+--
+
+CREATE TABLE `lime_survey_links` (
+  `participant_id` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `token_id` int(11) NOT NULL,
+  `survey_id` int(11) NOT NULL,
+  `date_created` datetime NOT NULL,
+  PRIMARY KEY  (`participant_id`,`token_id`,`survey_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `lime_survey_links`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lime_survey_permissions`
 --
 
 CREATE TABLE `lime_survey_permissions` (
-  `sid` int(10) unsigned NOT NULL,
-  `uid` int(10) unsigned NOT NULL,
+  `sid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
   `permission` varchar(20) collate utf8_unicode_ci NOT NULL,
   `create_p` tinyint(1) NOT NULL default '0',
   `read_p` tinyint(1) NOT NULL default '0',
@@ -927,19 +1085,22 @@ CREATE TABLE `lime_users` (
   `users_name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
   `password` blob NOT NULL,
   `full_name` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `parent_id` int(10) unsigned NOT NULL,
+  `parent_id` int(11) NOT NULL,
   `lang` varchar(20) collate utf8_unicode_ci default NULL,
   `email` varchar(320) collate utf8_unicode_ci default NULL,
   `create_survey` tinyint(1) NOT NULL default '0',
   `create_user` tinyint(1) NOT NULL default '0',
+  `participant_panel` tinyint(1) NOT NULL default '0',
   `delete_user` tinyint(1) NOT NULL default '0',
   `superadmin` tinyint(1) NOT NULL default '0',
   `configurator` tinyint(1) NOT NULL default '0',
   `manage_template` tinyint(1) NOT NULL default '0',
   `manage_label` tinyint(1) NOT NULL default '0',
   `htmleditormode` varchar(7) collate utf8_unicode_ci default 'default',
+  `templateeditormode` varchar(7) collate utf8_unicode_ci default 'default',
+  `questionselectormode` varchar(7) collate utf8_unicode_ci default 'default',
   `one_time_pw` blob,
-  `dateformat` int(10) unsigned NOT NULL default '1',
+  `dateformat` int(11) NOT NULL default '1',
   PRIMARY KEY  (`uid`),
   UNIQUE KEY `users_name` (`users_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -948,7 +1109,8 @@ CREATE TABLE `lime_users` (
 -- Dumping data for table `lime_users`
 --
 
-INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_id`, `lang`, `email`, `create_survey`, `create_user`, `delete_user`, `superadmin`, `configurator`, `manage_template`, `manage_label`, `htmleditormode`, `one_time_pw`, `dateformat`) VALUES(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 0, 'en', 'your@email.org', 1, 1, 1, 1, 1, 1, 1, 'default', NULL, 1);
+INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_id`, `lang`, `email`, `create_survey`, `create_user`, `participant_panel`, `delete_user`, `superadmin`, `configurator`, `manage_template`, `manage_label`, `htmleditormode`, `templateeditormode`, `questionselectormode`, `one_time_pw`, `dateformat`) VALUES
+(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 0, 'en', 'your-email@example.net', 1, 1, 0, 1, 1, 1, 1, 1, 'default', 'default', 'default', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -957,10 +1119,10 @@ INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_
 --
 
 CREATE TABLE `lime_user_groups` (
-  `ugid` int(10) unsigned NOT NULL auto_increment,
+  `ugid` int(11) NOT NULL auto_increment,
   `name` varchar(20) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
-  `owner_id` int(10) unsigned NOT NULL,
+  `owner_id` int(11) NOT NULL,
   PRIMARY KEY  (`ugid`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -977,8 +1139,8 @@ CREATE TABLE `lime_user_groups` (
 --
 
 CREATE TABLE `lime_user_in_groups` (
-  `ugid` int(10) unsigned NOT NULL,
-  `uid` int(10) unsigned NOT NULL,
+  `ugid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
   PRIMARY KEY  (`ugid`,`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

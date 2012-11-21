@@ -2,9 +2,12 @@ var DOM1;
 $(document).ready(function()
 {
 	DOM1 = (typeof document.getElementsByTagName!='undefined');
+    if (typeof LEMsetTabIndexes === 'function') { LEMsetTabIndexes(); }
 	if (typeof checkconditions!='undefined') checkconditions();
 	if (typeof template_onload!='undefined') template_onload();
 	prepareCellAdapters();
+	$(".text").focus();
+	$(".textarea").focus();
 	document['onkeypress'] = checkEnter;
     if (typeof(focus_element) != 'undefined')
     {
@@ -47,6 +50,9 @@ $(document).ready(function()
 			});
     }
 
+    // Maxlength for textareas TODO limit to not CSS3 compatible browser
+    maxlengthtextarea();
+
     // Maps
 	$(".location").each(function(index,element){
 		var question = $(element).attr('name');
@@ -78,38 +84,7 @@ $(document).ready(function()
 		marker.setPosition(markerLatLng);
 		currentMap.panTo(markerLatLng);
 	});
-	
-    if ((typeof(autoArray) != "undefined")){
-        if ((autoArray.list != 'undefined') && (autoArray.list.length > 0)){
-            var aListOfQuestions = autoArray.list;
 
-            $(aListOfQuestions).each(function(index,element){
-
-                var elementInfo = autoArray[element];
-                var strJSelector = "#answer" + (elementInfo.children.join(", #answer"));
-
-                var aJSelectors = strJSelector.split(", ");
-                var strCheckedSelector = (aJSelectors.join(":checked ,"))+":checked";
-
-                $(strJSelector).live('change',function(event){
-
-                    if ($(strCheckedSelector).length == $(strJSelector).length){
-
-                        $("#answer"+elementInfo.focus).trigger('click');
-
-                        eval("excludeAllOthers"+elementInfo.parent + "('answer"+elementInfo.focus + "', 'yes')");
-
-                        checkconditions($("#answer"+elementInfo.focus).val(),
-                                        $("#answer"+elementInfo.focus).attr("name"),
-                                        $("#answer"+elementInfo.focus).attr('type')
-                                    );
-
-                    }
-                });
-
-            });
-        }
-    }
     /*replacement for inline javascript for #index */
     /*
     $("#index").parents(".outerframe").addClass("withindex");
@@ -120,6 +95,33 @@ $(document).ready(function()
     */
 });
 
+function maxlengthtextarea(){
+    // Calling this function at document.ready : use maxlength attribute on textarea
+    // Can be replaced by inline javascript
+    $("textarea[maxlength]").change(function(){ // global solution
+        var maxlen=$(this).attr("maxlength");
+        if ($(this).val().length > maxlen) {
+            $(this).val($(this).val().substring(0, maxlen));
+        }
+    });
+    $("textarea[maxlength]").keyup(function(){ // For copy/paste (not for all browser)
+        var maxlen=$(this).attr("maxlength");
+        if ($(this).val().length > maxlen) {
+            $(this).val($(this).val().substring(0, maxlen));
+        }
+    });
+    $("textarea[maxlength]").keydown(function(event){ // No new key after maxlength
+        var maxlen=$(this).attr("maxlength");
+        var k =event.keyCode;
+        if (($(this).val().length >= maxlen) &&
+         !(k == null ||k==0||k==8||k==9||k==13||k==27||k==37||k==38||k==39||k==40||k==46)) {
+            // Don't accept new key except NULL,Backspace,Tab,Enter,Esc,arrows,Delete
+            return false;
+        }
+    });
+}
+
+// OSMap
 gmaps = new Object;
 osmaps = new Object;
 zoom = [];
@@ -188,12 +190,14 @@ function resetMap(qID) {
 	var name = question.substr(0,question.length - 2);
 	var coordinates = $('#question'+qID+' input.location').attr('value');
 	var xy = coordinates.split(" ");
-	var currentMap = gmaps[question];
-	var marker = gmaps['marker__'+question];
-	var markerLatLng = new google.maps.LatLng(xy[0],xy[1]);
-	marker.setPosition(markerLatLng);
-	google.maps.event.trigger(currentMap, 'resize')
-	currentMap.setCenter(markerLatLng);
+	if(gmaps[question]) {
+		var currentMap = gmaps[question];
+		var marker = gmaps['marker__'+question];
+		var markerLatLng = new google.maps.LatLng(xy[0],xy[1]);
+		marker.setPosition(markerLatLng);
+		google.maps.event.trigger(currentMap, 'resize')
+		currentMap.setCenter(markerLatLng);
+	}
 }
 
 // Reverse geocoder
@@ -336,7 +340,6 @@ function prepareCellAdapters()
 	var formCtls = document.getElementsByTagName('INPUT');
 	var ptr = null;
 	var foundTD = false;
-	var doneFocus = false;
 	for (var i = 0; i < formCtls.length; i++)
 	{
 		ptr = formCtls[i];
@@ -357,24 +360,16 @@ function prepareCellAdapters()
 				ptr = ptr.parentNode;
 			}
 		}
-		if (ptr.type != 'submit' && ptr.type != 'hidden' && doneFocus == false)
-		{
-			ptr.focus();
-			doneFocus = true;
-		}
-
-	}
-	formCtls = document.getElementsByTagName('textarea');
-	for (var i = 0; i < formCtls.length; i++)
-	{
-		formCtls[i].focus();
 	}
 }
 
 function checkEnter(e){ //e is event object passed from function invocation
 	var evt = e || event;
+
 	var whi = 0;
+
 	var counter = 1;
+
 	
 	whi = evt.which;
 	//alert(evt.which);
@@ -569,10 +564,40 @@ function std_onsubmit_handler()
     return true;
 }
 
+// round function from phpjs.org
+function round (value, precision, mode) {
+    // http://kevin.vanzonneveld.net
+    var m, f, isHalf, sgn; // helper variables
+    precision |= 0; // making sure precision is integer
+    m = Math.pow(10, precision);
+    value *= m;
+    sgn = (value > 0) | -(value < 0); // sign of the number
+    isHalf = value % 1 === 0.5 * sgn;
+    f = Math.floor(value);
+
+    if (isHalf) {
+        switch (mode) {
+        case 'PHP_ROUND_HALF_DOWN':
+            value = f + (sgn < 0); // rounds .5 toward zero
+            break;
+        case 'PHP_ROUND_HALF_EVEN':
+            value = f + (f % 2 * sgn); // rouds .5 towards the next even integer
+            break;
+        case 'PHP_ROUND_HALF_ODD':
+            value = f + !(f % 2); // rounds .5 towards the next odd integer
+            break;
+        default:
+            value = f + (sgn > 0); // rounds .5 away from zero
+        }
+    }
+
+    return (isHalf ? value : Math.round(value)) / m;
+}
+
 // ==========================================================
 // totals
 
-function multi_set(ids)
+function multi_set(ids,_radix)
 {
 	//quick ie check
 	var ie=(navigator.userAgent.indexOf("MSIE")>=0)?true:false;
@@ -580,6 +605,8 @@ function multi_set(ids)
 	var _match_grand = new RegExp('grand');
 	//match for total
 	var _match_total = new RegExp('total');
+    var radix = _radix; // comma, period, X (for not using numbers only)
+    var numRegex = new RegExp('[^-' + radix + '0-9]','g');
 	//main function (obj)
 	//id = wrapper id
 	function multi_total(id)
@@ -639,7 +666,6 @@ function multi_set(ids)
 								//add it to the array @ counter
 								_bits[_counter].push(_tdin);
 								//set key board actions
-								_tdin.onkeydown = _in_key;
 								_tdin.onkeyup = calc;
 								//check for total and grand total
 								if(_td[_a].className && _td[_a].className.match(_match_total,'ig'))
@@ -730,18 +756,21 @@ function multi_set(ids)
 			{
 				var addaclass=!_bits[id][i].getAttribute(ie ? 'className' : 'class') ? '' : _bits[id][i].getAttribute(ie ? 'className' : 'class') + ' ';
 				_bits[id][i].setAttribute((ie ? 'className' : 'class'), addaclass + 'horo_' + id);
-				_bits[id][i].onChange = calc;
+				_bits[id][i].onkeyup = calc;
 				if(i == (l - 1))
 				{
-					_bits[id][i].value = qt;
+					_bits[id][i].value = round(qt,12)
 				}
 				else if(_bits[id][i].value)
 				{
-					qt += (_bits[id][i].value * 1);
-//				}
-//				else
-//				{
-//					_bits[id][i].value = '0';
+                    _aval=_bits[id][i].value;
+                    if (radix===',') {
+                        _aval = _aval.split(',').join('.');
+                        _bits[id][i].value = _aval.split('.').join(',');
+                    }
+                    if  (_aval == parseFloat(_aval)) {
+                        qt += +_aval;
+                    }
 				};
 			};
 
@@ -758,18 +787,21 @@ function multi_set(ids)
 			{
 				var addaclass=!_bits[i][id].getAttribute(ie ? 'className' : 'class') ? '' : _bits[i][id].getAttribute(ie ? 'className' : 'class') + ' ';
 				_bits[i][id].setAttribute((ie ? 'className' : 'class'), addaclass + 'vert_' + id);
-				_bits[i][id].onchange = calc;
+				_bits[i][id].onkeyup = calc;
 				if(i == (l - 1))
 				{
-					_bits[i][id].value = qt;
+					_bits[i][id].value = round(qt,12);
 				}
 				else if(_bits[i][id].value)
 				{
-					qt += (_bits[i][id].value * 1);
-//				}
-//				else
-//				{
-//					_bits[i][id].value = '0';
+                    _aval=_bits[i][id].value;
+                    if (radix===',') {
+                        _aval = _aval.split(',').join('.');
+                        _bits[i][id].value = _aval.split('.').join(',');
+                    }
+                    if  (_aval == parseFloat(_aval)) {
+                        qt += +_aval;
+                    }
 				};
 			};
 		};
@@ -781,6 +813,25 @@ function multi_set(ids)
 			e=(e)?e:event;
 			var el=e.target||e.srcElement;
 			var _id=el.getAttribute(ie ? 'className' : 'class');
+            
+            // eliminate bad numbers
+            _aval=new String(el.value);
+            if (radix!=='X') {
+                _aval=_aval.replace(numRegex,'');
+            }
+            if (radix===',') {
+                _aval = _aval.split(',').join('.');
+            }
+            if (radix!=='X' && _aval != '-' && _aval != '.' && _aval != '-.' && _aval != parseFloat(_aval)) {
+                _aval = "";
+            }
+            if (radix===',') {
+                el.value = _aval.split('.').join(',');
+            }
+            else if (radix!=='X') {
+                el.value = _aval;
+            }
+                    
 			//vert_[id] horo_[id] in class trigger vert or horo calc on row[id]
 			if(_id.match('vert_','ig'))
 			{
@@ -804,6 +855,7 @@ function multi_set(ids)
 					calc_vert(_bits[0].length - 1);
 					break;
 			}
+            checkconditions($(el).val(), $(el).attr('name'), $(el).attr('type'));
 			return(true);
 		};
 		//retuns the id from end of string like 'vert_[id] horo_[id] other class'
@@ -833,29 +885,18 @@ function multi_set(ids)
                     }
                     else
                     {
-                        _bits[i][vid].value = qt;
+                        _bits[i][vid].value = round(qt,12);
                     }
 				}
 				else if(_bits[i][vid].value)
 				{
-					if(_bits[i][vid].value.match('-','ig'))
-					{
-						var _iklebit = _bits[i][vid].value.replace('-','','ig');
-						//alert(iklebit);
-						if(_iklebit)
-						{
-							qt -=(_iklebit * 1);
-						}
-					}
-					else
-					{
-						qt += (_bits[i][vid].value * 1);
-					}
-
-//				}
-//				else
-//				{
-//					_bits[i][vid].value = '0';
+                    _aval=_bits[i][vid].value;
+                    if (radix===',') {
+                        _aval = _aval.split(',').join('.');
+                    }
+                    if  (_aval == parseFloat(_aval)) {
+                        qt += +_aval;
+                    }
 				};
 			};
 
@@ -876,28 +917,18 @@ function multi_set(ids)
                     }
                     else
                     {
-                        _bits[hid][i].value = qt;
+                        _bits[hid][i].value = round(qt,12);
                     }
 				}
 				else if(_bits[hid][i].value)
 				{
-					if(_bits[hid][i].value.match('-','ig'))
-					{
-						var _iklebit = _bits[hid][i].value.replace('-','','ig');
-						//alert(_iklebit);
-						if(_iklebit)
-						{
-							qt -= (_iklebit * 1);
-						}
-					}
-					else
-					{
-						qt += (_bits[hid][i].value * 1);
-					}
-//				}
-//				else
-//				{
-//					_bits[hid][i].value = '0';
+                    _aval=_bits[hid][i].value;
+                    if (radix===',') {
+                        _aval = _aval.split(',').join('.');
+                    }
+                    if  (_aval == parseFloat(_aval)) {
+                        qt += +_aval;
+                    }
 				};
 			};
 		};
@@ -906,57 +937,6 @@ function multi_set(ids)
 		{
 			return(false);
 		};
-		//limit to numbers and .
-		function _in_key(e)
-		{
-			e = e || window.event;
-			//alert(e.keyCode);
-			switch(e.keyCode)
-			{
-				case 8:
-				case 9:
-				case 48:
-				case 49:
-				case 50:
-				case 51:
-				case 52:
-				case 53:
-				case 54:
-				case 55:
-				case 56:
-				case 57:
-				case 190:
-				case 45:
-				case 35:
-				case 40:
-				case 34:
-				case 37:
-				case 12:
-				case 39:
-				case 36:
-				case 38:
-				case 33:
-				case 46:
-				case 96:
-				case 97:
-				case 98:
-				case 99:
-				case 100:
-				case 101:
-				case 102:
-				case 103:
-				case 104:
-				case 105:
-				case 110:
-				case 109:
-                case 189:
-					return(e.keyCode);
-				default:
-				//alert(e.keyCode);
-					return(false);
-					break;
-			}
-		}
 	};
 	//set up the dom
 	//alert('multi called called value ' + ids);

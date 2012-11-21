@@ -1,4 +1,4 @@
-// $Id: surveytoolbar.js 9648 2011-01-07 13:06:39Z c_schmitz $
+// $Id: surveytoolbar.js 9401 2010-11-03 11:54:50Z c_schmitz $
 // based on TTabs from http://interface.eyecon.ro/
 
 $(document).ready(function(){

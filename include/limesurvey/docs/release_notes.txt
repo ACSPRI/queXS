@@ -1,4 +1,4 @@
-Welcome to LimeSurvey v1.91+!
+Welcome to LimeSurvey v1.92+!
 
 Warranty: This program is provided "as is" without warranties of any kind, either expressed or implied, 
 including, but not limited to, the implied warranties of merchantability and fitness for a particular 
@@ -76,6 +76,633 @@ HOW TO UPGRADE from a LimeSurvey 1.70(+) version to the latest 1.9x
 11. Done.
 
 Thank you to everyone who helped with this new release!
+
+
+
+Changes from 1.92+ (build 120909) to 1.92+ (build 120919) September 19, 2012
+-Fixed issue #6528: Save changes on label set results in a php warning when text contains a tab character (Carsten Schmitz)
+-Fixed issue #6536: HTML editor converts special characters to html entities within equations (Carsten Schmitz)
+-Fixed issue #6547: Arbitrary URL redirect - parameter "redirect" (Carsten Schmitz)
+-Fixed issue #6553: $column_style global parameter aren't used (Denis Chenu)
+
+Changes from 1.92+ (build 120822) to 1.92+ (build 120909) September 9, 2012
+-Fixed issue #6530: Since latest update unable to upload documents in survey (Denis Chenu)
+-Fixed issue #6543: SQL injection in activate_functions.php - parameter "sid" (jcleeland)
+-Fixed issue #6544: SQL injection in activate_functions.php - parameter "fixnumbering" (jcleeland)
+-Fixed issue #6545: SQL injection in preview.php - parameter "lang". Sanitized language string. (jcleeland)
+-Fixed issue #6546: SQL injection in userrighthandling.php - parameter "ugid" (jcleeland)
+
+
+Changes from 1.92+ (build 120815) to 1.92+ (build 120822) August 22, 2012
+-Fixed issue #6423: Potential XSS in 'Resume survey' load form (Carsten Schmitz)
+#Updated translation: Chinese (Simplified) by jun9
+#Updated translation: French (France) by BenoitBouvarel
+#Updated translation: Italian by lfanfoni
+#Updated translation: Korean by gregshin
+#Updated translation: Spanish (Chile) by jergas
+#Updated translation: Thai
+
+
+Changes from 1.92+ (build 120808) to 1.92+ (build 120815) August 15, 2012
+-Fixed issue #6319: Preview group can throw error (Denis Chenu)
+-Fixed issue #6442 : Adding labels fails without numbers in last Code field in Label Set editor (Denis Chenu)
+-Fixed issue #6452: File Upload not working with embedded_layout use (Carsten Schmitz)
+-Fixed issue #6465: Assessment typo (Carsten Schmitz)
+-Fixed issue #6467 : checkbox for 'other' missing for multiple choice (Denis Chenu)
+-Fixed issue #6470 : Bad emplacement of Other text input box for large screen in Multiple option (Denis Chenu)
+-Fixed issue #6476: Error in data entry when using multiple choice with comment questions and MSSQL (Carsten Schmitz)
+-Fixed issue: Multiple option with checkbox : Other can be checked at submit with empty value (Denis Chenu)
+-Fixed issue: Remove escape character (\) from any field evaluated by EM. (Thomas White)
+#Updated translation: French (France) by BenoitBouvarel, DenisChenu
+#Updated translation: German by debianese
+#Updated translation: Greek by kiolalis
+#Updated translation: Italian by lfanfoni
+#Updated translation: Japanese by nomoto
+#Updated translation: Malay by ayahanda
+#Updated translation: Polish by elisa
+
+
+Changes from 1.92+ (build 120801) to 1.92+ (build 120808) August 8, 2012
+-Fixed issue #6424: Lastpage field not being added in MSSQL when upgrading from 1.85 or older (Carsten Schmitz)
+-Fixed issue #6439: Question type Array (numbers) does not work with numbers >10 as labels (Thomas White)
+#Updated translation: Czech by slansky
+#Updated translation: German by c_schmitz
+#Updated translation: German (Informal) by c_schmitz
+#Updated translation: Malay by ayahanda
+#Updated translation: Polish by elisa
+#Updated translation: Turkish by kayazeren
+
+Changes from 1.92+ (build 120725) to 1.92+ (build 120801) August 1, 2012
+-Fixed issue #6066: File upload fails if single oder double quotes are used (Carsten Schmitz)
+-Fixed issue #6287: Unable to export QueXML with Postgresql 9.1 (Adam Zammit)
+-Fixed issue #6297: QueXML Export broken Dev Removed condition checking for queXML export (Adam Zammit)
+-Fixed issue #6334: Don't have a valid session in file upload question (Carsten Schmitz)
+-Fixed issue #6387: Broken Add vs Replace Buttons on Quick Add for Labels (tpartner)
+-Fixed issue #6395: QuickAdd permits longer codes than 5 characters (Carsten Schmitz)
+#Updated translation: Albanian by emiljan, c_schmitz
+#Updated translation: Czech by slansky
+#Updated translation: German by c_schmitz
+#Updated translation: German (Informal) by c_schmitz
+#Updated translation: Italian by lfanfoni
+#Updated translation: Italian (Formal) by gifino
+#Updated translation: Norwegian (Bokmal) by reidarborgersen, dittaeva
+#Updated translation: Polish by elisa
+#Updated translation: Turkish by kayazeren
+
+
+Changes from 1.92+ (build 120718) to 1.92+ (build 120725) July 25, 2012
+-Fixed issue #6312: Editing Survey Security Permissions as non-super-admin and non-survey owner throws PHP Fatal Error (Stephanie King)
+-Fixed Issue #6312 - Editing Survey Security Permissions as non-super-admin and non-survey owner throws PHP Fatal Error (Stephanie King)
+-Fixed issue #6335 : Group preview add answer (Denis Chenu)
+-Fixed issue #6336 : Bad template URL if templatedir is not exist (Denis Chenu)
+-Fixed issue #6337 : $defaulttemplate aren't allways used (Denis Chenu)
+-Fixed issue #6340: Error "String offset cast occured" when adding user and using PHP 5.4 or later (Carsten Schmitz)
+-Fixed issue #6346: Statistic page filter not remembering statistics language (Carsten Schmitz)
+-Fixed issue #6348: Bar chart not translated in statistics when changing statistics language (Carsten Schmitz)
+-Fixed issue #6349: condition does not work while using slider with stars (Thomas White)
+-Fixed issue: Bad CSS for empty other comment in mandatory question for citronade (Denis Chenu)
+-New feature: Ability to reset Expression Manager for admin with showlogicfile (Denis Chenu)
+
+
+Changes from 1.92+ (build 120711) to 1.92+ (build 120718) July 18, 2012
+-Fixed issue #6328: pre-filling of hidden questions does not work (Thomas White)
+-Fixed issue #6304: Reloading unfinished survey can submit it without user interaction / reloading survey don't goe to actual step (Denis Chenu)
+-Fixed issue #6318: Attributes/validation cut off when checking with EM (Carsten Schmitz)
+-Fixed issue #6329: Language titles in language switcher are displayed in the currently used language instead of the native name (Carsten Schmitz)
+-Fixed issue #6330: Regex engine does not accept a leading zero even if explicitly specified as acceptable (Thomas White)
+-Fixed issue: Other comment mandatory requires 2 or more characters in comment field instead of 1 or more characters (Thomas White)
+-Fixed issue: Whole Question Validation (em_validation_q) missing from several question types (Thomas White)
+#Updated translation: Chinese (Simplified) by yooyooh
+#Updated translation: Czech by slansky
+#Updated translation: French (France) by DenisChenu
+#Updated translation: German by Mazi
+#Updated translation: German (Informal) by c_schmitz
+#Updated translation: Italian by lfanfoni
+#Updated translation: Polish by elisa
+#Updated translation: Spanish (Spain) by danielgeisler
+
+
+Changes from 1.92+ (build 120704) to 1.92+ (build 120711) July 11, 2012
+-Fixed issue #6207: Error "Ambiguous column name 'qid'" when using MSSQL server and editing answer options (Carsten Schmitz)
+-Fixed issue #6252: English warning message though German language set (Carsten Schmitz)
+-Fixed issue #6282: Error accessing a survey from a language that it hasn't (Carsten Schmitz)
+-Fixed issue #6284: In some cases statistics' layout is broken (Carsten Schmitz)
+-Fixed issue #6290: Array (texts) responses with single quotes are truncated on data entry screen (Carsten Schmitz)
+-Fixed issue #6300: Token can be duplicated under some condition (Denis Chenu)
+-Fixed issue #6305: Assessment values are not shown in logic file; nor in question, and group previews (Thomas White)
+-Fixed issue #6309 : Bad javascript for 	Multiple choice with "Other option" (Denis Chenu)
+-Fixed issue: Several remote file inclusion vulnerabilities (only when register_globals is activated) (Carsten Schmitz)
+-Fixed issue: When magic quotes enabled on the server then quoting was not correct on the response data (Carsten Schmitz)
+#Updated translation: Czech by slansky
+#Updated translation: French (France) by DenisChenu
+#Updated translation: German by c_schmitz
+#Updated translation: Italian by lfanfoni
+#Updated translation: Polish by elisa
+#Updated translation: Russian by gdemin
+#Updated translation: Spanish (Spain) by gap1981
+#Updated translation: Turkish by kayazeren
+
+
+Changes from 1.92+ (build 120623) to 1.92+ (build 120704) July 4, 2012
+#Updated translation: Czech by slansky
+#Updated translation: Italian by lfanfoni
+#Updated translation: Spanish (Chile) by SirCrovax
+-Fixed issue #5849: Unable to paste into numeric question types (Thomas White)
+-Fixed issue #6188: Display error in conditions editor when selecting several options per sub-question (Carsten Schmitz)
+-Fixed issue #6210 Inconsistent database after deleting a file by "clear & exit" button (Denis Chenu)
+-Fixed issue #6250 : Public statistics always use default template (Denis Chenu)
+-Fixed issue #6256: Touch event support (tpartner)
+-Fixed issue #6271: text entry fields use onchange instead of onkeyup events to propagate changes (Thomas White)
+-Fixed issue #6281: hidden variables used in equations have wrong name so don't POST properly (Thomas White)
+-Fixed issue #6296: Question type file upload dose not work (tpartner)
+-Fixed issue #6298: File upload button too narrow in Safari + Chrome (tpartner)
+-Fixed issue: Array filter of ranking does not work reliably across browsers (Thomas White)
+-Fixed issue: Changes to comments in multiple choice checkbox could not trigger changes in tailoring (Thomas White)
+-Fixed issue: Clearing "other" value in multiple choice checkbox did not clear associated comment (Thomas White)
+-Fixed issue: EM unit tests broken due to  missing LEMradix variable. (Thomas White)
+-Fixed issue: Revert to using onchange instead of onkeyup for Array  Numbers when using dropdown lists of numbers (Thomas White)
+-Fixed issue: Show Survey Logic File does not show survey title, description, welcome, endmsg, endurl, nor any errors within them (Thomas White)
+-Fixed issue: Unchecking entries in multiple choice checkbox did not clear associated comment (Thomas White)
+-Fixed issue: Wrong flag image for ZH-Hant-TW (Carsten Schmitz)
+-Fixed issue: Removed dot in front of languageswitch drop down. (Marcel Minke)
+
+
+
+Changes from 1.92+ (build 120620) to 1.92+ (build 120623) June 22, 2012
+-Fixed issue #6240: conversion of conditions to relevance can fail for multiple choice tests during some upgrades (Thomas White)
+#Updated translation: Chinese (Simplified) by yooyooh
+#Updated translation: French (France) by DenisChenu
+#Updated translation: Italian by gifino, lfanfoni
+#Updated translation: Polish by elisa
+
+
+Changes from 1.92+ (build 120613) to 1.92+ (build 120620) June 20, 2012
+-Fixed issue #5766: exclude_all_others_auto does not work (Thomas White)
+-Fixed issue #6205: Add http:// by default to endurl for indication (Denis Chenu)
+-Fixed issue #6207: [Microsoft][ODBC SQL Server Driver][SQL Server]Ambiguous column name 'qid' (Carsten Schmitz)
+-Fixed issue #6207: [Microsoft][ODBC SQL Server Driver][SQL Server]Ambiguous column name 'qid' (Thomas White)
+-Fixed issue #6208 : Adding user to user group leads to error message (Denis Chenu)
+-Fixed issue #6211: Problems with two "file upload" question types in the same question group (Thomas White)
+-Fixed issue #6213: File upload questions tips have an error in italian (Thomas White)
+-Fixed issue #6214: relevance equations that only contain static replacement values cause JS crash (Thomas White)
+-Fixed issue #6221: Array filtering does not work when trigger question has multiple inputs per row (Thomas White)
+-Fixed issue #6222: Conditions not working when it relies on value from a hidden question (Thomas White)
+-Fixed issue #6223: Admin login does not work with postgres right after install (Carsten Schmitz)
+-Fixed issue #6224: resetadminpw.php: SQL-string for postgres incorrect (Carsten Schmitz)
+-Fixed issue #6225: unable to pass qcode-named variables via URL (Thomas White)
+-Fixed issue #6226 & #6229: Only end message with Cannot edit answer (token and edit answers after submitting activated) (Denis Chenu)
+-Fixed issue #6231: EM doesn't convert condition correctly, OR becomes AND (Thomas White)
+-Fixed issue #6235: Javascript errors when use equations for min/max num values in Ranking questions (Thomas White)
+-Fixed issue #6238: array filtering does not work for Ranking questions (Thomas White)
+-Fixed issue #6239: Ranking style questions can't be used to filter other questions (Thomas White)
+-Fixed issue: Array-filter algorithms for Ranking questions do not appear in Show Logic File (Thomas White)
+-Fixed issue: PHP errors thrown if use invalid array filter question (Thomas White)
+-Fixed issue: QID links in Show Survey Logic File should open new edit-question window, not just view question (Thomas White)
+-Fixed issue: ShowLogicFile did not show array filters for List(Radio) questions when "other" advanced question option selected (Thomas White)
+#Updated translation: Chinese (Simplified) by yooyooh
+#Updated translation: Italian by lfanfoni, gifino
+#Updated translation: Polish by elisa
+#Updated translation: Swedish
+#Updated translation: Turkish by kayazeren
+
+
+Changes from 1.92+ (build 120608) to 1.92+ (build 120613) June 13, 2012
+-Fixed issue #6100: English in other language (Thomas White)
+-Fixed issue #6130: Response emails sent as "text/plain" but with HTML embedded (Carsten Schmitz)
+-Fixed issue #6147: "Please rank at least x items" not being translated (Carsten Schmitz)
+-Fixed issue #6151: CSS errors on public statistics page (Carsten Schmitz)
+-Fixed issue #6153: "Cannot find data type DATE" when activating a survey with MSSQL 2005 (Carsten Schmitz)
+-Fixed issue #6168: Question preview ignores "no answer" setting (Thomas White)
+-Fixed issue #6177: uppercase logical operators (e.g. 'OR') in EM yield JavaScript errors (Thomas White)
+-Fixed issue #6178: es-CL is listed as Spanish (Mexico) instead of Spanish (Chile) (Carsten Schmitz)
+-Fixed issue #6186: Array Question Type: EM doesn't convert condition correctly, AND becomes OR (Thomas White)
+-Fixed issue #6187: Javascript Error on em_javascript.js : attr is undefined (Thomas White)
+-Fixed issue #6196: Misplaced PopUpEditor icon (tpartner)
+-Fixed issue #6200: if enter text into other box, then click the other checkbox, the entered text disappears (Thomas White)
+-Fixed issue #6201: Fatal error: Cannot redeclare replacenewline() (Thomas White)
+-Fixed issue: "Please check at least one item" not appropriate for single select list questions (Thomas White)
+#Updated translation: Arabic by maan
+#Updated translation: Croatian by rovinj
+#Updated translation: Czech by slansky
+#Updated translation: German by c_schmitz
+#Updated translation: German (Informal) by c_schmitz
+#Updated translation: Italian by lfanfoni
+#Updated translation: Korean by heasunchun
+#Updated translation: Norwegian (Bokmål) by c_schmitz
+#Updated translation: Polish by elisa
+#Updated translation: Portuguese (Brazil) by mauriciofurtado
+#Updated translation: Spanish (Mexican) by scoutino
+
+Changes from 1.92+ (build 120607) to 1.92+ (build 120608) June 7, 2012
+Fixed issue HTML error in hidden field for equation question type
+
+Changes from 1.92+ (build 120530) to 1.92+ (build 120607) June 7, 2012
+-Fixed issue #6122: EM seems to be holding a cache in admin dev: now only setting language in EM (mennodekker)
+-Fixed issue #6155: Error on MSSQL: Ambiguous column name qid (Menno Dekker)
+-Fixed issue #5943: exclusive option in multiple choice hide all other answer options (Thomas White)
+-Fixed issue #6057: Hitting RETURN while typing in M.C. 'Other' of non-tracked survey looses all survey input (tpartner)
+-Fixed issue #6140: Survey doesn't start from where it was left on Token Persistence (Thomas White)
+-Fixed issue #6149: EM shows wrong result for number generated by rand() function (Thomas White)
+-Fixed issue #6154: File upload questions not mandatory anymore (Thomas White)
+-Fixed issue #6158: In question-by-question mode, EM replacements in same group but on different page use <span> (Thomas White)
+-Fixed issue #6163: error in mandatory array_filter-ed multi-numeric and multiple-short questions 
+-Fixed issue #6165: unable to implement affirmative exclusive non-answer in array_filter_exclude 
+-Fixed issue #06079: sub-question filtering broken if "other" or "no answer" option is given (Thomas White)
+-Fixed issue #6171: variable < X is true even if variable isn't answered (Thomas White)
+-Fixed issue #6172: Update to Version 1.92+ from 1.91+ Cannot Complete - Reason: Duplicate column name 'grelevance' (Thomas White)
+-Fixed issue #6173: users can skip min_sum_value and equals_sum_value questions (Thomas White)
+-Fixed issue #6176: replacements of other value for multiple-choice don't appear when click previous (Thomas White)
+-Fixed issue: Assesments for multi choice question (Denis Chenu)
+-Fixed issue: Error in PostgreSQL DB create script. (Jonathan Harker)
+-Fixed issue: Error in upgrade from old DB versions (Carsten Schmitz)
+-Fixed issue: Errors in Postgres DB creation script (Carsten Schmitz)
+-Fixed issue: Google Analytics Style #2 breaks if group names contain special characters (Thomas White)
+-Fixed issue: mktime() function needs to be passed integer values (Thomas White)
+-Fixed issue: 'other' status flag missing from Show Logic File (Thomas White)
+-Fixed issue: Errors in Postgres upgrade and DB creation (Carsten Schmitz)
+#Updated translation: Amharic by mezwor 
+#Updated translation: Czech by slansky 
+#Updated translation: Dutch 
+#Updated translation: Dutch (Informal)
+#Updated translation: Estonian by LimAlf 
+#Updated translation: Italian by lfanfoni 
+#Updated translation: Polish by elisa
+#Updated translation: Portuguese (Portugal) by algarvio 
+#Updated translation: Slovenian 
+#Updated translation: Spanish (Chile) by SirCrovax 
+#Updated translation: Turkish by kayazeren
+
+
+Changes from 1.92+ (build 120529) to 1.92+ (build 120530) May 28, 2012
+-Fixed issue #6133: Race condition with concurrent upload of similar "survey structure" (Carsten Schmitz)
+
+Changes from 1.92+ (build 120526) to 1.92+ (build 120529) May 28, 2012
+-Fixed issue #6106: Mandatory error shown when testing a question (Carsten Schmitz)
+-Fixed issue #6133: Race condition with concurrent upload of similar "survey structure" (Carsten Schmitz)
+-Fixed issue #6136: Relevance evaluation with Postgres fails when using regular expressions (Carsten Schmitz)
+-Fixed issue: Admin language switching to survey language (Carsten Schmitz)
+
+Changes from 1.92+ (build 120517) to 1.92+ (build 120526) May 26, 2012
+#Updated translation: Dutch by Nickko 
+#Updated translation: Dutch (Informal) by Nickko (root)
+#Updated translation: French by Denis Chenu, Nickko 
+#Updated translation: German (Informal) by c_schmitz (root)
+#Updated translation: German by c_schmitz 
+#Updated translation: Polish (elisa-ls)
+#Updated translation: Dutch
+#Updated translation: Portuguese
+#Updated translation: Slovenian
+-Fixed issue #6122: EM seems to be holding a cache in admin dev: only set language when a surveyid is set (mennodekker)
+-Fixed issue #5766: exclude_all_others_auto does not work (Thomas White)
+-Fixed issue #6114: Mail encryption really off for bounce managment (Denis Chenu)
+-Fixed issue #6119: Apostrophe bug in statistics PDF and Excel output (Carsten Schmitz)
+-Fixed issue #6124: User with limited rights is allowed to export complete MySQL DB 
+-Fixed issue: User with configurator access doesn't have acces to global settings (Denis Chenu)
+-Fixed issue: Survey list does not show surveys having deleted owners (Carsten Schmitz)
+
+
+Changes from 1.92+ (build 120516) to 1.92+ (build 120517) May 17, 2012
+-Fixed issue: Missing translations / texts
+
+Changes from 1.92+ (build 120509) to 1.92+ (build 120516) May 16, 2012
++New translation: Spanish (Chile) kindly provided by Victor Pinto (Carsten Schmitz)
+#Updated translation: Polish (elisa-ls)
+#Updated translation: Amharic kindly provided by Mezene Worku 
+#Updated translation: Czech (lukas-slansky)
+#Updated translation: German by c_schmitz 
+#Updated translation: Persian - kindly provided by Morteza Farahbod 
+#Updated translation: Turkish - 100% - kindly provided by Kaya Zeren
+-Fixed issue #5766: exclude_all_others_auto does not work (Thomas White)
+-Fixed issue #5943: Exclusive option in multiple choice hides all other answer options (Thomas White)
+-Fixed issue #6003: Text truncated after single quote when browsing responses to Multiple short text question. (Thomas White)
+-Fixed issue #6046: Resume later deletes answers from db when all questions are on one page (Thomas White)
+-Fixed issue #6078: Invalid LimeExpressionManager->ngT() calls (TMSWhite)
+-Fixed issue #6086: 1.92+ Build 120509 Conditions do not work with probably good logic (Thomas White)
+-Fixed issue #6087: cascading array filter fails for depth>=3 in group and question modes (Thomas White)
+-Fixed issue #6093: Wrong result when comparing decimal values from equation question types in surveys using comma as decimal point (Thomas White)
+-Fixed issue #6102: "Print your answers" shows EM syntax errors (Thomas White)
+-Fixed issue #6048: Conditions editor produces fatal error: maximum allocated memory (Carsten Schmitz)
+-Fixed issue #6080: Wrong validation for multiple numeric questions 
+-Fixed issue #6085: By pasting a subquestion code can contain a space (Carsten Schmitz)
+-Fixed issue: Misaligned input with multi column on citronade (Denis Chenu)
+-Fixed issue: Array-filter equations not visible for List-type questions in Show Survey Logic file (Thomas White)
+-Fixed issue: Datestamp on not date stamped survey. Dev: use 1980-01-01 for 'All database same value' (Denis Chenu)
+-Fixed issue: Endless javascript loop in answer edit or subquestion edit (Denis Chenu)
+-Fixed issue: Missing translations for jQuery popup calendar (Carsten Schmitz)
+-Fixed issue: Nice exit if surveyid is invalid (Denis Chenu)
+-Fixed issue: Unable to add label in label set administration (Carsten Schmitz)
+
+
+Changes from 1.92+ (build 120501) to 1.92+ (build 120509) May 9, 2012
++New translation: Afrikaans 
++New translation: Amharic - kindly provided by Mezene Worku
+#Updated translation: Polish (elisa-ls)
+#Updated translation: German (Carsten Schmitz)
+#Updated translation: German (informal) (Carsten Schmitz)
+#Updated translation: Persian by M. Farahbod (Carsten Schmitz)
+#Updated translation: Portuguese (Brazil) by Flávio Rodrigues (Carsten Schmitz)
+-Fixed issue #5975: Confirmation screen broken for iterate survey feature (tpartner)
+-Fixed issue #5987: prefix and suffix are misaligned for "total" field at miltiple numeric question (tpartner)
+-Fixed issue #6030: answeroption not left-aligned (tpartner)
+-Fixed issue #6030: answeroption not left-aligned Dev Fixed up CSS for list-radio questions (tpartner)
+-Fixed issue #6044: Use advanced question settings such as numbers_only, display_rows, max_characters, prefix, suffix, ... at data entry screen. (Marcel Minke)
+-Fixed issue #6062: Language selector is missing on survey without description nor welcome message (tpartner)
+-Fixed issue #6075: Content of previous answer is not replaced, instead placeholder of selected answer is shown: eg. {TOKEN:ATTRIBUTE_2} (Thomas White)
+-Fixed issue #6030: answeroption not left-aligned with multiple-opt-comments Dev : move input outside label (Denis Chenu)
+-Fixed issue #6030: Misalign input in multi-line answers / citronade part Dev : fixed some issue with little screen too (Denis Chenu)
+-Fixed issue #6048: Conditions editor produces fatal error: maximum allocated memory (Carsten Schmitz)
+-Fixed issue #6059: EM puts spaces between variables (Carsten Schmitz)
+-Fixed issue #6061: Duplicate codes when adding new answer options/subquestions/labels (Carsten Schmitz)
+-Fixed issue #6065: Error when creating a new survey by copying an existing one (Carsten Schmitz)
+-Fixed issue #6071: Notices if using mssql and changing/importing survey (Carsten Schmitz)
+-Fixed issue: Added quota_languagesettings table to the fixlanguageconsistency() array - when languages are added, matching quota entries are created for each language (jcleeland)
+-Fixed issue: Behaviour change on 'resume later' (Carsten Schmitz)
+-Fixed issue: db_quoteall added to fixlanguageconsistency() function when copying quota translations. (jcleeland)
+-Fixed issue: Submit date set even though participant was screened out by a quota (Carsten Schmitz)
+-Fixed issue: Several HTML fixes for data entry screen (data entry & data edit) (Marcel Minke)
+
+
+Changes from 1.92+ (build 120425) to 1.92+ (build 120501) May 1, 2012
+-Fixed issue #6008: File upload doesn't work from date entry, not available in response edit (mennodekker)
+-Fixed issue #6045: Firefox 12 vertical scrolling problem in admin view (and other pages) (Carsten Schmitz)
+-Fixed issue #6056 - Quota languages don't update (jcleeland)
+-Fixed issue: Images inserted into HTML emails were not properly linked to the server (Carsten Schmitz)
+-Fixed issue: Fixed several HTML issues for data entry mode 
+-Fixed issue: Partial fix (just data entry - editing data missing) for bug #6044: Use advanced question settings such as numbers_only, display_rows, max_characters, prefix, suffix, ... at data entry screen. (Marcel Minke)
+
+
+Changes from 1.92+ (build 120418) to 1.92+ (build 120425) April 25, 2012
+-Fixed issue #5988: Problem displaying words with French accent within Expression Manager (Carsten Schmitz)
+-Fixed issue #6027: Users who have token creation permission can't create token table (Carsten Schmitz)
+-Fixed issue #6035: Insertans not working in multiple options with comments (Carsten Schmitz)
+-Fixed issue #6036: Reminder sent to people which opted out (Carsten Schmitz)
+-Fixed issue #6037: Zero uses left by default when importing tokens from CSV (Carsten Schmitz)
+-Fixed issue #6042: Check for existing token taables after activation -> switch to closed access (Carsten Schmitz)
+-Fixed issue #6043: Errors creating surveys in MSSQL (Carsten Schmitz)
+#Updated translation: Czech (lukas-slansky)
+#Updated translation: Danish  - kindly provided by Søren O'Neill (Carsten Schmitz)
+#Updated translation: Finnish kindly provided by Flo Apps Oy (Carsten Schmitz)
+#Updated translation: German (Carsten Schmitz)
+#Updated translation: Italian - kindly provided by Alberto Danese (Carsten Schmitz)
+#Updated translation: Spanish (Mexico) (Carsten Schmitz)
+
+
+Changes from 1.92+ (build 120412) to 1.92+ (build 120418) April 18, 2012
+-Fixed issue #5896: Miscellaneous, rarely used, qcode.* attributes showing blank values (Thomas White)
+-Fixed issue #6006: Error in LImeExpressionManage.php anytime using an array (numbers) with checkboxes and Mandatory (Thomas White)
+-Fixed issue #6007: Token variables resolving as 'undefined variable' after Version 1.91+ Build 11026 (Thomas White)
+-Fixed issue #6013: passthru stopped working (Thomas White)
+-Fixed issue #6015: INSERTANS does not work in end message (Thomas White)
+-Fixed issue #6024: $deletenonvalues option no longer working in 1.92+ (Thomas White)
+-Fixed issue #5986: Import label set does not properly show an error for invalid files (Carsten Schmitz)
+-Fixed issue #6016: Load Unfinished Survey button does not display for existing survey (Carsten Schmitz)
+-Fixed issue #6018: Using mssqlnative the "date" question type uses DATETIME type and not DATE (Carsten Schmitz)
+-Fixed issue: Notice when using mssqlnative driver (Carsten Schmitz)
+-Fixed issue: Only set EM variables for {TOKEN:xxxx} when token table exists; and only for declared attributes (Thomas White)
+-Fixed issue: Participant IP address not correctly captured if server is behind proxy (Carsten Schmitz)
+-Fixed issue: Warning if upload file and there is no minimum number of files specified (Thomas White)
+#Updated translation: Czech kindly provided by Slansky Lukas 
+#Updated translation: French kindly provided by Guillaume Jaouen 
+#Updated translation: German 
+#Updated translation: German (informal) (Carsten Schmitz)
+
+
+Changes from 1.92+ (build 120405) to 1.92+ (build 120412) April 12, 2012
+-Fixed issue #5962: View Response Details does not work correctly if responses are filtered (Statistics) (Thomas White)
+-Fixed issue #5985: Notifications using INSERTANS and/or QCODE don't work with all-in-one presentation of survey (Thomas White)
+-Fixed issue #5992: After upgrade to Version 1.92+ Build 120405 the uploaded file information gets corrupted. (Thomas White)
+-Fixed issue #6002: @@SURVEYURL@@ placeholder fails to translate (Thomas White)
+-Fixed issue #5976: Iterate survey sets all "uses_left" to "1" even if there has been set a larger number previously (Carsten Schmitz)
+-Fixed issue #5997 : upload windows are on default survey langage (Denis Chenu)
+-Fixed issue: Bad HTML in editgroup(Denis Chenu)
+-Fixed issue: Mssqlnative driver gives back weird date format in export (Carsten Schmitz)
+-Fixed issue: With certain Apache configurations then em_javascript.js file was not readable (Carsten Schmitz)
+#Updated translation: Danish  - kindly provided by Søren O'Neill (Carsten Schmitz)
+#Updated translation: Galician - kindly provided by Carlos Neira Cortizas (Carsten Schmitz)
+#Updated translation: German Updated translation: German (informal) (Carsten Schmitz)
+#Updated translation: Greek by Yannis Kaskamanidis (Carsten Schmitz)
+#Updated translation: Spanish (Mexico) (Carsten Schmitz)
+
+
+Changes from 1.92+ (build 120330) to 1.92+ (build 120405) April 5, 2012
+-Fixed issue #5877: Resume later doesn't work with a survey allowing public registration (Carsten Schmitz)
+-Fixed issue #5971: Strange behavior of expression manager - static equation results not visible (Thomas White)
+-Fixed issue #5979: values prefilled via URL are not passed through to end URL Dev also syntax highlighted end URL  so can see if it contains typos (Thomas White)
+-Fixed issue #5981: EM attributes that should be static generate <span> elements (Thomas White)
+-Fixed issue #5982: Wrong replacement field properties (Thomas White)
+-Fixed issue #5984: Javascript error with upload question type for italian language Dev: add js option on clang (Denis Chenu)
+-Fixed issue #5960: Start language always saved as English (Carsten Schmitz)
+-Fixed issue #5969: Trying to import a question group without a matching language gives no proper error (Carsten Schmitz)
+-Fixed issue: When there are multiple languages, getSubQuestions() returns wrong values (often a mix of language-specific values) (Thomas White)
+
+
+Changes from 1.92+ (build 120325) to 1.92+ (build 120330) Mar 30, 2012
+-Fixed issue #5948: Mandatory directive for question is ignored for array (numbers) using checkbox layout (Thomas White)
+-Fixed issue #5952: Error in statistics (Carsten Schmitz)
+-Fixed issue #5957: Cannot check integrity database (Carsten Schmitz)
+-Fixed issue #5962: View Response details does not work correctly if responses are filtered (Carsten Schmitz)
+-Fixed issue: Certain French characters garbled in statistics display and other areas (Carsten Schmitz)
+-Fixed issue: Error if s_lang are not in survey langage (Denis Chenu)
+-Fixed issue: When trying to export to application then not all fields are shown (Carsten Schmitz)
+
+Changes from 1.92+ (build 120324) to 1.92+ (build 120325) Mar 23, 2012
+-Fixed issue #5877: Resume later doesn't work with a survey allowing public registration (magiclko)
+-Fixed issue: MSSQL error on importing survey (Carsten Schmitz)
+
+Changes from 1.92+ (build 120323) to 1.92+ (build 120324) Mar 23, 2012
+-Fixed issue #5877: Resume later doesn't work with a survey allowing public registration (magiclko)
+-Fixed issue #5934: Generating new Lablesets won't work (magiclko)
+-Fixed issue #5946: SQL error while creating new survey (Carsten Schmitz)
+
+Changes from 1.92+ (build 120319) to 1.92+ (build 120323) Mar 23, 2012
+-Fixed issue #5731: Randomization group name seems to block "Test this survey" (Thomas White)
+-Fixed issue #5909: Re-uploading files after deletions and other problems with File Upload question type and Expression Manager (Carsten Schmitz)
+-Fixed issue #5932: Default answers to hidden questions are not saved to database  (Thomas White)
+-Fixed issue #5933: Uploaded files with uppercase extensions show placeholder instead of image (Carsten Schmitz)
+-Fixed issue #5936: INSERTANS or TOKEN cannot be used in mail adress notification (Denis Chenu)
+-Fixed issue #5941: Quotas fail to terminate survey (Carsten Schmitz)
+-Fixed issue #5942: unable to activate survey after some modification (Denis Chenu)
+-Fixed issue #5944: Cannot grant "Survey security" permission to another user (Carsten Schmitz)
+-Fixed issue: Conditions were not properly converted to EM expressions when magicquotes are enabled (Carsten Schmitz)
+
+Changes from 1.92+ (build 120314) to 1.92+ (build 120319) Mar 19, 2012
+#Updated translation: Hungarian by Pongrácz István (Carsten Schmitz)
+-Fixed issue #5904: Database upgrade fails with errors on Postgres (Carsten Schmitz)
+-Fixed issue #5913: Bad SQL syntax in file create-mssql.sql (Carsten Schmitz)
+-Fixed issue #5917: Bold text not showing when using default template (Carsten Schmitz)
+-Fixed issue #5921: Duplicate header field names for Dual scale question type when exporting to application (Carsten Schmitz)
+-Fixed issue #5924: Wrong alignment of subquestion text and radiobuttons in Array questions with RTL languages (Carsten Schmitz)
+-Fixed issue #5926: With multilingual surveys the sheetname on Excel export was not always in the base language (Carsten Schmitz)
+-Fixed issue #5927: Default template Yes/No questions & Male/Female alignment (Carsten Schmitz)
+-Fixed issue: Error in update scripts for MSSQL server (Carsten Schmitz)
+-Fixed issue: PHP warning when importing label set without labels (Carsten Schmitz)
+
+Changes from 1.92+ (build 120311) to 1.92+ (build 120314) Mar 14, 2012
++New feature #5492: Changing global settings takes you away from survey design Now it "remembers" the referee url and redirect to that url after saving global settings! (magiclko)
+-Fixed issue #5898: {GOOGLE_ANALYTICS_JAVASCRIPT} integration errors (Thomas White)
+-Fixed issue #5835: Standard survey header is not used in public statistics (Carsten Schmitz)
+-Fixed issue: Notice if Referer is not set (Shnoulle)
+-Fixed issue: Textareas in survey taking were not properly quoted when displayed again (Carsten Schmitz)
+-Fixed issue: Invalid email in 'resume later' save form did not show an error message (Carsten Schmitz)
+-Fixed issue: HTMLeditor popup not properly filtering some input variables (Carsten Schmitz)
+
+
+Changes from 1.92 (build 120302) to 1.92+ (build 120311) Mar 11, 2012
+-Fixed issue #5859: Question group import does not update references properly (Thomas White)
+-Fixed issue #5875: Flexible Labels do not register in french when apostrophes are in label text. (magiclko)
+-Fixed issue #5879: em_validation_q generates duplicative JavaScript (Thomas White)
+-Fixed issue #5880: Make em_q_fn_validation and em_sq_fn_validation more easily visible (Thomas White)
+-Fixed issue #5887: Minimum answers in Ranking question type are deactivated (Thomas White)
+-Fixed issue #5892: With question type "Short free text" and "display row" set, the text field is shown with some code (Thomas White)
+-Fixed issue #5894: INSERTANS (and qcode.shown) returning wrong values for some question types 
+-Fixed issue #5895: On-page substitution of comment for List with Comment type not being displayed (Thomas White)
+-Fixed issue #5897: Survey ID not set correctly after row insert in servey_NNN table (Thomas White)
+-Fixed issue #5778: Multiple choice answer for rtl in basic,bluenegrey,citronade,clear_logo,eireicon (Shnoulle)
+-Fixed issue #5778: Template for RTL : limespired, mint_idea,sherpa,vallendar (Shnoulle)
+-Fixed issue #5870: Progress indicator in quick-translate hiding to early. Some language (like Irish or Chinese) did not translate. (Carsten Schmitz)
+-Fixed issue #5876: Cryptic error message when trying to run LimeSurvey using an outdated PHP version (Carsten Schmitz)
+-Fixed issue #5878: Progress-bar not showing because of JS /eval folder being blocked (Carsten Schmitz)
+-Fixed issue: Uploaded files fail if target directory does not exist. (Thomas White)
+-Fixed issue: Data not saved and validations don't work when use multiflexible_checkbox option in Array (numbers) question type (Thomas White)
+-Fixed issue: Differencation for good/empty and good/not-empty (Shnoulle)
+-Fixed issue: Equation question types were only capturing the contents of the first replacement <span> element (Thomas White)
+-Fixed issue: Error on upgrade from 1.90 or earlier (Carsten Schmitz)
+-Fixed issue: Group preview sometimes does not work (Thomas White)
+-Fixed issue: hide_type advanced question option not available for all question types (Thomas White)
+-Fixed issue: JavaScript IDs for validation messages start with a number, which does not pass strict HTML validation criteria (Thomas White)
+-Fixed issue: When using question type Array (Numbers) with multiflexible_checkbox input and radix separator = comma, JavaScript throws error when trying to fix radix separator (Thomas White)
+#Updated translation: Greek by Γιάννης Κασκαμανίδης (Carsten Schmitz)
+
+Changes from 1.91+ (build 120302) to 1.92 (build 120303) Mar 3, 2012
++New feature #5780: Information when there is no matching label set (shnoulle)
++New feature #5103: Support conditional piping/tailoring and complex calculations via embedded equation parser (tmswhite)
++New feature #5104: Create new question type for stored calculation results, called Equation (tmswhite)
++New feature #5268: Do all LimeReplacementField and Token replacements in a single function (tmswhite)
++New feature #5269: Use ExpressionManager for Branching logic as optional alternative to Conditions (tmswhite)
++New feature #5279: Add a GUI for ExpressionManager (tmswhite)
++New feature #5288: Optionally replace Assessments with ExpressionManager features (tmswhite)
++New feature: Each type of validation tip can be styled separately (so if a question fails validation checks, you can see whether it is because of wrong number of answers, wrong value range, wrong sum range, or wrong regex criteria). (tmswhite)
++New feature: JavaScript question type selector and Editarea template can be desactivated by user (shnoulle)
++New feature: EM reserved word "this" which refers the the current sgqa code (tmswhite)
++New feature: Question_attribute 'em_validation_q': "Boolean equation to validate the whole question" (tmswhite)
++New feature: Question_attribute 'em_validation_q_tip': "Tip to show user describing the Question Validation Equation" (tmswhite)
++New feature: Question_attribute 'em_validation_sq': "Boolean equation to validate each sub-question." (tmswhite)
++New feature: Question_attribute 'em_validation_sq_tip': "Tip to show user describing the Sub-Question Validation Equation." (tmswhite)
++New feature: Added Tools button to access Expression Manager Test Suite (tmswhite)
++New feature: Allow Regular-Expression validation of question type ';' (ARRAY (Multi Flexi) Text) (tmswhite)
++New feature: Allow Regular-Expression validation of question type 'Q' (Multiple Short Text) (tmswhite)
++New feature: Google Analytics Support (tmswhite)
++New feature: Support dynamic validation range for multiflexible_min and multiflexible_max when in text input mode (tmswhite)
++New feature: dropdown_prefix attribute for List (dropdown) - lets you prefix each entry with its visible order in the list (tmswhite)
++New feature: dropdown_size attribute for List (dropdown) - lets you specify number of visible rows in the dropdown box (tmswhite)
++New feature: Code/QID visible in quick-translation answers/subquestions/questions for easier orientation (c_schmitz)
++New feature: Show Logic File for Entire Survey, with all conditions, validation, and tailoring (tmswhite)
++New feature: Sets "equals" as the default comparison operator for conditions (jcleeland)
++New feature: Quick-add feature for label sets which (was in _dev branch but was accidentally removed with merge in from _dev_tms branch) (tmswhite)
+#Updated feature: Added German translations to 1.91 sample survey. (maziminke)
+#Updated feature: Browse of submitted responses now only shows relevant questions and answers. (tmswhite)
+#Updated feature: Default values now available for the following question types: Date, Short/Long/Huge Text, Multiple ShortText, Multiple Numerical (tmswhite)
+#Updated feature: Deprecated min_num_value_sgqa, max_num_value_sgqa, and num_value_equals_sgqa (tmswhite)
+#Updated feature: array_filter - now also available for multiple_numeric and multiple_short_text (tmswhite)
+#Updated feature: exclude_all_others - now also available for multiple_choice_with_comments (tmswhite)
+#Updated feature: max_answers - now also available for all array types, multiple_numeric and multiple_short_text (tmswhite)
+#Updated feature: max_num_value_n - now also available for multiple_numeric (tmswhite)
+#Updated feature: min_answers - now also available for all array types, multiple_numeric and multiple_short_text (tmswhite)
+#Updated feature: Add many more unit tests to EM and group/sort them.  Contributed by GCi participant Aaron Schmitz (tmswhite)
+#Updated feature: min_num_value_n - now also available for multiple_numeric (tmswhite)
+
+
+Changes from 1.91+ (build 120224) to 1.91+ (build 120302) Mar 2, 2012
+-Fixed issue #5721: Login with admin and default password doesn't work on Postgres with certain server versions (Carsten Schmitz)
+-Fixed issue #5783: Surveys created in versions pre QuickTranslate do not set permission rights correctly (Carsten Schmitz)
+-Fixed issue: Updater bugging out if no files exist for backup (Carsten Schmitz)
+#Updated translation: German (Informal) by Gregor Herrmann (Carsten Schmitz)
+#Updated translation: German Updated translation: German (informal) (Carsten Schmitz)
+#Updated translation: Indonesian (Carsten Schmitz)
+#Updated translation: Portuguese (Brazil) (Carsten Schmitz)
+#Updated translation: Turkish (Carsten Schmitz)
+#Update translation: Greek by Yannis Kaskamanidis (Carsten Schmitz)
+
+
+Changes from 1.91+ (build 12416) to 1.91+ (build 120224) Feb 24, 2012
+-Fixed issue #05752: statistics_user.php - always shown in baselang (magiclko)
+-Fixed issue #05764: If enter Y-scale and X-scale at same time, and click save, only Y-scale is saved (magiclko)
+-Fixed issue #5824: QueXML export FAIL (Adam Zammit)
+-Fixed issue #5831: User name not properly quoted on display (Carsten Schmitz)
+-Fixed issue #5832: Unsanitized variable id when viewing a single response (Carsten Schmitz)
+-Fixed issue: Fieldnames are not being properly sanitized (Carsten Schmitz)
+-Fixed issue: Quote dbname correctly and use utf-8 for postgres installation (Stephan Beyer)
+
+Changes from 1.91+ (build 12358) to 1.91+ (build 12416) Feb 7, 2012
+#Updated translation: Greek by Yannis Kaskamanidis (c_schmitz)
+-Fixed issue #5734: Problem upgrading from 1.72 to 1.91+ (c_schmitz)
+-Fixed issue #5739: Wrong percentage in graphs with List with Comments question types (c_schmitz)
+-Fixed issue #5749: Wrong date conversion when using certain date formats (c_schmitz)
+-Fixed issue #5775: SQL error on translation (shnoulle)
+
+Changes from 1.91+ (build 12170) to 1.91+ (build 12358) Feb 5, 2012
+#Updated translation: German (maziminke)
+-Fixed issue: Added missing information about a token being required for sending invitations. (maziminke)
+-Fixed issue #5589: Error messages when user deletes himself (c_schmitz)
+-Fixed issue #5592: Wrong answer mapping for dual scale matrix in detailed admin notification email (c_schmitz)
+-Fixed issue #5648: Quota list of questions is not sorted (c_schmitz)
+-Fixed issue #5688: Quota answers not in base language (c_schmitz)
+-Fixed issue #5695: When creating a survey 'List survey publicly' defaults to Yes instead of Np (c_schmitz)
+-Fixed issue #5751: Quick translation - assignment problem with dual matrix (c_schmitz)
+-Fixed issue #5590: 1980-01-01 in printview (tpartner)
+-Fixed issue #5692: Google Maps do not reappear where field is has conditions (tpartner)
+-Fixed issue: Fixing notice introduced with commit 12113 (mennodekker)
+-Fixed issue: uploader on preview (mennodekker)
+
+Changes from 1.91+ (build 11804) to 1.91+ (build 12170) Jan 23, 2012
+#Updated translation: French (b00z00)
+#Updated translation: German (c_schmitz)
+#Updated translation: German Informal (c_schmitz)
+#Updated translation: Polish (elisa-ls)
+#Updated translation: Portuguese (Brazil) (c_schmitz)
+#Updated translation: Russian (c_schmitz)
+#Updated translation: Turkish by Kaya Zeren (c_schmitz)
+#Updated feature: Added German translations to 1.91 sample survey. (maziminke)
++New feature: Code/QID visible in quick-translation answers/subquestions/questions for easier orientation (c_schmitz)
+-Fixed issue #5645 : Upload file question for all in one survey and Fancy URLs (shnoulle)
+-Fixed issue #5628: SQL error after setting a filter in statistics and removing it again (c_schmitz)
+-Fixed issue #5649: Error message on numerical input type question not working for more than one question of this type (c_schmitz)
+-Fixed issue #5662: Clicking the 'Browse' button in statistics to browser filtered data shows all reponses (c_schmitz)
+-Fixed issue #5678: usesleft field is not created by RemoteControl in tokens table (c_schmitz)
+-Fixed issue #5643: CMS integration hack. Note: this option was removed for 2.00 (shnoulle)
+-Fixed issue: Display columns layout for citronade (shnoulle)
+-Fixed issue: php alert and bad deletion of file in upload file question (shnoulle)
+-Fixed issue: Answers not properly added for dual scale questions when adding a new language to the survey (c_schmitz)
+-Fixed issue: Missing sorting for groups/question in quick translate (c_schmitz)
+-Fixed issue: Broken pdf export of printable survey due to incorrect filename (mennodekker)
+-Fixed issue: printanswers shows json string for file upload fields (mennodekker)
+
+Changes from 1.91+ (build 11379) to 1.91+ (build 11804) Dec 30, 2011
+#Updated translation: Hungarian by GCI participant Andor UhlÃ¡r (c_schmitz)
+#Updated translation: French (b00z00)
+#Updated translation: Czech by GCI participant Martin JaneÄek (c_schmitz)
+#Updated translation: Indonesian 100% by Ivan Lanin (c_schmitz)
+#Updated translation: Indonesian by Jeremy Malcolm (c_schmitz)
+#Updated translation: Lithuanian by Roland As (c_schmitz)
+#Updated translation: Portuguese by JoÃ£o Santa Comba (c_schmitz)
+#Updated translation: Slovak (c_schmitz)
+#Updated translation: Spanish (es) (kadejo)
+#Updated translation: Turkish by GCI participant Mtmecax (c_schmitz)
+#Updated translations: Backported relevant translations from the Yii version (c_schmitz)
+-Fixed issue #5587: Unable to take ranking questions on Android phone browsers (tpartner)
+-Fixed issue: If SMTP sending fails due to invalid domain all following invitations in the same batch fail too if using SMTP (c_schmitz)
+
+Changes from 1.91+ (build 11343) to 1.91+ (build 11379) Nov 16, 2011
+-Fixed issue #5580: conditions don't work when using slider with emoticons and evaluation is done on the same page (lemeur)
+-Fixed issue #5570: INSERTANS does not return other comment in multiple questions with Other activated (c_schmitz)
+-Fixed issue #5574: Error in printable survey with Postgres/MSSQL (c_schmitz)
+-Fixed issue #5576: Quick-translation adds backslashes before quotes and double-quotes when magic_quotes are activated (c_schmitz)
+-Fixed issue #5578: $sitename not loaded (c_schmitz)
+-Fixed issue: Printable survey was not displaying 'Other' when other was selected as a condition (jcleeland)
+-Fixed issue: Languages in language changer select box were not sorted by the current language (c_schmitz)
+-Fixed issue: Memory issue in integrity check (c_schmitz)
+-Fixed issue: XSS injection due to improper quoting in tool tips - thanks for reporting to Joshua Tiago via Secunia Vulnerability Coordination Reward Program (SVCRP) (c_schmitz)
+
 
 Changes from 1.91+ (build 11228) to 1.91+ (build 11343) Nov 8, 2011
 -Fixed issue #5126: CSV export - no new lines (c_schmitz)
@@ -380,11 +1007,11 @@ Changes from 1.91+ (build 10168) to 1.91+ (build 10202)
      
 Changes from 1.91+ (build 10120) to 1.91+ (build 10168)                    
 #Updated translation: French (b00z00)
-#Updated translation: Czech by Vladimír Braun (c_schmitz)
+#Updated translation: Czech by VladimÃ­r Braun (c_schmitz)
 #Updated translation: French by Frederic Villerot (c_schmitz)
 #Updated translation: German (c_schmitz)
 #Updated translation: German Informal (c_schmitz)
-#Updated translation: Icelandic by Jóhann Friðriksson (c_schmitz)
+#Updated translation: Icelandic by JÃ³hann FriÃ°riksson (c_schmitz)
 #Updated translation: Polish (elisa-ls)
 +New feature: Updated FCKeditor to CKEditor (c_schmitz)
 +New feature: Updated phpExcel to 1.7.6 (c_schmitz)
@@ -419,13 +1046,13 @@ Changes from 1.91+ (build 10089) to 1.91+ (build 10120)
 -Fixed issue: No "Source" button in basic editor (tpartner)                      
                               
 Changes from 1.91+ (build 10062) to 1.91+ (build 10089)                              
-#Updated translation: Norwegian Nynorsk - kindly provided by Guttorm Flatab� (c_schmitz)
+#Updated translation: Norwegian Nynorsk - kindly provided by Guttorm Flatabø (c_schmitz)
 #Updated translation : French (b00z00)
 #Updated translation: Czech - kindly provided by Vladimir Braun (c_schmitz)
 #Updated translation: German (c_schmitz)
 #Updated translation: German Informal (c_schmitz)
-#Updated translation: Hungarian - kindly provided by Bal�zs Zolt�n (c_schmitz)
-#Updated translation: Norwegian Bokmal - kindly provided by P�l Monstad (c_schmitz)
+#Updated translation: Hungarian - kindly provided by Balázs Zoltán (c_schmitz)
+#Updated translation: Norwegian Bokmal - kindly provided by Pål Monstad (c_schmitz)
 -Fixed issue #4851: Translate button doesn't work in IE (tpartner)
 -Fixed issue #5150: Preview question; default answer not shown (c_schmitz)
 -Fixed issue #5157: Limit on 5 character in multiple answers with comments (c_schmitz)
@@ -608,7 +1235,7 @@ Changes from  1.87+ (build 8472) to 1.87+ (build 8498)- Legend: # updated featur
 -Fixed issue #4192: Problem saving partially finished survey for the second time in MSSQL server (c_schmitz)
 -Fixed issue #4195: RTL language aligment problem in bluengrey template (c_schmitz)
 -Fixed issue #4199: Cookie path not set (c_schmitz)
--Fixed issue 04188: Edit Response - Data Entry - Not working Dev corrected filling values automatically for Array (MultiFlexible)(Numbers) type questions (harsha_mora)
+-Fixed issue 04188: Edit Response - Data Entry - Not working (harsha_mora)
 -Fixed the issue for Date type questions 04188 (harsha_mora)
 
 Changes from  1.87+ (build 8453) to 1.87+ (build 8472)- Legend: # updated feature, - bug fix 
@@ -643,7 +1270,7 @@ Changes from  1.87+ (build 6406) to 1.87+ (build 8429) - Legend: # updated featu
 #Updated language: Croatian (idobraca)
 #Updated language: French (b00z00)
 #Updated language: Italian (thanks to Cristina Fiorentini ) (gandalfar)
-#Updated language: Portuguese, thanks to Rui Gouveia and Marco MendonÃ§a (gandalfar)
+#Updated language: Portuguese, thanks to Rui Gouveia and Marco MendonÃƒÂ§a (gandalfar)
 #Updated language: Spanish (es) (kadejo)
 #Updated translation: German (c_schmitz)
 #Updated translation: German Informal (c_schmitz)
@@ -832,8 +1459,8 @@ Changes from 1.87RC4 (build 8002) [29-11-2009] to 1.87RC5 (build 8151) - Legend:
 +New feature: Start/Expiry is now date and time (previously only date) (c_schmitz)
 #Updated feature: SPSS export now configurable for SPSS version - patch by Menno Dekker (c_schmitz)
 #Updated translation: Croatian (idobraca)
-#Updated translation: Norwegian BokmÃ¥l (reidarok)
-#Updated translation: Czech by VladimÃ­r Braun (c_schmitz)
+#Updated translation: Norwegian BokmÃƒÂ¥l (reidarok)
+#Updated translation: Czech by VladimÃƒÂ­r Braun (c_schmitz)
 #Updated translation: Dutch by Fred Dekkers & Han Velthuis (c_schmitz)
 #Updated translation: Dutch by Fred Dekkers (c_schmitz)
 #Updated translation: Dutch Informal by Han Velthuis (c_schmitz)
@@ -912,7 +1539,7 @@ Changes from 1.87RC2 (build 7886) to 1.87RC3 (build 7996) [27-11-2009] - Legend:
 #Updated translation: Finnish by Tapio Nurminen <tapio dot nurminen at tietokannat dot fi> 
 #Updated translation: German (c_schmitz)
 #Updated translation: German Informal (c_schmitz)
-#Updated translation: Norwegian BokmÃ¥l. By Reidar Ã˜ksnevad <reidar dot oksnevad at freecode dot no> 
+#Updated translation: Norwegian BokmÃƒÂ¥l. By Reidar ÃƒËœksnevad <reidar dot oksnevad at freecode dot no> 
 #Updated translation: Portuguese Brazilian by Yoshitake <yoshitake at pucsp dot br> 
 #Updated translation: Slovakian by Pavel Cerny  <pcerny at gmail dot com>
 #Updated translation: Spanish (kadejo)
@@ -1193,7 +1820,7 @@ Changes from 1.85+ (build 7337) to 1.85+ (build 7393) [03-08-2009] - Legend: + n
 #Updated translation: Italian. (idobraca)
 #Updated translation: French. (b00z00)
 #Updated translation: Polish(elisa-ls)
-#Updated translation: Slovak by Marek HallÃ©r. (jaycburton)
+#Updated translation: Slovak by Marek HallÃƒÂ©r. (jaycburton)
 #Updated translation: Spanish (es) (kadejo)
 +New feature: CSS class for cells within array (flexible label) question type. This way cells within the table can have a background color assigned using CSS. (maziminke)
 -Fixed bug #03459: Using a "lower than" > character as code within label set leads to a save error in the end user survey form (jcleeland)
@@ -1390,7 +2017,7 @@ Changes from 1.81 to 1.82 (build 6757) [2009/04/29] - Legend: + new feature, # u
 +New feature in group order - detects faulty group_order numbering and fixes before displaying groups (jcleeland)
 +New language translation: Sinhalese translation by Janaka Padukka (c_schmitz)
 #Updated Language: Czech (macduy)
-#Updated Language: Hungarian - kindly provided by Miklós Kriván (c_schmitz)
+#Updated Language: Hungarian - kindly provided by MiklÃ³s KrivÃ¡n (c_schmitz)
 #Updated Language: Polish - kindly provided by Ela Lesinska (elisa) (c_schmitz)
 #Updated language: German & German (informal) (c_schmitz)
 #Updated language: German translation (c_schmitz)
@@ -1588,10 +2215,10 @@ Updated translations:
     Updated Language: Galician language updated. By Carlos Neira Cortizas. (kadejo)
     Updated Language: Greek language updated. By Yiannos Katsirintakis. (kadejo)
     Updated Language: Italian. By Giovanni Chiozza. (kadejo)
-    Updated Language: Norwegian Bokmål. By Reidar Øksnevad. (kadejo)
+    Updated Language: Norwegian BokmÃ¥l. By Reidar Ã˜ksnevad. (kadejo)
     Updated Language: Polish (xqleg)
-    Updated Language: Portuguese Brazilian by Andréa Simões (c_schmitz)
-    Updated Language: Portuguese Brazilian by Flávio Veras (c_schmitz)
+    Updated Language: Portuguese Brazilian by AndrÃ©a SimÃµes (c_schmitz)
+    Updated Language: Portuguese Brazilian by FlÃ¡vio Veras (c_schmitz)
     Updated Language: Russian. By Pavel Tokarev. (kadejo)
     Updated Language: Serbian language updated. By Miroslav Jovanovic. (first in Cyrillic alphabet). (kadejo)
     Updated Language: Slovenian language update (gasper_koren)
@@ -1812,7 +2439,7 @@ Feature Changes:
 -Applied changes to originals texts for better i18n compatibility by Hooman Mesgary (c_schmitz)
 
 Languages:
--Added Icelandic translation kindly provided by Jóhann Friðriksson ( johannfr -i-t- arskoli -d-i-t- is )
+-Added Icelandic translation kindly provided by JÃ³hann FriÃ°riksson ( johannfr -i-t- arskoli -d-i-t- is )
 -Updated Albanian Language file by Eniel Ninka (e -d-o-t- ninka -a-t- univpm -d-o-t- it )
 -Updated Basque Translation by inforbek13 --i-t-- eps -d-a-t- mondragon -d-a-t- edu
 -Updated Bulgarian translation by Alexander Simidchiev <simid -a-t- mail -d-i-t- bg
@@ -1822,7 +2449,7 @@ Languages:
 -Updated Dutch translation by Hans Delva, Gerton Poot
 -Updated Estonian Translation by Villem Vannas (villem -dot- vannas(a) mail (dot) ee)
 -Renamed Farsi to Persian (c_schmitz)
--Updated Finnish Translation by Juuso Heinisuo, Päivi Tyni  (c_schmitz)
+-Updated Finnish Translation by Juuso Heinisuo, PÃ¤ivi Tyni  (c_schmitz)
 -Updated French translation (b00z00 and el Almoman walmoman -a-t- hemisa -d-o-z- com)
 -Updated German translations (c_schmitz)
 -Updated Greek translation by Christos Rodosthenous and Yiannos Katsirintakis
@@ -2178,7 +2805,7 @@ New Features / Feature Changes - Release Date: 2008/02/25
 [Survey Design] Adding new questions to very large surveys, and question sorts (jasebo)
 [Survey Design] Question Attribute "display_columns" for Gender Question--Type (jasebo)
 [Survey Design] Implemented dropdown layout for Dual Scale Question Type (lemeur)
-[Language] Added Slovak translation provided by Juraj Zubán aka D4v1dZ ( d4v1dz -a-t- gmail -d-o-t- com)
+[Language] Added Slovak translation provided by Juraj ZubÃ¡n aka D4v1dZ ( d4v1dz -a-t- gmail -d-o-t- com)
 
 
 
@@ -2191,7 +2818,7 @@ Features
 -Lots of security fixes regarding internal security - upgrade is highly recommended. (c_schmitz)
 -Hint is now shown if database exist (c_schmitz)
 -Added a warning message when the user did not change the 'password' Password (c_schmitz)
--Updated and now complete SPanish Translation by Luis M. Martínez
+-Updated and now complete SPanish Translation by Luis M. MartÃ­nez
 -Updated and now complete Polish Translation by Damian Kubiak
 
 
@@ -2203,7 +2830,7 @@ Fixes:
 -Fixed problem with mandatory questions in all-in-one mode (leochaton)	
 -Fixed "Load unfinished survey" and "Save survey and return" buttons active even when the survey is not active (leochaton)	
 -Fixed question marks being shown instead if Cyrillic/chinese/greek/... characters when installing LImeSurvey into a non-UTF8 database (c_schmitz)
--Fixed $accesscontrol isn´t working correctly - removed this obsolete setting (leochaton, c_schmitz)	
+-Fixed $accesscontrol isnÂ´t working correctly - removed this obsolete setting (leochaton, c_schmitz)	
 -Fixed error clicking Browse button to view text box responses (leochaton)
 -Fixed Locale nl point to wrong images-directory (el-matador-69)
 -Fixed The saved control records were not deleted when the survey was deactivated. (leochaton)
@@ -2256,14 +2883,14 @@ New General Features
 
 New Languages
 
-    * Brazilian Portuguese by Anderson La‚cio Galindo Trindade
+    * Brazilian Portuguese by Anderson Laâ€šcio Galindo Trindade
     * Chinese Traditional (Area Hong Kong) by Mark Yeung
     * Finnish by Matti Lassila
     * Galician translation by Carlos Neira Cortizas
     * Japanese translation by Hiroki Yoshino
     * Polish by Maciej Zawado
     * Serbian by Ivan Recevic
-    * Spanish by Carlos Juan Martín Pérez
+    * Spanish by Carlos Juan MartÃ­n PÃ©rez
     * Vietnamese by Vinh Ngo 
 
 

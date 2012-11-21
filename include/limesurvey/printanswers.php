@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: printanswers.php 10922 2011-09-02 14:02:28Z c_schmitz $
+ * $Id: printanswers.php 12172 2012-01-23 20:28:20Z tpartner $
  *
  */
 
@@ -114,12 +114,17 @@ if (!isset($rootdir) || isset($_REQUEST['$rootdir'])) {die("browse - Cannot run 
 
 // Set the language for dispay
 require_once($rootdir.'/classes/core/language.php');  // has been secured
-if (isset($_SESSION['s_lang']))
+if (isset($_REQUEST['lang'])) {
+    $lang = sanitize_languagecode($_REQUEST['lang']);
+    $clang = SetSurveyLanguage( $surveyid, $lang);
+    $language = $_SESSION['s_lang'];
+}
+else if (isset($_SESSION['s_lang']))
 {
     $clang = SetSurveyLanguage( $surveyid, $_SESSION['s_lang']);
     $language = $_SESSION['s_lang'];
 } else {
-$language = GetBaseLanguageFromSurveyID($surveyid);
+    $language = GetBaseLanguageFromSurveyID($surveyid);
     $clang = SetSurveyLanguage( $surveyid, $language);
 }
 
@@ -154,6 +159,7 @@ if ($actcount > 0)
     {
         $surveytable = db_table_name("survey_".$actrow['sid']);
         $surveyname = "{$actrow['surveyls_title']}";
+        $anonymized = $actrow['anonymized'];
     }
 }
 
@@ -173,6 +179,10 @@ if(isset($_POST['printableexport']))
         $pdf->titleintopdf($clang->gT("Survey name (ID)",'unescaped').": {$surveyname} ({$surveyid})");
 }
 $printoutput .= "\t<div class='printouttitle'><strong>".$clang->gT("Survey name (ID):")."</strong> $surveyname ($surveyid)</div><p>&nbsp;\n";
+
+LimeExpressionManager::StartProcessingPage(true);  // means that all variables are on the same page
+// Since all data are loaded, and don't need JavaScript, pretend all from Group -1.  Must do this rather than just StartProcessingPage since $_SESSION may no longer exist.
+LimeExpressionManager::StartProcessingGroup(-1,($thissurvey['anonymized']!="N"),$surveyid);
 
 $bHonorConditions=($printanswershonorsconditions==1);
 $aFullResponseTable=aGetFullResponseTable($surveyid,$id,$language,$bHonorConditions);
@@ -220,6 +230,21 @@ foreach ($aFullResponseTable as $sFieldname=>$fname)
             $printoutput .= "\t<tr class='printanswersquestionhead'><td  colspan='2'>{$fname[0]}</td></tr>\n";
         }
     }
+    elseif ($sFieldname=='submitdate')
+    {
+        if($anonymized != 'Y')
+        {
+           if(isset($_POST['printableexport']))
+           {
+               $pdf->intopdf(FlattenText($fname[0].$fname[1],true).": ".$fname[2]);
+               $pdf->ln(2);
+           }
+           else
+           {
+               $printoutput .= "\t<tr class='printanswersquestion'><td>{$fname[0]} {$fname[1]} {$sFieldname}</td><td class='printanswersanswertext'>{$fname[2]}</td></tr>";
+           }
+	    }
+    }
     else
     {
         if(isset($_POST['printableexport']))
@@ -242,7 +267,7 @@ if(isset($_POST['printableexport']))
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
     $sExportFileName=sanitize_filename($surveyname);
-    $pdf->Output($sExportFileName."-".$surveyid.".pdf","D");
+			$pdf->Output($sExportFileName."-".$surveyid.".pdf","D");
 }
 
 
@@ -258,5 +283,7 @@ if(!isset($_POST['printableexport']))
     echo "</body></html>";
 }
 
+LimeExpressionManager::FinishProcessingGroup();
+LimeExpressionManager::FinishProcessingPage();
 
 ?>

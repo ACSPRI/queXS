@@ -274,14 +274,19 @@ if ($questionnaire_id != false)
 				print "<h1>" . T_("Enter the details for creating the row quota:") . "</h1>";
 				print "<h2>" . T_("Pre defined values for this question:") . "</h2>";
 
-				$qid = explode("X", $sgqa);
-				$qid = $qid[2];
-	
-				$sql = "SELECT l.code,l.answer as title
-					FROM `" . LIME_PREFIX . "answers` as l
-					WHERE l.qid = '$qid'";
-	
-				$rs = $db->GetAll($sql);
+				$rs = "";
+
+				if ($sgqa != -2 && $sgqa != -1 && !empty($sgqa))
+				{
+					$qid = explode("X", $sgqa);
+					$qid = $qid[2];
+		
+					$sql = "SELECT l.code,l.answer as title
+						FROM `" . LIME_PREFIX . "answers` as l
+						WHERE l.qid = '$qid'";
+		
+					$rs = $db->GetAll($sql);
+				}
 	
 				if (!isset($rs) || empty($rs))
 					print "<p>" . T_("No labels defined for this question") ."</p>";

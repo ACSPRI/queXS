@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- *	$Id: admin_functions.php 9586 2010-12-06 03:08:07Z c_schmitz $
+ *	$Id: admin_functions.php 11664 2011-12-16 05:19:42Z tmswhite $
  *	Files Purpose:
  */
 
@@ -339,6 +339,7 @@ function getAdminHeader($meta=false)
     $strAdminHeader.= "<script type=\"text/javascript\" src=\"{$homeurl}/scripts/tabpane/js/tabpane.js\"></script>\n"
     . "<script type=\"text/javascript\" src=\"{$rooturl}/scripts/jquery/jquery.js\"></script>\n"
     . "<script type=\"text/javascript\" src=\"{$rooturl}/scripts/jquery/jquery-ui.js\"></script>\n"
+    . "<script type=\"text/javascript\" src=\"".$rooturl."/scripts/jquery/jquery.ui.touch-punch.min.js\"></script>\n"
     . "<script type=\"text/javascript\" src=\"{$rooturl}/scripts/jquery/jquery.qtip.js\"></script>\n"
     . "<script type=\"text/javascript\" src=\"{$rooturl}/scripts/jquery/jquery.notify.js\"></script>\n"
     . "<script type=\"text/javascript\" src=\"{$homeurl}/scripts/admin_core.js\"></script>\n";

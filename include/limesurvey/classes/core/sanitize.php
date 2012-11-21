@@ -1,6 +1,6 @@
 <?php
 /*
- * $Id: sanitize.php 9998 2011-04-12 11:34:43Z c_schmitz $
+ * $Id: sanitize.php 9999 2011-04-12 11:34:54Z c_schmitz $
  *
  * Copyright (c) 2002,2003 Free Software Foundation
  * developed under the custody of the

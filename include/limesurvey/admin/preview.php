@@ -10,41 +10,37 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: preview.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: preview.php 12106 2012-01-19 05:35:48Z tmswhite $
  */
 
 
 //Ensure script is not run directly, avoid path disclosure
+$LEMdebugLevel=0;
+
 include_once("login_check.php");
 require_once(dirname(__FILE__).'/sessioncontrol.php');
-require_once(dirname(__FILE__).'/../qanda.php');
 
 if (!isset($surveyid)) {$surveyid=returnglobal('sid');}
 if (!isset($qid)) {$qid=returnglobal('qid');}
 if (empty($surveyid)) {die("No SID provided.");}
 if (empty($qid)) {die("No QID provided.");}
 
+if (!isset($_SESSION['step'])) { $_SESSION['step'] = 0; }
+if (!isset($_SESSION['prevstep'])) { $_SESSION['prevstep'] = 0; }
+if (!isset($_SESSION['maxstep'])) { $_SESSION['maxstep'] = 0; }
 if (!isset($_GET['lang']) || $_GET['lang'] == "")
 {
     $language = GetBaseLanguageFromSurveyID($surveyid);
 } else {
-    $language = $_GET['lang'];
+    $language = sanitize_languagecode($_GET['lang']);
 }
 
 $_SESSION['s_lang'] = $language;
-$_SESSION['fieldmap']=createFieldMap($surveyid,'full',true,$qid);
-// Prefill question/answer from defaultvalues
-foreach ($_SESSION['fieldmap'] as $field)
-{
-    if (isset($field['defaultvalue']))
-    {
-        $_SESSION[$field['fieldname']]=$field['defaultvalue'];
-    }
-}
 $clang = new limesurvey_lang($language);
 
 $thissurvey=getSurveyInfo($surveyid);
 $_SESSION['dateformats'] = getDateFormatData($thissurvey['surveyls_dateformat']);
+require_once(dirname(__FILE__).'/../qanda.php');
 
 $qquery = 'SELECT * FROM '.db_table_name('questions')." WHERE sid='$surveyid' AND qid='$qid' AND language='{$language}'";
 $qresult = db_execute_assoc($qquery);
@@ -56,9 +52,18 @@ $ia = array(0 => $qid,
 4 => $qrows['type'],
 5 => $qrows['gid'],
 6 => $qrows['mandatory'],
-//7 => $qrows['other']); // ia[7] is conditionsexist not other
 7 => 'N',
 8 => 'N' ); // ia[8] is usedinconditions
+
+$radix=getRadixPointData($thissurvey['surveyls_numberformat']);
+$radix = $radix['seperator'];
+$surveyOptions = array(
+    'radix'=>$radix,
+    );
+
+LimeExpressionManager::StartSurvey($thissurvey['sid'], 'question', $surveyOptions, false,$LEMdebugLevel);
+$qseq = LimeExpressionManager::GetQuestionSeq($qid);
+$moveResult = LimeExpressionManager::JumpTo($qseq+1,true,false,true);
 
 $answers = retrieveAnswers($ia);
 
@@ -72,40 +77,105 @@ else
 }
 
 doHeader();
-$dummy_js = '
-		<!-- JAVASCRIPT FOR CONDITIONAL QUESTIONS -->
-		<script type="text/javascript">
-        /* <![CDATA[ */
-            function checkconditions(value, name, type)
-            {
-            }
-		function noop_checkconditions(value, name, type)
-		{
-		}
-        /* ]]> */
-		</script>
-        ';
+$showQuestion = "$('#question$qid').show();";
+$dummy_js = <<< EOD
+    <script type='text/javascript'>
+    <!--
+    LEMradix='$radix';
+    var numRegex = new RegExp('[^-' + LEMradix + '0-9]','g');
+    var intRegex = new RegExp('[^-0-9]','g');
+	function fixnum_checkconditions(value, name, type, evt_type, intonly)
+	{
+        newval = new String(value);
+        if (typeof intonly !=='undefined' && intonly==1) {
+            newval = newval.replace(intRegex,'');
+        }
+        else {
+            newval = newval.replace(numRegex,'');
+        }
+        if (LEMradix === ',') {
+            newval = newval.split(',').join('.');
+        }
+        if (newval != '-' && newval != '.' && newval != '-.' && newval != parseFloat(newval)) {
+            newval = '';
+        }
+        displayVal = newval;
+        if (LEMradix === ',') {
+            displayVal = displayVal.split('.').join(',');
+        }
+        if (name.match(/other$/)) {
+            $('#answer'+name+'text').val(displayVal);
+        }
+        $('#answer'+name).val(displayVal);
 
+        if (typeof evt_type === 'undefined')
+        {
+            evt_type = 'onchange';
+        }
+        checkconditions(newval, name, type, evt_type);
+	}
+
+	function checkconditions(value, name, type, evt_type)
+	{
+        if (typeof evt_type === 'undefined')
+        {
+            evt_type = 'onchange';
+        }
+        if (type == 'radio' || type == 'select-one')
+        {
+            var hiddenformname='java'+name;
+            document.getElementById(hiddenformname).value=value;
+        }
+        else if (type == 'checkbox')
+        {
+            if (document.getElementById('answer'+name).checked)
+            {
+                $('#java'+name).val('Y');
+            } else
+            {
+                $('#java'+name).val('');
+            }
+        }
+        else if (type == 'text' && name.match(/other$/) && typeof document.getElementById('java'+name) !== 'undefined' && document.getElementById('java'+name) != null)
+        {
+            $('#java'+name).val(value);
+        }
+        ExprMgr_process_relevance_and_tailoring(evt_type,name,type);
+        $showQuestion
+	}
+    $(document).ready(function() {
+        $showQuestion
+    });
+    $(document).change(function() {
+        $showQuestion
+    });
+    $(document).bind('keydown',function(e) {
+                if (e.keyCode == 9) {
+                    $showQuestion
+                    return true;
+                }
+                return true;
+            });
+// -->
+</script>
+EOD;
 
 $answer=$answers[0][1];
-$help=$answers[0][2];
+
+//GET HELP
+$hquery="SELECT help FROM {$dbprefix}questions WHERE qid=$ia[0] AND language='".$_SESSION['s_lang']."'";
+$hresult=db_execute_num($hquery) or safe_die($connect->ErrorMsg());       //Checked
+$help="";
+while ($hrow=$hresult->FetchRow()) {$help=$hrow[0];}
 
 $question = $answers[0][0];
 $question['code']=$answers[0][5];
 $question['class'] = question_class($qrows['type']);
 $question['essentials'] = 'id="question'.$qrows['qid'].'"';
 $question['sgq']=$ia[1];
-
-//Temporary fix for error condition arising from linked question via replacement fields
-//@todo: find a consistent way to check and handle this - I guess this is already handled but the wrong values are entered into the DB
-
-$search_for = '{INSERTANS';
-if(strpos($question['text'],$search_for)!==false){
-    $pattern_text = '/{([A-Z])*:([0-9])*X([0-9])*X([0-9])*}/';
-    $replacement_text = $clang->gT('[Dependency on another question (ID $4)]');
-    $text = preg_replace($pattern_text,$replacement_text,$question['text']);
-    $question['text']=$text;
-}
+$question['aid']='unknown';
+$question['sqid']='unknown';
+$question['type']= $qrows['type'];
 
 if ($qrows['mandatory'] == 'Y')
 {
@@ -123,20 +193,33 @@ $content .= templatereplace(file_get_contents("$thistpl/startgroup.pstpl"));
 $question_template = file_get_contents("$thistpl/question.pstpl");
 if(substr_count($question_template , '{QUESTION_ESSENTIALS}') > 0 ) // the following has been added for backwards compatiblity.
 {// LS 1.87 and newer templates
-    $content .= "\n".templatereplace($question_template)."\n";
+    $content .= "\n".templatereplace($question_template,NULL,false,$qid)."\n";
 }
 else
 {// LS 1.86 and older templates
     $content .= '<div '.$question['essentials'].' class="'.$question['class'].$question['man_class'].'">';
-    $content .= "\n".templatereplace($question_template)."\n";
+    $content .= "\n".templatereplace($question_template,NULL,false,$qid)."\n";
     $content .= "\n\t</div>\n";
 };
 
 $content .= templatereplace(file_get_contents("$thistpl/endgroup.pstpl")).$dummy_js;
+LimeExpressionManager::FinishProcessingGroup();
+$content .= LimeExpressionManager::GetRelevanceAndTailoringJavaScript();
 $content .= '<p>&nbsp;</form>';
-$content .= templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
+
+LimeExpressionManager::FinishProcessingPage();
 
 echo $content;
+
+if ($LEMdebugLevel >= 1) {
+    echo LimeExpressionManager::GetDebugTimingMessage();
+}
+if ($LEMdebugLevel >= 2) {
+     echo "<table><tr><td align='left'><b>Group/Question Validation Results:</b>".$moveResult['message']."</td></tr></table>\n";
+}
+
+$content .= templatereplace(file_get_contents("$thistpl/endpage.pstpl"));
+
 echo "</html>\n";
 
 

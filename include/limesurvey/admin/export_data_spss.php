@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: export_data_spss.php 10925 2011-09-02 14:12:02Z c_schmitz $
+ * $Id: export_data_spss.php 11664 2011-12-16 05:19:42Z tmswhite $
  */
 
 // Security Checked: POST, GET, SESSION, REQUEST, returnglobal, DB
@@ -63,11 +63,14 @@ $typeMap = array(
 ':'=>Array('name'=>'Multi flexi numbers','size'=>1,'SPSStype'=>'F','Scale'=>3),
 ';'=>Array('name'=>'Multi flexi text','size'=>1,'SPSStype'=>'A'),
 '|'=>Array('name'=>'File upload','size'=>1,'SPSStype'=>'A'),
+'*'=>Array('name'=>'Equation','size'=>1,'SPSStype'=>'A'),
 );
 
 if (!isset($surveyid)) {$surveyid=returnglobal('sid');}
 $filterstate = incompleteAnsFilterstate();
+
 $quexsfilterstate = questionnaireSampleFilterstate();
+
 $spssver = returnglobal('spssver');
 if (is_null($spssver)) {
     if (!isset($_SESSION['spssversion'])) {
@@ -93,7 +96,7 @@ switch ($spssver) {
 
 }
 
-$headerComment = '*$Rev: 10925 $' . " $quexsfilterstate $filterstate $spssver.\n";
+$headerComment = '*$Rev: 11664 $' . " $quexsfilterstate $filterstate $spssver.\n";
 
 if (isset($_GET['dldata'])) $subaction = "dldata";
 if (isset($_GET['dlstructure'])) $subaction = "dlstructure";

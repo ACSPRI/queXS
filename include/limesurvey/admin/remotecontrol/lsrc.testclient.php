@@ -10,7 +10,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  *
- * $Id: lsrc.testclient.php 9648 2011-01-07 13:06:39Z c_schmitz $
+ * $Id: lsrc.testclient.php 11664 2011-12-16 05:19:42Z tmswhite $
  *
  */
 
