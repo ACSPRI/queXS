@@ -1,3 +1,11 @@
+quexs 1.6.0 - Changes since 1.5.4
+
+Major New Feature: Updated to Limesurvey 1.92 Build 120919 last commit a2955e94e254f09b6f31c6c0ca8cf25929ec7e7 on GitHub 13 November 2012
+New Feature: Use ADODB from Limesurvey (so no additional ADODB installation required)
+New Feature: Access sample variables via the Limesurvey Expression Manager system (using {SAMPLE:xxxx} notation)
+New Feature: Make default end URL {ENDINTERVIEWURL}
+
+
 queXS 1.5.4 - Changes since 1.5.3:
 
 New Feature: Added bulk appointment generator from CSV 
