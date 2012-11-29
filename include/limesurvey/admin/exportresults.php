@@ -51,6 +51,10 @@ if (!$exportstyle)
     }
     $excesscols=array_keys($excesscols);
 
+	//queXS remove token from initial list
+	$t = array_search('token',$excesscols);
+	if ($t)
+		unset($excesscols[$t]);
 
 
     $afieldcount = count($excesscols);
@@ -234,21 +238,31 @@ $quexsfilterstate = questionnaireSampleFilterstate();
     // Find out if survey results are anonymous
     if ($thissurvey['anonymized'] == "N" && tableExists("tokens_$surveyid"))
         {
-            $exportoutput .= "<fieldset><legend>".$clang->gT("Token control")."</legend>\n"
-            .$clang->gT("Choose token fields").":"
+            $exportoutput .= "<fieldset><legend>".$clang->gT("queXS paradata/metadata")."</legend>\n"
+            .$clang->gT("Choose fields").":"
             ."<img src='$imageurl/help.gif' alt='".$clang->gT("Help")."' onclick='javascript:alert(\""
-            .$clang->gT("Your survey can export associated token data with each response. Select any additional fields you would like to export.","js")
+            .$clang->gT("You can export associated queXS paradata with each response. Select any additional fields you would like to export.","js")
             ."\")' /><br />"
             ."<select name='attribute_select[]' multiple size='20'>\n"
-            ."<option value='first_name' id='first_name' />".$clang->gT("First name")."</option>\n"
-            ."<option value='last_name' id='last_name' />".$clang->gT("Last name")."</option>\n"
-            ."<option value='email_address' id='email_address' />".$clang->gT("Email address")."</option>\n"
-            ."<option value='token' id='token' />".$clang->gT("Token")."</option>\n";
+            ."<option value='token' id='token' />".$clang->gT("Case ID")."</option>\n"
+            ."<option value='callattempts' id='callattempts' />".$clang->gT("Number of call attempts")."</option>\n"
+            ."<option value='messagesleft' id='messagesleft' />".$clang->gT("Number of answering machine messages left")."</option>\n";
 
-            $attrfieldnames=GetTokenFieldsAndNames($surveyid,true);
-            foreach ($attrfieldnames as $attr_name=>$attr_desc)
+
+	$sql = "SELECT sv.var,sv.val
+		FROM `questionnaire` as q, questionnaire_sample as qs, sample as s, sample_var as sv
+		WHERE q.lime_sid = $surveyid 
+		AND qs.questionnaire_id = q.questionnaire_id 
+		AND s.import_id = qs.sample_import_id
+		AND sv.sample_id = s.sample_id
+		GROUP BY qs.sample_import_id,sv.var";
+
+	$queXSrs = $connect->GetAssoc($sql);
+
+
+            foreach ($queXSrs as $attr_name=>$val)
             {
-                $exportoutput .= "<option value='$attr_name' id='$attr_name' />".$attr_desc."</option>\n";
+                $exportoutput .= "<option value='SAMPLE:$attr_name' id='SAMPLE:$attr_name' />Sample: ".$attr_name."</option>\n";
             }
             $exportoutput .= "</select></fieldset>\n";
         }
@@ -267,12 +281,24 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
 $tokenTableExists=tableExists('tokens_'.$surveyid);
 $aTokenFieldNames=array();
+$attributeFieldAndNames = array();
 
 if ($tokenTableExists)
 {
-    $aTokenFieldNames=GetTokenFieldsAndNames($surveyid);
-    $attributeFieldAndNames=GetTokenFieldsAndNames($surveyid,true);
-    $attributeFields=array_keys($attributeFieldAndNames);
+    $aTokenFieldNames=GetTokenFieldsAndNames($surveyid,false,true);
+
+	$sql = "SELECT sv.var,sv.val
+		FROM `questionnaire` as q, questionnaire_sample as qs, sample as s, sample_var as sv
+		WHERE q.lime_sid = $surveyid 
+		AND qs.questionnaire_id = q.questionnaire_id 
+		AND s.import_id = qs.sample_import_id
+		AND sv.sample_id = s.sample_id
+		GROUP BY qs.sample_import_id,sv.var";
+
+	$attributeFields = $connect->GetAssoc($sql);
+
+
+
 }
 
 switch ( $_POST["type"] ) {
@@ -359,7 +385,7 @@ if (isset($_POST['colselect']))
     foreach($_POST['colselect'] as $cs)
     {
         if (!isset($fieldmap[$cs]) && !isset($aTokenFieldNames[$cs]) && $cs != 'completed') continue; // skip invalid field names to prevent SQL injection
-        if ($tokenTableExists && $cs == 'token')
+        if ($tokenTableExists && $cs == 'token' && isset($_POST['attribute_select']) && is_array($_POST['attribute_select']) && in_array('token',$_POST['attribute_select']))
         {
             // We shouldnt include the token field when we are joining with the token field
         }
@@ -386,28 +412,38 @@ else
 $dquery = "SELECT $selectfields";
 if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribute_select']) && is_array($_POST['attribute_select']))
 {
-    if (in_array('first_name',$_POST['attribute_select']))
+    if (in_array('callattempts',$_POST['attribute_select']))
     {
-        $dquery .= ", {$dbprefix}tokens_$surveyid.firstname";
+        $dquery .= ", 	(SELECT COUNT(c.call_attempt_id) 
+			FROM call_attempt as c 
+                	WHERE c.case_id = {$dbprefix}survey_$surveyid.token) as callattempts ";
     }
-    if (in_array('last_name',$_POST['attribute_select']))
+    if (in_array('messagesleft',$_POST['attribute_select']))
     {
-        $dquery .= ", {$dbprefix}tokens_$surveyid.lastname";
-    }
-    if (in_array('email_address',$_POST['attribute_select']))
-    {
-        $dquery .= ", {$dbprefix}tokens_$surveyid.email";
+        $dquery .= ",  (SELECT COUNT(c2.call_id) 
+                        FROM `call` as c2
+                        WHERE c2.case_id = {$dbprefix}survey_$surveyid.token 
+			AND c2.outcome_id = 23) as messagesleft ";
     }
     if (in_array('token',$_POST['attribute_select']))
     {
         $dquery .= ", {$dbprefix}tokens_$surveyid.token";
     }
 
-    foreach ($attributeFields as $attr_name)
+    $i =1;
+    foreach ($attributeFields as $attr_name => $attr_val)
     {
-        if (in_array($attr_name,$_POST['attribute_select']))
+        if (in_array("SAMPLE:$attr_name",$_POST['attribute_select']))
         {
-            $dquery .= ", {$dbprefix}tokens_$surveyid.$attr_name";
+            $dquery .= ", (	SELECT sv.val
+				FROM sample_var as sv, `case` as c3
+				WHERE c3.case_id = {$dbprefix}survey_$surveyid.token
+				AND c3.sample_id = sv.sample_id
+				AND sv.var LIKE '$attr_name') as attribute_$i ";
+
+		$attributeFieldAndNames["attribute_$i"] = $attr_name;
+
+		$i++;
         }
     }
 }
@@ -444,15 +480,15 @@ for ($i=0; $i<$fieldcount; $i++)
     $field=$dresult->FetchField($i);
     $fieldinfo=$field->name;
 
-    if ($fieldinfo == "lastname")
+    if ($fieldinfo == "callattempts")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Last name")."\"$separator";}
-        else {$firstline .= $elang->gT("Last name")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Number of call attempts")."\"$separator";}
+        else {$firstline .= $elang->gT("Number of call attempts")."$separator";}
     }
-    elseif ($fieldinfo == "firstname")
+    elseif ($fieldinfo == "messagesleft")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("First name")."\"$separator";}
-        else {$firstline .= $elang->gT("First name")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Number of answering machine messages left")."\"$separator";}
+        else {$firstline .= $elang->gT("Number of answering machine messages left")."$separator";}
     }
     elseif ($fieldinfo == "email")
     {
@@ -461,8 +497,8 @@ for ($i=0; $i<$fieldcount; $i++)
     }
     elseif ($fieldinfo == "token")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Token")."\"$separator";}
-        else {$firstline .= $elang->gT("Token")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case ID")."\"$separator";}
+        else {$firstline .= $elang->gT("Case ID")."$separator";}
     }
     elseif (substr($fieldinfo,0,10)=="attribute_")
     {
