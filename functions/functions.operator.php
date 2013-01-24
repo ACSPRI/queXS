@@ -43,6 +43,26 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
 
+/**
+* Creates a random sequence of characters
+*
+* @param mixed $length Length of resulting string
+* @param string $pattern To define which characters should be in the resulting string
+* 
+* From Limesurvey
+*/
+function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
+{
+    $patternlength = strlen($pattern)-1;
+    for($i=0;$i<$length;$i++)
+    {   
+        if(isset($key))
+            $key .= $pattern{rand(0,$patternlength)};
+        else
+            $key = $pattern{rand(0,$patternlength)};
+    }
+    return $key;
+}
 
 /**
  * Check if the project associated with this case is using 
@@ -496,8 +516,10 @@ function get_case_id($operator_id, $create = false)
 		
 				if (!empty($r3))
 				{
-					$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id)
-						VALUES (NULL, {$r3['sample_id']}, {$r3['questionnaire_id']} , NULL, $operator_id, NULL, 1)";
+					$token = sRandomChars();
+
+					$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
+						VALUES (NULL, {$r3['sample_id']}, {$r3['questionnaire_id']} , NULL, $operator_id, NULL, 1, '$token')";
 	
 					$db->Execute($sql);
 	
@@ -576,7 +598,7 @@ function get_case_id($operator_id, $create = false)
 						if ($lime_sid)
 						{
 							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
-							VALUES (NULL,'','','',$case_id,'".DEFAULT_LOCALE."','N','N',NULL)";
+							VALUES (NULL,'','','','$token','".DEFAULT_LOCALE."','N','N',NULL)";
 		
 							$db->Execute($sql);
 						}
@@ -1113,14 +1135,21 @@ function get_limesurvey_url($operator_id)
 
 	if ($case_id)
 	{
+		$sql = "SELECT token
+			FROM `case`
+			WHERE case_id = $case_id";
+
+		$token = $db->GetOne($sql);
+
 		$sid = get_limesurvey_id($operator_id);
-		$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$case_id&amp;lang=" . DEFAULT_LOCALE;
+		$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$token&amp;lang=" . DEFAULT_LOCALE;
 		$questionnaire_id = get_questionnaire_id($operator_id);
 		
 		//get prefills
 		$sql = "SELECT lime_sgqa,value
 			FROM questionnaire_prefill
 			WHERE questionnaire_id = '$questionnaire_id'";
+
 		$pf = $db->GetAll($sql);
 	
 		if (!empty($pf))
