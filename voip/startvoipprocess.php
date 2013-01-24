@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Start the VoIP process from the command line 
  *
