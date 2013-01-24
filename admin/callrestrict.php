@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Modify the call restriction times 
  *
@@ -114,7 +114,7 @@ translate_array($daysofweek,array("description"));
 ?>
 	<form method="post" action="">
 	<table>
-<?
+<?php 
 	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr>";
 	$count = 0;
 	foreach($shifts as $shift)
@@ -131,10 +131,10 @@ translate_array($daysofweek,array("description"));
 
 ?>
 	</table>
-	<div><a onclick="addRow(); return false;" href="#"><? echo T_("Add row"); ?></a></div>
-	<p><input type="submit" name="submit" value="<? echo T_("Save changes to restriction times"); ?>"/></p>
+	<div><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></div>
+	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to restriction times"); ?>"/></p>
 	</form>
-<?
+<?php 
 	
 
 xhtml_foot();

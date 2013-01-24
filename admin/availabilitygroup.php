@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * List and create availability groups
  *
@@ -97,10 +97,10 @@ else
 //add a note
 ?>
 <form method="get" action="?">
-	<p><input type="text" class="textclass" name="availability_group" id="availability_group"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Add availability group"); ?>"/>
+	<p><input type="text" class="textclass" name="availability_group" id="availability_group"/><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add availability group"); ?>"/>
 	</p>
 </form>
-<?
+<?php 
 
 xhtml_foot();
 

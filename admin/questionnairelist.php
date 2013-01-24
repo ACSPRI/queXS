@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Manage questionnaires by editing them or disabling/enabling them
  *
@@ -160,22 +160,22 @@ if (isset($_GET['modify']))
 	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
 	echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'>" . T_("Edit instrument in Limesurvey") . "</a></p>";
 	?>
-		<form action="?modify=<? echo $questionnaire_id; ?>" method="post">
-		<p><? echo T_("Name for questionnaire:"); ?> <input type="text" name="description" value="<? echo $rs['description']; ?>"/></p>
-		<p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" <? echo $ras; ?>/></p>
-		<p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" <? echo $rws; ?>/></p>
-		<p><? echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox" disabled="true" <? echo $testing; ?>/></p>
-		<? if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
-		<p><? echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);?></p>
-		<p><? echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro",$rs['rs_project_intro'],$ckeditorConfig);?></p>
-		<p><? echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback",$rs['rs_callback'],$ckeditorConfig);?> </p>
-		<p><? echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine",$rs['rs_answeringmachine'],$ckeditorConfig);?> </p>
-		<? } else if (!empty($rs['lime_rs_sid'])) { echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></p>"; } ?>
-		<p><? echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end",$rs['rs_project_end'],$ckeditorConfig); ?></p>
-		<p><? echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info",$rs['info'],$ckeditorConfig); ?></p>
-		<p><input type="submit" name="update" value="<? echo T_("Update Questionnaire"); ?>"/></p>
+		<form action="?modify=<?php  echo $questionnaire_id; ?>" method="post">
+		<p><?php  echo T_("Name for questionnaire:"); ?> <input type="text" name="description" value="<?php  echo $rs['description']; ?>"/></p>
+		<p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" <?php  echo $ras; ?>/></p>
+		<p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" <?php  echo $rws; ?>/></p>
+		<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox" disabled="true" <?php  echo $testing; ?>/></p>
+		<?php  if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
+		<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);?></p>
+		<p><?php  echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro",$rs['rs_project_intro'],$ckeditorConfig);?></p>
+		<p><?php  echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback",$rs['rs_callback'],$ckeditorConfig);?> </p>
+		<p><?php  echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine",$rs['rs_answeringmachine'],$ckeditorConfig);?> </p>
+		<?php  } else if (!empty($rs['lime_rs_sid'])) { echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></p>"; } ?>
+		<p><?php  echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end",$rs['rs_project_end'],$ckeditorConfig); ?></p>
+		<p><?php  echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info",$rs['info'],$ckeditorConfig); ?></p>
+		<p><input type="submit" name="update" value="<?php  echo T_("Update Questionnaire"); ?>"/></p>
 		</form>
-	<?
+	<?php 
 	
 }
 else

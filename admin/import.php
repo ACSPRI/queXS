@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Import a sample from a Headered CSV file
  *
@@ -87,7 +87,7 @@ else if (isset($_POST['import_file']))
 	xhtml_head(T_("Import: Select columns to import"));
 	?>
 	<form action="" method="post">
-	<?
+	<?php 
 
 	$tmpfname = tempnam(TEMPORARY_DIRECTORY, "FOO");
 	move_uploaded_file($_FILES['file']['tmp_name'],$tmpfname);
@@ -97,12 +97,12 @@ else if (isset($_POST['import_file']))
 
 
 	?>
-	<p><input type="hidden" name="description" value="<? if (isset($_POST['description'])) print($_POST['description']); ?>"/></p>
-	<p><input type="hidden" name="filename" value="<? echo $tmpfname; ?>"/></p>
+	<p><input type="hidden" name="description" value="<?php  if (isset($_POST['description'])) print($_POST['description']); ?>"/></p>
+	<p><input type="hidden" name="filename" value="<?php  echo $tmpfname; ?>"/></p>
 	<p><input type="submit" name="import_form"/></p>
 	</form>
 
-	<?
+	<?php 
 	xhtml_foot();
 
 }
@@ -114,12 +114,12 @@ else
 
 	<form enctype="multipart/form-data" action="" method="post">
 	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
-	<p><? echo T_("Choose the CSV sample file to upload:"); ?><input name="file" type="file" /></p>
-	<p><? echo T_("Description for file:"); ?><input name="description" type="text" /></p>
-	<p><input type="submit" name="import_file" value="<? echo T_("Add sample"); ?>"/></p>
+	<p><?php  echo T_("Choose the CSV sample file to upload:"); ?><input name="file" type="file" /></p>
+	<p><?php  echo T_("Description for file:"); ?><input name="description" type="text" /></p>
+	<p><input type="submit" name="import_file" value="<?php  echo T_("Add sample"); ?>"/></p>
 	</form>
 
-	<?
+	<?php 
 	xhtml_foot();
 
 }

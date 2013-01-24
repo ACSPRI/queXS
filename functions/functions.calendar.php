@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Functions relating to appointment times and calendars
  *
@@ -495,8 +495,7 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 	<th>S</th>
 	<th>S</th>
 	</tr>
-<?php
-
+<?php 
 
 	while ( $Day = $Month->fetch() ) {
 
@@ -564,7 +563,7 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 	</td>
 	</tr>
 	</table>
-	<?
+	<?php 
 	print "<div>" . date('l j F Y',mktime(0,0,0,$month,$day,$year)) . "</div>";
 }
 

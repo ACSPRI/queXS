@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Operator functions for interacting with the database and getting/storing state
  *

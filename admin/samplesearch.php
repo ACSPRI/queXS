@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Select and search within a sample to see what case(s) is/are assigned to a sample record
  * and if so to look at them, otherwise give the option to remove a sample record
@@ -153,12 +153,12 @@ if ($sample_import_id != false)
 	?>
 	<form action="" method="get">
 	<p>
-		<label for="search"><? echo T_("Search for:"); ?></label><input type="text" name="search" id="search"/><br/>
-		<input type="hidden" name="sample_import_id" value="<? print($sample_import_id); ?>"/>
-		<input type="submit" name="searchsub" value="<? echo T_("Start search"); ?>"/>
+		<label for="search"><?php  echo T_("Search for:"); ?></label><input type="text" name="search" id="search"/><br/>
+		<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
+		<input type="submit" name="searchsub" value="<?php  echo T_("Start search"); ?>"/>
 	</p>
 	</form>
-	<?
+	<?php 
 }
 xhtml_foot();
 

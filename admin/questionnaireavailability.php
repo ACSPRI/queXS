@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Assign availability groups to a questionnaire
  *
@@ -132,8 +132,8 @@ if ($questionnaire_id != false)
 		print "<h2>" . T_("Add an availability group to this questionnaire:") . "</h2>";
 		?>
 		<form action="" method="get">
-		<p><label for="availability_group"><? echo T_("Select availability group:"); ?></label><select name="availability_group" id="availability_group">
-		<?
+		<p><label for="availability_group"><?php  echo T_("Select availability group:"); ?></label><select name="availability_group" id="availability_group">
+		<?php 
 	
 		foreach($qs as $q)
 		{
@@ -142,10 +142,10 @@ if ($questionnaire_id != false)
 	
 		?>
 		</select><br/>
-		<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
+		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="submit" name="add_availability" value="Add availability group"/></p>
 		</form>
-		<?
+		<?php 
 	}
 }
 xhtml_foot();

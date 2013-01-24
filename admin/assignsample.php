@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Assign sample(s) to a questionnaire
  *
@@ -135,8 +135,8 @@ if ($questionnaire_id != false)
 		print "<h1>" . T_("Add a sample to this questionnaire:") . "</h1>";
 		?>
 		<form action="" method="get">
-		<p><label for="sample"><? echo T_("Select sample:"); ?></label><select name="sample" id="sample">
-		<?
+		<p><label for="sample"><?php  echo T_("Select sample:"); ?></label><select name="sample" id="sample">
+		<?php 
 	
 		foreach($qs as $q)
 		{
@@ -145,14 +145,14 @@ if ($questionnaire_id != false)
 	
 		?>
 		</select><br/>
-		<label for="call_max"><? echo T_("Max calls (0 for unlimited)"); ?></label><input type="text" name="call_max" id="call_max" value="0"/><br/>
-		<label for="call_attempt_max"><? echo T_("Max call attempts (0 for unlimited)"); ?></label><input type="text" name="call_attempt_max" id="call_attempt_max" value="0"/>		<br/>
-		<label for="answering_machine_messages"><? echo T_("Number of answering machine messages to leave per case (0 for never)"); ?></label><input type="text" name="answering_machine_messages" id="answering_machine_messages" value="1"/>		<br/>
-		<label for="selecttype"><? echo T_("Select from sample randomly? (otherwise sequentially)"); ?></label><input type="checkbox" id = "selecttype" name="selecttype" />		<br/>
-		<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
+		<label for="call_max"><?php  echo T_("Max calls (0 for unlimited)"); ?></label><input type="text" name="call_max" id="call_max" value="0"/><br/>
+		<label for="call_attempt_max"><?php  echo T_("Max call attempts (0 for unlimited)"); ?></label><input type="text" name="call_attempt_max" id="call_attempt_max" value="0"/>		<br/>
+		<label for="answering_machine_messages"><?php  echo T_("Number of answering machine messages to leave per case (0 for never)"); ?></label><input type="text" name="answering_machine_messages" id="answering_machine_messages" value="1"/>		<br/>
+		<label for="selecttype"><?php  echo T_("Select from sample randomly? (otherwise sequentially)"); ?></label><input type="checkbox" id = "selecttype" name="selecttype" />		<br/>
+		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="submit" name="add_sample" value="Add sample"/></p>
 		</form>
-		<?
+		<?php 
 	}
 }
 xhtml_foot();

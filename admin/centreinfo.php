@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Set information about this centre for diplay to operators
  *
@@ -63,10 +63,10 @@ xhtml_head(T_("Set centre information"),true,false,array("../js/window.js"));
 
 		?>
 		<form action="" method="post"><p>
-		<label for="information"><? echo T_("Set centre information: "); ?></label><? echo $CKEditor->editor("information",get_setting("information")); ?>
-		<input type="submit" name="update" value="<? echo T_("Update centre information"); ?>"/></p>
+		<label for="information"><?php  echo T_("Set centre information: "); ?></label><?php  echo $CKEditor->editor("information",get_setting("information")); ?>
+		<input type="submit" name="update" value="<?php  echo T_("Update centre information"); ?>"/></p>
 		</form>
-		<?
+		<?php 
 xhtml_foot();
 
 

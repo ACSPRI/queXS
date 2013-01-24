@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * Output data as a fixed width ASCII file
  *
  *

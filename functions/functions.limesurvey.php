@@ -1,4 +1,4 @@
-<?
+<?php 
 
 /**
  * Functions relating to integration with {@link http://www.limesurvey.org/ LimeSurvey}

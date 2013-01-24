@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Modify the default timezones
  *
@@ -113,10 +113,10 @@ foreach($qs as $q)
 print "<h1>" . T_("Add a Timezone:") . "</h1>";
 		?>
 		<form action="" method="get"><p>
-		<label for="time_zone"><? echo T_("Timezone: "); ?></label><? display_chooser($tzl, 'time_zone', 'time_zone', false,  false, false, false, false); ?>
-		<input type="submit" name="add_timezone" value="<? echo T_("Add Timezone"); ?>"/></p>
+		<label for="time_zone"><?php  echo T_("Timezone: "); ?></label><?php  display_chooser($tzl, 'time_zone', 'time_zone', false,  false, false, false, false); ?>
+		<input type="submit" name="add_timezone" value="<?php  echo T_("Add Timezone"); ?>"/></p>
 		</form>
-		<?
+		<?php 
 xhtml_foot();
 
 

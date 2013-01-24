@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Modify availability within this availability group
  *
@@ -132,7 +132,7 @@ translate_array($daysofweek,array("description"));
 ?>
 	<form method="post" action="">
 	<table>
-<?
+<?php 
 	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr>";
 	$count = 0;
 	foreach($availabilitys as $availability)
@@ -149,11 +149,11 @@ translate_array($daysofweek,array("description"));
 
 ?>
 	</table>
-	<div><a onclick="addRow(); return false;" href="#"><? echo T_("Add row"); ?></a></div>
-	<p><input type="submit" name="submit" value="<? echo T_("Save changes to availabilities"); ?>"/></p>
-	<input type="hidden" name="availability_group" value="<? echo $availability_group;?>"/>
+	<div><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></div>
+	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to availabilities"); ?>"/></p>
+	<input type="hidden" name="availability_group" value="<?php  echo $availability_group;?>"/>
 	</form>
-<?
+<?php 
 	
 
 xhtml_foot();

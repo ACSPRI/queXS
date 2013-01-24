@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Functions relating to displaying for XHTML
  *

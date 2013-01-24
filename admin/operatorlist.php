@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * List operators and allow for customised VoIP downloads, changing passwords, disabling, etc
  *

@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Run the system wide case sorting process
  *

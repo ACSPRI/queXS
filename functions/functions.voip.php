@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Functions to interact with Asterisk
  *      Some examples taken from {@link http://www.voip-info.org/wiki/index.php?page=Asterisk+manager+Example%3A+PHP voip-info.org}

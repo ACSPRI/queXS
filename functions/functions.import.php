@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Functions relating to importing a sample file (from CSV)
  *

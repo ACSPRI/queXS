@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Set quota's for answered questions 
  *
@@ -210,15 +210,15 @@ if ($questionnaire_id != false)
 			?>
 			<form action="" method="get">
 			<p>
-			<label for="value"><? echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
-			<label for="comparison"><? echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
-			<label for="completions"><? echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
-			<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
-			<input type="hidden" name="sample_import_id" value="<? print($sample_import_id); ?>"/>
-			<input type="hidden" name="sgqa" value="<? print($sgqa); ?>"/>
-			<input type="submit" name="add_quota" value="<? print(T_("Add quota")); ?>"/></p>
+			<label for="value"><?php  echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
+			<label for="comparison"><?php  echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
+			<label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
+			<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
+			<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
+			<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
+			<input type="submit" name="add_quota" value="<?php  print(T_("Add quota")); ?>"/></p>
 			</form>
-			<?
+			<?php 
 		}
 	}
 }

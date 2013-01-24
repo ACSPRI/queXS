@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Select and set questions to pre fill in the questionnaire
  *
@@ -171,16 +171,16 @@ if ($questionnaire_id != false)
 		?>
 		<form action="" method="get">
 		<p>
-		<label for="value"><? echo T_("The value to pre fill"); ?> </label><input type="text" name="value" id="value"/>		<br/>
-		<label for="svar"><? echo T_("or: Select pre fill from sample list"); ?> </label>
-<?	//display a list of possible sample variables for this questionnaire
+		<label for="value"><?php  echo T_("The value to pre fill"); ?> </label><input type="text" name="value" id="value"/>		<br/>
+		<label for="svar"><?php  echo T_("or: Select pre fill from sample list"); ?> </label>
+<?php 	//display a list of possible sample variables for this questionnaire
 		display_chooser($db->GetAll($sql),"svar","svar",true,false,false,false,false);
 ?>		<br/>
-	<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
-		<input type="hidden" name="sgqa" value="<? print($sgqa); ?>"/>
-		<input type="submit" name="add_prefill" value="<? print(T_("Add pre fill")); ?>"/></p>
+	<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
+		<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
+		<input type="submit" name="add_prefill" value="<?php  print(T_("Add pre fill")); ?>"/></p>
 		</form>
-		<?
+		<?php 
 	}
 }
 xhtml_foot();

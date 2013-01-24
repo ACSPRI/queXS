@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Create a queXS questionnaire and link it to a LimeSurvey questionnaire
  *
@@ -113,8 +113,8 @@ if (isset($_POST['import_file']))
 ?>
 	<form enctype="multipart/form-data" action="" method="post">
 	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
-	<p><? echo T_("Name for questionnaire:"); ?> <input type="text" name="description"/></p>
-	<p><? echo T_("Select limesurvey instrument:"); 
+	<p><?php  echo T_("Name for questionnaire:"); ?> <input type="text" name="description"/></p>
+	<p><?php  echo T_("Select limesurvey instrument:"); 
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
@@ -137,9 +137,9 @@ else
 	print "<a href='" . LIME_URL ."admin/admin.php?action=newsurvey'>" . T_("Create an instrument in Limesurvey") ."</a>";
 }
 ?></p>
-<p><? echo T_("Respondent selection type:"); ?>
-<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><? echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><? echo T_("Use basic respondent selection text (below)"); ?></option>
-<?
+<p><?php  echo T_("Respondent selection type:"); ?>
+<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><?php  echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><?php  echo T_("Use basic respondent selection text (below)"); ?></option>
+<?php 
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
@@ -176,20 +176,20 @@ $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 	
 
 ?></select></p>
-<p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
-<p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
-<p><? echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
+<p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
+<p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
+<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
 <div id='rstext' style='display:none;'>
-<p><? echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?></p>
-<p><? echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro","",$ckeditorConfig);?></p>
-<p><? echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback","",$ckeditorConfig);?> </p>
-<p><? echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine","",$ckeditorConfig);?> </p>
+<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?></p>
+<p><?php  echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro","",$ckeditorConfig);?></p>
+<p><?php  echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback","",$ckeditorConfig);?> </p>
+<p><?php  echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine","",$ckeditorConfig);?> </p>
 </div>
-<p><? echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end","",$ckeditorConfig); ?></p>
-<p><? echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info","",$ckeditorConfig);?></p>
-<p><input type="submit" name="import_file" value="<? echo T_("Create Questionnaire"); ?>"/></p>
+<p><?php  echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end","",$ckeditorConfig); ?></p>
+<p><?php  echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info","",$ckeditorConfig);?></p>
+<p><input type="submit" name="import_file" value="<?php  echo T_("Create Questionnaire"); ?>"/></p>
 </form>
-<?
+<?php 
 xhtml_foot();
 
 

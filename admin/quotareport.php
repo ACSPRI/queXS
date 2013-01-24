@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * Display a report of all quota's
  * a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
  * b. (Replicate quota) Exclude selected sample records 

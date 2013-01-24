@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * Display outcomes by questionnaire
  *
  *

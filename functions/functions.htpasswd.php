@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * htpasswd/htgroup functions for authentication integration
  *

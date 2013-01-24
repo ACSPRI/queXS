@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Functions to calculate AAPOR outcomes based on Standard Definitions here:
  *
