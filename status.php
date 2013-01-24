@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display status of case
  *

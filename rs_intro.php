@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection introduction 
  *
@@ -89,41 +89,41 @@ if (limesurvey_percent_complete($case_id) == false)
 	{
 		//If nothing is specified as a project introduction, skip straight to questionnaire
 		?>
-		<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="<?php  print(get_limesurvey_url($operator_id)); ?>"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 	else
 	{
 		?>
-		<p class='rsoption'><a href="rs_project_intro.php"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="rs_project_intro.php"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 } else {
 	if(empty($r['rs_callback']))
 	{
 		//If nothing is specified as a callback screen, skip straight to questionnaire
 		?>
-		<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="<?php  print(get_limesurvey_url($operator_id)); ?>"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 	else
 	{
 		?>
-		<p class='rsoption'><a href="rs_callback.php"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="rs_callback.php"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 }
 ?>
-<p class='rsoption'><a href="rs_business.php"><? echo T_("Business number"); ?></a></p>
-<p class='rsoption'><a href="rs_answeringmachine.php"><? echo T_("Answering machine"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=2');"><? echo T_("End call with outcome: No answer (ring out or busy) "); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=18');"><? echo T_("End call with outcome: Accidental hang up"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=6');"><? echo T_("End call with outcome: Refusal by unknown person"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=17');"><? echo T_("End call with outcome: No eligible respondent (person never available on this number)"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=31');"><? echo T_("End call with outcome: Non contact (person not currently available on this number: no appointment made)"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=30');"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
-<?
+<p class='rsoption'><a href="rs_business.php"><?php  echo T_("Business number"); ?></a></p>
+<p class='rsoption'><a href="rs_answeringmachine.php"><?php  echo T_("Answering machine"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=2');"><?php  echo T_("End call with outcome: No answer (ring out or busy) "); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=18');"><?php  echo T_("End call with outcome: Accidental hang up"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=6');"><?php  echo T_("End call with outcome: Refusal by unknown person"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><?php  echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=17');"><?php  echo T_("End call with outcome: No eligible respondent (person never available on this number)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=31');"><?php  echo T_("End call with outcome: Non contact (person not currently available on this number: no appointment made)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=30');"><?php  echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
+<?php 
 
 xhtml_foot();
 

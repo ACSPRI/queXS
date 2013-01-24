@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Answering machine
  *
@@ -78,18 +78,18 @@ else
 	print "<p class='rstext'>" . T_("Do not leave a message, please hang up") . "</p>";
 
 ?>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=29');"><? echo T_("End call with outcome: Business answering machine"); ?></a></p>
-<?
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=29');"><?php  echo T_("End call with outcome: Business answering machine"); ?></a></p>
+<?php 
 if ($leavemessage)
 {
 ?>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=23');"><? echo T_("End call with outcome: Answering machine Message left"); ?></a></p>
-<?
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=23');"><?php  echo T_("End call with outcome: Answering machine Message left"); ?></a></p>
+<?php 
 }
 ?>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=24');"><? echo T_("End call with outcome: Answering machine No message left"); ?></a></p>
-<p class='rsoption'><a href="rs_intro.php"><? echo T_("Go Back"); ?></a></p>
-<?
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=24');"><?php  echo T_("End call with outcome: Answering machine No message left"); ?></a></p>
+<p class='rsoption'><a href="rs_intro.php"><?php  echo T_("Go Back"); ?></a></p>
+<?php 
 
 xhtml_foot();
 

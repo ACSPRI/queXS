@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display the main page including all panels and tabs
  *
@@ -51,12 +51,12 @@ xhtml_head(T_("queXS"), false, array("css/index_interface2.css","css/tabber_inte
 ?>
 <div id="header_line"></div>
 <ul class="wait_wrapper">
-	<li class="wait_li_1"><a href="index_interface2.php"><? echo T_("Get a new case"); ?> <img src="css/images/play.jpg" /></a></li>
-    <li class="wait_li_2"><a href="endwork.php"><? echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
+	<li class="wait_li_1"><a href="index_interface2.php"><?php  echo T_("Get a new case"); ?> <img src="css/images/play.jpg" /></a></li>
+    <li class="wait_li_2"><a href="endwork.php"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
 
 </ul>
 
-<?
+<?php 
 
 xhtml_foot();
 

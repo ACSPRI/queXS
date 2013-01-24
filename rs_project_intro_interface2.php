@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Project Introduction 
  *
@@ -76,15 +76,15 @@ print "<p class='rstext'>" . template_replace($r['rs_project_intro'],$operator_i
 
 ?>
 
-<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
+<p class='rsoption'><a href="<?php  print(get_limesurvey_url($operator_id)); ?>"><?php  echo T_("Yes - Continue"); ?></a></p>
 
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=8&endcase=endcase'"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=17&endcase=endcase'"><? echo T_("End call with outcome: No eligible respondent (person not available on this number)"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=30&endcase=endcase'"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=8&endcase=endcase'"><?php  echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=17&endcase=endcase'"><?php  echo T_("End call with outcome: No eligible respondent (person not available on this number)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=30&endcase=endcase'"><?php  echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
 
-<p class='rsoption'><a href="rs_intro_interface2.php"><? echo T_("Go Back"); ?></a></p>
+<p class='rsoption'><a href="rs_intro_interface2.php"><?php  echo T_("Go Back"); ?></a></p>
 
-<?
+<?php 
 
 xhtml_foot();
 

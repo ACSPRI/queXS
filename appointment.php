@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Create an appointment for the currently assigned case
  *
@@ -129,12 +129,12 @@ if(isset($_GET['respondent_id']) && $_GET['respondent_id'] == 0)
 {
 	//ability to create a new one
 	?>
-	<p><? echo T_("Create new respondent:"); ?></p>
+	<p><?php  echo T_("Create new respondent:"); ?></p>
 	<form id="addRespondent" method="post" action="">
-	<? display_respondent_form(); ?>
-	<p><input type="submit" value="<? echo T_("Add this respondent"); ?>"/></p>
+	<?php  display_respondent_form(); ?>
+	<p><input type="submit" value="<?php  echo T_("Add this respondent"); ?>"/></p>
 	</form>
-	<?
+	<?php 
 }
 else if(isset($_GET['respondent_id']))
 {
@@ -179,18 +179,18 @@ else if(isset($_GET['respondent_id']))
 				{
 					//ability to add a new one
 					?>
-					<p><? echo T_("Add new phone number (with area code, eg 0398761234):"); ?></p>
+					<p><?php  echo T_("Add new phone number (with area code, eg 0398761234):"); ?></p>
 					<form id="addPhone" method="get" action="">
 					<p><input type="text" name="phonenum"/></p>
-					<p><input type="submit" value="<? echo T_("Add this phone number"); ?>"/>
-					<input type="hidden" name="start" value="<? print $_GET['start']; ?>"/>
-					<input type="hidden" name="end" value="<? print $_GET['end']; ?>"/>
-					<input type="hidden" name="d" value="<? print $day; ?>"/>
-					<input type="hidden" name="m" value="<? print $month; ?>"/>
-					<input type="hidden" name="y" value="<? print $year; ?>"/>
-					<input type="hidden" name="respondent_id" value="<? print $respondent_id; ?>"/></p>
+					<p><input type="submit" value="<?php  echo T_("Add this phone number"); ?>"/>
+					<input type="hidden" name="start" value="<?php  print $_GET['start']; ?>"/>
+					<input type="hidden" name="end" value="<?php  print $_GET['end']; ?>"/>
+					<input type="hidden" name="d" value="<?php  print $day; ?>"/>
+					<input type="hidden" name="m" value="<?php  print $month; ?>"/>
+					<input type="hidden" name="y" value="<?php  print $year; ?>"/>
+					<input type="hidden" name="respondent_id" value="<?php  print $respondent_id; ?>"/></p>
 					</form>
-					<?
+					<?php 
 				}
 				else
 				{
@@ -201,20 +201,20 @@ else if(isset($_GET['respondent_id']))
 					}
 	
 					?>
-					<p><? echo T_("Appointment:"); ?></p>
+					<p><?php  echo T_("Appointment:"); ?></p>
 					<form id="appointment" method="post" action="">
-					<? print "<p>" . T_("Accept appointment from ") .convert_time($_GET['start']).T_(" till ").convert_time($_GET['end']).T_(" on ") . "$day/$month/$year? " . T_("on") . " $phonenum </p>"; ?>
+					<?php  print "<p>" . T_("Accept appointment from ") .convert_time($_GET['start']).T_(" till ").convert_time($_GET['end']).T_(" on ") . "$day/$month/$year? " . T_("on") . " $phonenum </p>"; ?>
 					<p>
-					<input type="hidden" name="start" value="<? print $_GET['start']; ?>"/>
-					<input type="hidden" name="end" value="<? print $_GET['end']; ?>"/>
-					<input type="hidden" name="day" value="<? print $day; ?>"/>
-					<input type="hidden" name="month" value="<? print $month; ?>"/>
-					<input type="hidden" name="year" value="<? print $year; ?>"/>
-					<input type="hidden" name="respondent_id" value="<? print $respondent_id; ?>"/>
-					<input type="hidden" name="contact_phone_id" value="<? print $contact_phone_id; ?>"/>
+					<input type="hidden" name="start" value="<?php  print $_GET['start']; ?>"/>
+					<input type="hidden" name="end" value="<?php  print $_GET['end']; ?>"/>
+					<input type="hidden" name="day" value="<?php  print $day; ?>"/>
+					<input type="hidden" name="month" value="<?php  print $month; ?>"/>
+					<input type="hidden" name="year" value="<?php  print $year; ?>"/>
+					<input type="hidden" name="respondent_id" value="<?php  print $respondent_id; ?>"/>
+					<input type="hidden" name="contact_phone_id" value="<?php  print $contact_phone_id; ?>"/>
 					<input type="submit" value="Make appointment"/></p>
 					</form>
-					<?
+					<?php 
 				}
 			}
 			

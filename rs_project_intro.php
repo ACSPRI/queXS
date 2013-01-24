@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Project Introduction 
  *
@@ -76,15 +76,15 @@ print "<p class='rstext'>" . template_replace($r['rs_project_intro'],$operator_i
 
 ?>
 
-<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
+<p class='rsoption'><a href="<?php  print(get_limesurvey_url($operator_id)); ?>"><?php  echo T_("Yes - Continue"); ?></a></p>
 
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=17');"><? echo T_("End call with outcome: No eligible respondent (person not available on this number)"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=30');"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><?php  echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=17');"><?php  echo T_("End call with outcome: No eligible respondent (person not available on this number)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=30');"><?php  echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
 
-<p class='rsoption'><a href="rs_intro.php"><? echo T_("Go Back"); ?></a></p>
+<p class='rsoption'><a href="rs_intro.php"><?php  echo T_("Go Back"); ?></a></p>
 
-<?
+<?php 
 
 xhtml_foot();
 

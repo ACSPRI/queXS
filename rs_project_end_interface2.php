@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Project End
  *
@@ -82,8 +82,8 @@ if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
 else
 {
 	?>
-	<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=10&endcase=endcase'"><? echo T_("End call with outcome: Complete"); ?></a></p>
-	<?
+	<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=10&endcase=endcase'"><?php  echo T_("End call with outcome: Complete"); ?></a></p>
+	<?php 
 }
 xhtml_foot();
 

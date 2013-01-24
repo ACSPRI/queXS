@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Popup screen to manage calling and hanging up and assigning outcomes to calls
  *

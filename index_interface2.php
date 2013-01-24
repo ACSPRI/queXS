@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display the main page including all panels and tabs
  *
@@ -198,15 +198,15 @@ print $script;
 ?>
 
 <ul id="casefunctions" class="header">
-       <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><? echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
-    <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><? echo T_("Appointment"); ?> <img src="css/images/plius.jpg" /></a></li>
-    <li id="item_3_e" class="item_3_full_height"><a href="?endwork=endwork"><? echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
+       <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><?php  echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
+    <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><?php  echo T_("Appointment"); ?> <img src="css/images/plius.jpg" /></a></li>
+    <li id="item_3_e" class="item_3_full_height"><a href="?endwork=endwork"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
 </ul>
 
 
 
 <div id="content" class="content">
-<? 
+<?php  
 
 $case_id = get_case_id($operator_id,true);
 $ca = get_call_attempt($operator_id,true);
@@ -278,8 +278,8 @@ xhtml_object($data,"main-content");
 </div>
 
 <div id="qstatus" class="header">
-<?xhtml_object("status_interface2.php","main-qstatus");?>
-<? if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.jpg' alt='<? echo T_('Arrow for expanding or contracting'); ?>'/></div> <? } ?>
+<?php xhtml_object("status_interface2.php","main-qstatus");?>
+<?php  if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.jpg' alt='<?php  echo T_('Arrow for expanding or contracting'); ?>'/></div> <?php  } ?>
 </div>
 
 
@@ -288,82 +288,82 @@ xhtml_object($data,"main-content");
 
 <div class="tabber" id="tab-main">
 
-<? if (TAB_CASENOTES) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'casenotes' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'casenotes' && $appointment)) 
+<?php  if (TAB_CASENOTES) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'casenotes' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'casenotes' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Notes"); ?></h2>
-	  <div id="div-casenotes" class="tabberdiv"><?xhtml_object("casenote.php","main-casenotes");?></div>
+	  <h2><?php  echo T_("Notes"); ?></h2>
+	  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("casenote.php","main-casenotes");?></div>
    </div>
-<? }?>
+<?php  }?>
 
-<? if (TAB_CONTACTDETAILS) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'contactdetails' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'contactdetails' && $appointment)) 
+<?php  if (TAB_CONTACTDETAILS) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'contactdetails' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'contactdetails' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Contact details"); ?></h2>
-	  <div id="div-contactdetails" class="tabberdiv"><?xhtml_object("contactdetails.php","main-contactdetails");?></div>
+	  <h2><?php  echo T_("Contact details"); ?></h2>
+	  <div id="div-contactdetails" class="tabberdiv"><?php xhtml_object("contactdetails.php","main-contactdetails");?></div>
    </div>
-<? }?>
+<?php  }?>
 
 
-<? if (TAB_CALLLIST) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'calllist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'calllist' && $appointment)) 
+<?php  if (TAB_CALLLIST) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'calllist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'calllist' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Call history"); ?></h2>
-	  <div id="div-calllist" class="tabberdiv"><?xhtml_object("calllist.php","main-calllist");?></div>
+	  <h2><?php  echo T_("Call history"); ?></h2>
+	  <div id="div-calllist" class="tabberdiv"><?php xhtml_object("calllist.php","main-calllist");?></div>
      </div>
-<? }?>
+<?php  }?>
 
 
-<? if (TAB_SHIFTS) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'shifts' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'shifts' && $appointment)) 
+<?php  if (TAB_SHIFTS) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'shifts' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'shifts' && $appointment)) 
 					print "tabbertabdefault"; ?>" id="tab-shifts">
-	  <h2><? echo T_("Shifts"); ?></h2>
-	  <div id="div-shifts" class="tabberdiv"><?xhtml_object("shifts.php","main-shifts");?></div>
+	  <h2><?php  echo T_("Shifts"); ?></h2>
+	  <div id="div-shifts" class="tabberdiv"><?php xhtml_object("shifts.php","main-shifts");?></div>
      </div>
-<? }?>
+<?php  }?>
 
 
-<? if (TAB_APPOINTMENTLIST) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'appointmentlist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'appointmentlist' && $appointment)) 
+<?php  if (TAB_APPOINTMENTLIST) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'appointmentlist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'appointmentlist' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Appointments"); ?></h2>
-	  <div id="div-appointmentlist" class="tabberdiv"><?xhtml_object("appointmentlist.php","main-appointmentlist");?></div>
+	  <h2><?php  echo T_("Appointments"); ?></h2>
+	  <div id="div-appointmentlist" class="tabberdiv"><?php xhtml_object("appointmentlist.php","main-appointmentlist");?></div>
      </div>
-<? }?>
+<?php  }?>
 
 
-<? if (TAB_PERFORMANCE) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'performance' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'performance' && $appointment)) 
+<?php  if (TAB_PERFORMANCE) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'performance' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'performance' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Performance"); ?></h2>
-	  <div id="div-performance" class="tabberdiv"><?xhtml_object("performance.php","main-performance");?></div>
+	  <h2><?php  echo T_("Performance"); ?></h2>
+	  <div id="div-performance" class="tabberdiv"><?php xhtml_object("performance.php","main-performance");?></div>
      </div>
-<? }?>
+<?php  }?>
 
-<? if (TAB_CALLHISTORY) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'callhistory' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'callhistory' && $appointment)) 
+<?php  if (TAB_CALLHISTORY) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'callhistory' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'callhistory' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Work history"); ?></h2>
-	  <div id="div-callhistory" class="tabberdiv"><?xhtml_object("callhistory.php","main-callhistory");?></div>
+	  <h2><?php  echo T_("Work history"); ?></h2>
+	  <div id="div-callhistory" class="tabberdiv"><?php xhtml_object("callhistory.php","main-callhistory");?></div>
      </div>
-<? }?>
+<?php  }?>
 
-<? if (TAB_PROJECTINFO) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'projectinfo' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'projectinfo' && $appointment)) 
+<?php  if (TAB_PROJECTINFO) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'projectinfo' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'projectinfo' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Project information"); ?></h2>
-	  <div id="div-projectinfo" class="tabberdiv"><?xhtml_object("project_info.php","main-projectinfo");?></div>
+	  <h2><?php  echo T_("Project information"); ?></h2>
+	  <div id="div-projectinfo" class="tabberdiv"><?php xhtml_object("project_info.php","main-projectinfo");?></div>
      </div>
-<? }?>
+<?php  }?>
 
 
-<? if (TAB_INFO) { ?>
-     <div class="tabbertab <? if ((DEFAULT_TAB == 'info' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'info' && $appointment)) 
+<?php  if (TAB_INFO) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'info' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'info' && $appointment)) 
 					print "tabbertabdefault"; ?>">
-	  <h2><? echo T_("Info"); ?></h2>
-	  <div id="div-info" class="tabberdiv"><?xhtml_object("info.php","main-info");?></div>
+	  <h2><?php  echo T_("Info"); ?></h2>
+	  <div id="div-info" class="tabberdiv"><?php xhtml_object("info.php","main-info");?></div>
      </div>
-<? }?>
+<?php  }?>
 
 
 </div>
@@ -371,7 +371,7 @@ xhtml_object($data,"main-content");
 
 </div>
 
-<?
+<?php 
 
 xhtml_foot();
 

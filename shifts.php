@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display the shifts for this case, if no case, show all shifts that the operator is assigned to
  *

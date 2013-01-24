@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Call back (respondent already started questionnaire) 
  *
@@ -84,10 +84,10 @@ print "<p class='rstext'>" . T_("You are: ") . round(limesurvey_percent_complete
 
 ?>
 
-<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue where we left off"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
-<p class='rsoption'><a href="rs_intro.php"><? echo T_("Go Back"); ?></a></p>
-<?
+<p class='rsoption'><a href="<?php  print(get_limesurvey_url($operator_id)); ?>"><?php  echo T_("Yes - Continue where we left off"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=8');"><?php  echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="rs_intro.php"><?php  echo T_("Go Back"); ?></a></p>
+<?php 
 
 xhtml_foot();
 

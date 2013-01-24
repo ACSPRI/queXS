@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Project End
  *
@@ -90,8 +90,8 @@ if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
 else
 {
 	?>
-	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><? echo T_("End call with outcome: Complete"); ?></a></p>
-	<?
+	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><?php  echo T_("End call with outcome: Complete"); ?></a></p>
+	<?php 
 }
 xhtml_foot();
 

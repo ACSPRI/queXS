@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Business answers
  *
@@ -56,11 +56,11 @@ xhtml_head(T_("Respondent Selection - Business answers"),true,array("css/rs.css"
 
 
 ?>
-<p class='rstext'><? echo T_("Sorry to bother you, I have called the wrong number")?></p>
+<p class='rstext'><?php  echo T_("Sorry to bother you, I have called the wrong number")?></p>
 
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=16');"><? echo T_("End call with outcome: Business number"); ?></a></p>
-<p class='rsoption'><a href="rs_intro.php"><? echo T_("Go Back"); ?></a></p>
-<?
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=16');"><?php  echo T_("End call with outcome: Business number"); ?></a></p>
+<p class='rsoption'><a href="rs_intro.php"><?php  echo T_("Go Back"); ?></a></p>
+<?php 
 
 xhtml_foot();
 

@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display error message when no current call available
  *
@@ -51,8 +51,8 @@ if (AUTO_LOGOUT_MINUTES !== false)
 xhtml_head(T_("No call available"),true,array("css/table.css"),$js);
 
 ?>
-<h1><? echo T_("Please click on:") . " " . T_("Call/Hangup") . " " .T_("to display call script"); ?></h1>
-<?
+<h1><?php  echo T_("Please click on:") . " " . T_("Call/Hangup") . " " .T_("to display call script"); ?></h1>
+<?php 
 
 xhtml_foot();
 

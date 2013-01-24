@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display the end work screen to the operator
  *

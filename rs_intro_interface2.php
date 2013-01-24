@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection introduction 
  *
@@ -89,41 +89,41 @@ if (limesurvey_percent_complete($case_id) == false)
 	{
 		//If nothing is specified as a project introduction, skip straight to questionnaire
 		?>
-		<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="<?php  print(get_limesurvey_url($operator_id)); ?>"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 	else
 	{
 		?>
-		<p class='rsoption'><a href="rs_project_intro_interface2.php"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="rs_project_intro_interface2.php"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 } else {
 	if(empty($r['rs_callback']))
 	{
 		//If nothing is specified as a callback screen, skip straight to questionnaire
 		?>
-		<p class='rsoption'><a href="<? print(get_limesurvey_url($operator_id)); ?>"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="<?php  print(get_limesurvey_url($operator_id)); ?>"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 	else
 	{
 		?>
-		<p class='rsoption'><a href="rs_callback_interface2.php"><? echo T_("Yes - Continue"); ?></a></p>
-		<?
+		<p class='rsoption'><a href="rs_callback_interface2.php"><?php  echo T_("Yes - Continue"); ?></a></p>
+		<?php 
 	}
 }
 ?>
-<p class='rsoption'><a href="rs_business_interface2.php"><? echo T_("Business number"); ?></a></p>
-<p class='rsoption'><a href="rs_answeringmachine_interface2.php"><? echo T_("Answering machine"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=2&endcase=endcase'"><? echo T_("End call with outcome: No answer (ring out or busy) "); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=18&endcase=endcase'"><? echo T_("End call with outcome: Accidental hang up"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=6&endcase=endcase'"><? echo T_("End call with outcome: Refusal by unknown person"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=8&endcase=endcase'"><? echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=17&endcase=endcase'"><? echo T_("End call with outcome: No eligible respondent (person never available on this number)"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=31&endcase=endcase'"><? echo T_("End call with outcome: Non contact (person not currently available on this number: no appointment made)"); ?></a></p>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=30&endcase=endcase'"><? echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
-<?
+<p class='rsoption'><a href="rs_business_interface2.php"><?php  echo T_("Business number"); ?></a></p>
+<p class='rsoption'><a href="rs_answeringmachine_interface2.php"><?php  echo T_("Answering machine"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=2&endcase=endcase'"><?php  echo T_("End call with outcome: No answer (ring out or busy) "); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=18&endcase=endcase'"><?php  echo T_("End call with outcome: Accidental hang up"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=6&endcase=endcase'"><?php  echo T_("End call with outcome: Refusal by unknown person"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=8&endcase=endcase'"><?php  echo T_("End call with outcome: Refusal by respondent"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=17&endcase=endcase'"><?php  echo T_("End call with outcome: No eligible respondent (person never available on this number)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=31&endcase=endcase'"><?php  echo T_("End call with outcome: Non contact (person not currently available on this number: no appointment made)"); ?></a></p>
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=30&endcase=endcase'"><?php  echo T_("End call with outcome: Out of sample (already completed in another mode)"); ?></a></p>
+<?php 
 
 xhtml_foot();
 

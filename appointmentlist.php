@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display appointments for this case and their outcomes if any
  *
