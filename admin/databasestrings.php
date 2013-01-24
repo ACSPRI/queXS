@@ -78,5 +78,12 @@ T_("Weekday mornings (Before 12pm)");
 T_("Weekday afternoons (After 12pm but before 6pm)");
 T_("Evenings (After 6pm)");
 T_("Saturdays");
+T_("String");
+T_("Phone number");
+T_("Primary phone number");
+T_("State");
+T_("Postcode");
+T_("Respondent first name");
+T_("Respondent last name");
 
 ?>

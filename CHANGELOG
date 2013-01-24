@@ -1,6 +1,8 @@
 queXS 1.6.1 - Changes since 1.6.0
 
 New Feature: Include paradata/metadata in data output (number call attempts, number of answering machine messages and all sample variables)
+Fixed Bug: Sample import lists not translatable
+Translations updated (Thanks to those who contributed on Launchpad) 
 
 quexs 1.6.0 - Changes since 1.5.4
 

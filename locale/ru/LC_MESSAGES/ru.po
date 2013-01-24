@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-14 11:25+1000\n"
-"PO-Revision-Date: 2012-10-21 23:05+0000\n"
-"Last-Translator: mimoxod <drun1@mail.ru>\n"
+"PO-Revision-Date: 2012-11-15 09:29+0000\n"
+"Last-Translator: Alexander Matrunich <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-14 05:06+0000\n"
-"X-Generator: Launchpad (build 16251)\n"
+"X-Launchpad-Export-Date: 2013-01-24 01:12+0000\n"
+"X-Generator: Launchpad (build 16445)\n"
 
 #: callhistory.php:56
 msgid "Case History List"
@@ -51,27 +51,28 @@ msgstr "Оператор отсутствует"
 #: rs_answeringmachine_interface2.php:64
 #: rs_answeringmachine.php:64
 msgid "Respondent Selection - Answering machine"
-msgstr ""
+msgstr "Отбор респондента - Автоответчик"
 
 #: rs_answeringmachine_interface2.php:78
 #: rs_answeringmachine.php:78
 msgid "Do not leave a message, please hang up"
-msgstr ""
+msgstr "Не оставляйте сообщение, повесьте трубку, пожалуйста"
 
 #: rs_answeringmachine_interface2.php:81
 #: rs_answeringmachine.php:81
 msgid "End call with outcome: Business answering machine"
-msgstr ""
+msgstr "Окончание звонка с результатом: Корпоративный автоответчик"
 
 #: rs_answeringmachine_interface2.php:86
 #: rs_answeringmachine.php:86
 msgid "End call with outcome: Answering machine Message left"
-msgstr ""
+msgstr "Окончание звонка с результатом: Автоответчик - сообщение оставлено"
 
 #: rs_answeringmachine_interface2.php:90
 #: rs_answeringmachine.php:90
 msgid "End call with outcome: Answering machine No message left"
 msgstr ""
+"Окончание звонка с результатом: Автоответчик - сообщение не оставлено"
 
 #: rs_answeringmachine_interface2.php:91
 #: rs_business_interface2.php:62
@@ -79,25 +80,25 @@ msgstr ""
 #: rs_project_intro.php:85
 #: rs_answeringmachine.php:91
 msgid "Go Back"
-msgstr ""
+msgstr "Вернуться"
 
 #: rs_business_interface2.php:55
 msgid "Respondent Selection - Business answers"
-msgstr ""
+msgstr "Отбор респондента - Организация"
 
 #: rs_business_interface2.php:59
 msgid "Sorry to bother you, I have called the wrong number"
-msgstr ""
+msgstr "Извините за беспокойство, я набрал(а) неверный номер"
 
 #: rs_business_interface2.php:61
 msgid "End call with outcome: Business number"
-msgstr ""
+msgstr "Окончание звонка с результатом: Организация"
 
 #: index_interface2.php:195
 #: waitnextcase_interface2.php:49
 #: index.php:130
 msgid "queXS"
-msgstr ""
+msgstr "queXS"
 
 #: index_interface2.php:202
 #: appointment.php:119
@@ -118,17 +119,17 @@ msgstr "Стрелочка для изменения размера"
 #: index_interface2.php:294
 #: index.php:187
 msgid "Notes"
-msgstr ""
+msgstr "Примечания"
 
 #: index_interface2.php:302
 #: index.php:205
 msgid "Contact details"
-msgstr ""
+msgstr "Контактная информация"
 
 #: index_interface2.php:311
 #: index.php:214
 msgid "Call history"
-msgstr ""
+msgstr "История вызовов"
 
 #: index_interface2.php:320
 #: index.php:223
@@ -143,7 +144,7 @@ msgstr ""
 #: index_interface2.php:338
 #: index.php:241
 msgid "Performance"
-msgstr ""
+msgstr "Производительность"
 
 #: index_interface2.php:346
 #: index.php:249

@@ -132,7 +132,7 @@ function display_table($data)
 	$sql = "SELECT description,type
 		FROM sample_var_type";
 
-	$rs = $db->Execute($sql);
+	$rs = $db->GetAll($sql);
 
 	foreach ($data as $key => $value)
 	{
@@ -140,10 +140,18 @@ function display_table($data)
 		$checked = "checked";
 		if (empty($val)) $val = "samp_$row";
 
-		print "<tr><td>$value</td><td><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\"/></td><td><input type=\"text\" value=\"$val\" name=\"n_$row\"/></td><td>" . $rs->GetMenu("t_$row","1",false) . "</td></tr>";
+		print "<tr><td>$value</td><td><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\"/></td><td><input type=\"text\" value=\"$val\" name=\"n_$row\"/></td><td>";
+		print "<select name=\"t_$row\">";
+		$selected = "selected=\"selected\"";
+		foreach($rs as $r)
+		{
+			print "<option value=\"{$r['type']}\" $selected>" . T_($r['description']) . "</option>";
+			$selected = "";
+		}
+		print "</select>";
+		print "</td></tr>";
 		$row++;
 
-		$rs->MoveFirst();
 	}	
 	print "</table>";
 
