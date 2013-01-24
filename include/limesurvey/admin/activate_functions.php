@@ -407,6 +407,11 @@ function activateSurvey($postsid,$surveyid, $scriptname='admin.php')
     }
 
     $execresult=$dict->ExecuteSQLArray($sqlarray,1);
+
+    //queXS Addition - add an index on the token
+    $createtokenindex = $dict->CreateIndexSQL("{$tabname}_idx", $tabname, array('token'));
+    $dict->ExecuteSQLArray($createtokenindex, false) or safe_die ("Failed to create token index<br />$createtokenindex<br /><br />".$connect->ErrorMsg());
+
     if ($execresult==0 || $execresult==1)
     {
         $activateoutput .= "<br />\n<div class='messagebox ui-corner-all'>\n" .
