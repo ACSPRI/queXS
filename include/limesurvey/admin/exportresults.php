@@ -244,7 +244,17 @@ $quexsfilterstate = questionnaireSampleFilterstate();
             .$clang->gT("You can export associated queXS paradata with each response. Select any additional fields you would like to export.","js")
             ."\")' /><br />"
             ."<select name='attribute_select[]' multiple size='20'>\n"
-            ."<option value='token' id='token' />".$clang->gT("Case ID")."</option>\n"
+            ."<option value='firstname' id='firstname' />".$clang->gT("First name")."</option>\n"
+            ."<option value='lastname' id='lastname' />".$clang->gT("Last name")."</option>\n"
+            ."<option value='email' id='email' />".$clang->gT("Email")."</option>\n";
+
+	$attrfieldnames=GetTokenFieldsAndNames($surveyid,true);
+ 	foreach ($attrfieldnames as $attr_name=>$attr_desc)
+ 	{
+ 	$exportoutput .= "<option value='$attr_name' id='$attr_name' />".$attr_desc."</option>\n";
+ 	}
+
+            $exportoutput .= "<option value='token' id='token' />".$clang->gT("Case ID")."</option>\n"
             ."<option value='callattempts' id='callattempts' />".$clang->gT("Number of call attempts")."</option>\n"
             ."<option value='messagesleft' id='messagesleft' />".$clang->gT("Number of answering machine messages left")."</option>\n";
 
@@ -430,7 +440,37 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
         $dquery .= ", {$dbprefix}tokens_$surveyid.token";
     }
 
+    if (in_array('firstname',$_POST['attribute_select']))
+    {
+        $dquery .= ", {$dbprefix}tokens_$surveyid.firstname";
+    }
+
+
+   if (in_array('lastname',$_POST['attribute_select']))
+    {
+        $dquery .= ", {$dbprefix}tokens_$surveyid.lastname";
+    }
+
+
+   if (in_array('email',$_POST['attribute_select']))
+    {
+        $dquery .= ", {$dbprefix}tokens_$surveyid.email";
+    }
+
+
     $i =1;
+	$attrfieldnames=GetTokenFieldsAndNames($surveyid,true);
+	foreach ($attrfieldnames as $attr_name=>$attr_desc)
+ 	{
+ 	if (in_array($attr_name,$_POST['attribute_select']))
+ 	{
+ 	$dquery .= ", {$dbprefix}tokens_$surveyid.$attr_name";
+	$attributeFieldAndNames[$attr_name] = $attr_desc;
+ 	}
+	$i++;
+ 	}
+
+
     foreach ($attributeFields as $attr_name => $attr_val)
     {
         if (in_array("SAMPLE:$attr_name",$_POST['attribute_select']))
@@ -494,6 +534,16 @@ for ($i=0; $i<$fieldcount; $i++)
     {
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Email address")."\"$separator";}
         else {$firstline .= $elang->gT("Email address")."$separator";}
+    }
+    elseif ($fieldinfo == "firstname")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("First name")."\"$separator";}
+        else {$firstline .= $elang->gT("First name")."$separator";}
+    }
+    elseif ($fieldinfo == "lastname")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Last name")."\"$separator";}
+        else {$firstline .= $elang->gT("Last name")."$separator";}
     }
     elseif ($fieldinfo == "token")
     {
