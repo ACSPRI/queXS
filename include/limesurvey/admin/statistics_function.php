@@ -510,7 +510,7 @@
     if ($qfs != false)
     {
         //Limit responses by questionnaire and/or sample
-        $query .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+        $query .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
         if ($qfs[1] != 0) //if a sample is selected
                 $query .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
     }
@@ -1143,7 +1143,7 @@
 		    if ($qfs != false)
 		    {
 		        //Limit responses by questionnaire and/or sample
-		        $query .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+		        $query .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
 		        if ($qfs[1] != 0) //if a sample is selected
 		                $query .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 		    }
@@ -1207,7 +1207,7 @@
 		    if ($qfs != false)
 		    {
 		        //Limit responses by questionnaire and/or sample
-		        $query .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+		        $query .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
 		        if ($qfs[1] != 0) //if a sample is selected
 		                $query .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 		    }
@@ -1237,7 +1237,7 @@
 		    if ($qfs != false)
 		    {
 		        //Limit responses by questionnaire and/or sample
-		        $querystarter .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+		        $querystarter .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
 		        if ($qfs[1] != 0) //if a sample is selected
 		                $querystarter .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 		    }
@@ -1957,7 +1957,7 @@
 	        if ($qfs != false)
 		{
 		       //Limit responses by questionnaire and/or sample
-		       $querylimit .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+		       $querylimit .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
 		       if ($qfs[1] != 0) //if a sample is selected
 		               $querylimit .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 		}

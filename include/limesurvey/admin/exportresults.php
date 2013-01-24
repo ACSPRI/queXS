@@ -425,14 +425,15 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
     if (in_array('callattempts',$_POST['attribute_select']))
     {
         $dquery .= ", 	(SELECT COUNT(c.call_attempt_id) 
-			FROM call_attempt as c 
-                	WHERE c.case_id = {$dbprefix}survey_$surveyid.token) as callattempts ";
+			FROM call_attempt as c, `case` as ca
+                	WHERE c.case_id = ca.case_id AND ca.token = {$dbprefix}survey_$surveyid.token) as callattempts ";
     }
     if (in_array('messagesleft',$_POST['attribute_select']))
     {
         $dquery .= ",  (SELECT COUNT(c2.call_id) 
-                        FROM `call` as c2
-                        WHERE c2.case_id = {$dbprefix}survey_$surveyid.token 
+                        FROM `call` as c2, `case` as ca2
+                        WHERE ca2.case_id = c2.case_id 
+			AND ca2.token = {$dbprefix}survey_$surveyid.token 
 			AND c2.outcome_id = 23) as messagesleft ";
     }
     if (in_array('token',$_POST['attribute_select']))
@@ -477,7 +478,7 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
         {
             $dquery .= ", (	SELECT sv.val
 				FROM sample_var as sv, `case` as c3
-				WHERE c3.case_id = {$dbprefix}survey_$surveyid.token
+				WHERE c3.token = {$dbprefix}survey_$surveyid.token
 				AND c3.sample_id = sv.sample_id
 				AND sv.var LIKE '$attr_name') as attribute_$i ";
 
@@ -505,7 +506,7 @@ $qfs = questionnaireSampleFilterstate();
 if ($qfs != false)
 {
     //Limit responses by questionnaire and/or sample
-    $dquery .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+    $dquery .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
     if ($qfs[1] != 0) //if a sample is selected
             $dquery .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 }

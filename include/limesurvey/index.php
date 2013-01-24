@@ -2649,7 +2649,7 @@ function check_quota($checkaction,$surveyid)
                     $querysel = "SELECT id FROM ".db_table_name('survey_'.$surveyid)." AS s
 				     JOIN `case` AS cq ON (cq.case_id = '$case_id')
 				     JOIN sample AS sampt ON (sampt.sample_id = cq.sample_id)
-				     JOIN `case` AS c ON (c.case_id = s.token AND c.questionnaire_id = cq.questionnaire_id)
+				     JOIN `case` AS c ON (c.token = s.token AND c.questionnaire_id = cq.questionnaire_id)
 				     JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = sampt.import_id)
 			             WHERE ".implode(' AND ',$querycond)." "." 
 					AND s.submitdate IS NOT NULL";

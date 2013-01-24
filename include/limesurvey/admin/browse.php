@@ -197,7 +197,7 @@ if ($subaction == "id")
     if ($qfs != false)
     {
         //Limit responses by questionnaire and/or sample
-        $query .= "     JOIN `case` AS c ON (s.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+        $query .= "     JOIN `case` AS c ON (s.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
         if ($qfs[1] != 0) //if a sample is selected
                 $query .= "     JOIN `sample` AS ss ON (ss.sample_id = c.sample_id AND ss.import_id = '{$qfs[1]}') ";
     }
@@ -592,7 +592,7 @@ elseif ($subaction == "all")
     if ($qfs != false)
     {
         //Limit responses by questionnaire and/or sample
-        $sql_from .= "     JOIN `case` AS c ON ({$surveytable}.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+        $sql_from .= "     JOIN `case` AS c ON ({$surveytable}.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
         if ($qfs[1] != 0) //if a sample is selected
                 $sql_from .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
     }
@@ -639,7 +639,7 @@ elseif ($subaction == "all")
 	    if ($qfs != false)
 	    {
 	        //Limit responses by questionnaire and/or sample
-	        $dtquery .= "     JOIN `case` AS c ON ({$surveytable}.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+	        $dtquery .= "     JOIN `case` AS c ON ({$surveytable}.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
 	        if ($qfs[1] != 0) //if a sample is selected
 	                $dtquery .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 	    }
@@ -669,7 +669,7 @@ elseif ($subaction == "all")
 	    if ($qfs != false)
 	    {
 	        //Limit responses by questionnaire and/or sample
-	        $dtquery .= "     JOIN `case` AS c ON ({$surveytable}.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+	        $dtquery .= "     JOIN `case` AS c ON ({$surveytable}.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
 	        if ($qfs[1] != 0) //if a sample is selected
 	                $dtquery .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 	    }
@@ -702,7 +702,7 @@ elseif ($subaction == "all")
 	    if ($qfs != false)
 	    {
 	        //Limit responses by questionnaire and/or sample
-	        $dtquery .= "     JOIN `case` AS c ON ({$surveytable}.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+	        $dtquery .= "     JOIN `case` AS c ON ({$surveytable}.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
 	        if ($qfs[1] != 0) //if a sample is selected
 	                $dtquery .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 	    }

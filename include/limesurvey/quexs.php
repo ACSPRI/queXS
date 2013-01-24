@@ -753,8 +753,14 @@ function get_start_interview_url()
 
         if ($case_id)
         {
+		$sql = "SELECT token
+			FROM `case`
+			WHERE case_id = $case_id";
+
+		$token = $db->GetOne($sql);
+
                 $sid = get_limesurvey_id($operator_id);
-                $url = LIME_URL . "index.php?loadall=reload&sid=$sid&token=$case_id&lang=" . DEFAULT_LOCALE;
+                $url = LIME_URL . "index.php?loadall=reload&sid=$sid&token=$token&lang=" . DEFAULT_LOCALE;
                 $questionnaire_id = get_questionnaire_id($operator_id);
                 
                 //get prefills

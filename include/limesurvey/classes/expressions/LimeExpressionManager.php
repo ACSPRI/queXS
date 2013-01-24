@@ -3419,7 +3419,7 @@
 		$sql = "SELECT sv.var,sv.val
 			FROM sample_var as sv, `case` as c
 			WHERE c.sample_id = sv.sample_id
-			AND c.case_id = {$_SESSION['token']}";
+			AND c.token = {$_SESSION['token']}";
 
 		$queXSrs = $connect->GetAssoc($sql);
 		
