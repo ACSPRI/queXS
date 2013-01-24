@@ -35,25 +35,6 @@
  */
 include("../functions/functions.input.php");
 
-
-if (isset($_GET['data']))
-{
-	/**
-	 * Limesurvey functions
-	 */
-	include("../functions/functions.limesurvey.php");
-
-	$questionnaire_id = false;
-	$sample_import_id = false;
-	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
-	if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-
-	limesurvey_export_fixed_width($questionnaire_id,$sample_import_id);
-
-	exit();
-}
-
-
 /**
  * Configuration file
  */

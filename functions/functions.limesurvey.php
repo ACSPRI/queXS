@@ -65,7 +65,7 @@ function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sam
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
 		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
 		WHERE s.submitdate IS NOT NULL
-		AND s.token = c.case_id";
+		AND s.token = c.token";
 
 	$rs = $db->GetRow($sql);
 
@@ -95,7 +95,7 @@ function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.case_id = '$case_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
-		WHERE s.token = c.case_id
+		WHERE s.token = c.token
 		AND s.`$lime_sgqa` $comparison '$value'";
 
 	$rs = $db->GetRow($sql);
@@ -127,7 +127,7 @@ function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var)
 		JOIN `case` as c ON (c.case_id = '$case_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
 		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
-		WHERE s.token = c.case_id";
+		WHERE s.token = c.token";
 
 	$rs = $db->GetRow($sql);
 
@@ -161,7 +161,7 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
 		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
 		WHERE s.submitdate IS NOT NULL
-		AND s.token = c.case_id
+		AND s.token = c.token
 		AND s.`$lime_sgqa` $comparison '$value'";
 
 	$rs = $db->GetRow($sql);
@@ -373,9 +373,10 @@ function get_lime_id($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT id
-		FROM " . LIME_PREFIX . "survey_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT s.id
+		FROM " . LIME_PREFIX . "survey_$lime_sid as s, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND c.token = s.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -402,9 +403,10 @@ function get_lime_tid($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT tid
-		FROM " . LIME_PREFIX . "tokens_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT t.tid
+		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND c.token = t.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -453,9 +455,10 @@ function limesurvey_is_quota_full($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT completed
-		FROM " . LIME_PREFIX . "tokens_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT t.completed
+		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND c.token = t.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -480,9 +483,10 @@ function limesurvey_is_completed($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT completed
-		FROM " . LIME_PREFIX . "tokens_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT t.completed
+		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND t.token = c.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -623,290 +627,5 @@ function limesurvey_create_multi(&$varwidth,&$vartype,$qid,$varname,$length,$typ
 
 	return;
 }
-
-/**
- * Return a string with only ASCII characters in it
- *
- * This function was sourced from the php website, help on str_replace
- * No author was listed at the time of access
- *
- * @param string $stringIn The string
- * @return string A string containing only ASCII characters
- */
-function all_ascii( $stringIn ){
-    $final = '';
-    $search = array(chr(145),chr(146),chr(147),chr(148),chr(150),chr(151),chr(13),chr(10));
-    $replace = array("'","'",'"','"','-','-',' ',' ');
-
-    $hold = str_replace($search[0],$replace[0],$stringIn);
-    $hold = str_replace($search[1],$replace[1],$hold);
-    $hold = str_replace($search[2],$replace[2],$hold);
-    $hold = str_replace($search[3],$replace[3],$hold);
-    $hold = str_replace($search[4],$replace[4],$hold);
-    $hold = str_replace($search[5],$replace[5],$hold);
-    $hold = str_replace($search[6],$replace[6],$hold);
-    $hold = str_replace($search[7],$replace[7],$hold);
-
-    if(!function_exists('str_split')){
-       function str_split($string,$split_length=1){
-           $count = strlen($string);
-           if($split_length < 1){
-               return false;
-           } elseif($split_length > $count){
-               return array($string);
-           } else {
-               $num = (int)ceil($count/$split_length);
-               $ret = array();
-               for($i=0;$i<$num;$i++){
-                   $ret[] = substr($string,$i*$split_length,$split_length);
-               }
-               return $ret;
-           }
-       }
-    }
-
-    $holdarr = str_split($hold);
-    foreach ($holdarr as $val) {
-       if (ord($val) < 128) $final .= $val;
-    }
-    return $final;
-}
-
-
-/**
- * Produce a fixed width string containing the data from a questionnaire
- *
- * @param int $questionnaire_id The quesitonnaire id
- * @param int|false $sample_import_id The sample importid or false for all data
- * @return string Fixed width data from the limesurvey database
- *
- */
-function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = false)
-{
-	global $db;
-
-	//array of varname and width
-	$varwidth = array();
-	$vartype = array();
-
-	$sql = "SELECT lime_sid
-		FROM questionnaire
-		WHERE questionnaire_id = '$questionnaire_id'";
-
-	$r = $db->GetRow($sql);
-
-	if (!empty($r))
-		$surveyid = $r['lime_sid']; 
-	else
-		return;
-
-	//foreach question
-	$sql = "SELECT q.* 
-		FROM ".LIME_PREFIX."questions as q, ".LIME_PREFIX."groups as g
-		WHERE q.sid=$surveyid
-		AND q.type NOT LIKE 'X'
-		AND g.gid = q.gid
-		ORDER BY g.group_order ASC,q.question_order ASC";
-
-	$r = $db->GetAll($sql);
-	foreach ($r as $RowQ)
-	{
-		$type = $RowQ['type'];
-		$qid = $RowQ['qid'];
-		$lid = $RowQ['lid'];
-		$gid = $RowQ['gid'];
-	
-		$varName = $surveyid . "X" . $gid . "X" . $qid;
-	
-		switch ($type)
-	        {
-	       		case "X": //BOILERPLATE QUESTION - none should appear
-		            
-		            break;
-		        case "5": //5 POINT CHOICE radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;
-		            break;
-		        case "D": //DATE
-		            $varwidth[$varName]=8;
-			    $vartype[$varName] = 1;
-		            break;
-		        case "Z": //LIST Flexible drop-down/radio-button list
-		            $varwidth[$varName]=limesurvey_fixed_width($lid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "L": //LIST drop-down/radio-button list
-		            $varwidth[$varName]=limesurvey_answer_width($qid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "W": //List - dropdown
-		            $varwidth[$varName]=limesurvey_answer_width($qid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "!": //List - dropdown
-		            $varwidth[$varName]=limesurvey_answer_width($qid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "O": //LIST WITH COMMENT drop-down/radio-button list + textarea
-		            //Not yet implemented		            
-		            break;
-		        case "R": //RANKING STYLE
-		            //Not yet implemented
-		            break;
-		        case "M": //MULTIPLE OPTIONS checkbox
-		            limesurvey_create_multi($varwidth,$vartype,$qid,$varName,1,3);
-		            break;
-		        case "P": //MULTIPLE OPTIONS WITH COMMENTS checkbox + text
-	     		            //Not yet implemented
-			    break;
-		        case "Q": //MULTIPLE SHORT TEXT
-		            limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_get_width($qid,24),2);		            
-		            break;
-		        case "K": //MULTIPLE NUMERICAL
-		            limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_get_width($qid,10),1);		            
- 		            break;
-	  	        case "N": //NUMERICAL QUESTION TYPE
-		            $varwidth[$varName]= limesurvey_get_width($qid,10);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "S": //SHORT FREE TEXT
-		            $varwidth[$varName]= limesurvey_get_width($qid,240);
-			    $vartype[$varName] = 2;
-		            break;
-		        case "T": //LONG FREE TEXT
-		            $varwidth[$varName]= limesurvey_get_width($qid,1024);
-			    $vartype[$varName] = 2;
-			    break;
-		        case "U": //HUGE FREE TEXT
-		            $varwidth[$varName]= limesurvey_get_width($qid,2048);
-			    $vartype[$varName] = 2;
-		            break;
-		        case "Y": //YES/NO radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;
-			    break;
-		        case "G": //GENDER drop-down list
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;
-			    break;
-		        case "A": //ARRAY (5 POINT CHOICE) radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;		    
-				break;
-		        case "B": //ARRAY (10 POINT CHOICE) radio-buttons
-		            $varwidth[$varName]=2;
-			    $vartype[$varName] = 1;    
-				break;
-		        case "C": //ARRAY (YES/UNCERTAIN/NO) radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;    
-				break;
-		        case "E": //ARRAY (Increase/Same/Decrease) radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;    
-				break;
-		        case "F": //ARRAY (Flexible) - Row Format
-				limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_fixed_width($lid),1);    
-		            break;
-		        case "H": //ARRAY (Flexible) - Column Format
-				limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_fixed_width($lid),1);
-	    			break;
-			case "^": //SLIDER CONTROL
-		            //Not yet implemented
-			    break;
-		} //End Switch
-			
-			
-	}
-	
-
-	$fn = "survey_$surveyid.dat";
-
-	header("Content-Type: application/download");
-	header("Content-Disposition: attachment; filename=$fn");
-	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
-	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
-	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-	header("Pragma: no-cache");                          // HTTP/1.0
-	
-	$sql3 = "SELECT c.case_id as case_id
-		FROM `case` as c
-		WHERE c.questionnaire_id = '$questionnaire_id'
-		AND c.current_outcome_id = 10";
-
-	$r = $db->GetAll($sql3);
-
-	if (!empty($r))
-	{
-		$sql = "SELECT *
-			FROM ".LIME_PREFIX."survey_$surveyid
-			WHERE ";
-
-
-		if ($sample_import_id == false)
-		{
-			$sql .= " (";
-			$ccount = count($r);
-			$ccounter = 0;
-			foreach($r as $row)
-			{
-				$token = $row['case_id'];
-				$ccounter++;
-				$sql .= " token = '$token'";
-				if ($ccounter < $ccount)
-					$sql .= " or ";
-			}
-			$sql .= ")";
-		}
-		else
-		{
-			$sql2 = "SELECT c.case_id as case_id
-				FROM `case` as c, `sample` as s
-				WHERE c.questionnaire_id = '$questionnaire_id'
-				AND c.sample_id = s.sample_id
-				AND s.import_id = '$sample_import_id'";
-	
-			$r = $db->GetAll($sql2);
-	
-			if (!empty($r))
-			{
-				$sql .= " (";
-				$ccount = count($r);
-				$ccounter = 0;
-				foreach($r as $row)
-				{
-					$token = $row['case_id'];
-					$ccounter++;
-					$sql .= " token = '$token'";
-					if ($ccounter < $ccount)
-						$sql .= " or ";
-				}
-				$sql .= ")";
-			}
-	
-		}
-
-		$r = $db->GetAll($sql);
-
-		foreach($r as $Row)
-		{
-			foreach ($varwidth as $var => $width)
-			{
-				if ($vartype[$var] == 1)
-					echo str_pad(substr(all_ascii($Row[$var]),0,$width), $width, " ", STR_PAD_LEFT);
-				else if ($vartype[$var] == 2)
-					echo str_pad(substr(all_ascii($Row[$var]),0,$width), $width, " ", STR_PAD_RIGHT);
-				else if ($vartype[$var] == 3)
-					if (empty($Row[$var])) echo " "; else echo "1";
-			}
-			echo str_pad(substr($Row['token'],0,9), 9, " ", STR_PAD_LEFT);
-			echo str_pad(substr($Row['datestamp'],0,16), 16, " ", STR_PAD_LEFT);
-			echo "\n";
-		}
-
-	}
-	
-}
-
 
 ?>
