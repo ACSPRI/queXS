@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Functions for interacting with queXS
  *

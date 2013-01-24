@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display a "full screen" view of outcomes for display on a large
  * communal screen - will change views periodically
