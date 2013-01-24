@@ -254,7 +254,8 @@ $quexsfilterstate = questionnaireSampleFilterstate();
  	$exportoutput .= "<option value='$attr_name' id='$attr_name' />".$attr_desc."</option>\n";
  	}
 
-            $exportoutput .= "<option value='token' id='token' />".$clang->gT("Case ID")."</option>\n"
+            $exportoutput .= "<option value='token' id='token' />".$clang->gT("Token")."</option>\n"
+            ."<option value='caseid' id='caseid' />".$clang->gT("Case ID")."</option>\n"
             ."<option value='callattempts' id='callattempts' />".$clang->gT("Number of call attempts")."</option>\n"
             ."<option value='messagesleft' id='messagesleft' />".$clang->gT("Number of answering machine messages left")."</option>\n";
 
@@ -422,6 +423,10 @@ else
 $dquery = "SELECT $selectfields";
 if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribute_select']) && is_array($_POST['attribute_select']))
 {
+    if (in_array('caseid',$_POST['attribute_select']))
+    {
+        $dquery .= ", 	c.case_id ";
+    }
     if (in_array('callattempts',$_POST['attribute_select']))
     {
         $dquery .= ", 	(SELECT COUNT(c.call_attempt_id) 
@@ -531,6 +536,11 @@ for ($i=0; $i<$fieldcount; $i++)
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Number of answering machine messages left")."\"$separator";}
         else {$firstline .= $elang->gT("Number of answering machine messages left")."$separator";}
     }
+    elseif ($fieldinfo == "caseid")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case ID")."\"$separator";}
+        else {$firstline .= $elang->gT("Case ID")."$separator";}
+    }
     elseif ($fieldinfo == "email")
     {
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Email address")."\"$separator";}
@@ -548,8 +558,8 @@ for ($i=0; $i<$fieldcount; $i++)
     }
     elseif ($fieldinfo == "token")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case ID")."\"$separator";}
-        else {$firstline .= $elang->gT("Case ID")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Token")."\"$separator";}
+        else {$firstline .= $elang->gT("Token")."$separator";}
     }
     elseif (substr($fieldinfo,0,10)=="attribute_")
     {
