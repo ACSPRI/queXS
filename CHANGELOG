@@ -1,3 +1,7 @@
+queXS 1.6.1 - Changes since 1.6.0
+
+New Feature: Include paradata/metadata in data output (number call attempts, number of answering machine messages and all sample variables)
+
 quexs 1.6.0 - Changes since 1.5.4
 
 Major New Feature: Updated to Limesurvey 1.92 Build 120919 last commit a2955e94e254f09b6f31c6c0ca8cf25929ec7e7 on GitHub 13 November 2012
