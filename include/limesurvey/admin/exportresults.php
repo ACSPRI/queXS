@@ -425,7 +425,9 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
 {
     if (in_array('caseid',$_POST['attribute_select']))
     {
-        $dquery .= ", 	c.case_id ";
+        $dquery .= ", 	(SELECT c4.case_id
+			FROM `case` as c4
+			WHERE c4.token = {$dbprefix}survey_$surveyid.token) as caseid ";
     }
     if (in_array('callattempts',$_POST['attribute_select']))
     {
@@ -834,7 +836,7 @@ elseif ($answers == "long")        //chose complete answers
             $fqid=0;            // By default fqid is set to zero
             $field=$dresult->FetchField($i);
             $fieldinfo=$field->name;
-            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed")
+            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed" && $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft")
             {
                 $fielddata=$fieldmap[$fieldinfo];
                 $fqid=$fielddata['qid'];
@@ -855,6 +857,15 @@ elseif ($answers == "long")        //chose complete answers
                 {
                     switch($fieldinfo)
                     {
+			case "caseid":
+	                    $ftitle=$elang->gT("Case ID").":";
+                            break;
+ 			case "callattempts":
+	                    $ftitle=$elang->gT("Number of call attempts").":";
+                            break;
+ 			case "messagesleft":
+	                    $ftitle=$elang->gT("Number of answering machine messages left").":";
+                            break;
                         case "datestamp":
                             $ftitle=$elang->gT("Date Last Action").":";
                             break;
