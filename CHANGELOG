@@ -8,6 +8,10 @@ Database updates:
 ALTER TABLE `case` ADD `token` VARCHAR( 36 ) NOT NULL ;
 ALTER TABLE `case` ADD UNIQUE (`token`);
 
+To allow for accessing existing cases in new system, need to assign a "token" for each case
+
+UPDATE `case` SET token = case_id;
+
 queXS 1.6.1 - Changes since 1.6.0
 
 New Feature: Include paradata/metadata in data output (number call attempts, number of answering machine messages and all sample variables)
