@@ -56,6 +56,7 @@ if (isset($_GET['loadall']) && $_GET['loadall'] == "reload" && isset($_GET['toke
  	//Must destroy the session
  	session_unset();
 }
+
 //end queXS Addition
 
 //LimeExpressionManager::SetSurveyId($surveyid);  // must be called early - it clears internal cache if a new survey is being used
@@ -119,6 +120,21 @@ if ( $embedded && $embedded_inc != '' )
 {
     require_once( $embedded_inc );
 }
+
+//queXS Addition
+//see who is doing this survey - an interviewer or the respondent directly
+$interviewer=returnglobal('interviewer');
+if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true)) 
+{
+	$interviewer = true;
+	$_SESSION['interviewer'] = true;
+}
+else
+{
+	$interviewer = false;
+}
+
+
 
 //CHECK FOR REQUIRED INFORMATION (sid)
 if (!$surveyid || !$surveyexists)
@@ -512,16 +528,20 @@ else
 
 
 
-
-//SET THE TEMPLATE DIRECTORY
-if (!$thissurvey['templatedir'])
+if ($interviewer)
 {
-    $thistpl=sGetTemplatePath($defaulttemplate);
+	//SET THE TEMPLATE DIRECTORY
+	if (!$thissurvey['templatedir'])
+	{
+	    $thistpl=sGetTemplatePath($defaulttemplate);
+	}
+	else
+	{
+	    $thistpl=sGetTemplatePath($thissurvey['templatedir']);
+	}
 }
 else
-{
-    $thistpl=sGetTemplatePath($thissurvey['templatedir']);
-}
+	$thistpl=sGetTemplatePath('sherpa');
 
 
 

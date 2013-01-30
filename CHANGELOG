@@ -23,6 +23,11 @@ New sample variable type (Email address):
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES
 (8, 'Email address', '');
 
+Specify details of respondent self completion:
+
+ALTER TABLE `questionnaire` ADD `lime_mode` VARCHAR( 64 ) NULL COMMENT 'Limesurvey mode for respondent self completion' AFTER `info` ,
+ADD `lime_template` VARCHAR( 128 ) NULL COMMENT 'Limesurvey template for respondent self completion' AFTER `lime_mode` ,
+ADD `lime_endurl` VARCHAR( 256 ) NULL COMMENT 'Forwarding end URL for respondent self completion' AFTER `lime_template` ;
 
 queXS 1.6.1 - Changes since 1.6.0
 

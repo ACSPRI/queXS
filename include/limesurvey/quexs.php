@@ -37,6 +37,30 @@ require_once(dirname(__FILE__).'/../../config.inc.php');
 
 
 /**
+ * Set the case as completed by respondent
+ * 
+ * @param int $surveyid  The limesurvey survey id
+ * @param string  $clienttoken The token
+ * 
+ * @return none
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-01-30
+ */
+function quexs_completed_by_respondent($surveyid,$clienttoken)
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$sql = "UPDATE `case`
+		SET current_outcome_id = 34
+		WHERE token = '$clienttoken'";
+
+	$db->Execute($sql);
+}
+
+
+/**
  * Get the number of answering messages left for this case
  * 
  * @param mixed $case_id 
@@ -715,7 +739,7 @@ function get_respondent_selection_url()
 	{
 		$sid = get_limesurvey_id($operator_id,true); //true for RS
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
-			$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
+			$url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
 		else
 			$url = 'rs_intro.php';
 	}
@@ -727,11 +751,15 @@ function get_respondent_selection_url()
 /**
  * Get the URL to end the interview
  *
+ * @param string $token The token if ended by the respondent, blank if ended by the interviewer
  * @return string The URL to end the interview
  */
-function get_end_interview_url()
+function get_end_interview_url($token = "")
 {
-	return QUEXS_URL . "rs_project_end.php";
+	if ($token == "")
+		return QUEXS_URL . "rs_project_end.php";
+	else
+		return "http://www.google.com.au";
 }
 
 /**
@@ -760,7 +788,7 @@ function get_start_interview_url()
 		$token = $db->GetOne($sql);
 
                 $sid = get_limesurvey_id($operator_id);
-                $url = LIME_URL . "index.php?loadall=reload&sid=$sid&token=$token&lang=" . DEFAULT_LOCALE;
+                $url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload&sid=$sid&token=$token&lang=" . DEFAULT_LOCALE;
                 $questionnaire_id = get_questionnaire_id($operator_id);
                 
                 //get prefills
