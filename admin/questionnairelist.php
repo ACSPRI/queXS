@@ -86,9 +86,22 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	$ras =0;
 	$rws = 0;
 	$rs = 0;
+	$respsc = 0;
 	if (isset($_POST['ras'])) $ras = 1;
 	if (isset($_POST['rws'])) $rws = 1;
+	if (isset($_POST['respsc'])) $respsc = 1;
 	
+	$lime_mode = "NULL";
+	$lime_template = "NULL";
+	$lime_endurl = "NULL";
+
+	if ($respsc == 1)
+	{
+		$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
+		$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
+		$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
+	}
+
 	$name = $db->qstr(html_entity_decode($_POST['description']));
 	if (isset($_POST['rs_intro']))
 	{
@@ -102,7 +115,7 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],true));
 
 	$sql = "UPDATE questionnaire
-		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws'
+		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
 		WHERE questionnaire_id = '$questionnaire_id'";
 
 	$db->Execute($sql);
@@ -119,7 +132,7 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	
 }
 
-xhtml_head(T_("Questionnaire list"),true,array("../css/table.css"));
+xhtml_head(T_("Questionnaire list"),true,array("../css/table.css"),array("../js/new.js"));
 	
 
 if (isset($_GET['modify']))
@@ -150,11 +163,17 @@ if (isset($_GET['modify']))
 
 	$rs = $db->GetRow($sql);
 
-	$testing = $rws = $ras = "checked=\"checked\"";
-	
+	$testing = $rws = $ras = $rsc = "checked=\"checked\"";
+	$rscd = "";	
+
 	if ($rs['restrict_appointments_shifts'] != 1) $ras = "";
 	if ($rs['restrict_work_shifts'] != 1) $rws = "";
 	if ($rs['testing'] != 1) $testing = "";
+	if (empty($rs['lime_mode']))
+	{
+		$rsc = "";
+		$rscd = "style='display:none;'";
+	}
 	
 	echo "<h1>" . $rs['description'] . "</h1>";
 	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
@@ -165,6 +184,23 @@ if (isset($_GET['modify']))
 		<p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" <?php  echo $ras; ?>/></p>
 		<p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" <?php  echo $rws; ?>/></p>
 		<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox" disabled="true" <?php  echo $testing; ?>/></p>
+		<p><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> <input name="respsc" type="checkbox" <?php echo $rsc ?>  onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" /></p>
+		<div id='limesc' <?php echo $rscd; ?>>
+		<p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option value="survey"><?php echo T_("All in one"); ?></option><option value="question"><?php echo T_("Question by question"); ?></option><option value="group"><?php echo T_("Group at a time"); ?></option></select></p>
+		<p><?php echo T_("Limesurvey template for respondent");?>: <select name="lime_template">
+		<?php 
+		if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
+		    while (false !== ($entry = readdir($handle))) {
+		        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
+		            echo "<option value=\"$entry\">$entry</option>";
+		        }
+		    }
+		    closedir($handle);
+		}
+		?>
+		</select></p>
+		<p><?php echo T_("URL to forward respondents on self completion");?>: <input name="lime_endurl" type="text" value="http://www.acspri.org.au/"/></p>
+		</div>
 		<?php  if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
 		<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);?></p>
 		<p><?php  echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro",$rs['rs_project_intro'],$ckeditorConfig);?></p>
