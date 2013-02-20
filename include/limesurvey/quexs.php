@@ -37,6 +37,55 @@ require_once(dirname(__FILE__).'/../../config.inc.php');
 
 
 /**
+ * Template for the self completion user
+ * 
+ * @param string $clienttoken The token
+ * 
+ * @return string The limesurvey template name
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-20
+ */
+function quexs_get_template($clienttoken)
+{
+	if (empty($clienttoken)) return 'default';
+
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$sql = "SELECT q.lime_template
+		FROM questionnaire as q, `case` as c
+		WHERE q.questionnaire_id = c.questionnaire_id
+		AND c.token = '$clienttoken'";
+
+	return $db->GetOne($sql);
+}
+
+/**
+ * Mode of survey completion
+ * 
+ * @param string $clienttoken The token
+ * 
+ * @return The limesurvey mode
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-20
+ */
+function quexs_get_survey_mode($clienttoken)
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$sql = "SELECT q.lime_mode
+		FROM questionnaire as q, `case` as c
+		WHERE q.questionnaire_id = c.questionnaire_id
+		AND c.token = '$clienttoken'";
+
+	return $db->GetOne($sql);
+}
+
+
+/**
  * Set the case as completed by respondent
  * 
  * @param int $surveyid  The limesurvey survey id
@@ -759,7 +808,18 @@ function get_end_interview_url($token = "")
 	if ($token == "")
 		return QUEXS_URL . "rs_project_end.php";
 	else
-		return "http://www.google.com.au";
+	{
+		$db = newADOConnection(DB_TYPE);
+		$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+		$sql = "SELECT q.lime_endurl
+			FROM questionnaire as q, `case` as c
+			WHERE c.token = '$token'
+			AND c.questionnaire_id = q.questionnaire_id";
+
+		return $db->GetOne($sql);
+	}
 }
 
 /**

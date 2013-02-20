@@ -15,6 +15,7 @@
 if (!isset($homedir) || isset($_REQUEST['$homedir'])) {die("Cannot run this script directly");}
 
 require_once("save.php");   // for supporting functions only
+include_once("quexs.php"); //queXS funcitons
 
 // $LEMdebugLevel - customizable debugging for Lime Expression Manager
 $LEMdebugLevel=0;   // LEM_DEBUG_TIMING;    // (LEM_DEBUG_TIMING + LEM_DEBUG_VALIDATION_SUMMARY + LEM_DEBUG_VALIDATION_DETAIL);
@@ -37,7 +38,7 @@ if ($interviewer)
 	}
 }
 else
-	$surveyMode='survey';
+	$surveyMode=quexs_get_survey_mode($clienttoken);
 
 $radix=getRadixPointData($thissurvey['surveyls_numberformat']);
 $radix = $radix['seperator'];

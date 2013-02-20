@@ -21,6 +21,8 @@ require_once(dirname(__FILE__).'/classes/core/startup.php');
 require_once(dirname(__FILE__).'/config-defaults.php');
 require_once(dirname(__FILE__).'/common.php');
 require_once(dirname(__FILE__).'/classes/core/language.php');
+include_once("quexs.php");
+
 @ini_set('session.gc_maxlifetime', $sessionlifetime);
 
 $loadname=returnglobal('loadname');
@@ -541,7 +543,9 @@ if ($interviewer)
 	}
 }
 else
-	$thistpl=sGetTemplatePath('sherpa');
+{
+	$thistpl=quexs_get_template($clienttoken);
+}
 
 
 
