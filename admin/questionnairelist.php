@@ -166,6 +166,12 @@ if (isset($_GET['modify']))
 	$testing = $rws = $ras = $rsc = "checked=\"checked\"";
 	$rscd = "";	
 
+	$aio = $qbq = $gat = "";
+	if ($rs['lime_mode'] == "survey") $aio = "selected=\"selected\"";
+	if ($rs['lime_mode'] == "question") $qbq = "selected=\"selected\"";
+	if ($rs['lime_mode'] == "group") $gat = "selected=\"selected\"";
+
+
 	if ($rs['restrict_appointments_shifts'] != 1) $ras = "";
 	if ($rs['restrict_work_shifts'] != 1) $rws = "";
 	if ($rs['testing'] != 1) $testing = "";
@@ -186,20 +192,23 @@ if (isset($_GET['modify']))
 		<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox" disabled="true" <?php  echo $testing; ?>/></p>
 		<p><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> <input name="respsc" type="checkbox" <?php echo $rsc ?>  onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" /></p>
 		<div id='limesc' <?php echo $rscd; ?>>
-		<p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option value="survey"><?php echo T_("All in one"); ?></option><option value="question"><?php echo T_("Question by question"); ?></option><option value="group"><?php echo T_("Group at a time"); ?></option></select></p>
+		<p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option <?php echo $aio;?> value="survey"><?php echo T_("All in one"); ?></option><option <?php echo $qbq; ?> value="question"><?php echo T_("Question by question"); ?></option><option <?php echo $gat; ?> value="group"><?php echo T_("Group at a time"); ?></option></select></p>
 		<p><?php echo T_("Limesurvey template for respondent");?>: <select name="lime_template">
 		<?php 
 		if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
 		    while (false !== ($entry = readdir($handle))) {
 		        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
-		            echo "<option value=\"$entry\">$entry</option>";
+		            echo "<option value=\"$entry\" ";
+			    if ($rs['lime_template'] == $entry) echo " selected=\"selected\" ";
+			    echo ">$entry</option>";
+			
 		        }
 		    }
 		    closedir($handle);
 		}
 		?>
 		</select></p>
-		<p><?php echo T_("URL to forward respondents on self completion");?>: <input name="lime_endurl" type="text" value="http://www.acspri.org.au/"/></p>
+		<p><?php echo T_("URL to forward respondents on self completion");?>: <input name="lime_endurl" type="text" value="<?php echo $rs['lime_endurl']; ?>"/></p>
 		</div>
 		<?php  if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
 		<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);?></p>
