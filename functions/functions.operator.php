@@ -646,6 +646,31 @@ function get_case_id($operator_id, $create = false)
 
 }
 
+
+/**
+ * Get the token based on the case id
+ * 
+ * @param int $case_id The case id
+ * 
+ * @return string|bool The token otherwise false if case doesn't exist
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-25
+ */
+function get_token($case_id)
+{
+	global $db;
+
+	$sql = "SELECT token 
+		FROM `case`
+		WHERE case_id = $case_id";
+
+	$token = $db->GetOne($sql);
+
+	if (empty($token)) return FALSE;
+
+	return $token;
+}
+
 /**
  * Return the phone number of a call
  *

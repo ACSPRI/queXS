@@ -126,6 +126,7 @@ function display_outcomes($contacted,$ca,$case_id)
 					WHERE contacted = '$contacted'
 					AND outcome_id != 10"; //don't show completed if not
 			}
+
 		}
 	}
 	$rs = $db->GetAll($sql);
@@ -133,7 +134,13 @@ function display_outcomes($contacted,$ca,$case_id)
 	print "<div>";
 	if (!empty($rs))
 	{
-		$do = false;
+		//Get current outcome to set as default
+		$sql = "SELECT outcome
+			FROM `call`
+			WHERE call_attempt_id = $ca
+			AND `end` IS NULL";
+
+		$do = $db->GetOne($sql);
 		if (isset($_GET['defaultoutcome'])) $do = bigintval($_GET['defaultoutcome']);
 		foreach($rs as $r)
 		{

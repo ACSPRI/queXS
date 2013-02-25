@@ -15,8 +15,8 @@ UPDATE `case` SET token = case_id;
 New outcomes for email invitation and online self completion:
 
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES
-(34, '1.1', 'Self completed online', 0, 4, 0, 1, 1, 1, 0, 'I'),
-(35, '2.36', 'Self completion email invitation sent', 10080, 1, 0, 1, 1, 1, 0, 'O');
+(40, '1.1', 'Self completed online', 0, 4, 0, 1, 1, 1, 0, 'I'),
+(41, '2.36', 'Self completion email invitation sent', 10080, 1, 0, 1, 1, 1, 0, 'O');
 
 New sample variable type (Email address):
 

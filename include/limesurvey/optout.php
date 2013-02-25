@@ -60,6 +60,29 @@ else
     {
         $usquery = "Update ".db_table_name("tokens_{$surveyid}")." set emailstatus='OptOut', usesleft=0 where token=".db_quoteall($token,true);
         $usresult = $connect->Execute($usquery);
+
+	//queXS addition
+
+	//Set to Hard Refusal, respondent
+	$sql = "UPDATE `case`
+		SET current_outcome_id = 9
+		WHERE token = '$token'";
+
+	$connect->Execute($sql);
+
+	$sql = "SELECT case_id
+		FROM `case`
+		WHERE token = '$token'";
+
+	$case_id = $connect->GetOne($sql);
+
+
+	//Add a case note to clarify (need to translate this string)
+	$sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
+		VALUES ($case_id,1,'Self completion refused via opt out function',NOW())";
+
+	$connect->Execute($sql);
+
         $html .= $clang->gT('You have been successfully removed from this survey.');
     }
     else
