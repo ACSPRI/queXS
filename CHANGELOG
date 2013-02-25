@@ -25,7 +25,8 @@ INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES
 
 Specify details of respondent self completion:
 
-ALTER TABLE `questionnaire` ADD `lime_mode` VARCHAR( 64 ) NULL COMMENT 'Limesurvey mode for respondent self completion' AFTER `info` ,
+ALTER TABLE `questionnaire` ADD `self_complete` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `info`,
+ADD `lime_mode` VARCHAR( 64 ) NULL COMMENT 'Limesurvey mode for respondent self completion' AFTER `self_complete` ,
 ADD `lime_template` VARCHAR( 128 ) NULL COMMENT 'Limesurvey template for respondent self completion' AFTER `lime_mode` ,
 ADD `lime_endurl` VARCHAR( 256 ) NULL COMMENT 'Forwarding end URL for respondent self completion' AFTER `lime_template` ;
 

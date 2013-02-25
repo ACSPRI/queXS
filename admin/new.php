@@ -76,17 +76,6 @@ if (isset($_POST['import_file']))
 	if (isset($_POST['respsc'])) $respsc = 1;
 	if ($_POST['selectrs'] != "none") $rs = 1;
 	
-	$lime_mode = "NULL";
-	$lime_template = "NULL";
-	$lime_endurl = "NULL";
-
-	if ($respsc == 1)
-	{
-		$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
-		$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
-		$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
-	}
-
 	$name = $db->qstr($_POST['description'],get_magic_quotes_gpc());
 	$rs_intro = $db->qstr(html_entity_decode($_POST['rs_intro'],get_magic_quotes_gpc()));
 	$rs_project_intro = $db->qstr(html_entity_decode($_POST['rs_project_intro'],get_magic_quotes_gpc()));
@@ -104,14 +93,26 @@ if (isset($_POST['import_file']))
 		$lime_rs_sid = bigintval($_POST['selectrs']);
 	}
 
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,lime_mode,lime_template,lime_endurl)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$lime_mode,$lime_template,$lime_endurl)";
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc)";
 
 	$rs = $db->Execute($sql);
 
 	if ($rs)
 	{
 		$qid = $db->Insert_ID();
+		if ($respsc == 1)
+		{
+			$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
+			$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
+			$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
+
+			$sql = "UPDATE questionnaire
+				SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
+				WHERE questionnaire_id = $qid";
+
+			$db->Execute($sql);
+		}
 		print "<p>" . T_("Successfully inserted") . " $name " . T_("as questionnaire") . " $qid, " . T_("linked to") . " $lime_sid</p>";
 	}else
 	{

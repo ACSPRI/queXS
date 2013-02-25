@@ -91,17 +91,6 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['respsc'])) $respsc = 1;
 	
-	$lime_mode = "NULL";
-	$lime_template = "NULL";
-	$lime_endurl = "NULL";
-
-	if ($respsc == 1)
-	{
-		$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
-		$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
-		$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
-	}
-
 	$name = $db->qstr(html_entity_decode($_POST['description']));
 	if (isset($_POST['rs_intro']))
 	{
@@ -115,7 +104,7 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],true));
 
 	$sql = "UPDATE questionnaire
-		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
+		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', self_complete = $respsc
 		WHERE questionnaire_id = '$questionnaire_id'";
 
 	$db->Execute($sql);
@@ -129,7 +118,19 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 		$db->Execute($sql);
 	}
 
-	
+	if ($respsc == 1)
+	{
+		$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
+		$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
+		$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
+
+		$sql = "UPDATE questionnaire
+			SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
+			WHERE questionnaire_id = $questionnaire_id";
+
+		$db->Execute($sql);
+	}
+
 }
 
 xhtml_head(T_("Questionnaire list"),true,array("../css/table.css"),array("../js/new.js"));
@@ -175,7 +176,7 @@ if (isset($_GET['modify']))
 	if ($rs['restrict_appointments_shifts'] != 1) $ras = "";
 	if ($rs['restrict_work_shifts'] != 1) $rws = "";
 	if ($rs['testing'] != 1) $testing = "";
-	if (empty($rs['lime_mode']))
+	if ($rs['self_complete'] == 0)
 	{
 		$rsc = "";
 		$rscd = "style='display:none;'";
