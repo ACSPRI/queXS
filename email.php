@@ -204,6 +204,7 @@ if (isset($_POST['firstname']))
 			}
 			else if (isset($_POST['submit']))
 			{
+				/*
 				$call_id = get_call($operator_id);
 	
 				$sql = "UPDATE `call` as c
@@ -211,7 +212,8 @@ if (isset($_POST['firstname']))
 					WHERE c.call_id = $call_id";
 	
 				$db->Execute($sql);
-			
+				*/
+
 				xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
 			}
 			xhtml_foot();
