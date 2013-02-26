@@ -73,6 +73,7 @@ if (isset($_POST['firstname']))
 	{		
 		$case_id = get_case_id($operator_id);
 		$lime_sid = get_lime_sid($case_id);
+		$ca = get_call_attempt($operator_id);
 		$token = get_token($case_id);
 		$email = $db->qstr($_POST['email']);
 		$firstname = $db->qstr($_POST['firstname']);
@@ -168,11 +169,9 @@ if (isset($_POST['firstname']))
 
 		if ($mail->Send())
 		{
-			// Put date into sent
-			$today = date("Y-m-d H:i:s");
-
+			// Put call attempt id in to sent
 			$sql = "UPDATE ". LIME_PREFIX . "tokens_{$lime_sid}
-				SET sent='$today' 
+				SET sent='$ca' 
 				WHERE token='$token'";
 
 			$db->Execute($sql);
@@ -204,16 +203,6 @@ if (isset($_POST['firstname']))
 			}
 			else if (isset($_POST['submit']))
 			{
-				/*
-				$call_id = get_call($operator_id);
-	
-				$sql = "UPDATE `call` as c
-					SET c.outcome_id = 41
-					WHERE c.call_id = $call_id";
-	
-				$db->Execute($sql);
-				*/
-
 				xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
 			}
 			xhtml_foot();

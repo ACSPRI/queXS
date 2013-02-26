@@ -134,13 +134,17 @@ function display_outcomes($contacted,$ca,$case_id)
 	print "<div>";
 	if (!empty($rs))
 	{
-		//Get current outcome to set as default
-		$sql = "SELECT outcome
-			FROM `call`
-			WHERE call_attempt_id = $ca
-			AND `end` IS NULL";
+		$lime_sid = get_limesurvey_id(get_operator_id());
+
+		//Check to see if we have sent an email on this call and set the default outcome
+		$sql = "SELECT 41
+			FROM `case` as c, " . LIME_PREFIX . "tokens_$lime_sid as t
+			WHERE t.sent = '$ca'
+			AND c.case_id = $case_id
+			AND t.token = c.token";
 
 		$do = $db->GetOne($sql);
+
 		if (isset($_GET['defaultoutcome'])) $do = bigintval($_GET['defaultoutcome']);
 		foreach($rs as $r)
 		{
