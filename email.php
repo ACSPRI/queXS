@@ -85,38 +85,142 @@ if (isset($_POST['firstname']))
 
 		$db->Execute($sql);
 
+		//Send email
+		include_once("include/limesurvey/classes/phpmailer/class.phpmailer.php");
+		$fieldsarray = array();
+		$fieldsarray["{EMAIL}"]=$_POST['email'];
+		$fieldsarray["{FIRSTNAME}"]=$_POST['firstname'];
+		$fieldsarray["{LASTNAME}"]=$_POST['lastname'];
+		$fieldsarray["{TOKEN}"]=$token;
+		$fieldsarray["{LANGUAGE}"]=DEFAULT_LOCALE;
+		$fieldsarray["{SID}"]=$fieldsarray["{SURVEYID}"]=$lime_sid;
+		//$fieldsarray["{SURVEYNAME}"]=$thissurvey["surveyls_title"];
 
-		if (isset($_POST['submith']))
+		$sql = "SELECT s.var,s.val
+			FROM `sample_var` as s, `case` as c
+			WHERE c.case_id = $case_id
+			AND s.sample_id = c.sample_id";
+
+		$attributes = $db->GetAssoc($sql);
+
+		//Assign sample variables
+		foreach ($attributes as $attributefield=>$val)
 		{
-			end_call($operator_id,41); //end with outcome sent 
-			if (is_voip_enabled($operator_id))
-			{
-				include("functions/functions.voip.php");
-				$v = new voip();
-				$v->connect(VOIP_SERVER);
-				$v->hangup(get_extension($operator_id));
-			}
-			//disable recording
-			$newtext = T_("Start REC");
-				$js = "js/window.js";
-			if (browser_ie()) $js = "js/window_ie6.js";
-			xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
-
+			$fieldsarray['{SAMPLE:'.strtoupper($attributefield).'}']=$val;
 		}
-		else if (isset($_POST['submit']))
-		{
-			$call_id = get_call($operator_id);
 
-			$sql = "UPDATE `call` as c
-				SET c.outcome_id = 41
-				WHERE c.call_id = $call_id";
+		$fieldsarray["{OPTOUTURL}"]=LIME_URL . "optout.php?lang=".trim(DEFAULT_LOCALE)."&sid=$lime_sid&token={$token}";
+		$fieldsarray["{SURVEYURL}"]=LIME_URL . "index.php?lang=".trim(DEFAULT_LOCALE)."&sid=$lime_sid&token={$token}";
+		$barebone_link=$fieldsarray["{SURVEYURL}"];
+                       
+		$customheaders = array( '1' => "X-surveyid: ".$lime_sid, '2' => "X-tokenid: ".$fieldsarray["{TOKEN}"]);
+
+		$sql = "SELECT surveyls_email_invite_subj, surveyls_email_invite
+			FROM `lime_surveys_languagesettings`
+			WHERE `surveyls_survey_id` = $lime_sid
+			order by surveyls_language LIKE '" . DEFAULT_LOCALE . "' DESC";
+
+		$econtent = $db->GetRow($sql);
+
+		$modsubject =  $econtent['surveyls_email_invite_subj'];
+		$modmessage =  $econtent['surveyls_email_invite'];
+
+		foreach ( $fieldsarray as $key => $value )
+		{   
+			$modsubject=str_replace($key, $value, $modsubject);
+		}
+
+		foreach ( $fieldsarray as $key => $value )
+		{   
+			$modmessage=str_replace($key, $value, $modmessage);
+		}
+
+		$modsubject = str_replace("@@SURVEYURL@@", $barebone_link, $modsubject);
+		$modmessage = str_replace("@@SURVEYURL@@", $barebone_link, $modmessage);
+
+		$mail = new PHPMailer;
+
+		$sql = "SELECT stg_value
+			FROM " . LIME_PREFIX . "settings_global
+			WHERE stg_name LIKE 'siteadminemail'";
+
+		$fromemail = $db->GetOne($sql);
+
+		$sql = "SELECT stg_value
+			FROM " . LIME_PREFIX . "settings_global
+			WHERE stg_name LIKE 'siteadminname'";
+
+		$fromname = $db->GetOne($sql);
+
+		$mail->SetFrom($fromemail,$fromname);
+		$mail->AddAddress($_POST['email']);
+		foreach ($customheaders as $key=>$val) 
+		{
+			$mail->AddCustomHeader($val);
+		}
+		$mail->AddCustomHeader("X-Surveymailer: queXS Emailer (quexs.sourceforge.net)");
+
+		$mail->IsHTML(true);
+		$mail->Body = $modmessage;
+		$mail->AltBody = trim(strip_tags(html_entity_decode($modmessage,ENT_QUOTES,'UTF-8')));
+		$mail->Subject = $modsubject;
+
+
+		if ($mail->Send())
+		{
+			// Put date into sent
+			$today = date("Y-m-d H:i:s");
+
+			$sql = "UPDATE ". LIME_PREFIX . "tokens_{$lime_sid}
+				SET sent='$today' 
+				WHERE token='$token'";
 
 			$db->Execute($sql);
-		
-			xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
+
+			//Add a note that sent
+
+			$sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
+				VALUES ($case_id,$operator_id,'" . T_("Self completion invitation sent via email to") . ": " . $_POST['email'] . "',NOW())";
+
+			$db->Execute($sql);
+
+
+			if (isset($_POST['submith']))
+			{
+				end_call($operator_id,41); //end with outcome sent 
+				if (is_voip_enabled($operator_id))
+				{
+					include("functions/functions.voip.php");
+					$v = new voip();
+					$v->connect(VOIP_SERVER);
+					$v->hangup(get_extension($operator_id));
+				}
+				//disable recording
+				$newtext = T_("Start REC");
+					$js = "js/window.js";
+				if (browser_ie()) $js = "js/window_ie6.js";
+				xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
+	
+			}
+			else if (isset($_POST['submit']))
+			{
+				$call_id = get_call($operator_id);
+	
+				$sql = "UPDATE `call` as c
+					SET c.outcome_id = 41
+					WHERE c.call_id = $call_id";
+	
+				$db->Execute($sql);
+			
+				xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
+			}
+			xhtml_foot();
+			die();
 		}
-		xhtml_foot();
-		die();
+		else
+		{
+			$msg = T_("The email did not send");
+		}
 	}
 	else
 	{

@@ -42,6 +42,30 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
 
+
+/**
+ * Strip comments from email taken from limesurvey common functions
+ * 
+ * @param mixed    $comment 
+ * @param mixed    $email   
+ * @param resource $replace Optional, defaults to ''. 
+ * 
+ * @return TODO
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-26
+ */
+function strip_comments($comment, $email, $replace=''){
+
+    while (1){
+        $new = preg_replace("!$comment!", $replace, $email);
+        if (strlen($new) == strlen($email)){
+            return $email;
+        }
+        $email = $new;
+    }
+}
+
+
 /*function validate_email($email)
 {
 // Create the syntactical validation regular expression
