@@ -544,6 +544,7 @@ if ($interviewer)
 }
 else
 {
+	$thissurvey['templatedir'] = quexs_get_template($clienttoken);
 	$thistpl=sGetTemplatePath(quexs_get_template($clienttoken));
 }
 
