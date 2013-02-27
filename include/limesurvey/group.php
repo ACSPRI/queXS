@@ -470,13 +470,15 @@ else
 		$quexs_url = get_start_interview_url(); 
 		$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
 		  
+
+		$end_url = $url;
 		if ($interviewer)
 		{
 			$end_url = get_end_interview_url();
 		}
 		else
 		{
-			$url = get_end_interview_url($clienttoken);
+			$end_url = get_end_interview_url($clienttoken);
 			quexs_completed_by_respondent($surveyid,$clienttoken);
 		}
 

@@ -544,7 +544,7 @@ if ($interviewer)
 }
 else
 {
-	$thistpl=quexs_get_template($clienttoken);
+	$thistpl=sGetTemplatePath(quexs_get_template($clienttoken));
 }
 
 

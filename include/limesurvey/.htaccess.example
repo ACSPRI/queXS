@@ -1,4 +1,4 @@
 AuthType None
 Satisfy Any
-Order Deny, Allow
+Order Deny,Allow
 Allow from All
