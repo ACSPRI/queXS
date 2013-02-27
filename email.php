@@ -198,7 +198,14 @@ if (isset($_POST['firstname']))
 				$newtext = T_("Start REC");
 					$js = "js/window.js";
 				if (browser_ie()) $js = "js/window_ie6.js";
-				xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
+				if (isset($_GET['interface2']))
+				{
+					xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='openParent(\"endcase=endcase\");'");
+				}
+				else
+				{
+					xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
+				}
 	
 			}
 			else if (isset($_POST['submit']))
@@ -246,11 +253,19 @@ if ($sc == 1)
 	
 	print "<div class='status'>" . T_("Email respondent for self completion") . "</div>";
 	if (!empty($msg)) print "<p>$msg</p>";
-	print "<form action='?' method='post'>";
+	print "<form action='?";
+	if (isset($_GET['interface2']))
+	{
+		print "interface2=true";
+	}
+	print "' method='post'>";
 	print "<div><label for='firstname'>" . T_("First name") . "</label><input type='text' value='{$rs['firstname']}' name='firstname' id='firstname'/></div>";
 	print "<div><label for='lastname'>" . T_("Last name") . "</label><input type='text' value='{$rs['lastname']}' name='lastname' id='lastname'/></div>";
 	print "<div><label for='email'>" . T_("Email") . "</label><input type='text' value='{$rs['email']}' name='email' id='email'/></div>";
-	print "<div><input type='submit' value='" . T_("Send invitation") . "' name='submit' id='submit'/></div>";
+	if (!isset($_GET['interface2']))
+	{
+		print "<div><input type='submit' value='" . T_("Send invitation") . "' name='submit' id='submit'/></div>";
+	}
 	print "<div><input type='submit' value='" . T_("Send invitation and Hang up") . "' name='submith' id='submith'/></div></form>";
 }
 else
