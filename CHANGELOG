@@ -1,6 +1,7 @@
 queXS 1.7.0 - Changes since 1.6.1
 
 New Feature: Replace queXS caseid as token with a random token to allow for safe external access
+New Feature: Allow for responents to self complete the questionnaire via email invitation
 Fixed Bug: Replaced php short tags with long tags
 
 Database updates:
