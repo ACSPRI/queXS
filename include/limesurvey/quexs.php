@@ -102,10 +102,22 @@ function quexs_completed_by_respondent($surveyid,$clienttoken)
 	$db->SetFetchMode(ADODB_FETCH_ASSOC);
 
 	$sql = "UPDATE `case`
-		SET current_outcome_id = 34
+		SET current_outcome_id = 40
 		WHERE token = '$clienttoken'";
 
 	$db->Execute($sql);
+
+	$sql = "SELECT case_id
+		FROM `case`
+		WHERE token = '$clienttoken'";
+
+	$case_id = $db->GetOne($sql);
+
+        //Add a case note to clarify (need to translate this string)
+        $sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
+                VALUES ($case_id,1,'Self completed online',NOW())";
+
+        $db->Execute($sql);
 }
 
 

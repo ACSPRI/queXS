@@ -226,25 +226,37 @@ if (browser_ie()) $js = "js/window_ie6.js";
 
 xhtml_head(T_("Email"),true,array("css/call.css"),array($js));
 
+$sql = "SELECT q.self_complete
+	FROM questionnaire as q, `case` as c
+	WHERE c.case_id = $case_id 
+	AND c.questionnaire_id = q.questionnaire_id";
 
-$sql = "SELECT sv1.val as firstname, sv2.val as lastname, sv3.val as email
-	FROM `case` as c
-	LEFT JOIN sample_var as sv1 on (sv1.sample_id = c.sample_id AND sv1.type = 6)
-	LEFT JOIN sample_var as sv2 on (sv2.sample_id = c.sample_id AND sv2.type = 7)
-	LEFT JOIN sample_var as sv3 on (sv3.sample_id = c.sample_id AND sv3.type = 8)
-	WHERE c.case_id = $case_id";
+$sc = $db->GetOne($sql);
 
-$rs = $db->GetRow($sql);
-
-print "<div class='status'>" . T_("Email respondent for self completion") . "</div>";
-if (!empty($msg)) print "<p>$msg</p>";
-print "<form action='?' method='post'>";
-print "<div><label for='firstname'>" . T_("First name") . "</label><input type='text' value='{$rs['firstname']}' name='firstname' id='firstname'/></div>";
-print "<div><label for='lastname'>" . T_("Last name") . "</label><input type='text' value='{$rs['lastname']}' name='lastname' id='lastname'/></div>";
-print "<div><label for='email'>" . T_("Email") . "</label><input type='text' value='{$rs['email']}' name='email' id='email'/></div>";
-print "<div><input type='submit' value='" . T_("Send invitation") . "' name='submit' id='submit'/></div>";
-print "<div><input type='submit' value='" . T_("Send invitation and Hang up") . "' name='submith' id='submith'/></div></form>";
-
+if ($sc == 1)
+{
+	$sql = "SELECT sv1.val as firstname, sv2.val as lastname, sv3.val as email
+		FROM `case` as c
+		LEFT JOIN sample_var as sv1 on (sv1.sample_id = c.sample_id AND sv1.type = 6)
+		LEFT JOIN sample_var as sv2 on (sv2.sample_id = c.sample_id AND sv2.type = 7)
+		LEFT JOIN sample_var as sv3 on (sv3.sample_id = c.sample_id AND sv3.type = 8)
+		WHERE c.case_id = $case_id";
+	
+	$rs = $db->GetRow($sql);
+	
+	print "<div class='status'>" . T_("Email respondent for self completion") . "</div>";
+	if (!empty($msg)) print "<p>$msg</p>";
+	print "<form action='?' method='post'>";
+	print "<div><label for='firstname'>" . T_("First name") . "</label><input type='text' value='{$rs['firstname']}' name='firstname' id='firstname'/></div>";
+	print "<div><label for='lastname'>" . T_("Last name") . "</label><input type='text' value='{$rs['lastname']}' name='lastname' id='lastname'/></div>";
+	print "<div><label for='email'>" . T_("Email") . "</label><input type='text' value='{$rs['email']}' name='email' id='email'/></div>";
+	print "<div><input type='submit' value='" . T_("Send invitation") . "' name='submit' id='submit'/></div>";
+	print "<div><input type='submit' value='" . T_("Send invitation and Hang up") . "' name='submith' id='submith'/></div></form>";
+}
+else
+{
+	print "<p>" . T_("Self completion email not available for this questionnaire") . "</p>";
+}
 
 xhtml_foot();
 

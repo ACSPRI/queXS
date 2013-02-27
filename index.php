@@ -130,6 +130,15 @@ else if (HEADER_EXPANDER_MANUAL)
 xhtml_head(T_("queXS"), $body, array("css/index.css","css/tabber.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
 print $script;
 
+$case_id = get_case_id($operator_id,true);
+
+$sql = "SELECT q.self_complete
+        FROM questionnaire as q, `case` as c
+        WHERE c.case_id = $case_id 
+        AND c.questionnaire_id = q.questionnaire_id";
+
+$sc = $db->GetOne($sql);
+
 ?>
 
 <div id="casefunctions" class="header">
@@ -137,7 +146,7 @@ print $script;
 	<div class='box'><a href="javascript:poptastic('appointment.php');"><?php  echo T_("Appointment"); ?></a></div>
 	<div class='box important'><a href="javascript:poptastic('call.php');"><?php  echo T_("Call/Hangup"); ?></a></div>
 	<div class='box'><a href="javascript:poptastic('supervisor.php');"><?php  echo T_("Supervisor"); ?></a></div>
-	<div class='box'><a href="javascript:poptastic('email.php');"><?php  echo T_("Email"); ?></a></div>
+	<?php if ($sc == 1) { ?><div class='box'><a href="javascript:poptastic('email.php');"><?php  echo T_("Email"); ?></a></div><?php } ?>
 	<div class='box' id='recbox'><a id='reclink' class='offline' href="javascript:poptastic('record.php?start=start');"><?php  echo T_("Start REC"); ?></a></div>
 	<?php  if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.png' alt='<?php  echo T_('Arrow for expanding or contracting'); ?>'/></div> <?php  } ?>
 	<div class='box'><a href='index.php?'><?php  echo T_("Restart"); ?></a></div>
@@ -146,7 +155,6 @@ print $script;
 <div id="content" class="content">
 <?php  
 
-$case_id = get_case_id($operator_id,true);
 $ca = get_call_attempt($operator_id,true);
 $appointment = false;
 $availability = is_using_availability($case_id);
