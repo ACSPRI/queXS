@@ -467,22 +467,21 @@ else
 
 		//queXS Addition
 		include_once("quexs.php");
-		$quexs_url = get_start_interview_url(); 
-		$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
 		  
-
-		$end_url = $url;
 		if ($interviewer)
 		{
+			$quexs_url = get_start_interview_url(); 
+			$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
+
 			$end_url = get_end_interview_url();
+			$url = str_replace("{ENDINTERVIEWURL}", $end_url, $url);
 		}
 		else
 		{
-			$end_url = get_end_interview_url($clienttoken);
+			$url = get_end_interview_url($clienttoken);
 			quexs_completed_by_respondent($surveyid,$clienttoken);
 		}
 
-		$url = str_replace("{ENDINTERVIEWURL}", $end_url, $url);
 
                 header("Location: {$url}");
             }
