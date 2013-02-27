@@ -514,6 +514,8 @@ function get_respondent_variable($variable,$respondent_id)
  */
 function get_operator_id()
 {
+	if (!isset($_SERVER['PHP_AUTH_USER'])) return false;
+
 	$db = newADOConnection(DB_TYPE);
 	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$db->SetFetchMode(ADODB_FETCH_ASSOC);
