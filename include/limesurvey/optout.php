@@ -79,7 +79,7 @@ else
 
 	//Add a case note to clarify (need to translate this string)
 	$sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
-		VALUES ($case_id,1,'Self completion refused via opt out function',NOW())";
+		VALUES ($case_id,1,'Self completion refused via opt out function',CONVERT_TZ(NOW(),'System','UTC'))";
 
 	$connect->Execute($sql);
 

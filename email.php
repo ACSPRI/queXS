@@ -179,7 +179,7 @@ if (isset($_POST['firstname']))
 			//Add a note that sent
 
 			$sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
-				VALUES ($case_id,$operator_id,'" . T_("Self completion invitation sent via email to") . ": " . $_POST['email'] . "',NOW())";
+				VALUES ($case_id,$operator_id,'" . T_("Self completion invitation sent via email to") . ": " . $_POST['email'] . "',CONVERT_TZ(NOW(),'System','UTC'))";
 
 			$db->Execute($sql);
 

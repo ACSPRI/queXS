@@ -115,7 +115,7 @@ function quexs_completed_by_respondent($surveyid,$clienttoken)
 
         //Add a case note to clarify (need to translate this string)
         $sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
-                VALUES ($case_id,1,'Self completed online',NOW())";
+                VALUES ($case_id,1,'Self completed online',CONVERT_TZ(NOW(),'System','UTC'))";
 
         $db->Execute($sql);
 }
