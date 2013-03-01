@@ -7,11 +7,11 @@ Fixed Bug: Replaced php short tags with long tags
 Database updates:
 
 ALTER TABLE `case` ADD `token` VARCHAR( 36 ) NOT NULL ;
-ALTER TABLE `case` ADD UNIQUE (`token`);
 
 To allow for accessing existing cases in new system, need to assign a "token" for each case:
 
 UPDATE `case` SET token = case_id;
+ALTER TABLE `case` ADD UNIQUE (`token`);
 
 New outcomes for email invitation and online self completion:
 
