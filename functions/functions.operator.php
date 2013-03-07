@@ -382,13 +382,16 @@ function get_case_id($operator_id, $create = false)
 			if ($systemsort)
 			{
 				//Just make sure that this case should go to this operator (assigned to this project and skill)
+				//Also check if this is an exclusive appointment
 				$sql = "SELECT c.case_id as caseid
 					FROM `case` as c
 					JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = c.questionnaire_id)
 					JOIN outcome as ou ON (ou.outcome_id = c.current_outcome_id)
 					JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = ou.outcome_type_id)
+					LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
 					WHERE c.sortorder IS NOT NULL
 					AND c.current_operator_id IS NULL
+					AND (apn.require_operator_id IS NULL OR apn.require_operator_id = '$operator_id')
 					ORDER BY c.sortorder ASC
 					LIMIT 1";
 
@@ -438,6 +441,7 @@ function get_case_id($operator_id, $create = false)
 					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND os.outcome_type_id != 2)
 					AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
 					AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
+					AND (apn.require_operator_id IS NULL OR apn.require_operator_id = '$operator_id')
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
 					ORDER BY apn.start DESC, a.start ASC, qsep.priority DESC
 					LIMIT 1";

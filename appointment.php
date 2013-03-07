@@ -99,8 +99,10 @@ if(isset($_POST['start']) && isset($_POST['end']) && isset($_POST['day']) && iss
 	$start = $_POST['start'];
 	$end = $_POST['end'];
 	$call_attempt_id = get_call_attempt($operator_id,false);
+	$require_operator_id = false;
+	if (isset($_POST['require_operator_id'])) $require_operator_id = bigintval($_POST['require_operator_id']);
 
-	make_appointment($respondent_id,$case_id,$contact_phone_id,$call_attempt_id,$day,$month,$year,$start,$end);
+	make_appointment($respondent_id,$case_id,$contact_phone_id,$call_attempt_id,$day,$month,$year,$start,$end,$require_operator_id);
 
 	$db->CompleteTrans();
 
@@ -205,6 +207,8 @@ else if(isset($_GET['respondent_id']))
 					<form id="appointment" method="post" action="">
 					<?php  print "<p>" . T_("Accept appointment from ") .convert_time($_GET['start']).T_(" till ").convert_time($_GET['end']).T_(" on ") . "$day/$month/$year? " . T_("on") . " $phonenum </p>"; ?>
 					<p>
+					<?php print "<p><label for='require_operator_id'>" . T_("Appointment with myself only?"); ?></label>
+					<input type="checkbox" id="require_operator_id" name="require_operator_id" value="<?php echo $operator_id;?>">
 					<input type="hidden" name="start" value="<?php  print $_GET['start']; ?>"/>
 					<input type="hidden" name="end" value="<?php  print $_GET['end']; ?>"/>
 					<input type="hidden" name="day" value="<?php  print $day; ?>"/>
