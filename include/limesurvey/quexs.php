@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Functions for interacting with queXS
  *
@@ -34,6 +34,91 @@
  * Configuration file
  */
 require_once(dirname(__FILE__).'/../../config.inc.php');
+
+
+/**
+ * Template for the self completion user
+ * 
+ * @param string $clienttoken The token
+ * 
+ * @return string The limesurvey template name
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-20
+ */
+function quexs_get_template($clienttoken)
+{
+	if (empty($clienttoken)) return 'default';
+
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$sql = "SELECT q.lime_template
+		FROM questionnaire as q, `case` as c
+		WHERE q.questionnaire_id = c.questionnaire_id
+		AND c.token = '$clienttoken'";
+
+	return $db->GetOne($sql);
+}
+
+/**
+ * Mode of survey completion
+ * 
+ * @param string $clienttoken The token
+ * 
+ * @return The limesurvey mode
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-20
+ */
+function quexs_get_survey_mode($clienttoken)
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$sql = "SELECT q.lime_mode
+		FROM questionnaire as q, `case` as c
+		WHERE q.questionnaire_id = c.questionnaire_id
+		AND c.token = '$clienttoken'";
+
+	return $db->GetOne($sql);
+}
+
+
+/**
+ * Set the case as completed by respondent
+ * 
+ * @param int $surveyid  The limesurvey survey id
+ * @param string  $clienttoken The token
+ * 
+ * @return none
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-01-30
+ */
+function quexs_completed_by_respondent($surveyid,$clienttoken)
+{
+	$db = newADOConnection(DB_TYPE);
+	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+	$sql = "UPDATE `case`
+		SET current_outcome_id = 40
+		WHERE token = '$clienttoken'";
+
+	$db->Execute($sql);
+
+	$sql = "SELECT case_id
+		FROM `case`
+		WHERE token = '$clienttoken'";
+
+	$case_id = $db->GetOne($sql);
+
+        //Add a case note to clarify (need to translate this string)
+        $sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
+                VALUES ($case_id,1,'Self completed online',CONVERT_TZ(NOW(),'System','UTC'))";
+
+        $db->Execute($sql);
+}
 
 
 /**
@@ -441,6 +526,8 @@ function get_respondent_variable($variable,$respondent_id)
  */
 function get_operator_id()
 {
+	if (!isset($_SERVER['PHP_AUTH_USER'])) return false;
+
 	$db = newADOConnection(DB_TYPE);
 	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$db->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -715,7 +802,7 @@ function get_respondent_selection_url()
 	{
 		$sid = get_limesurvey_id($operator_id,true); //true for RS
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
-			$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
+			$url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
 		else
 			$url = 'rs_intro.php';
 	}
@@ -727,11 +814,26 @@ function get_respondent_selection_url()
 /**
  * Get the URL to end the interview
  *
+ * @param string $token The token if ended by the respondent, blank if ended by the interviewer
  * @return string The URL to end the interview
  */
-function get_end_interview_url()
+function get_end_interview_url($token = "")
 {
-	return QUEXS_URL . "rs_project_end.php";
+	if ($token == "")
+		return QUEXS_URL . "rs_project_end.php";
+	else
+	{
+		$db = newADOConnection(DB_TYPE);
+		$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$db->SetFetchMode(ADODB_FETCH_ASSOC);
+
+		$sql = "SELECT q.lime_endurl
+			FROM questionnaire as q, `case` as c
+			WHERE c.token = '$token'
+			AND c.questionnaire_id = q.questionnaire_id";
+
+		return $db->GetOne($sql);
+	}
 }
 
 /**
@@ -753,8 +855,14 @@ function get_start_interview_url()
 
         if ($case_id)
         {
+		$sql = "SELECT token
+			FROM `case`
+			WHERE case_id = $case_id";
+
+		$token = $db->GetOne($sql);
+
                 $sid = get_limesurvey_id($operator_id);
-                $url = LIME_URL . "index.php?loadall=reload&sid=$sid&token=$case_id&lang=" . DEFAULT_LOCALE;
+                $url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload&sid=$sid&token=$token&lang=" . DEFAULT_LOCALE;
                 $questionnaire_id = get_questionnaire_id($operator_id);
                 
                 //get prefills

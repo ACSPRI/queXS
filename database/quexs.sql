@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2012 at 12:35 PM
+-- Generation Time: Feb 28, 2013 at 09:35 AM
 -- Server version: 5.0.51
 -- PHP Version: 5.2.6-1+lenny16
 
@@ -16,8 +16,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `quexs`
+-- Database: `quexs_ictest`
 --
+
 -- --------------------------------------------------------
 
 --
@@ -241,8 +242,10 @@ CREATE TABLE `case` (
   `current_call_id` bigint(20) default NULL,
   `current_outcome_id` int(11) NOT NULL default '1',
   `sortorder` int(11) default NULL,
+  `token` varchar(36) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`case_id`),
   UNIQUE KEY `onecasepersample` (`sample_id`,`questionnaire_id`),
+  UNIQUE KEY `token` (`token`),
   UNIQUE KEY `current_operator_id` (`current_operator_id`),
   UNIQUE KEY `current_call_id` (`current_call_id`),
   KEY `sample_id` (`sample_id`),
@@ -883,9 +886,8 @@ CREATE TABLE `lime_settings_global` (
 -- Dumping data for table `lime_settings_global`
 --
 
-INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES
-('DBVersion', '155.6'),
-('SessionName', 'ls28629164789259281352');
+INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('DBVersion', '155.6');
+INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('SessionName', 'ls28629164789259281352');
 
 -- --------------------------------------------------------
 
@@ -1109,8 +1111,7 @@ CREATE TABLE `lime_users` (
 -- Dumping data for table `lime_users`
 --
 
-INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_id`, `lang`, `email`, `create_survey`, `create_user`, `participant_panel`, `delete_user`, `superadmin`, `configurator`, `manage_template`, `manage_label`, `htmleditormode`, `templateeditormode`, `questionselectormode`, `one_time_pw`, `dateformat`) VALUES
-(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 0, 'en', 'your-email@example.net', 1, 1, 0, 1, 1, 1, 1, 1, 'default', 'default', 'default', NULL, 1);
+INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_id`, `lang`, `email`, `create_survey`, `create_user`, `participant_panel`, `delete_user`, `superadmin`, `configurator`, `manage_template`, `manage_label`, `htmleditormode`, `templateeditormode`, `questionselectormode`, `one_time_pw`, `dateformat`) VALUES(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 0, 'en', 'your-email@example.net', 1, 1, 0, 1, 1, 1, 1, 1, 'default', 'default', 'default', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1270,6 +1271,8 @@ INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_m
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(31, '2.20', 'Non contact', 180, 1, 1, 1, 1, 1, 0, 'NC');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(32, '4.80', 'Quota filled', 0, 4, 0, 1, 0, 0, 0, '');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(33, '2.36', 'Miscellaneous - Unavailable for a week', 10080, 1, 0, 1, 1, 1, 0, 'O');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(40, '1.1', 'Self completed online', 0, 4, 0, 1, 1, 1, 0, 'I');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(41, '2.36', 'Self completion email invitation sent', 10080, 1, 0, 1, 1, 1, 0, 'O');
 
 -- --------------------------------------------------------
 
@@ -1355,6 +1358,10 @@ CREATE TABLE `questionnaire` (
   `rs_answeringmachine` text collate utf8_unicode_ci NOT NULL,
   `lime_rs_sid` int(11) default NULL,
   `info` text collate utf8_unicode_ci,
+  `self_complete` tinyint(1) NOT NULL default '0',
+  `lime_mode` varchar(64) collate utf8_unicode_ci default NULL COMMENT 'Limesurvey mode for respondent self completion',
+  `lime_template` varchar(128) collate utf8_unicode_ci default NULL COMMENT 'Limesurvey template for respondent self completion',
+  `lime_endurl` varchar(256) collate utf8_unicode_ci default NULL COMMENT 'Forwarding end URL for respondent self completion',
   `enabled` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`questionnaire_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1625,7 +1632,7 @@ CREATE TABLE `sample_postcode_timezone` (
 --
 
 CREATE TABLE `sample_prefix_timezone` (
-  `val` char(10) NOT NULL,
+  `val` char(10) collate utf8_unicode_ci NOT NULL,
   `Time_zone_name` char(64) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`val`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1696,6 +1703,7 @@ INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(4, 'State'
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(5, 'Postcode', 'sample_postcode_timezone');
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(6, 'Respondent first name', '');
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(7, 'Respondent last name', '');
+INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(8, 'Email address', '');
 
 -- --------------------------------------------------------
 

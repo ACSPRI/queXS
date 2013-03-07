@@ -1,4 +1,4 @@
-<?
+<?php 
 
 /**
  * Functions relating to integration with {@link http://www.limesurvey.org/ LimeSurvey}
@@ -42,6 +42,238 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
 
+
+/**
+ * Strip comments from email taken from limesurvey common functions
+ * 
+ * @param mixed    $comment 
+ * @param mixed    $email   
+ * @param resource $replace Optional, defaults to ''. 
+ * 
+ * @return TODO
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-26
+ */
+function strip_comments($comment, $email, $replace=''){
+
+    while (1){
+        $new = preg_replace("!$comment!", $replace, $email);
+        if (strlen($new) == strlen($email)){
+            return $email;
+        }
+        $email = $new;
+    }
+}
+
+
+/*function validate_email($email)
+{
+// Create the syntactical validation regular expression
+// Validate the syntax
+
+// see http://data.iana.org/TLD/tlds-alpha-by-domain.txt
+$maxrootdomainlength = 6;
+return ( ! preg_match("/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,".$maxrootdomainlength."}))$/ix", $email)) ? FALSE : TRUE;
+}*/
+
+function validate_email($email){
+
+
+    $no_ws_ctl    = "[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f]";
+    $alpha        = "[\\x41-\\x5a\\x61-\\x7a]";
+    $digit        = "[\\x30-\\x39]";
+    $cr        = "\\x0d";
+    $lf        = "\\x0a";
+    $crlf        = "(?:$cr$lf)";
+
+
+    $obs_char    = "[\\x00-\\x09\\x0b\\x0c\\x0e-\\x7f]";
+    $obs_text    = "(?:$lf*$cr*(?:$obs_char$lf*$cr*)*)";
+    $text        = "(?:[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f]|$obs_text)";
+
+
+    $text        = "(?:$lf*$cr*$obs_char$lf*$cr*)";
+    $obs_qp        = "(?:\\x5c[\\x00-\\x7f])";
+    $quoted_pair    = "(?:\\x5c$text|$obs_qp)";
+
+
+    $wsp        = "[\\x20\\x09]";
+    $obs_fws    = "(?:$wsp+(?:$crlf$wsp+)*)";
+    $fws        = "(?:(?:(?:$wsp*$crlf)?$wsp+)|$obs_fws)";
+    $ctext        = "(?:$no_ws_ctl|[\\x21-\\x27\\x2A-\\x5b\\x5d-\\x7e])";
+    $ccontent    = "(?:$ctext|$quoted_pair)";
+    $comment    = "(?:\\x28(?:$fws?$ccontent)*$fws?\\x29)";
+    $cfws        = "(?:(?:$fws?$comment)*(?:$fws?$comment|$fws))";
+
+
+    $outer_ccontent_dull    = "(?:$fws?$ctext|$quoted_pair)";
+    $outer_ccontent_nest    = "(?:$fws?$comment)";
+    $outer_comment        = "(?:\\x28$outer_ccontent_dull*(?:$outer_ccontent_nest$outer_ccontent_dull*)+$fws?\\x29)";
+
+
+
+    $atext        = "(?:$alpha|$digit|[\\x21\\x23-\\x27\\x2a\\x2b\\x2d\\x2f\\x3d\\x3f\\x5e\\x5f\\x60\\x7b-\\x7e])";
+    $atext_domain     = "(?:$alpha|$digit|[\\x2b\\x2d\\x5f])";
+
+    $atom        = "(?:$cfws?(?:$atext)+$cfws?)";
+    $atom_domain       = "(?:$cfws?(?:$atext_domain)+$cfws?)";
+
+
+    $qtext        = "(?:$no_ws_ctl|[\\x21\\x23-\\x5b\\x5d-\\x7e])";
+    $qcontent    = "(?:$qtext|$quoted_pair)";
+    $quoted_string    = "(?:$cfws?\\x22(?:$fws?$qcontent)*$fws?\\x22$cfws?)";
+
+
+    $quoted_string    = "(?:$cfws?\\x22(?:$fws?$qcontent)+$fws?\\x22$cfws?)";
+    $word        = "(?:$atom|$quoted_string)";
+
+
+    $obs_local_part    = "(?:$word(?:\\x2e$word)*)";
+
+
+    $obs_domain    = "(?:$atom_domain(?:\\x2e$atom_domain)*)";
+
+    $dot_atom_text     = "(?:$atext+(?:\\x2e$atext+)*)";
+    $dot_atom_text_domain    = "(?:$atext_domain+(?:\\x2e$atext_domain+)*)";
+
+
+    $dot_atom    	   = "(?:$cfws?$dot_atom_text$cfws?)";
+    $dot_atom_domain   = "(?:$cfws?$dot_atom_text_domain$cfws?)";
+
+
+    $dtext        = "(?:$no_ws_ctl|[\\x21-\\x5a\\x5e-\\x7e])";
+    $dcontent    = "(?:$dtext|$quoted_pair)";
+    $domain_literal    = "(?:$cfws?\\x5b(?:$fws?$dcontent)*$fws?\\x5d$cfws?)";
+
+
+    $local_part    = "(($dot_atom)|($quoted_string)|($obs_local_part))";
+    $domain        = "(($dot_atom_domain)|($domain_literal)|($obs_domain))";
+    $addr_spec    = "$local_part\\x40$domain";
+
+
+    if (strlen($email) > 256) return FALSE;
+
+
+    $email = strip_comments($outer_comment, $email, "(x)");
+
+
+
+    if (!preg_match("!^$addr_spec$!", $email, $m)){
+
+        return FALSE;
+    }
+
+    $bits = array(
+    'local'            => isset($m[1]) ? $m[1] : '',
+    'local-atom'        => isset($m[2]) ? $m[2] : '',
+    'local-quoted'        => isset($m[3]) ? $m[3] : '',
+    'local-obs'        => isset($m[4]) ? $m[4] : '',
+    'domain'        => isset($m[5]) ? $m[5] : '',
+    'domain-atom'        => isset($m[6]) ? $m[6] : '',
+    'domain-literal'    => isset($m[7]) ? $m[7] : '',
+    'domain-obs'        => isset($m[8]) ? $m[8] : '',
+    );
+
+
+
+    $bits['local']    = strip_comments($comment, $bits['local']);
+    $bits['domain']    = strip_comments($comment, $bits['domain']);
+
+
+
+
+    if (strlen($bits['local']) > 64) return FALSE;
+    if (strlen($bits['domain']) > 255) return FALSE;
+
+
+
+    if (strlen($bits['domain-literal'])){
+
+        $Snum            = "(\d{1,3})";
+        $IPv4_address_literal    = "$Snum\.$Snum\.$Snum\.$Snum";
+
+        $IPv6_hex        = "(?:[0-9a-fA-F]{1,4})";
+
+        $IPv6_full        = "IPv6\:$IPv6_hex(:?\:$IPv6_hex){7}";
+
+        $IPv6_comp_part        = "(?:$IPv6_hex(?:\:$IPv6_hex){0,5})?";
+        $IPv6_comp        = "IPv6\:($IPv6_comp_part\:\:$IPv6_comp_part)";
+
+        $IPv6v4_full        = "IPv6\:$IPv6_hex(?:\:$IPv6_hex){5}\:$IPv4_address_literal";
+
+        $IPv6v4_comp_part    = "$IPv6_hex(?:\:$IPv6_hex){0,3}";
+        $IPv6v4_comp        = "IPv6\:((?:$IPv6v4_comp_part)?\:\:(?:$IPv6v4_comp_part\:)?)$IPv4_address_literal";
+
+
+
+        if (preg_match("!^\[$IPv4_address_literal\]$!", $bits['domain'], $m)){
+
+            if (intval($m[1]) > 255) return FALSE;
+            if (intval($m[2]) > 255) return FALSE;
+            if (intval($m[3]) > 255) return FALSE;
+            if (intval($m[4]) > 255) return FALSE;
+
+        }else{
+
+
+            while (1){
+
+                if (preg_match("!^\[$IPv6_full\]$!", $bits['domain'])){
+                    break;
+                }
+
+                if (preg_match("!^\[$IPv6_comp\]$!", $bits['domain'], $m)){
+                    list($a, $b) = explode('::', $m[1]);
+                    $folded = (strlen($a) && strlen($b)) ? "$a:$b" : "$a$b";
+                    $groups = explode(':', $folded);
+                    if (count($groups) > 6) return FALSE;
+                    break;
+                }
+
+                if (preg_match("!^\[$IPv6v4_full\]$!", $bits['domain'], $m)){
+
+                    if (intval($m[1]) > 255) return FALSE;
+                    if (intval($m[2]) > 255) return FALSE;
+                    if (intval($m[3]) > 255) return FALSE;
+                    if (intval($m[4]) > 255) return FALSE;
+                    break;
+                }
+
+                if (preg_match("!^\[$IPv6v4_comp\]$!", $bits['domain'], $m)){
+                    list($a, $b) = explode('::', $m[1]);
+                    $b = substr($b, 0, -1); # remove the trailing colon before the IPv4 address
+                    $folded = (strlen($a) && strlen($b)) ? "$a:$b" : "$a$b";
+                    $groups = explode(':', $folded);
+                    if (count($groups) > 4) return FALSE;
+                    break;
+                }
+
+                return FALSE;
+            }
+        }
+    }else{
+
+
+        $labels = explode('.', $bits['domain']);
+
+
+        if (count($labels) == 1) return FALSE;
+
+
+        foreach ($labels as $label){
+
+            if (strlen($label) > 63) return FALSE;
+            if (substr($label, 0, 1) == '-') return FALSE;
+            if (substr($label, -1) == '-') return FALSE;
+        }
+
+        if (preg_match('!^[0-9]+$!', array_pop($labels))) return FALSE;
+    }
+
+
+    return TRUE;
+}
+
 /**
  * Return the number of completions for a given
  * questionnaire, where the given sample var has
@@ -65,7 +297,7 @@ function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sam
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
 		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
 		WHERE s.submitdate IS NOT NULL
-		AND s.token = c.case_id";
+		AND s.token = c.token";
 
 	$rs = $db->GetRow($sql);
 
@@ -95,7 +327,7 @@ function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.case_id = '$case_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
-		WHERE s.token = c.case_id
+		WHERE s.token = c.token
 		AND s.`$lime_sgqa` $comparison '$value'";
 
 	$rs = $db->GetRow($sql);
@@ -127,7 +359,7 @@ function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var)
 		JOIN `case` as c ON (c.case_id = '$case_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
 		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
-		WHERE s.token = c.case_id";
+		WHERE s.token = c.token";
 
 	$rs = $db->GetRow($sql);
 
@@ -161,7 +393,7 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
 		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
 		WHERE s.submitdate IS NOT NULL
-		AND s.token = c.case_id
+		AND s.token = c.token
 		AND s.`$lime_sgqa` $comparison '$value'";
 
 	$rs = $db->GetRow($sql);
@@ -272,7 +504,6 @@ function getRandomID()
 
 
 
-
 /** 
  * Taken from admin/database.php in the LimeSurvey package
  * With modifications
@@ -351,9 +582,10 @@ function get_lime_id($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT id
-		FROM " . LIME_PREFIX . "survey_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT s.id
+		FROM " . LIME_PREFIX . "survey_$lime_sid as s, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND c.token = s.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -380,9 +612,10 @@ function get_lime_tid($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT tid
-		FROM " . LIME_PREFIX . "tokens_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT t.tid
+		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND c.token = t.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -431,9 +664,10 @@ function limesurvey_is_quota_full($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT completed
-		FROM " . LIME_PREFIX . "tokens_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT t.completed
+		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND c.token = t.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -458,9 +692,10 @@ function limesurvey_is_completed($case_id)
 	$lime_sid = get_lime_sid($case_id);
 	if ($lime_sid == false) return false;
 
-	$sql = "SELECT completed
-		FROM " . LIME_PREFIX . "tokens_$lime_sid 
-		WHERE token = '$case_id'";
+	$sql = "SELECT t.completed
+		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
+		WHERE c.case_id = '$case_id'
+		AND t.token = c.token";
 	
 	$r = $db->GetRow($sql);
 
@@ -539,352 +774,5 @@ function limesurvey_get_width($qid,$default)
 
 	return $default;
 }
-
-
-/**
- * Return the greatest width of answers
- * 
- * @param mixed $qid Limesurvey question id
- * 
- * @return int width of longest answer
- * @author Adam Zammit <adam.zammit@acspri.org.au>
- * @since  2010-11-03
- */
-function limesurvey_answer_width($qid)
-{
-	global $db;
-
-	$sql = "SELECT MAX(LENGTH(code)) as c FROM ".LIME_PREFIX."answers WHERE qid = $qid";
-	$r = $db->GetRow($sql);
-
-	$val = 1;
-
-	if (!empty($r))
-		$val = $r['c'];
-
-	return $val;
-
-}
-
-function limesurvey_fixed_width($lid)
-{
-	global $db;
-
-	$sql = "SELECT MAX(LENGTH(code)) as c FROM ".LIME_PREFIX."labels WHERE lid = $lid";
-	$r = $db->GetRow($sql);
-
-	$val = 1;
-
-	if (!empty($r))
-		$val = $r['c'];
-
-	return $val;
-}
-
-function limesurvey_create_multi(&$varwidth,&$vartype,$qid,$varname,$length,$type)
-{
-	global $db;
-
-	$sql = "SELECT *
-		FROM ".LIME_PREFIX."answers
-		WHERE qid = $qid
-		ORDER BY sortorder ASC";
-
-	$r = $db->GetAll($sql);
-
-	foreach($r as $Row)
-	{
-		$v = $varname . $Row['code'];
-		$varwidth[$v] = $length;
-		$vartype[$v] = $type;
-	}
-
-	return;
-}
-
-/**
- * Return a string with only ASCII characters in it
- *
- * This function was sourced from the php website, help on str_replace
- * No author was listed at the time of access
- *
- * @param string $stringIn The string
- * @return string A string containing only ASCII characters
- */
-function all_ascii( $stringIn ){
-    $final = '';
-    $search = array(chr(145),chr(146),chr(147),chr(148),chr(150),chr(151),chr(13),chr(10));
-    $replace = array("'","'",'"','"','-','-',' ',' ');
-
-    $hold = str_replace($search[0],$replace[0],$stringIn);
-    $hold = str_replace($search[1],$replace[1],$hold);
-    $hold = str_replace($search[2],$replace[2],$hold);
-    $hold = str_replace($search[3],$replace[3],$hold);
-    $hold = str_replace($search[4],$replace[4],$hold);
-    $hold = str_replace($search[5],$replace[5],$hold);
-    $hold = str_replace($search[6],$replace[6],$hold);
-    $hold = str_replace($search[7],$replace[7],$hold);
-
-    if(!function_exists('str_split')){
-       function str_split($string,$split_length=1){
-           $count = strlen($string);
-           if($split_length < 1){
-               return false;
-           } elseif($split_length > $count){
-               return array($string);
-           } else {
-               $num = (int)ceil($count/$split_length);
-               $ret = array();
-               for($i=0;$i<$num;$i++){
-                   $ret[] = substr($string,$i*$split_length,$split_length);
-               }
-               return $ret;
-           }
-       }
-    }
-
-    $holdarr = str_split($hold);
-    foreach ($holdarr as $val) {
-       if (ord($val) < 128) $final .= $val;
-    }
-    return $final;
-}
-
-
-/**
- * Produce a fixed width string containing the data from a questionnaire
- *
- * @param int $questionnaire_id The quesitonnaire id
- * @param int|false $sample_import_id The sample importid or false for all data
- * @return string Fixed width data from the limesurvey database
- *
- */
-function limesurvey_export_fixed_width($questionnaire_id,$sample_import_id = false)
-{
-	global $db;
-
-	//array of varname and width
-	$varwidth = array();
-	$vartype = array();
-
-	$sql = "SELECT lime_sid
-		FROM questionnaire
-		WHERE questionnaire_id = '$questionnaire_id'";
-
-	$r = $db->GetRow($sql);
-
-	if (!empty($r))
-		$surveyid = $r['lime_sid']; 
-	else
-		return;
-
-	//foreach question
-	$sql = "SELECT q.* 
-		FROM ".LIME_PREFIX."questions as q, ".LIME_PREFIX."groups as g
-		WHERE q.sid=$surveyid
-		AND q.type NOT LIKE 'X'
-		AND g.gid = q.gid
-		ORDER BY g.group_order ASC,q.question_order ASC";
-
-	$r = $db->GetAll($sql);
-	foreach ($r as $RowQ)
-	{
-		$type = $RowQ['type'];
-		$qid = $RowQ['qid'];
-		$lid = $RowQ['lid'];
-		$gid = $RowQ['gid'];
-	
-		$varName = $surveyid . "X" . $gid . "X" . $qid;
-	
-		switch ($type)
-	        {
-	       		case "X": //BOILERPLATE QUESTION - none should appear
-		            
-		            break;
-		        case "5": //5 POINT CHOICE radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;
-		            break;
-		        case "D": //DATE
-		            $varwidth[$varName]=8;
-			    $vartype[$varName] = 1;
-		            break;
-		        case "Z": //LIST Flexible drop-down/radio-button list
-		            $varwidth[$varName]=limesurvey_fixed_width($lid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "L": //LIST drop-down/radio-button list
-		            $varwidth[$varName]=limesurvey_answer_width($qid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "W": //List - dropdown
-		            $varwidth[$varName]=limesurvey_answer_width($qid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "!": //List - dropdown
-		            $varwidth[$varName]=limesurvey_answer_width($qid);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "O": //LIST WITH COMMENT drop-down/radio-button list + textarea
-		            //Not yet implemented		            
-		            break;
-		        case "R": //RANKING STYLE
-		            //Not yet implemented
-		            break;
-		        case "M": //MULTIPLE OPTIONS checkbox
-		            limesurvey_create_multi($varwidth,$vartype,$qid,$varName,1,3);
-		            break;
-		        case "P": //MULTIPLE OPTIONS WITH COMMENTS checkbox + text
-	     		            //Not yet implemented
-			    break;
-		        case "Q": //MULTIPLE SHORT TEXT
-		            limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_get_width($qid,24),2);		            
-		            break;
-		        case "K": //MULTIPLE NUMERICAL
-		            limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_get_width($qid,10),1);		            
- 		            break;
-	  	        case "N": //NUMERICAL QUESTION TYPE
-		            $varwidth[$varName]= limesurvey_get_width($qid,10);
-			    $vartype[$varName] = 1;
-		            break;
-		        case "S": //SHORT FREE TEXT
-		            $varwidth[$varName]= limesurvey_get_width($qid,240);
-			    $vartype[$varName] = 2;
-		            break;
-		        case "T": //LONG FREE TEXT
-		            $varwidth[$varName]= limesurvey_get_width($qid,1024);
-			    $vartype[$varName] = 2;
-			    break;
-		        case "U": //HUGE FREE TEXT
-		            $varwidth[$varName]= limesurvey_get_width($qid,2048);
-			    $vartype[$varName] = 2;
-		            break;
-		        case "Y": //YES/NO radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;
-			    break;
-		        case "G": //GENDER drop-down list
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;
-			    break;
-		        case "A": //ARRAY (5 POINT CHOICE) radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;		    
-				break;
-		        case "B": //ARRAY (10 POINT CHOICE) radio-buttons
-		            $varwidth[$varName]=2;
-			    $vartype[$varName] = 1;    
-				break;
-		        case "C": //ARRAY (YES/UNCERTAIN/NO) radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;    
-				break;
-		        case "E": //ARRAY (Increase/Same/Decrease) radio-buttons
-		            $varwidth[$varName]=1;
-			    $vartype[$varName] = 1;    
-				break;
-		        case "F": //ARRAY (Flexible) - Row Format
-				limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_fixed_width($lid),1);    
-		            break;
-		        case "H": //ARRAY (Flexible) - Column Format
-				limesurvey_create_multi($varwidth,$vartype,$qid,$varName,limesurvey_fixed_width($lid),1);
-	    			break;
-			case "^": //SLIDER CONTROL
-		            //Not yet implemented
-			    break;
-		} //End Switch
-			
-			
-	}
-	
-
-	$fn = "survey_$surveyid.dat";
-
-	header("Content-Type: application/download");
-	header("Content-Disposition: attachment; filename=$fn");
-	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
-	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
-	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-	header("Pragma: no-cache");                          // HTTP/1.0
-	
-	$sql3 = "SELECT c.case_id as case_id
-		FROM `case` as c
-		WHERE c.questionnaire_id = '$questionnaire_id'
-		AND c.current_outcome_id = 10";
-
-	$r = $db->GetAll($sql3);
-
-	if (!empty($r))
-	{
-		$sql = "SELECT *
-			FROM ".LIME_PREFIX."survey_$surveyid
-			WHERE ";
-
-
-		if ($sample_import_id == false)
-		{
-			$sql .= " (";
-			$ccount = count($r);
-			$ccounter = 0;
-			foreach($r as $row)
-			{
-				$token = $row['case_id'];
-				$ccounter++;
-				$sql .= " token = '$token'";
-				if ($ccounter < $ccount)
-					$sql .= " or ";
-			}
-			$sql .= ")";
-		}
-		else
-		{
-			$sql2 = "SELECT c.case_id as case_id
-				FROM `case` as c, `sample` as s
-				WHERE c.questionnaire_id = '$questionnaire_id'
-				AND c.sample_id = s.sample_id
-				AND s.import_id = '$sample_import_id'";
-	
-			$r = $db->GetAll($sql2);
-	
-			if (!empty($r))
-			{
-				$sql .= " (";
-				$ccount = count($r);
-				$ccounter = 0;
-				foreach($r as $row)
-				{
-					$token = $row['case_id'];
-					$ccounter++;
-					$sql .= " token = '$token'";
-					if ($ccounter < $ccount)
-						$sql .= " or ";
-				}
-				$sql .= ")";
-			}
-	
-		}
-
-		$r = $db->GetAll($sql);
-
-		foreach($r as $Row)
-		{
-			foreach ($varwidth as $var => $width)
-			{
-				if ($vartype[$var] == 1)
-					echo str_pad(substr(all_ascii($Row[$var]),0,$width), $width, " ", STR_PAD_LEFT);
-				else if ($vartype[$var] == 2)
-					echo str_pad(substr(all_ascii($Row[$var]),0,$width), $width, " ", STR_PAD_RIGHT);
-				else if ($vartype[$var] == 3)
-					if (empty($Row[$var])) echo " "; else echo "1";
-			}
-			echo str_pad(substr($Row['token'],0,9), 9, " ", STR_PAD_LEFT);
-			echo str_pad(substr($Row['datestamp'],0,16), 16, " ", STR_PAD_LEFT);
-			echo "\n";
-		}
-
-	}
-	
-}
-
 
 ?>

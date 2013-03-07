@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Assign operators to skills in a checkbox matrix
  *
@@ -152,7 +152,7 @@ xhtml_head(T_("Assign operators to Skills"),false,array("../css/table.css"));
 
 <script type="text/javascript">
 
-<?
+<?php 
 print "outcome_type_id = new Array(";
 
 $s = "";
@@ -235,7 +235,7 @@ function checkVid(v)
 <body>
 
 
-<?
+<?php 
 
 
 

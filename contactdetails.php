@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display sample details of respondent
  *
@@ -86,12 +86,12 @@ if (isset($_GET['respondent_id']) && $_GET['respondent_id'] == 0)
 {
 ?>
 	<form method="post" action="?">
-	<? display_respondent_form(false,$case_id); ?>
-	<div class="text"><input type='submit' name='submit' id='submit' value='<? echo T_("Add respondent"); ?>'/></div>
+	<?php  display_respondent_form(false,$case_id); ?>
+	<div class="text"><input type='submit' name='submit' id='submit' value='<?php  echo T_("Add respondent"); ?>'/></div>
 	</form>
-	<div><a href="?"><? echo T_("Go back"); ?></a></div>
+	<div><a href="?"><?php  echo T_("Go back"); ?></a></div>
 
-<?
+<?php 
 }
 else
 {

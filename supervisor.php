@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Supervisor help functions
  *

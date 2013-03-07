@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Create an operator and link to a webserver username for authentication
  *
@@ -173,8 +173,8 @@ xhtml_head(T_("Add an operator"));
 if ($a)
 {
 ?>
-	<h3><? echo $a; ?></h3>
-<?
+	<h3><?php  echo $a; ?></h3>
+<?php 
 }
 
 $sql = "SELECT Time_zone_name as value, Time_zone_name as description
@@ -183,29 +183,29 @@ $sql = "SELECT Time_zone_name as value, Time_zone_name as description
 $rs = $db->GetAll($sql);
 
 ?>
-<h1><? echo T_("Add an operator"); ?></h1>
-<p><? echo T_("Adding an operator here will give the user the ability to call cases"); ?> <a href="operatorquestionnaire.php"><? echo T_("Assign Operator to Questionnaire"); ?></a> <? echo T_("tool"); ?>.</p>
-<p><? echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p>
+<h1><?php  echo T_("Add an operator"); ?></h1>
+<p><?php  echo T_("Adding an operator here will give the user the ability to call cases"); ?> <a href="operatorquestionnaire.php"><?php  echo T_("Assign Operator to Questionnaire"); ?></a> <?php  echo T_("tool"); ?>.</p>
+<p><?php  echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p>
 <form enctype="multipart/form-data" action="" method="post">
-	<p><? echo T_("Enter the username of an operator to add:"); ?> <input name="operator" type="text"/></p>
-<? if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
-	<p><? echo T_("Enter the password of an operator to add:"); ?> <input name="password" type="text"/></p>
-<? } ?>
-	<p><? echo T_("Enter the first name of an operator to add:"); ?> <input name="firstname" type="text"/></p>
-	<p><? echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
-	<p><a href='timezonetemplate.php'><? echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
-<? if (FREEPBX_PATH == false) { ?>
-	<p><? echo T_("Enter the telephone extension number:"); ?> <input name="extension" type="text"/></p>
-	<p><? echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
-<? } ?>
-	<p><? echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
-	<p><? echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
-	<p><? echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>
-	<p><? echo T_("Is the operator a refusal converter?"); ?> <input name="refusal" type="checkbox"/></p>
-	<p><input type="submit" value="<? echo T_("Add user"); ?>" /></p>
+	<p><?php  echo T_("Enter the username of an operator to add:"); ?> <input name="operator" type="text"/></p>
+<?php  if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
+	<p><?php  echo T_("Enter the password of an operator to add:"); ?> <input name="password" type="text"/></p>
+<?php  } ?>
+	<p><?php  echo T_("Enter the first name of an operator to add:"); ?> <input name="firstname" type="text"/></p>
+	<p><?php  echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
+	<p><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
+<?php  if (FREEPBX_PATH == false) { ?>
+	<p><?php  echo T_("Enter the telephone extension number:"); ?> <input name="extension" type="text"/></p>
+	<p><?php  echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
+<?php  } ?>
+	<p><?php  echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
+	<p><?php  echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
+	<p><?php  echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>
+	<p><?php  echo T_("Is the operator a refusal converter?"); ?> <input name="refusal" type="checkbox"/></p>
+	<p><input type="submit" value="<?php  echo T_("Add user"); ?>" /></p>
 </form>
 
-<?
+<?php 
 
 xhtml_foot();
 

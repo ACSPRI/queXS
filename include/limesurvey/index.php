@@ -21,6 +21,8 @@ require_once(dirname(__FILE__).'/classes/core/startup.php');
 require_once(dirname(__FILE__).'/config-defaults.php');
 require_once(dirname(__FILE__).'/common.php');
 require_once(dirname(__FILE__).'/classes/core/language.php');
+include_once("quexs.php");
+
 @ini_set('session.gc_maxlifetime', $sessionlifetime);
 
 $loadname=returnglobal('loadname');
@@ -56,6 +58,7 @@ if (isset($_GET['loadall']) && $_GET['loadall'] == "reload" && isset($_GET['toke
  	//Must destroy the session
  	session_unset();
 }
+
 //end queXS Addition
 
 //LimeExpressionManager::SetSurveyId($surveyid);  // must be called early - it clears internal cache if a new survey is being used
@@ -119,6 +122,21 @@ if ( $embedded && $embedded_inc != '' )
 {
     require_once( $embedded_inc );
 }
+
+//queXS Addition
+//see who is doing this survey - an interviewer or the respondent directly
+$interviewer=returnglobal('interviewer');
+if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true)) 
+{
+	$interviewer = true;
+	$_SESSION['interviewer'] = true;
+}
+else
+{
+	$interviewer = false;
+}
+
+
 
 //CHECK FOR REQUIRED INFORMATION (sid)
 if (!$surveyid || !$surveyexists)
@@ -512,15 +530,22 @@ else
 
 
 
-
-//SET THE TEMPLATE DIRECTORY
-if (!$thissurvey['templatedir'])
+if ($interviewer)
 {
-    $thistpl=sGetTemplatePath($defaulttemplate);
+	//SET THE TEMPLATE DIRECTORY
+	if (!$thissurvey['templatedir'])
+	{
+	    $thistpl=sGetTemplatePath($defaulttemplate);
+	}
+	else
+	{
+	    $thistpl=sGetTemplatePath($thissurvey['templatedir']);
+	}
 }
 else
 {
-    $thistpl=sGetTemplatePath($thissurvey['templatedir']);
+	$thissurvey['templatedir'] = quexs_get_template($clienttoken);
+	$thistpl=sGetTemplatePath(quexs_get_template($clienttoken));
 }
 
 
@@ -2649,7 +2674,7 @@ function check_quota($checkaction,$surveyid)
                     $querysel = "SELECT id FROM ".db_table_name('survey_'.$surveyid)." AS s
 				     JOIN `case` AS cq ON (cq.case_id = '$case_id')
 				     JOIN sample AS sampt ON (sampt.sample_id = cq.sample_id)
-				     JOIN `case` AS c ON (c.case_id = s.token AND c.questionnaire_id = cq.questionnaire_id)
+				     JOIN `case` AS c ON (c.token = s.token AND c.questionnaire_id = cq.questionnaire_id)
 				     JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = sampt.import_id)
 			             WHERE ".implode(' AND ',$querycond)." "." 
 					AND s.submitdate IS NOT NULL";

@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Respondent selection - Project End due to full quota
  *
@@ -69,14 +69,14 @@ print "<p class='rstext'>" . template_replace($_GET['message'],$operator_id,$cas
 if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
 {
 ?>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=32&endcase=endcase'"><? echo T_("End call with outcome: Quota filled"); ?></a></p>
-<?
+<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=32&endcase=endcase'"><?php  echo T_("End call with outcome: Quota filled"); ?></a></p>
+<?php 
 } 
 else
 {
 ?>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=32');"><? echo T_("End call with outcome: Quota filled"); ?></a></p>
-<?
+<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=32');"><?php  echo T_("End call with outcome: Quota filled"); ?></a></p>
+<?php 
 }
 
 xhtml_foot();

@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Run the VoIP monitoring process and monitor it via the database
  *

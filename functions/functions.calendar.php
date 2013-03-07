@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Functions relating to appointment times and calendars
  *
@@ -77,18 +77,22 @@ function add_contact_phone($case_id,$phone)
  * @param int $y the year (4 digit)
  * @param string $start The time in the format HH:MM:SS
  * @param string $end The time in the format HH:MM:SS
+ * @param string|int $require_operator_id False if for any operator otherwise restrict this appointment to a particular operator
  * @return bool Result false if failed to add else true
  */
-function make_appointment($respondent_id,$case_id,$contact_phone_id,$call_attempt_id,$d,$m,$y,$start,$end)
+function make_appointment($respondent_id,$case_id,$contact_phone_id,$call_attempt_id,$d,$m,$y,$start,$end,$require_operator_id = false)
 {
 	global $db;
 
 	$start = "$y-$m-$d $start";
 	$end= "$y-$m-$d $end";
 
+	if ($require_operator_id == false)
+		$require_operator_id = "NULL";
+
 	$sql = "INSERT INTO `appointment`
 		(appointment_id,case_id,contact_phone_id,call_attempt_id,start,end,require_operator_id,respondent_id,completed_call_id)
-		SELECT NULL,'$case_id','$contact_phone_id','$call_attempt_id',CONVERT_TZ('$start',r.Time_zone_name,'UTC'),CONVERT_TZ('$end',r.Time_zone_name,'UTC'),NULL,$respondent_id,NULL
+		SELECT NULL,'$case_id','$contact_phone_id','$call_attempt_id',CONVERT_TZ('$start',r.Time_zone_name,'UTC'),CONVERT_TZ('$end',r.Time_zone_name,'UTC'),$require_operator_id,$respondent_id,NULL
 		FROM respondent as r
 		WHERE r.respondent_id = '$respondent_id'";
 
@@ -495,8 +499,7 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 	<th>S</th>
 	<th>S</th>
 	</tr>
-<?php
-
+<?php 
 
 	while ( $Day = $Month->fetch() ) {
 
@@ -564,7 +567,7 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 	</td>
 	</tr>
 	</table>
-	<?
+	<?php 
 	print "<div>" . date('l j F Y',mktime(0,0,0,$month,$day,$year)) . "</div>";
 }
 

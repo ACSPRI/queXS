@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display a list of cases for a questionnaire based on the current outcome 
  *

@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Create a queXS questionnaire and link it to a LimeSurvey questionnaire
  *
@@ -68,10 +68,12 @@ if (isset($_POST['import_file']))
 	$testing = 0;
 	$rs = 0;
 	$lime_sid = 0;
+	$respsc = 0;
 	$lime_rs_sid = "NULL";
 	if (isset($_POST['ras'])) $ras = 1;
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['testing'])) $testing = 1;
+	if (isset($_POST['respsc'])) $respsc = 1;
 	if ($_POST['selectrs'] != "none") $rs = 1;
 	
 	$name = $db->qstr($_POST['description'],get_magic_quotes_gpc());
@@ -91,14 +93,26 @@ if (isset($_POST['import_file']))
 		$lime_rs_sid = bigintval($_POST['selectrs']);
 	}
 
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info)";
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc)";
 
 	$rs = $db->Execute($sql);
 
 	if ($rs)
 	{
 		$qid = $db->Insert_ID();
+		if ($respsc == 1)
+		{
+			$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
+			$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
+			$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
+
+			$sql = "UPDATE questionnaire
+				SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
+				WHERE questionnaire_id = $qid";
+
+			$db->Execute($sql);
+		}
 		print "<p>" . T_("Successfully inserted") . " $name " . T_("as questionnaire") . " $qid, " . T_("linked to") . " $lime_sid</p>";
 	}else
 	{
@@ -113,8 +127,8 @@ if (isset($_POST['import_file']))
 ?>
 	<form enctype="multipart/form-data" action="" method="post">
 	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
-	<p><? echo T_("Name for questionnaire:"); ?> <input type="text" name="description"/></p>
-	<p><? echo T_("Select limesurvey instrument:"); 
+	<p><?php  echo T_("Name for questionnaire:"); ?> <input type="text" name="description"/></p>
+	<p><?php  echo T_("Select limesurvey instrument:"); 
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
@@ -137,9 +151,9 @@ else
 	print "<a href='" . LIME_URL ."admin/admin.php?action=newsurvey'>" . T_("Create an instrument in Limesurvey") ."</a>";
 }
 ?></p>
-<p><? echo T_("Respondent selection type:"); ?>
-<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><? echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><? echo T_("Use basic respondent selection text (below)"); ?></option>
-<?
+<p><?php  echo T_("Respondent selection type:"); ?>
+<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><?php  echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><?php  echo T_("Use basic respondent selection text (below)"); ?></option>
+<?php 
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
@@ -176,20 +190,37 @@ $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 	
 
 ?></select></p>
-<p><? echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
-<p><? echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
-<p><? echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
-<div id='rstext' style='display:none;'>
-<p><? echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?></p>
-<p><? echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro","",$ckeditorConfig);?></p>
-<p><? echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback","",$ckeditorConfig);?> </p>
-<p><? echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine","",$ckeditorConfig);?> </p>
+<p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
+<p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
+<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
+<p><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> <input name="respsc" type="checkbox"  onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" /></p>
+<div id='limesc' style='display:none;'>
+<p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option value="survey"><?php echo T_("All in one"); ?></option><option value="question"><?php echo T_("Question by question"); ?></option><option value="group"><?php echo T_("Group at a time"); ?></option></select></p>
+<p><?php echo T_("Limesurvey template for respondent");?>: <select name="lime_template">
+<?php 
+if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
+    while (false !== ($entry = readdir($handle))) {
+        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
+            echo "<option value=\"$entry\">$entry</option>";
+        }
+    }
+    closedir($handle);
+}
+?>
+</select></p>
+<p><?php echo T_("URL to forward respondents on self completion");?>: <input name="lime_endurl" type="text" value="http://www.acspri.org.au/"/></p>
 </div>
-<p><? echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end","",$ckeditorConfig); ?></p>
-<p><? echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info","",$ckeditorConfig);?></p>
-<p><input type="submit" name="import_file" value="<? echo T_("Create Questionnaire"); ?>"/></p>
+<div id='rstext' style='display:none;'>
+<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?></p>
+<p><?php  echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro","",$ckeditorConfig);?></p>
+<p><?php  echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback","",$ckeditorConfig);?> </p>
+<p><?php  echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine","",$ckeditorConfig);?> </p>
+</div>
+<p><?php  echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end","",$ckeditorConfig); ?></p>
+<p><?php  echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info","",$ckeditorConfig);?></p>
+<p><input type="submit" name="import_file" value="<?php  echo T_("Create Questionnaire"); ?>"/></p>
 </form>
-<?
+<?php 
 xhtml_foot();
 
 

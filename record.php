@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Record calls using Asterisk (if enabled)
  *

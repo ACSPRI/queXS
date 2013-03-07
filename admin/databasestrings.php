@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * A list of database strings for translation
  *
@@ -85,5 +85,8 @@ T_("State");
 T_("Postcode");
 T_("Respondent first name");
 T_("Respondent last name");
+T_("Email address");
+T_("Self completion email invitation sent");
+T_("Self completed online");
 
 ?>

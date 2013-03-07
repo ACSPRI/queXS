@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Update case availability
  *

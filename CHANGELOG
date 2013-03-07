@@ -1,3 +1,36 @@
+queXS 1.7.0 - Changes since 1.6.1
+
+New Feature: Replace queXS caseid as token with a random token to allow for safe external access
+New Feature: Allow for responents to self complete the questionnaire via email invitation
+Fixed Bug: Replaced php short tags with long tags
+
+Database updates:
+
+ALTER TABLE `case` ADD `token` VARCHAR( 36 ) NOT NULL ;
+
+To allow for accessing existing cases in new system, need to assign a "token" for each case:
+
+UPDATE `case` SET token = case_id;
+ALTER TABLE `case` ADD UNIQUE (`token`);
+
+New outcomes for email invitation and online self completion:
+
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES
+(40, '1.1', 'Self completed online', 0, 4, 0, 1, 1, 1, 0, 'I'),
+(41, '2.36', 'Self completion email invitation sent', 10080, 1, 0, 1, 1, 1, 0, 'O');
+
+New sample variable type (Email address):
+
+INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES
+(8, 'Email address', '');
+
+Specify details of respondent self completion:
+
+ALTER TABLE `questionnaire` ADD `self_complete` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `info`,
+ADD `lime_mode` VARCHAR( 64 ) NULL COMMENT 'Limesurvey mode for respondent self completion' AFTER `self_complete` ,
+ADD `lime_template` VARCHAR( 128 ) NULL COMMENT 'Limesurvey template for respondent self completion' AFTER `lime_mode` ,
+ADD `lime_endurl` VARCHAR( 256 ) NULL COMMENT 'Forwarding end URL for respondent self completion' AFTER `lime_template` ;
+
 queXS 1.6.1 - Changes since 1.6.0
 
 New Feature: Include paradata/metadata in data output (number call attempts, number of answering machine messages and all sample variables)

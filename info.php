@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display information about this centre
  *

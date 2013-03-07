@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Assign operators to questionnaires in a checkbox matrix
  *
@@ -158,7 +158,7 @@ xhtml_head(T_("Assign operators to questionnaires"),false,array("../css/table.cs
 
 <script type="text/javascript">
 
-<?
+<?php 
 print "questionnaire_id = new Array(";
 
 $s = "";
@@ -241,7 +241,7 @@ function checkVid(v)
 <body>
 
 
-<?
+<?php 
 
 
 

@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display the performance of this operator
  *

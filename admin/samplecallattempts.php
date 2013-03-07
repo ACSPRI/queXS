@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * Display sample call attempt report (A listing of how many attempts made for cases within a sample)
  *
  *

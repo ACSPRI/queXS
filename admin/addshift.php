@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Add and modify shifts by questionnaire
  *
@@ -231,7 +231,7 @@ if ($questionnaire_id != false)
 	?>
 		<form method="post" action="">
 		<table>
-	<?
+	<?php 
 		print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th><th>" . T_("Use shift?") . "</th></tr>";
 		$count = 1;
 		foreach($shifts as $shift)
@@ -257,12 +257,12 @@ if ($questionnaire_id != false)
 		<!--<tr><td/><td/><td/><td>Select all</td></tr>-->
 		</table>
 		<!--<p><input type="submit" name="addshift" value="Add Shift"/></p>-->
-		<p><input type="submit" name="submit" value="<? echo T_("Submit changes"); ?>"/></p>
-		<p><input type="hidden" name="year" value="<? echo $year; ?>"/></p>
-		<p><input type="hidden" name="woy" value="<? echo $woy; ?>"/></p>
-		<p><input type="hidden" name="qid" value="<? echo $questionnaire_id; ?>"/></p>
+		<p><input type="submit" name="submit" value="<?php  echo T_("Submit changes"); ?>"/></p>
+		<p><input type="hidden" name="year" value="<?php  echo $year; ?>"/></p>
+		<p><input type="hidden" name="woy" value="<?php  echo $woy; ?>"/></p>
+		<p><input type="hidden" name="qid" value="<?php  echo $questionnaire_id; ?>"/></p>
 		</form>
-	<?
+	<?php 
 }	
 	
 xhtml_foot();

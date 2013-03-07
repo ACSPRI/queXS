@@ -15,23 +15,31 @@
 if (!isset($homedir) || isset($_REQUEST['$homedir'])) {die("Cannot run this script directly");}
 
 require_once("save.php");   // for supporting functions only
+include_once("quexs.php"); //queXS funcitons
 
 // $LEMdebugLevel - customizable debugging for Lime Expression Manager
 $LEMdebugLevel=0;   // LEM_DEBUG_TIMING;    // (LEM_DEBUG_TIMING + LEM_DEBUG_VALIDATION_SUMMARY + LEM_DEBUG_VALIDATION_DETAIL);
 $LEMskipReprocessing=false; // true if used GetLastMoveResult to avoid generation of unneeded extra JavaScript
-switch ($thissurvey['format'])
+
+if ($interviewer)
 {
-    case "A": //All in one
-        $surveyMode='survey';
-        break;
-    default:
-    case "S": //One at a time
-        $surveyMode='question';
-        break;
-    case "G": //Group at a time
-        $surveyMode='group';
-        break;
+	switch ($thissurvey['format'])
+	{
+	    case "A": //All in one
+	        $surveyMode='survey';
+	        break;
+	    default:
+	    case "S": //One at a time
+	        $surveyMode='question';
+	        break;
+	    case "G": //Group at a time
+	        $surveyMode='group';
+	        break;
+	}
 }
+else
+	$surveyMode=quexs_get_survey_mode($clienttoken);
+
 $radix=getRadixPointData($thissurvey['surveyls_numberformat']);
 $radix = $radix['seperator'];
 
@@ -459,11 +467,21 @@ else
 
 		//queXS Addition
 		include_once("quexs.php");
-		$quexs_url = get_start_interview_url(); 
-		$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
-		   
-		$end_url = get_end_interview_url();
-		$url = str_replace("{ENDINTERVIEWURL}", $end_url, $url);
+		  
+		if ($interviewer)
+		{
+			$quexs_url = get_start_interview_url(); 
+			$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);
+
+			$end_url = get_end_interview_url();
+			$url = str_replace("{ENDINTERVIEWURL}", $end_url, $url);
+		}
+		else
+		{
+			$url = get_end_interview_url($clienttoken);
+			quexs_completed_by_respondent($surveyid,$clienttoken);
+		}
+
 
                 header("Location: {$url}");
             }

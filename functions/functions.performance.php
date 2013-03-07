@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Functions that display data about the project
  *

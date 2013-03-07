@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * View cases referred to the supervisor and add notes/assign outcomes
  *
@@ -105,10 +105,10 @@ if (!empty($rs))
 ?>
 <form action="" method="get">
 <p>
-<label for="case_id"><? echo T_("Case id:"); ?> </label><input type="text" name="case_id" id="case_id" value="<? echo $case_id; ?>"/>
-<input type="submit" name="case_form" value="<? echo T_("Select case"); ?>"/></p>
+<label for="case_id"><?php  echo T_("Case id:"); ?> </label><input type="text" name="case_id" id="case_id" value="<?php  echo $case_id; ?>"/>
+<input type="submit" name="case_form" value="<?php  echo T_("Select case"); ?>"/></p>
 </form>
-<?
+<?php 
 
 if (isset($_GET['call_id']))
 {
@@ -127,7 +127,7 @@ if (isset($_GET['call_id']))
 	
 		?>
 		<form method="get" action="?">
-		<?              
+		<?php               
 			$sql = "SELECT o.outcome_id as value,description, CASE WHEN o.outcome_id = c.outcome_id THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM outcome as o, `call` as c
 				WHERE c.call_id = '$call_id'";
@@ -136,9 +136,9 @@ if (isset($_GET['call_id']))
 			translate_array($rs2,array("description"));
 			display_chooser($rs2, "set_outcome_id", "set_outcome_id",true,false,false);
 		?>
-		<p><input type="hidden" name="call_id" value="<? echo $call_id;?>"/><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Set outcome"); ?>"/></p>
+		<p><input type="hidden" name="call_id" value="<?php  echo $call_id;?>"/><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Set outcome"); ?>"/></p>
 		</form>
-		<?
+		<?php 
 	}
 }
 if ($case_id != false)
@@ -289,10 +289,10 @@ if ($case_id != false)
 		?>
 		<form method="get" action="?">
 			<p>
-			<input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input type="text" class="textclass" name="note" id="note"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Add note"); ?>"/>
+			<input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/><input type="text" class="textclass" name="note" id="note"/><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add note"); ?>"/>
 			</p>
 		</form>
-		<?
+		<?php 
 		
 		//Modify the case in Limesurvey
 
@@ -309,7 +309,7 @@ if ($case_id != false)
 
 		?>
 		<form method="get" action="?">
-		<?              
+		<?php               
 			$sql = "SELECT outcome_id as value,description, CASE WHEN outcome_id = '$current_outcome_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM outcome";
 	
@@ -318,9 +318,9 @@ if ($case_id != false)
 			display_chooser($rs2, "outcome_id", "outcome_id",true,false,false);
 	
 		?>
-		<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Set outcome"); ?>"/></p>
+		<p><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Set outcome"); ?>"/></p>
 		</form>
-		<?
+		<?php 
 
 		//view availability
 		if (is_using_availability($case_id))
@@ -355,9 +355,9 @@ if ($case_id != false)
 			
 			}
 			?>
-			<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submitag" value="<? echo T_("Update case availability"); ?>"/></p>
+			<p><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/><input class="submitclass" type="submit" name="submitag" value="<?php  echo T_("Update case availability"); ?>"/></p>
 			</form>
-			<?
+			<?php 
 		}
 		else
 		{
@@ -370,7 +370,7 @@ if ($case_id != false)
 		print "<h3>" . T_("Assign this case to operator (will appear as next case for them)") . "</h3>";
 		?>
 		<form method="get" action="?">
-		<?              
+		<?php               
 			$sql = "SELECT operator_id as value,CONCAT(firstName,' ', lastName) as description, CASE WHEN next_case_id = '$case_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM operator
 				WHERE enabled = 1";
@@ -379,9 +379,9 @@ if ($case_id != false)
 			display_chooser($rs3, "operator_id", "operator_id",true,false,false);
 	
 		?>
-		<p><input type="hidden" name="case_id" value="<? echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Assign this case to operator"); ?>"/></p>
+		<p><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Assign this case to operator"); ?>"/></p>
 		</form>
-		<?
+		<?php 
 
 	
 	}

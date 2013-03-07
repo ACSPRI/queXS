@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display a list of calls and outcomes for all calls  
  *

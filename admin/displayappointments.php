@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * Display appointments
  *
  *
@@ -120,10 +119,13 @@ if (isset($_GET['start']) && isset($_GET['appointment_id']))
 	$end = $db->qstr($_GET['end']);
 	$contact_phone_id = bigintval($_GET['contact_phone_id']);
 	$respondent_id = bigintval($_GET['respondent_id']);
+	$require_operator_id = "NULL";
+	if ($_GET['require_operator_id'] > 1) $require_operator_id = bigintval($_GET['require_operator_id']);
 	
 	//Edit this appointment in the database
 	$sql = "UPDATE appointment as a, respondent as r
-		SET a.start = CONVERT_TZ($start,r.Time_zone_name,'UTC'), a.end = CONVERT_TZ($end,r.Time_zone_name,'UTC'), a.contact_phone_id = $contact_phone_id, a.respondent_id = $respondent_id
+		SET 	a.start = CONVERT_TZ($start,r.Time_zone_name,'UTC'), a.end = CONVERT_TZ($end,r.Time_zone_name,'UTC'), a.contact_phone_id = $contact_phone_id, a.respondent_id = $respondent_id,
+		 	a.require_operator_id = $require_operator_id
 		WHERE a.appointment_id = $appointment_id
 		AND r.respondent_id = $respondent_id";
 
@@ -157,7 +159,7 @@ if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 		xhtml_head(T_("Edit appointment"),false,$css,$js);
 		print "<script type='text/javascript'>$(document).ready(function() { $('#start').datetimepicker({timeFormat: 'hh:mm:ss', dateFormat: 'yy-mm-dd'}); $('#end').datetimepicker({timeFormat: 'hh:mm:ss', dateFormat: 'yy-mm-dd'});});</script>";
 		
-		$sql = "SELECT a.contact_phone_id,a.call_attempt_id,CONVERT_TZ(a.start,'UTC',r.Time_zone_name) as start,CONVERT_TZ(a.end,'UTC',r.Time_zone_name) as end,a.respondent_id
+		$sql = "SELECT a.contact_phone_id,a.call_attempt_id,CONVERT_TZ(a.start,'UTC',r.Time_zone_name) as start,CONVERT_TZ(a.end,'UTC',r.Time_zone_name) as end,a.respondent_id,a.require_operator_id
 			FROM appointment as a, respondent as r
 			WHERE a.appointment_id = '$appointment_id'
 			AND a.case_id = '$case_id'
@@ -169,6 +171,7 @@ if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 		{
 			$respondent_id = $rs['respondent_id'];
 			$contact_phone_id = $rs['contact_phone_id'];
+			$require_operator_id = $rs['require_operator_id'];
 			$start = $rs['start'];
 			$end = $rs['end'];
 
@@ -189,6 +192,22 @@ if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 			
 			print "</div><div><label for='start'>" . T_("Start time") . "</label><input type='text' value='$start' id='start' name='start'/></div>";
 			print "<div><label for='end'>" . T_("End time") . "</label><input type='text' value='$end' id='end' name='end'/></div>";
+			print "<div><label for='require_operator_id'>" . T_("Appointment with") . "</label>";
+			$ops = $db->GetAll("	SELECT o.operator_id as value,
+						CONCAT(o.firstName, ' ', o.lastName) as description,
+						CASE WHEN o.operator_id = '$require_operator_id' THEN 'selected=\'selected\'' ELSE '' END as selected
+						FROM operator as o");
+			$selected = "selected=\'selected\'";
+			foreach($ops as $o)
+			{
+				if (!empty($o['selected']))
+				{
+					$selected = "";
+					break;
+				}
+			}
+			array_unshift($ops,array('value'=>0,'description'=>T_("Any operator"),'selected'=>$selected));
+			display_chooser($ops,"require_operator_id","require_operator_id",false,false,false,false);
 			print "<input type='hidden' value='$appointment_id' id='appointment_id' name='appointment_id'/>";
 			print "<div><input type='submit' value='" . T_("Edit appointment") . "'/></div>";
 
@@ -207,20 +226,21 @@ else
 	
 	print "<h1>" . T_("Appointments") . "</h1><h2>" . T_("All appointments (with times displayed in your time zone)") . "</h2>";
 	
-	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . T_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". T_("Delete") . "</a>') as link, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'>". T_("Edit") . "</a>') as edit
+	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . T_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". T_("Delete") . "</a>') as link, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'>". T_("Edit") . "</a>') as edit,IFNULL(ao.firstName,'" . T_("Any operator") . "') as witho
 
 		FROM appointment as a
 		JOIN (`case` as c, respondent as r, questionnaire as q, operator as o, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and o.operator_id = '$operator_id' and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
 		LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id)
+		LEFT JOIN operator AS ao ON ao.operator_id = a.require_operator_id
 		WHERE a.end >= CONVERT_TZ(NOW(),'System','UTC')
 		ORDER BY a.start ASC";
 	
 	$rs = $db->GetAll($sql);
-	
+
 	if (!empty($rs))
 	{
 		translate_array($rs,array("outcome"));
-		xhtml_table($rs,array("description","case_id","start","end","makerName","firstName","lastName","outcome","callerName","link","edit"),array(T_("Questionnaire"),T_("Case ID"),T_("Start"),T_("End"),T_("Operator Name"),T_("Respondent Name"),T_("Surname"),T_("Current outcome"),T_("Operator who called"),T_("Delete"),T_("Edit")));
+		xhtml_table($rs,array("description","case_id","start","end","makerName","witho","firstName","lastName","outcome","callerName","link","edit"),array(T_("Questionnaire"),T_("Case ID"),T_("Start"),T_("End"),T_("Operator Name"),T_("Appointment with"),T_("Respondent Name"),T_("Surname"),T_("Current outcome"),T_("Operator who called"),T_("Delete"),T_("Edit")));
 	}
 	else
 		print "<p>" . T_("No appointments in the future") . "</p>";

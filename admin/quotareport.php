@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * Display a report of all quota's
  * a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
  * b. (Replicate quota) Exclude selected sample records 
@@ -271,7 +270,7 @@ if ($questionnaire_id)
 				JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
 				WHERE ".implode(' AND ',$sqlq)." "." 
 				AND submitdate IS NOT NULL
-				AND s.token = c.case_id";
+				AND s.token = c.token";
 
 			$rs = $db->GetRow($sql);
 

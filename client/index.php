@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * Display outcomes for each questionnaire assigned to this client
  *
  *

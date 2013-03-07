@@ -254,7 +254,8 @@ $quexsfilterstate = questionnaireSampleFilterstate();
  	$exportoutput .= "<option value='$attr_name' id='$attr_name' />".$attr_desc."</option>\n";
  	}
 
-            $exportoutput .= "<option value='token' id='token' />".$clang->gT("Case ID")."</option>\n"
+            $exportoutput .= "<option value='token' id='token' />".$clang->gT("Token")."</option>\n"
+            ."<option value='caseid' id='caseid' />".$clang->gT("Case ID")."</option>\n"
             ."<option value='callattempts' id='callattempts' />".$clang->gT("Number of call attempts")."</option>\n"
             ."<option value='messagesleft' id='messagesleft' />".$clang->gT("Number of answering machine messages left")."</option>\n";
 
@@ -422,17 +423,24 @@ else
 $dquery = "SELECT $selectfields";
 if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribute_select']) && is_array($_POST['attribute_select']))
 {
+    if (in_array('caseid',$_POST['attribute_select']))
+    {
+        $dquery .= ", 	(SELECT c4.case_id
+			FROM `case` as c4
+			WHERE c4.token = {$dbprefix}survey_$surveyid.token) as caseid ";
+    }
     if (in_array('callattempts',$_POST['attribute_select']))
     {
         $dquery .= ", 	(SELECT COUNT(c.call_attempt_id) 
-			FROM call_attempt as c 
-                	WHERE c.case_id = {$dbprefix}survey_$surveyid.token) as callattempts ";
+			FROM call_attempt as c, `case` as ca
+                	WHERE c.case_id = ca.case_id AND ca.token = {$dbprefix}survey_$surveyid.token) as callattempts ";
     }
     if (in_array('messagesleft',$_POST['attribute_select']))
     {
         $dquery .= ",  (SELECT COUNT(c2.call_id) 
-                        FROM `call` as c2
-                        WHERE c2.case_id = {$dbprefix}survey_$surveyid.token 
+                        FROM `call` as c2, `case` as ca2
+                        WHERE ca2.case_id = c2.case_id 
+			AND ca2.token = {$dbprefix}survey_$surveyid.token 
 			AND c2.outcome_id = 23) as messagesleft ";
     }
     if (in_array('token',$_POST['attribute_select']))
@@ -477,7 +485,7 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
         {
             $dquery .= ", (	SELECT sv.val
 				FROM sample_var as sv, `case` as c3
-				WHERE c3.case_id = {$dbprefix}survey_$surveyid.token
+				WHERE c3.token = {$dbprefix}survey_$surveyid.token
 				AND c3.sample_id = sv.sample_id
 				AND sv.var LIKE '$attr_name') as attribute_$i ";
 
@@ -505,7 +513,7 @@ $qfs = questionnaireSampleFilterstate();
 if ($qfs != false)
 {
     //Limit responses by questionnaire and/or sample
-    $dquery .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.case_id AND c.questionnaire_id = '{$qfs[0]}') ";
+    $dquery .= "     JOIN `case` AS c ON ({$dbprefix}survey_$surveyid.token = c.token AND c.questionnaire_id = '{$qfs[0]}') ";
     if ($qfs[1] != 0) //if a sample is selected
             $dquery .= "     JOIN `sample` AS s ON (s.sample_id = c.sample_id AND s.import_id = '{$qfs[1]}') ";
 }
@@ -530,6 +538,11 @@ for ($i=0; $i<$fieldcount; $i++)
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Number of answering machine messages left")."\"$separator";}
         else {$firstline .= $elang->gT("Number of answering machine messages left")."$separator";}
     }
+    elseif ($fieldinfo == "caseid")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case ID")."\"$separator";}
+        else {$firstline .= $elang->gT("Case ID")."$separator";}
+    }
     elseif ($fieldinfo == "email")
     {
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Email address")."\"$separator";}
@@ -547,8 +560,8 @@ for ($i=0; $i<$fieldcount; $i++)
     }
     elseif ($fieldinfo == "token")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case ID")."\"$separator";}
-        else {$firstline .= $elang->gT("Case ID")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Token")."\"$separator";}
+        else {$firstline .= $elang->gT("Token")."$separator";}
     }
     elseif (substr($fieldinfo,0,10)=="attribute_")
     {
@@ -823,7 +836,7 @@ elseif ($answers == "long")        //chose complete answers
             $fqid=0;            // By default fqid is set to zero
             $field=$dresult->FetchField($i);
             $fieldinfo=$field->name;
-            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed")
+            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed" && $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft")
             {
                 $fielddata=$fieldmap[$fieldinfo];
                 $fqid=$fielddata['qid'];
@@ -844,6 +857,15 @@ elseif ($answers == "long")        //chose complete answers
                 {
                     switch($fieldinfo)
                     {
+			case "caseid":
+	                    $ftitle=$elang->gT("Case ID").":";
+                            break;
+ 			case "callattempts":
+	                    $ftitle=$elang->gT("Number of call attempts").":";
+                            break;
+ 			case "messagesleft":
+	                    $ftitle=$elang->gT("Number of answering machine messages left").":";
+                            break;
                         case "datestamp":
                             $ftitle=$elang->gT("Date Last Action").":";
                             break;

@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Popup screen to manage calling and hanging up and assigning outcomes to calls
  *
@@ -126,6 +126,7 @@ function display_outcomes($contacted,$ca,$case_id)
 					WHERE contacted = '$contacted'
 					AND outcome_id != 10"; //don't show completed if not
 			}
+
 		}
 	}
 	$rs = $db->GetAll($sql);
@@ -133,7 +134,17 @@ function display_outcomes($contacted,$ca,$case_id)
 	print "<div>";
 	if (!empty($rs))
 	{
-		$do = false;
+		$lime_sid = get_limesurvey_id(get_operator_id());
+
+		//Check to see if we have sent an email on this call and set the default outcome
+		$sql = "SELECT 41
+			FROM `case` as c, " . LIME_PREFIX . "tokens_$lime_sid as t
+			WHERE t.sent = '$ca'
+			AND c.case_id = $case_id
+			AND t.token = c.token";
+
+		$do = $db->GetOne($sql);
+
 		if (isset($_GET['defaultoutcome'])) $do = bigintval($_GET['defaultoutcome']);
 		foreach($rs as $r)
 		{

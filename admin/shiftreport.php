@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * List and edit reports on shifts
  *
  *

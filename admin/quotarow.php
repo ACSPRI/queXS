@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Set quota's for answered questions and be able to exclude sample records by row 
  * instead of an entire sample
@@ -297,24 +297,24 @@ if ($questionnaire_id != false)
 				?>
 				<form action="" method="get">
 				<p>
-				<label for="description"><? echo T_("Describe this quota"); ?> </label><input type="text" name="description" id="description"/>		<br/>
-				<label for="priority"><? echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?> </label><input type="text" name="priority" id="priority" value="50"/>		<br/>
-				<label for="autoprioritise"><? echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> </label><input type="checkbox" name="autoprioritise" id="autoprioritise"/>		<br/>
-				<? if ($sgqa != -1) { if ($sgqa != -2) { ?>
-				<label for="value"><? echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
-				<label for="comparison"><? echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
-				<? } else { ?>
+				<label for="description"><?php  echo T_("Describe this quota"); ?> </label><input type="text" name="description" id="description"/>		<br/>
+				<label for="priority"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?> </label><input type="text" name="priority" id="priority" value="50"/>		<br/>
+				<label for="autoprioritise"><?php  echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> </label><input type="checkbox" name="autoprioritise" id="autoprioritise"/>		<br/>
+				<?php  if ($sgqa != -1) { if ($sgqa != -2) { ?>
+				<label for="value"><?php  echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
+				<label for="comparison"><?php  echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
+				<?php  } else { ?>
 				<input type="hidden" name="value" value="-2"/>
 				<input type="hidden" name="comparison" value="-2"/>
-				<? } ?>
-				<label for="completions"><? echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
-				<? } else { ?>
+				<?php  } ?>
+				<label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
+				<?php  } else { ?>
 				<input type="hidden" name="value" value="-1"/>
 				<input type="hidden" name="comparison" value="-1"/>
 				<input type="hidden" name="completions" value="-1"/>
-				<? } ?>
-				<label for="exclude_val"><? echo T_("Exclude from the sample where the value is like"); ?></label>
-				<?
+				<?php  } ?>
+				<label for="exclude_val"><?php  echo T_("Exclude from the sample where the value is like"); ?></label>
+				<?php 
 				
 				$sql = "SELECT sv.val as value, sv.val as description, ''  AS selected
 					FROM sample_var AS sv, sample AS s
@@ -327,13 +327,13 @@ if ($questionnaire_id != false)
 				flush();
 				?>
 				<br/>
-				<input type="hidden" name="exclude_var" value="<? print($sample_var); ?>"/>
-				<input type="hidden" name="questionnaire_id" value="<? print($questionnaire_id); ?>"/>
-				<input type="hidden" name="sample_import_id" value="<? print($sample_import_id); ?>"/>
-				<input type="hidden" name="sgqa" value="<? print($sgqa); ?>"/>
-				<input type="submit" name="add_quota" value="<? print(T_("Add row quota")); ?>"/></p>
+				<input type="hidden" name="exclude_var" value="<?php  print($sample_var); ?>"/>
+				<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
+				<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
+				<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
+				<input type="submit" name="add_quota" value="<?php  print(T_("Add row quota")); ?>"/></p>
 				</form>
-				<?
+				<?php 
 			}
 		}
 	}

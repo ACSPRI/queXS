@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Operator functions for interacting with the database and getting/storing state
  *
@@ -43,6 +43,26 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
 
+/**
+* Creates a random sequence of characters
+*
+* @param mixed $length Length of resulting string
+* @param string $pattern To define which characters should be in the resulting string
+* 
+* From Limesurvey
+*/
+function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
+{
+    $patternlength = strlen($pattern)-1;
+    for($i=0;$i<$length;$i++)
+    {   
+        if(isset($key))
+            $key .= $pattern{rand(0,$patternlength)};
+        else
+            $key = $pattern{rand(0,$patternlength)};
+    }
+    return $key;
+}
 
 /**
  * Check if the project associated with this case is using 
@@ -362,13 +382,16 @@ function get_case_id($operator_id, $create = false)
 			if ($systemsort)
 			{
 				//Just make sure that this case should go to this operator (assigned to this project and skill)
+				//Also check if this is an exclusive appointment
 				$sql = "SELECT c.case_id as caseid
 					FROM `case` as c
 					JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = c.questionnaire_id)
 					JOIN outcome as ou ON (ou.outcome_id = c.current_outcome_id)
 					JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = ou.outcome_type_id)
+					LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
 					WHERE c.sortorder IS NOT NULL
 					AND c.current_operator_id IS NULL
+					AND (apn.require_operator_id IS NULL OR apn.require_operator_id = '$operator_id')
 					ORDER BY c.sortorder ASC
 					LIMIT 1";
 
@@ -418,6 +441,7 @@ function get_case_id($operator_id, $create = false)
 					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND os.outcome_type_id != 2)
 					AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
 					AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
+					AND (apn.require_operator_id IS NULL OR apn.require_operator_id = '$operator_id')
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
 					ORDER BY apn.start DESC, a.start ASC, qsep.priority DESC
 					LIMIT 1";
@@ -496,8 +520,10 @@ function get_case_id($operator_id, $create = false)
 		
 				if (!empty($r3))
 				{
-					$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id)
-						VALUES (NULL, {$r3['sample_id']}, {$r3['questionnaire_id']} , NULL, $operator_id, NULL, 1)";
+					$token = sRandomChars();
+
+					$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
+						VALUES (NULL, {$r3['sample_id']}, {$r3['questionnaire_id']} , NULL, $operator_id, NULL, 1, '$token')";
 	
 					$db->Execute($sql);
 	
@@ -576,7 +602,7 @@ function get_case_id($operator_id, $create = false)
 						if ($lime_sid)
 						{
 							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
-							VALUES (NULL,'','','',$case_id,'".DEFAULT_LOCALE."','N','N',NULL)";
+							VALUES (NULL,'','','','$token','".DEFAULT_LOCALE."','N','N',NULL)";
 		
 							$db->Execute($sql);
 						}
@@ -622,6 +648,31 @@ function get_case_id($operator_id, $create = false)
 
 	return $case_id;
 
+}
+
+
+/**
+ * Get the token based on the case id
+ * 
+ * @param int $case_id The case id
+ * 
+ * @return string|bool The token otherwise false if case doesn't exist
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-02-25
+ */
+function get_token($case_id)
+{
+	global $db;
+
+	$sql = "SELECT token 
+		FROM `case`
+		WHERE case_id = $case_id";
+
+	$token = $db->GetOne($sql);
+
+	if (empty($token)) return FALSE;
+
+	return $token;
 }
 
 /**
@@ -1077,7 +1128,7 @@ function get_respondentselection_url($operator_id,$escape = true,$interface2 = f
 	{
 		$sid = get_limesurvey_id($operator_id,true); //true for RS
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
-			$url = LIME_URL . "index.php?loadall=reload" . $amp . "sid=$sid" . $amp . "token=$call_id" . $amp . "lang=" . DEFAULT_LOCALE;
+			$url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload" . $amp . "sid=$sid" . $amp . "token=$call_id" . $amp . "lang=" . DEFAULT_LOCALE;
 		else
 		{
 			if ($interface2)
@@ -1113,14 +1164,21 @@ function get_limesurvey_url($operator_id)
 
 	if ($case_id)
 	{
+		$sql = "SELECT token
+			FROM `case`
+			WHERE case_id = $case_id";
+
+		$token = $db->GetOne($sql);
+
 		$sid = get_limesurvey_id($operator_id);
-		$url = LIME_URL . "index.php?loadall=reload&amp;sid=$sid&amp;token=$case_id&amp;lang=" . DEFAULT_LOCALE;
+		$url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload&amp;sid=$sid&amp;token=$token&amp;lang=" . DEFAULT_LOCALE;
 		$questionnaire_id = get_questionnaire_id($operator_id);
 		
 		//get prefills
 		$sql = "SELECT lime_sgqa,value
 			FROM questionnaire_prefill
 			WHERE questionnaire_id = '$questionnaire_id'";
+
 		$pf = $db->GetAll($sql);
 	
 		if (!empty($pf))

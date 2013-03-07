@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display notes for this case and the ability to add notes
  *
@@ -63,12 +63,12 @@ if (isset($_GET['add']))
 ?>
 	<form method="post" action="?">
 		<p>
-		<input type="text" class="textclass" name="note" id="note"/><input class="submitclass" type="submit" name="submit" value="<? echo T_("Add note"); ?>"/>
+		<input type="text" class="textclass" name="note" id="note"/><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add note"); ?>"/>
 		</p>
 	</form>
-	<p><a href="?"><? echo T_("Go back"); ?></a></p>
+	<p><a href="?"><?php  echo T_("Go back"); ?></a></p>
 
-<?
+<?php 
 }
 else
 {

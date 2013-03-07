@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Display error message when no cases available
  *
@@ -65,10 +65,10 @@ xhtml_head(T_("No case available"),true,array("css/table.css"),$js);
 $operator_id = get_operator_id();
 
 ?>
-<h1><? echo T_("There is no case currently available"); ?></h1>
-<h2><? echo T_("Reasons:"); ?></h2>
+<h1><?php  echo T_("There is no case currently available"); ?></h1>
+<h2><?php  echo T_("Reasons:"); ?></h2>
 
-<?
+<?php 
 
 /**
  * check for reasons why no case is displayed
@@ -85,13 +85,13 @@ $sql = "SELECT oq.questionnaire_id, q.description
 $rs = $db->GetAll($sql);
 
 ?>
-<p><? echo T_("Assigned questionnaires:"); ?></p>
-<?
+<p><?php  echo T_("Assigned questionnaires:"); ?></p>
+<?php 
 if (!empty($rs))
 	xhtml_table($rs,array("questionnaire_id","description"),array(T_("ID"),T_("Description")));
 else
 {
-	?> <p class='error'><? echo T_("ERROR: No questionnaires assigned to you"); ?></p> <?
+	?> <p class='error'><?php  echo T_("ERROR: No questionnaires assigned to you"); ?></p> <?php 
 }
 
 
@@ -109,13 +109,13 @@ $sql = "SELECT q.description, CONVERT_TZ(sh.start, 'UTC', o.Time_zone_name) as s
 $rs = $db->GetAll($sql);
 
 ?>
-<p><? echo T_("Current shifts available:"); ?></p>
-<?
+<p><?php  echo T_("Current shifts available:"); ?></p>
+<?php 
 if (!empty($rs))
 	xhtml_table($rs,array("description","st","en"),array(T_("Questionnaire"),T_("Shift start"),T_("Shift end")));
 else
 {
-	?> <p class='error'><? echo T_("ERROR: No shifts at this time"); ?></p> <?
+	?> <p class='error'><?php  echo T_("ERROR: No shifts at this time"); ?></p> <?php 
 }
 
 //call restrictions and outside times
@@ -135,11 +135,11 @@ $sql = "SELECT count(*) as c
 $rs = $db->GetRow($sql);
 
 ?>
-<p><? echo T_("Call restrictions:"); ?></p>
-<?
+<p><?php  echo T_("Call restrictions:"); ?></p>
+<?php 
 if ($rs['c'] == 0)
 {
-	?> <p class='error'><? echo T_("ERROR: There are no cases available that fall within call restrictions"); ?></p> <?
+	?> <p class='error'><?php  echo T_("ERROR: There are no cases available that fall within call restrictions"); ?></p> <?php 
 }
 else
 {
@@ -149,8 +149,8 @@ else
 
 
 ?>
-<p><? echo T_("Limesurvey links:"); ?></p>
-<?
+<p><?php  echo T_("Limesurvey links:"); ?></p>
+<?php 
 
 //no link to limesurvey
 $sql = "SELECT q.lime_sid, q.description

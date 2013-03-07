@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
  * Run this script from a command line (only one instance per installation) to
  * "watch" the asterisk server to record outcomes of calls in the queXS database
