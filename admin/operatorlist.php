@@ -54,37 +54,43 @@ if (isset($_POST['submit']))
 	if (isset($_POST['voip'])) $voip = 1;
 	if (isset($_POST['enabled'])) $enabled = 1;
 
-	$sql = "UPDATE operator
-		SET username = " . $db->qstr($_POST['username']) . ",
-		lastName = " . $db->qstr($_POST['lastName']) . ",
-		firstName = " . $db->qstr($_POST['firstName']) . ",
-		extension = " . $db->qstr($_POST['extension']) . ",
-		extension_password = " . $db->qstr($_POST['extension_password']) . ",
-		Time_zone_name = " . $db->qstr($_POST['timezone']) . ",
-		voip = $voip, enabled = $enabled
-		WHERE operator_id = $operator_id";
-
-	$rs = $db->Execute($sql);
-
-	if (!empty($rs))
+	if (HTPASSWD_PATH !== false && $_POST['existing_username'] != $_POST['username'] && empty($_POST['password']))
 	{
-		if (HTPASSWD_PATH !== false && !empty($_POST['password']))
-		{
-			//update password in htaccess
-			include_once(dirname(__FILE__).'/../functions/functions.htpasswd.php');
-			$htp = New Htpasswd(HTPASSWD_PATH);
-			$htp->deleteUser($_POST["existing_username"]);
-			$htp->deleteUser($_POST["username"]);
-			$htp->addUser($_POST["username"],$_POST["password"]);
-		}
-
-		$msg = T_("Successfully updated user");
+		$msg = T_("If changing usernames, you must specify a new password");
 	}
 	else
 	{
-		$msg = T_("Failed to update user. Please make sure the username and extension are unique");
-	}
+		$sql = "UPDATE operator
+			SET username = " . $db->qstr($_POST['username']) . ",
+			lastName = " . $db->qstr($_POST['lastName']) . ",
+			firstName = " . $db->qstr($_POST['firstName']) . ",
+			extension = " . $db->qstr($_POST['extension']) . ",
+			extension_password = " . $db->qstr($_POST['extension_password']) . ",
+			Time_zone_name = " . $db->qstr($_POST['timezone']) . ",
+			voip = $voip, enabled = $enabled
+			WHERE operator_id = $operator_id";
 
+		$rs = $db->Execute($sql);
+
+		if (!empty($rs))
+		{
+			if (HTPASSWD_PATH !== false && !empty($_POST['password']))
+			{
+				//update password in htaccess
+				include_once(dirname(__FILE__).'/../functions/functions.htpasswd.php');
+				$htp = New Htpasswd(HTPASSWD_PATH);
+				$htp->deleteUser($_POST["existing_username"]);
+				$htp->deleteUser($_POST["username"]);
+				$htp->addUser($_POST["username"],$_POST["password"]);
+			}
+
+			$msg = T_("Successfully updated user");
+		}
+		else
+		{
+			$msg = T_("Failed to update user. Please make sure the username and extension are unique");
+		}
+	}
 	$_GET['edit'] = $operator_id;
 }
 
