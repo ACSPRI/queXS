@@ -57,6 +57,149 @@ include("../include/ckeditor/ckeditor.php");
 global $db;
 
 
+if (isset($_POST['questionnaire_id']) && isset($_POST['submit']))
+{
+	//Delete the questionnaire
+
+	$questionnaire_id = intval($_POST['questionnaire_id']);
+
+	$db->StartTrans();
+
+	$sql = "DELETE FROM `appointment`
+		WHERE case_id IN 
+			(SELECT case_id 
+			FROM `case` 
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `call`
+		WHERE case_id IN 
+			(SELECT case_id 
+			FROM `case` 
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+
+	$sql = "DELETE FROM `call_attempt`
+		WHERE case_id IN 
+			(SELECT case_id 
+			FROM `case` 
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+
+	$sql = "DELETE FROM `case_availability`
+		WHERE case_id IN 
+			(SELECT case_id 
+			FROM `case` 
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `case_note`
+		WHERE case_id IN 
+			(SELECT case_id 
+			FROM `case` 
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `contact_phone`
+		WHERE case_id IN 
+			(SELECT case_id 
+			FROM `case` 
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `respondent`
+		WHERE case_id IN 
+			(SELECT case_id 
+			FROM `case` 
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `client_questionnaire`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `operator_questionnaire`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_availability`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_prefill`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_sample`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_sample_exclude_priority`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_sample_priority`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_sample_quota`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_sample_quota_row`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire_sample_quota_row_exclude`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `shift_report`
+		WHERE shift_id IN
+			(SELECT shift_id
+			FROM `shift`
+			WHERE questionnaire_id = $questionnaire_id)";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `shift`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `case`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM `questionnaire`
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$db->Execute($sql);
+
+	$db->CompleteTrans();
+
+}
+
 if (isset($_GET['disable']))
 {
 	$questionnaire_id = intval($_GET['disable']);
@@ -224,10 +367,33 @@ if (isset($_GET['modify']))
 	<?php 
 	
 }
+else if (isset($_GET['delete']))
+{
+	$questionnaire_id = intval($_GET['delete']);
+
+	$sql = "SELECT *
+		FROM questionnaire
+		WHERE questionnaire_id = $questionnaire_id";
+
+	$rs = $db->GetRow($sql);
+
+	echo "<h1>" . $rs['description'] . "</h1>";
+	
+	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
+
+	print "<p>" . T_("Any collected data and the limesurvey instrument will NOT be deleted") . "</p>"; 
+	print "<p>" . T_("The questionnaire will be deleted from queXS including call history, cases, case notes, respondent details, appointments and the links between operators, clients and the questionnaire") . "</p>";
+	print "<p>" . T_("Please confirm you wish to delete the questionnaire") . "</p>";
+
+	print "<form method='post' action='?'>";
+	print "<p><input type='submit' name='submit' value='" . T_("Delete this questionnaire") . "'/>";
+	print "<input type='hidden' name='questionnaire_id' value='$questionnaire_id'/></p>";
+	print "</form>";
+}
 else
 {
-	$columns = array("description","enabledisable","modify");
-	$titles = array(T_("Questionnaire"),T_("Enable/Disable"),("Modify"));
+	$columns = array("description","enabledisable","modify","deletee");
+	$titles = array(T_("Questionnaire"),T_("Enable/Disable"),T_("Modify"),T_("Delete"));
 	
 	$sql = "SELECT
 			description,
@@ -237,7 +403,8 @@ else
 				CONCAT('<a href=\'?disable=',questionnaire_id,'\'>" . T_("Disable") . "</a>') 
 			END
 			as enabledisable,
-			CONCAT('<a href=\'?modify=',questionnaire_id,'\'>" . T_("Modify"). "</a>') as modify
+			CONCAT('<a href=\'?modify=',questionnaire_id,'\'>" . T_("Modify"). "</a>') as modify,
+			CONCAT('<a href=\'?delete=',questionnaire_id,'\'>" . T_("Delete"). "</a>') as deletee
 		FROM questionnaire";
 		
 	$rs = $db->GetAll($sql);

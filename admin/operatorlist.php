@@ -45,34 +45,96 @@ include_once(dirname(__FILE__).'/../db.inc.php');
 include_once(dirname(__FILE__).'/../functions/functions.xhtml.php');
 
 $display = true;
+$msg = "";
 
-if (isset($_POST))
+if (isset($_POST['submit']))
 {
-	foreach($_POST as $key => $val)
+	$operator_id = intval($_POST['operator_id']);
+	$voip = $enabled = 0;
+	if (isset($_POST['voip'])) $voip = 1;
+	if (isset($_POST['enabled'])) $enabled = 1;
+
+	$sql = "UPDATE operator
+		SET username = " . $db->qstr($_POST['username']) . ",
+		lastName = " . $db->qstr($_POST['lastName']) . ",
+		firstName = " . $db->qstr($_POST['firstName']) . ",
+		extension = " . $db->qstr($_POST['extension']) . ",
+		extension_password = " . $db->qstr($_POST['extension_password']) . ",
+		Time_zone_name = " . $db->qstr($_POST['timezone']) . ",
+		voip = $voip, enabled = $enabled
+		WHERE operator_id = $operator_id";
+
+	$rs = $db->Execute($sql);
+
+	if (!empty($rs))
 	{
-		if (substr($key,0,8) == "password")
+		if (HTPASSWD_PATH !== false && !empty($_POST['password']))
 		{
-			if (HTPASSWD_PATH !== false)
-			{
-				$operator_id = intval(substr($key,8));
-				//update password in htaccess
-				include_once(dirname(__FILE__).'/../functions/functions.htpasswd.php');
-				$htp = New Htpasswd(HTPASSWD_PATH);
-				$htp->deleteUser($_POST["username" . $operator_id]);
-				$htp->addUser($_POST["username" . $operator_id],$val);
-			}
+			//update password in htaccess
+			include_once(dirname(__FILE__).'/../functions/functions.htpasswd.php');
+			$htp = New Htpasswd(HTPASSWD_PATH);
+			$htp->deleteUser($_POST["existing_username"]);
+			$htp->deleteUser($_POST["username"]);
+			$htp->addUser($_POST["username"],$_POST["password"]);
 		}
-		else if (substr($key,0,8) == "timezone")
-		{
-			$operator_id = intval(substr($key,8));
-			$tzone = $db->qstr($val);
-			$sql = "UPDATE operator
-				SET Time_zone_name = $tzone
-				WHERE operator_id = '$operator_id'";
-			$db->Execute($sql);
-		}
+
+		$msg = T_("Successfully updated user");
 	}
+	else
+	{
+		$msg = T_("Failed to update user. Please make sure the username and extension are unique");
+	}
+
+	$_GET['edit'] = $operator_id;
 }
+
+
+if (isset($_GET['edit']))
+{
+	xhtml_head(T_("Operator edit"),true,array("../css/table.css"));
+
+	$operator_id = intval($_GET['edit']);
+
+	$sql = "SELECT *,
+	CONCAT('<select name=\'timezone\'>', (SELECT GROUP_CONCAT(CONCAT('<option ', CASE WHEN timezone_template.Time_zone_name LIKE operator.Time_zone_name THEN ' selected=\"selected\" ' ELSE '' END ,'value=\"', Time_zone_name, '\">', Time_zone_name, '</option>') SEPARATOR '') as tzones
+                FROM timezone_template),'</select>') as timezone
+		FROM operator
+		WHERE operator_id = $operator_id";
+
+	$rs = $db->GetRow($sql);
+
+	print "<h2>" . T_("Edit") . ": " . $rs['username'] . "</h2>";
+	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
+	if (!empty($msg)) print "<h3>$msg</h3>";
+
+	?>
+	<form action="?" method="post">
+	<div><label for="username"><?php echo T_("Username") . ": "; ?></label><input type='text' name='username' value="<?php echo $rs['username'];?>"/></div>
+	<?php
+	if (HTPASSWD_PATH !== false) 
+	{ ?>
+	<div><label for="password"><?php echo T_("Update password (leave blank to keep existing password)") . ": "; ?></label><input type='text' name='password'/></div>
+	<?php }
+	?>
+	<div><label for="firstName"><?php echo T_("First name") . ": "; ?></label><input type='text' name='firstName' value="<?php echo $rs['firstName'];?>"/></div>
+	<div><label for="lastName"><?php echo T_("Last name") . ": "; ?></label><input type='text' name='lastName' value="<?php echo $rs['lastName'];?>"/></div>
+	<div><label for="extension"><?php echo T_("Extension") . ": "; ?></label><input type='text' name='extension' value="<?php echo $rs['extension'];?>"/></div>
+	<div><label for="extension_password"><?php echo T_("Extension Password") . ": "; ?></label><input type='text' name='extension_password' value="<?php echo $rs['extension_password'];?>"/></div>
+	<div><label for="timezone"><?php echo T_("Timezone") . ": ";?></label><?php echo $rs['timezone'];?></div>
+	<div><label for="enabled"><?php echo T_("Enabled") . "? ";?></label><input type="checkbox" name="enabled" <?php if ($rs['enabled'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+	<div><label for="voip"><?php echo T_("Uses VoIP") . "? ";?></label><input type="checkbox" name="voip" <?php if ($rs['voip'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+	<div><input type='hidden' name='operator_id' value='<?php echo $operator_id;?>'/></div>
+	<div><input type='hidden' name='existing_username' value="<?php echo $rs['username'];?>"/></div>
+	<div><input type="submit" name="submit" value="<?php echo T_("Update operator");?>"/></div>
+	</form>
+	<?php	
+
+	
+	xhtml_foot();
+	exit();
+}
+
+
 
 if (isset($_GET['voipdisable']))
 {
@@ -175,8 +237,8 @@ if ($display)
 				CONCAT('<a href=\'?voipenable=',operator_id,'\'>" . T_("Enable VoIP") . "</a>') 
 			ELSE
 				CONCAT('<a href=\'?voipdisable=',operator_id,'\'>" . T_("Disable VoIP") . "</a>') 
-			END
-			as voipenabledisable,
+			END as voipenabledisable,
+			CONCAT('<a href=\'?edit=',operator_id,'\'>" . T_("Edit") . "</a>')  as edit,
 			username
 		FROM operator";
 	
@@ -184,8 +246,8 @@ if ($display)
 	
 	xhtml_head(T_("Operator list"),true,array("../css/table.css"));
 	
-	$columns = array("name","username","enabledisable","timezone");
-	$titles = array(T_("Operator"),T_("Username"),T_("Enable/Disable"),T_("Update timezone"));
+	$columns = array("name","username","enabledisable","edit");
+	$titles = array(T_("Operator"),T_("Username"),T_("Enable/Disable"),T_("Edit"));
 
 	if (VOIP_ENABLED)
 	{
@@ -200,12 +262,6 @@ if ($display)
 		$titles[] = T_("Enable/Disable VoIP");
 		$titles[] = T_("Windows VoIP");
 		$titles[] = T_("*nix VoIP");
-	}
-
-	if (HTPASSWD_PATH !== false)
-	{
-		$columns[] = "password";
-		$titles[] = T_("Update password");
 	}
 
 	xhtml_table($rs,$columns,$titles);
