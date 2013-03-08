@@ -55,6 +55,7 @@ print "<li><a href=\"?page=" . LIME_URL . "admin/admin.php\">" . T_("Administer 
 
 print "<li><h3>" . T_("Sample/List management") . "</h3><ul>";
 print "<li><a href=\"?page=import.php\">" . T_("Import a sample file (in CSV form)") . "</a></li>";
+print "<li><a href=\"?page=samplelist.php\">" . T_("Sample management") . "</a></li>";
 print "<li><a href=\"?page=assignsample.php\">" . T_("Assign samples to questionnaires") . "</a></li>";
 print "<li><a href=\"?page=questionnaireprefill.php\">" . T_("Set values in questionnaire to pre fill") . "</a></li></ul></li>";
 

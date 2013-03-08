@@ -1600,6 +1600,7 @@ CREATE TABLE `sample_import` (
   `description` varchar(255) collate utf8_unicode_ci NOT NULL,
   `call_restrict` tinyint(1) NOT NULL default '1',
   `refusal_conversion` tinyint(1) NOT NULL default '1',
+  `enabled` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`sample_import_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

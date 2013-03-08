@@ -4,10 +4,10 @@ New Feature: Replace queXS caseid as token with a random token to allow for safe
 New Feature: Allow for responents to self complete the questionnaire via email invitation
 New Feature: Allow restricting appointment to just yourself
 New Feature: Added ability to edit operators
-New Featuer: Can delete a queXS questionnaire
-
+New Feature: Can delete a queXS questionnaire
+New Feature: List and enable/disable sample files
+New Feature: Deidentify (delete fields) from sample files
 Fixed Bug: Replaced php short tags with long tags
-
 
 Database updates:
 
@@ -35,6 +35,10 @@ ALTER TABLE `questionnaire` ADD `self_complete` TINYINT( 1 ) NOT NULL DEFAULT '0
 ADD `lime_mode` VARCHAR( 64 ) NULL COMMENT 'Limesurvey mode for respondent self completion' AFTER `self_complete` ,
 ADD `lime_template` VARCHAR( 128 ) NULL COMMENT 'Limesurvey template for respondent self completion' AFTER `lime_mode` ,
 ADD `lime_endurl` VARCHAR( 256 ) NULL COMMENT 'Forwarding end URL for respondent self completion' AFTER `lime_template` ;
+
+Allow for enabling/disabling sample files:
+
+ALTER TABLE `sample_import` ADD `enabled` TINYINT( 1 ) NOT NULL DEFAULT '1';
 
 queXS 1.6.1 - Changes since 1.6.0
 
