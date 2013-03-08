@@ -44,6 +44,21 @@ include_once(dirname(__FILE__).'/../db.inc.php');
  */
 include_once(dirname(__FILE__).'/../functions/functions.xhtml.php');
 
+
+
+if (isset($_POST['submitr']))
+{
+	$sample_import_id = intval($_POST['sample_import_id']);
+	
+	$sql = "UPDATE sample_import
+		SET description = "  . $db->qstr($_POST['description']) . "
+		WHERE sample_import_id = $sample_import_id";
+
+	$db->Execute($sql);
+
+	$_GET['rename'] = $sample_import_id; 
+}
+
 if (isset($_POST['submit']))
 {
 	$sample_import_id = intval($_POST['sample_import_id']);
@@ -67,6 +82,33 @@ if (isset($_POST['submit']))
 	$_GET['edit'] = $sample_import_id;
 }
 
+if (isset($_GET['rename']))
+{
+	xhtml_head(T_("Rename"),true,array("../css/table.css"));
+
+	$sample_import_id = intval($_GET['rename']);
+
+	$sql = "SELECT description
+		FROM sample_import
+		WHERE sample_import_id = $sample_import_id";
+
+	$rs = $db->GetOne($sql);
+
+	print "<h2>" . T_("Rename") . ": " . $rs. "</h2>";
+	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
+
+	?>
+	<form action="?" method="post">
+	<div><label for='description'><?php echo T_("Description") . ": "; ?></label><input type='text' name='description' value="<?php echo $rs;?>"/></div>
+	<div><input type='hidden' name='sample_import_id' value='<?php echo $sample_import_id;?>'/></div>
+	<div><input type="submit" name="submitr" value="<?php echo T_("Rename");?>"/></div>
+	</form>
+	<?php	
+
+	
+	xhtml_foot();
+	exit();
+}
 
 if (isset($_GET['edit']))
 {
@@ -137,6 +179,7 @@ $sql = "SELECT
 		END
 		as enabledisable,
 		CONCAT('<a href=\'?edit=',sample_import_id,'\'>" . T_("Deidentify") . "</a>')  as did,
+		CONCAT('<a href=\'?rename=',sample_import_id,'\'>" . T_("Rename") . "</a>')  as rname,
 		description
 	FROM sample_import";
 
@@ -144,8 +187,8 @@ $rs = $db->GetAll($sql);
 
 xhtml_head(T_("Sample list"),true,array("../css/table.css"));
 
-$columns = array("description","enabledisable","did");
-$titles = array(T_("Sample"),T_("Enable/Disable"),T_("Deidentify"));
+$columns = array("description","enabledisable","did","rname");
+$titles = array(T_("Sample"),T_("Enable/Disable"),T_("Deidentify"),T_("Rename"));
 
 xhtml_table($rs,$columns,$titles);
 
