@@ -124,7 +124,8 @@ if ($questionnaire_id != false)
 	$sql = "SELECT si.sample_import_id,si.description
 		FROM sample_import as si
 		LEFT JOIN questionnaire_sample as q ON (q.questionnaire_id = '$questionnaire_id' AND q.sample_import_id = si.sample_import_id)
-		WHERE q.questionnaire_id is NULL";
+		WHERE q.questionnaire_id is NULL
+		AND si.enabled = 1";
 	
 	$qs = $db->GetAll($sql);
 

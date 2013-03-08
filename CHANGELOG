@@ -31,6 +31,10 @@ ADD `lime_mode` VARCHAR( 64 ) NULL COMMENT 'Limesurvey mode for respondent self 
 ADD `lime_template` VARCHAR( 128 ) NULL COMMENT 'Limesurvey template for respondent self completion' AFTER `lime_mode` ,
 ADD `lime_endurl` VARCHAR( 256 ) NULL COMMENT 'Forwarding end URL for respondent self completion' AFTER `lime_template` ;
 
+Allow for enabling/disabling sample files:
+
+ALTER TABLE `sample_import` ADD `enabled` TINYINT( 1 ) NOT NULL DEFAULT '1';
+
 queXS 1.6.1 - Changes since 1.6.0
 
 New Feature: Include paradata/metadata in data output (number call attempts, number of answering machine messages and all sample variables)
