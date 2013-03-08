@@ -40,6 +40,11 @@ Allow for enabling/disabling sample files:
 
 ALTER TABLE `sample_import` ADD `enabled` TINYINT( 1 ) NOT NULL DEFAULT '1';
 
+Contact phone should allow for char phone numbers:
+
+ALTER TABLE `contact_phone` CHANGE `phone` `phone` CHAR( 30 ) NOT NULL 
+
+
 queXS 1.6.1 - Changes since 1.6.0
 
 New Feature: Include paradata/metadata in data output (number call attempts, number of answering machine messages and all sample variables)

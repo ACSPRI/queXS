@@ -346,7 +346,7 @@ CREATE TABLE `contact_phone` (
   `contact_phone_id` bigint(20) NOT NULL auto_increment,
   `case_id` bigint(20) NOT NULL,
   `priority` tinyint(1) NOT NULL default '1',
-  `phone` bigint(20) NOT NULL,
+  `phone` char(30) collate utf8_unicode_ci NOT NULL,
   `description` varchar(255) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`contact_phone_id`),
   KEY `case_id` (`case_id`)
