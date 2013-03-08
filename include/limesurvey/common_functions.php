@@ -4227,13 +4227,27 @@ function getHeader($meta = false)
     $js_header_includes = array_unique($js_header_includes);
     $css_header_includes = array_unique($css_header_includes);
 
-    $js_header_includes[] = '/../../js/popup.js'; //queXS Addition
-    include_once("quexs.php");
-    if (AUTO_LOGOUT_MINUTES !== false)
-    {
-        $js_header_includes[] = $rooturl . "/../../js/childnap.js"; //queXS Addition
-    }
+	$interviewer=returnglobal('interviewer');
+	if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true))
+	{
+		$interviewer = true;
+		$_SESSION['interviewer'] = true;
+	}
+	else
+	{
+		$interviewer = false;
+	}
 
+    if ($interviewer)
+    {
+    	$js_header_includes[] = '/../../js/popup.js'; //queXS Addition
+	    include_once("quexs.php");
+	    if (AUTO_LOGOUT_MINUTES !== false)
+	    {
+	        $js_header_includes[] = $rooturl . "/../../js/childnap.js"; //queXS Addition
+	    }
+    }
+	
     if (isset($_SESSION['s_lang']) && $_SESSION['s_lang'])
     {
         $surveylanguage= $_SESSION['s_lang'];

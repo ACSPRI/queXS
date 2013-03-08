@@ -5,7 +5,7 @@ New Feature: Allow for responents to self complete the questionnaire via email i
 New Feature: Allow restricting appointment to just yourself
 New Feature: Added ability to edit operators
 New Feature: Can delete a queXS questionnaire
-New Feature: List and enable/disable sample files
+New Feature: List, rename and enable/disable sample files
 New Feature: Deidentify (delete fields) from sample files
 Fixed Bug: Replaced php short tags with long tags
 
