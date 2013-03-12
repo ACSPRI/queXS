@@ -153,11 +153,6 @@ if (isset($_POST['questionnaire_id']) && isset($_POST['submit']))
 
 	$db->Execute($sql);
 
-	$sql = "DELETE FROM `questionnaire_sample_priority`
-		WHERE questionnaire_id = $questionnaire_id";
-
-	$db->Execute($sql);
-
 	$sql = "DELETE FROM `questionnaire_sample_quota`
 		WHERE questionnaire_id = $questionnaire_id";
 
