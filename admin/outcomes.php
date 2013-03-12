@@ -96,6 +96,36 @@ if ($questionnaire_id != false)
 
 	xhtml_table($db->GetAll($sql),array("drawn","count"),array(T_("Status"),T_("Number")));
 
+	print "<p>" . T_("Case availability (cases with temporary or appointment outcomes)") ."</p>";
+
+	$sql = "SELECT count(c.case_id) as available, si.description
+                                        FROM `case`  as c
+                                        LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
+                                        JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
+                                        JOIN (questionnaire_sample as qs, questionnaire as q, outcome as ou) on (q.questionnaire_id = $questionnaire_id and c.questionnaire_id = q.questionnaire_id and qs.sample_import_id = s.import_id and qs.questionnaire_id = q.questionnaire_id and ou.outcome_id = c.current_outcome_id)
+                                        LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
+                                        LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
+                                        LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
+                                        LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+                                        LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
+                                        LEFT JOIN case_availability AS casa ON (casa.case_id = c.case_id)
+                                        LEFT JOIN availability AS ava ON (ava.availability_group_id = casa.availability_group_id)
+                                        WHERE c.current_operator_id IS NULL
+					AND ou.outcome_type_id IN (1,5)
+                                        AND (casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
+                                        AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
+                                        AND ap.case_id is NULL
+                                        AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
+                                        AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL AND ou.outcome_type_id != 2)
+                                        AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND ou.outcome_type_id != 2)
+                                        AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
+                                        AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
+                                        AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+                                     
+group by s.import_id";
+
+	xhtml_table($db->GetAll($sql),array("description","available"),array(T_("Sample"),T_("Cases currently available to call")),"tclass",false,array("available"));
+
 	$atime = get_average_time_questionnaire(10,$questionnaire_id);
 	$mins = intval($atime / 60);
 	$secs = $atime % 60;
