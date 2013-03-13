@@ -124,7 +124,16 @@ if ($questionnaire_id != false)
                                      
 group by s.import_id";
 
-	xhtml_table($db->GetAll($sql),array("description","available"),array(T_("Sample"),T_("Cases currently available to call")),"tclass",false,array("available"));
+	$rs = $db->GetAll($sql);
+	
+	if (empty($rs))
+	{
+		print "<div>" . T_("No cases currently available to call") . "</div>";
+	}
+	else
+	{
+		xhtml_table($rs,array("description","available"),array(T_("Sample"),T_("Cases currently available to call")),"tclass",false,array("available"));
+	}
 
 	$atime = get_average_time_questionnaire(10,$questionnaire_id);
 	$mins = intval($atime / 60);
