@@ -1886,8 +1886,33 @@ function do_listwithcomment($ia)
             {
                 $check_ans = CHECKED;
             }
+
+		//queXS check if this is designed to set an outcome:
+		$quexs_outcome = false;
+		$quexs_outcome_code = 0;
+		if (strncasecmp($ansrow['answer'],"{OUTCOME:",9) == 0)
+		{
+			$quexs_pos = strrpos($ansrow['answer'],"}",8);
+			if ($quexs_pos != false)
+			{
+				$quexs_outcome_code = substr($ansrow['answer'],9,$quexs_pos - 9);
+				$quexs_outcome = true;
+				include_once(dirname(__FILE__) . '/quexs.php');
+				$ansrow['answer'] = quexs_template_replace($ansrow['answer']);
+			}
+		}	
+
+		//queXS check if this is designed to schedule an appointment:
+		$quexs_appointment = false;
+		if (strncasecmp($ansrow['answer'],"{SCHEDULEAPPOINTMENT}",21) == 0)
+		{
+			$ansrow['answer'] = $clang->gT("Schedule Appointment");
+			$quexs_appointment = true;
+		}
+
+
             $answer .= '		<li>
-			<input type="radio" name="'.$ia[1].'" id="answer'.$ia[1].$ansrow['code'].'" value="'.$ansrow['code'].'" class="radio" '.$check_ans.' onclick="'.$checkconditionFunction.'(this.value, this.name, this.type)" />
+			<input type="radio" name="'.$ia[1].'" id="answer'.$ia[1].$ansrow['code'].'" value="'.$ansrow['code'].'" class="radio" '.$check_ans.' onclick="'.$checkconditionFunction.'(this.value, this.name, this.type)' . quexs_submit_on_click(!$quexs_outcome && !$quexs_appointment).quexs_outcome($quexs_outcome_code).quexs_appointment($quexs_appointment)  . '" />
 			<label for="answer'.$ia[1].$ansrow['code'].'" class="answertext">'.$ansrow['answer'].'</label>
 		</li>
             ';
