@@ -83,7 +83,7 @@ function is_using_availability($case_id)
 		WHERE qa.questionnaire_id = c.questionnaire_id
 		AND c.case_id = $case_id";
 
-	$rs = $db->CacheGetRow($sql);
+	$rs = $db->GetRow($sql);
 
 	if ($rs['cc'] > 0)
 		return true;
@@ -582,7 +582,7 @@ function get_case_id($operator_id, $create = false)
 					//add respondent details to respondent (if such details exist in the sample)
 	
 					$sql = "INSERT INTO respondent (case_id,firstName,lastName,Time_zone_name) 
-						SELECT $case_id as case_id, s1.val as firstName, s2.val as lastName, s3.Time_zone_name as Time_zone_name  
+						SELECT $case_id as case_id, IFNULL(s1.val,'') as firstName, IFNULL(s2.val,'') as lastName, s3.Time_zone_name as Time_zone_name  
 						FROM sample as s3
 						LEFT JOIN sample_var as s2 on (s2.sample_id = '{$r3['sample_id']}' and s2.type = 7) 
 						LEFT JOIN sample_var as s1 on (s1.sample_id = '{$r3['sample_id']}' and s1.type = 6) 
