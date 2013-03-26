@@ -50,7 +50,7 @@ include_once(dirname(__FILE__).'/../db.inc.php');
  */
 function only_numbers($str)
 {
-	return ereg_replace('[^0-9]*','',$str);
+	return preg_replace("/[^0-9]/", "",$str);
 }
 
 

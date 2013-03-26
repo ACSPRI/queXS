@@ -562,7 +562,7 @@ function get_case_id($operator_id, $create = false)
 							$i = 1;
 							foreach ($r5 as $r5v)
 							{
-								$tnum =  ereg_replace('[^0-9]*','',$r5v['phone']); 
+								$tnum =  preg_replace("/[^0-9]/", "",$r5v['phone']); 
 								if (empty($tnum)) $tnum = "312345678"; //handle error condition
 								$sql = "INSERT INTO contact_phone (case_id,priority,phone)
 									VALUES ($case_id,$i,$tnum)";

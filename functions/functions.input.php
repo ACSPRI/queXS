@@ -44,7 +44,7 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 function bigintval($val)
 {
-	$r = ereg_replace('[^0-9]*','',$val);
+	$r = preg_replace("/[^0-9]/", "",$val);
 	if (empty($r))
 		return 0;
 	else
