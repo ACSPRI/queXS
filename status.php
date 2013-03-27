@@ -76,7 +76,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 
 xhtml_head(T_("Status"),true,array("css/status.css"),$js,$btext,60);
 
-print "<div class='text'>" . get_operator_time($operator_id,"%a %d %b %h:%i%p") ."</div>";
+print "<div class='text'>" . get_operator_time($operator_id,DATE_TIME_FORMAT) ."</div>";
 
 //need to determine VoIP status by confirming with the VoIP server if this operator is online
 
@@ -124,7 +124,7 @@ else if ($state == 3)
 $ca = get_call_attempt($operator_id,false);
 if ($ca)
 {
-	print "<div class='text'>" . get_respondent_time(get_respondent_id($ca),"%h:%i%p") ."</div>";
+	print "<div class='text'>" . get_respondent_time(get_respondent_id($ca),TIME_FORMAT) ."</div>";
 	if (is_on_appointment($ca)) print "<div class='online statusbutton'>" . T_("APPT") . "</div>";
 	if (missed_appointment($ca)) print "<div class='tobecoded statusbutton'>" . T_("MISSED") . "</div>";
 }
