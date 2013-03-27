@@ -3433,6 +3433,55 @@
                     'readWrite'=>'N',
                     );
 		}
+
+		//add operator and respondent details
+		$this->knownVars["OPERATOR:FIRSTNAME"] = 
+			array('code' => $connect->GetOne("	SELECT o.firstName
+								FROM operator as o, `case` as c
+								WHERE c.token = '{$_SESSION['token']}'
+								AND o.operator_id = c.current_operator_id"),
+		            'jsName_on'=>'',
+                	    'jsName'=>'',
+	                    'readWrite'=>'N',
+        	            );
+
+		$this->knownVars["OPERATOR:LASTNAME"] = 
+			array('code' => $connect->GetOne("	SELECT o.lastName
+								FROM operator as o, `case` as c
+								WHERE c.token = '{$_SESSION['token']}'
+								AND o.operator_id = c.current_operator_id"),
+		            'jsName_on'=>'',
+                	    'jsName'=>'',
+	                    'readWrite'=>'N',
+        	            );
+
+		$this->knownVars["RESPONDENT:FIRSTNAME"] = 
+			array('code' => $connect->GetOne("	SELECT r.firstName
+								FROM respondent as r, `case` as c, call_attempt as ca
+								WHERE c.token = '{$_SESSION['token']}'
+								AND ca.case_id = c.case_id
+								AND ca.end IS NULL
+								AND r.respondent_id = ca.respondent_id"),
+		            'jsName_on'=>'',
+                	    'jsName'=>'',
+	                    'readWrite'=>'N',
+        	            );
+
+		$this->knownVars["RESPONDENT:LASTNAME"] = 
+			array('code' => $connect->GetOne("	SELECT r.lastName
+								FROM respondent as r, `case` as c, call_attempt as ca
+								WHERE c.token = '{$_SESSION['token']}'
+								AND ca.case_id = c.case_id
+								AND ca.end IS NULL
+								AND r.respondent_id = ca.respondent_id"),
+		            'jsName_on'=>'',
+                	    'jsName'=>'',
+	                    'readWrite'=>'N',
+        	            );
+
+
+
+				
 	
             }
             else
@@ -3479,6 +3528,17 @@
                     'jsName'=>'',
                     'readWrite'=>'N',
                     );
+		}
+
+		$oa= array("OPERATOR:FIRSTNAME","OPERATOR:LASTNAME","RESPONDENT:FIRSTNAME","RESPONDENT:LASTNAME");
+		foreach ($oa as $o)
+		{
+			$this->knownVars[$o] = array(
+	                    'code'=>"",
+        	            'jsName_on'=>'',
+	                    'jsName'=>'',
+	                    'readWrite'=>'N',
+        	            );
 		}
 	
 

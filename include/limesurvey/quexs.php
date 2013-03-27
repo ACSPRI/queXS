@@ -632,10 +632,6 @@ function quexs_core_replace()
 	$core['PERCCOMPLETE'] = round(get_percent_complete($case_id),0);
 	$core['ENDINTERVIEWURL'] = get_end_interview_url();
 	$core['STARTINTERVIEWURL'] = get_start_interview_url();
-	$core['OPERATOR:FIRSTNAME'] = get_operator_variable('firstName',$operator_id);
-	$core['OPERATOR:LASTNAME'] = get_operator_variable('lastName',$operator_id);
-	$core['RESPONDENT:FIRSTNAME'] = get_respondent_variable('firstName',$respondent_id);
-	$core['RESPONDENT:LASTNAME'] = get_respondent_variable('lastName',$respondent_id);
 
 	return $core;
 }

@@ -171,6 +171,9 @@ if (!is_respondent_selection($operator_id))
 else 
 	$data = get_respondentselection_url($operator_id);
 
+
+$db->CompleteTrans();
+
 xhtml_object($data,"main-content"); 
 
 ?>
@@ -289,6 +292,5 @@ xhtml_foot();
 
 
 	//if ($db->HasFailedTrans()){ print "<p>FAILED AT END of index</p>"; exit();}
-$db->CompleteTrans();
 
 ?>
