@@ -1,3 +1,13 @@
+queXS 1.7.2 - Changes since 1.7.1
+
+New Feature: Add display of cases currently available by sample (in: questionnaire outcomes)
+Fixed Bug: Fixed .htaccess.example for limesurvey/admin directory
+Fixed Bug: Fixed errors that seemed to afflict mysql 5.1.68 on windows with PHP 5.4 and IIS (not creating a new case due to transaction failure)
+Fixed Bug: Removed deprecated ereg_replace
+Fixed Bug: Replace date time hardcoding with defaults from config
+Fixed Bug: Add operator and respondent details to core replacements in Limesurvey expression manager (need to use capitalisation)
+Translations: Updated and a new full Czech translation (thank you Zbyněk Schwarz)
+
 queXS 1.7.1 - Changes since 1.7.0
 
 Fixed Bug: Deletion of queXS questionnaire failed
