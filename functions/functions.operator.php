@@ -564,16 +564,16 @@ function get_case_id($operator_id, $create = false)
 							{
 								$tnum =  preg_replace("/[^0-9]/", "",$r5v['phone']); 
 								if (empty($tnum)) $tnum = "312345678"; //handle error condition
-								$sql = "INSERT INTO contact_phone (case_id,priority,phone)
-									VALUES ($case_id,$i,$tnum)";
+								$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
+									VALUES ($case_id,$i,$tnum,'')";
 								$db->Execute($sql);
 								$i++;
 							}
 						}
 						else
 						{
-							$sql = "INSERT INTO contact_phone (case_id,priority,phone)
-								VALUES ($case_id,1,312345678)";
+							$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
+								VALUES ($case_id,1,312345678,'test only')";
 							$db->Execute($sql);
 						}
 
