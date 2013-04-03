@@ -800,7 +800,7 @@ function get_operator_id()
 
 	$sql = "SELECT operator_id
 		FROM operator
-		WHERE username = '{$_SERVER['PHP_AUTH_USER']}'
+		WHERE username = " . $db->qstr($_SERVER['PHP_AUTH_USER']) . "
 		AND enabled = 1";
 
 	$o = $db->GetRow($sql);
