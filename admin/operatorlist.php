@@ -101,13 +101,16 @@ if (isset($_GET['edit']))
 
 	$operator_id = intval($_GET['edit']);
 
-	$sql = "SELECT *,
-	CONCAT('<select name=\'timezone\'>', (SELECT GROUP_CONCAT(CONCAT('<option ', CASE WHEN timezone_template.Time_zone_name LIKE operator.Time_zone_name THEN ' selected=\"selected\" ' ELSE '' END ,'value=\"', Time_zone_name, '\">', Time_zone_name, '</option>') SEPARATOR '') as tzones
-                FROM timezone_template),'</select>') as timezone
+	$sql = "SELECT *
 		FROM operator
 		WHERE operator_id = $operator_id";
 
 	$rs = $db->GetRow($sql);
+
+	$sql = "SELECT Time_zone_name as value, Time_zone_name as description
+		FROM timezone_template";
+
+	$tz = $db->GetAll($sql);
 
 	print "<h2>" . T_("Edit") . ": " . $rs['username'] . "</h2>";
 	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
@@ -126,7 +129,7 @@ if (isset($_GET['edit']))
 	<div><label for="lastName"><?php echo T_("Last name") . ": "; ?></label><input type='text' name='lastName' value="<?php echo $rs['lastName'];?>"/></div>
 	<div><label for="extension"><?php echo T_("Extension") . ": "; ?></label><input type='text' name='extension' value="<?php echo $rs['extension'];?>"/></div>
 	<div><label for="extension_password"><?php echo T_("Extension Password") . ": "; ?></label><input type='text' name='extension_password' value="<?php echo $rs['extension_password'];?>"/></div>
-	<div><label for="timezone"><?php echo T_("Timezone") . ": ";?></label><?php echo $rs['timezone'];?></div>
+	<div><label for="timezone"><?php echo T_("Timezone") . ": ";?></label><?php display_chooser($tz,"timezone","timezone",false,false,false,false,array("value",$rs['Time_zone_name'])); ?></div>
 	<div><label for="enabled"><?php echo T_("Enabled") . "? ";?></label><input type="checkbox" name="enabled" <?php if ($rs['enabled'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
 	<div><label for="voip"><?php echo T_("Uses VoIP") . "? ";?></label><input type="checkbox" name="voip" <?php if ($rs['voip'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
 	<div><input type='hidden' name='operator_id' value='<?php echo $operator_id;?>'/></div>
