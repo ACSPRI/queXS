@@ -131,7 +131,7 @@ if (!defined('QUEXS_PATH')) define('QUEXS_PATH', '/quexs/');
 
 $protocol = "http://";
 
-if (!empty($_SERVER['HTTPS'])) 
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) 
 {
 	$protocol = "https://";
 }
