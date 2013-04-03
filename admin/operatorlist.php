@@ -227,13 +227,6 @@ if ($display)
 {
 	$sql = "SELECT
 			CONCAT(firstName, ' ', lastName) as name,
-			CONCAT('<form action=\'?\' method=\'post\'><input type=\'text\' name=\'password', operator_id, '\'/><input type=\'hidden\' name=\'username', operator_id, '\' value=\'', username, '\'/><input type=\'submit\' value=\'" . T_("Update password") . "\'/></form>') as password,
-			CONCAT('<form action=\'?\' method=\'post\'><select name=\'timezone', operator_id, '\'/>', 
-
-(SELECT GROUP_CONCAT(CONCAT('<option ', CASE WHEN timezone_template.Time_zone_name LIKE operator.Time_zone_name THEN ' selected=\"selected\" ' ELSE '' END ,'value=\"', Time_zone_name, '\">', Time_zone_name, '</option>') SEPARATOR '') as tzones
-                FROM timezone_template)
-
-			  ,'</select><input type=\'submit\' value=\'" . T_("Update timezone") . "\'/></form>') as timezone,
 			CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . T_("Windows bat file") . "</a>') as winbat,
 			CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . T_("*nix script file") . "</a>') as sh,
 			CASE WHEN enabled = 0 THEN
