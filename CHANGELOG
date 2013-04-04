@@ -1,3 +1,12 @@
+queXS 1.7.3 - Changes since 1.7.2
+
+Fixed Bug: Reliance on JS executing as PHP for ckeditor
+Fixed Bug: Use of group concat for timezones is character limited and causes timezone list to truncate
+Fixed Bug: PEAR Calendar class issuing PHP Strict notices
+Fixed Bug: Adding a contact phone without a description causes new case transaction to fail on some versions of MySQL
+Fixed Bug: Can't add operator with \ in name 
+Fixed Bug: HTTPS incorrectly being used in admin pages on IIS
+
 queXS 1.7.2 - Changes since 1.7.1
 
 New Feature: Add display of cases currently available by sample (in: questionnaire outcomes)
