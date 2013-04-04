@@ -10,34 +10,20 @@ CKEDITOR.plugins.add( 'tokens',
       // Gets the list of tags from the settings.
       var tags = []; //new Array();
       //this.add('value', 'drop_text', 'drop_label');
-
-	<?php
-		include_once("../../../../config.inc.php");
-		include_once("../../../../lang.inc.php");
-		
-		$tags = array();
-		$tags[] = array("{PeriodOfDay}",T_("Period of day (e.g. Morning)"));
-		$tags[] = array("{Respondent:firstName}",T_("Respondent first name"));
-		$tags[] = array("{Respondent:lastName}",T_("Respondent last name"));
-		$tags[] = array("{Operator:firstName}",T_("Operator first name"));
-		$tags[] = array("{Operator:lastName}",T_("Operator last name"));
-		$tags[] = array("{Sample:var}",T_("Sample value (replace var)"));
-
-		$tn = 0;
-		foreach($tags as $t)
-		{
-			print "tags[$tn]=[\"{$t[0]}\",\"{$t[1]}\",\"{$t[1]}\"];\n";
-			$tn++;
-		}
-	?>
+      tags[0]=["{PERIODOFDAY}","Period of day (e.g. Morning)","Period of day (e.g. Morning)"];
+      tags[1]=["{RESPONDENT:FIRSTNAME}","Respondent first name","Respondent first name"];
+      tags[2]=["{RESPONDENT:LASTNAME}","Respondent last name","Respondent last name"];
+      tags[3]=["{OPERATOR:FIRSTNAME}", "Operator first name","Operator first name"];
+      tags[4]=["{OPERATOR:LASTNAME}","Operator last name","Operator last name"];
+      tags[5]=["{SAMPLE:VAR}","Sample value (replace VAR)","Sample value (replace VAR)"];
 
       // Create style objects for all defined styles.
 
       editor.ui.addRichCombo( 'tokens',
          {
-            label : "<?php echo T_("Insert tokens"); ?>",
-            title :"<?php echo T_("Insert tokens"); ?>",
-            voiceLabel : "<?php echo T_("Insert tokens"); ?>",
+            label : "Insert tokens",
+            title :"Insert tokens",
+            voiceLabel : "Insert tokens",
             className : 'cke_format',
             multiSelect : false,
 
@@ -49,7 +35,7 @@ CKEDITOR.plugins.add( 'tokens',
 
             init : function()
             {
-               this.startGroup( "<?php echo T_("Insert Tokens"); ?>" );
+               this.startGroup( "Insert Tokens" );
                //this.add('value', 'drop_text', 'drop_label');
                for (var this_tag in tags){
                   this.add(tags[this_tag][0], tags[this_tag][1], tags[this_tag][2]);
