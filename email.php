@@ -143,6 +143,25 @@ if (isset($_POST['firstname']))
 
 		$sql = "SELECT stg_value
 			FROM " . LIME_PREFIX . "settings_global
+			WHERE stg_name = 'emailsmtpssl'";
+
+		$emailsmtpssl = $db->GetOne($sql);
+
+		if (isset($emailsmtpssl) && trim($emailsmtpssl)!=='' && $emailsmtpssl!==0) 
+		{
+			if ($emailsmtpssl===1) 
+			{
+				$mail->SMTPSecure = "ssl";
+			}
+			else 
+			{
+				$mail->SMTPSecure = $emailsmtpssl;
+			}
+		}
+
+
+		$sql = "SELECT stg_value
+			FROM " . LIME_PREFIX . "settings_global
 			WHERE stg_name = 'emailmethod'";
 
 		$emailmethod = $db->GetOne($sql);
