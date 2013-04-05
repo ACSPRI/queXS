@@ -143,6 +143,48 @@ if (isset($_POST['firstname']))
 
 		$sql = "SELECT stg_value
 			FROM " . LIME_PREFIX . "settings_global
+			WHERE stg_name = 'emailmethod'";
+
+		$emailmethod = $db->GetOne($sql);
+
+		    switch ($emailmethod) {
+			case "qmail":
+			    $mail->IsQmail();
+			    break;
+			case "smtp":
+			    $mail->IsSMTP();
+			    
+				$sql = "SELECT stg_name,stg_value
+					FROM " . LIME_PREFIX . "settings_global";				
+				$ec =$db->GetAssoc($sql);
+		
+			    if (strpos($ec['emailsmtphost'],':')>0)
+			    {
+				$mail->Host = substr($ec['emailsmtphost'],0,strpos($ec['emailsmtphost'],':'));
+				$mail->Port = substr($ec['emailsmtphost'],strpos($ec['emailsmtphost'],':')+1);
+			    }
+			    else {
+				$mail->Host = $ec['emailsmtphost'];
+			    }
+			    $mail->Username =$ec['emailsmtpuser'];
+			    $mail->Password =$ec['emailsmtppassword'];
+			    if (trim($ec['emailsmtpuser'])!="")
+			    {
+				$mail->SMTPAuth = true;
+			    }
+			    break;
+			case "sendmail":
+			    $mail->IsSendmail();
+			    break;
+			default:
+			    //Set to the default value to rule out incorrect settings.
+			    $emailmethod="mail";
+			    $mail->IsMail();
+		    }
+
+
+		$sql = "SELECT stg_value
+			FROM " . LIME_PREFIX . "settings_global
 			WHERE stg_name LIKE 'siteadminemail'";
 
 		$fromemail = $db->GetOne($sql);
