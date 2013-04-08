@@ -202,19 +202,15 @@ if (isset($_POST['firstname']))
 		    }
 
 
-		$sql = "SELECT stg_value
-			FROM " . LIME_PREFIX . "settings_global
-			WHERE stg_name LIKE 'siteadminemail'";
+		$sql = "SELECT admin,adminemail
+			FROM " . LIME_PREFIX . "surveys
+			WHERE sid = $lime_sid";
 
-		$fromemail = $db->GetOne($sql);
+		$from = $db->GetRow($sql);
 
-		$sql = "SELECT stg_value
-			FROM " . LIME_PREFIX . "settings_global
-			WHERE stg_name LIKE 'siteadminname'";
+		$mail->SetFrom($from['adminemail'],$from['admin']);
+		$mail->Sender = $from['adminemail'];
 
-		$fromname = $db->GetOne($sql);
-
-		$mail->SetFrom($fromemail,$fromname);
 		$mail->AddAddress($_POST['email']);
 		foreach ($customheaders as $key=>$val) 
 		{
