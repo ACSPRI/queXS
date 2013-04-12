@@ -1,3 +1,8 @@
+queXS 1.7.4 - Changes sinze 1.7.3
+
+Fixed Bug: Only auto advance in the questionnaire if an interviewer (not when self completing)
+Fixed Bug: When emailing - respect the limesurvey email settings including SSL
+
 queXS 1.7.3 - Changes since 1.7.2
 
 Fixed Bug: Reliance on JS executing as PHP for ckeditor
