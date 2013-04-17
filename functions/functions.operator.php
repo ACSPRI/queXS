@@ -382,10 +382,11 @@ function get_case_id($operator_id, $create = false)
 			if ($systemsort)
 			{
 				//Just make sure that this case should go to this operator (assigned to this project and skill)
-				//Also check if this is an exclusive appointment
+				//Also check if this is an exclusive appointment and that the questionnaire is enabled
 				$sql = "SELECT c.case_id as caseid
 					FROM `case` as c
 					JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = c.questionnaire_id)
+					JOIN questionnaire as q ON (q.questionnaire_id = c.questionnaire_id AND q.enabled = 1)
 					JOIN outcome as ou ON (ou.outcome_id = c.current_outcome_id)
 					JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = ou.outcome_type_id)
 					LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
@@ -411,6 +412,7 @@ function get_case_id($operator_id, $create = false)
 				 *    If restricted to respondent call times, make sure we are in those
 				 *    Only assign if outcome type is assigned to the operator
 				 *    Has not reached the quota
+				 *    Is part of an enabled questionnaire
 				 *
 				 *    
 				 *   THINGS TO ADD:
@@ -423,7 +425,7 @@ function get_case_id($operator_id, $create = false)
 					FROM `case`  as c
 					LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
 					JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
-					JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, outcome as ou) on (c.questionnaire_id = q.questionnaire_id and op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and ou.outcome_id = c.current_outcome_id)
+					JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, outcome as ou) on (c.questionnaire_id = q.questionnaire_id and q.enabled = 1 and op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and ou.outcome_id = c.current_outcome_id)
 					LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
 					LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
 					LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
@@ -460,7 +462,7 @@ function get_case_id($operator_id, $create = false)
 						FROM questionnaire_sample_exclude_priority as qsep
 						JOIN operator_skill as os ON (os.operator_id = '$operator_id' AND os.outcome_type_id = 1)
 						JOIN operator_questionnaire AS oq ON (oq.operator_id = '$operator_id' AND oq.questionnaire_id = qsep.questionnaire_id)
-						JOIN questionnaire as q ON (q.questionnaire_id = qsep.questionnaire_id)
+						JOIN questionnaire as q ON (q.questionnaire_id = qsep.questionnaire_id and q.enabled = 1)
 						LEFT JOIN `case` as c ON (c.sample_id = qsep.sample_id AND c.questionnaire_id = qsep.questionnaire_id)
 						WHERE qsep.sortorder IS NOT NULL 
 						AND c.case_id IS NULL
@@ -487,7 +489,7 @@ function get_case_id($operator_id, $create = false)
 				  
 					$sql = "SELECT s.sample_id as sample_id,c.case_id as case_id,qs.questionnaire_id as questionnaire_id,CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) as resptime, q.testing as testing
 						FROM sample as s
-						JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, sample_import as si, operator_skill as os) on (op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and si.sample_import_id = s.import_id and os.operator_id = op.operator_id and os.outcome_type_id = 1)
+						JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, sample_import as si, operator_skill as os) on (op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and si.sample_import_id = s.import_id and os.operator_id = op.operator_id and os.outcome_type_id = 1 and q.enabled = 1)
 						LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
 						LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
 						LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
