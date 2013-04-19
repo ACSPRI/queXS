@@ -141,6 +141,8 @@ if (isset($_POST['firstname']))
 
 		$mail = new PHPMailer;
 
+		$mail->CharSet = 'UTF-8';
+
 		$sql = "SELECT stg_value
 			FROM " . LIME_PREFIX . "settings_global
 			WHERE stg_name = 'emailsmtpssl'";
