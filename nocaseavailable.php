@@ -77,7 +77,7 @@ $operator_id = get_operator_id();
 
 //you have not been assigned to a questionnaire
 
-$sql = "SELECT oq.questionnaire_id, q.description
+$sql = "SELECT oq.questionnaire_id, q.description, CASE WHEN q.enabled = 1 THEN '" . T_("Enabled") . "' ELSE '" . T_("Disabled") . "' END as enabled
 	FROM operator_questionnaire as oq, questionnaire as q
 	WHERE oq.operator_id = '$operator_id'
 	AND q.questionnaire_id = oq.questionnaire_id";
@@ -88,7 +88,7 @@ $rs = $db->GetAll($sql);
 <p><?php  echo T_("Assigned questionnaires:"); ?></p>
 <?php 
 if (!empty($rs))
-	xhtml_table($rs,array("questionnaire_id","description"),array(T_("ID"),T_("Description")));
+	xhtml_table($rs,array("questionnaire_id","description","enabled"),array(T_("ID"),T_("Description"),T_("Enabled")));
 else
 {
 	?> <p class='error'><?php  echo T_("ERROR: No questionnaires assigned to you"); ?></p> <?php 
