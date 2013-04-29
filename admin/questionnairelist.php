@@ -347,7 +347,7 @@ if (isset($_GET['modify']))
 		}
 		?>
 		</select></p>
-		<p><?php echo T_("URL to forward respondents on self completion");?>: <input name="lime_endurl" type="text" value="<?php echo $rs['lime_endurl']; ?>"/></p>
+		<p><?php echo T_("URL to forward respondents on self completion (required)");?>: <input name="lime_endurl" type="text" value="<?php echo $rs['lime_endurl']; ?>"/></p>
 		</div>
 		<?php  if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
 		<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);?></p>

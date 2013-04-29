@@ -208,7 +208,7 @@ if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
 }
 ?>
 </select></p>
-<p><?php echo T_("URL to forward respondents on self completion");?>: <input name="lime_endurl" type="text" value="http://www.acspri.org.au/"/></p>
+<p><?php echo T_("URL to forward respondents on self completion (required)");?>: <input name="lime_endurl" type="text" value="http://www.acspri.org.au/"/></p>
 </div>
 <div id='rstext' style='display:none;'>
 <p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?></p>
