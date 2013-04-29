@@ -52,8 +52,35 @@ function templatereplace($line, $replacements=array(), $anonymized=false, $quest
 
     if (stripos($line, "</head>"))
     {
+	//queXS Addition
+	$textfocus = "";
+
+	$interviewer=returnglobal('interviewer');
+	if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true))
+	{
+		$interviewer = true;
+		$_SESSION['interviewer'] = true;
+	}
+	else
+	{
+		$interviewer = false;
+	}
+
+	if ($interviewer)
+	{	
+		$textfocus =
+		'<script type="text/javascript">
+		$(document).ready(function()
+		{
+	        	$(".text").focus();
+		        $(".textarea").focus();
+		});
+		</script>';
+	}
+
         $line = str_ireplace("</head>",
             "<script type=\"text/javascript\" src=\"$rooturl/scripts/survey_runtime.js\"></script>\n"
+			. "$textfocus\n"
                         . use_firebug()
                         . "\t</head>", $line);
     }

@@ -6,8 +6,6 @@ $(document).ready(function()
 	if (typeof checkconditions!='undefined') checkconditions();
 	if (typeof template_onload!='undefined') template_onload();
 	prepareCellAdapters();
-	$(".text").focus();
-	$(".textarea").focus();
 	document['onkeypress'] = checkEnter;
     if (typeof(focus_element) != 'undefined')
     {
