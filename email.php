@@ -242,6 +242,22 @@ if (isset($_POST['firstname']))
 
 			$db->Execute($sql);
 
+			//set to start frm the first page if the format for the respondent is not question by question
+			$sql = "SELECT q.lime_mode
+				FROM questionnaire as q, `case` as c
+				WHERE c.case_id = $case_id
+				AND q.questionnaire_id = c.questionnaire_id";
+
+			$lmode = $db->GetOne($sql);
+
+			if ($lmode != "question")
+			{
+				$sql = "UPDATE " . LIME_PREFIX ."survey_{$lime_sid}
+					SET lastpage = 0
+					WHERE token = '$token'";
+	
+				$db->Execute($sql);
+			}
 
 			if (isset($_POST['submith']))
 			{
