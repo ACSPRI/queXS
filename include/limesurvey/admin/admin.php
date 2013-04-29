@@ -254,7 +254,7 @@ if(isset($_SESSION['loginID']))
     }
     elseif ($action == 'previewgroup')
     {
-
+	$_SESSION['interviewer'] = true;
         require_once('../index.php');
         exit;
 
