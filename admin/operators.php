@@ -186,6 +186,7 @@ $rs = $db->GetAll($sql);
 <h1><?php  echo T_("Add an operator"); ?></h1>
 <p><?php  echo T_("Adding an operator here will give the user the ability to call cases"); ?> <a href="operatorquestionnaire.php"><?php  echo T_("Assign Operator to Questionnaire"); ?></a> <?php  echo T_("tool"); ?>.</p>
 <p><?php  echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p>
+<p><?php echo T_("The username and extension must be unique for each operator.")?></p>
 <form enctype="multipart/form-data" action="" method="post">
 	<p><?php  echo T_("Enter the username of an operator to add:"); ?> <input name="operator" type="text"/></p>
 <?php  if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
