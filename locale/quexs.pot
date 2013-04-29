@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-29 11:32+1000\n"
+"POT-Creation-Date: 2013-04-29 12:00+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -2633,7 +2633,7 @@ msgstr ""
 
 #: admin/new.php:211
 #: admin/questionnairelist.php:350
-msgid "URL to forward respondents on self completion"
+msgid "URL to forward respondents on self completion (required)"
 msgstr ""
 
 #: admin/new.php:214
