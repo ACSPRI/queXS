@@ -160,7 +160,7 @@ if (isset($_POST['operator']))
 		}
 		else
 		{
-			$a = T_("Could not add operator. There may already be an operator of this name:") . " $operator" ;
+			$a = T_("Could not add operator. There may already be an operator of this name:") . " $operator " . T_("Or there may already be an telephone extension number") . ":$extension"  ;
 		}
 
 
