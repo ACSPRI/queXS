@@ -112,7 +112,7 @@ if (!defined('AUTO_POPUP')) define('AUTO_POPUP',false);
 /**
  * The extension of the supervisor for dialing the supervisor
  */
-if (!defined('SUPERVISOR_EXTENSION')) define('SUPERVISOR_EXTENSION',"0392517290");
+if (!defined('SUPERVISOR_EXTENSION')) define('SUPERVISOR_EXTENSION',"1000");
 
 /**
  * The path to limesurvey
