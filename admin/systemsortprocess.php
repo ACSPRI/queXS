@@ -45,6 +45,11 @@ include (dirname(__FILE__) . "/../db.inc.php");
 include (dirname(__FILE__) . "/../functions/functions.process.php");
 
 /**
+ * Operator functions (for quotas)
+ */
+include (dirname(__FILE__) . "/../functions/functions.operator.php");
+
+/**
  * Update the database with the new data from the running script
  *
  * @param string $buffer The data to append to the database
@@ -105,6 +110,17 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 
 	$db->Execute($sql);
 
+	
+	//Update quotas for all enabled questionnaires
+	$sql = "SELECT questionnaire_id
+		FROM questionnaire
+		WHERE enabled = 1";
+
+	$qs = $db->GetAll($sql);
+
+	foreach($qs as $q)
+		update_quotas($q['questionnaire_id']);	
+	
 
 	//Sort current cases for all enabled questionnaires
 	
