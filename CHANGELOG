@@ -1,4 +1,17 @@
-queXS 1.7.4 - Changes sinze 1.7.3
+queXS 1.7.5 - Changes since 1.7.4
+
+Fixed Bug: Set default supervisor extension to be 1000
+Fixed Bug: Add quota updates to system sort process to keep additive quotas up to date
+Fixed Bug: Previews in Limesurvey should be as an interviewer
+Fixed Bug: Reset page position when respondent is to self complete in a different mode
+Fixed Bug: Only apply automatic text focus when working as an interviewer (otherwise may jump to strange part of page)
+Fixed Bug: Updated error message when adding operator if extension is the same
+Fixed Bug: Make sure cases are only generated for enabled questionnaires
+Fixed Bug: Email charset wasn't UTF8
+New Feature: Display if assigned questionnaires are enabled or not
+Translations: Updated translations (thank you again to all the translators)
+
+queXS 1.7.4 - Changes since 1.7.3
 
 Fixed Bug: Only auto advance in the questionnaire if an interviewer (not when self completing)
 Fixed Bug: When emailing - respect the limesurvey email settings including SSL
