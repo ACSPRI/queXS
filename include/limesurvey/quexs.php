@@ -58,7 +58,12 @@ function quexs_get_template($clienttoken)
 		WHERE q.questionnaire_id = c.questionnaire_id
 		AND c.token = '$clienttoken'";
 
-	return $db->GetOne($sql);
+	$tpl = $db->GetOne($sql);
+
+	if (empty($tpl)) 
+		return 'default';
+	else
+		return $tpl;
 }
 
 /**
