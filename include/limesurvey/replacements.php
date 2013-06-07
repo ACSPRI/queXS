@@ -50,21 +50,21 @@ function templatereplace($line, $replacements=array(), $anonymized=false, $quest
     $_templateurl = sGetTemplateURL($_templatename) . '/';
     $templatedir = sgetTemplatePath($_templatename);
 
+    $interviewer=returnglobal('interviewer');
+    if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true))
+    {
+	$interviewer = true;
+	$_SESSION['interviewer'] = true;
+    }
+    else
+    {
+	$interviewer = false;
+    }
+
     if (stripos($line, "</head>"))
     {
 	//queXS Addition
 	$textfocus = "";
-
-	$interviewer=returnglobal('interviewer');
-	if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true))
-	{
-		$interviewer = true;
-		$_SESSION['interviewer'] = true;
-	}
-	else
-	{
-		$interviewer = false;
-	}
 
 	if ($interviewer)
 	{	
@@ -767,9 +767,10 @@ EOD;
 	if (!$anonymized) $coreReplacements['TOKEN'] = $_token;
 	$coreReplacements['URL'] = $_linkreplace;
 	$coreReplacements['WELCOME'] = (isset($thissurvey['welcome']) ? $thissurvey['welcome'] : '');
-
-        //queXS Addition
+        
+	//queXS Addition
         include_once("quexs.php");
+	$coreReplacements['IS_INTERVIEWER'] = $interviewer;
         $coreReplacements = array_merge($coreReplacements,quexs_core_replace());
 
     if (!is_null($replacements) && is_array($replacements))
