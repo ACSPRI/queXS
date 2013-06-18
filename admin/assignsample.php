@@ -78,14 +78,24 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
 }
 
-if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
+if (isset($_POST['edit']))
 {
-	//need to remove rsid from questionnaire
+	//need to add sample to questionnaire
 
-	$questionnaire_id = bigintval($_GET['questionnaire_id']);
-	$sid = bigintval($_GET['rsid']);
+	$questionnaire_id = bigintval($_POST['questionnaire_id']);
+	$sid = bigintval($_POST['sample_import_id']);
+	$cm = bigintval($_POST['call_max']);
+	$cam = bigintval($_POST['call_attempt_max']);
+	$am = bigintval($_POST['answering_machine_messages']);
+	$selecttype = 0;
+	if (isset($_POST['selecttype'])) $selecttype = 1;
 
-	$sql = "DELETE FROM questionnaire_sample
+
+	$sql = "UPDATE questionnaire_sample
+		SET call_max = '$cm',
+		call_attempt_max = '$cam',
+		random_select = '$selecttype',
+		answering_machine_messages = '$am'
 		WHERE questionnaire_id = '$questionnaire_id'
 		AND sample_import_id = '$sid'";
 
@@ -94,10 +104,70 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 }
 
 
+
+if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
+{
+	$questionnaire_id = bigintval($_GET['questionnaire_id']);
+	$sid = bigintval($_GET['rsid']);
+
+	if (isset($_GET['edit']))
+	{
+		xhtml_head(T_("Assign Sample: Select sample to assign"),true,array("../css/table.css"),array("../js/window.js"));
+
+		$sql = "SELECT si.description as description, 
+				qr.description as qdescription,
+				q.call_max,
+				q.call_attempt_max,
+				q.random_select,
+				q.answering_machine_messages
+			FROM questionnaire_sample as q, sample_import as si, questionnaire as qr
+			WHERE q.sample_import_id = si.sample_import_id
+			AND q.questionnaire_id = '$questionnaire_id'
+			AND si.sample_import_id = '$sid'
+			AND qr.questionnaire_id = q.questionnaire_id";
+
+		$qs = $db->GetRow($sql);
+
+		print "<h1>" . T_("Edit sample details") . "<h1>";
+		print "<h2>" . T_("Questionnaire") . ": " . $qs['qdescription'] . "</h2>";
+		print "<h2>" . T_("Sample") . ": " . $qs['description'] . "</h2>";
+
+		print "<p><a href='?questionnaire_id=$questionnaire_id'>" . T_("Go back") . "</a></p>";
+
+		$selected ="";
+		if ($qs['random_select'] == 1)
+			$selected = "checked=\"checked\"";
+
+		?>
+		<form action="?questionnaire_id=<?php echo $questionnaire_id;?>" method="post">
+		<label for="call_max"><?php  echo T_("Max calls (0 for unlimited)"); ?></label><input type="text" name="call_max" id="call_max" value="<?php echo $qs['call_max'];?>"/><br/>
+		<label for="call_attempt_max"><?php  echo T_("Max call attempts (0 for unlimited)"); ?></label><input type="text" name="call_attempt_max" id="call_attempt_max" value="<?php echo $qs['call_attempt_max'];?>"/>		<br/>
+		<label for="answering_machine_messages"><?php  echo T_("Number of answering machine messages to leave per case (0 for never)"); ?></label><input type="text" name="answering_machine_messages" id="answering_machine_messages" value="<?php echo $qs['answering_machine_messages'];?>"/>		<br/>
+		<label for="selecttype"><?php  echo T_("Select from sample randomly? (otherwise sequentially)"); ?></label><input type="checkbox" id = "selecttype" name="selecttype" <?php echo $selected;?> />		<br/>
+		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
+		<input type="hidden" name="sample_import_id" value="<?php  print($sid); ?>"/>
+		<input type="submit" name="edit" value="<?php echo T_("Edit"); ?>"/></p>
+		</form>
+		<?php 
+		xhtml_foot();
+		die();
+	}
+	else
+	{
+		//need to remove rsid from questionnaire
+		$sql = "DELETE FROM questionnaire_sample
+			WHERE questionnaire_id = '$questionnaire_id'
+			AND sample_import_id = '$sid'";
+	
+		$db->Execute($sql);
+	}
+}
+
+
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Assign Sample: Select sample to assign"),true,false,array("../js/window.js"));
+xhtml_head(T_("Assign Sample: Select sample to assign"),true,array("../css/table.css"),array("../js/window.js"));
 print "<h1>" . T_("Select a questionnaire from the list below") . "</h1>";
 display_questionnaire_chooser($questionnaire_id);
 
@@ -106,20 +176,23 @@ if ($questionnaire_id != false)
 {
 	print "<h1>" . T_("Samples selected for this questionnaire") . "</h1>";
 
-	$sql = "SELECT q.sample_import_id as sample_import_id,si.description as description, q.call_max, q.call_attempt_max, q.random_select
+	$sql = "SELECT si.description as description, 
+			CASE WHEN q.call_max = 0 THEN '" . T_("Unlimited") . "' ELSE q.call_max END as call_max,
+			CASE WHEN q.call_attempt_max = 0 THEN '" . T_("Unlimited") . "' ELSE q.call_attempt_max END AS call_attempt_max,
+			CASE WHEN q.random_select = 0 THEN '" . T_("Sequential") . "' ELSE '". T_("Random") . "' END as random_select,
+			CASE WHEN q.answering_machine_messages = 0 THEN '" . T_("Never") . "' ELSE q.answering_machine_messages END as answering_machine_messages,
+			CONCAT('<a href=\"?edit=edit&amp;questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . T_("Edit") ."</a>') as edit,
+			CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . T_("Click to unassign") ."</a>') as unassign
 		FROM questionnaire_sample as q, sample_import as si
 		WHERE q.sample_import_id = si.sample_import_id
 		AND q.questionnaire_id = '$questionnaire_id'";
 
 	$qs = $db->GetAll($sql);
 
-	foreach($qs as $q)
-	{
-		if ($q['random_select'] == 0) $rs = T_("Sequentially selected");
-		else $rs = T_("Randomly selected");
-		print "<p><a href=\"?questionnaire_id=$questionnaire_id&amp;rsid={$q['sample_import_id']}\">{$q['sample_import_id']} - {$q['description']}: " . T_("Max calls:") . " {$q['call_max']}  " . T_("Max call attempts:") . " {$q['call_attempt_max']}  $rs (" . T_("Click to unassign") . ")</a></p>";
-	}
-
+	if (!empty($qs))
+		xhtml_table($qs,array("description","call_max","call_attempt_max","answering_machine_messages","random_select","edit","unassign"),array(T_("Sample"), T_("Max calls"), T_("Max call attempts"), T_("Answering machine messages"), T_("Selection type"), T_("Edit"), T_("Unassign sample") ));
+	else
+		print "<p>" . T_("No samples selected for this questionnaire") . "</p>";
 
 	$sql = "SELECT si.sample_import_id,si.description
 		FROM sample_import as si
@@ -151,7 +224,7 @@ if ($questionnaire_id != false)
 		<label for="answering_machine_messages"><?php  echo T_("Number of answering machine messages to leave per case (0 for never)"); ?></label><input type="text" name="answering_machine_messages" id="answering_machine_messages" value="1"/>		<br/>
 		<label for="selecttype"><?php  echo T_("Select from sample randomly? (otherwise sequentially)"); ?></label><input type="checkbox" id = "selecttype" name="selecttype" />		<br/>
 		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
-		<input type="submit" name="add_sample" value="Add sample"/></p>
+		<input type="submit" name="add_sample" value="<?php echo T_("Add sample");?>"/></p>
 		</form>
 		<?php 
 	}
