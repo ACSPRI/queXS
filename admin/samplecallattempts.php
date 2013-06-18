@@ -69,7 +69,7 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 	global $db;
 
 	$q = "";
-	if ($questionnaire_id !== false)
+	if ($questionnaire_id !== false && $questionnaire_id != -1)
 		$q = "AND c.questionnaire_id = $questionnaire_id";
 
 	$s = "";
@@ -169,41 +169,41 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 
 xhtml_head(T_("Sample call attempt"),true,array("../css/table.css"),array("../js/window.js"));
 
-print "<h2>" . T_("Overall") . "</h2>";
-
-sample_call_attempt_report(false,false,false);
-
 print "<h2>" . T_("Please select a questionnaire") . "</h2>";
 $questionnaire_id = false;
-if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id);
+if (isset($_GET['questionnaire_id'])) $questionnaire_id = intval($_GET['questionnaire_id']);
+display_questionnaire_chooser($questionnaire_id,array(-1,T_("Overall")));
 
-if ($questionnaire_id)
+
+if ($questionnaire_id || $questionnaire_id == -1)
 {
 	if (sample_call_attempt_report($questionnaire_id,false,false))
 	{
-		print "<h2>" . T_("Please select a sample") . "</h2>";
-		$sample_import_id = false;
-		if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
-		display_sample_chooser($questionnaire_id,$sample_import_id);
-
-		if ($sample_import_id)
+		if ($questionnaire_id != -1)
 		{
-			if (sample_call_attempt_report($questionnaire_id,$sample_import_id,false))
+			print "<h2>" . T_("Please select a sample") . "</h2>";
+			$sample_import_id = false;
+			if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
+			display_sample_chooser($questionnaire_id,$sample_import_id);
+
+			if ($sample_import_id)
 			{
-				$questionnaire_sample_quota_row_id = false;
-				if (isset($_GET['questionnaire_sample_quota_row_id'])) $questionnaire_sample_quota_row_id = bigintval($_GET['questionnaire_sample_quota_row_id']);
-				print "<h2>" . T_("Please select a quota") . "</h2>";
-				display_quota_chooser($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id);
-	
-				if ($questionnaire_sample_quota_row_id)
+				if (sample_call_attempt_report($questionnaire_id,$sample_import_id,false))
 				{
-					if (!sample_call_attempt_report($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id))
-						print "<p>" . T_("No calls for this quota") . "</p>";
+					$questionnaire_sample_quota_row_id = false;
+					if (isset($_GET['questionnaire_sample_quota_row_id'])) $questionnaire_sample_quota_row_id = bigintval($_GET['questionnaire_sample_quota_row_id']);
+					print "<h2>" . T_("Please select a quota") . "</h2>";
+					display_quota_chooser($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id);
+		
+					if ($questionnaire_sample_quota_row_id)
+					{
+						if (!sample_call_attempt_report($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id))
+							print "<p>" . T_("No calls for this quota") . "</p>";
+					}
 				}
+				else
+					print "<p>" . T_("No calls for this sample") . "</p>";
 			}
-			else
-				print "<p>" . T_("No calls for this sample") . "</p>";
 		}
 	}
 	else

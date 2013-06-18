@@ -55,7 +55,7 @@ include_once(dirname(__FILE__).'/../db.inc.php');
  * @param int|bool $questionnaire_id The questionnaire id or false if none selecetd
  *
  */
-function display_questionnaire_chooser($questionnaire_id = false)
+function display_questionnaire_chooser($questionnaire_id = false, $overall = false)
 {
 	global $db;
 
@@ -69,6 +69,15 @@ function display_questionnaire_chooser($questionnaire_id = false)
 	print "<div><select id='questionnaire' name='questionnaire' onchange=\"LinkUp('questionnaire')\"><option value='?'></option>";
 	if (!empty($rs))
 	{
+		if (is_array($overall))
+		{
+			$selected = "";
+			if ($questionnaire_id == $overall[0])
+				$selected = "selected='selected'";
+
+			print "<option value='?questionnaire_id=-1' $selected>{$overall[1]}</option>";
+		}
+
 		foreach($rs as $r)
 		{
 			print "<option value='?questionnaire_id={$r['questionnaire_id']}' {$r['selected']}>{$r['description']}</option>";
