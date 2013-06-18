@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-29 12:00+1000\n"
+"POT-Creation-Date: 2013-06-18 16:24+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -378,7 +378,7 @@ msgid "Begin the manual recording now..."
 msgstr ""
 
 #: record.php:78
-#: email.php:257
+#: email.php:273
 msgid "Start REC"
 msgstr ""
 
@@ -394,43 +394,43 @@ msgstr ""
 msgid "Self completion invitation sent via email to"
 msgstr ""
 
-#: email.php:262
-#: email.php:266
-#: email.php:272
-#: email.php:293
-#: email.php:323
+#: email.php:278
+#: email.php:282
+#: email.php:288
+#: email.php:309
+#: email.php:339
 msgid "Email"
 msgstr ""
 
-#: email.php:279
+#: email.php:295
 msgid "The email did not send"
 msgstr ""
 
-#: email.php:284
+#: email.php:300
 msgid "The email address is not valid"
 msgstr ""
 
-#: email.php:313
+#: email.php:329
 msgid "Email respondent for self completion"
 msgstr ""
 
-#: email.php:321
+#: email.php:337
 msgid "First name"
 msgstr ""
 
-#: email.php:322
+#: email.php:338
 msgid "Last name"
 msgstr ""
 
-#: email.php:326
+#: email.php:342
 msgid "Send invitation"
 msgstr ""
 
-#: email.php:328
+#: email.php:344
 msgid "Send invitation and Hang up"
 msgstr ""
 
-#: email.php:332
+#: email.php:348
 msgid "Self completion email not available for this questionnaire"
 msgstr ""
 
@@ -621,10 +621,12 @@ msgid "Assigned questionnaires:"
 msgstr ""
 
 #: nocaseavailable.php:91
+#: nocaseavailable.php:113
 msgid "ID"
 msgstr ""
 
 #: nocaseavailable.php:91
+#: nocaseavailable.php:113
 msgid "Description"
 msgstr ""
 
@@ -632,67 +634,79 @@ msgstr ""
 msgid "ERROR: No questionnaires assigned to you"
 msgstr ""
 
-#: nocaseavailable.php:112
+#: nocaseavailable.php:110
+msgid "Assigned samples:"
+msgstr ""
+
+#: nocaseavailable.php:113
+msgid "Sample"
+msgstr ""
+
+#: nocaseavailable.php:116
+msgid "ERROR: No samples assigned to the questionnaires"
+msgstr ""
+
+#: nocaseavailable.php:135
 msgid "Current shifts available:"
 msgstr ""
 
-#: nocaseavailable.php:115
+#: nocaseavailable.php:138
 msgid "Questionnaire"
 msgstr ""
 
-#: nocaseavailable.php:115
+#: nocaseavailable.php:138
 msgid "Shift start"
 msgstr ""
 
-#: nocaseavailable.php:115
+#: nocaseavailable.php:138
 msgid "Shift end"
 msgstr ""
 
-#: nocaseavailable.php:118
+#: nocaseavailable.php:141
 msgid "ERROR: No shifts at this time"
 msgstr ""
 
-#: nocaseavailable.php:138
+#: nocaseavailable.php:161
 msgid "Call restrictions:"
 msgstr ""
 
-#: nocaseavailable.php:142
+#: nocaseavailable.php:165
 msgid "ERROR: There are no cases available that fall within call restrictions"
 msgstr ""
 
-#: nocaseavailable.php:146
+#: nocaseavailable.php:169
 msgid "There are "
 msgstr ""
 
-#: nocaseavailable.php:146
+#: nocaseavailable.php:169
 msgid " unassigned case(s) available within the specified call restrictions"
 msgstr ""
 
-#: nocaseavailable.php:152
+#: nocaseavailable.php:175
 msgid "Limesurvey links:"
 msgstr ""
 
-#: nocaseavailable.php:172
+#: nocaseavailable.php:195
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
 msgstr ""
 
-#: nocaseavailable.php:172
+#: nocaseavailable.php:195
 msgid "from questionnaire:"
 msgstr ""
 
-#: nocaseavailable.php:174
+#: nocaseavailable.php:197
 msgid "Tokens table exists for Limesurvey questionnaire:"
 msgstr ""
 
-#: nocaseavailable.php:179
+#: nocaseavailable.php:202
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
 msgstr ""
 
-#: nocaseavailable.php:198
+#: nocaseavailable.php:221
 msgid "ERROR: Quota reached for this question"
 msgstr ""
 
-#: nocaseavailable.php:218
+#: nocaseavailable.php:241
 msgid "POSSIBLE ERROR: Row quota reached for this question"
 msgstr ""
 
@@ -1074,29 +1088,36 @@ msgstr ""
 msgid "Assign clients to questionnaires"
 msgstr ""
 
-#: admin/systemsortprocess.php:86
+#: admin/systemsortprocess.php:91
 msgid "Sorting cases process starting"
 msgstr ""
 
-#: admin/systemsortprocess.php:95
+#: admin/systemsortprocess.php:100
 msgid "Sorting cases"
 msgstr ""
 
-#: admin/systemsortprocess.php:199
+#: admin/systemsortprocess.php:130
+#: admin/systemsortprocess.php:142
+#: admin/systemsortprocess.php:168
+#: admin/systemsortprocess.php:180
+msgid "System automatically closed case as not closed for more than 24 hours"
+msgstr ""
+
+#: admin/systemsortprocess.php:293
 msgid "Completed sort"
 msgstr ""
 
-#: admin/systemsortprocess.php:199
-#: admin/systemsortprocess.php:201
+#: admin/systemsortprocess.php:293
+#: admin/systemsortprocess.php:295
 msgid "This task took"
 msgstr ""
 
-#: admin/systemsortprocess.php:199
-#: admin/systemsortprocess.php:201
+#: admin/systemsortprocess.php:293
+#: admin/systemsortprocess.php:295
 msgid "seconds"
 msgstr ""
 
-#: admin/systemsortprocess.php:201
+#: admin/systemsortprocess.php:295
 msgid "Failed to complete sort"
 msgstr ""
 
@@ -1180,10 +1201,6 @@ msgstr ""
 
 #: admin/quotareport.php:284
 msgid "Quota"
-msgstr ""
-
-#: admin/quotareport.php:284
-msgid "Sample"
 msgstr ""
 
 #: admin/quotareport.php:284
@@ -1906,24 +1923,28 @@ msgid "Enter the Time Zone of a client to add:"
 msgstr ""
 
 #: admin/availabilitygroup.php:70
-#: admin/availabilitygroup.php:89
+#: admin/availabilitygroup.php:90
 msgid "Availability groups"
 msgstr ""
 
-#: admin/availabilitygroup.php:84
-#: admin/availabilitygroup.php:94
+#: admin/availabilitygroup.php:85
+#: admin/availabilitygroup.php:97
 msgid "Modify"
 msgstr ""
 
 #: admin/availabilitygroup.php:92
+msgid "Availability groups define periods of time of respondent availability."
+msgstr ""
+
+#: admin/availabilitygroup.php:95
 msgid "No availability groups"
 msgstr ""
 
-#: admin/availabilitygroup.php:94
+#: admin/availabilitygroup.php:97
 msgid "Availablity group"
 msgstr ""
 
-#: admin/availabilitygroup.php:100
+#: admin/availabilitygroup.php:103
 msgid "Add availability group"
 msgstr ""
 
@@ -2460,7 +2481,7 @@ msgstr ""
 #: admin/availability.php:136
 #: admin/callrestrict.php:118
 #: admin/shifttemplate.php:118
-#: admin/addshift.php:235
+#: admin/addshift.php:238
 msgid "Day"
 msgstr ""
 
@@ -2695,11 +2716,23 @@ msgstr ""
 msgid "Add shifts in your Time Zone"
 msgstr ""
 
-#: admin/addshift.php:235
+#: admin/addshift.php:166
+msgid "Shifts allow you to restrict appointments being made, and interviewers to working on a particlar project at defined times."
+msgstr ""
+
+#: admin/addshift.php:173
+msgid "Select year"
+msgstr ""
+
+#: admin/addshift.php:184
+msgid "Select week of year"
+msgstr ""
+
+#: admin/addshift.php:238
 msgid "Use shift?"
 msgstr ""
 
-#: admin/addshift.php:260
+#: admin/addshift.php:263
 msgid "Submit changes"
 msgstr ""
 
@@ -2792,7 +2825,7 @@ msgid "Assign operators to questionnaires"
 msgstr ""
 
 #: admin/index.php:70
-#: admin/operatorskill.php:270
+#: admin/operatorskill.php:272
 msgid "Modify operator skills"
 msgstr ""
 
@@ -2964,19 +2997,19 @@ msgstr ""
 msgid "Sample call attempt"
 msgstr ""
 
-#: admin/samplecallattempts.php:172
+#: admin/samplecallattempts.php:175
 msgid "Overall"
 msgstr ""
 
-#: admin/samplecallattempts.php:196
+#: admin/samplecallattempts.php:195
 msgid "Please select a quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:202
+#: admin/samplecallattempts.php:201
 msgid "No calls for this quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:206
+#: admin/samplecallattempts.php:205
 msgid "No calls for this sample"
 msgstr ""
 
@@ -2986,6 +3019,10 @@ msgstr ""
 
 #: admin/operatorskill.php:149
 msgid "Assign operators to Skills"
+msgstr ""
+
+#: admin/operatorskill.php:151
+msgid "Set which types of cases will be made available to each operator. Please note that all operators will be allowed to assign all possible outcomes to a case. This restricts which ones will be assigned to an operator."
 msgstr ""
 
 #: admin/questionnaireprefill.php:99
@@ -3054,52 +3091,86 @@ msgstr ""
 msgid "Click here to begin monitoring the VoIP Process"
 msgstr ""
 
-#: admin/assignsample.php:100
+#: admin/assignsample.php:115
+#: admin/assignsample.php:170
 msgid "Assign Sample: Select sample to assign"
 msgstr ""
 
-#: admin/assignsample.php:107
-msgid "Samples selected for this questionnaire"
+#: admin/assignsample.php:131
+msgid "Edit sample details"
 msgstr ""
 
-#: admin/assignsample.php:118
-msgid "Sequentially selected"
-msgstr ""
-
-#: admin/assignsample.php:119
-msgid "Randomly selected"
-msgstr ""
-
-#: admin/assignsample.php:120
-msgid "Max calls:"
-msgstr ""
-
-#: admin/assignsample.php:120
-msgid "Max call attempts:"
-msgstr ""
-
-#: admin/assignsample.php:136
-msgid "Add a sample to this questionnaire:"
-msgstr ""
-
-#: admin/assignsample.php:139
-msgid "Select sample:"
-msgstr ""
-
-#: admin/assignsample.php:149
+#: admin/assignsample.php:143
+#: admin/assignsample.php:222
 msgid "Max calls (0 for unlimited)"
 msgstr ""
 
-#: admin/assignsample.php:150
+#: admin/assignsample.php:144
+#: admin/assignsample.php:223
 msgid "Max call attempts (0 for unlimited)"
 msgstr ""
 
-#: admin/assignsample.php:151
+#: admin/assignsample.php:145
+#: admin/assignsample.php:224
 msgid "Number of answering machine messages to leave per case (0 for never)"
 msgstr ""
 
-#: admin/assignsample.php:152
+#: admin/assignsample.php:146
+#: admin/assignsample.php:225
 msgid "Select from sample randomly? (otherwise sequentially)"
+msgstr ""
+
+#: admin/assignsample.php:177
+msgid "Samples selected for this questionnaire"
+msgstr ""
+
+#: admin/assignsample.php:180
+#: admin/assignsample.php:181
+msgid "Unlimited"
+msgstr ""
+
+#: admin/assignsample.php:182
+msgid "Sequential"
+msgstr ""
+
+#: admin/assignsample.php:182
+msgid "Random"
+msgstr ""
+
+#: admin/assignsample.php:183
+msgid "Never"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Max calls"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Max call attempts"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Answering machine messages"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Selection type"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Unassign sample"
+msgstr ""
+
+#: admin/assignsample.php:195
+msgid "No samples selected for this questionnaire"
+msgstr ""
+
+#: admin/assignsample.php:209
+msgid "Add a sample to this questionnaire:"
+msgstr ""
+
+#: admin/assignsample.php:212
+msgid "Select sample:"
 msgstr ""
 
 #: admin/centreinfo.php:66
