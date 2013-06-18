@@ -162,12 +162,15 @@ if (empty($rs) || !$rs || empty($rs['t']))
 
 print "<h2>" . T_("Add shifts in your Time Zone") . "</h2>";
 
+
+print "<p>" . T_("Shifts allow you to restrict appointments being made, and interviewers to working on a particlar project at defined times.") . "</p>";
+
 print "<h3>" . T_("Select a questionnaire from the list below") . "</h3>";
 display_questionnaire_chooser($questionnaire_id);	
 
 if ($questionnaire_id != false)
 {
-	print "<p>";
+	print "<p>" . T_("Select year") . ": ";
 	for ($i = $year - 1; $i < $year + 4; $i++)
 	{
 		if ($i == $year)
@@ -178,7 +181,7 @@ if ($questionnaire_id != false)
 	print "</p>";
 	
 	
-	print "<p>";
+	print "<p>" . T_("Select week of year") . ": ";
 	for ($i = 1; $i <= 53; $i++)
 	{
 		if ($i == $woy)
