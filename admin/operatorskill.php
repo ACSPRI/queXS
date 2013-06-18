@@ -148,6 +148,8 @@ $operators = $db->GetAll($sql);
 
 xhtml_head(T_("Assign operators to Skills"),false,array("../css/table.css"));
 
+print "<p>" . T_("Set which types of cases will be made available to each operator. Please note that all operators will be allowed to assign all possible outcomes to a case. This restricts which ones will be assigned to an operator.") . "</p>";
+
 ?>
 
 <script type="text/javascript">
