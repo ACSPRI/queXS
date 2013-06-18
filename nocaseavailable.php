@@ -95,6 +95,29 @@ else
 }
 
 
+//no sample
+
+$sql = "SELECT oq.questionnaire_id, q.description, si.description as sdescription
+	FROM operator_questionnaire as oq, questionnaire as q, sample_import as si, questionnaire_sample as qs
+	WHERE oq.operator_id = '$operator_id'
+	AND q.questionnaire_id = oq.questionnaire_id
+	AND qs.questionnaire_id = q.questionnaire_id
+	AND si.sample_import_id = qs.sample_import_id";
+
+$rs = $db->GetAll($sql);
+
+?>
+<p><?php  echo T_("Assigned samples:"); ?></p>
+<?php 
+if (!empty($rs))
+	xhtml_table($rs,array("questionnaire_id","description","sdescription"),array(T_("ID"),T_("Description"),T_("Sample")));
+else
+{
+	?> <p class='error'><?php  echo T_("ERROR: No samples assigned to the questionnaires"); ?></p> <?php 
+}
+
+
+
 //shift restrictions and no shift
 $sql = "SELECT q.description, CONVERT_TZ(sh.start, 'UTC', o.Time_zone_name) as st, CONVERT_TZ(sh.end, 'UTC', o.Time_zone_name) as en
 	FROM operator_questionnaire AS oq
