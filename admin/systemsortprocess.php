@@ -103,7 +103,85 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 
 	$db->StartTrans();
 
-	//First set all cases as unavailable
+	//find all call attempts without an end that started more than 24 hours ago
+
+	$sql = "SELECT case_id, call_attempt_id
+		FROM `call_attempt` 
+		WHERE TIMESTAMPDIFF(HOUR, start, CONVERT_TZ(NOW(),'System','UTC')) > 24
+		AND end IS NULL";
+	
+	$rs = $db->GetAll($sql);
+	
+	foreach ($rs as $r)
+	{
+		//refer to supervisor if case still assigned
+	
+		$sql = "UPDATE `case`
+			SET current_operator_id = NULL, current_outcome_id = 5
+			WHERE case_id = '{$r['case_id']}'
+			AND current_operator_id IS NOT NULL
+			AND current_call_id IS NULL";
+
+		$db->Execute($sql);
+
+		//add note
+
+		$sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
+			VALUES ('{$r['case_id']}',1,'" . T_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
+
+		$db->Execute($sql);
+	
+		//finish the call attempt
+			
+		$sql =	"UPDATE `call_attempt` 
+			 SET end = start
+			 WHERE call_attempt_id = '{$r['call_attempt_id']}'";
+
+		$db->Execute($sql);
+
+		print T_("System automatically closed case as not closed for more than 24 hours") . " - " . T_("Case id") . ": {$r['case_id']}";
+	}
+	
+	//find all calls without an end that started more than 24 hours ago
+	
+	$sql = "SELECT case_id, call_id
+		FROM `call` 
+		WHERE TIMESTAMPDIFF(HOUR, start, CONVERT_TZ(NOW(),'System','UTC')) > 24
+		AND end IS NULL";
+	
+	$rs = $db->GetAll($sql);
+	
+	foreach ($rs as $r)
+	{
+		//refer to supervisor if case still assigned
+	
+		$sql = "UPDATE `case`
+			SET current_operator_id = NULL, current_outcome_id = 5, current_call_id = NULL
+			WHERE case_id = '{$r['case_id']}'
+			AND current_operator_id IS NOT NULL";
+
+		$db->Execute($sql);
+
+		//add note
+	
+		$sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
+			VALUES ('{$r['case_id']}',1,'" . T_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
+
+		$db->Execute($sql);
+
+		//finish the call 
+			
+		$sql =	"UPDATE `call` 
+			 SET end = start, outcome_id = 5, state = 5
+			 WHERE call_id = '{$r['call_id']}'";
+
+		$db->Execute($sql);
+
+		print T_("System automatically closed case as not closed for more than 24 hours") . " - " . T_("Case id") . ": {$r['case_id']}";
+	}
+	
+	
+	//Set all cases as unavailable
 	$sql = "UPDATE `case`
 		SET sortorder = NULL
 		WHERE 1";
