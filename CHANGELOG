@@ -1,3 +1,17 @@
+queXS 1.7.6 - Changes since 1.7.5
+
+Fixed Bug: Define operator skills as for the assigning of cases to operators
+Fixed Bug: Define availability group as for respondent
+Fixed Bug: Add description of shift defining process and label year and week of year
+Fixed Bug: Add message about missing sample if sample not assigned 
+Fixed Bug: Don't display overall stats unless explicitly selected
+New Feature: Search for cases that have been assigned but not completed in more than 24 hours and put them back in the pool
+New Feature: Allow for editing of assigned sample details
+New Feature: Assign appointments in order of closest ending time
+New Feature: Added IS_INTERVIEWER token so can check if the questionnaire is administered by an interviewer by the following Lime Expression Manager code: {if(IS_INTERVIEWER,'This is an interviewer','THIS IS NOT AN INTERVIEWER')}
+Fixed Bug: Set default template if token specified but no equivalent token in queXS (i.e. when using limesurvey within queXS standalone)
+Translations: Added Persian language and updated translations from Launchpad - thank you
+
 queXS 1.7.5 - Changes since 1.7.4
 
 Fixed Bug: Set default supervisor extension to be 1000
