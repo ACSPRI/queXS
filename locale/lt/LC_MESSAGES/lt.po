@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-03-08 12:07+1000\n"
+"POT-Creation-Date: 2013-06-18 16:24+1000\n"
 "PO-Revision-Date: 2013-03-08 01:20+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-03-27 01:24+0000\n"
-"X-Generator: Launchpad (build 16540)\n"
+"X-Launchpad-Export-Date: 2013-06-20 01:24+0000\n"
+"X-Generator: Launchpad (build 16667)\n"
 
 #: appointment.php:69
 msgid "Appointment error"
@@ -396,7 +396,7 @@ msgid "Begin the manual recording now..."
 msgstr "Dabar pradeti rankinį įrašą..."
 
 #: record.php:78
-#: email.php:198
+#: email.php:273
 msgid "Start REC"
 msgstr "Įrašyti"
 
@@ -408,47 +408,47 @@ msgstr "Stabdo įrašą"
 msgid "Stop the manual recording now..."
 msgstr "Dabar sustabdyti rankinį įrašą..."
 
-#: email.php:182
+#: email.php:241
 msgid "Self completion invitation sent via email to"
 msgstr ""
 
-#: email.php:203
-#: email.php:207
-#: email.php:213
-#: email.php:234
-#: email.php:264
+#: email.php:278
+#: email.php:282
+#: email.php:288
+#: email.php:309
+#: email.php:339
 msgid "Email"
 msgstr ""
 
-#: email.php:220
+#: email.php:295
 msgid "The email did not send"
 msgstr ""
 
-#: email.php:225
+#: email.php:300
 msgid "The email address is not valid"
 msgstr ""
 
-#: email.php:254
+#: email.php:329
 msgid "Email respondent for self completion"
 msgstr ""
 
-#: email.php:262
+#: email.php:337
 msgid "First name"
 msgstr ""
 
-#: email.php:263
+#: email.php:338
 msgid "Last name"
 msgstr ""
 
-#: email.php:267
+#: email.php:342
 msgid "Send invitation"
 msgstr ""
 
-#: email.php:269
+#: email.php:344
 msgid "Send invitation and Hang up"
 msgstr ""
 
-#: email.php:273
+#: email.php:348
 msgid "Self completion email not available for this questionnaire"
 msgstr ""
 
@@ -457,7 +457,7 @@ msgid "Contact details"
 msgstr "Duomenys"
 
 #: availability.php:56
-#: index.php:204
+#: index.php:207
 msgid "Availability"
 msgstr "Pasiekiamumas"
 
@@ -634,15 +634,26 @@ msgstr "Šiuo metu nėra prieinamų atvejų"
 msgid "Reasons:"
 msgstr "Priežastys:"
 
+#: nocaseavailable.php:80
+#: nocaseavailable.php:91
+msgid "Enabled"
+msgstr ""
+
+#: nocaseavailable.php:80
+msgid "Disabled"
+msgstr ""
+
 #: nocaseavailable.php:88
 msgid "Assigned questionnaires:"
 msgstr "Priskirti klausimynai:"
 
 #: nocaseavailable.php:91
+#: nocaseavailable.php:113
 msgid "ID"
 msgstr "iD"
 
 #: nocaseavailable.php:91
+#: nocaseavailable.php:113
 msgid "Description"
 msgstr "Aprašymas"
 
@@ -650,69 +661,81 @@ msgstr "Aprašymas"
 msgid "ERROR: No questionnaires assigned to you"
 msgstr "Klaida: Jokio priskirto klausimyno"
 
-#: nocaseavailable.php:112
+#: nocaseavailable.php:110
+msgid "Assigned samples:"
+msgstr ""
+
+#: nocaseavailable.php:113
+msgid "Sample"
+msgstr "Imtis"
+
+#: nocaseavailable.php:116
+msgid "ERROR: No samples assigned to the questionnaires"
+msgstr ""
+
+#: nocaseavailable.php:135
 msgid "Current shifts available:"
 msgstr "Galimi šie pakeitimai:"
 
-#: nocaseavailable.php:115
+#: nocaseavailable.php:138
 msgid "Questionnaire"
 msgstr "Klausimynas"
 
-#: nocaseavailable.php:115
+#: nocaseavailable.php:138
 msgid "Shift start"
 msgstr "Pamaina prasideda"
 
-#: nocaseavailable.php:115
+#: nocaseavailable.php:138
 msgid "Shift end"
 msgstr "Pamaina baigiasi"
 
-#: nocaseavailable.php:118
+#: nocaseavailable.php:141
 msgid "ERROR: No shifts at this time"
 msgstr "Klaida: Jokios pamainos šiuo metu"
 
-#: nocaseavailable.php:138
+#: nocaseavailable.php:161
 msgid "Call restrictions:"
 msgstr "Skambučių apribojimas"
 
-#: nocaseavailable.php:142
+#: nocaseavailable.php:165
 msgid ""
 "ERROR: There are no cases available that fall within call restrictions"
 msgstr ""
 "KLAIDA: nėra prieinamų atvejų, kurie iškrito dėl skambinimo apribojimų"
 
-#: nocaseavailable.php:146
+#: nocaseavailable.php:169
 msgid "There are "
 msgstr "Yra "
 
-#: nocaseavailable.php:146
+#: nocaseavailable.php:169
 msgid " unassigned case(s) available within the specified call restrictions"
 msgstr " Nepriskirti atvejai galimi dėl specifinių skambučių apribojimų"
 
-#: nocaseavailable.php:152
+#: nocaseavailable.php:175
 msgid "Limesurvey links:"
 msgstr "Limesurvey nuorodos:"
 
-#: nocaseavailable.php:172
+#: nocaseavailable.php:195
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
 msgstr "KLAIDA: nėra Limesurvey klausimynui nustatytos tokenų lentelės"
 
-#: nocaseavailable.php:172
+#: nocaseavailable.php:195
 msgid "from questionnaire:"
 msgstr "iš klausimyno:"
 
-#: nocaseavailable.php:174
+#: nocaseavailable.php:197
 msgid "Tokens table exists for Limesurvey questionnaire:"
 msgstr "Tokenų lentelė skirta Limesurvey klausimynui:"
 
-#: nocaseavailable.php:179
+#: nocaseavailable.php:202
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
 msgstr "KLAIDA: Negalima rasti klausimynų su LimeSurvey ID"
 
-#: nocaseavailable.php:198
+#: nocaseavailable.php:221
 msgid "ERROR: Quota reached for this question"
 msgstr "Klaida: Kvota buvo pasiekta šiam klausimui"
 
-#: nocaseavailable.php:218
+#: nocaseavailable.php:241
 msgid "POSSIBLE ERROR: Row quota reached for this question"
 msgstr ""
 
@@ -768,17 +791,14 @@ msgid "Call automatically ended with outcome: Complete - End case"
 msgstr ""
 
 #: rs_business_interface2.php:55
-#: rs_business.php:55
 msgid "Respondent Selection - Business answers"
 msgstr "Respondentų Atranka - Verslo atsakymai"
 
 #: rs_business_interface2.php:59
-#: rs_business.php:59
 msgid "Sorry to bother you, I have called the wrong number"
 msgstr "Atleiskit, kad trukdau, surinkau ne tą numerį"
 
 #: rs_business_interface2.php:61
-#: rs_business.php:61
 msgid "End call with outcome: Business number"
 msgstr "Baigti skambutį su rezultatu: Verslo numeris"
 
@@ -811,31 +831,31 @@ msgstr ""
 msgid "Restart"
 msgstr ""
 
-#: index.php:196
+#: index.php:199
 msgid "Notes"
 msgstr "Pastabos"
 
-#: index.php:223
+#: index.php:226
 msgid "Call history"
 msgstr "Istorija"
 
-#: index.php:232
+#: index.php:235
 msgid "Shifts"
 msgstr "Pamaina"
 
-#: index.php:241
+#: index.php:244
 msgid "Appointments"
 msgstr "Perskambinimai"
 
-#: index.php:258
+#: index.php:261
 msgid "Work history"
 msgstr "Darbo istorija"
 
-#: index.php:266
+#: index.php:269
 msgid "Project information"
 msgstr "Projekto Informacija"
 
-#: index.php:275
+#: index.php:278
 msgid "Info"
 msgstr "Informacija"
 
@@ -1086,7 +1106,7 @@ msgstr "po pietų"
 msgid "evening"
 msgstr "vakaras"
 
-#: functions/functions.operator.php:795
+#: functions/functions.operator.php:797
 msgid ""
 "ERROR: You do not have server side authentication enabled therefore queXS "
 "cannot determine which user is accessing the system."
@@ -1095,7 +1115,6 @@ msgstr ""
 "vartotojo teises."
 
 #: include/php-gettext-1.0.11/examples/pigs_fallback.php:76
-#: include/php-gettext-1.0.11/examples/pigs_dropin.php:77
 msgid ""
 "This is how the story goes.\n"
 "\n"
@@ -1108,29 +1127,36 @@ msgstr ""
 msgid "Assign clients to questionnaires"
 msgstr "Priskirti klientus klausimynams"
 
-#: admin/systemsortprocess.php:86
+#: admin/systemsortprocess.php:91
 msgid "Sorting cases process starting"
 msgstr ""
 
-#: admin/systemsortprocess.php:95
+#: admin/systemsortprocess.php:100
 msgid "Sorting cases"
 msgstr ""
 
-#: admin/systemsortprocess.php:199
+#: admin/systemsortprocess.php:130
+#: admin/systemsortprocess.php:142
+#: admin/systemsortprocess.php:168
+#: admin/systemsortprocess.php:180
+msgid "System automatically closed case as not closed for more than 24 hours"
+msgstr ""
+
+#: admin/systemsortprocess.php:293
 msgid "Completed sort"
 msgstr ""
 
-#: admin/systemsortprocess.php:199
-#: admin/systemsortprocess.php:201
+#: admin/systemsortprocess.php:293
+#: admin/systemsortprocess.php:295
 msgid "This task took"
 msgstr ""
 
-#: admin/systemsortprocess.php:199
-#: admin/systemsortprocess.php:201
+#: admin/systemsortprocess.php:293
+#: admin/systemsortprocess.php:295
 msgid "seconds"
 msgstr ""
 
-#: admin/systemsortprocess.php:201
+#: admin/systemsortprocess.php:295
 msgid "Failed to complete sort"
 msgstr ""
 
@@ -1217,10 +1243,6 @@ msgid "Quota"
 msgstr ""
 
 #: admin/quotareport.php:284
-msgid "Sample"
-msgstr "Imtis"
-
-#: admin/quotareport.php:284
 msgid "Sample Used"
 msgstr ""
 
@@ -1257,6 +1279,10 @@ msgid ""
 "Could not add operator. There may already be an operator of this name:"
 msgstr ""
 
+#: admin/operators.php:163
+msgid "Or there may already be an telephone extension number"
+msgstr ""
+
 #: admin/operators.php:171
 #: admin/operators.php:186
 msgid "Add an operator"
@@ -1285,51 +1311,55 @@ msgstr ""
 "saugumo sistemą. Pvz.: jei jūs esate apsaugoję pagrindinę queXS direktoriją "
 "naudodami Apche failą, įrašykite naudotojų vardus čia."
 
-#: admin/operators.php:190
+#: admin/operators.php:189
+msgid "The username and extension must be unique for each operator."
+msgstr ""
+
+#: admin/operators.php:191
 msgid "Enter the username of an operator to add:"
 msgstr "Įveskite operatoriaus vartotojo vardą, kad pridėti:"
 
-#: admin/operators.php:192
+#: admin/operators.php:193
 msgid "Enter the password of an operator to add:"
 msgstr ""
 
-#: admin/operators.php:194
+#: admin/operators.php:195
 msgid "Enter the first name of an operator to add:"
 msgstr "Įveskite operatoriaus vardą, kad pridėti:"
 
-#: admin/operators.php:195
+#: admin/operators.php:196
 msgid "Enter the surname of an operator to add:"
 msgstr "Įveskite operatoriaus pavrdę, kad pridėti:"
 
-#: admin/operators.php:196
+#: admin/operators.php:197
 msgid "Enter the Time Zone of an operator to add:"
 msgstr "Įveskite operatoriaus Laiko juostą"
 
-#: admin/operators.php:198
+#: admin/operators.php:199
 msgid "Enter the telephone extension number:"
 msgstr "Įveskite papildomą telefono numerį:"
 
-#: admin/operators.php:199
+#: admin/operators.php:200
 msgid "Enter the telephone extension password:"
 msgstr ""
 
-#: admin/operators.php:201
+#: admin/operators.php:202
 msgid "Will this operator be using VoIP?"
 msgstr ""
 
-#: admin/operators.php:202
+#: admin/operators.php:203
 msgid "Is the operator a normal interviewer?"
 msgstr "Ar operatorius yra normalus intervuotojas?"
 
-#: admin/operators.php:203
+#: admin/operators.php:204
 msgid "Is the operator a supervisor?"
 msgstr "Ar operatorius yra supervizorius?"
 
-#: admin/operators.php:204
+#: admin/operators.php:205
 msgid "Is the operator a refusal converter?"
 msgstr "Ar operatorius yra atsisakymų perkalbėtojas?"
 
-#: admin/operators.php:205
+#: admin/operators.php:206
 msgid "Add user"
 msgstr "Pridėti vartotoją"
 
@@ -1354,12 +1384,10 @@ msgid ""
 msgstr ""
 
 #: admin/bulkappointment.php:230
-#: admin/displayappointments.php:193
 msgid "Start time"
 msgstr ""
 
 #: admin/bulkappointment.php:230
-#: admin/displayappointments.php:194
 msgid "End time"
 msgstr ""
 
@@ -1412,8 +1440,6 @@ msgstr "Šios pamainos ataskaitos"
 
 #: admin/shiftreport.php:96
 #: admin/shiftreport.php:104
-#: admin/displayappointments.php:229
-#: admin/displayappointments.php:243
 msgid "Edit"
 msgstr "Redaguoti"
 
@@ -1491,26 +1517,35 @@ msgstr "Visi perskambinimai (su laiku jūsų laiko zonoje)"
 
 #: admin/displayappointments.php:229
 #: admin/displayappointments.php:243
+#: admin/supervisor.php:231
+#: admin/supervisor.php:244
+#: admin/supervisor.php:271
+#: admin/supervisor.php:285
 msgid "Delete"
 msgstr "Ištrinti"
 
 #: admin/displayappointments.php:243
+#: admin/supervisor.php:244
 msgid "Operator Name"
 msgstr "Operatoriaus vardas"
 
 #: admin/displayappointments.php:243
+#: admin/supervisor.php:244
 msgid "Respondent Name"
 msgstr "Respondento Vardas"
 
 #: admin/displayappointments.php:243
+#: admin/supervisor.php:244
 msgid "Surname"
 msgstr "Pavardė"
 
 #: admin/displayappointments.php:243
+#: admin/supervisor.php:244
 msgid "Current outcome"
 msgstr "Pastarasis rezultatas"
 
 #: admin/displayappointments.php:243
+#: admin/supervisor.php:244
 msgid "Operator who called"
 msgstr "Skambinęs operatorius"
 
@@ -1594,111 +1629,123 @@ msgid "Questionnaire Outcomes"
 msgstr "Klausimyno rezultatai"
 
 #: admin/outcomes.php:86
-#: admin/outcomes.php:205
+#: admin/outcomes.php:244
 msgid "Outcomes"
 msgstr "Rezultatai"
 
 #: admin/outcomes.php:88
-#: admin/outcomes.php:192
+#: admin/outcomes.php:231
 msgid "Sample status"
 msgstr "Pavyzdžio statusas"
 
 #: admin/outcomes.php:90
-#: admin/outcomes.php:194
+#: admin/outcomes.php:233
 msgid "Drawn from sample"
 msgstr "Išėmimas iš pavyzdžio"
 
 #: admin/outcomes.php:90
-#: admin/outcomes.php:194
+#: admin/outcomes.php:233
 msgid "Remain in sample"
 msgstr "Pasilieka pavyzdyje"
 
 #: admin/outcomes.php:97
-#: admin/outcomes.php:202
+#: admin/outcomes.php:241
 msgid "Number"
 msgstr "Skaičius"
 
-#: admin/outcomes.php:103
+#: admin/outcomes.php:99
+msgid "Case availability (cases with temporary or appointment outcomes)"
+msgstr ""
+
+#: admin/outcomes.php:131
+msgid "No cases currently available to call"
+msgstr ""
+
+#: admin/outcomes.php:135
+msgid "Cases currently available to call"
+msgstr ""
+
+#: admin/outcomes.php:142
 msgid "Average time on a completed questionnaire"
 msgstr "Vidutinis baigto klausimyno laikas"
 
-#: admin/outcomes.php:103
+#: admin/outcomes.php:142
 msgid "Min"
 msgstr "min"
 
-#: admin/outcomes.php:103
+#: admin/outcomes.php:142
 msgid "Secs"
 msgstr "sek."
 
-#: admin/outcomes.php:116
+#: admin/outcomes.php:155
 msgid "Rate"
 msgstr "Dažnis"
 
-#: admin/outcomes.php:117
+#: admin/outcomes.php:156
 msgid "Response Rate 1"
 msgstr "Atsakymų dažnumas"
 
-#: admin/outcomes.php:118
+#: admin/outcomes.php:157
 msgid "Refusal Rate 1"
 msgstr "Atsisakymų dažnumas"
 
-#: admin/outcomes.php:119
+#: admin/outcomes.php:158
 msgid "Cooperation Rate 1"
 msgstr "Kooperacijos Rodiklis 1"
 
-#: admin/outcomes.php:120
+#: admin/outcomes.php:159
 msgid "Contact Rate 1"
 msgstr "Kontakto Rodiklis 1"
 
-#: admin/outcomes.php:135
-#: admin/outcomes.php:169
-#: admin/outcomes.php:222
+#: admin/outcomes.php:174
+#: admin/outcomes.php:208
+#: admin/outcomes.php:261
 msgid "Count"
 msgstr "Skaičius"
 
-#: admin/outcomes.php:135
-#: admin/outcomes.php:169
-#: admin/outcomes.php:222
+#: admin/outcomes.php:174
+#: admin/outcomes.php:208
+#: admin/outcomes.php:261
 msgid "%"
 msgstr ""
 
-#: admin/outcomes.php:154
+#: admin/outcomes.php:193
 msgid "Operator call outcomes"
 msgstr ""
 
-#: admin/outcomes.php:225
+#: admin/outcomes.php:264
 msgid "No outcomes recorded for this sample"
 msgstr "Jokių statusų nebuvo priskirta šiam sąrašui"
 
-#: admin/outcomes.php:230
+#: admin/outcomes.php:269
 msgid "No outcomes recorded for this questionnaire"
 msgstr "Nėra išsaugotų rezultatų šiam klausimynui"
 
-#: admin/outcomes.php:237
+#: admin/outcomes.php:276
 msgid "No shift reports: Add report"
 msgstr "Nėra pakitimų pranešimų: pridėti pranešimą"
 
-#: admin/outcomes.php:237
+#: admin/outcomes.php:276
 msgid "View shift reports"
 msgstr "Rodyti pakitimų pranešimus"
 
-#: admin/outcomes.php:237
+#: admin/outcomes.php:276
 msgid "View operator performance"
 msgstr "Rodyti operatoriaus darbą"
 
-#: admin/outcomes.php:256
+#: admin/outcomes.php:295
 msgid "No shifts defined for this questionnaire"
 msgstr "Nėra pakitimų priskirtų šiam klausimynui"
 
-#: admin/outcomes.php:258
+#: admin/outcomes.php:297
 msgid "Shift"
 msgstr "Pamaina"
 
-#: admin/outcomes.php:258
+#: admin/outcomes.php:297
 msgid "Shift report"
 msgstr "Pamainos ataskaita"
 
-#: admin/outcomes.php:258
+#: admin/outcomes.php:297
 msgid "Operator performance"
 msgstr "Operatoriaus efektingumas"
 
@@ -1950,24 +1997,29 @@ msgid "Enter the Time Zone of a client to add:"
 msgstr ""
 
 #: admin/availabilitygroup.php:70
-#: admin/availabilitygroup.php:89
+#: admin/availabilitygroup.php:90
 msgid "Availability groups"
 msgstr ""
 
-#: admin/availabilitygroup.php:84
-#: admin/availabilitygroup.php:94
+#: admin/availabilitygroup.php:85
+#: admin/availabilitygroup.php:97
 msgid "Modify"
 msgstr ""
 
 #: admin/availabilitygroup.php:92
+msgid ""
+"Availability groups define periods of time of respondent availability."
+msgstr ""
+
+#: admin/availabilitygroup.php:95
 msgid "No availability groups"
 msgstr ""
 
-#: admin/availabilitygroup.php:94
+#: admin/availabilitygroup.php:97
 msgid "Availablity group"
 msgstr ""
 
-#: admin/availabilitygroup.php:100
+#: admin/availabilitygroup.php:103
 msgid "Add availability group"
 msgstr ""
 
@@ -2016,99 +2068,87 @@ msgstr ""
 msgid "Operator edit"
 msgstr ""
 
-#: admin/operatorlist.php:118
-#: admin/operatorlist.php:256
+#: admin/operatorlist.php:121
+#: admin/operatorlist.php:252
 msgid "Username"
 msgstr ""
 
-#: admin/operatorlist.php:122
+#: admin/operatorlist.php:125
 msgid "Update password (leave blank to keep existing password)"
 msgstr ""
 
-#: admin/operatorlist.php:128
+#: admin/operatorlist.php:131
 msgid "Extension Password"
 msgstr ""
 
-#: admin/operatorlist.php:129
+#: admin/operatorlist.php:132
 msgid "Timezone"
 msgstr ""
 
-#: admin/operatorlist.php:130
-msgid "Enabled"
-msgstr ""
-
-#: admin/operatorlist.php:131
+#: admin/operatorlist.php:134
 msgid "Uses VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:134
+#: admin/operatorlist.php:137
 msgid "Update operator"
 msgstr ""
 
-#: admin/operatorlist.php:227
-msgid "Update password"
-msgstr ""
-
-#: admin/operatorlist.php:233
-msgid "Update timezone"
-msgstr ""
-
-#: admin/operatorlist.php:234
+#: admin/operatorlist.php:230
 msgid "Windows bat file"
 msgstr ""
 
-#: admin/operatorlist.php:235
+#: admin/operatorlist.php:231
 msgid "*nix script file"
 msgstr ""
 
-#: admin/operatorlist.php:237
+#: admin/operatorlist.php:233
 msgid "Enable"
 msgstr ""
 
-#: admin/operatorlist.php:239
+#: admin/operatorlist.php:235
 msgid "Disable"
 msgstr ""
 
-#: admin/operatorlist.php:243
+#: admin/operatorlist.php:239
 msgid "Enable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:245
+#: admin/operatorlist.php:241
 msgid "Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:253
+#: admin/operatorlist.php:249
 msgid "Operator list"
 msgstr ""
 
-#: admin/operatorlist.php:256
+#: admin/operatorlist.php:252
 msgid "Enable/Disable"
 msgstr ""
 
-#: admin/operatorlist.php:260
+#: admin/operatorlist.php:256
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
 
-#: admin/operatorlist.php:262
+#: admin/operatorlist.php:258
 msgid "Download Windows VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:263
+#: admin/operatorlist.php:259
 msgid "Download Linux VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:268
+#: admin/operatorlist.php:264
 msgid "Enable/Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:269
+#: admin/operatorlist.php:265
 msgid "Windows VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:270
+#: admin/operatorlist.php:266
 msgid "*nix VoIP"
 msgstr ""
 
@@ -2224,7 +2264,6 @@ msgid "Add/Remove Timezones"
 msgstr "Pridėti/Pašalinti Laiko juostas"
 
 #: admin/timezonetemplate.php:97
-#: admin/availability.php:100
 msgid ""
 "Your database does not have timezones installed, please see here for details"
 msgstr ""
@@ -2519,6 +2558,7 @@ msgid "Modify availability"
 msgstr ""
 
 #: admin/availability.php:114
+#: admin/callrestrict.php:96
 msgid ""
 "Enter the start and end times for each day of the week to restrict calls "
 "within"
@@ -2527,10 +2567,15 @@ msgstr ""
 "pabaigą"
 
 #: admin/availability.php:136
+#: admin/callrestrict.php:118
+#: admin/shifttemplate.php:118
+#: admin/addshift.php:238
 msgid "Day"
 msgstr "Diena"
 
 #: admin/availability.php:152
+#: admin/callrestrict.php:134
+#: admin/shifttemplate.php:134
 msgid "Add row"
 msgstr "Pridėti eilutę"
 
@@ -2625,7 +2670,7 @@ msgid "Error: Failed to insert questionnaire"
 msgstr ""
 
 #: admin/new.php:130
-#: admin/questionnairelist.php:333
+#: admin/questionnairelist.php:328
 msgid "Name for questionnaire:"
 msgstr "Klausimyno vardas"
 
@@ -2656,82 +2701,82 @@ msgid "Use basic respondent selection text (below)"
 msgstr ""
 
 #: admin/new.php:193
-#: admin/questionnairelist.php:334
+#: admin/questionnairelist.php:329
 msgid "Restrict appointments to shifts?"
 msgstr "Apriboti perskambinimų pakeitimų galimybę?"
 
 #: admin/new.php:194
-#: admin/questionnairelist.php:335
+#: admin/questionnairelist.php:330
 msgid "Restrict work to shifts?"
 msgstr "Apriboti galimybe darbo pakeitimams?"
 
 #: admin/new.php:195
-#: admin/questionnairelist.php:336
+#: admin/questionnairelist.php:331
 msgid "Questionnaire for testing only?"
 msgstr "Klausimynas tik testavimui?"
 
 #: admin/new.php:196
-#: admin/questionnairelist.php:337
+#: admin/questionnairelist.php:332
 msgid "Allow for respondent self completion via email invitation?"
 msgstr ""
 
 #: admin/new.php:198
-#: admin/questionnairelist.php:339
+#: admin/questionnairelist.php:334
 msgid "Questionnaire display mode for respondent"
 msgstr ""
 
 #: admin/new.php:198
-#: admin/questionnairelist.php:339
+#: admin/questionnairelist.php:334
 msgid "All in one"
 msgstr ""
 
 #: admin/new.php:198
-#: admin/questionnairelist.php:339
+#: admin/questionnairelist.php:334
 msgid "Question by question"
 msgstr ""
 
 #: admin/new.php:198
-#: admin/questionnairelist.php:339
+#: admin/questionnairelist.php:334
 msgid "Group at a time"
 msgstr ""
 
 #: admin/new.php:199
-#: admin/questionnairelist.php:340
+#: admin/questionnairelist.php:335
 msgid "Limesurvey template for respondent"
 msgstr ""
 
 #: admin/new.php:211
-#: admin/questionnairelist.php:355
-msgid "URL to forward respondents on self completion"
+#: admin/questionnairelist.php:350
+msgid "URL to forward respondents on self completion (required)"
 msgstr ""
 
 #: admin/new.php:214
-#: admin/questionnairelist.php:358
+#: admin/questionnairelist.php:353
 msgid "Respondent selection introduction:"
 msgstr "Įvadas į respondentų atranką"
 
 #: admin/new.php:215
-#: admin/questionnairelist.php:359
+#: admin/questionnairelist.php:354
 msgid "Respondent selection project introduction:"
 msgstr "Įvadas į respondentų atrankos projektą"
 
 #: admin/new.php:216
-#: admin/questionnairelist.php:360
+#: admin/questionnairelist.php:355
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr "Respondentų atrankos perskambinimas (jau pradėtas klausimynas)"
 
 #: admin/new.php:217
-#: admin/questionnairelist.php:361
+#: admin/questionnairelist.php:356
 msgid "Message to leave on an answering machine:"
 msgstr "Žinutė skirta palikti autoatsakiklyje:"
 
 #: admin/new.php:219
-#: admin/questionnairelist.php:363
+#: admin/questionnairelist.php:358
 msgid "Project end text (thank you screen):"
 msgstr ""
 
 #: admin/new.php:220
-#: admin/questionnairelist.php:364
+#: admin/questionnairelist.php:359
 msgid "Project information for interviewers/operators:"
 msgstr ""
 
@@ -2766,46 +2811,60 @@ msgstr ""
 msgid "Add shifts in your Time Zone"
 msgstr "Įtraukti pamainas į  Jūsų laiko juostą"
 
-#: admin/addshift.php:235
+#: admin/addshift.php:166
+msgid ""
+"Shifts allow you to restrict appointments being made, and interviewers to "
+"working on a particlar project at defined times."
+msgstr ""
+
+#: admin/addshift.php:173
+msgid "Select year"
+msgstr ""
+
+#: admin/addshift.php:184
+msgid "Select week of year"
+msgstr ""
+
+#: admin/addshift.php:238
 msgid "Use shift?"
 msgstr "naudoti pamainą?"
 
-#: admin/addshift.php:260
+#: admin/addshift.php:263
 msgid "Submit changes"
 msgstr "Patvirtinti pakeitimus"
 
-#: admin/questionnairelist.php:279
+#: admin/questionnairelist.php:274
 msgid "Questionnaire list"
 msgstr ""
 
-#: admin/questionnairelist.php:330
+#: admin/questionnairelist.php:325
 msgid "Edit instrument in Limesurvey"
 msgstr ""
 
-#: admin/questionnairelist.php:362
+#: admin/questionnairelist.php:357
 msgid "Edit respondent selection instrument in Limesurvey"
 msgstr ""
 
-#: admin/questionnairelist.php:365
+#: admin/questionnairelist.php:360
 msgid "Update Questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:384
+#: admin/questionnairelist.php:379
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
 msgstr ""
 
-#: admin/questionnairelist.php:385
+#: admin/questionnairelist.php:380
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
 "operators, clients and the questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:386
+#: admin/questionnairelist.php:381
 msgid "Please confirm you wish to delete the questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:389
+#: admin/questionnairelist.php:384
 msgid "Delete this questionnaire"
 msgstr ""
 
@@ -2868,7 +2927,7 @@ msgid "Assign operators to questionnaires"
 msgstr "Priskirti operatorius klausimynams"
 
 #: admin/index.php:70
-#: admin/operatorskill.php:270
+#: admin/operatorskill.php:272
 msgid "Modify operator skills"
 msgstr "Keisti operatorių"
 
@@ -2956,33 +3015,41 @@ msgstr "Paleisti ir stebėti VoIP"
 msgid "Extension status"
 msgstr ""
 
-#: admin/samplelist.php:73
 #: admin/samplelist.php:87
-#: admin/samplelist.php:95
-#: admin/samplelist.php:139
-#: admin/samplelist.php:148
+#: admin/samplelist.php:97
+#: admin/samplelist.php:104
+#: admin/samplelist.php:182
+#: admin/samplelist.php:191
+msgid "Rename"
+msgstr ""
+
+#: admin/samplelist.php:115
+#: admin/samplelist.php:129
+#: admin/samplelist.php:137
+#: admin/samplelist.php:181
+#: admin/samplelist.php:191
 msgid "Deidentify"
 msgstr ""
 
-#: admin/samplelist.php:90
+#: admin/samplelist.php:132
 msgid ""
 "Select which fields from this sample to deidentify. Deidentified fields will "
 "be permanently deleted from the sample."
 msgstr ""
 
-#: admin/samplelist.php:95
+#: admin/samplelist.php:137
 msgid "Field"
 msgstr ""
 
-#: admin/samplelist.php:95
+#: admin/samplelist.php:137
 msgid "Example data"
 msgstr ""
 
-#: admin/samplelist.php:98
+#: admin/samplelist.php:140
 msgid "Delete selected fields"
 msgstr ""
 
-#: admin/samplelist.php:145
+#: admin/samplelist.php:188
 msgid "Sample list"
 msgstr ""
 
@@ -3034,19 +3101,19 @@ msgstr ""
 msgid "Sample call attempt"
 msgstr ""
 
-#: admin/samplecallattempts.php:172
+#: admin/samplecallattempts.php:175
 msgid "Overall"
 msgstr "Bendras"
 
-#: admin/samplecallattempts.php:196
+#: admin/samplecallattempts.php:195
 msgid "Please select a quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:202
+#: admin/samplecallattempts.php:201
 msgid "No calls for this quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:206
+#: admin/samplecallattempts.php:205
 msgid "No calls for this sample"
 msgstr ""
 
@@ -3057,6 +3124,13 @@ msgstr ""
 #: admin/operatorskill.php:149
 msgid "Assign operators to Skills"
 msgstr "Priskirti įgudžius operatoriams"
+
+#: admin/operatorskill.php:151
+msgid ""
+"Set which types of cases will be made available to each operator. Please "
+"note that all operators will be allowed to assign all possible outcomes to a "
+"case. This restricts which ones will be assigned to an operator."
+msgstr ""
 
 #: admin/questionnaireprefill.php:99
 msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
@@ -3132,55 +3206,89 @@ msgstr "(tam kad gauti rezultatą reikalingas veiksmas VoIP serveryje)"
 msgid "Click here to begin monitoring the VoIP Process"
 msgstr "Spustelkite čia tam kad pradėti stebėti VoIP procesą"
 
-#: admin/assignsample.php:100
+#: admin/assignsample.php:115
+#: admin/assignsample.php:170
 msgid "Assign Sample: Select sample to assign"
 msgstr "Priskirkite atranką: pasirinkite atranką priskyrimui"
 
-#: admin/assignsample.php:107
-msgid "Samples selected for this questionnaire"
-msgstr "Pasirinktos atrankos/imtys šiam klausimynui"
+#: admin/assignsample.php:131
+msgid "Edit sample details"
+msgstr ""
 
-#: admin/assignsample.php:118
-msgid "Sequentially selected"
-msgstr "Nuosekliai parinktas"
-
-#: admin/assignsample.php:119
-msgid "Randomly selected"
-msgstr "Atsitiktinai parinktas"
-
-#: admin/assignsample.php:120
-msgid "Max calls:"
-msgstr "Maksimalus skambučių skaičius:"
-
-#: admin/assignsample.php:120
-msgid "Max call attempts:"
-msgstr "Maksimalus bandymų (skambinti) skaičius:"
-
-#: admin/assignsample.php:136
-msgid "Add a sample to this questionnaire:"
-msgstr "Įkelti atranką šiam klausimynui"
-
-#: admin/assignsample.php:139
-msgid "Select sample:"
-msgstr "Pasirinkti atranką/imtį"
-
-#: admin/assignsample.php:149
+#: admin/assignsample.php:143
+#: admin/assignsample.php:222
 msgid "Max calls (0 for unlimited)"
 msgstr "Maksimalus skmbučių skaičius (nurodyti 0 kai neribotas)"
 
-#: admin/assignsample.php:150
+#: admin/assignsample.php:144
+#: admin/assignsample.php:223
 msgid "Max call attempts (0 for unlimited)"
 msgstr "Maksimalus bandymų (skambinti) skaičius (nurodyti 0 kai neribotas)"
 
-#: admin/assignsample.php:151
+#: admin/assignsample.php:145
+#: admin/assignsample.php:224
 msgid "Number of answering machine messages to leave per case (0 for never)"
 msgstr ""
 "Vienam atvejui skirtų autoatsakiklio žinučių skaičius (nurodyti 0 kai nei "
 "vieno)"
 
-#: admin/assignsample.php:152
+#: admin/assignsample.php:146
+#: admin/assignsample.php:225
 msgid "Select from sample randomly? (otherwise sequentially)"
 msgstr "Pasirinkti iš atrankos atsitiktinai? (kitu atveju nuosekliai)"
+
+#: admin/assignsample.php:177
+msgid "Samples selected for this questionnaire"
+msgstr "Pasirinktos atrankos/imtys šiam klausimynui"
+
+#: admin/assignsample.php:180
+#: admin/assignsample.php:181
+msgid "Unlimited"
+msgstr ""
+
+#: admin/assignsample.php:182
+msgid "Sequential"
+msgstr ""
+
+#: admin/assignsample.php:182
+msgid "Random"
+msgstr ""
+
+#: admin/assignsample.php:183
+msgid "Never"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Max calls"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Max call attempts"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Answering machine messages"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Selection type"
+msgstr ""
+
+#: admin/assignsample.php:193
+msgid "Unassign sample"
+msgstr ""
+
+#: admin/assignsample.php:195
+msgid "No samples selected for this questionnaire"
+msgstr ""
+
+#: admin/assignsample.php:209
+msgid "Add a sample to this questionnaire:"
+msgstr "Įkelti atranką šiam klausimynui"
+
+#: admin/assignsample.php:212
+msgid "Select sample:"
+msgstr "Pasirinkti atranką/imtį"
 
 #: admin/centreinfo.php:66
 msgid "Set centre information: "
@@ -3201,3 +3309,15 @@ msgstr "Nėra Jums priskirtų klausimynų"
 #: client/index.php:123
 msgid "You are not a valid client"
 msgstr "Jūs nesate galiojantis klientas"
+
+#~ msgid "Sequentially selected"
+#~ msgstr "Nuosekliai parinktas"
+
+#~ msgid "Randomly selected"
+#~ msgstr "Atsitiktinai parinktas"
+
+#~ msgid "Max calls:"
+#~ msgstr "Maksimalus skambučių skaičius:"
+
+#~ msgid "Max call attempts:"
+#~ msgstr "Maksimalus bandymų (skambinti) skaičius:"
