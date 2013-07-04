@@ -153,11 +153,13 @@ else
 
 
 	//display sample details
-	//  use type = 1 to limit to non specific sample variables
+	//limit to those allowed by admin
 	$sql = "SELECT s.var,s.val
 		FROM sample_var as s
 		JOIN `case` as c on (c.case_id = '$case_id' and c.sample_id = s.sample_id)
-		WHERE s.type = 1";
+		JOIN `sample` as sa ON (sa.sample_id = c.sample_id)
+		JOIN sample_import_var_restrict as sv ON (sv.var LIKE s.var AND sa.import_id = sv.sample_import_id AND sv.restrict = 0)";
+	
 	
 	$rs = $db->GetAll($sql);
 

@@ -124,7 +124,7 @@ function verify_fields($fields)
 function display_table($data)
 {
 	print "<table>";
-	print "<tr><th></th><th>" . T_("Import?") . "</th><th>" . T_("Name") . "</th><th>" . T_("Type") . "</th></tr>";
+	print "<tr><th></th><th>" . T_("Import?") . "</th><th>" . T_("Name") . "</th><th>" . T_("Type") . "</th><th>" . T_("Allow operator to see?") . "</th></tr>";
 	$row = 1;
 
 	global $db;
@@ -148,8 +148,9 @@ function display_table($data)
 			print "<option value=\"{$r['type']}\" $selected>" . T_($r['description']) . "</option>";
 			$selected = "";
 		}
-		print "</select>";
-		print "</td></tr>";
+		print "</select></td>";
+		print "<td><input type=\"checkbox\" name=\"a_$row\"/></td>";
+		print "</tr>";
 		$row++;
 
 	}	
@@ -215,6 +216,20 @@ function import_file($file, $description, $fields, $firstrow = 2)
 		{
 			$selected_type[substr($key,2)] = $fields["t_" . substr($key,2)];
 			$selected_name[substr($key,2)] = $fields["n_" . substr($key,2)];
+
+			$restrict = 1;
+
+			//Set restrictions on columns
+			if (isset($fields["a_" . substr($key,2)]))
+			{
+				$restrict = 0;
+			}
+			
+			$sql = "INSERT INTO sample_import_var_restrict
+				(`sample_import_id`,`var`,`restrict`)
+				VALUES ($id,'" . $fields["n_" . substr($key,2)] . "',$restrict)";
+
+			$db->Execute($sql);			
 		}
 	}
 

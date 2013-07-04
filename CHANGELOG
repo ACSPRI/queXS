@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS `sample_import_var_restrict` (
+  `sample_import_id` bigint(20) NOT NULL,
+  `var` char(128) collate utf8_unicode_ci NOT NULL,
+  `restrict` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`sample_import_id`,`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 queXS 1.7.6 - Changes since 1.7.5
 
 Fixed Bug: Define operator skills as for the assigning of cases to operators
