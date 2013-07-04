@@ -1,3 +1,13 @@
+CREATE TABLE IF NOT EXISTS `case_queue` (
+  `case_queue_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `case_id` bigint(20) NOT NULL,
+  `operator_id` bigint(20) NOT NULL,
+  `sortorder` int(11) NOT NULL,
+  PRIMARY KEY (`case_queue_id`),
+  UNIQUE KEY `case_id` (`case_id`),
+  KEY `operator_id` (`operator_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `sample_import_var_restrict` (
   `sample_import_id` bigint(20) NOT NULL,
   `var` char(128) collate utf8_unicode_ci NOT NULL,

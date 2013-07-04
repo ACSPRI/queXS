@@ -348,6 +348,16 @@ function get_case_id($operator_id, $create = false)
 
 		$rnc = $db->GetRow($sql);
 
+		$sql = "SELECT cq.case_id, cq.case_queue_id
+			FROM case_queue as cq, `case` as c
+			WHERE cq.operator_id = '$operator_id'
+			AND cq.case_id = c.case_id
+			AND c.current_operator_id IS NULL
+			ORDER BY cq.sortorder ASC
+			LIMIT 1";
+		
+		$sq = $db->GetRow($sql);
+
 		if (isset($rnc['next_case_id']) && !empty($rnc['next_case_id']))
 		{
 			$case_id = $rnc['next_case_id'];
@@ -374,7 +384,52 @@ function get_case_id($operator_id, $create = false)
 				$db->Execute($sql);
 			}
 
-		}	
+		}
+		else if (isset($sq['case_id']) && !empty($sq['case_id']))
+		{
+			$case_id = $sq['case_id'];
+			$case_queue_id = $sq['case_queue_id'];
+
+			$sql = "UPDATE `case`
+				SET current_operator_id = '$operator_id'
+				WHERE current_operator_id IS NULL
+				AND case_id = '$case_id'";
+	
+			$db->Execute($sql);
+		
+			//should fail transaction if already assigned to another case	
+			if ($db->Affected_Rows() != 1)
+			{
+				$db->FailTrans();
+			}
+			else
+			{
+				//remove case from queue and update sortorder
+				$sql = "DELETE FROM case_queue
+					WHERE case_queue_id = '$case_queue_id'";
+
+				$db->Execute($sql);
+
+				$sql = "SELECT case_queue_id
+					FROM case_queue
+					WHERE operator_id = '$operator_id'
+					ORDER BY sortorder ASC";
+
+				$rs = $db->GetAll($sql);
+
+				$sortorder = 1;
+				foreach($rs as $r)
+				{
+					$sql = "UPDATE case_queue
+						SET sortorder = '$sortorder'
+						WHERE case_queue_id = '{$r['case_queue_id']}'";
+			
+					$db->Execute($sql);
+			
+					$sortorder++;			
+				}
+			}
+		}
 		else if ($create)
 		{
 			$systemsort = get_setting('systemsort');
