@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-18 16:24+1000\n"
+"POT-Creation-Date: 2013-07-04 14:55+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -340,17 +340,17 @@ msgstr ""
 msgid "Respondent:"
 msgstr ""
 
-#: respondent.php:164
+#: respondent.php:166
 msgid "Show details"
 msgstr ""
 
-#: respondent.php:168
-#: contactdetails.php:161
+#: respondent.php:170
+#: contactdetails.php:162
 msgid "Var"
 msgstr ""
 
-#: respondent.php:168
-#: contactdetails.php:161
+#: respondent.php:170
+#: contactdetails.php:162
 msgid "Value"
 msgstr ""
 
@@ -1061,6 +1061,10 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
+#: functions/functions.import.php:127
+msgid "Allow operator to see?"
+msgstr ""
+
 #: functions/functions.operator.php:141
 msgid "morning"
 msgstr ""
@@ -1073,7 +1077,7 @@ msgstr ""
 msgid "evening"
 msgstr ""
 
-#: functions/functions.operator.php:797
+#: functions/functions.operator.php:852
 msgid "ERROR: You do not have server side authentication enabled therefore queXS cannot determine which user is accessing the system."
 msgstr ""
 
@@ -2810,7 +2814,7 @@ msgstr ""
 
 #: admin/index.php:66
 #: admin/index.php:68
-#: admin/index.php:109
+#: admin/index.php:110
 msgid "Operator management"
 msgstr ""
 
@@ -2877,75 +2881,96 @@ msgstr ""
 msgid "Search the sample"
 msgstr ""
 
-#: admin/index.php:98
-msgid "System settings"
+#: admin/index.php:96
+msgid "Case status and assignment"
 msgstr ""
 
 #: admin/index.php:99
-msgid "Set default timezone list"
+msgid "System settings"
 msgstr ""
 
 #: admin/index.php:100
-msgid "Set default shift times"
+msgid "Set default timezone list"
 msgstr ""
 
 #: admin/index.php:101
-msgid "Set call restriction times"
+msgid "Set default shift times"
 msgstr ""
 
 #: admin/index.php:102
-msgid "Set centre information"
+msgid "Set call restriction times"
 msgstr ""
 
 #: admin/index.php:103
+msgid "Set centre information"
+msgstr ""
+
+#: admin/index.php:104
 msgid "Start and monitor system wide case sorting"
 msgstr ""
 
-#: admin/index.php:107
+#: admin/index.php:108
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:108
+#: admin/index.php:109
 msgid "Start and monitor VoIP"
 msgstr ""
 
-#: admin/index.php:110
+#: admin/index.php:111
 msgid "Extension status"
 msgstr ""
 
-#: admin/samplelist.php:87
-#: admin/samplelist.php:97
-#: admin/samplelist.php:104
-#: admin/samplelist.php:182
-#: admin/samplelist.php:191
+#: admin/samplelist.php:117
+#: admin/samplelist.php:127
+#: admin/samplelist.php:134
+#: admin/samplelist.php:270
+#: admin/samplelist.php:279
 msgid "Rename"
 msgstr ""
 
-#: admin/samplelist.php:115
-#: admin/samplelist.php:129
-#: admin/samplelist.php:137
-#: admin/samplelist.php:181
-#: admin/samplelist.php:191
-msgid "Deidentify"
+#: admin/samplelist.php:146
+#: admin/samplelist.php:179
+#: admin/samplelist.php:269
+#: admin/samplelist.php:279
+msgid "Operator viewing permissions"
 msgstr ""
 
-#: admin/samplelist.php:132
-msgid "Select which fields from this sample to deidentify. Deidentified fields will be permanently deleted from the sample."
+#: admin/samplelist.php:182
+msgid "Select which fields from this sample should be able to be viewed by operators"
 msgstr ""
 
-#: admin/samplelist.php:137
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
 msgid "Field"
 msgstr ""
 
-#: admin/samplelist.php:137
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
 msgid "Example data"
 msgstr ""
 
-#: admin/samplelist.php:140
+#: admin/samplelist.php:190
+msgid "Save changes"
+msgstr ""
+
+#: admin/samplelist.php:202
+#: admin/samplelist.php:216
+#: admin/samplelist.php:224
+#: admin/samplelist.php:268
+#: admin/samplelist.php:279
+msgid "Deidentify"
+msgstr ""
+
+#: admin/samplelist.php:219
+msgid "Select which fields from this sample to deidentify. Deidentified fields will be permanently deleted from the sample."
+msgstr ""
+
+#: admin/samplelist.php:227
 msgid "Delete selected fields"
 msgstr ""
 
-#: admin/samplelist.php:188
+#: admin/samplelist.php:276
 msgid "Sample list"
 msgstr ""
 
@@ -3089,6 +3114,43 @@ msgstr ""
 
 #: admin/voipmonitor.php:97
 msgid "Click here to begin monitoring the VoIP Process"
+msgstr ""
+
+#: admin/casestatus.php:88
+#: admin/casestatus.php:89
+msgid "Now"
+msgstr ""
+
+#: admin/casestatus.php:92
+msgid "Not assigned, select to assign"
+msgstr ""
+
+#: admin/casestatus.php:93
+msgid "Assigned to"
+msgstr ""
+
+#: admin/casestatus.php:93
+msgid "Order"
+msgstr ""
+
+#: admin/casestatus.php:111
+msgid "Case available in x minutes"
+msgstr ""
+
+#: admin/casestatus.php:111
+msgid "Assigned to operator"
+msgstr ""
+
+#: admin/casestatus.php:119
+msgid "Choose operator to assign selected cases to"
+msgstr ""
+
+#: admin/casestatus.php:122
+msgid "Assign cases to operator queue"
+msgstr ""
+
+#: admin/casestatus.php:199
+msgid "List cases by questionnaire and sample with the ability to assign them to be called next in a queue by a particular operator. If you assign cases to an operator, it will override the normal scheduling process and call them as soon as the operator is available."
 msgstr ""
 
 #: admin/assignsample.php:115
