@@ -1,3 +1,10 @@
+queXS 1.8.0 - Changes since 1.7.6
+
+New Feature: Allow for restricting the view of sample variables to operators
+New Feature: Case status and assignment page allowing to view the current status of cases by questionnaire, and allow for the manual assigning to operators if required
+
+Database updates:
+
 CREATE TABLE IF NOT EXISTS `case_queue` (
   `case_queue_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `case_id` bigint(20) NOT NULL,

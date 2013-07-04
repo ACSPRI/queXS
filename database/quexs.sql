@@ -294,9 +294,18 @@ CREATE TABLE `case_note` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `case_note`
+-- Table structure for table `case_queue`
 --
 
+CREATE TABLE `case_queue` (
+  `case_queue_id` bigint(20) NOT NULL auto_increment,
+  `case_id` bigint(20) NOT NULL,
+  `operator_id` bigint(20) NOT NULL,
+  `sortorder` int(11) NOT NULL,
+  PRIMARY KEY  (`case_queue_id`),
+  UNIQUE KEY `case_id` (`case_id`),
+  KEY `operator_id` (`operator_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1605,9 +1614,15 @@ CREATE TABLE `sample_import` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `sample_import`
+-- Table structure for table `sample_import_var_restrict`
 --
 
+CREATE TABLE `sample_import_var_restrict` (
+  `sample_import_id` bigint(20) NOT NULL,
+  `var` char(128) collate utf8_unicode_ci NOT NULL,
+  `restrict` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`sample_import_id`,`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
