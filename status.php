@@ -92,9 +92,9 @@ if (is_voip_enabled($operator_id))
 			$exta = $exts[1];
 	$extp = get_extension_password($operator_id);
 	if (get_extension_status($operator_id))
-		print "<div class='online statusbutton'><a href='news://turnvoipoff'>" . T_("VoIP On") . "</a></div>";
+		print "<div class='online statusbutton'>" . T_("VoIP On") . "</div>";
 	else
-		print "<div class='offline statusbutton'><a href='irc://$exta:$extp@" . VOIP_SERVER . "/'>" . T_("VoIP Off") . "</a></div>";
+		print "<div class='offline statusbutton'><a href='voip/downloadvoipclient.php'>" . T_("VoIP Off") . "</a></div>";
 }
 else
 	print "<div class='online statusbutton'>" . T_("No VoIP") . "</div>";
