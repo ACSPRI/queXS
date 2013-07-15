@@ -39,12 +39,17 @@ function tempdir($dir, $prefix='', $mode=0700)
 {
 	if (substr($dir, -1) != '/') $dir .= '/';
 
-	do
+	if (is_writable($dir))
 	{
-		$path = $dir.$prefix.mt_rand(0, 9999999);
-	} while (!mkdir($path, $mode));
-
-	return $path;
+		do
+		{
+			$path = $dir.$prefix.mt_rand(0, 9999999);
+		} while (!mkdir($path, $mode));
+	
+		return $path;
+	}
+	else
+		die(T_("Error: Cannot write to temporary directory"));
 }
 
 $tempdir = realpath(dirname(__FILE__) . '/../include/limesurvey/tmp');
@@ -61,45 +66,42 @@ if ($operator_id)
 
 	if (!empty($rs))
 	{
-		if (is_writable($tempdir))
+		$zipdir=tempdir($tempdir);
+
+		$userAgent = strtolower($_SERVER['HTTP_USER_AGENT']); 
+		if (preg_match('/linux/', $userAgent)) {
+			//assume linux
+			copy(realpath(dirname(__FILE__) . '/../voipclient'),"$zipdir/voipclient");
+			$f1 = "$zipdir/voipclient";
+			$f2 = "$zipdir/startvoip";
+			file_put_contents($f2, "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME']);
+
+		} 
+		else
 		{
-			$zipdir=tempdir($tempdir);
+			//assume windows
+			copy(realpath(dirname(__FILE__) . '/../voipclient.exe'),"$zipdir/voipclient.exe");
+			$f1 = "$zipdir/voipclient.exe";
+			$f2 = "$zipdir/startvoip.bat";
+			file_put_contents($f2, "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME']);
 
-			$userAgent = strtolower($_SERVER['HTTP_USER_AGENT']); 
-			if (preg_match('/linux/', $userAgent)) {
-				//assume linux
-				copy(realpath(dirname(__FILE__) . '/../voipclient'),"$zipdir/voipclient");
-				$f1 = "$zipdir/voipclient";
-				$f2 = "$zipdir/startvoip";
-				file_put_contents($f2, "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME']);
-
-			} 
-			else
-			{
-				//assume windows
-				copy(realpath(dirname(__FILE__) . '/../voipclient.exe'),"$zipdir/voipclient.exe");
-				$f1 = "$zipdir/voipclient.exe";
-				$f2 = "$zipdir/startvoip.bat";
-				file_put_contents($f2, "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME']);
-
-			}
-
-			require_once(dirname(__FILE__) . "/../include/limesurvey/admin/classes/phpzip/phpzip.inc.php");
-			$z = new PHPZip();
-			$zipfile="$tempdir/voipclient.zip";
-			$z->Zip($zipdir, $zipfile);
-
-			unlink($f1);
-			unlink($f2);
-			rmdir($zipdir);
-
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename="voipclient.zip"'); 
-			header('Content-Transfer-Encoding: binary');
-			// load the file to send:
-			readfile($zipfile);
-			unlink($zipfile);
 		}
+
+		require_once(dirname(__FILE__) . "/../include/limesurvey/admin/classes/phpzip/phpzip.inc.php");
+		$z = new PHPZip();
+		$zipfile="$tempdir/voipclient.zip";
+		$z->Zip($zipdir, $zipfile);
+
+		unlink($f1);
+		unlink($f2);
+		rmdir($zipdir);
+
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="voipclient.zip"'); 
+		header('Content-Transfer-Encoding: binary');
+		// load the file to send:
+		readfile($zipfile);
+		unlink($zipfile);
 	}
 }
 exit();
