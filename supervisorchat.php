@@ -84,7 +84,7 @@ if ($chatenabled && operator_chat_enabled($operator_id))
 	print "<div style='display:none' id='statusavailable'>" . T_("Supervisor is available") . "</div>";
 	print "<div id='statusunavailable'>" . T_("Supervisor not available") . "</div>";
 
-	print "<div id='chatbox'><input type='text' id='chattext'/> <div id='chatclick'>" . T_("Send") . "</div></div>";
+	print "<div id='chatbox'><label for='chattext'>" . T_("Message") . ":</label><input type='text' id='chattext'/> <input type='submit' id='chatclick' value='" . T_("Send") . "'/></div>";
 
 	//table for chat messages
 	print "<table class='tclass' id='chattable'><tbody><tr><th>" . T_("From") . "</th><th>" . T_("Message") . "</th></tr></tbody></table>";

@@ -33,11 +33,26 @@ function OnMessageStanza(stanza)
 	//alert(sFrom + ':' + sType  + ':' + sBody + ':' + sBareJid);
 	// do something, e.g. show sBody with jQuer
 
-	//make sure the chat tab is in focus when an incoming messages appears
 
 	//display message as new row in message table if it is from the supervisor
 	if (sBareJid == SUPERVISOR_XMPP)
 	{
+		//make sure the chat tab is in focus when an incoming messages appears
+		
+		//find the index of div-supervisorchat (children of tab-main)
+		var tm = parent.document.getElementById('tab-main')
+		var i = 0;
+
+		for (i=0;i<tm.children.length;i++)
+		{
+			if (tm.children[i].id == 'tab-chat')
+			{
+				break;
+			}
+		}
+
+		tm.tabber.tabShow(i-1);
+
 		var html = '<tr><td>' + SUPERVISOR_NAME + '</td><td>' + sBody + '</td></tr>';
 		$('#chattable > tbody > tr').eq(0).after(html);
 	}

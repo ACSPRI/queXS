@@ -274,7 +274,7 @@ xhtml_object($data,"main-content");
 
 <?php  if ($chat) { ?>
      <div class="tabbertab <?php  if ((DEFAULT_TAB == 'chat' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'chat' && $appointment)) 
-					print "tabbertabdefault"; ?>">
+					print "tabbertabdefault"; ?>" id="tab-chat">
 	  <h2><?php  echo T_("Supervisor chat"); ?></h2>
 	  <div id="div-supervisorchat" class="tabberdiv"><?php xhtml_object("supervisorchat.php","main-supervisorchat");?></div>
      </div>
