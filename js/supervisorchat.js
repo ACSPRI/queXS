@@ -1,7 +1,11 @@
 /* Javascript for XMPP client based on: http://blog.wolfspelz.de/2010/09/website-chat-made-easy-with-xmpp-and.html */
 
+var nConnStatus = "";
+
 function OnConnectionStatus(nStatus)
 {
+	nConnStatus = nStatus;
+
 	if (nStatus == Strophe.Status.CONNECTING) {
 	} else if (nStatus == Strophe.Status.CONNFAIL) {
 	} else if (nStatus == Strophe.Status.DISCONNECTING) {
@@ -31,9 +35,12 @@ function OnMessageStanza(stanza)
 
 	//make sure the chat tab is in focus when an incoming messages appears
 
-	//display message as new row in message table
-	var html = '<tr><td>' + SUPERVISOR_NAME + '</td><td>' + sBody + '</td></tr>';
-	$('#chattable > tbody > tr').eq(0).after(html);
+	//display message as new row in message table if it is from the supervisor
+	if (sBareJid == SUPERVISOR_XMPP)
+	{
+		var html = '<tr><td>' + SUPERVISOR_NAME + '</td><td>' + sBody + '</td></tr>';
+		$('#chattable > tbody > tr').eq(0).after(html);
+	}
 
 	return true;
 }
@@ -46,20 +53,61 @@ function OnPresenceStanza(stanza)
 	var sShow = $(stanza).find('show').text();
 	//alert(sFrom + ':' + sType  + ':' + sShow + ':' + sBareJid);
 
-	// update status on screen
-	if (sType == null || sType == '') {
-		sType = 'available';
-	}
+	// update status on screen if it is the supervisors status
 
-	switch (sType) {
-		case 'available': 
-		{
-      		} break;
-
-		case 'unavailable': 
-		{
-      		} break;
+	if (sBareJid == SUPERVISOR_XMPP)
+	{
+		if (sType == null || sType == '') {
+			sType = 'available';
+		}
+	
+		switch (sType) {
+			case 'available': 
+			{
+				$('#statusunavailable').hide();
+				$('#statusavailable').show();
+	
+	      		} break;
+	
+			case 'unavailable': 
+			{
+				$('#statusavailable').hide();
+				$('#statusunavailable').show();
+	      		} break;
+		}
 	}
 
 	return true;
 }
+
+
+function SendChat(chat)
+{
+
+	if (chat != '') 
+	{
+		if (nConnStatus == Strophe.Status.CONNECTED) 
+		{
+      			var stanza = $msg({ to: SUPERVISOR_XMPP, type: 'chat' }).c('body').t(chat);
+			conn.send(stanza.tree());
+			var html = '<tr><td>' + MY_NAME + '</td><td>' + chat + '</td></tr>';
+			$('#chattable > tbody > tr').eq(0).after(html);
+		}
+	}
+}
+
+$(document).ready(function(){
+	$('#chatclick').bind('click', function()
+	{
+	    SendChat($('#chattext').val());
+	    $('#chattext').val('');
+	  });
+	
+	$('#chattext').bind('keypress', function(ev)
+	{
+	  if (ev.keyCode == 13) {
+	    SendChat($('#chattext').val());
+	    $('#chattext').val('');
+	  }
+	});
+});

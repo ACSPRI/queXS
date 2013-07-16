@@ -1,3 +1,11 @@
+queXS 1.9.0 - Changes since 1.8.0
+
+Database updates:
+
+ALTER TABLE `operator` ADD `chat_enable` TINYINT( 1 ) NULL DEFAULT '0',
+ADD `chat_user` VARCHAR( 255 ) NULL ,
+ADD `chat_password` VARCHAR( 255 ) NULL ;
+
 queXS 1.8.0 - Changes since 1.7.6
 
 New Feature: Allow for restricting the view of sample variables to operators

@@ -56,16 +56,41 @@ if (AUTO_LOGOUT_MINUTES !== false)
 xhtml_head(T_("Supervisor chat"),true,array("css/table.css"),$js);
 
 $operator_id = get_operator_id();
+$chatenabled = get_setting("chat_enabled");
+if (empty($chatenabled))
+	$chatenabled = false;
+else
+	$chatenabled = true;
 
-//javascript to activate connection for this user
-print "<script type='text/javascript'>";
-print "var SUPERVISOR_NAME = 'Adam';";
-print "var conn = new Strophe.Connection('/xmpp-httpbind');";
-print "conn.connect('mim@surveys.acspri.org.au', 'mim', OnConnectionStatus);";
-print "</script>";
+if ($chatenabled && operator_chat_enabled($operator_id))
+{
+	//get BOSH service URL
+	$bosh_service = get_setting("bosh_service");
+	if (empty($bosh_service))
+		$bosh_service = "/xmpp-httpbind";
 
-//table for chat messages
-print "<table class='tclass' id='chattable'><tbody><tr><th>" . T_("From") . "</th><th>" . T_("Message") . "</th></tr></tbody></table>";
+	//could set this on a shift by shift basis if required
+	$supervisor_xmpp = get_setting("supervisor_xmpp");
+
+	//javascript to activate connection for this user
+	print "<script type='text/javascript'>";
+	print "var SUPERVISOR_NAME = '" . T_("Supervisor") . "';";
+	print "var MY_NAME = '" . T_("Me") . "';";
+	print "var SUPERVISOR_XMPP = '$supervisor_xmpp';";
+	print "var conn = new Strophe.Connection('$bosh_service');";
+	print "conn.connect('" . get_operator_variable("chat_user",$operator_id) ."', '" . get_operator_variable("chat_password",$operator_id) . "', OnConnectionStatus);";
+	print "</script>";
+	
+	print "<div style='display:none' id='statusavailable'>" . T_("Supervisor is available") . "</div>";
+	print "<div id='statusunavailable'>" . T_("Supervisor not available") . "</div>";
+
+	print "<div id='chatbox'><input type='text' id='chattext'/> <div id='chatclick'>" . T_("Send") . "</div></div>";
+
+	//table for chat messages
+	print "<table class='tclass' id='chattable'><tbody><tr><th>" . T_("From") . "</th><th>" . T_("Message") . "</th></tr></tbody></table>";
+}
+else
+	print "<p>" . T_("Supervisor chat is not enabled") . "</p>";
 
 xhtml_foot();
 

@@ -92,6 +92,31 @@ function is_using_availability($case_id)
 }
 
 /**
+ * Return if chat is enabled for this operator
+ * 
+ * @param int $operator_id the operator id
+ * 
+ * @return bool True if enabled, false if not
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @since  2013-07-16
+ */
+function operator_chat_enabled($operator_id)
+{
+	global $db;
+
+	$sql = "SELECT chat_enable
+		FROM `operator`
+		WHERE operator_id = '$operator_id'";
+
+	$c = $db->GetOne($sql);	
+
+	if ($c == 1)
+		return true;
+
+	return false;
+}
+
+/**
  * Return if VOIP is enabled on an operator by operator basis
  * Will always return false if VOIP is globally disabled
  *
