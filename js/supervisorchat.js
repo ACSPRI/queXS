@@ -31,6 +31,19 @@ function OnConnected()
 {
 	conn.addHandler(OnPresenceStanza, null, "presence");
 	conn.addHandler(OnMessageStanza, null, "message");
+
+	//check if supervisor on list, if not ask to authenticate
+	var roster_iq = $iq({type: "get"}).c('query', {xmlns: Strophe.NS.ROSTER});
+
+	conn.sendIQ(roster_iq, function (iq) {
+		if ($(iq).find('item[jid="' + SUPERVISOR_XMPP + '"]').length == 0)
+		{
+			//request to be on list
+			conn.send($pres({ to: SUPERVISOR_XMPP, type: "subscribe" }));
+		}
+	});
+
+	//send presence message
 	conn.send($pres().c('status').t(PRESENCE_MESSAGE));
 }
 
@@ -79,10 +92,15 @@ function OnPresenceStanza(stanza)
 	var sShow = $(stanza).find('show').text();
 	//alert(sFrom + ':' + sType  + ':' + sShow + ':' + sBareJid);
 
-	// update status on screen if it is the supervisors status
-
-	if (sBareJid == SUPERVISOR_XMPP)
+	if(sType == "subscribe" && sBareJid == SUPERVISOR_XMPP)
 	{
+        	// Send a 'subscribed' notification back to accept the incoming
+	        // subscription request if it is the supervisor
+		conn.send($pres({ to: SUPERVISOR_XMPP, type: "subscribed" }));
+    	}
+	else if (sBareJid == SUPERVISOR_XMPP)
+	{
+		// update status on screen if it is the supervisors status
 		if (sType == null || sType == '') {
 			sType = 'available';
 		}
