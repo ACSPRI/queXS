@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-06-18 16:24+1000\n"
-"PO-Revision-Date: 2013-06-19 19:43+0000\n"
+"POT-Creation-Date: 2013-07-04 14:55+1000\n"
+"PO-Revision-Date: 2013-07-07 21:16+0000\n"
 "Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-07-04 05:00+0000\n"
-"X-Generator: Launchpad (build 16692)\n"
+"X-Launchpad-Export-Date: 2013-07-17 02:56+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
 
 #: appointment.php:69
 msgid "Appointment error"
@@ -363,17 +363,17 @@ msgstr "ID případu:"
 msgid "Respondent:"
 msgstr "Respondent:"
 
-#: respondent.php:164
+#: respondent.php:166
 msgid "Show details"
 msgstr "Zobrazit podrobnosti"
 
-#: respondent.php:168
-#: contactdetails.php:161
+#: respondent.php:170
+#: contactdetails.php:162
 msgid "Var"
 msgstr "Prom"
 
-#: respondent.php:168
-#: contactdetails.php:161
+#: respondent.php:170
+#: contactdetails.php:162
 msgid "Value"
 msgstr "Hodnota"
 
@@ -1100,6 +1100,10 @@ msgstr "Import?"
 msgid "Type"
 msgstr "Typ"
 
+#: functions/functions.import.php:127
+msgid "Allow operator to see?"
+msgstr "Umožnit operátorovi zobrazit?"
+
 #: functions/functions.operator.php:141
 msgid "morning"
 msgstr "ráno"
@@ -1112,7 +1116,7 @@ msgstr "odpoledne"
 msgid "evening"
 msgstr "večer"
 
-#: functions/functions.operator.php:797
+#: functions/functions.operator.php:852
 msgid ""
 "ERROR: You do not have server side authentication enabled therefore queXS "
 "cannot determine which user is accessing the system."
@@ -2946,7 +2950,7 @@ msgstr "Nastavit hodnoty v dotazníku pro předvyplnění"
 
 #: admin/index.php:66
 #: admin/index.php:68
-#: admin/index.php:109
+#: admin/index.php:110
 msgid "Operator management"
 msgstr "Správa operátorů"
 
@@ -3013,59 +3017,89 @@ msgstr "Přidělit výsledky k případům"
 msgid "Search the sample"
 msgstr "Prohledat vzorek"
 
-#: admin/index.php:98
+#: admin/index.php:96
+msgid "Case status and assignment"
+msgstr "Stav a přidělení případu"
+
+#: admin/index.php:99
 msgid "System settings"
 msgstr "Nastavení systému"
 
-#: admin/index.php:99
+#: admin/index.php:100
 msgid "Set default timezone list"
 msgstr "Nastavit seznam výchozích časových pásem"
 
-#: admin/index.php:100
+#: admin/index.php:101
 msgid "Set default shift times"
 msgstr "Nastavit výchozí doby směn"
 
-#: admin/index.php:101
+#: admin/index.php:102
 msgid "Set call restriction times"
 msgstr "Nastavit doby omezení volání"
 
-#: admin/index.php:102
+#: admin/index.php:103
 msgid "Set centre information"
 msgstr "Nastavit informace o centru"
 
-#: admin/index.php:103
+#: admin/index.php:104
 msgid "Start and monitor system wide case sorting"
 msgstr "Spustit a sledovat celosystémové řazení případů"
 
-#: admin/index.php:107
+#: admin/index.php:108
 msgid "VoIP"
 msgstr "VoIP"
 
-#: admin/index.php:108
+#: admin/index.php:109
 msgid "Start and monitor VoIP"
 msgstr "Spustit a sledovat VoIP"
 
-#: admin/index.php:110
+#: admin/index.php:111
 msgid "Extension status"
 msgstr "Stav rozšíření"
 
-#: admin/samplelist.php:87
-#: admin/samplelist.php:97
-#: admin/samplelist.php:104
-#: admin/samplelist.php:182
-#: admin/samplelist.php:191
+#: admin/samplelist.php:117
+#: admin/samplelist.php:127
+#: admin/samplelist.php:134
+#: admin/samplelist.php:270
+#: admin/samplelist.php:279
 msgid "Rename"
 msgstr "Přejmenovat"
 
-#: admin/samplelist.php:115
-#: admin/samplelist.php:129
-#: admin/samplelist.php:137
-#: admin/samplelist.php:181
-#: admin/samplelist.php:191
+#: admin/samplelist.php:146
+#: admin/samplelist.php:179
+#: admin/samplelist.php:269
+#: admin/samplelist.php:279
+msgid "Operator viewing permissions"
+msgstr "Oprávnění zobrazení operátora"
+
+#: admin/samplelist.php:182
+msgid ""
+"Select which fields from this sample should be able to be viewed by operators"
+msgstr "Vyberte která pole pro tento vzorek mohou operátoři vidět"
+
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
+msgid "Field"
+msgstr "Pole"
+
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
+msgid "Example data"
+msgstr "Příklad dat"
+
+#: admin/samplelist.php:190
+msgid "Save changes"
+msgstr "Uložit změny"
+
+#: admin/samplelist.php:202
+#: admin/samplelist.php:216
+#: admin/samplelist.php:224
+#: admin/samplelist.php:268
+#: admin/samplelist.php:279
 msgid "Deidentify"
 msgstr "Deidentifikace"
 
-#: admin/samplelist.php:132
+#: admin/samplelist.php:219
 msgid ""
 "Select which fields from this sample to deidentify. Deidentified fields will "
 "be permanently deleted from the sample."
@@ -3073,19 +3107,11 @@ msgstr ""
 "Vyberte která pole v tomto vzorku mají být deidentifikována. Tato pole jsou "
 "natrvalo odstraněna ze vzorku"
 
-#: admin/samplelist.php:137
-msgid "Field"
-msgstr "Pole"
-
-#: admin/samplelist.php:137
-msgid "Example data"
-msgstr "Příklad dat"
-
-#: admin/samplelist.php:140
+#: admin/samplelist.php:227
 msgid "Delete selected fields"
 msgstr "Smazat vybraná pole"
 
-#: admin/samplelist.php:188
+#: admin/samplelist.php:276
 msgid "Sample list"
 msgstr "Seznam vzorků"
 
@@ -3240,6 +3266,51 @@ msgstr "(pro projevení změn musí být aktivita na serveru VoIP)"
 #: admin/voipmonitor.php:97
 msgid "Click here to begin monitoring the VoIP Process"
 msgstr "Klikněte zde pro spuštění sledování procesů VoIP"
+
+#: admin/casestatus.php:88
+#: admin/casestatus.php:89
+msgid "Now"
+msgstr "Nyní"
+
+#: admin/casestatus.php:92
+msgid "Not assigned, select to assign"
+msgstr "Nepřiřazeno, vyberte pro přiřazení"
+
+#: admin/casestatus.php:93
+msgid "Assigned to"
+msgstr "Přiřadit k"
+
+#: admin/casestatus.php:93
+msgid "Order"
+msgstr "Pořadí"
+
+#: admin/casestatus.php:111
+msgid "Case available in x minutes"
+msgstr "Případ dostupný za x minut"
+
+#: admin/casestatus.php:111
+msgid "Assigned to operator"
+msgstr "Přiděleno k operátorovi"
+
+#: admin/casestatus.php:119
+msgid "Choose operator to assign selected cases to"
+msgstr "Zvolte operátora ke kterému případ přidělit"
+
+#: admin/casestatus.php:122
+msgid "Assign cases to operator queue"
+msgstr "Přidělit případ ke frontě operátora"
+
+#: admin/casestatus.php:199
+msgid ""
+"List cases by questionnaire and sample with the ability to assign them to be "
+"called next in a queue by a particular operator. If you assign cases to an "
+"operator, it will override the normal scheduling process and call them as "
+"soon as the operator is available."
+msgstr ""
+"Vypsat případy podle dotazníku a vzorku spolu s možností je přidělit na "
+"začátek fronty konkrétního operátora. Pokud případy operátorovi přidělíte, "
+"bude potlačen normální proces plánování a budou volány hned, jak operátor "
+"bude dostupný."
 
 #: admin/assignsample.php:115
 #: admin/assignsample.php:170

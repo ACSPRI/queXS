@@ -1,5 +1,10 @@
 queXS 1.9.0 - Changes since 1.8.0
 
+New Feature: Supervisor chat via XMPP/Jabber (allow interviewers to chat with a supervisor from the interviewer screen)
+New Feature: Set downloading VoIP client as the default
+Fixed Bug: Server overloads when downloading VoIP client if temporary directory not writeable
+Translations: Updated Czech translation - Thank you!
+
 Database updates:
 
 ALTER TABLE `operator` ADD `chat_enable` TINYINT( 1 ) NULL DEFAULT '0',
