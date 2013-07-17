@@ -158,7 +158,13 @@ $sc = $db->GetOne($sql);
 $ca = get_call_attempt($operator_id,true);
 $appointment = false;
 $availability = is_using_availability($case_id);
-$chat = operator_chat_enabled($operator_id);
+
+$chatenabled = get_setting("chat_enabled");
+if (empty($chatenabled))
+	$chatenabled = false;
+else
+	$chatenabled = true;
+
 if ($ca)
 {
 	if (is_on_appointment($ca))
@@ -272,15 +278,13 @@ xhtml_object($data,"main-content");
      </div>
 <?php  }?>
 
-<?php  if ($chat) { ?>
+<?php  if ($chatenabled && operator_chat_enabled($operator_id)) { ?>
      <div class="tabbertab <?php  if ((DEFAULT_TAB == 'chat' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'chat' && $appointment)) 
 					print "tabbertabdefault"; ?>" id="tab-chat">
 	  <h2><?php  echo T_("Supervisor chat"); ?></h2>
 	  <div id="div-supervisorchat" class="tabberdiv"><?php xhtml_object("supervisorchat.php","main-supervisorchat");?></div>
      </div>
 <?php  }?>
-
-
 
 <?php  if (TAB_INFO) { ?>
      <div class="tabbertab <?php  if ((DEFAULT_TAB == 'info' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'info' && $appointment)) 
