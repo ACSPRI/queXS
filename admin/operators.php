@@ -54,6 +54,8 @@ if (isset($_POST['operator']))
 	$operator = $db->qstr($_POST['operator'],get_magic_quotes_gpc());
 	$firstname = $db->qstr($_POST['firstname'],get_magic_quotes_gpc());
 	$lastname = $db->qstr($_POST['lastname'],get_magic_quotes_gpc());
+	$chat_user = $db->qstr($_POST['chat_user'],get_magic_quotes_gpc());
+	$chat_password = $db->qstr($_POST['chat_password'],get_magic_quotes_gpc());
 	$time_zone_name = $db->qstr($_POST['Time_zone_name'],get_magic_quotes_gpc());
 	$extension = 1000;
 	$extensionp = "";
@@ -98,16 +100,18 @@ if (isset($_POST['operator']))
 	$temporary = 0;
 	$refusal = 0;
 	$voip = 0;
+	$chat = 0;
 	if (isset($_POST['supervisor']) && $_POST['supervisor'] == "on") $supervisor = 1;
 	if (isset($_POST['refusal']) && $_POST['refusal'] == "on") $refusal = 1;
 	if (isset($_POST['temporary']) && $_POST['temporary'] == "on") $temporary = 1;	
 	if (isset($_POST['voip']) && $_POST['voip'] == "on") $voip = 1;	
+	if (isset($_POST['chat_enable']) && $_POST['chat_enable'] == "on") $chat = 1;	
 
 	if (!empty($_POST['operator']))
 	{
 		$sql = "INSERT INTO operator
-			(`operator_id` ,`username` ,`firstName` ,`lastName`, `extension`,`extension_password`, `Time_zone_name`,`voip`)
-			VALUES (NULL , $operator, $firstname , $lastname, $extension, $extensionp, $time_zone_name, $voip);";
+			(`operator_id` ,`username` ,`firstName` ,`lastName`, `extension`,`extension_password`, `Time_zone_name`,`voip`,`chat_enable`,`chat_user`,`chat_password`)
+			VALUES (NULL , $operator, $firstname , $lastname, $extension, $extensionp, $time_zone_name, $voip, $chat, $chat_user, $chat_password);";
 	
 		if ($db->Execute($sql))
 		{
@@ -200,6 +204,9 @@ $rs = $db->GetAll($sql);
 	<p><?php  echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
 <?php  } ?>
 	<p><?php  echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
+	<p><?php  echo T_("Jabber/XMPP username for chat:"); ?> <input name="chat_user" type="text"/></p>
+	<p><?php  echo T_("Jabber/XMPP password for chat:"); ?> <input name="chat_password" type="text"/></p>
+	<p><?php  echo T_("Will this operator be using chat?"); ?> <input name="chat_enable" type="checkbox"/></p>
 	<p><?php  echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
 	<p><?php  echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>
 	<p><?php  echo T_("Is the operator a refusal converter?"); ?> <input name="refusal" type="checkbox"/></p>

@@ -1177,6 +1177,9 @@ CREATE TABLE `operator` (
   `voip` tinyint(1) NOT NULL default '1',
   `voip_status` tinyint(1) NOT NULL default '0',
   `next_case_id` bigint(20) default NULL,
+  `chat_enable` tinyint(1) default '0',
+  `chat_user` varchar(255) collate utf8_unicode_ci default NULL,
+  `chat_password` varchar(255) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`operator_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `extension` (`extension`)

@@ -50,8 +50,9 @@ $msg = "";
 if (isset($_POST['submit']))
 {
 	$operator_id = intval($_POST['operator_id']);
-	$voip = $enabled = 0;
+	$chat_enable = $voip = $enabled = 0;
 	if (isset($_POST['voip'])) $voip = 1;
+	if (isset($_POST['chat_enable'])) $chat_enable = 1;
 	if (isset($_POST['enabled'])) $enabled = 1;
 
 	if (HTPASSWD_PATH !== false && $_POST['existing_username'] != $_POST['username'] && empty($_POST['password']))
@@ -64,10 +65,12 @@ if (isset($_POST['submit']))
 			SET username = " . $db->qstr($_POST['username']) . ",
 			lastName = " . $db->qstr($_POST['lastName']) . ",
 			firstName = " . $db->qstr($_POST['firstName']) . ",
+			chat_user = " . $db->qstr($_POST['chat_user']) . ",
+			chat_password = " . $db->qstr($_POST['chat_password']) . ",
 			extension = " . $db->qstr($_POST['extension']) . ",
 			extension_password = " . $db->qstr($_POST['extension_password']) . ",
 			Time_zone_name = " . $db->qstr($_POST['timezone']) . ",
-			voip = $voip, enabled = $enabled
+			voip = $voip, enabled = $enabled, chat_enable = $chat_enable
 			WHERE operator_id = $operator_id";
 
 		$rs = $db->Execute($sql);
@@ -129,6 +132,9 @@ if (isset($_GET['edit']))
 	<div><label for="lastName"><?php echo T_("Last name") . ": "; ?></label><input type='text' name='lastName' value="<?php echo $rs['lastName'];?>"/></div>
 	<div><label for="extension"><?php echo T_("Extension") . ": "; ?></label><input type='text' name='extension' value="<?php echo $rs['extension'];?>"/></div>
 	<div><label for="extension_password"><?php echo T_("Extension Password") . ": "; ?></label><input type='text' name='extension_password' value="<?php echo $rs['extension_password'];?>"/></div>
+	<div><label for="chat_user"><?php echo T_("Jabber/XMPP chat user") . ": "; ?></label><input type='text' name='chat_user' value="<?php echo $rs['chat_user'];?>"/></div>
+	<div><label for="chat_password"><?php echo T_("Jabber/XMPP chat password") . ": "; ?></label><input type='text' name='chat_password' value="<?php echo $rs['chat_password'];?>"/></div>
+	<div><label for="chat_enable"><?php echo T_("Uses chat") . "? ";?></label><input type="checkbox" name="chat_enable" <?php if ($rs['chat_enable'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
 	<div><label for="timezone"><?php echo T_("Timezone") . ": ";?></label><?php display_chooser($tz,"timezone","timezone",false,false,false,false,array("value",$rs['Time_zone_name'])); ?></div>
 	<div><label for="enabled"><?php echo T_("Enabled") . "? ";?></label><input type="checkbox" name="enabled" <?php if ($rs['enabled'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
 	<div><label for="voip"><?php echo T_("Uses VoIP") . "? ";?></label><input type="checkbox" name="voip" <?php if ($rs['voip'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
