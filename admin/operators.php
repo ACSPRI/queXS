@@ -204,8 +204,8 @@ $rs = $db->GetAll($sql);
 	<p><?php  echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
 <?php  } ?>
 	<p><?php  echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
-	<p><?php  echo T_("Jabber/XMPP username for chat:"); ?> <input name="chat_user" type="text"/></p>
-	<p><?php  echo T_("Jabber/XMPP password for chat:"); ?> <input name="chat_password" type="text"/></p>
+	<p><?php  echo T_("Jabber/XMPP chat user"); ?>: <input name="chat_user" type="text"/></p>
+	<p><?php  echo T_("Jabber/XMPP chat password"); ?>: <input name="chat_password" type="text"/></p>
 	<p><?php  echo T_("Will this operator be using chat?"); ?> <input name="chat_enable" type="checkbox"/></p>
 	<p><?php  echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
 	<p><?php  echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>
