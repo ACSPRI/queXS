@@ -2,6 +2,17 @@
 
 var nConnStatus = "";
 
+function Unload()
+{
+	if (conn) 
+	{
+		conn.flush();
+		conn.sync = true;
+		conn.disconnect();
+		conn = null;
+	}
+}
+
 function OnConnectionStatus(nStatus)
 {
 	nConnStatus = nStatus;
@@ -20,7 +31,7 @@ function OnConnected()
 {
 	conn.addHandler(OnPresenceStanza, null, "presence");
 	conn.addHandler(OnMessageStanza, null, "message");
-	conn.send($pres());
+	conn.send($pres().c('status').t(PRESENCE_MESSAGE));
 }
 
 
@@ -112,6 +123,16 @@ function SendChat(chat)
 }
 
 $(document).ready(function(){
+
+	$(window).bind('beforeunload', function(e) {
+	  Unload();
+	});
+	
+	$(window).unload(function()
+	{
+	  Unload();
+	});
+
 	$('#chatclick').bind('click', function()
 	{
 	    SendChat($('#chattext').val());

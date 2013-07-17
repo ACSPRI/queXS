@@ -64,6 +64,8 @@ else
 
 if ($chatenabled && operator_chat_enabled($operator_id))
 {
+	$case_id = get_case_id($operator_id);
+
 	//get BOSH service URL
 	$bosh_service = get_setting("bosh_service");
 	if (empty($bosh_service))
@@ -77,6 +79,7 @@ if ($chatenabled && operator_chat_enabled($operator_id))
 	print "var SUPERVISOR_NAME = '" . T_("Supervisor") . "';";
 	print "var MY_NAME = '" . T_("Me") . "';";
 	print "var SUPERVISOR_XMPP = '$supervisor_xmpp';";
+	print "var PRESENCE_MESSAGE = '" . T_("Case id") . ": $case_id';";
 	print "var conn = new Strophe.Connection('$bosh_service');";
 	print "conn.connect('" . get_operator_variable("chat_user",$operator_id) ."', '" . get_operator_variable("chat_password",$operator_id) . "', OnConnectionStatus);";
 	print "</script>";
