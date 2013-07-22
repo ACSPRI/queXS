@@ -158,7 +158,8 @@ else
 		FROM sample_var as s
 		JOIN `case` as c on (c.case_id = '$case_id' and c.sample_id = s.sample_id)
 		JOIN `sample` as sa ON (sa.sample_id = c.sample_id)
-		JOIN sample_import_var_restrict as sv ON (sv.var LIKE s.var AND sa.import_id = sv.sample_import_id AND sv.restrict = 0)";
+		LEFT JOIN sample_import_var_restrict as sv ON (sv.var LIKE s.var AND sa.import_id = sv.sample_import_id)
+		WHERE (sv.restrict IS NULL OR sv.restrict = 0)";
 	
 	
 	$rs = $db->GetAll($sql);
