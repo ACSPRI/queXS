@@ -116,10 +116,16 @@ if (isset($_GET['call_id']))
 	if (isset($_GET['set_outcome_id']))
 	{
 		$outcome_id = bigintval($_GET['set_outcome_id']);
-		$sql = "UPDATE `call`
-			SET outcome_id = '$outcome_id'
-			WHERE call_id = '$call_id'";
-		$db->Execute($sql);
+
+		if ($outcome_id > 0)
+		{
+
+			$sql = "UPDATE `call`
+				SET outcome_id = '$outcome_id'
+				WHERE call_id = '$call_id'";
+
+			$db->Execute($sql);
+		}
 	}
 	else
 	{
@@ -156,11 +162,14 @@ if ($case_id != false)
 	{
 		$outcome_id = bigintval($_GET['outcome_id']);
 
-		$sql = "UPDATE `case`
-			SET current_outcome_id = $outcome_id
-			WHERE case_id = '$case_id'";
-
-		$db->Execute($sql);
+		if ($outcome_id > 0)
+		{
+			$sql = "UPDATE `case`
+				SET current_outcome_id = $outcome_id
+				WHERE case_id = '$case_id'";
+	
+			$db->Execute($sql);
+		}
 	}
 
 	if (isset($_GET['operator_id']))
