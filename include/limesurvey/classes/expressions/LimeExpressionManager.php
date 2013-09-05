@@ -4689,6 +4689,8 @@
 
                 foreach ($updatedValues as $key=>$value)
                 {
+		    if (!empty($key)) //queXS Addition
+		    {
                     $val = (is_null($value) ? NULL : $value['value']);
                     $type = (is_null($value) ? NULL : $value['type']);
 
@@ -4725,6 +4727,7 @@
                     {
                         $setter[] = db_quote_id($key) . "=" . db_quoteall($val,true);
                     }
+		    }
                 }
                 $query .= implode(', ', $setter);
                 $query .= " WHERE ID=";
