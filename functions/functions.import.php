@@ -356,7 +356,8 @@ function get_time_zone($value,$type)
 
 		$sql = "SELECT Time_zone_name as tz
 			FROM `$tname`
-			WHERE val = SUBSTR($value, 1, CHAR_LENGTH( val ) )";
+			WHERE val = SUBSTR($value, 1, CHAR_LENGTH( val ) )
+			ORDER BY CHAR_LENGTH(val) DESC";
 
 		$tz = $db->GetOne($sql);
 
