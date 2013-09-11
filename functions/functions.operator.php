@@ -428,7 +428,11 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 	if (!$db->HasFailedTrans()) //if the transaction hasn't failed
 	{
-		$lime_sid = get_limesurvey_id($operator_id);
+		$sql = "SELECT lime_sid
+			FROM questionnaire
+			WHERE questionnaire_id = '$questionnaire_id'";
+
+		$lime_sid = $db->GetOne($sql);
 
 		if ($lime_sid)
 		{
