@@ -197,12 +197,14 @@ print $script;
 
 $case_id = get_case_id($operator_id,true);
 
-$sql = "SELECT q.self_complete
+$sql = "SELECT q.self_complete, q.referral
         FROM questionnaire as q, `case` as c
         WHERE c.case_id = $case_id 
         AND c.questionnaire_id = q.questionnaire_id";
 
-$sc = $db->GetOne($sql);
+$scr = $db->GetRow($sql);
+$sc = $scr['self_complete'];
+$ref = $scr['referral'];
 
 ?>
 
@@ -210,6 +212,7 @@ $sc = $db->GetOne($sql);
        <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><?php  echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
     <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><?php  echo T_("Appointment"); ?> <img src="css/images/plius.jpg" /></a></li>
 	<?php if ($sc == 1) { ?><li id='item_4_e' class="item_2_full_height"><a href="javascript:poptastic('email.php?interface2=true');"><?php  echo T_("Email"); ?> <img src="css/images/plius.jpg" /></a></li><?php } ?>
+	<?php if ($ref == 1) { ?><li id='item_5_e' class="item_2_full_height"><a href="javascript:poptastic('referral.php?interface2=true');"><?php  echo T_("Referral"); ?> <img src="css/images/plius.jpg" /></a></li><?php } ?>
     <li id="item_3_e" class="item_3_full_height"><a href="?endwork=endwork"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
 </ul>
 

@@ -66,6 +66,7 @@ if (isset($_POST['import_file']))
 	$ras =0;
 	$rws = 0;
 	$testing = 0;
+	$referral = 0;
 	$rs = 0;
 	$lime_sid = 0;
 	$respsc = 0;
@@ -74,6 +75,7 @@ if (isset($_POST['import_file']))
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['testing'])) $testing = 1;
 	if (isset($_POST['respsc'])) $respsc = 1;
+	if (isset($_POST['referral'])) $respsc = 1;
 	if ($_POST['selectrs'] != "none") $rs = 1;
 	
 	$name = $db->qstr($_POST['description'],get_magic_quotes_gpc());
@@ -93,8 +95,8 @@ if (isset($_POST['import_file']))
 		$lime_rs_sid = bigintval($_POST['selectrs']);
 	}
 
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc)";
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete,referral)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc,$referral)";
 
 	$rs = $db->Execute($sql);
 
@@ -193,6 +195,7 @@ $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 <p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
 <p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
 <p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
+<p><?php  echo T_("Allow operators to generate referrals?"); ?> <input name="referral" type="checkbox"/></p>
 <p><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> <input name="respsc" type="checkbox"  onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" /></p>
 <div id='limesc' style='display:none;'>
 <p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option value="survey"><?php echo T_("All in one"); ?></option><option value="question"><?php echo T_("Question by question"); ?></option><option value="group"><?php echo T_("Group at a time"); ?></option></select></p>

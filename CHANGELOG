@@ -1,3 +1,9 @@
+New Feature: Accept case referrals
+
+Database updates:
+
+ALTER TABLE `questionnaire` ADD `referral` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `self_complete` 
+
 queXS 1.9.0 - Changes since 1.8.0
 
 New Feature: Supervisor chat via XMPP/Jabber (allow interviewers to chat with a supervisor from the interviewer screen)
