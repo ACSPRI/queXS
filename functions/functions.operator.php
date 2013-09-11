@@ -338,6 +338,112 @@ function is_respondent_selection($operator_id)
 }
 
 /**
+ * Add a case to the system based on a sample record
+ *
+ * @param int $sample_id The sample id
+ * @param int $questionnaire_id The questionnaire id
+ * @param int $operator_id The operator id (Default NULL)
+ * @param int $testing 0 if a live case otherwise 1 for a testing case
+ * 
+ * @return int The case id
+ */
+function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 0)
+{
+	global $db;
+
+	$token = sRandomChars();
+
+	$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
+		VALUES (NULL, $sample_id, $questionnaire_id, NULL, $operator_id, NULL, 1, '$token')";
+
+	$db->Execute($sql);
+
+	$case_id = $db->Insert_ID();
+
+	//if this sample is set as testing, assign internal numbers as numbers
+	if ($testing == 1)
+	{
+		$db->Execute("SET @row := 0");
+
+		$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
+			SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(extension,'/',-1) as phone, CONCAT(firstName, ' ', lastName)
+			FROM operator
+			WHERE enabled = 1";
+
+		$db->Execute($sql);
+	}
+	else
+	{
+		//add any phone numbers to contact phone
+
+		//$db->Execute("SET @row := 0");
+
+		$sql = "SELECT val as phone
+			FROM sample_var
+			WHERE sample_id = '$sample_id'
+			AND val is NOT NULL
+			AND val != \"\"
+			AND (`type` = 2 or `type` = 3)
+			ORDER BY `type` DESC";
+
+		$r5 = $db->GetAll($sql);
+
+		if (!empty($r5))
+		{
+			$i = 1;
+			foreach ($r5 as $r5v)
+			{
+				$tnum =  preg_replace("/[^0-9]/", "",$r5v['phone']); 
+				if (empty($tnum)) $tnum = "312345678"; //handle error condition
+				$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
+					VALUES ($case_id,$i,$tnum,'')";
+				$db->Execute($sql);
+				$i++;
+			}
+		}
+		else
+		{
+			$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
+				VALUES ($case_id,1,312345678,'test only')";
+			$db->Execute($sql);
+		}
+
+	}
+
+	//add respondent details to respondent (if such details exist in the sample)
+
+	$sql = "INSERT INTO respondent (case_id,firstName,lastName,Time_zone_name) 
+		SELECT $case_id as case_id, IFNULL(s1.val,'') as firstName, IFNULL(s2.val,'') as lastName, s3.Time_zone_name as Time_zone_name  
+		FROM sample as s3
+		LEFT JOIN sample_var as s2 on (s2.sample_id = '$sample_id' and s2.type = 7) 
+		LEFT JOIN sample_var as s1 on (s1.sample_id = '$sample_id' and s1.type = 6) 
+		WHERE s3.sample_id = '$sample_id'";
+
+	$db->Execute($sql);
+
+
+	//add resopndent to Lime Survey token table for this questionnaire
+
+	//first we need to get the limesurvey survey id 
+
+	if (!$db->HasFailedTrans()) //if the transaction hasn't failed
+	{
+		$lime_sid = get_limesurvey_id($operator_id);
+
+		if ($lime_sid)
+		{
+			$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
+			VALUES (NULL,'','','','$token','".DEFAULT_LOCALE."','N','N',NULL)";
+
+			$db->Execute($sql);
+		}
+	}
+
+	return $case_id;
+}
+
+
+/**
  * Get the current or next case id
  *
  * @param int $operator_id The operator id
@@ -602,94 +708,8 @@ function get_case_id($operator_id, $create = false)
 		
 				if (!empty($r3))
 				{
-					$token = sRandomChars();
-
-					$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
-						VALUES (NULL, {$r3['sample_id']}, {$r3['questionnaire_id']} , NULL, $operator_id, NULL, 1, '$token')";
-	
-					$db->Execute($sql);
-	
-					$case_id = $db->Insert_ID();
-
-					//if this sample is set as testing, assign internal numbers as numbers
-					if ($r3['testing'] == 1)
-					{
-						$db->Execute("SET @row := 0");
-		
-						$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-							SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(extension,'/',-1) as phone, CONCAT(firstName, ' ', lastName)
-							FROM operator
-							WHERE enabled = 1";
-		
-						$db->Execute($sql);
-					}
-					else
-					{
-						//add any phone numbers to contact phone
-		
-						//$db->Execute("SET @row := 0");
-		
-						$sql = "SELECT val as phone
-							FROM sample_var
-							WHERE sample_id = '{$r3['sample_id']}'
-							AND val is NOT NULL
-							AND val != \"\"
-							AND (`type` = 2 or `type` = 3)
-							ORDER BY `type` DESC";
-		
-						$r5 = $db->GetAll($sql);
-
-						if (!empty($r5))
-						{
-							$i = 1;
-							foreach ($r5 as $r5v)
-							{
-								$tnum =  preg_replace("/[^0-9]/", "",$r5v['phone']); 
-								if (empty($tnum)) $tnum = "312345678"; //handle error condition
-								$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-									VALUES ($case_id,$i,$tnum,'')";
-								$db->Execute($sql);
-								$i++;
-							}
-						}
-						else
-						{
-							$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-								VALUES ($case_id,1,312345678,'test only')";
-							$db->Execute($sql);
-						}
-
-					}
-	
-					//add respondent details to respondent (if such details exist in the sample)
-	
-					$sql = "INSERT INTO respondent (case_id,firstName,lastName,Time_zone_name) 
-						SELECT $case_id as case_id, IFNULL(s1.val,'') as firstName, IFNULL(s2.val,'') as lastName, s3.Time_zone_name as Time_zone_name  
-						FROM sample as s3
-						LEFT JOIN sample_var as s2 on (s2.sample_id = '{$r3['sample_id']}' and s2.type = 7) 
-						LEFT JOIN sample_var as s1 on (s1.sample_id = '{$r3['sample_id']}' and s1.type = 6) 
-						WHERE s3.sample_id = '{$r3['sample_id']}'";
-	
-					$db->Execute($sql);
-	
-	
-					//add resopndent to Lime Survey token table for this questionnaire
-	
-					//first we need to get the limesurvey survey id 
-
-					if (!$db->HasFailedTrans()) //if the transaction hasn't failed
-					{
-						$lime_sid = get_limesurvey_id($operator_id);
-		
-						if ($lime_sid)
-						{
-							$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
-							VALUES (NULL,'','','','$token','".DEFAULT_LOCALE."','N','N',NULL)";
-		
-							$db->Execute($sql);
-						}
-					}
-				}
+					$case_id = add_case($r3['sample_id'],$r3['questionnaire_id'],$operator_id,$r3['testing']);
+				}	
 			}
 			else
 			{
