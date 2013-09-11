@@ -277,38 +277,14 @@ function import_file($file, $description, $fields, $firstrow = 2)
 				 *
 				 */
 				foreach($selected_type as $key => $val)
-				{		
-					$sql = "SELECT `table`
-						FROM sample_var_type
-						WHERE type = '$val'";
-		
-					$tname = $db->GetRow($sql);
-					
-					if (!empty($tname))
+				{	
+					$tz = get_time_zone($data[$key - 1],$val);
+	
+					if ($tz !== false)
 					{
-						$tname = $tname['table'];
-						if (!empty($tname))
-						{
-		
-							$value = $db->Quote($data[$key - 1]);
-			
-							$sql = "SELECT Time_zone_name as tz
-								FROM `$tname`
-								WHERE val = SUBSTR($value, 1, CHAR_LENGTH( val ) )";
-				
-							$tz = $db->GetRow($sql);
-					
-							//print("$sql<br/>");
-							//if ($db->HasFailedTrans()) { print "FAILED"; exit(); }
-		
-							if (!empty($tz))
-							{
-								$tzone = $tz['tz'];
-								break;
-							}
-		
-						}	
-					}	
+						$tzone = $tz;
+						break;
+					}
 				}
 		
 		
@@ -354,6 +330,42 @@ function import_file($file, $description, $fields, $firstrow = 2)
 
 	return $db->CompleteTrans();
 	
+}
+
+/**
+ * Get the timezone given the sample value and type
+ *
+ * @param string $value A sample value
+ * @param integer $type The type of sample var (see sample_var_type table)
+ *
+ * @return string|bool Return the timezone name or false if not found
+ */
+function get_time_zone($value,$type)
+{
+	global $db;
+	
+	$sql = "SELECT `table`
+		FROM sample_var_type
+		WHERE type = '$type'";
+
+	$tname = $db->GetOne($sql);
+	
+	if (!empty($tname))
+	{
+		$value = $db->Quote($value);
+
+		$sql = "SELECT Time_zone_name as tz
+			FROM `$tname`
+			WHERE val = SUBSTR($value, 1, CHAR_LENGTH( val ) )";
+
+		$tz = $db->GetOne($sql);
+
+		if (!empty($tz))
+		{
+			return $tz;
+		}
+	}
+	return false;
 }
 
 
