@@ -142,13 +142,22 @@ if ($questionnaire_id != false)
 	$sgqa = false;
 	if (isset($_GET['sgqa'])) 	$sgqa = $_GET['sgqa'];
 
-	$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) AS value, SUBSTR(CONCAT(q.question, ': ', IFNULL(a.answer,'')),1,100) as description, CASE WHEN CONCAT( q.sid, 'X', q.gid, 'X', q.qid, IFNULL( a.code, '' ) ) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
+	$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid) AS value,
+		CASE WHEN qo.question IS NULL THEN q.question ELSE CONCAT(qo.question,' : ',q.question) END as description,
+		CASE WHEN CONCAT(q.sid, 'X', q.gid, 'X', q.qid) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM `" . LIME_PREFIX . "questions` AS q
-		LEFT JOIN `" . LIME_PREFIX . "answers` AS a ON ( a.qid = q.qid )
-		WHERE q.sid = '$lime_sid'";
+		LEFT JOIN `" . LIME_PREFIX . "questions` as qo ON (qo.qid = q.parent_qid)
+		WHERE q.sid = '$lime_sid'
+		ORDER BY CASE WHEN qo.question_order IS NULL THEN q.question_order ELSE qo.question_order + (q.question_order / 1000) END ASC";
 
+	$rs = $db->GetAll($sql);
 
-	display_chooser($db->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id");
+	for ($i=0; $i<count($rs); $i++)
+	{
+		$rs[$i]['description'] = substr(strip_tags($rs[$i]['description']),0,100);
+	}
+
+	display_chooser($rs,"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id");
 
 	if ($sgqa != false)
 	{
