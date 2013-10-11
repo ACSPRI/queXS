@@ -316,6 +316,13 @@ function spss_fieldmap($prefix = 'V') {
         }
     }
 
+	//queXS addition - caseid
+	$fieldno++;
+	$fields[] = array('id'=>"$prefix$fieldno",'name'=>'caseid',
+		    'qid'=>0,'code'=>'','SPSStype'=>'F','LStype'=>'Undef',
+		    'VariableLabel'=>'Case ID','sql_name'=>'caseid','size'=>'15',
+		    'title'=>'caseid','hide'=>0, 'scale'=>'');
+
     $tempArray = array();
     $fieldnames = array_values($connect->MetaColumnNames("{$dbprefix}survey_$surveyid", true));
     $num_results = count($fieldnames);
@@ -440,7 +447,7 @@ function spss_getquery() {
 
     #See if tokens are being used
     if (isset($tokensexist) && $tokensexist == true && $surveyprivate == 'N') {
-        $query="SELECT ";
+        $query="SELECT case1.case_id as caseid, ";
         $tokenattributes=GetTokenFieldsAndNames($surveyid,false,false);
         foreach ($tokenattributes as $attributefield=>$attributedescription) {
             //Drop the token field, since it is in the survey too
@@ -450,6 +457,7 @@ function spss_getquery() {
         }
         $query .= "{$dbprefix}survey_$surveyid.*
 	    FROM {$dbprefix}survey_$surveyid
+	    JOIN `case` as case1 ON ({$dbprefix}survey_$surveyid.token = case1.token)
 	    LEFT JOIN {$dbprefix}tokens_$surveyid ON {$dbprefix}survey_$surveyid.token = {$dbprefix}tokens_$surveyid.token";
     } else {
         $query = "SELECT *
