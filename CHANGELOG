@@ -1,3 +1,15 @@
+queXS 1.9.1 - Changes since 1.9.0
+
+New Feature: Add caseid to SPSS output
+New Feature: Add token to sample key output
+New Feature: Add more metadata to data output including case notes, case outcome, total interview time, last number dialed, operator username
+Fixed Bug: lp:1209479 Allows for the deletion and modification of availability groups
+Fixed Bug: lp:1220515 Database error when displaying questionnaire
+Fixed Bug: lp:1209486 Supervisor can assign a blank outcome to a case which makes it unavailable
+Fixed Bug: Make sure sample fields without restrictions still display
+Fixed Bug: Prefill questions displaying out of order and including wrong fields
+Translations: Updated and Bosnian translation begun - Thank you for your contributions!
+
 queXS 1.9.0 - Changes since 1.8.0
 
 New Feature: Supervisor chat via XMPP/Jabber (allow interviewers to chat with a supervisor from the interviewer screen)
