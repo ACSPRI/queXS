@@ -83,6 +83,12 @@ if (isset($_POST['day']))
 		}
 	}
 
+	$sql = "UPDATE availability_group
+		SET description = " . $db->qstr($_POST['description']) .  "
+		WHERE availability_group_id=  $availability_group";
+
+	$db->Execute($sql);
+
 	$db->CompleteTrans();
 }
 
@@ -108,6 +114,8 @@ $sql = "SELECT description
 	WHERE availability_group_id = $availability_group";
 
 $rs = $db->GetRow($sql);
+
+$description = $rs['description'];
 
 print "<h2>" . $rs['description'] . "</h2>";
 
@@ -149,8 +157,13 @@ translate_array($daysofweek,array("description"));
 
 ?>
 	</table>
-	<div><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></div>
+	<p><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></p>
+	<p><label for="description"><?php echo T_("Availability group name");  ?>: </label><input type="text" name="description" id="description" value="<?php echo $description;?>"/></p>
 	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to availabilities"); ?>"/></p>
+	<input type="hidden" name="availability_group" value="<?php  echo $availability_group;?>"/>
+	</form>
+	<form method="post" action="availabilitygroup.php">
+	<p><input type="submit" name="subdel" value="<?php  echo T_("Delete this availability group"); ?>"/></p>
 	<input type="hidden" name="availability_group" value="<?php  echo $availability_group;?>"/>
 	</form>
 <?php 

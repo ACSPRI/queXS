@@ -69,10 +69,32 @@ global $db;
 
 xhtml_head(T_("Availability groups"),true,array("../css/table.css"),array("../js/window.js"));
 
-
-if (isset($_GET['availability_group']))
+if (isset($_POST['subdel']))
 {
-	$availability_group = $db->qstr($_GET['availability_group']);
+	$availability_group = intval($_POST['availability_group']);
+
+	$db->StartTrans();
+
+	$sql = "DELETE FROM availability
+		WHERE availability_group_id = $availability_group";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM questionnaire_availability
+		WHERE availability_group_id = $availability_group";
+
+	$db->Execute($sql);
+
+	$sql = "DELETE FROM availability_group
+		WHERE availability_group_id = $availability_group";
+
+	$db->Execute($sql);
+
+	$db->CompleteTrans();
+}
+else if (isset($_POST['availability_group']))
+{
+	$availability_group = $db->qstr($_POST['availability_group']);
 	
 	$sql = "INSERT INTO `availability_group` (availability_group_id,description)
 		VALUES (NULL,$availability_group)";
@@ -97,10 +119,12 @@ else
 	xhtml_table($rs,array("description","link"),array(T_("Availablity group"),T_("Modify")));
 
 
-//add a note
+//add an availablity group
+print "<h3>" . T_("Add availability group") . "</h3>";
 ?>
-<form method="get" action="?">
-	<p><input type="text" class="textclass" name="availability_group" id="availability_group"/><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add availability group"); ?>"/>
+<form method="post" action="?">
+	<p><label for="availability_group"><?php echo T_("Availability group name"); ?>: </label><input type="text" class="textclass" name="availability_group" id="availability_group"/></p>
+	<p><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add availability group"); ?>"/>
 	</p>
 </form>
 <?php 
