@@ -77,7 +77,7 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	header("Pragma: no-cache");                          // HTTP/1.0
 
-	echo("caseid");
+	echo("token,caseid");
 	foreach($svars as $s)
 	{
 		echo("," . $s['value']);
@@ -89,7 +89,7 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 
 	echo("\n");
 
-	$sql = "SELECT c.case_id ";
+	$sql = "SELECT c.token,c.case_id ";
 
 	if (isset($_GET['sample'])) $sql .= ", o.description, o.aapor_id ";
 
@@ -125,7 +125,7 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 	{
 		foreach($list as $l)
 		{
-			echo $l['case_id'];
+			echo $l['token'] . "," . $l['case_id'];
 			$i = 0;
 			foreach ($svars as $s)
 			{
@@ -149,7 +149,7 @@ if (isset($_GET['sample_var']))
 	$sample_import_id = bigintval($_GET['sample_import_id']);
 	$sample_var = $db->quote($_GET['sample_var']);
 
-	$sql = "SELECT c.case_id, sv.val
+	$sql = "SELECT c.token,c.case_id, sv.val
 		FROM sample, `case` as c, sample_var as sv
 		WHERE c.questionnaire_id = '$questionnaire_id'
 		AND sample.import_id = '$sample_import_id'
@@ -168,13 +168,13 @@ if (isset($_GET['sample_var']))
 	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	header("Pragma: no-cache");                          // HTTP/1.0
 
-	echo("caseid,$sample_var\n");
+	echo("token,caseid,$sample_var\n");
 
 	if (!empty($list))
 	{
 		foreach($list as $l)
 		{
-			echo $l['case_id'] . "," . $l['val'] . "\n";
+			echo $l['token'] . "," . $l['case_id'] . "," . $l['val'] . "\n";
 		}
 	}
 
