@@ -256,8 +256,14 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
             $exportoutput .= "<option value='token' id='token' />".$clang->gT("Token")."</option>\n"
             ."<option value='caseid' id='caseid' />".$clang->gT("Case ID")."</option>\n"
+            ."<option value='caseoutcome' id='caseoutcome' />".$clang->gT("Case outcome")."</option>\n"
             ."<option value='callattempts' id='callattempts' />".$clang->gT("Number of call attempts")."</option>\n"
-            ."<option value='messagesleft' id='messagesleft' />".$clang->gT("Number of answering machine messages left")."</option>\n";
+            ."<option value='messagesleft' id='messagesleft' />".$clang->gT("Number of answering machine messages left")."</option>\n"
+            ."<option value='casenotes' id='casenotes' />".$clang->gT("Case notes")."</option>\n"
+            ."<option value='interviewtimec' id='interviewtimec' />".$clang->gT("Total interview time over all calls (mins)")."</option>\n"
+            ."<option value='interviewtimel' id='interviewtimel' />".$clang->gT("Interview time for last call (mins)")."</option>\n"
+            ."<option value='lastnumber' id='lastnumber' />".$clang->gT("Last number dialled")."</option>\n"
+            ."<option value='operatoru' id='operatoru' />".$clang->gT("Operator username for last call")."</option>\n";
 
 
 	$sql = "SELECT sv.var,sv.val
@@ -429,6 +435,13 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
 			FROM `case` as c4
 			WHERE c4.token = {$dbprefix}survey_$surveyid.token) as caseid ";
     }
+    if (in_array('caseoutcome',$_POST['attribute_select']))
+    {
+        $dquery .= ", 	(SELECT o1.description
+			FROM `case` as ca8, `outcome` as o1
+			WHERE ca8.token = {$dbprefix}survey_$surveyid.token
+			AND o1.outcome_id = ca8.current_outcome_id) as caseoutcome ";
+    }
     if (in_array('callattempts',$_POST['attribute_select']))
     {
         $dquery .= ", 	(SELECT COUNT(c.call_attempt_id) 
@@ -442,6 +455,50 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
                         WHERE ca2.case_id = c2.case_id 
 			AND ca2.token = {$dbprefix}survey_$surveyid.token 
 			AND c2.outcome_id = 23) as messagesleft ";
+    }
+    if (in_array('casenotes',$_POST['attribute_select']))
+    {
+        $dquery .= ",  (SELECT GROUP_CONCAT(cn1.note SEPARATOR '|')
+			FROM `case_note`  as cn1, `case` as ca3
+                        WHERE ca3.case_id = cn1.case_id 
+			AND ca3.token = {$dbprefix}survey_$surveyid.token
+			GROUP BY cn1.case_id) as casenotes ";
+    }
+    if (in_array('interviewtimec',$_POST['attribute_select']))
+    {
+        $dquery .= ",  (SELECT ROUND(SUM( TIMESTAMPDIFF(SECOND , cl2.start,IFNULL(cl2.end,CONVERT_TZ(NOW(),'System','UTC'))))/60,2)
+			FROM `call_attempt` as cl2, `case` as ca4
+			WHERE cl2.case_id = ca4.case_id
+			AND ca4.token = {$dbprefix}survey_$surveyid.token) as interviewtimec ";
+    }
+    if (in_array('interviewtimel',$_POST['attribute_select']))
+    {
+        $dquery .= ",  (SELECT ROUND(TIMESTAMPDIFF(SECOND , cl3.start,IFNULL(cl3.end,CONVERT_TZ(NOW(),'System','UTC')))/60,2)
+			FROM `call` as cl3, `case` as ca5
+			WHERE cl3.case_id = ca5.case_id
+			AND ca5.token = {$dbprefix}survey_$surveyid.token
+			ORDER BY cl3.call_id DESC
+			LIMIT 1) as interviewtimel ";
+    }
+    if (in_array('lastnumber',$_POST['attribute_select']))
+    {
+        $dquery .= ",  (SELECT cp1.phone
+			FROM `call` as cl4, `case` as ca6, `contact_phone` as cp1
+			WHERE cl4.case_id = ca6.case_id
+			AND ca6.token = {$dbprefix}survey_$surveyid.token
+			AND cp1.contact_phone_id = cl4.contact_phone_id
+			ORDER BY cl4.call_id DESC
+			LIMIT 1) as lastnumber ";
+    }
+    if (in_array('operatoru',$_POST['attribute_select']))
+    {
+        $dquery .= ",  (SELECT op1.username
+			FROM `call` as cl5, `case` as ca7, `operator` as op1
+			WHERE cl5.case_id = ca7.case_id
+			AND ca7.token = {$dbprefix}survey_$surveyid.token
+			AND op1.operator_id = cl5.operator_id
+			ORDER BY cl5.call_id DESC
+			LIMIT 1) as operatoru ";
     }
     if (in_array('token',$_POST['attribute_select']))
     {
@@ -538,10 +595,40 @@ for ($i=0; $i<$fieldcount; $i++)
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Number of answering machine messages left")."\"$separator";}
         else {$firstline .= $elang->gT("Number of answering machine messages left")."$separator";}
     }
+    elseif ($fieldinfo == "casenotes")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case notes")."\"$separator";}
+        else {$firstline .= $elang->gT("Case notes")."$separator";}
+    }
+    elseif ($fieldinfo == "interviewtimec")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Total interview time over all calls (mins)")."\"$separator";}
+        else {$firstline .= $elang->gT("Total interview time over all calls (mins)")."$separator";}
+    }
+    elseif ($fieldinfo == "interviewtimel")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Interview time for last call (mins)")."\"$separator";}
+        else {$firstline .= $elang->gT("Interview time for last call (mins)")."$separator";}
+    }
+    elseif ($fieldinfo =="lastnumber")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Last number dialled")."\"$separator";}
+        else {$firstline .= $elang->gT("Last number dialled")."$separator";}
+    }
+    elseif ($fieldinfo == "operatoru")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Operator username for last call")."\"$separator";}
+        else {$firstline .= $elang->gT("Operator username for last call")."$separator";}
+    }
     elseif ($fieldinfo == "caseid")
     {
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Case ID")."\"$separator";}
         else {$firstline .= $elang->gT("Case ID")."$separator";}
+    }
+    elseif ($fieldinfo == "caseoutcome")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case outcome")."\"$separator";}
+        else {$firstline .= $elang->gT("Case outcome")."$separator";}
     }
     elseif ($fieldinfo == "email")
     {
@@ -836,7 +923,7 @@ elseif ($answers == "long")        //chose complete answers
             $fqid=0;            // By default fqid is set to zero
             $field=$dresult->FetchField($i);
             $fieldinfo=$field->name;
-            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed" && $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft")
+            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed"  && $fieldinfo != "caseoutcome"&& $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft"&& $fieldinfo != "casenotes"&& $fieldinfo != "interviewtimec"&& $fieldinfo != "interviewtimel"&& $fieldinfo != "lastnumber"&& $fieldinfo != "operatoru")
             {
                 $fielddata=$fieldmap[$fieldinfo];
                 $fqid=$fielddata['qid'];
@@ -860,11 +947,29 @@ elseif ($answers == "long")        //chose complete answers
 			case "caseid":
 	                    $ftitle=$elang->gT("Case ID").":";
                             break;
+ 			case "caseoutcome":
+	                    $ftitle=$elang->gT("Case outcome").":";
+                            break;
  			case "callattempts":
 	                    $ftitle=$elang->gT("Number of call attempts").":";
                             break;
  			case "messagesleft":
 	                    $ftitle=$elang->gT("Number of answering machine messages left").":";
+                            break;
+  			case "casenotes":
+	                    $ftitle=$elang->gT("Case notes").":";
+                            break;
+  			case "interviewtimec":
+	                    $ftitle=$elang->gT("Total interview time over all calls (mins)").":";
+                            break;
+  			case "interviewtimel":
+	                    $ftitle=$elang->gT("Interview time for last call (mins)").":";
+                            break;
+  			case "lastnumber":
+	                    $ftitle=$elang->gT("Last number dialled").":";
+                            break;
+  			case "operatoru":
+	                    $ftitle=$elang->gT("Operator username for last call").":";
                             break;
                         case "datestamp":
                             $ftitle=$elang->gT("Date Last Action").":";
