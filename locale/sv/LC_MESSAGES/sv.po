@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-06-18 16:24+1000\n"
+"POT-Creation-Date: 2013-07-17 12:38+1000\n"
 "PO-Revision-Date: 2013-03-08 01:20+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-07-04 05:01+0000\n"
-"X-Generator: Launchpad (build 16692)\n"
+"X-Launchpad-Export-Date: 2013-10-11 03:48+0000\n"
+"X-Generator: Launchpad (build 16799)\n"
 
 #: appointment.php:69
 msgid "Appointment error"
@@ -371,17 +371,17 @@ msgstr "Intervju ID:"
 msgid "Respondent:"
 msgstr "Kontaktperson:"
 
-#: respondent.php:164
+#: respondent.php:166
 msgid "Show details"
 msgstr "Visa detaljer"
 
-#: respondent.php:168
-#: contactdetails.php:161
+#: respondent.php:170
+#: contactdetails.php:162
 msgid "Var"
 msgstr "Var"
 
-#: respondent.php:168
-#: contactdetails.php:161
+#: respondent.php:170
+#: contactdetails.php:162
 msgid "Value"
 msgstr "V&auml;rde"
 
@@ -470,7 +470,7 @@ msgid "Contact details"
 msgstr "Kontaktinformation"
 
 #: availability.php:56
-#: index.php:207
+#: index.php:214
 msgid "Availability"
 msgstr "Tillg&auml;nglighet"
 
@@ -852,31 +852,35 @@ msgstr "Pil f&ouml;r att expandera eller dra ihop"
 msgid "Restart"
 msgstr "Starta om"
 
-#: index.php:199
+#: index.php:206
 msgid "Notes"
 msgstr "Kommentarer"
 
-#: index.php:226
+#: index.php:233
 msgid "Call history"
 msgstr "Samtalshistorik"
 
-#: index.php:235
+#: index.php:242
 msgid "Shifts"
 msgstr "Skift"
 
-#: index.php:244
+#: index.php:251
 msgid "Appointments"
 msgstr "&Aring;terkontakter"
 
-#: index.php:261
+#: index.php:268
 msgid "Work history"
 msgstr "Arbetshistoria"
 
-#: index.php:269
+#: index.php:276
 msgid "Project information"
 msgstr "Projektinformation"
 
-#: index.php:278
+#: index.php:284
+msgid "Supervisor chat"
+msgstr ""
+
+#: index.php:292
 msgid "Info"
 msgstr "Information"
 
@@ -965,6 +969,39 @@ msgstr "Inga skift f&ouml;r detta projekt"
 #: shifts.php:101
 msgid "No future shifts scheduled"
 msgstr "Inga framtida skift schemalagda"
+
+#: supervisorchat.php:80
+msgid "Me"
+msgstr ""
+
+#: supervisorchat.php:82
+msgid "Case id"
+msgstr "Intervju ID"
+
+#: supervisorchat.php:87
+msgid "Supervisor is available"
+msgstr ""
+
+#: supervisorchat.php:88
+msgid "Supervisor not available"
+msgstr ""
+
+#: supervisorchat.php:90
+#: supervisorchat.php:93
+msgid "Message"
+msgstr ""
+
+#: supervisorchat.php:90
+msgid "Send"
+msgstr ""
+
+#: supervisorchat.php:93
+msgid "From"
+msgstr ""
+
+#: supervisorchat.php:96
+msgid "Supervisor chat is not enabled"
+msgstr ""
 
 #: functions/functions.calendar.php:265
 msgid "First name:"
@@ -1086,12 +1123,6 @@ msgstr "Kopplas om"
 msgid " Extension "
 msgstr " Till&auml;gg "
 
-#: functions/functions.voip.php:555
-#: functions/functions.voip.php:567
-#: functions/functions.voip.php:579
-msgid "Case id"
-msgstr "Intervju ID"
-
 #: functions/functions.voip.php:589
 msgid "Unregistered"
 msgstr "Oregistrerad"
@@ -1116,19 +1147,23 @@ msgstr "Importera?"
 msgid "Type"
 msgstr "Typ"
 
-#: functions/functions.operator.php:141
+#: functions/functions.import.php:127
+msgid "Allow operator to see?"
+msgstr ""
+
+#: functions/functions.operator.php:166
 msgid "morning"
 msgstr "f&ouml;rmiddag"
 
-#: functions/functions.operator.php:142
+#: functions/functions.operator.php:167
 msgid "afternoon"
 msgstr "eftermiddag"
 
-#: functions/functions.operator.php:143
+#: functions/functions.operator.php:168
 msgid "evening"
 msgstr "kv&auml;ll"
 
-#: functions/functions.operator.php:797
+#: functions/functions.operator.php:877
 msgid ""
 "ERROR: You do not have server side authentication enabled therefore queXS "
 "cannot determine which user is accessing the system."
@@ -1141,6 +1176,10 @@ msgid ""
 msgstr ""
 "Detta &auml;r hur historien g&aring;r.\n"
 "\n"
+
+#: voip/downloadvoipclient.php:52
+msgid "Error: Cannot write to temporary directory"
+msgstr ""
 
 #: admin/clientquestionnaire.php:150
 #: admin/clientquestionnaire.php:271
@@ -1185,7 +1224,6 @@ msgid "Operator Performance"
 msgstr "Intervjuare statistik"
 
 #: admin/operatorperformance.php:73
-#: admin/shiftreport.php:65
 msgid "Please select a questionnaire"
 msgstr "V&auml;nligen v&auml;lj en enk&auml;t"
 
@@ -1224,7 +1262,6 @@ msgid "till"
 msgstr "tills"
 
 #: admin/operatorperformance.php:96
-#: admin/shiftreport.php:72
 msgid "Please select a shift"
 msgstr "V&auml;nligen v&auml;lj ett skift"
 
@@ -1286,41 +1323,41 @@ msgstr "Automatisk prioritering"
 msgid "Update priorities"
 msgstr "Uppdatera prioriteringar"
 
-#: admin/operators.php:135
+#: admin/operators.php:139
 msgid "Added:"
 msgstr "Inlagt:"
 
-#: admin/operators.php:138
+#: admin/operators.php:142
 msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
 msgstr ""
 
-#: admin/operators.php:163
+#: admin/operators.php:167
 msgid ""
 "Could not add operator. There may already be an operator of this name:"
 msgstr ""
 
-#: admin/operators.php:163
+#: admin/operators.php:167
 msgid "Or there may already be an telephone extension number"
 msgstr ""
 
-#: admin/operators.php:171
-#: admin/operators.php:186
+#: admin/operators.php:175
+#: admin/operators.php:190
 msgid "Add an operator"
 msgstr "L&auml;gg till en intervjuare"
 
-#: admin/operators.php:187
+#: admin/operators.php:191
 msgid "Adding an operator here will give the user the ability to call cases"
 msgstr ""
 
-#: admin/operators.php:187
+#: admin/operators.php:191
 msgid "Assign Operator to Questionnaire"
 msgstr "Tilldela intervjuare till enk&auml;ter"
 
-#: admin/operators.php:187
+#: admin/operators.php:191
 msgid "tool"
 msgstr "verktyg"
 
-#: admin/operators.php:188
+#: admin/operators.php:192
 msgid ""
 "Use this form to enter the username of a user based on your directory "
 "security system. For example, if you have secured the base directory of "
@@ -1328,55 +1365,67 @@ msgid ""
 "here."
 msgstr ""
 
-#: admin/operators.php:189
+#: admin/operators.php:193
 msgid "The username and extension must be unique for each operator."
 msgstr ""
 
-#: admin/operators.php:191
+#: admin/operators.php:195
 msgid "Enter the username of an operator to add:"
 msgstr ""
 
-#: admin/operators.php:193
+#: admin/operators.php:197
 msgid "Enter the password of an operator to add:"
 msgstr ""
 
-#: admin/operators.php:195
+#: admin/operators.php:199
 msgid "Enter the first name of an operator to add:"
 msgstr ""
 
-#: admin/operators.php:196
+#: admin/operators.php:200
 msgid "Enter the surname of an operator to add:"
 msgstr ""
 
-#: admin/operators.php:197
+#: admin/operators.php:201
 msgid "Enter the Time Zone of an operator to add:"
 msgstr ""
 
-#: admin/operators.php:199
+#: admin/operators.php:203
 msgid "Enter the telephone extension number:"
 msgstr ""
 
-#: admin/operators.php:200
+#: admin/operators.php:204
 msgid "Enter the telephone extension password:"
 msgstr ""
 
-#: admin/operators.php:202
+#: admin/operators.php:206
 msgid "Will this operator be using VoIP?"
 msgstr ""
 
-#: admin/operators.php:203
+#: admin/operators.php:207
+msgid "Jabber/XMPP chat user"
+msgstr ""
+
+#: admin/operators.php:208
+msgid "Jabber/XMPP chat password"
+msgstr ""
+
+#: admin/operators.php:209
+msgid "Will this operator be using chat?"
+msgstr ""
+
+#: admin/operators.php:210
 msgid "Is the operator a normal interviewer?"
 msgstr "&Auml;r intervjuaren en normal intervjuare?"
 
-#: admin/operators.php:204
+#: admin/operators.php:211
 msgid "Is the operator a supervisor?"
 msgstr "&Auml;r intervjuaren en chef"
 
-#: admin/operators.php:205
+#: admin/operators.php:212
 msgid "Is the operator a refusal converter?"
 msgstr "&Auml;r intervjuaren en v&auml;gran omvandlare"
 
-#: admin/operators.php:206
+#: admin/operators.php:213
 msgid "Add user"
 msgstr "L&auml;gg till anv&auml;ndare"
 
@@ -1457,10 +1506,20 @@ msgstr "Rapport f&ouml;r detta skift"
 
 #: admin/shiftreport.php:96
 #: admin/shiftreport.php:104
+#: admin/displayappointments.php:229
+#: admin/displayappointments.php:243
+#: admin/supervisor.php:231
+#: admin/supervisor.php:244
+#: admin/supervisor.php:253
+#: admin/operatorlist.php:118
+#: admin/operatorlist.php:249
+#: admin/operatorlist.php:258
 msgid "Edit"
 msgstr "Redigera"
 
 #: admin/shiftreport.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Date"
 msgstr "Datum"
 
@@ -2082,104 +2141,108 @@ msgstr ""
 msgid "Download complete sample file with current outcomes"
 msgstr ""
 
-#: admin/operatorlist.php:59
+#: admin/operatorlist.php:60
 msgid "If changing usernames, you must specify a new password"
 msgstr ""
 
-#: admin/operatorlist.php:87
+#: admin/operatorlist.php:90
 msgid "Successfully updated user"
 msgstr ""
 
-#: admin/operatorlist.php:91
+#: admin/operatorlist.php:94
 msgid ""
 "Failed to update user. Please make sure the username and extension are unique"
 msgstr ""
 
-#: admin/operatorlist.php:100
+#: admin/operatorlist.php:103
 msgid "Operator edit"
 msgstr ""
 
-#: admin/operatorlist.php:121
-#: admin/operatorlist.php:252
+#: admin/operatorlist.php:124
+#: admin/operatorlist.php:258
 msgid "Username"
 msgstr "Anv&auml;ndarnamn"
 
-#: admin/operatorlist.php:125
+#: admin/operatorlist.php:128
 msgid "Update password (leave blank to keep existing password)"
 msgstr ""
 
-#: admin/operatorlist.php:131
+#: admin/operatorlist.php:134
 msgid "Extension Password"
 msgstr ""
 
-#: admin/operatorlist.php:132
+#: admin/operatorlist.php:137
+msgid "Uses chat"
+msgstr ""
+
+#: admin/operatorlist.php:138
 msgid "Timezone"
 msgstr ""
 
-#: admin/operatorlist.php:134
+#: admin/operatorlist.php:140
 msgid "Uses VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:137
+#: admin/operatorlist.php:143
 msgid "Update operator"
 msgstr ""
 
-#: admin/operatorlist.php:230
+#: admin/operatorlist.php:236
 msgid "Windows bat file"
 msgstr ""
 
-#: admin/operatorlist.php:231
+#: admin/operatorlist.php:237
 msgid "*nix script file"
 msgstr ""
 
-#: admin/operatorlist.php:233
+#: admin/operatorlist.php:239
 msgid "Enable"
 msgstr "Aktivera"
 
-#: admin/operatorlist.php:235
+#: admin/operatorlist.php:241
 msgid "Disable"
 msgstr "Inaktivera"
 
-#: admin/operatorlist.php:239
+#: admin/operatorlist.php:245
 msgid "Enable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:241
+#: admin/operatorlist.php:247
 msgid "Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:249
+#: admin/operatorlist.php:255
 msgid "Operator list"
 msgstr "Intervjuarelista"
 
-#: admin/operatorlist.php:252
+#: admin/operatorlist.php:258
 msgid "Enable/Disable"
 msgstr "Aktivera/inaktivera"
 
-#: admin/operatorlist.php:256
+#: admin/operatorlist.php:262
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
 
-#: admin/operatorlist.php:258
+#: admin/operatorlist.php:264
 msgid "Download Windows VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:259
+#: admin/operatorlist.php:265
 msgid "Download Linux VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:264
+#: admin/operatorlist.php:270
 msgid "Enable/Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:265
+#: admin/operatorlist.php:271
 msgid "Windows VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:266
+#: admin/operatorlist.php:272
 msgid "*nix VoIP"
 msgstr ""
 
@@ -2936,7 +2999,7 @@ msgstr "St&auml;ll v&auml;rden i enk&auml;ten att i f&ouml;rv&auml;g fylla"
 
 #: admin/index.php:66
 #: admin/index.php:68
-#: admin/index.php:109
+#: admin/index.php:111
 msgid "Operator management"
 msgstr "Intervjuare hanterare"
 
@@ -3003,77 +3066,99 @@ msgstr "Tilldela resultat till intervju"
 msgid "Search the sample"
 msgstr "S&ouml;k kontakter"
 
-#: admin/index.php:98
+#: admin/index.php:96
+msgid "Case status and assignment"
+msgstr ""
+
+#: admin/index.php:99
 msgid "System settings"
 msgstr "Systeminst&auml;llningar"
 
-#: admin/index.php:99
+#: admin/index.php:100
 msgid "Set default timezone list"
 msgstr ""
 
-#: admin/index.php:100
+#: admin/index.php:101
 msgid "Set default shift times"
 msgstr ""
 
-#: admin/index.php:101
+#: admin/index.php:102
 msgid "Set call restriction times"
 msgstr ""
 
-#: admin/index.php:102
+#: admin/index.php:103
 msgid "Set centre information"
 msgstr ""
 
-#: admin/index.php:103
+#: admin/index.php:105
 msgid "Start and monitor system wide case sorting"
 msgstr ""
 
-#: admin/index.php:107
+#: admin/index.php:109
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:108
+#: admin/index.php:110
 msgid "Start and monitor VoIP"
 msgstr ""
 
-#: admin/index.php:110
+#: admin/index.php:112
 msgid "Extension status"
 msgstr ""
 
-#: admin/samplelist.php:87
-#: admin/samplelist.php:97
-#: admin/samplelist.php:104
-#: admin/samplelist.php:182
-#: admin/samplelist.php:191
+#: admin/samplelist.php:117
+#: admin/samplelist.php:127
+#: admin/samplelist.php:134
+#: admin/samplelist.php:270
+#: admin/samplelist.php:279
 msgid "Rename"
 msgstr ""
 
-#: admin/samplelist.php:115
-#: admin/samplelist.php:129
-#: admin/samplelist.php:137
-#: admin/samplelist.php:181
-#: admin/samplelist.php:191
+#: admin/samplelist.php:146
+#: admin/samplelist.php:179
+#: admin/samplelist.php:269
+#: admin/samplelist.php:279
+msgid "Operator viewing permissions"
+msgstr ""
+
+#: admin/samplelist.php:182
+msgid ""
+"Select which fields from this sample should be able to be viewed by operators"
+msgstr ""
+
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
+msgid "Field"
+msgstr ""
+
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
+msgid "Example data"
+msgstr ""
+
+#: admin/samplelist.php:190
+msgid "Save changes"
+msgstr ""
+
+#: admin/samplelist.php:202
+#: admin/samplelist.php:216
+#: admin/samplelist.php:224
+#: admin/samplelist.php:268
+#: admin/samplelist.php:279
 msgid "Deidentify"
 msgstr ""
 
-#: admin/samplelist.php:132
+#: admin/samplelist.php:219
 msgid ""
 "Select which fields from this sample to deidentify. Deidentified fields will "
 "be permanently deleted from the sample."
 msgstr ""
 
-#: admin/samplelist.php:137
-msgid "Field"
-msgstr ""
-
-#: admin/samplelist.php:137
-msgid "Example data"
-msgstr ""
-
-#: admin/samplelist.php:140
+#: admin/samplelist.php:227
 msgid "Delete selected fields"
 msgstr ""
 
-#: admin/samplelist.php:188
+#: admin/samplelist.php:276
 msgid "Sample list"
 msgstr ""
 
@@ -3225,6 +3310,47 @@ msgstr ""
 msgid "Click here to begin monitoring the VoIP Process"
 msgstr ""
 
+#: admin/casestatus.php:88
+#: admin/casestatus.php:89
+msgid "Now"
+msgstr ""
+
+#: admin/casestatus.php:92
+msgid "Not assigned, select to assign"
+msgstr ""
+
+#: admin/casestatus.php:93
+msgid "Assigned to"
+msgstr ""
+
+#: admin/casestatus.php:93
+msgid "Order"
+msgstr ""
+
+#: admin/casestatus.php:111
+msgid "Case available in x minutes"
+msgstr ""
+
+#: admin/casestatus.php:111
+msgid "Assigned to operator"
+msgstr ""
+
+#: admin/casestatus.php:119
+msgid "Choose operator to assign selected cases to"
+msgstr ""
+
+#: admin/casestatus.php:122
+msgid "Assign cases to operator queue"
+msgstr ""
+
+#: admin/casestatus.php:199
+msgid ""
+"List cases by questionnaire and sample with the ability to assign them to be "
+"called next in a queue by a particular operator. If you assign cases to an "
+"operator, it will override the normal scheduling process and call them as "
+"soon as the operator is available."
+msgstr ""
+
 #: admin/assignsample.php:115
 #: admin/assignsample.php:170
 msgid "Assign Sample: Select sample to assign"
@@ -3307,6 +3433,29 @@ msgstr "L&auml;gg till kontakter till denna enk&auml;t"
 #: admin/assignsample.php:212
 msgid "Select sample:"
 msgstr "V&auml;lj kontakter:"
+
+#: admin/supervisorchat.php:63
+msgid ""
+"Allow interviewers to chat with the supervisor over XMPP (Jabber). Required "
+"is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will "
+"need XMPP/Jabber accounts."
+msgstr ""
+
+#: admin/supervisorchat.php:73
+msgid "Enable supervisor chat?"
+msgstr ""
+
+#: admin/supervisorchat.php:74
+msgid "Set BOSH URL"
+msgstr ""
+
+#: admin/supervisorchat.php:75
+msgid "Supervisor XMPP/Jabber id"
+msgstr ""
+
+#: admin/supervisorchat.php:76
+msgid "Update"
+msgstr ""
 
 #: admin/centreinfo.php:66
 msgid "Set centre information: "

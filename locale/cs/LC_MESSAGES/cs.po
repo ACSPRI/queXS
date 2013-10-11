@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-07-04 14:55+1000\n"
-"PO-Revision-Date: 2013-07-07 21:16+0000\n"
+"POT-Creation-Date: 2013-07-17 12:38+1000\n"
+"PO-Revision-Date: 2013-07-27 21:47+0000\n"
 "Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-07-17 02:56+0000\n"
-"X-Generator: Launchpad (build 16696)\n"
+"X-Launchpad-Export-Date: 2013-10-11 03:48+0000\n"
+"X-Generator: Launchpad (build 16799)\n"
 
 #: appointment.php:69
 msgid "Appointment error"
@@ -462,7 +462,7 @@ msgid "Contact details"
 msgstr "Kontaktní údaje"
 
 #: availability.php:56
-#: index.php:207
+#: index.php:214
 msgid "Availability"
 msgstr "Dostupnost"
 
@@ -833,31 +833,35 @@ msgstr "Šipka pro rozbalení/sbalení"
 msgid "Restart"
 msgstr "Restartovat"
 
-#: index.php:199
+#: index.php:206
 msgid "Notes"
 msgstr "Poznámky"
 
-#: index.php:226
+#: index.php:233
 msgid "Call history"
 msgstr "Historie volání"
 
-#: index.php:235
+#: index.php:242
 msgid "Shifts"
 msgstr "Směny"
 
-#: index.php:244
+#: index.php:251
 msgid "Appointments"
 msgstr "Schůzky"
 
-#: index.php:261
+#: index.php:268
 msgid "Work history"
 msgstr "Historie práce"
 
-#: index.php:269
+#: index.php:276
 msgid "Project information"
 msgstr "Informace o projektu"
 
-#: index.php:278
+#: index.php:284
+msgid "Supervisor chat"
+msgstr "Chat s vedoucím"
+
+#: index.php:292
 msgid "Info"
 msgstr "Informace"
 
@@ -946,6 +950,39 @@ msgstr "Žádné směny pro tento projekt"
 #: shifts.php:101
 msgid "No future shifts scheduled"
 msgstr "Nenaplánovány žádné další směny"
+
+#: supervisorchat.php:80
+msgid "Me"
+msgstr "Já"
+
+#: supervisorchat.php:82
+msgid "Case id"
+msgstr "ID případu"
+
+#: supervisorchat.php:87
+msgid "Supervisor is available"
+msgstr "Vedoucí je dostupný"
+
+#: supervisorchat.php:88
+msgid "Supervisor not available"
+msgstr "Vedoucí není dostupný"
+
+#: supervisorchat.php:90
+#: supervisorchat.php:93
+msgid "Message"
+msgstr "Zpráva"
+
+#: supervisorchat.php:90
+msgid "Send"
+msgstr "Odeslat"
+
+#: supervisorchat.php:93
+msgid "From"
+msgstr "Od"
+
+#: supervisorchat.php:96
+msgid "Supervisor chat is not enabled"
+msgstr "Chat s vedoucím není povolen"
 
 #: functions/functions.calendar.php:265
 msgid "First name:"
@@ -1070,12 +1107,6 @@ msgstr "Znovu připojeno"
 msgid " Extension "
 msgstr " Rozšíření "
 
-#: functions/functions.voip.php:555
-#: functions/functions.voip.php:567
-#: functions/functions.voip.php:579
-msgid "Case id"
-msgstr "ID případu"
-
 #: functions/functions.voip.php:589
 msgid "Unregistered"
 msgstr "Neregistrováno"
@@ -1104,19 +1135,19 @@ msgstr "Typ"
 msgid "Allow operator to see?"
 msgstr "Umožnit operátorovi zobrazit?"
 
-#: functions/functions.operator.php:141
+#: functions/functions.operator.php:166
 msgid "morning"
 msgstr "ráno"
 
-#: functions/functions.operator.php:142
+#: functions/functions.operator.php:167
 msgid "afternoon"
 msgstr "odpoledne"
 
-#: functions/functions.operator.php:143
+#: functions/functions.operator.php:168
 msgid "evening"
 msgstr "večer"
 
-#: functions/functions.operator.php:852
+#: functions/functions.operator.php:877
 msgid ""
 "ERROR: You do not have server side authentication enabled therefore queXS "
 "cannot determine which user is accessing the system."
@@ -1131,6 +1162,10 @@ msgid ""
 msgstr ""
 "A ten příběh je vyprávěn takto.\n"
 "\n"
+
+#: voip/downloadvoipclient.php:52
+msgid "Error: Cannot write to temporary directory"
+msgstr "Chyba: nelze zapisovat do dočasného adresáře"
 
 #: admin/clientquestionnaire.php:150
 #: admin/clientquestionnaire.php:271
@@ -1176,7 +1211,6 @@ msgid "Operator Performance"
 msgstr "Výkon operátora"
 
 #: admin/operatorperformance.php:73
-#: admin/shiftreport.php:65
 msgid "Please select a questionnaire"
 msgstr "Prosím zvolte dotazník"
 
@@ -1215,7 +1249,6 @@ msgid "till"
 msgstr "do"
 
 #: admin/operatorperformance.php:96
-#: admin/shiftreport.php:72
 msgid "Please select a shift"
 msgstr "Prosím zvolte směnu"
 
@@ -1277,41 +1310,41 @@ msgstr "Autopriorita"
 msgid "Update priorities"
 msgstr "Aktualizovat priority"
 
-#: admin/operators.php:135
+#: admin/operators.php:139
 msgid "Added:"
 msgstr "Přidáno:"
 
-#: admin/operators.php:138
+#: admin/operators.php:142
 msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
 msgstr "FreePBX byl znovu načten, aby nové rozšíření VoIP mohlo být použito"
 
-#: admin/operators.php:163
+#: admin/operators.php:167
 msgid ""
 "Could not add operator. There may already be an operator of this name:"
 msgstr "Nelze přidat operátora. Již možná existuje operátor s tímto názvem:"
 
-#: admin/operators.php:163
+#: admin/operators.php:167
 msgid "Or there may already be an telephone extension number"
 msgstr "Nebo již může být zadáno číslo telefonní linky"
 
-#: admin/operators.php:171
-#: admin/operators.php:186
+#: admin/operators.php:175
+#: admin/operators.php:190
 msgid "Add an operator"
 msgstr "Přidat operátora"
 
-#: admin/operators.php:187
+#: admin/operators.php:191
 msgid "Adding an operator here will give the user the ability to call cases"
 msgstr "Po přidání operátora zde bude mít uživatel možnost vytáčet případy"
 
-#: admin/operators.php:187
+#: admin/operators.php:191
 msgid "Assign Operator to Questionnaire"
 msgstr "Přidělit operátora k dotazníku"
 
-#: admin/operators.php:187
+#: admin/operators.php:191
 msgid "tool"
 msgstr "nástroj"
 
-#: admin/operators.php:188
+#: admin/operators.php:192
 msgid ""
 "Use this form to enter the username of a user based on your directory "
 "security system. For example, if you have secured the base directory of "
@@ -1323,56 +1356,68 @@ msgstr ""
 "základní adresář queXS pomocí Apache souboru zabezpečení, zadejte "
 "uživatelská jména zde."
 
-#: admin/operators.php:189
+#: admin/operators.php:193
 msgid "The username and extension must be unique for each operator."
 msgstr ""
 "Uživatelské jméno a rozšíření musí být pro každého operátora jedinečné."
 
-#: admin/operators.php:191
+#: admin/operators.php:195
 msgid "Enter the username of an operator to add:"
 msgstr "Zadejte uživatelské jméno operátora pro přidání:"
 
-#: admin/operators.php:193
+#: admin/operators.php:197
 msgid "Enter the password of an operator to add:"
 msgstr "Zadejte heslo operátora pro přidání:"
 
-#: admin/operators.php:195
+#: admin/operators.php:199
 msgid "Enter the first name of an operator to add:"
 msgstr "Zadejte jméno operátora pro přidání:"
 
-#: admin/operators.php:196
+#: admin/operators.php:200
 msgid "Enter the surname of an operator to add:"
 msgstr "Zadejte příjmení operátora pro přidání:"
 
-#: admin/operators.php:197
+#: admin/operators.php:201
 msgid "Enter the Time Zone of an operator to add:"
 msgstr "Zadejte časové pásmo operátora pro přidání:"
 
-#: admin/operators.php:199
+#: admin/operators.php:203
 msgid "Enter the telephone extension number:"
 msgstr "Zadejte číslo telefonní linky:"
 
-#: admin/operators.php:200
+#: admin/operators.php:204
 msgid "Enter the telephone extension password:"
 msgstr "Zadejte heslo telefonní linky:"
 
-#: admin/operators.php:202
+#: admin/operators.php:206
 msgid "Will this operator be using VoIP?"
 msgstr "Bude tento operátor používat VoIP?"
 
-#: admin/operators.php:203
+#: admin/operators.php:207
+msgid "Jabber/XMPP chat user"
+msgstr "Uživatel chatu Jabber/XMPP"
+
+#: admin/operators.php:208
+msgid "Jabber/XMPP chat password"
+msgstr "Heslo chatu Jabber/XMPP"
+
+#: admin/operators.php:209
+msgid "Will this operator be using chat?"
+msgstr "Bude tento operátor používat chat?"
+
+#: admin/operators.php:210
 msgid "Is the operator a normal interviewer?"
 msgstr "Je operátor normální tazatel?"
 
-#: admin/operators.php:204
+#: admin/operators.php:211
 msgid "Is the operator a supervisor?"
 msgstr "Je operátor vedoucí?"
 
-#: admin/operators.php:205
+#: admin/operators.php:212
 msgid "Is the operator a refusal converter?"
 msgstr "Je operátor určen pro odmítavé respondenty?"
 
-#: admin/operators.php:206
+#: admin/operators.php:213
 msgid "Add user"
 msgstr "Přidat uživatele"
 
@@ -1462,10 +1507,20 @@ msgstr "Hlášení pro tuto směnu"
 
 #: admin/shiftreport.php:96
 #: admin/shiftreport.php:104
+#: admin/displayappointments.php:229
+#: admin/displayappointments.php:243
+#: admin/supervisor.php:231
+#: admin/supervisor.php:244
+#: admin/supervisor.php:253
+#: admin/operatorlist.php:118
+#: admin/operatorlist.php:249
+#: admin/operatorlist.php:258
 msgid "Edit"
 msgstr "Upravit"
 
 #: admin/shiftreport.php:104
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
 msgid "Date"
 msgstr "Datum"
 
@@ -2078,83 +2133,87 @@ msgstr "Stáhnout celý soubor s klíčem"
 msgid "Download complete sample file with current outcomes"
 msgstr "Stáhnout celý soubor vzorku se současnými výsledky"
 
-#: admin/operatorlist.php:59
+#: admin/operatorlist.php:60
 msgid "If changing usernames, you must specify a new password"
 msgstr "Při změně uživatelských jmen musíte zadat nové heslo"
 
-#: admin/operatorlist.php:87
+#: admin/operatorlist.php:90
 msgid "Successfully updated user"
 msgstr "Uživatel úspěšně aktualizován"
 
-#: admin/operatorlist.php:91
+#: admin/operatorlist.php:94
 msgid ""
 "Failed to update user. Please make sure the username and extension are unique"
 msgstr ""
 "Nelze aktualizovat uživatele. Ujistěte se prosím, že uživatelské jméno a "
 "přípony jsou jedinečné"
 
-#: admin/operatorlist.php:100
+#: admin/operatorlist.php:103
 msgid "Operator edit"
 msgstr "Úprava operátora"
 
-#: admin/operatorlist.php:121
-#: admin/operatorlist.php:252
+#: admin/operatorlist.php:124
+#: admin/operatorlist.php:258
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: admin/operatorlist.php:125
+#: admin/operatorlist.php:128
 msgid "Update password (leave blank to keep existing password)"
 msgstr "Aktualizovat heslo (nechejte prázdné pro použití současného hesla)"
 
-#: admin/operatorlist.php:131
+#: admin/operatorlist.php:134
 msgid "Extension Password"
 msgstr "Heslo rozšíření"
 
-#: admin/operatorlist.php:132
+#: admin/operatorlist.php:137
+msgid "Uses chat"
+msgstr "Používá chat"
+
+#: admin/operatorlist.php:138
 msgid "Timezone"
 msgstr "Časové pásmo"
 
-#: admin/operatorlist.php:134
+#: admin/operatorlist.php:140
 msgid "Uses VoIP"
 msgstr "Používá VoIP"
 
-#: admin/operatorlist.php:137
+#: admin/operatorlist.php:143
 msgid "Update operator"
 msgstr "Aktualizovat operátora"
 
-#: admin/operatorlist.php:230
+#: admin/operatorlist.php:236
 msgid "Windows bat file"
 msgstr "Soubor dávky Windows"
 
-#: admin/operatorlist.php:231
+#: admin/operatorlist.php:237
 msgid "*nix script file"
 msgstr "soubor skriptu *nix"
 
-#: admin/operatorlist.php:233
+#: admin/operatorlist.php:239
 msgid "Enable"
 msgstr "Povolit"
 
-#: admin/operatorlist.php:235
+#: admin/operatorlist.php:241
 msgid "Disable"
 msgstr "Zakázat"
 
-#: admin/operatorlist.php:239
+#: admin/operatorlist.php:245
 msgid "Enable VoIP"
 msgstr "Povolit VoIP"
 
-#: admin/operatorlist.php:241
+#: admin/operatorlist.php:247
 msgid "Disable VoIP"
 msgstr "Zakázat VoIP"
 
-#: admin/operatorlist.php:249
+#: admin/operatorlist.php:255
 msgid "Operator list"
 msgstr "Seznam operátorů"
 
-#: admin/operatorlist.php:252
+#: admin/operatorlist.php:258
 msgid "Enable/Disable"
 msgstr "Povolit/Zakázat"
 
-#: admin/operatorlist.php:256
+#: admin/operatorlist.php:262
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
@@ -2164,23 +2223,23 @@ msgstr ""
 "soubor voip.exe. Když je soubor spuštěn, spustí soubor voip.exe se správnými "
 "údaii o spojení pro připojení operátora k serveru VoIP"
 
-#: admin/operatorlist.php:258
+#: admin/operatorlist.php:264
 msgid "Download Windows VoIP Executable"
 msgstr "Stáhnout spustitelný soubor VoIP pro Windows"
 
-#: admin/operatorlist.php:259
+#: admin/operatorlist.php:265
 msgid "Download Linux VoIP Executable"
 msgstr "Stáhnout spustitelný soubor VoIP pro Linux"
 
-#: admin/operatorlist.php:264
+#: admin/operatorlist.php:270
 msgid "Enable/Disable VoIP"
 msgstr "Povolit/Zakázat VoIP"
 
-#: admin/operatorlist.php:265
+#: admin/operatorlist.php:271
 msgid "Windows VoIP"
 msgstr "Windows VoIP"
 
-#: admin/operatorlist.php:266
+#: admin/operatorlist.php:272
 msgid "*nix VoIP"
 msgstr "*nix VoIP"
 
@@ -2950,7 +3009,7 @@ msgstr "Nastavit hodnoty v dotazníku pro předvyplnění"
 
 #: admin/index.php:66
 #: admin/index.php:68
-#: admin/index.php:110
+#: admin/index.php:111
 msgid "Operator management"
 msgstr "Správa operátorů"
 
@@ -3041,19 +3100,19 @@ msgstr "Nastavit doby omezení volání"
 msgid "Set centre information"
 msgstr "Nastavit informace o centru"
 
-#: admin/index.php:104
+#: admin/index.php:105
 msgid "Start and monitor system wide case sorting"
 msgstr "Spustit a sledovat celosystémové řazení případů"
 
-#: admin/index.php:108
+#: admin/index.php:109
 msgid "VoIP"
 msgstr "VoIP"
 
-#: admin/index.php:109
+#: admin/index.php:110
 msgid "Start and monitor VoIP"
 msgstr "Spustit a sledovat VoIP"
 
-#: admin/index.php:111
+#: admin/index.php:112
 msgid "Extension status"
 msgstr "Stav rozšíření"
 
@@ -3394,6 +3453,31 @@ msgstr "Přidejte vzorek k tomuto dotazníku:"
 #: admin/assignsample.php:212
 msgid "Select sample:"
 msgstr "Vyberte vzorek"
+
+#: admin/supervisorchat.php:63
+msgid ""
+"Allow interviewers to chat with the supervisor over XMPP (Jabber). Required "
+"is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will "
+"need XMPP/Jabber accounts."
+msgstr ""
+"Umožňuje tazatelům používat chat s vedoucím pomocí XMPP (Jabber). Požadavkem "
+"je server XMPP/Jabber s BOSH. Operátoři a vedoucí potřebují účty XMPP/Jabber"
+
+#: admin/supervisorchat.php:73
+msgid "Enable supervisor chat?"
+msgstr "Povolit chat s vedoucím?"
+
+#: admin/supervisorchat.php:74
+msgid "Set BOSH URL"
+msgstr "Nastavit URL BOSH"
+
+#: admin/supervisorchat.php:75
+msgid "Supervisor XMPP/Jabber id"
+msgstr "XMPP/Jabber ID vedoucího"
+
+#: admin/supervisorchat.php:76
+msgid "Update"
+msgstr "Aktualizovat"
 
 #: admin/centreinfo.php:66
 msgid "Set centre information: "
