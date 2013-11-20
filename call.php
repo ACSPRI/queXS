@@ -183,10 +183,8 @@ if (isset($_POST['submit']))
 				$v->connect(VOIP_SERVER);
 				$v->dial(get_extension($operator_id),get_call_number($call_id));
 			}
-			if (is_respondent_selection($operator_id))
-				$btext = "onload='openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'";
-			else
-				$btext = "onload='parent.closePopup();'";
+			
+      $btext = "onload='openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'";
 
 			$js = "js/window.js";
 			if (browser_ie()) $js = "js/window_ie6.js";

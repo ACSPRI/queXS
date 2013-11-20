@@ -200,6 +200,13 @@ if (!defined('AUTO_COMPLETE_OUTCOME')) define('AUTO_COMPLETE_OUTCOME',false);
 if (!defined('AUTO_LOGOUT_MINUTES')) define('AUTO_LOGOUT_MINUTES',false);
 
 /**
+ * The number of seconds to wait before automatically dialling the first available number or ending the case 
+ * where an operator has an open screen
+ * False to disable
+ */
+if (!defined('AUTO_DIAL_SECONDS')) define('AUTO_DIAL_SECONDS',false);
+
+/**
  * The default tab to start on on the main screen
  */
 if (!defined('DEFAULT_TAB')) define('DEFAULT_TAB','casenotes');
