@@ -1185,7 +1185,7 @@ function get_call($operator_id,$respondent_id = "",$contact_phone_id = "",$creat
 
 /**
  * Get the complete URL for the Limesurvey questionnaire of respondent selection
- * If no case available, return an error screen
+ * If no call available, return an error screen
  *
  * @param int $operator_id The operator id
  * @param bool $escape Whether to escape the ampersands default true
@@ -1210,13 +1210,22 @@ function get_respondentselection_url($operator_id,$escape = true,$interface2 = f
 	{
 		$sid = get_limesurvey_id($operator_id,true); //true for RS
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
-			$url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload" . $amp . "sid=$sid" . $amp . "token=$call_id" . $amp . "lang=" . DEFAULT_LOCALE;
+			$url = LIME_URL . "index.php?interviewer=interviewer" . $amp . "loadall=reload" . $amp . "sid=$sid" . $amp . "token=$call_id" . $amp . "lang=" . DEFAULT_LOCALE;
 		else
-		{
-			if ($interface2)
-				$url = 'rs_intro_interface2.php';
-			else
-				$url = 'rs_intro.php';
+    {
+      if (is_respondent_selection($operator_id) === false)
+      {
+        $url = get_limesurvey_url($operator_id);
+        if (!$escape)
+          $url = str_replace("&amp;","&",$url);
+      }
+      else
+      {
+  			if ($interface2)
+  				$url = 'rs_intro_interface2.php';
+  			else
+          $url = 'rs_intro.php';
+      }
 		}
 	}
 
