@@ -45,24 +45,24 @@ include ("../functions/functions.xhtml.php");
 
 xhtml_head(T_("Display extension status"),true,array("../css/table.css"));
 	
-$sql=  "SELECT o.firstName, o.extension, CASE o.voip_status WHEN 0 THEN '" . T_("VoIP Offline") . "' ELSE '" . T_("VoIP Online") . "' END as voip_status, CASE ca.state WHEN 0 THEN '" . T_("Not called") . "' WHEN 1 THEN '" . T_("Requesting call") . "' WHEN 2 THEN '" . T_("Ringing") . "' WHEN 3 THEN '" . T_("Answered") . "' WHEN 4 THEN '" . T_("Requires coding") . "' ELSE '" . T_("Done") . "' END as state, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>' , c.case_id, '</a>') as case_id, SEC_TO_TIME(TIMESTAMPDIFF(SECOND,cal.start,CONVERT_TZ(NOW(),'SYSTEM','UTC'))) as calltime, voip_status as vs
-	FROM operator as o
+$sql=  "SELECT CONCAT('<a href=\'operatorlist.php?edit=',o.operator_id,'\'>',o.firstName,'</a>') as firstName, e.extension, CASE e.status WHEN 0 THEN '" . T_("VoIP Offline") . "' ELSE '" . T_("VoIP Online") . "' END as status, CASE ca.state WHEN 0 THEN '" . T_("Not called") . "' WHEN 1 THEN '" . T_("Requesting call") . "' WHEN 2 THEN '" . T_("Ringing") . "' WHEN 3 THEN '" . T_("Answered") . "' WHEN 4 THEN '" . T_("Requires coding") . "' ELSE '" . T_("Done") . "' END as state, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>' , c.case_id, '</a>') as case_id, SEC_TO_TIME(TIMESTAMPDIFF(SECOND,cal.start,CONVERT_TZ(NOW(),'SYSTEM','UTC'))) as calltime, e.status as vs
+  FROM extension as e
+  LEFT JOIN `operator` as o ON (o.operator_id = e.current_operator_id)
 	LEFT JOIN `case` as c ON (c.current_operator_id = o.operator_id)
 	LEFT JOIN `call_attempt` as cal ON (cal.operator_id = o.operator_id AND cal.end IS NULL and cal.case_id = c.case_id)
 	LEFT JOIN `call` as ca ON (ca.case_id = c.case_id AND ca.operator_id = o.operator_id AND ca.outcome_id= 0 AND ca.call_attempt_id = cal.call_attempt_id)
-	WHERE o.voip = 1
-	ORDER BY o.operator_id ASC";
+	ORDER BY e.extension_id ASC";
 
 $rs = $db->GetAll($sql);
 
 
 if (!empty($rs))
 {
-	xhtml_table($rs,array("extension","firstName","voip_status","case_id","state","calltime"),array(T_("Extension"),T_("Operator"),T_("VoIP Status"),T_("Case ID"),T_("Call state"),T_("Time on call")),"tclass",array("vs" => "1"));
+	xhtml_table($rs,array("extension","firstName","firstName","status","case_id","state","calltime"),array(T_("Extension"),T_("Operator"),T_("Assignment"),T_("VoIP Status"),T_("Case ID"),T_("Call state"),T_("Time on call")),"tclass",array("vs" => "1"));
 }
 else
-	print "<p>" . T_("No operators") . "</p>";
-	
+	print "<p>" . T_("No extensions") . "</p>";
+
 xhtml_foot();
 
 ?>

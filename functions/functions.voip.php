@@ -417,15 +417,15 @@ class voipWatch extends voip {
 		global $db;
 	
 		$sql = "SELECT l.call_id, c.case_id
-                        FROM operator AS o
+                        FROM `extension` AS e
                         JOIN (`case` AS c, `call_attempt` AS ca, `call` AS l) ON
-                                                      ( c.current_operator_id = o.operator_id
+                                                      ( c.current_operator_id = e.current_operator_id
                                                         AND c.case_id = ca.case_id
-                                                        AND ca.operator_id = o.operator_id
+                                                        AND ca.operator_id = e.current_operator_id
                                                         AND ca.end IS NULL
                                                         AND l.call_attempt_id = ca.call_attempt_id
                         	                        AND l.outcome_id =0 )
-                        WHERE o.extension = '$ext'";
+                        WHERE e.extension = '$ext'";
 
 		$rs = $db->GetRow($sql);
 		$call_id =0;
@@ -448,8 +448,8 @@ class voipWatch extends voip {
 		
 		if ($msg) print(T_("Extension") . " $ext " . ($online ? T_("online") : T_("offline")) . "\n");
 
-		$sql = "UPDATE operator
-			SET voip_status = '$s'
+		$sql = "UPDATE `extension`
+			SET status = '$s'
 			WHERE extension = '$ext'";
 			
 		$db->Execute($sql);
@@ -470,21 +470,19 @@ class voipWatch extends voip {
 	}
 
 	/**
- 	 * Update the extension status for all extensions
+   * Update the extension status for all extensions
 	 */
 	function updateAllExtensionStatus()
 	{
 		global $db;
 
-		$sql = "SELECT extension,operator_id
-			FROM operator
-			WHERE voip = 1 AND enabled = 1";
+		$sql = "SELECT e.extension
+			FROM `extension` as e";
 
 		$rs = $db->GetAll($sql);
 
 		foreach($rs as $r)
 		{
-			$o = $r['operator_id'];
 			$e = $r['extension'];
 
 			$s = $this->getExtensionStatus($e);
