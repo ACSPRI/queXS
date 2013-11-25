@@ -75,18 +75,29 @@ if (isset($_POST['submit']))
 
 		if (!empty($rs))
     {
-       $sql = "UPDATE extension
-               SET current_operator_id = NULL
-               WHERE current_operator_id= $operator_id";
-      $db->Execute($sql);
+      //only update extension if we aren't on a case
+      $sql = "SELECT case_id
+              FROM `case`
+              WHERE current_operator_id = $operator_id";
 
-      if (!empty($_POST['extension_id']))
+      $cc= $db->GetOne($sql);
+
+      if (empty($cc))
       {
         $sql = "UPDATE extension
-                SET current_operator_id = $operator_id
-                WHERE extension_id = " . intval($_POST['extension_id']);
+                SET current_operator_id = NULL
+                WHERE current_operator_id= $operator_id";
 
         $db->Execute($sql);
+  
+        if (!empty($_POST['extension_id']))
+        {
+          $sql = "UPDATE extension
+                  SET current_operator_id = $operator_id
+                  WHERE extension_id = " . intval($_POST['extension_id']);
+  
+          $db->Execute($sql);
+        }
       }
 
 			if (HTPASSWD_PATH !== false && !empty($_POST['password']))
