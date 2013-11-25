@@ -251,7 +251,8 @@ if (isset($_GET['operator_id']))
 if ($display)
 {
 	$sql = "SELECT
-			CONCAT(firstName, ' ', lastName) as name,
+    CONCAT(firstName, ' ', lastName) as name,
+      e.extension,
 			CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . T_("Windows bat file") . "</a>') as winbat,
 			CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . T_("*nix script file") . "</a>') as sh,
 			CASE WHEN enabled = 0 THEN
@@ -267,14 +268,15 @@ if ($display)
 			END as voipenabledisable,
 			CONCAT('<a href=\'?edit=',operator_id,'\'>" . T_("Edit") . "</a>')  as edit,
 			username
-		FROM operator";
+      FROM operator
+      LEFT JOIN `extension` as e ON (e.current_operator_id = operator_id)";
 	
 	$rs = $db->GetAll($sql);
 	
 	xhtml_head(T_("Operator list"),true,array("../css/table.css"));
 	
-	$columns = array("name","username","enabledisable","edit");
-	$titles = array(T_("Operator"),T_("Username"),T_("Enable/Disable"),T_("Edit"));
+	$columns = array("name","username","extension","enabledisable","edit");
+	$titles = array(T_("Operator"),T_("Username"),T_("Extension"),T_("Enable/Disable"),T_("Edit"));
 
 	if (VOIP_ENABLED)
 	{
