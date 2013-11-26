@@ -1,7 +1,5 @@
 New Feature: Operators can choose extension
 
-ALTER TABLE `operator` CHANGE `extension` `extension` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;
-
 CREATE TABLE IF NOT EXISTS `extension` (
   `extension_id` int(11) NOT NULL AUTO_INCREMENT,
   `extension` char(10) COLLATE utf8_unicode_ci NOT NULL,
