@@ -84,7 +84,7 @@ print "<div class='text'>" . get_operator_time($operator_id,DATE_TIME_FORMAT) ."
 
 if (is_voip_enabled($operator_id))
 {
-	$ext = get_extension($operator_id);
+  $ext = get_extension($operator_id);
 	$exta = $ext;
 	//Get just the start of the extension for auto dial out
 	$exts = explode('/', $ext, 2);
@@ -94,7 +94,9 @@ if (is_voip_enabled($operator_id))
 	if (get_extension_status($operator_id))
 		print "<div class='online statusbutton'>" . T_("VoIP On") . "</div>";
 	else
-		print "<div class='offline statusbutton'><a href='voip/downloadvoipclient.php'>" . T_("VoIP Off") . "</a></div>";
+    print "<div class='offline statusbutton'><a href='voip/downloadvoipclient.php'>" . T_("VoIP Off") . "</a></div>";
+
+  print "<div class='statusbutton'>" . T_("Extension") . ": $ext</div>";
 }
 else
 	print "<div class='online statusbutton'>" . T_("No VoIP") . "</div>";
