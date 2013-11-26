@@ -70,6 +70,11 @@ if (!defined('TIME_FORMAT')) define('TIME_FORMAT','%I:%i%p');
 if (!defined('VOIP_ENABLED')) define('VOIP_ENABLED',false);
 
 /**
+ * Allow operators to choose their extension?
+ */
+if (!defined('ALLOW_OPERATOR_EXTENSION_SELECT')) define('ALLOW_OPERATOR_EXTENSION_SELECT',false);
+
+/**
  * The Asterisk server address
  */
 if (!defined('VOIP_SERVER')) define('VOIP_SERVER','asterisk.dcarf');
