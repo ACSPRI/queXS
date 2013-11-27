@@ -238,7 +238,7 @@ if (isset($_POST['firstname']))
 			//Add a note that sent
 
 			$sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
-				VALUES ($case_id,$operator_id,'" . T_("Self completion invitation sent via email to") . ": " . $_POST['email'] . "',CONVERT_TZ(NOW(),'System','UTC'))";
+				VALUES ($case_id,$operator_id,'" . TQ_("Self completion invitation sent via email to") . ": " . $_POST['email'] . "',CONVERT_TZ(NOW(),'System','UTC'))";
 
 			$db->Execute($sql);
 
@@ -339,9 +339,9 @@ if ($sc == 1)
 	print "<div><label for='email'>" . T_("Email") . "</label><input type='text' value='{$rs['email']}' name='email' id='email'/></div>";
 	if (!isset($_GET['interface2']))
 	{
-		print "<div><input type='submit' value='" . T_("Send invitation") . "' name='submit' id='submit'/></div>";
+		print "<div><input type='submit' value='" . TQ_("Send invitation") . "' name='submit' id='submit'/></div>";
 	}
-	print "<div><input type='submit' value='" . T_("Send invitation and Hang up") . "' name='submith' id='submith'/></div></form>";
+	print "<div><input type='submit' value='" . TQ_("Send invitation and Hang up") . "' name='submith' id='submith'/></div></form>";
 }
 else
 {

@@ -467,7 +467,7 @@ switch($state)
 		print "<div class='status'>" . T_("Requires coding") . "</div>";
 		print "<form action='?' method='post'>";
 		display_outcomes(false,$call_attempt_id,$case_id);
-		print "<div><input type='submit' value='" . T_("Assign outcome") . "' name='submit' id='submit'/></div></form>";
+		print "<div><input type='submit' value='" . TQ_("Assign outcome") . "' name='submit' id='submit'/></div></form>";
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done
 	default:

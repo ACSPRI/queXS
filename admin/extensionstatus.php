@@ -165,9 +165,9 @@ else
   $sql=  "SELECT CONCAT('<a href=\'operatorlist.php?edit=',o.operator_id,'\'>',o.firstName,'</a>') as firstName,
                  CONCAT('<a href=\'?edit=',e.extension_id,'\'>',e.extension,'</a>') as extension,
                  IF(c.case_id IS NULL,IF(e.current_operator_id IS NULL,'list'
-                 ,CONCAT('<a href=\'?unassign=',e.extension_id,'\'>". T_("Unassign")  ."</a>')),'". T_("End case to change assignment")."') as assignment, 
-                 CASE e.status WHEN 0 THEN '" . T_("VoIP Offline") . "' ELSE '" . T_("VoIP Online") . "' END as status, 
-                 CASE ca.state WHEN 0 THEN '" . T_("Not called") . "' WHEN 1 THEN '" . T_("Requesting call") . "' WHEN 2 THEN '" . T_("Ringing") . "' WHEN 3 THEN '" . T_("Answered") . "' WHEN 4 THEN '" . T_("Requires coding") . "' ELSE '" . T_("Done") . "' END as state,
+                 ,CONCAT('<a href=\'?unassign=',e.extension_id,'\'>". TQ_("Unassign")  ."</a>')),'". TQ_("End case to change assignment")."') as assignment, 
+                 CASE e.status WHEN 0 THEN '" . TQ_("VoIP Offline") . "' ELSE '" . TQ_("VoIP Online") . "' END as status, 
+                 CASE ca.state WHEN 0 THEN '" . TQ_("Not called") . "' WHEN 1 THEN '" . TQ_("Requesting call") . "' WHEN 2 THEN '" . TQ_("Ringing") . "' WHEN 3 THEN '" . TQ_("Answered") . "' WHEN 4 THEN '" . TQ_("Requires coding") . "' ELSE '" . TQ_("Done") . "' END as state,
                  CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>' , c.case_id, '</a>') as case_id, SEC_TO_TIME(TIMESTAMPDIFF(SECOND,cal.start,CONVERT_TZ(NOW(),'SYSTEM','UTC'))) as calltime, 
                  e.status as vs,
                  e.extension_id

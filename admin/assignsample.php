@@ -177,12 +177,12 @@ if ($questionnaire_id != false)
 	print "<h1>" . T_("Samples selected for this questionnaire") . "</h1>";
 
 	$sql = "SELECT si.description as description, 
-			CASE WHEN q.call_max = 0 THEN '" . T_("Unlimited") . "' ELSE q.call_max END as call_max,
-			CASE WHEN q.call_attempt_max = 0 THEN '" . T_("Unlimited") . "' ELSE q.call_attempt_max END AS call_attempt_max,
-			CASE WHEN q.random_select = 0 THEN '" . T_("Sequential") . "' ELSE '". T_("Random") . "' END as random_select,
-			CASE WHEN q.answering_machine_messages = 0 THEN '" . T_("Never") . "' ELSE q.answering_machine_messages END as answering_machine_messages,
-			CONCAT('<a href=\"?edit=edit&amp;questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . T_("Edit") ."</a>') as edit,
-			CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . T_("Click to unassign") ."</a>') as unassign
+			CASE WHEN q.call_max = 0 THEN '" . TQ_("Unlimited") . "' ELSE q.call_max END as call_max,
+			CASE WHEN q.call_attempt_max = 0 THEN '" . TQ_("Unlimited") . "' ELSE q.call_attempt_max END AS call_attempt_max,
+			CASE WHEN q.random_select = 0 THEN '" . TQ_("Sequential") . "' ELSE '". TQ_("Random") . "' END as random_select,
+			CASE WHEN q.answering_machine_messages = 0 THEN '" . TQ_("Never") . "' ELSE q.answering_machine_messages END as answering_machine_messages,
+			CONCAT('<a href=\"?edit=edit&amp;questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . TQ_("Edit") ."</a>') as edit,
+			CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . TQ_("Click to unassign") ."</a>') as unassign
 		FROM questionnaire_sample as q, sample_import as si
 		WHERE q.sample_import_id = si.sample_import_id
 		AND q.questionnaire_id = '$questionnaire_id'";

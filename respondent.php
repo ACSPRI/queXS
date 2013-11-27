@@ -91,7 +91,7 @@ if (isset($_GET['respondent_id']) && $_GET['respondent_id'] == 0)
 ?>
 	<form method="post" action="?">
 	<?php  display_respondent_form(false,$case_id); ?>
-	<div><input type='submit' name='submit' id='submit' value='<?php  echo T_("Add respondent"); ?>'/></div>
+	<div><input type='submit' name='submit' id='submit' value='<?php  echo TQ_("Add respondent"); ?>'/></div>
 	</form>
 	<div><a href="?"><?php  echo T_("Go back"); ?></a></div>
 

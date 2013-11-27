@@ -174,15 +174,15 @@ if (AUTO_DIAL_SECONDS !== false)
         if ($contact_phone_id !== false)
         {
           //got a number to dial so initiate the countdown to begin dialing
-          $texttodisplay = T_("Will dial in");
-          $endtexttodisplay = T_("Dialling now");
+          $texttodisplay = TQ_("Will dial in");
+          $endtexttodisplay = TQ_("Dialling now");
           $jsfunctocall = "document.location.href = 'nocallavailable.php?contact_phone=" . $contact_phone_id . "';";
         }
         else
         {
           //no more numbers to dial so initiate the countdown to end the case
-          $texttodisplay = T_("Will end case in");
-          $endtexttodisplay = T_("Ending case now");
+          $texttodisplay = TQ_("Will end case in");
+          $endtexttodisplay = TQ_("Ending case now");
           $jsfunctocall = "openParent('endcase=endcase');";
         }
         print "<div id='timer'></div>";
@@ -200,7 +200,7 @@ if (AUTO_DIAL_SECONDS !== false)
                     " . $jsfunctocall .  " 
                     return;
                   }
-                  document.getElementById('timer').innerHTML='". $texttodisplay  ." ' + count + ' " . T_("seconds") . "';
+                  document.getElementById('timer').innerHTML='". $texttodisplay  ." ' + count + ' " . TQ_("seconds") . "';
                 }
 
                 window.onload = function()

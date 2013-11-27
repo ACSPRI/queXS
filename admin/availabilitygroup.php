@@ -104,7 +104,7 @@ else if (isset($_POST['availability_group']))
 	
 //view groups
 $sql = "SELECT description,
-	CONCAT('<a href=\'availability.php?availability_group=', availability_group_id, '\'>". T_("Modify") . "</a>') as link 
+	CONCAT('<a href=\'availability.php?availability_group=', availability_group_id, '\'>". TQ_("Modify") . "</a>') as link 
 	FROM availability_group";
 	
 	$rs = $db->GetAll($sql);

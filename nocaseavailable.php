@@ -77,7 +77,7 @@ $operator_id = get_operator_id();
 
 //you have not been assigned to a questionnaire
 
-$sql = "SELECT oq.questionnaire_id, q.description, CASE WHEN q.enabled = 1 THEN '" . T_("Enabled") . "' ELSE '" . T_("Disabled") . "' END as enabled
+$sql = "SELECT oq.questionnaire_id, q.description, CASE WHEN q.enabled = 1 THEN '" . TQ_("Enabled") . "' ELSE '" . TQ_("Disabled") . "' END as enabled
 	FROM operator_questionnaire as oq, questionnaire as q
 	WHERE oq.operator_id = '$operator_id'
 	AND q.questionnaire_id = oq.questionnaire_id";

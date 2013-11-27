@@ -127,7 +127,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 		//add note
 
 		$sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
-			VALUES ('{$r['case_id']}',1,'" . T_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
+			VALUES ('{$r['case_id']}',1,'" . TQ_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
 
 		$db->Execute($sql);
 	
@@ -165,7 +165,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 		//add note
 	
 		$sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
-			VALUES ('{$r['case_id']}',1,'" . T_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
+			VALUES ('{$r['case_id']}',1,'" . TQ_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
 
 		$db->Execute($sql);
 

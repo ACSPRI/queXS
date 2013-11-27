@@ -97,7 +97,7 @@ if ($sample_import_id != false)
 	{
 		$search = $db->qstr($_GET['search']);
 
-		$sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN CONCAT('<a href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id , '\'>" . T_("No cases yet assigned: Delete this sample record") . "</a>') ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>" . T_("Assigned to questionnaire: ") . "', q.description, '</a>') END as link
+		$sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN CONCAT('<a href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id , '\'>" . TQ_("No cases yet assigned: Delete this sample record") . "</a>') ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>" . TQ_("Assigned to questionnaire: ") . "', q.description, '</a>') END as link
 			FROM sample_var AS sv
 			JOIN (sample as s) ON (s.import_id = '$sample_import_id' and sv.sample_id = s.sample_id)
 			LEFT JOIN (`case` AS c, questionnaire AS q) ON ( c.sample_id = sv.sample_id AND q.questionnaire_id = c.questionnaire_id )
