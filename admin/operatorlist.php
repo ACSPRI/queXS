@@ -233,20 +233,20 @@ if ($display)
 {
 	$sql = "SELECT
 			CONCAT(firstName, ' ', lastName) as name,
-			CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . T_("Windows bat file") . "</a>') as winbat,
-			CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . T_("*nix script file") . "</a>') as sh,
+			CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . TQ_("Windows bat file") . "</a>') as winbat,
+			CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . TQ_("*nix script file") . "</a>') as sh,
 			CASE WHEN enabled = 0 THEN
-				CONCAT('<a href=\'?enable=',operator_id,'\'>" . T_("Enable") . "</a>') 
+				CONCAT('<a href=\'?enable=',operator_id,'\'>" . TQ_("Enable") . "</a>') 
 			ELSE
-				CONCAT('<a href=\'?disable=',operator_id,'\'>" . T_("Disable") . "</a>') 
+				CONCAT('<a href=\'?disable=',operator_id,'\'>" . TQ_("Disable") . "</a>') 
 			END
 			as enabledisable,
 			CASE WHEN voip = 0 THEN
-				CONCAT('<a href=\'?voipenable=',operator_id,'\'>" . T_("Enable VoIP") . "</a>') 
+				CONCAT('<a href=\'?voipenable=',operator_id,'\'>" . TQ_("Enable VoIP") . "</a>') 
 			ELSE
-				CONCAT('<a href=\'?voipdisable=',operator_id,'\'>" . T_("Disable VoIP") . "</a>') 
+				CONCAT('<a href=\'?voipdisable=',operator_id,'\'>" . TQ_("Disable VoIP") . "</a>') 
 			END as voipenabledisable,
-			CONCAT('<a href=\'?edit=',operator_id,'\'>" . T_("Edit") . "</a>')  as edit,
+			CONCAT('<a href=\'?edit=',operator_id,'\'>" . TQ_("Edit") . "</a>')  as edit,
 			username
 		FROM operator";
 	

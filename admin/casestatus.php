@@ -85,12 +85,12 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 	$sql = "SELECT 	CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id,
 			o.description as outcomes,
 			si.description as samples,	
-			CASE 	WHEN ca.end IS NULL THEN '" . T_("Now") . "'
-				WHEN TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL co.default_delay_minutes MINUTE),'System','UTC'))) < 0 THEN '" . T_("Now") . "'
+			CASE 	WHEN ca.end IS NULL THEN '" . TQ_("Now") . "'
+				WHEN TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL co.default_delay_minutes MINUTE),'System','UTC'))) < 0 THEN '" . TQ_("Now") . "'
 				ELSE ROUND(TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL co.default_delay_minutes MINUTE),'System','UTC'))) / 60)
 			END AS availableinmin,
-			CASE 	WHEN oq.operator_id IS NULL THEN CONCAT('". T_("Not assigned, select to assign") ." ','<input type=\"checkbox\" name=\"c', c.case_id, '\" value=\"', c.case_id, '\"/>')
-				ELSE CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_id&amp;unassign=', cq.case_queue_id, '\"/>". T_("Assigned to") . ": ', oq.firstName, ' " . T_("Order") . ":', cq.sortorder , ' (". T_("Click to unassign") .")</a>')
+			CASE 	WHEN oq.operator_id IS NULL THEN CONCAT('". TQ_("Not assigned, select to assign") ." ','<input type=\"checkbox\" name=\"c', c.case_id, '\" value=\"', c.case_id, '\"/>')
+				ELSE CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_id&amp;unassign=', cq.case_queue_id, '\"/>". TQ_("Assigned to") . ": ', oq.firstName, ' " . TQ_("Order") . ":', cq.sortorder , ' (". TQ_("Click to unassign") .")</a>')
 			END AS assignedoperator
 		FROM `case` as c
 		JOIN questionnaire as q ON (q.questionnaire_id = c.questionnaire_id and q.enabled = 1)

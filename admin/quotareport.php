@@ -282,7 +282,7 @@ if ($questionnaire_id)
 
 		print "<form action='' method='post'>";
 		xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc","priority","autoprioritise"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete"),T_("Set priority"),T_("Auto prioritise")),"tclass",false,false);
-		print "<p><input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/><input type='submit' id='submit' name='submit' value='" . T_("Update priorities") . "'/></p></form>";
+		print "<p><input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/><input type='submit' id='submit' name='submit' value='" . TQ_("Update priorities") . "'/></p></form>";
 	}
 	
 }

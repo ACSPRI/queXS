@@ -382,7 +382,7 @@ else if (isset($_GET['delete']))
 	print "<p>" . T_("Please confirm you wish to delete the questionnaire") . "</p>";
 
 	print "<form method='post' action='?'>";
-	print "<p><input type='submit' name='submit' value='" . T_("Delete this questionnaire") . "'/>";
+	print "<p><input type='submit' name='submit' value='" . TQ_("Delete this questionnaire") . "'/>";
 	print "<input type='hidden' name='questionnaire_id' value='$questionnaire_id'/></p>";
 	print "</form>";
 }
@@ -394,13 +394,13 @@ else
 	$sql = "SELECT
 			description,
 			CASE WHEN enabled = 0 THEN
-				CONCAT('<a href=\'?enable=',questionnaire_id,'\'>" . T_("Enable") . "</a>') 
+				CONCAT('<a href=\'?enable=',questionnaire_id,'\'>" . TQ_("Enable") . "</a>') 
 			ELSE
-				CONCAT('<a href=\'?disable=',questionnaire_id,'\'>" . T_("Disable") . "</a>') 
+				CONCAT('<a href=\'?disable=',questionnaire_id,'\'>" . TQ_("Disable") . "</a>') 
 			END
 			as enabledisable,
-			CONCAT('<a href=\'?modify=',questionnaire_id,'\'>" . T_("Modify"). "</a>') as modify,
-			CONCAT('<a href=\'?delete=',questionnaire_id,'\'>" . T_("Delete"). "</a>') as deletee
+			CONCAT('<a href=\'?modify=',questionnaire_id,'\'>" . TQ_("Modify"). "</a>') as modify,
+			CONCAT('<a href=\'?delete=',questionnaire_id,'\'>" . TQ_("Delete"). "</a>') as deletee
 		FROM questionnaire";
 		
 	$rs = $db->GetAll($sql);

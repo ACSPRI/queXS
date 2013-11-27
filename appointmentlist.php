@@ -67,7 +67,7 @@ $rs = "";
 
 if ($case_id)
 {
-	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',r.Time_zone_name),'".DATE_TIME_FORMAT."') as start,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',r.Time_zone_name),'".TIME_FORMAT."') as end, c.completed_call_id, IFNULL(ou.firstName,'" . T_("Not yet called") . "') as firstName, CONCAT(r.firstName, ' ', r.lastName) as respname, IFNULL(o.description,'" . T_("Not yet called") . "') as des, IFNULL(ao.firstName,'" . T_("Any operator") . "') as witho
+	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',r.Time_zone_name),'".DATE_TIME_FORMAT."') as start,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',r.Time_zone_name),'".TIME_FORMAT."') as end, c.completed_call_id, IFNULL(ou.firstName,'" . TQ_("Not yet called") . "') as firstName, CONCAT(r.firstName, ' ', r.lastName) as respname, IFNULL(o.description,'" . TQ_("Not yet called") . "') as des, IFNULL(ao.firstName,'" . TQ_("Any operator") . "') as witho
 		FROM `appointment` as c
 		JOIN respondent as r on  (r.respondent_id = c.respondent_id)
 		LEFT JOIN (`call` as ca, outcome as o, operator as ou) on (ca.call_id = c.completed_call_id and ca.outcome_id = o.outcome_id and ou.operator_id = ca.operator_id)

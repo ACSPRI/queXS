@@ -48,6 +48,19 @@ function translate_array(&$a,$b)
 			if (isset($row[$el])) $row[$el] = T_($row[$el]);
 }
 
+/**
+ * Translate then quote a string to make it ready
+ * for database insertion
+ *
+ * @param string $msg The message to translate and quote
+ * @return string The translated message quoted
+ */
+function TQ_($msg)
+{
+  $msg = T_($msg);
+  $msg = str_replace(array('\\',"\0"),array('\\\\',"\\\0"),$msg);
+  return str_replace("'","\\'",$msg);
+}
 
 
 $locale = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);

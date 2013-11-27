@@ -428,27 +428,27 @@ switch($state)
 		print "<div><a href='?newstate=3'>" . T_("Call Answered") . "</a></div>";
 		print "<form action='?' method='post'>";
 		display_outcomes(0,$call_attempt_id,$case_id);
-		print "<div><input type='submit' value='" . T_("Hangup") . "' name='submit' id='submit'/></div></form>";
+		print "<div><input type='submit' value='" . TQ_("Hangup") . "' name='submit' id='submit'/></div></form>";
 		break;
 	case 2: //ringing
 		print "<div class='status'>" . T_("Ringing") . "</div>";
 		print "<div><a href='?newstate=3'>" . T_("Call Answered") . "</a></div>";
 		print "<form action='?' method='post'>";
 		display_outcomes(0,$call_attempt_id,$case_id);
-		print "<div><input type='submit' value='" . T_("Hangup") . "' name='submit' id='submit'/></div></form>";
+		print "<div><input type='submit' value='" . TQ_("Hangup") . "' name='submit' id='submit'/></div></form>";
 		break;
 	case 3: //answered
 		print "<div class='status'>" . T_("Answered") . "</div>";
 		print "<div><a href='?newstate=2'>" . T_("Not Answered") . "</a></div>";
 		print "<form action='?' method='post'>";
 		display_outcomes(1,$call_attempt_id,$case_id);
-		print "<div><input type='submit' value='" . T_("Hangup") . "' name='submit' id='submit'/></div></form>";
+		print "<div><input type='submit' value='" . TQ_("Hangup") . "' name='submit' id='submit'/></div></form>";
 		break;
 	case 4: //requires coding
 		print "<div class='status'>" . T_("Requires coding") . "</div>";
 		print "<form action='?' method='post'>";
 		display_outcomes(false,$call_attempt_id,$case_id);
-		print "<div><input type='submit' value='" . T_("Assign outcome") . "' name='submit' id='submit'/></div></form>";
+		print "<div><input type='submit' value='" . TQ_("Assign outcome") . "' name='submit' id='submit'/></div></form>";
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done
 	default:

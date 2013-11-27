@@ -85,7 +85,7 @@ if ($questionnaire_id)
 	$shift_id = false;
 	if (isset($_GET['shift_id'])) $shift_id = bigintval($_GET['shift_id']);
 
-	$sql = "SELECT s.shift_id as value,CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . DATE_TIME_FORMAT . "'),' " . T_("till") . " ',DATE_FORMAT(CONVERT_TZ(s.end,'UTC',o.Time_zone_name),'" . TIME_FORMAT . "')) as description,CASE WHEN s.shift_id = '$shift_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+	$sql = "SELECT s.shift_id as value,CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . DATE_TIME_FORMAT . "'),' " . TQ_("till") . " ',DATE_FORMAT(CONVERT_TZ(s.end,'UTC',o.Time_zone_name),'" . TIME_FORMAT . "')) as description,CASE WHEN s.shift_id = '$shift_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM shift as s
 		LEFT JOIN (operator as o) on (o.operator_id = '$operator_id')
 		WHERE s.questionnaire_id = '$questionnaire_id'

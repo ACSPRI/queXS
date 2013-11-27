@@ -76,10 +76,10 @@ if ($chatenabled && operator_chat_enabled($operator_id))
 
 	//javascript to activate connection for this user
 	print "<script type='text/javascript'>";
-	print "var SUPERVISOR_NAME = '" . T_("Supervisor") . "';";
-	print "var MY_NAME = '" . T_("Me") . "';";
+	print "var SUPERVISOR_NAME = '" . TQ_("Supervisor") . "';";
+	print "var MY_NAME = '" . TQ_("Me") . "';";
 	print "var SUPERVISOR_XMPP = '$supervisor_xmpp';";
-	print "var PRESENCE_MESSAGE = '" . T_("Case id") . ": $case_id';";
+	print "var PRESENCE_MESSAGE = '" . TQ_("Case id") . ": $case_id';";
 	print "var conn = new Strophe.Connection('$bosh_service');";
 	print "conn.connect('" . get_operator_variable("chat_user",$operator_id) ."', '" . get_operator_variable("chat_password",$operator_id) . "', OnConnectionStatus);";
 	print "</script>";
@@ -87,7 +87,7 @@ if ($chatenabled && operator_chat_enabled($operator_id))
 	print "<div style='display:none' id='statusavailable'>" . T_("Supervisor is available") . "</div>";
 	print "<div id='statusunavailable'>" . T_("Supervisor not available") . "</div>";
 
-	print "<div id='chatbox'><label for='chattext'>" . T_("Message") . ":</label><input type='text' id='chattext'/> <input type='submit' id='chatclick' value='" . T_("Send") . "'/></div>";
+	print "<div id='chatbox'><label for='chattext'>" . T_("Message") . ":</label><input type='text' id='chattext'/> <input type='submit' id='chatclick' value='" . TQ_("Send") . "'/></div>";
 
 	//table for chat messages
 	print "<table class='tclass' id='chattable'><tbody><tr><th>" . T_("From") . "</th><th>" . T_("Message") . "</th></tr></tbody></table>";

@@ -87,7 +87,7 @@ if ($questionnaire_id != false)
 	
 	print "<p>" . T_("Sample status") . "</p>";
 
-	$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . T_("Drawn from sample") . "' ELSE '" . T_("Remain in sample") . "' END as drawn,
+	$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . TQ_("Drawn from sample") . "' ELSE '" . TQ_("Remain in sample") . "' END as drawn,
 			count(*) as count
 		FROM sample as s
 		JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
@@ -230,7 +230,7 @@ group by s.import_id";
 		{
 			print "<p>" . T_("Sample status") . "</p>";
 
-			$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . T_("Drawn from sample") . "' ELSE '" . T_("Remain in sample") . "' END as drawn,
+			$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . TQ_("Drawn from sample") . "' ELSE '" . TQ_("Remain in sample") . "' END as drawn,
 					count(*) as count
 				FROM sample as s
 				JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
@@ -273,7 +273,7 @@ group by s.import_id";
 	print "<h2>" . T_("Shifts") . "</h2>";
 
 	$sql = "SELECT s.shift_id, CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . DATE_TIME_FORMAT ."'), ' - ', DATE_FORMAT(CONVERT_TZ(s.end,'UTC',o.Time_zone_name),'" . DATE_TIME_FORMAT ."')) as description,
-		CASE WHEN sr.shift_id IS NULL THEN CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '&amp;createnewreport=yes\'>" . T_("No shift reports: Add report") . "</a>') ELSE CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\'>" . T_("View shift reports") . "</a>') END AS link, c.completions as completions, CONCAT('<a href=\'operatorperformance.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\'>" . T_("View operator performance") . "</a>') as operform
+		CASE WHEN sr.shift_id IS NULL THEN CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '&amp;createnewreport=yes\'>" . TQ_("No shift reports: Add report") . "</a>') ELSE CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\'>" . TQ_("View shift reports") . "</a>') END AS link, c.completions as completions, CONCAT('<a href=\'operatorperformance.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\'>" . TQ_("View operator performance") . "</a>') as operform
 		FROM `shift` as s
 		JOIN operator as o on (o.operator_id = '$admin_operator_id')
 		LEFT JOIN shift_report as sr on (sr.shift_id = s.shift_id)

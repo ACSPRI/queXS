@@ -209,7 +209,7 @@ if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 			array_unshift($ops,array('value'=>0,'description'=>T_("Any operator"),'selected'=>$selected));
 			display_chooser($ops,"require_operator_id","require_operator_id",false,false,false,false);
 			print "<input type='hidden' value='$appointment_id' id='appointment_id' name='appointment_id'/>";
-			print "<div><input type='submit' value='" . T_("Edit appointment") . "'/></div>";
+			print "<div><input type='submit' value='" . TQ_("Edit appointment") . "'/></div>";
 
 			print "</form></p>";
 			print "<p><a href='?'>" . T_("Cancel edit") . "</a></p>";
@@ -226,7 +226,7 @@ else
 	
 	print "<h1>" . T_("Appointments") . "</h1><h2>" . T_("All appointments (with times displayed in your time zone)") . "</h2>";
 	
-	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . T_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". T_("Delete") . "</a>') as link, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'>". T_("Edit") . "</a>') as edit,IFNULL(ao.firstName,'" . T_("Any operator") . "') as witho
+	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . TQ_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". TQ_("Delete") . "</a>') as link, CONCAT('<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'>". TQ_("Edit") . "</a>') as edit,IFNULL(ao.firstName,'" . TQ_("Any operator") . "') as witho
 
 		FROM appointment as a
 		JOIN (`case` as c, respondent as r, questionnaire as q, operator as o, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and o.operator_id = '$operator_id' and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)

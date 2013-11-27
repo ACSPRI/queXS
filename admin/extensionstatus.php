@@ -45,7 +45,7 @@ include ("../functions/functions.xhtml.php");
 
 xhtml_head(T_("Display extension status"),true,array("../css/table.css"));
 	
-$sql=  "SELECT o.firstName, o.extension, CASE o.voip_status WHEN 0 THEN '" . T_("VoIP Offline") . "' ELSE '" . T_("VoIP Online") . "' END as voip_status, CASE ca.state WHEN 0 THEN '" . T_("Not called") . "' WHEN 1 THEN '" . T_("Requesting call") . "' WHEN 2 THEN '" . T_("Ringing") . "' WHEN 3 THEN '" . T_("Answered") . "' WHEN 4 THEN '" . T_("Requires coding") . "' ELSE '" . T_("Done") . "' END as state, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>' , c.case_id, '</a>') as case_id, SEC_TO_TIME(TIMESTAMPDIFF(SECOND,cal.start,CONVERT_TZ(NOW(),'SYSTEM','UTC'))) as calltime, voip_status as vs
+$sql=  "SELECT o.firstName, o.extension, CASE o.voip_status WHEN 0 THEN '" . TQ_("VoIP Offline") . "' ELSE '" . TQ_("VoIP Online") . "' END as voip_status, CASE ca.state WHEN 0 THEN '" . TQ_("Not called") . "' WHEN 1 THEN '" . TQ_("Requesting call") . "' WHEN 2 THEN '" . TQ_("Ringing") . "' WHEN 3 THEN '" . TQ_("Answered") . "' WHEN 4 THEN '" . TQ_("Requires coding") . "' ELSE '" . TQ_("Done") . "' END as state, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>' , c.case_id, '</a>') as case_id, SEC_TO_TIME(TIMESTAMPDIFF(SECOND,cal.start,CONVERT_TZ(NOW(),'SYSTEM','UTC'))) as calltime, voip_status as vs
 	FROM operator as o
 	LEFT JOIN `case` as c ON (c.current_operator_id = o.operator_id)
 	LEFT JOIN `call_attempt` as cal ON (cal.operator_id = o.operator_id AND cal.end IS NULL and cal.case_id = c.case_id)

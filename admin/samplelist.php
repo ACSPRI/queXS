@@ -260,14 +260,14 @@ if (isset($_GET['sampleenable']))
 
 $sql = "SELECT
 		CASE WHEN enabled = 0 THEN
-			CONCAT('<a href=\'?sampleenable=',sample_import_id,'\'>" . T_("Enable") . "</a>') 
+			CONCAT('<a href=\'?sampleenable=',sample_import_id,'\'>" . TQ_("Enable") . "</a>') 
 		ELSE
-			CONCAT('<a href=\'?sampledisable=',sample_import_id,'\'>" . T_("Disable") . "</a>') 
+			CONCAT('<a href=\'?sampledisable=',sample_import_id,'\'>" . TQ_("Disable") . "</a>') 
 		END
 		as enabledisable,
-		CONCAT('<a href=\'?edit=',sample_import_id,'\'>" . T_("Deidentify") . "</a>')  as did,
-		CONCAT('<a href=\'?view=',sample_import_id,'\'>" . T_("Operator viewing permissions") . "</a>')  as vp,
-		CONCAT('<a href=\'?rename=',sample_import_id,'\'>" . T_("Rename") . "</a>')  as rname,
+		CONCAT('<a href=\'?edit=',sample_import_id,'\'>" . TQ_("Deidentify") . "</a>')  as did,
+		CONCAT('<a href=\'?view=',sample_import_id,'\'>" . TQ_("Operator viewing permissions") . "</a>')  as vp,
+		CONCAT('<a href=\'?rename=',sample_import_id,'\'>" . TQ_("Rename") . "</a>')  as rname,
 		description
 	FROM sample_import";
 
