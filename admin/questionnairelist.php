@@ -229,17 +229,18 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['respsc'])) $respsc = 1;
 	
-	$name = $db->qstr(html_entity_decode($_POST['description']));
+	$name = $db->qstr(html_entity_decode($_POST['description'],ENT_QUOTES,'UTF-8'));
 	if (isset($_POST['rs_intro']))
 	{
 		$rs = 1;
-		$rs_intro = $db->qstr(html_entity_decode($_POST['rs_intro']));
-		$rs_project_intro = $db->qstr(html_entity_decode($_POST['rs_project_intro']));
-		$rs_callback = $db->qstr(html_entity_decode($_POST['rs_callback']));
-		$rs_answeringmachine = $db->qstr(html_entity_decode($_POST['rs_answeringmachine']));
+		$rs_intro = $db->qstr(html_entity_decode($_POST['rs_intro'],ENT_QUOTES,'UTF-8'));
+		$rs_project_intro = $db->qstr(html_entity_decode($_POST['rs_project_intro'],ENT_QUOTES,'UTF-8'));
+		$rs_callback = $db->qstr(html_entity_decode($_POST['rs_callback'],ENT_QUOTES,'UTF-8'));
+		$rs_answeringmachine = $db->qstr(html_entity_decode($_POST['rs_answeringmachine'],ENT_QUOTES,'UTF-8'));
 	}
-	$info  = $db->qstr(html_entity_decode($_POST['info']));
-	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],true));
+	$info  = $db->qstr(html_entity_decode($_POST['info'],ENT_QUOTES,'UTF-8'));
+	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],ENT_QUOTES,'UTF-8'));
+
 
 	$sql = "UPDATE questionnaire
 		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', self_complete = $respsc

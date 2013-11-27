@@ -76,13 +76,13 @@ if (isset($_POST['import_file']))
 	if (isset($_POST['respsc'])) $respsc = 1;
 	if ($_POST['selectrs'] != "none") $rs = 1;
 	
-	$name = $db->qstr($_POST['description'],get_magic_quotes_gpc());
-	$rs_intro = $db->qstr(html_entity_decode($_POST['rs_intro'],get_magic_quotes_gpc()));
-	$rs_project_intro = $db->qstr(html_entity_decode($_POST['rs_project_intro'],get_magic_quotes_gpc()));
-	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],get_magic_quotes_gpc()));
-	$rs_callback = $db->qstr(html_entity_decode($_POST['rs_callback'],get_magic_quotes_gpc()));
-	$rs_answeringmachine = $db->qstr(html_entity_decode($_POST['rs_answeringmachine'],get_magic_quotes_gpc()));
-	$info  = $db->qstr(html_entity_decode($_POST['info'],get_magic_quotes_gpc()));
+	$name = $db->qstr($_POST['description']);
+	$rs_intro = $db->qstr(html_entity_decode($_POST['rs_intro'],ENT_QUOTES,'UTF-8'));
+	$rs_project_intro = $db->qstr(html_entity_decode($_POST['rs_project_intro'],ENT_QUOTES,'UTF-8'));
+	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],ENT_QUOTES,'UTF-8'));
+	$rs_callback = $db->qstr(html_entity_decode($_POST['rs_callback'],ENT_QUOTES,'UTF-8'));
+	$rs_answeringmachine = $db->qstr(html_entity_decode($_POST['rs_answeringmachine'],ENT_QUOTES,'UTF-8'));
+	$info  = $db->qstr(html_entity_decode($_POST['info'],ENT_QUOTES,'UTF-8'));
 
 	//use existing lime instrument
 	$lime_sid = bigintval($_POST['select']);
@@ -103,9 +103,9 @@ if (isset($_POST['import_file']))
 		$qid = $db->Insert_ID();
 		if ($respsc == 1)
 		{
-			$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
-			$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
-			$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
+			$lime_mode = $db->qstr($_POST['lime_mode']);
+			$lime_template = $db->qstr($_POST['lime_template']);
+			$lime_endurl = $db->qstr($_POST['lime_endurl']);
 
 			$sql = "UPDATE questionnaire
 				SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
