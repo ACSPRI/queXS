@@ -339,9 +339,9 @@ if ($sc == 1)
 	print "<div><label for='email'>" . T_("Email") . "</label><input type='text' value='{$rs['email']}' name='email' id='email'/></div>";
 	if (!isset($_GET['interface2']))
 	{
-		print "<div><input type='submit' value='" . TQ_("Send invitation") . "' name='submit' id='submit'/></div>";
+		print "<div><input type='submit' value=\"" . T_("Send invitation") . "\" name='submit' id='submit'/></div>";
 	}
-	print "<div><input type='submit' value='" . TQ_("Send invitation and Hang up") . "' name='submith' id='submith'/></div></form>";
+	print "<div><input type='submit' value=\"" . T_("Send invitation and Hang up") . "\" name='submith' id='submith'/></div></form>";
 }
 else
 {

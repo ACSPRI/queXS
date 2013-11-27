@@ -211,11 +211,11 @@ if ($questionnaire_id != false)
 			{
 				print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking): ");
 				display_chooser($ss,"copy_sample_import_id","copy_sample_import_id",false,false,false,false);
-				print "<input type='submit' id='submit' value='" . TQ_("Copy") . "'/></p></form>";
+				print "<input type='submit' id='submit' value=\"" . T_("Copy") . "\"/></p></form>";
 
                 print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking) with adjusting: ");
 				display_chooser($ss,"copy_sample_import_id_with_adjustment","copy_sample_import_id_with_adjustment",false,false,false,false);
-				print "<input type='submit' id='submit' value='" . TQ_("Copy adjustments") . "'/></p></form>";
+				print "<input type='submit' id='submit' value=\"" . T_("Copy adjustments") . "\"/></p></form>";
 			}
 
 		}

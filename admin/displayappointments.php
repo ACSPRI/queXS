@@ -209,7 +209,7 @@ if (isset($_GET['appointment_id']) && isset($_GET['case_id']))
 			array_unshift($ops,array('value'=>0,'description'=>T_("Any operator"),'selected'=>$selected));
 			display_chooser($ops,"require_operator_id","require_operator_id",false,false,false,false);
 			print "<input type='hidden' value='$appointment_id' id='appointment_id' name='appointment_id'/>";
-			print "<div><input type='submit' value='" . TQ_("Edit appointment") . "'/></div>";
+      print "<div><input type='submit' value=\"" . T_("Edit appointment") . "\"/></div>";
 
 			print "</form></p>";
 			print "<p><a href='?'>" . T_("Cancel edit") . "</a></p>";

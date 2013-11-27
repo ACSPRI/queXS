@@ -340,7 +340,7 @@ switch($state)
 		
 					print "<form action='?' method='post'><div>";
 					print "<p>" . T_("Number to call:") . " {$r['phone']} - {$r['description']}</p>";
-					print "</div><div><input type='hidden' id='contact_phone' name='contact_phone' value='{$r['contact_phone_id']}'/><input type='submit' value='Call' name='submit' id='submit'/></div></form>";
+					print "</div><div><input type='hidden' id='contact_phone' name='contact_phone' value='{$r['contact_phone_id']}'/><input type='submit' value=\"" . T_("Call") . "\" name='submit' id='submit'/></div></form>";
 				}
 				else
 					print "<div>" . T_("Your VoIP extension is not enabled. Please close this window and enable VoIP by clicking once on the red button that says 'VoIP Off'") . "</div>";
@@ -411,7 +411,7 @@ switch($state)
 						{
 							print "<option value='{$r['contact_phone_id']}'>{$r['phone']} - {$r['description']}</option>";
 						}
-						print "</select></div><div><input type='submit' value='Call' name='submit' id='submit'/></div></form>";
+						print "</select></div><div><input type='submit' value=\"" . T_("Call") . "\" name='submit' id='submit'/></div></form>";
 					}
 					else
 						print "<div>" . T_("Your VoIP extension is not enabled. Please close this window and enable VoIP by clicking once on the red button that says 'VoIP Off'") . "</div>";
@@ -467,7 +467,7 @@ switch($state)
 		print "<div class='status'>" . T_("Requires coding") . "</div>";
 		print "<form action='?' method='post'>";
 		display_outcomes(false,$call_attempt_id,$case_id);
-		print "<div><input type='submit' value='" . TQ_("Assign outcome") . "' name='submit' id='submit'/></div></form>";
+		print "<div><input type='submit' value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></div></form>";
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done
 	default:

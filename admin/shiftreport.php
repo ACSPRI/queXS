@@ -114,7 +114,7 @@ if ($questionnaire_id)
 			print "<form action='?' method='get'><p><textarea name='report' id='report' rows='15' cols='80'></textarea></p>";
 			print "<p><input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/>";
 			print "<input type='hidden' name='shift_id' id='shift_id' value='$shift_id'/>";
-			print "<input type='submit' name='submit' id='submit' value='" . TQ_("Add report") . "'/>";
+			print "<input type='submit' name='submit' id='submit' value=\"" . T_("Add report") . "\"/>";
 			print "</p></form>";
 		}
 		else if (isset($_GET['report']))
@@ -160,7 +160,7 @@ if ($questionnaire_id)
 				print "<p><input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/>";
 				print "<input type='hidden' name='shift_id' id='shift_id' value='$shift_id'/>";
 				print "<input type='hidden' name='shift_report_id' id='shift_report_id' value='$shift_report_id'/>";				
-				print "<input type='submit' name='submit' id='submit' value='" . TQ_("Modify report") . "'/>";
+				print "<input type='submit' name='submit' id='submit' value=\"" . T_("Modify report") . "\"/>";
 				print "</p></form>";
 			}
 		}

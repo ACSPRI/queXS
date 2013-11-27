@@ -382,7 +382,7 @@ else if (isset($_GET['delete']))
 	print "<p>" . T_("Please confirm you wish to delete the questionnaire") . "</p>";
 
 	print "<form method='post' action='?'>";
-	print "<p><input type='submit' name='submit' value='" . TQ_("Delete this questionnaire") . "'/>";
+	print "<p><input type='submit' name='submit' value=\"" . T_("Delete this questionnaire") . "\"/>";
 	print "<input type='hidden' name='questionnaire_id' value='$questionnaire_id'/></p>";
 	print "</form>";
 }
