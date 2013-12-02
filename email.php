@@ -285,7 +285,7 @@ if (isset($_POST['firstname']))
 			}
 			else if (isset($_POST['submit']))
 			{
-				xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
+				xhtml_head(T_("Email"),true,array("css/call.css"),false,"onload='parent.closePopup();'");
 			}
 			xhtml_foot();
 			die();
