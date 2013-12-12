@@ -106,23 +106,48 @@ function quexs_completed_by_respondent($surveyid,$clienttoken)
 	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$db->SetFetchMode(ADODB_FETCH_ASSOC);
 
+  $sql = "SELECT case_id
+		FROM `case`
+		WHERE token = '$clienttoken'";
+
+	$case_id = $db->GetOne($sql);
+
+  //need to insert a call record here to handle assigning outcomes properly
+  //find the last call attempt
+  //
+  $sql = "SELECT call_attempt_id,respondent_id,operator_id
+          FROM call_attempt 
+          WHERE case_id = $case_id
+          ORDER BY call_attempt_id DESC";
+
+  $cai = $db->GetRow($sql);
+
+  $sql = "SELECT contact_phone_id
+          FROM contact_phone
+          WHERE case_id = $case_id
+          ORDER BY priority ASC";
+
+  $cpid = $db->GetOne($sql);
+
+  if (!empty($cai) && !empty($cpid))
+  {
+    $sql = "INSERT INTO `call` (operator_id,respondent_id,case_id,contact_phone_id,call_attempt_id,start,end,outcome_id,state)
+            VALUES ({$cai['operator_id']},{$cai['respondent_id']},$case_id,$cpid,{$cai['call_attempt_id']},CONVERT_TZ(NOW(),'System','UTC'),CONVERT_TZ(NOW(),'System','UTC'),40,5)";
+
+    $db->Execute($sql);
+  }
+
 	$sql = "UPDATE `case`
 		SET current_outcome_id = 40
 		WHERE token = '$clienttoken'";
 
 	$db->Execute($sql);
 
-	$sql = "SELECT case_id
-		FROM `case`
-		WHERE token = '$clienttoken'";
+  //Add a case note to clarify (need to translate this string)
+  $sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
+          VALUES ($case_id,1,'Self completed online',CONVERT_TZ(NOW(),'System','UTC'))";
 
-	$case_id = $db->GetOne($sql);
-
-        //Add a case note to clarify (need to translate this string)
-        $sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
-                VALUES ($case_id,1,'Self completed online',CONVERT_TZ(NOW(),'System','UTC'))";
-
-        $db->Execute($sql);
+  $db->Execute($sql);
 }
 
 
