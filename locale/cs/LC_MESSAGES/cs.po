@@ -7,15 +7,244 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-07-17 12:38+1000\n"
+"POT-Creation-Date: 2013-12-02 14:31+1000\n"
 "PO-Revision-Date: 2013-07-27 21:47+0000\n"
 "Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-11 03:48+0000\n"
-"X-Generator: Launchpad (build 16799)\n"
+"X-Launchpad-Export-Date: 2013-12-19 23:41+0000\n"
+"X-Generator: Launchpad (build 16872)\n"
+
+#: callhistory.php:56
+msgid "Case History List"
+msgstr "Seznam historie případů"
+
+#: callhistory.php:79
+msgid "No calls ever made"
+msgstr "Žádný hovor nebyl proveden"
+
+#: callhistory.php:83
+#: calllist.php:84
+msgid "Date/Time"
+msgstr "Datum/čas"
+
+#: callhistory.php:83
+msgid "Case ID"
+msgstr "ID případu"
+
+#: callhistory.php:83
+#: index_interface2.php:210
+#: calllist.php:84
+msgid "Outcome"
+msgstr "Výsledek"
+
+#: callhistory.php:83
+msgid "Respondent"
+msgstr "Respondent"
+
+#: callhistory.php:87
+msgid "No operator"
+msgstr "Žádný operátor"
+
+#: rs_answeringmachine_interface2.php:64
+#: rs_answeringmachine.php:64
+msgid "Respondent Selection - Answering machine"
+msgstr "Výběr respondenta - Záznamník"
+
+#: rs_answeringmachine_interface2.php:78
+#: rs_answeringmachine.php:78
+msgid "Do not leave a message, please hang up"
+msgstr "Nezanechávejte zprávu, prosím zavěste"
+
+#: rs_answeringmachine_interface2.php:81
+#: rs_answeringmachine.php:81
+msgid "End call with outcome: Business answering machine"
+msgstr "Ukončit hovor s výsledkem: Firemní záznamník"
+
+#: rs_answeringmachine_interface2.php:86
+#: rs_answeringmachine.php:86
+msgid "End call with outcome: Answering machine Message left"
+msgstr "Ukončit hovor s výsledkem: Záznamník - zanechána zpráva"
+
+#: rs_answeringmachine_interface2.php:90
+#: rs_answeringmachine.php:90
+msgid "End call with outcome: Answering machine No message left"
+msgstr "Ukončit hovor s výsledkem: Záznamník - zpráva nezanechána"
+
+#: rs_answeringmachine_interface2.php:91
+#: rs_business_interface2.php:62
+#: rs_callback_interface2.php:89
+#: rs_project_intro.php:85
+#: rs_answeringmachine.php:91
+msgid "Go Back"
+msgstr "Jít zpět"
+
+#: rs_business_interface2.php:55
+msgid "Respondent Selection - Business answers"
+msgstr "Výběr respondenta - Firemní odpovědi"
+
+#: rs_business_interface2.php:59
+msgid "Sorry to bother you, I have called the wrong number"
+msgstr "Je mi líto že Vás obtěžuji, zavolal jsem na špatné číslo"
+
+#: rs_business_interface2.php:61
+msgid "End call with outcome: Business number"
+msgstr "Ukončit hovor s výsledkem: Firemní číslo"
+
+#: index_interface2.php:195
+#: waitnextcase_interface2.php:49
+#: index.php:130
+msgid "queXS"
+msgstr "queXS"
+
+#: index_interface2.php:211
+#: appointment.php:121
+#: index.php:146
+msgid "Appointment"
+msgstr "Schůzka"
+
+#: index_interface2.php:212
+#: index.php:149
+msgid "Email"
+msgstr "E-mail"
+
+#: index_interface2.php:213
+#: waitnextcase_interface2.php:55
+msgid "End work"
+msgstr "Ukončit práci"
+
+#: index_interface2.php:291
+#: index.php:151
+msgid "Arrow for expanding or contracting"
+msgstr "Šipka pro rozbalení/sbalení"
+
+#: index_interface2.php:303
+#: index.php:202
+msgid "Notes"
+msgstr "Poznámky"
+
+#: index_interface2.php:311
+#: index.php:220
+msgid "Contact details"
+msgstr "Kontaktní údaje"
+
+#: index_interface2.php:320
+#: index.php:229
+msgid "Call history"
+msgstr "Historie volání"
+
+#: index_interface2.php:329
+#: index.php:238
+msgid "Shifts"
+msgstr "Směny"
+
+#: index_interface2.php:338
+#: index.php:247
+msgid "Appointments"
+msgstr "Schůzky"
+
+#: index_interface2.php:347
+#: index.php:256
+msgid "Performance"
+msgstr "Výkon"
+
+#: index_interface2.php:355
+#: index.php:264
+msgid "Work history"
+msgstr "Historie práce"
+
+#: index_interface2.php:363
+#: project_info.php:61
+#: index.php:272
+msgid "Project information"
+msgstr "Informace o projektu"
+
+#: index_interface2.php:372
+#: index.php:288
+msgid "Info"
+msgstr "Informace"
+
+#: record.php:55
+msgid "Stop REC"
+msgstr "Zastavit nahrávání"
+
+#: record.php:56
+#: record.php:79
+#: record.php:96
+msgid "Record"
+msgstr "Nahrávat"
+
+#: record.php:66
+msgid "Beginning recording..."
+msgstr "Nahrávání spuštěno..."
+
+#: record.php:69
+#: record.php:97
+msgid "Not on a call, so not beginning a recording"
+msgstr "Nevoláte, nahrávání není spuštěno"
+
+#: record.php:73
+msgid "Begin the manual recording now..."
+msgstr "Spustit ruční nahrávání nyní..."
+
+#: record.php:78
+#: index.php:150
+msgid "Start REC"
+msgstr "Spustit nahrávání"
+
+#: record.php:86
+msgid "Stopping recording..."
+msgstr "Nahrávání zastaveno..."
+
+#: record.php:90
+msgid "Stop the manual recording now..."
+msgstr "Zastavit ruční nahrávání nyní..."
+
+#: rs_callback_interface2.php:66
+msgid "Respondent Selection - Call back"
+msgstr "Výběr respondenta - zpětné volání"
+
+#: rs_callback_interface2.php:80
+msgid "You are: "
+msgstr "Jste: "
+
+#: rs_callback_interface2.php:80
+#, php-format
+msgid "% complete"
+msgstr "% c dokončeno"
+
+#: rs_callback_interface2.php:87
+msgid "Yes - Continue where we left off"
+msgstr "Ano - pokračovat kde jste skončili"
+
+#: rs_callback_interface2.php:88
+#: rs_project_intro.php:81
+msgid "End call with outcome: Refusal by respondent"
+msgstr "Ukončit volání s výsledkem: Odmítnutí respondentem"
+
+#: rs_project_intro.php:59
+msgid "Respondent Selection - Project Introduction"
+msgstr "Výběr respondenta - Úvod projektu"
+
+#: rs_project_intro.php:79
+msgid "Yes - Continue"
+msgstr "Ano - pokračovat"
+
+#: rs_project_intro.php:82
+msgid ""
+"End call with outcome: No eligible respondent (person not available on this "
+"number)"
+msgstr ""
+"Ukončit hovor s výsledkem: Žádný vhodný respondent (osoba není na tomto "
+"čísle dostupná)"
+
+#: rs_project_intro.php:83
+msgid ""
+"End call with outcome: Out of sample (already completed in another mode)"
+msgstr ""
+"Ukončit hovor s výsledkem: Mimo vzorek (již dokončeno v jiném režimu)"
 
 #: appointment.php:69
 msgid "Appointment error"
@@ -29,11 +258,6 @@ msgstr "Nebyl Vám přidělen případ a proto nemůžete vytvořit schůzku"
 #: appointment.php:109
 msgid "Appointment made"
 msgstr "Schůzka vytvořena"
-
-#: appointment.php:121
-#: status_interface2.php:176
-msgid "Appointment"
-msgstr "Schůzka"
 
 #: appointment.php:124
 msgid "Select a respondent"
@@ -91,32 +315,224 @@ msgstr "v"
 msgid "Appointment with myself only?"
 msgstr "Schůzka pouze sám se sebou?"
 
-#: performance.php:61
-msgid "Performance"
-msgstr "Výkon"
+#: calllist.php:56
+msgid "Call List"
+msgstr "Seznam volání"
 
-#: performance.php:77
-msgid "This shift"
-msgstr "Tato směna"
+#: calllist.php:80
+msgid "No calls made"
+msgstr "Nikam nevoláno"
 
-#: performance.php:78
-#: performance.php:85
+#: calllist.php:84
+msgid "Number called"
+msgstr "Volaná čísla"
+
+#: calllist.php:84
 msgid "Operator"
 msgstr "Operátor"
 
-#: performance.php:78
-#: performance.php:85
-msgid "Completions"
-msgstr "Dokončení"
+#: calllist.php:88
+#: project_info.php:82
+msgid "No case"
+msgstr "Žádný případ"
 
-#: performance.php:78
-#: performance.php:85
-msgid "Completions per hour"
-msgstr "Dokončení za dinu"
+#: waitnextcase_interface2.php:54
+msgid "Get a new case"
+msgstr "Obdržet nový případ"
 
-#: performance.php:84
-msgid "This project"
-msgstr "Tento projekt"
+#: index.php:145
+msgid "End"
+msgstr "Konec"
+
+#: index.php:147
+msgid "Call/Hangup"
+msgstr "Zavolat/Zavěsit"
+
+#: index.php:148
+msgid "Supervisor"
+msgstr "Vedoucí"
+
+#: index.php:152
+msgid "Restart"
+msgstr "Restartovat"
+
+#: index.php:210
+msgid "Availability"
+msgstr "Dostupnost"
+
+#: index.php:280
+msgid "Supervisor chat"
+msgstr "Chat s vedoucím"
+
+#: info.php:56
+msgid "Information"
+msgstr "Informace"
+
+#: supervisorchat.php:80
+msgid "Me"
+msgstr "Já"
+
+#: supervisorchat.php:82
+msgid "Case id"
+msgstr "ID případu"
+
+#: supervisorchat.php:87
+msgid "Supervisor is available"
+msgstr "Vedoucí je dostupný"
+
+#: supervisorchat.php:88
+msgid "Supervisor not available"
+msgstr "Vedoucí není dostupný"
+
+#: supervisorchat.php:90
+#: supervisorchat.php:93
+msgid "Message"
+msgstr "Zpráva"
+
+#: supervisorchat.php:90
+msgid "Send"
+msgstr "Odeslat"
+
+#: supervisorchat.php:93
+msgid "From"
+msgstr "Od"
+
+#: supervisorchat.php:96
+msgid "Supervisor chat is not enabled"
+msgstr "Chat s vedoucím není povolen"
+
+#: call_interface2.php:181
+#: call_interface2.php:210
+#: call_interface2.php:242
+#: call_interface2.php:246
+#: call_interface2.php:264
+#: call_interface2.php:295
+#: call_interface2.php:343
+#: call_interface2.php:414
+#: call.php:191
+#: call.php:211
+#: call.php:227
+#: call.php:258
+#: call.php:306
+#: call.php:377
+msgid "Call"
+msgstr "Volání"
+
+#: call_interface2.php:302
+#: call.php:265
+msgid "Not on a call"
+msgstr "Nevolá"
+
+#: call_interface2.php:314
+#: call_interface2.php:430
+#: call_interface2.php:435
+#: call_interface2.php:451
+#: call_interface2.php:457
+#: call.php:277
+#: call.php:393
+#: call.php:398
+#: call.php:414
+#: call.php:420
+msgid "End case"
+msgstr "Ukončit případ"
+
+#: call_interface2.php:339
+#: call.php:302
+msgid "Press the call button to dial the number for this appointment:"
+msgstr "Stiskněte tlačítko volání pro vytočení čísla pro tuto schůzku"
+
+#: call_interface2.php:342
+#: call.php:305
+msgid "Number to call:"
+msgstr "Číslo k volání:"
+
+#: call_interface2.php:346
+#: call_interface2.php:417
+#: call.php:309
+#: call.php:380
+msgid ""
+"Your VoIP extension is not enabled. Please close this window and enable VoIP "
+"by clicking once on the red button that says 'VoIP Off'"
+msgstr ""
+"Vaše rozšíření VoIP není zapnuto. Prosím zavřete toto okno a zapněte ho "
+"kliknutím na červené tlačítko s nápisem 'VoIP vypnuto'"
+
+#: call_interface2.php:407
+#: call.php:370
+msgid "Select phone number to dial:"
+msgstr "Vyberte telefonní číslo pro vytočení"
+
+#: call_interface2.php:422
+#: call_interface2.php:456
+#: call.php:385
+#: call.php:419
+msgid "The last call completed this call attempt"
+msgstr "Poslední volání dokončilo tento pokus o volání"
+
+#: call_interface2.php:426
+#: call_interface2.php:449
+#: call.php:389
+#: call.php:412
+msgid "Enter a reason for this outcome before completing this case:"
+msgstr "Zadejte důvod pro tento výsledek před dokončením případu:"
+
+#: call_interface2.php:467
+#: call.php:448
+msgid "Requires coding"
+msgstr "Vyžaduje kódování"
+
+#: call_interface2.php:470
+#: call.php:451
+msgid "Assign outcome"
+msgstr "Přidělit výsledek"
+
+#: call_interface2.php:474
+#: call.php:455
+msgid "Error: Close window"
+msgstr "Chyba: Zavřete okno"
+
+#: call.php:427
+msgid "Requesting call"
+msgstr "Žádost o volání"
+
+#: call.php:428
+#: call.php:435
+msgid "Call Answered"
+msgstr "Voláný odpověděl"
+
+#: call.php:431
+#: call.php:438
+#: call.php:445
+msgid "Hangup"
+msgstr "Zavěšeno"
+
+#: call.php:434
+msgid "Ringing"
+msgstr "Vyzvánění"
+
+#: call.php:441
+msgid "Answered"
+msgstr "Zvednuto"
+
+#: call.php:442
+msgid "Not Answered"
+msgstr "Nezvednuto"
+
+#: endwork.php:45
+msgid "End of work"
+msgstr "Konec práce"
+
+#: endwork.php:49
+msgid "You have been automatically logged out of work due to inactivity"
+msgstr "Byli jste automaticky odhlášeni z práce kvůli nečinnosti"
+
+#: endwork.php:52
+msgid "Work has ended. That is it"
+msgstr "Práce skončila. Toť vše"
+
+#: endwork.php:54
+msgid "Go back to work"
+msgstr "Vrátit se do práce"
 
 #: status_interface2.php:70
 msgid "Status"
@@ -131,57 +547,10 @@ msgstr "Jméno"
 msgid "No more numbers to call"
 msgstr "Žádná čísla k volání"
 
-#: status_interface2.php:231
-msgid "No case"
-msgstr "Žádný případ"
-
-#: rs_callback.php:66
-msgid "Respondent Selection - Call back"
-msgstr "Výběr respondenta - zpětné volání"
-
-#: rs_callback.php:80
-msgid "You are: "
-msgstr "Jste: "
-
-#: rs_callback.php:80
-#, php-format
-msgid "% complete"
-msgstr "% c dokončeno"
-
-#: rs_callback.php:87
-msgid "Yes - Continue where we left off"
-msgstr "Ano - pokračovat kde jste skončili"
-
-#: rs_callback.php:88
-#: rs_intro.php:122
-#: rs_project_intro.php:81
-#: rs_intro_interface2.php:122
-msgid "End call with outcome: Refusal by respondent"
-msgstr "Ukončit volání s výsledkem: Odmítnutí respondentem"
-
-#: rs_callback.php:89
-#: rs_project_intro.php:85
-#: rs_answeringmachine_interface2.php:91
-#: rs_answeringmachine.php:91
-msgid "Go Back"
-msgstr "Jít zpět"
-
 #: rs_intro.php:65
 #: rs_intro_interface2.php:65
 msgid "Respondent Selection - Introduction"
 msgstr "Výběr respondenta - Úvod"
-
-#: rs_intro.php:92
-#: rs_intro.php:98
-#: rs_intro.php:106
-#: rs_intro.php:112
-#: rs_project_intro.php:79
-#: rs_intro_interface2.php:92
-#: rs_intro_interface2.php:98
-#: rs_intro_interface2.php:106
-#: rs_intro_interface2.php:112
-msgid "Yes - Continue"
-msgstr "Ano - pokračovat"
 
 #: rs_intro.php:117
 #: rs_intro_interface2.php:117
@@ -227,244 +596,72 @@ msgstr ""
 "Ukončit hovor s výsledkem: Bez kontaktu (osoba není v současnosti na tomto "
 "číslo dostupná: nebyla zřízena žádná schůzka)"
 
-#: rs_intro.php:125
-#: rs_project_intro.php:83
-#: rs_intro_interface2.php:125
-msgid ""
-"End call with outcome: Out of sample (already completed in another mode)"
-msgstr ""
-"Ukončit hovor s výsledkem: Mimo vzorek (již dokončeno v jiném režimu)"
+#: shifts.php:57
+msgid "Shift List"
+msgstr "Seznam směn"
 
-#: callhistory.php:56
-msgid "Case History List"
-msgstr "Seznam historie případů"
+#: shifts.php:80
+msgid "No shifts for this project"
+msgstr "Žádné směny pro tento projekt"
 
-#: callhistory.php:79
-msgid "No calls ever made"
-msgstr "Žádný hovor nebyl proveden"
+#: shifts.php:82
+#: shifts.php:103
+msgid "Start"
+msgstr "Začátek"
 
-#: callhistory.php:83
-msgid "Date/Time"
-msgstr "Datum/čas"
+#: shifts.php:101
+msgid "No future shifts scheduled"
+msgstr "Nenaplánovány žádné další směny"
 
-#: callhistory.php:83
-msgid "Case ID"
-msgstr "ID případu"
+#: shifts.php:103
+#: nocaseavailable.php:138
+msgid "Questionnaire"
+msgstr "Dotazník"
 
-#: callhistory.php:83
-msgid "Outcome"
-msgstr "Výsledek"
+#: rs_project_end_interface2.php:62
+msgid "Respondent Selection - Project end"
+msgstr "Výběr respondenta - Konec projektu"
 
-#: callhistory.php:83
-msgid "Respondent"
-msgstr "Respondent"
+#: rs_project_end_interface2.php:80
+msgid "Call automatically ended with outcome: Complete - End case"
+msgstr "Hovor automaticky ukončen s výsledkem: Dokončeno - Ukončit případ"
 
-#: callhistory.php:87
-msgid "No operator"
-msgstr "Žádný operátor"
+#: rs_project_end_interface2.php:85
+msgid "End call with outcome: Complete"
+msgstr "Ukončit hovor s výsledkem: Dokončeno"
 
-#: rs_project_intro.php:59
-msgid "Respondent Selection - Project Introduction"
-msgstr "Výběr respondenta - Úvod projektu"
-
-#: rs_project_intro.php:82
-msgid ""
-"End call with outcome: No eligible respondent (person not available on this "
-"number)"
-msgstr ""
-"Ukončit hovor s výsledkem: Žádný vhodný respondent (osoba není na tomto "
-"čísle dostupná)"
-
-#: supervisor.php:52
-msgid "Supervisor"
-msgstr "Vedoucí"
-
-#: supervisor.php:61
-msgid "Please wait till you have ended this call to call the supervisor"
-msgstr "Prosím počkejte na konec tohoto hovoru, ne zavoláte vedoucího."
-
-#: supervisor.php:105
-msgid "You may now close this window"
-msgstr "Nyní můžete toto okno zavřít"
-
-#: supervisor.php:110
-msgid "Calling the supervisor, you may close this window"
-msgstr "Vedoucí je zavolán, můžete zavřít toto okno"
-
-#: supervisor.php:115
-msgid ""
-"Click here to call the supervisor's phone. Otherwise close this window"
-msgstr ""
-"Klikněte zde pro vytočení telefonu vedoucího. Jinak zavřete toto okno"
-
-#: supervisor.php:116
-msgid "Hangup when calling the supervisor"
-msgstr "Při volání vedoucího došlo k zavěšení"
-
-#: supervisor.php:121
-msgid "Try calling the supervisor"
-msgstr "Zkuste zavolat vedoucímu"
-
-#: supervisor.php:128
-msgid ""
-"Please wait for this call to answer before attempting to call the supervisor"
-msgstr ""
-"Prosím počkejte na odpověď tohoto hovoru, než se budete snažit zavolat "
-"vedoucímu"
-
-#: rs_answeringmachine_interface2.php:64
-#: rs_answeringmachine.php:64
-msgid "Respondent Selection - Answering machine"
-msgstr "Výběr respondenta - Záznamník"
-
-#: rs_answeringmachine_interface2.php:78
-#: rs_answeringmachine.php:78
-msgid "Do not leave a message, please hang up"
-msgstr "Nezanechávejte zprávu, prosím zavěste"
-
-#: rs_answeringmachine_interface2.php:81
-#: rs_answeringmachine.php:81
-msgid "End call with outcome: Business answering machine"
-msgstr "Ukončit hovor s výsledkem: Firemní záznamník"
-
-#: rs_answeringmachine_interface2.php:86
-#: rs_answeringmachine.php:86
-msgid "End call with outcome: Answering machine Message left"
-msgstr "Ukončit hovor s výsledkem: Záznamník - zanechána zpráva"
-
-#: rs_answeringmachine_interface2.php:90
-#: rs_answeringmachine.php:90
-msgid "End call with outcome: Answering machine No message left"
-msgstr "Ukončit hovor s výsledkem: Záznamník - zpráva nezanechána"
-
-#: respondent.php:70
-msgid "Respondent Selector"
-msgstr "Výběrčí respondenta"
-
-#: respondent.php:94
-#: respondent.php:132
 #: contactdetails.php:90
 #: contactdetails.php:128
+#: respondent.php:94
+#: respondent.php:132
 msgid "Add respondent"
 msgstr "Přidat respondenta"
 
-#: respondent.php:96
 #: contactdetails.php:92
+#: respondent.php:96
+#: casenote.php:69
 msgid "Go back"
 msgstr "Jít zpět"
 
-#: respondent.php:102
 #: contactdetails.php:98
+#: respondent.php:102
 msgid "Case id:"
 msgstr "ID případu:"
 
-#: respondent.php:103
 #: contactdetails.php:99
+#: respondent.php:103
 msgid "Respondent:"
 msgstr "Respondent:"
 
-#: respondent.php:166
-msgid "Show details"
-msgstr "Zobrazit podrobnosti"
-
-#: respondent.php:170
-#: contactdetails.php:162
+#: contactdetails.php:163
+#: respondent.php:171
 msgid "Var"
 msgstr "Prom"
 
-#: respondent.php:170
-#: contactdetails.php:162
+#: contactdetails.php:163
+#: respondent.php:171
 msgid "Value"
 msgstr "Hodnota"
-
-#: record.php:55
-msgid "Stop REC"
-msgstr "Zastavit nahrávání"
-
-#: record.php:56
-#: record.php:79
-#: record.php:96
-msgid "Record"
-msgstr "Nahrávat"
-
-#: record.php:66
-msgid "Beginning recording..."
-msgstr "Nahrávání spuštěno..."
-
-#: record.php:69
-#: record.php:97
-msgid "Not on a call, so not beginning a recording"
-msgstr "Nevoláte, nahrávání není spuštěno"
-
-#: record.php:73
-msgid "Begin the manual recording now..."
-msgstr "Spustit ruční nahrávání nyní..."
-
-#: record.php:78
-#: email.php:273
-msgid "Start REC"
-msgstr "Spustit nahrávání"
-
-#: record.php:86
-msgid "Stopping recording..."
-msgstr "Nahrávání zastaveno..."
-
-#: record.php:90
-msgid "Stop the manual recording now..."
-msgstr "Zastavit ruční nahrávání nyní..."
-
-#: email.php:241
-msgid "Self completion invitation sent via email to"
-msgstr "Pozvánka pro vlastní dokončení odeslána pomocí e-mailu na"
-
-#: email.php:278
-#: email.php:282
-#: email.php:288
-#: email.php:309
-#: email.php:339
-msgid "Email"
-msgstr "E-mail"
-
-#: email.php:295
-msgid "The email did not send"
-msgstr "E-mail nebyl odeslán"
-
-#: email.php:300
-msgid "The email address is not valid"
-msgstr "E-mailová adresa není platná"
-
-#: email.php:329
-msgid "Email respondent for self completion"
-msgstr "Poslat e-mail respondentovi pro vlastní dokončení"
-
-#: email.php:337
-msgid "First name"
-msgstr "Křestní jméno"
-
-#: email.php:338
-msgid "Last name"
-msgstr "Příjmení"
-
-#: email.php:342
-msgid "Send invitation"
-msgstr "Odeslat pozvánku"
-
-#: email.php:344
-msgid "Send invitation and Hang up"
-msgstr "Odeslat pozvánku a zavěsit"
-
-#: email.php:348
-msgid "Self completion email not available for this questionnaire"
-msgstr "Pro tento dotazník není dostupný email vlastního dokončení"
-
-#: contactdetails.php:70
-msgid "Contact details"
-msgstr "Kontaktní údaje"
-
-#: availability.php:56
-#: index.php:214
-msgid "Availability"
-msgstr "Dostupnost"
 
 #: availability.php:123
 msgid ""
@@ -477,153 +674,13 @@ msgstr ""
 msgid "Availability groups not defined for this questionnaire"
 msgstr "Skupiny dostupnosti nejsou pro tento dotazník dostupné"
 
-#: endwork.php:45
-msgid "End of work"
-msgstr "Konec práce"
+#: respondent.php:70
+msgid "Respondent Selector"
+msgstr "Výběrčí respondenta"
 
-#: endwork.php:49
-msgid "You have been automatically logged out of work due to inactivity"
-msgstr "Byli jste automaticky odhlášeni z práce kvůli nečinnosti"
-
-#: endwork.php:52
-msgid "Work has ended. That is it"
-msgstr "Práce skončila. Toť vše"
-
-#: endwork.php:54
-msgid "Go back to work"
-msgstr "Vrátit se do práce"
-
-#: info.php:56
-msgid "Information"
-msgstr "Informace"
-
-#: call.php:193
-#: call.php:213
-#: call.php:229
-#: call.php:260
-#: call_interface2.php:181
-#: call_interface2.php:210
-#: call_interface2.php:242
-#: call_interface2.php:246
-#: call_interface2.php:264
-#: call_interface2.php:295
-msgid "Call"
-msgstr "Volání"
-
-#: call.php:267
-#: call_interface2.php:302
-msgid "Not on a call"
-msgstr "Nevolá"
-
-#: call.php:278
-#: call.php:280
-#: call.php:396
-#: call.php:401
-#: call.php:417
-#: call.php:423
-#: call_interface2.php:313
-#: call_interface2.php:315
-#: call_interface2.php:431
-#: call_interface2.php:436
-#: call_interface2.php:452
-#: call_interface2.php:458
-msgid "End work"
-msgstr "Ukončit práci"
-
-#: call.php:279
-#: call.php:395
-#: call.php:400
-#: call.php:416
-#: call.php:422
-#: call_interface2.php:314
-#: call_interface2.php:430
-#: call_interface2.php:435
-#: call_interface2.php:451
-#: call_interface2.php:457
-msgid "End case"
-msgstr "Ukončit případ"
-
-#: call.php:304
-#: call_interface2.php:339
-msgid "Press the call button to dial the number for this appointment:"
-msgstr "Stiskněte tlačítko volání pro vytočení čísla pro tuto schůzku"
-
-#: call.php:307
-#: call_interface2.php:342
-msgid "Number to call:"
-msgstr "Číslo k volání:"
-
-#: call.php:311
-#: call.php:382
-#: call_interface2.php:346
-#: call_interface2.php:417
-msgid ""
-"Your VoIP extension is not enabled. Please close this window and enable VoIP "
-"by clicking once on the red button that says 'VoIP Off'"
-msgstr ""
-"Vaše rozšíření VoIP není zapnuto. Prosím zavřete toto okno a zapněte ho "
-"kliknutím na červené tlačítko s nápisem 'VoIP vypnuto'"
-
-#: call.php:372
-#: call_interface2.php:407
-msgid "Select phone number to dial:"
-msgstr "Vyberte telefonní číslo pro vytočení"
-
-#: call.php:387
-#: call.php:421
-#: call_interface2.php:422
-#: call_interface2.php:456
-msgid "The last call completed this call attempt"
-msgstr "Poslední volání dokončilo tento pokus o volání"
-
-#: call.php:391
-#: call.php:414
-#: call_interface2.php:426
-#: call_interface2.php:449
-msgid "Enter a reason for this outcome before completing this case:"
-msgstr "Zadejte důvod pro tento výsledek před dokončením případu:"
-
-#: call.php:429
-msgid "Requesting call"
-msgstr "Žádost o volání"
-
-#: call.php:430
-#: call.php:437
-msgid "Call Answered"
-msgstr "Voláný odpověděl"
-
-#: call.php:433
-#: call.php:440
-#: call.php:447
-msgid "Hangup"
-msgstr "Zavěšeno"
-
-#: call.php:436
-msgid "Ringing"
-msgstr "Vyzvánění"
-
-#: call.php:443
-msgid "Answered"
-msgstr "Zvednuto"
-
-#: call.php:444
-msgid "Not Answered"
-msgstr "Nezvednuto"
-
-#: call.php:450
-#: call_interface2.php:467
-msgid "Requires coding"
-msgstr "Vyžaduje kódování"
-
-#: call.php:453
-#: call_interface2.php:470
-msgid "Assign outcome"
-msgstr "Přidělit výsledek"
-
-#: call.php:457
-#: call_interface2.php:474
-msgid "Error: Close window"
-msgstr "Chyba: Zavřete okno"
+#: respondent.php:167
+msgid "Show details"
+msgstr "Zobrazit podrobnosti"
 
 #: nocaseavailable.php:63
 msgid "No case available"
@@ -679,10 +736,6 @@ msgstr "CHYBA: K dotazníkům nejsou přiděleny žádné vzorky"
 #: nocaseavailable.php:135
 msgid "Current shifts available:"
 msgstr "Současné dostupné směny:"
-
-#: nocaseavailable.php:138
-msgid "Questionnaire"
-msgstr "Dotazník"
 
 #: nocaseavailable.php:138
 msgid "Shift start"
@@ -741,155 +794,6 @@ msgstr "CHYBA: Dosažena kvóta pro tuto otázku"
 msgid "POSSIBLE ERROR: Row quota reached for this question"
 msgstr "MOŽNÁ CHYBA: Dosažena kvóta řádku pro tuto otázku"
 
-#: rs_project_end.php:71
-#: rs_project_end_interface2.php:62
-msgid "Respondent Selection - Project end"
-msgstr "Výběr respondenta - Konec projektu"
-
-#: rs_project_end.php:88
-msgid "Call automatically ended with outcome: Complete"
-msgstr "Hovor automaticky dokončen s výsledkem: Dokončeno"
-
-#: rs_project_end.php:93
-#: rs_project_end_interface2.php:85
-msgid "End call with outcome: Complete"
-msgstr "Ukončit hovor s výsledkem: Dokončeno"
-
-#: appointmentlist.php:56
-msgid "Appointment List"
-msgstr "Seznam schůzek"
-
-#: appointmentlist.php:70
-msgid "Not yet called"
-msgstr "Zatím nezavoláno"
-
-#: appointmentlist.php:70
-msgid "Any operator"
-msgstr "Všichni operátoři"
-
-#: appointmentlist.php:83
-msgid "No appointments made"
-msgstr "Žádné schůzky nevytovřeny"
-
-#: appointmentlist.php:85
-msgid "No future appointments scheduled"
-msgstr "Žádné budoucí schůzky nenaplánovány"
-
-#: appointmentlist.php:90
-msgid "Start"
-msgstr "Začátek"
-
-#: appointmentlist.php:90
-#: index.php:145
-msgid "End"
-msgstr "Konec"
-
-#: appointmentlist.php:90
-msgid "Appointment with"
-msgstr "Schůzka s"
-
-#: rs_project_end_interface2.php:80
-msgid "Call automatically ended with outcome: Complete - End case"
-msgstr "Hovor automaticky ukončen s výsledkem: Dokončeno - Ukončit případ"
-
-#: rs_business_interface2.php:55
-msgid "Respondent Selection - Business answers"
-msgstr "Výběr respondenta - Firemní odpovědi"
-
-#: rs_business_interface2.php:59
-msgid "Sorry to bother you, I have called the wrong number"
-msgstr "Je mi líto že Vás obtěžuji, zavolal jsem na špatné číslo"
-
-#: rs_business_interface2.php:61
-msgid "End call with outcome: Business number"
-msgstr "Ukončit hovor s výsledkem: Firemní číslo"
-
-#: nocallavailable.php:51
-msgid "No call available"
-msgstr "Žádné volání není dostupné"
-
-#: nocallavailable.php:54
-msgid "Please click on:"
-msgstr "Prosím klikněte na:"
-
-#: nocallavailable.php:54
-#: index.php:147
-msgid "Call/Hangup"
-msgstr "Zavolat/Zavěsit"
-
-#: nocallavailable.php:54
-msgid "to display call script"
-msgstr "pro zobrazení scénáře volání"
-
-#: index.php:130
-msgid "queXS"
-msgstr "queXS"
-
-#: index.php:151
-msgid "Arrow for expanding or contracting"
-msgstr "Šipka pro rozbalení/sbalení"
-
-#: index.php:152
-msgid "Restart"
-msgstr "Restartovat"
-
-#: index.php:206
-msgid "Notes"
-msgstr "Poznámky"
-
-#: index.php:233
-msgid "Call history"
-msgstr "Historie volání"
-
-#: index.php:242
-msgid "Shifts"
-msgstr "Směny"
-
-#: index.php:251
-msgid "Appointments"
-msgstr "Schůzky"
-
-#: index.php:268
-msgid "Work history"
-msgstr "Historie práce"
-
-#: index.php:276
-msgid "Project information"
-msgstr "Informace o projektu"
-
-#: index.php:284
-msgid "Supervisor chat"
-msgstr "Chat s vedoucím"
-
-#: index.php:292
-msgid "Info"
-msgstr "Informace"
-
-#: calllist.php:56
-msgid "Call List"
-msgstr "Seznam volání"
-
-#: calllist.php:80
-msgid "No calls made"
-msgstr "Nikam nevoláno"
-
-#: calllist.php:84
-msgid "Number called"
-msgstr "Volaná čísla"
-
-#: rs_quota_end.php:61
-msgid "Respondent Selection - Project Quota End"
-msgstr "Výběr respondenta - Konec kvóty projektu"
-
-#: rs_quota_end.php:72
-#: rs_quota_end.php:78
-msgid "End call with outcome: Quota filled"
-msgstr "Ukončit hovor s výsledkem: Kvóta naplněna"
-
-#: waitnextcase_interface2.php:54
-msgid "Get a new case"
-msgstr "Obdržet nový případ"
-
 #: casenote.php:56
 msgid "Case Notes"
 msgstr "Poznámky případu"
@@ -906,6 +810,25 @@ msgstr "Žádné poznámky"
 #: casenote.php:110
 msgid "Note"
 msgstr "Poznámka"
+
+#: performance.php:77
+msgid "This shift"
+msgstr "Tato směna"
+
+#: performance.php:78
+#: performance.php:85
+#: admin/quotareport.php:284
+msgid "Completions"
+msgstr "Dokončení"
+
+#: performance.php:78
+#: performance.php:85
+msgid "Completions per hour"
+msgstr "Dokončení za dinu"
+
+#: performance.php:84
+msgid "This project"
+msgstr "Tento projekt"
 
 #: status.php:95
 msgid "VoIP On"
@@ -939,318 +862,245 @@ msgstr "SCHŮZKA"
 msgid "MISSED"
 msgstr "ZMEŠKÁNO"
 
-#: shifts.php:57
-msgid "Shift List"
-msgstr "Seznam směn"
+#: rs_project_end.php:88
+msgid "Call automatically ended with outcome: Complete"
+msgstr "Hovor automaticky dokončen s výsledkem: Dokončeno"
 
-#: shifts.php:80
-msgid "No shifts for this project"
-msgstr "Žádné směny pro tento projekt"
+#: nocallavailable.php:80
+msgid "No call available"
+msgstr "Žádné volání není dostupné"
 
-#: shifts.php:101
-msgid "No future shifts scheduled"
-msgstr "Nenaplánovány žádné další směny"
+#: nocallavailable.php:83
+msgid "Please click on:"
+msgstr "Prosím klikněte na:"
 
-#: supervisorchat.php:80
-msgid "Me"
-msgstr "Já"
+#: nocallavailable.php:83
+msgid "to display call script"
+msgstr "pro zobrazení scénáře volání"
 
-#: supervisorchat.php:82
-msgid "Case id"
-msgstr "ID případu"
+#: nocallavailable.php:177
+msgid "Will dial in"
+msgstr ""
 
-#: supervisorchat.php:87
-msgid "Supervisor is available"
-msgstr "Vedoucí je dostupný"
+#: nocallavailable.php:178
+msgid "Dialling now"
+msgstr ""
 
-#: supervisorchat.php:88
-msgid "Supervisor not available"
-msgstr "Vedoucí není dostupný"
+#: nocallavailable.php:184
+msgid "Will end case in"
+msgstr ""
 
-#: supervisorchat.php:90
-#: supervisorchat.php:93
-msgid "Message"
-msgstr "Zpráva"
+#: nocallavailable.php:185
+msgid "Ending case now"
+msgstr ""
 
-#: supervisorchat.php:90
-msgid "Send"
-msgstr "Odeslat"
+#: nocallavailable.php:203
+msgid "seconds"
+msgstr "vteřin"
 
-#: supervisorchat.php:93
-msgid "From"
-msgstr "Od"
+#: nocallavailable.php:216
+msgid ""
+"Your VoIP extension is not active. Please activate VoIP by clicking once on "
+"the red button that says 'VoIP Off'"
+msgstr ""
 
-#: supervisorchat.php:96
-msgid "Supervisor chat is not enabled"
-msgstr "Chat s vedoucím není povolen"
+#: nocallavailable.php:222
+msgid "Auto dialling unavailable as VoIP is not enabled"
+msgstr ""
 
-#: functions/functions.calendar.php:265
-msgid "First name:"
-msgstr "Jméno:"
+#: nocallavailable.php:228
+msgid "Auto dialling unavailable as you are already on a call"
+msgstr ""
 
-#: functions/functions.calendar.php:266
-msgid "Last  name:"
-msgstr "Příjmení:"
+#: rs_quota_end.php:61
+msgid "Respondent Selection - Project Quota End"
+msgstr "Výběr respondenta - Konec kvóty projektu"
 
-#: functions/functions.calendar.php:271
-msgid "Time Zone:"
-msgstr "Časové pásmo:"
+#: rs_quota_end.php:72
+#: rs_quota_end.php:78
+msgid "End call with outcome: Quota filled"
+msgstr "Ukončit hovor s výsledkem: Kvóta naplněna"
 
-#: functions/functions.calendar.php:328
-msgid "Shift from:"
-msgstr "Směna od:"
+#: email.php:241
+msgid "Self completion invitation sent via email to"
+msgstr "Pozvánka pro vlastní dokončení odeslána pomocí e-mailu na"
 
-#: functions/functions.calendar.php:335
-msgid "Start Time"
-msgstr "Čas zahájení"
+#: email.php:295
+msgid "The email did not send"
+msgstr "E-mail nebyl odeslán"
 
-#: functions/functions.calendar.php:385
-msgid "End Time"
+#: email.php:300
+msgid "The email address is not valid"
+msgstr "E-mailová adresa není platná"
+
+#: email.php:329
+msgid "Email respondent for self completion"
+msgstr "Poslat e-mail respondentovi pro vlastní dokončení"
+
+#: email.php:337
+msgid "First name"
+msgstr "Křestní jméno"
+
+#: email.php:338
+msgid "Last name"
+msgstr "Příjmení"
+
+#: email.php:342
+msgid "Send invitation"
+msgstr "Odeslat pozvánku"
+
+#: email.php:344
+msgid "Send invitation and Hang up"
+msgstr "Odeslat pozvánku a zavěsit"
+
+#: email.php:348
+msgid "Self completion email not available for this questionnaire"
+msgstr "Pro tento dotazník není dostupný email vlastního dokončení"
+
+#: appointmentlist.php:56
+msgid "Appointment List"
+msgstr "Seznam schůzek"
+
+#: appointmentlist.php:70
+msgid "Not yet called"
+msgstr "Zatím nezavoláno"
+
+#: appointmentlist.php:70
+msgid "Any operator"
+msgstr "Všichni operátoři"
+
+#: appointmentlist.php:83
+msgid "No appointments made"
+msgstr "Žádné schůzky nevytovřeny"
+
+#: appointmentlist.php:85
+msgid "No future appointments scheduled"
+msgstr "Žádné budoucí schůzky nenaplánovány"
+
+#: appointmentlist.php:90
+msgid "Appointment with"
+msgstr "Schůzka s"
+
+#: supervisor.php:61
+msgid "Please wait till you have ended this call to call the supervisor"
+msgstr "Prosím počkejte na konec tohoto hovoru, ne zavoláte vedoucího."
+
+#: supervisor.php:105
+msgid "You may now close this window"
+msgstr "Nyní můžete toto okno zavřít"
+
+#: supervisor.php:110
+msgid "Calling the supervisor, you may close this window"
+msgstr "Vedoucí je zavolán, můžete zavřít toto okno"
+
+#: supervisor.php:115
+msgid ""
+"Click here to call the supervisor's phone. Otherwise close this window"
+msgstr ""
+"Klikněte zde pro vytočení telefonu vedoucího. Jinak zavřete toto okno"
+
+#: supervisor.php:116
+msgid "Hangup when calling the supervisor"
+msgstr "Při volání vedoucího došlo k zavěšení"
+
+#: supervisor.php:121
+msgid "Try calling the supervisor"
+msgstr "Zkuste zavolat vedoucímu"
+
+#: supervisor.php:128
+msgid ""
+"Please wait for this call to answer before attempting to call the supervisor"
+msgstr ""
+"Prosím počkejte na odpověď tohoto hovoru, než se budete snažit zavolat "
+"vedoucímu"
+
+#: admin/systemsort.php:75
+#: admin/systemsort.php:98
+#: admin/systemsort.php:99
+msgid "Monitor system wide case sorting"
+msgstr "Sledovat celosystémové řazení případů"
+
+#: admin/systemsort.php:77
+msgid "Running process:"
+msgstr "Běžící proces:"
+
+#: admin/systemsort.php:81
+msgid "Kill signal sent: Please wait..."
+msgstr "Ukončovací signál odeslán: Prosím čekejte..."
+
+#: admin/systemsort.php:82
+msgid ""
+"Process is already closed (eg. server was rebooted) - click here to confirm"
+msgstr ""
+"Proces již je uzavřen (např. byl restartován server) - klikněte zde pro "
+"potvrzení"
+
+#: admin/systemsort.php:86
+msgid "Kill the running process"
+msgstr "Ukončit běžící proces"
+
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
+msgid "Log id"
+msgstr "ID záznamu"
+
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
+msgid "Date"
+msgstr "Datum"
+
+#: admin/systemsort.php:92
+#: admin/systemsort.php:106
+msgid "Log entry"
+msgstr "Položka záznamu"
+
+#: admin/systemsort.php:100
+msgid "Click here to enable and begin system wide case sorting"
+msgstr "Klikněte zde pro zapnutí a zahájení celosystémového řazení případů"
+
+#: admin/systemsort.php:101
+msgid ""
+"System wide case sorting is periodically (via SYSTEM_SORT_MINUTES "
+"configuration directive) sorting cases on a system wide basis instead of "
+"finding the most appropriate case each time an operator requests a new case. "
+"This may increase performance where there are a large number of cases or "
+"complex quotas in place. If you are not experiencing any performance "
+"problems, it is not recommended to use this feature."
+msgstr ""
+"Celosystémové řazení případů pravidelně (podle příkazu nastavení "
+"SYSTEM_SORT_MINUTES) řadí případy  v celém systému místo hledání "
+"nejvhodnějšího případu pokaždé, když operátor zažádá o nový případ. To může "
+"zvýšit výkon v případě velkého počtu případů nebo složitých kvót. Pokud "
+"nezaznamenáváte žádné potíže s výkonem, nedoporučuje se tuto funkci zapínat."
+
+#: admin/systemsort.php:102
+msgid "Outcome of last process run (if any)"
+msgstr "Výsledek posledního spuštěného procesu (pokud je)"
+
+#: admin/callhistory.php:80
+#: admin/callhistory.php:109
+#: admin/callhistory.php:117
+msgid "Call History List"
+msgstr "Seznam historie volání"
+
+#: admin/callhistory.php:96
+#: admin/callhistory.php:111
+msgid "Date/Time call start"
+msgstr "Datum/Čas zahájení volání"
+
+#: admin/callhistory.php:96
+#: admin/callhistory.php:111
+msgid "Time end"
 msgstr "Čas ukončení"
 
-#: functions/functions.performance.php:469
-msgid "No shift"
-msgstr "Žádná směna"
-
-#: functions/functions.performance.php:492
-msgid "Total completions"
-msgstr "Celkem dokončení"
-
-#: functions/functions.performance.php:521
-msgid "Completions this shift"
-msgstr "Dokončení tuto směnu"
-
-#: functions/functions.performance.php:544
-#: functions/functions.performance.php:590
-msgid "No previous shift"
-msgstr "Žádná předchozí směna"
-
-#: functions/functions.performance.php:564
-msgid "Completions on the previous shift"
-msgstr "Dokončení v předchozí směně"
-
-#: functions/functions.performance.php:611
-msgid "Completions this time on the previous shift"
-msgstr "Dokončení v tuto dobu v předchozí směně"
-
-#: functions/functions.performance.php:629
-msgid "No calls made for this shift"
-msgstr "Tuto směnu nikam nevoláno"
-
-#: functions/functions.performance.php:631
-msgid "Top CPH for this shift"
-msgstr "Nejvyšší volání za hodinu pro tuto směnu"
-
-#: functions/functions.performance.php:648
-msgid "No calls made for this project"
-msgstr "V tomto projektu nebylo nikdy voláno"
-
-#: functions/functions.performance.php:650
-msgid "Top CPH"
-msgstr "Nejvyšší volání za hodinu"
-
-#: functions/functions.freepbx.php:138
-#, php-format
-msgid "Reload failed because retrieve_conf encountered an error: %s"
-msgstr "Znovu načtení selhalo protože retrieve_conf narazilo na chybu: %s"
-
-#: functions/functions.freepbx.php:140
-msgid "retrieve_conf failed, config not applied"
-msgstr "retrieve_conf selhalo, nastavení není použito"
-
-#: functions/functions.freepbx.php:146
-msgid ""
-"Reload failed because FreePBX could not connect to the asterisk manager "
-"interface."
-msgstr ""
-"Znovu načtení selhalo protože FreePBX se nemohlo připojit ke správcovskému "
-"rozhraní asterisk."
-
-#: functions/functions.freepbx.php:165
-msgid ""
-"Could not reload the FOP operator panel server using the bounce_op.sh "
-"script. Configuration changes may not be reflected in the panel display."
-msgstr ""
-"Nelze znovu načíst server panelu operátora FOP, pomocí skriptu bounce_op.sh. "
-"ZMěny nastavení se nemusí na zobrazení panelu projevit."
-
-#: functions/functions.freepbx.php:174
-#, php-format
-msgid "Exit code was %s and output was: %s"
-msgstr "Kód ukončení byl %s a výstup byl: %s"
-
-#: functions/functions.voip.php:449
-msgid "Extension"
-msgstr "Rozšíření"
-
-#: functions/functions.voip.php:449
-msgid "online"
-msgstr "připojeno"
-
-#: functions/functions.voip.php:449
-msgid "offline"
-msgstr "odpojeno"
-
-#: functions/functions.voip.php:530
-msgid "Disconnected"
-msgstr "Odpojeno"
-
-#: functions/functions.voip.php:532
-msgid "Reconnected"
-msgstr "Znovu připojeno"
-
-#: functions/functions.voip.php:555
-#: functions/functions.voip.php:567
-#: functions/functions.voip.php:579
-#: functions/functions.voip.php:589
-#: functions/functions.voip.php:598
-msgid " Extension "
-msgstr " Rozšíření "
-
-#: functions/functions.voip.php:589
-msgid "Unregistered"
-msgstr "Neregistrováno"
-
-#: functions/functions.voip.php:598
-msgid "Registered"
-msgstr "Registrováno"
-
-#: functions/functions.import.php:89
-msgid "Duplicate name"
-msgstr "Duplicitní název"
-
-#: functions/functions.import.php:111
-msgid "You must select one and one only Primary Phone number"
-msgstr "Musíte zvolit jedno a pouze jedno Hlavní telefonní číslo"
-
-#: functions/functions.import.php:127
-msgid "Import?"
-msgstr "Import?"
-
-#: functions/functions.import.php:127
-msgid "Type"
-msgstr "Typ"
-
-#: functions/functions.import.php:127
-msgid "Allow operator to see?"
-msgstr "Umožnit operátorovi zobrazit?"
-
-#: functions/functions.operator.php:166
-msgid "morning"
-msgstr "ráno"
-
-#: functions/functions.operator.php:167
-msgid "afternoon"
-msgstr "odpoledne"
-
-#: functions/functions.operator.php:168
-msgid "evening"
-msgstr "večer"
-
-#: functions/functions.operator.php:877
-msgid ""
-"ERROR: You do not have server side authentication enabled therefore queXS "
-"cannot determine which user is accessing the system."
-msgstr ""
-"CHYBA: Nemáte povoleno ověření na straně serveru a proto queXS nemůže "
-"zjistit kteří uživatelé vstupují do systému"
-
-#: include/php-gettext-1.0.11/examples/pigs_fallback.php:76
-msgid ""
-"This is how the story goes.\n"
-"\n"
-msgstr ""
-"A ten příběh je vyprávěn takto.\n"
-"\n"
-
-#: voip/downloadvoipclient.php:52
-msgid "Error: Cannot write to temporary directory"
-msgstr "Chyba: nelze zapisovat do dočasného adresáře"
+#: admin/callhistory.php:110
+msgid "Download Call History List"
+msgstr "Stáhnout seznam historie volání"
 
 #: admin/clientquestionnaire.php:150
 #: admin/clientquestionnaire.php:271
 msgid "Assign clients to questionnaires"
 msgstr "Přidělit klienty k dotazníkům"
-
-#: admin/systemsortprocess.php:91
-msgid "Sorting cases process starting"
-msgstr "Spouštěn proces řazení případů"
-
-#: admin/systemsortprocess.php:100
-msgid "Sorting cases"
-msgstr "Řazení případů"
-
-#: admin/systemsortprocess.php:130
-#: admin/systemsortprocess.php:142
-#: admin/systemsortprocess.php:168
-#: admin/systemsortprocess.php:180
-msgid "System automatically closed case as not closed for more than 24 hours"
-msgstr ""
-"Systém automaticky uzavřel případ jako neuzavřený za více než 24 hodin"
-
-#: admin/systemsortprocess.php:293
-msgid "Completed sort"
-msgstr "Řazení dokončeno"
-
-#: admin/systemsortprocess.php:293
-#: admin/systemsortprocess.php:295
-msgid "This task took"
-msgstr "Tento úkol trval"
-
-#: admin/systemsortprocess.php:293
-#: admin/systemsortprocess.php:295
-msgid "seconds"
-msgstr "vteřin"
-
-#: admin/systemsortprocess.php:295
-msgid "Failed to complete sort"
-msgstr "Nelze dokončit řazení"
-
-#: admin/operatorperformance.php:66
-msgid "Operator Performance"
-msgstr "Výkon operátora"
-
-#: admin/operatorperformance.php:73
-msgid "Please select a questionnaire"
-msgstr "Prosím zvolte dotazník"
-
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:104
-msgid "Calls"
-msgstr "Volání"
-
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:104
-msgid "Total time"
-msgstr "Celkový čas"
-
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:104
-msgid "Call time"
-msgstr "Čas zavolání"
-
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:104
-msgid "Completions p/h"
-msgstr "Dokončení za hod."
-
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:104
-msgid "Calls p/h"
-msgstr "Volání za hod."
-
-#: admin/operatorperformance.php:81
-#: admin/operatorperformance.php:104
-msgid "Effectiveness"
-msgstr "Účinnost"
-
-#: admin/operatorperformance.php:88
-msgid "till"
-msgstr "do"
-
-#: admin/operatorperformance.php:96
-msgid "Please select a shift"
-msgstr "Prosím zvolte směnu"
 
 #: admin/quotareport.php:109
 msgid "Quota report"
@@ -1310,219 +1160,341 @@ msgstr "Autopriorita"
 msgid "Update priorities"
 msgstr "Aktualizovat priority"
 
-#: admin/operators.php:139
-msgid "Added:"
-msgstr "Přidáno:"
+#: admin/import.php:51
+msgid "Import: Validating and uploading"
+msgstr "Import: Ověřování a nahrávání"
 
-#: admin/operators.php:142
-msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
-msgstr "FreePBX byl znovu načten, aby nové rozšíření VoIP mohlo být použito"
+#: admin/import.php:67
+msgid "Successfully imported file"
+msgstr "Soubor úspěšně importován"
 
-#: admin/operators.php:167
-msgid ""
-"Could not add operator. There may already be an operator of this name:"
-msgstr "Nelze přidat operátora. Již možná existuje operátor s tímto názvem:"
+#: admin/import.php:71
+msgid "Error importing file. Please try again"
+msgstr "Chyba při importování souboru. Zkuste to znovu"
 
-#: admin/operators.php:167
-msgid "Or there may already be an telephone extension number"
-msgstr "Nebo již může být zadáno číslo telefonní linky"
+#: admin/import.php:75
+msgid "Error:"
+msgstr "Chyba:"
 
-#: admin/operators.php:175
-#: admin/operators.php:190
-msgid "Add an operator"
-msgstr "Přidat operátora"
+#: admin/import.php:75
+msgid "Please go back in your browser and fix the problem"
+msgstr "Prosím vraťte se ve svém prohlížeči a problém opravte"
 
-#: admin/operators.php:191
-msgid "Adding an operator here will give the user the ability to call cases"
-msgstr "Po přidání operátora zde bude mít uživatel možnost vytáčet případy"
+#: admin/import.php:87
+msgid "Import: Select columns to import"
+msgstr "Import: Vyberte sloupce pro import"
 
-#: admin/operators.php:191
-msgid "Assign Operator to Questionnaire"
-msgstr "Přidělit operátora k dotazníku"
-
-#: admin/operators.php:191
-msgid "tool"
-msgstr "nástroj"
-
-#: admin/operators.php:192
-msgid ""
-"Use this form to enter the username of a user based on your directory "
-"security system. For example, if you have secured the base directory of "
-"queXS using Apache file based security, enter the usernames of the users "
-"here."
-msgstr ""
-"Použijte tento formulář k zadání uživatelského jména uživatele na základě "
-"vašeho adresáře bezpečnostního systému. Například, pokud jste zabezpečili "
-"základní adresář queXS pomocí Apache souboru zabezpečení, zadejte "
-"uživatelská jména zde."
-
-#: admin/operators.php:193
-msgid "The username and extension must be unique for each operator."
-msgstr ""
-"Uživatelské jméno a rozšíření musí být pro každého operátora jedinečné."
-
-#: admin/operators.php:195
-msgid "Enter the username of an operator to add:"
-msgstr "Zadejte uživatelské jméno operátora pro přidání:"
-
-#: admin/operators.php:197
-msgid "Enter the password of an operator to add:"
-msgstr "Zadejte heslo operátora pro přidání:"
-
-#: admin/operators.php:199
-msgid "Enter the first name of an operator to add:"
-msgstr "Zadejte jméno operátora pro přidání:"
-
-#: admin/operators.php:200
-msgid "Enter the surname of an operator to add:"
-msgstr "Zadejte příjmení operátora pro přidání:"
-
-#: admin/operators.php:201
-msgid "Enter the Time Zone of an operator to add:"
-msgstr "Zadejte časové pásmo operátora pro přidání:"
-
-#: admin/operators.php:203
-msgid "Enter the telephone extension number:"
-msgstr "Zadejte číslo telefonní linky:"
-
-#: admin/operators.php:204
-msgid "Enter the telephone extension password:"
-msgstr "Zadejte heslo telefonní linky:"
-
-#: admin/operators.php:206
-msgid "Will this operator be using VoIP?"
-msgstr "Bude tento operátor používat VoIP?"
-
-#: admin/operators.php:207
-msgid "Jabber/XMPP chat user"
-msgstr "Uživatel chatu Jabber/XMPP"
-
-#: admin/operators.php:208
-msgid "Jabber/XMPP chat password"
-msgstr "Heslo chatu Jabber/XMPP"
-
-#: admin/operators.php:209
-msgid "Will this operator be using chat?"
-msgstr "Bude tento operátor používat chat?"
-
-#: admin/operators.php:210
-msgid "Is the operator a normal interviewer?"
-msgstr "Je operátor normální tazatel?"
-
-#: admin/operators.php:211
-msgid "Is the operator a supervisor?"
-msgstr "Je operátor vedoucí?"
-
-#: admin/operators.php:212
-msgid "Is the operator a refusal converter?"
-msgstr "Je operátor určen pro odmítavé respondenty?"
-
-#: admin/operators.php:213
-msgid "Add user"
-msgstr "Přidat uživatele"
-
-#: admin/bulkappointment.php:199
-msgid "Added appointment"
-msgstr "Schůzka přidána"
-
-#: admin/bulkappointment.php:203
-msgid ""
-"No such case id, or case set to a final outcome, or case currently assigned "
-"to an operator"
-msgstr ""
-"Žádné takové ID případu, nebo případ nastaven na konečný výsledek, nebo není "
-"nyní přidělen k operátorovi."
-
-#: admin/bulkappointment.php:209
-msgid "Result"
-msgstr "Výsledek"
-
-#: admin/bulkappointment.php:229
-msgid ""
-"Please check the case id's, appointment start and end times and notes are "
-"correct before accepting below"
-msgstr ""
-"Prosím zkontrolujte správnost ID případu, začátku a konce schůzky a poznámek "
-"předtím, než všechno níže přijmete"
-
-#: admin/bulkappointment.php:230
-msgid "Start time"
-msgstr "Čas zahájení"
-
-#: admin/bulkappointment.php:230
-msgid "End time"
-msgstr "Čas ukončení"
-
-#: admin/bulkappointment.php:235
-msgid "Accept and generate bulk appointments"
-msgstr "Přijmout a hromadně vytvořit schůzky"
-
-#: admin/bulkappointment.php:240
-msgid ""
-"The file does not contain at least caseid, starttime and endtime columns. "
-"Please try again."
-msgstr ""
-"Soubor musí obsahovat alespoň sloupce caseid, starttime a endtime. Prosím "
-"zkuste to znovu."
-
-#: admin/bulkappointment.php:248
+#: admin/import.php:112
 msgid "Import: Select file to upload"
 msgstr "Import: Vyberte soubor k nahrání"
 
-#: admin/bulkappointment.php:250
-msgid "Bulk appointment generator"
-msgstr "Hromadný generátor schůzek"
+#: admin/import.php:117
+msgid "Choose the CSV sample file to upload:"
+msgstr "Zvolte vzorový soubor CSV pro nahrání:"
 
-#: admin/bulkappointment.php:251
-msgid ""
-"Provide a headered CSV file containing at least 3 columns - caseid, "
-"starttime and endtime. Optionally you can include a note column to attach a "
-"note to the case in addition to setting an appointment. Only cases that have "
-"temporary (non final) outcomes will have appointments generated, and the "
-"outcome of the case will be updated to an appointment outcome."
+#: admin/import.php:118
+msgid "Description for file:"
+msgstr "Popis souboru:"
+
+#: admin/import.php:119
+msgid "Add sample"
+msgstr "Přidat vzorek"
+
+#: admin/systemsortprocess.php:91
+msgid "Sorting cases process starting"
+msgstr "Spouštěn proces řazení případů"
+
+#: admin/systemsortprocess.php:100
+msgid "Sorting cases"
+msgstr "Řazení případů"
+
+#: admin/systemsortprocess.php:130
+#: admin/systemsortprocess.php:142
+#: admin/systemsortprocess.php:168
+#: admin/systemsortprocess.php:180
+msgid "System automatically closed case as not closed for more than 24 hours"
 msgstr ""
-"Zadejte soubor CSV s hlavičkou obsahující alespoň 3 sloupce - caseid, "
-"starttime a endtime. Můžete také zahrnout sloupec note pro přidání poznámky "
-"k případu spolu s vytvořením schůzky."
+"Systém automaticky uzavřel případ jako neuzavřený za více než 24 hodin"
 
-#: admin/bulkappointment.php:252
-msgid "Example CSV file:"
-msgstr "Příklad souboru CSV:"
+#: admin/systemsortprocess.php:293
+msgid "Completed sort"
+msgstr "Řazení dokončeno"
 
-#: admin/bulkappointment.php:261
-msgid "Choose the CSV file to upload:"
-msgstr "Zvolte soubor CSV k nahrání:"
+#: admin/systemsortprocess.php:293
+#: admin/systemsortprocess.php:295
+msgid "This task took"
+msgstr "Tento úkol trval"
 
-#: admin/bulkappointment.php:262
-msgid "Load bulk appointment CSV"
-msgstr "Načíst CSV hromadných schůzek"
+#: admin/systemsortprocess.php:295
+msgid "Failed to complete sort"
+msgstr "Nelze dokončit řazení"
+
+#: admin/displayappointments.php:149
+msgid "Now modify case outcome"
+msgstr "Nyní změnit výsledek případu"
+
+#: admin/displayappointments.php:151
+msgid ""
+"The appointment has been deleted. Now you must modify the case outcome"
+msgstr "Schůzka byla smazána. Nyní musíte změnit výsledek případu"
+
+#: admin/displayappointments.php:152
+msgid "Modify case outcome"
+msgstr "Změnit výsledek případu"
+
+#: admin/displayappointments.php:159
+#: admin/displayappointments.php:212
+msgid "Edit appointment"
+msgstr "Upravit schůzku"
+
+#: admin/displayappointments.php:185
+msgid "Contact phone"
+msgstr "Kontaktní telefon"
+
+#: admin/displayappointments.php:193
+msgid "Start time"
+msgstr "Čas zahájení"
+
+#: admin/displayappointments.php:194
+msgid "End time"
+msgstr "Čas ukončení"
+
+#: admin/displayappointments.php:215
+msgid "Cancel edit"
+msgstr "Zrušit úpravu"
+
+#: admin/displayappointments.php:216
+msgid "Delete this appointment"
+msgstr "Smazat tuto schůzku"
+
+#: admin/displayappointments.php:225
+msgid "Display Appointments"
+msgstr "Zobrazit schůzky"
+
+#: admin/displayappointments.php:227
+msgid "All appointments (with times displayed in your time zone)"
+msgstr "Všechny schůzky (časy jsou zobrazeny ve vašem časovém pásmu)"
+
+#: admin/displayappointments.php:229
+#: admin/displayappointments.php:243
+msgid "Delete"
+msgstr "Smazat"
+
+#: admin/displayappointments.php:229
+#: admin/displayappointments.php:243
+#: admin/shiftreport.php:96
+#: admin/shiftreport.php:104
+#: admin/assignsample.php:149
+#: admin/assignsample.php:184
+#: admin/assignsample.php:193
+msgid "Edit"
+msgstr "Upravit"
+
+#: admin/displayappointments.php:243
+msgid "Operator Name"
+msgstr "Jméno operátora"
+
+#: admin/displayappointments.php:243
+msgid "Respondent Name"
+msgstr "Jméno respondenta"
+
+#: admin/displayappointments.php:243
+msgid "Surname"
+msgstr "Příjmení"
+
+#: admin/displayappointments.php:243
+msgid "Current outcome"
+msgstr "Současný výsledek"
+
+#: admin/displayappointments.php:243
+msgid "Operator who called"
+msgstr "Operátor který volal"
+
+#: admin/displayappointments.php:246
+msgid "No appointments in the future"
+msgstr "V budoucnu nejsou žádné schůzky"
+
+#: admin/quota.php:109
+#: admin/index.php:62
+#: admin/index.php:63
+msgid "Quota management"
+msgstr "Správa kvóty"
+
+#: admin/quota.php:134
+msgid "Current quotas (click to delete)"
+msgstr "Současné kvóty (klikněte pro smazání)"
+
+#: admin/quota.php:146
+msgid "Currently no quotas"
+msgstr "V současnosti žádné kvóty"
+
+#: admin/quota.php:152
+msgid "Stop calling this sample when:"
+msgstr "Přestat volat tomuto vzorku když:"
+
+#: admin/quota.php:152
+msgid "for"
+msgstr "po"
+
+#: admin/quota.php:152
+msgid "completions"
+msgstr "dokončeních"
+
+#: admin/quota.php:155
+msgid "Quota reached"
+msgstr "Kvóta dosažena"
+
+#: admin/quota.php:157
+msgid "Quota not yet reached"
+msgstr "Kvóta není dosažena"
+
+#: admin/quota.php:159
+msgid "Current completions: "
+msgstr "Současných dokončení: "
+
+#: admin/quota.php:167
+msgid "Select a question for the quota"
+msgstr "Vyberte otázku pro kvótu"
+
+#: admin/quota.php:192
+msgid "Enter the details for creating the quota:"
+msgstr "Zadejte podrobnosti pro vytvoření kvóty:"
+
+#: admin/quota.php:193
+msgid "Pre defined values for this question:"
+msgstr "Předurčené hodnoty pro tuto otázku:"
+
+#: admin/quota.php:205
+msgid "No labels defined for this question"
+msgstr "Neurčeny žádné štítky pro tuto otázku"
+
+#: admin/quota.php:207
+msgid "Code value"
+msgstr "Hodnota kódu"
+
+#: admin/quota.php:213
+msgid "The code value to compare"
+msgstr "Hodnota kódu pro porovnání"
+
+#: admin/quota.php:214
+msgid "The type of comparison"
+msgstr "Typ porovnání"
+
+#: admin/quota.php:215
+msgid "The number of completions to stop calling at"
+msgstr "Počet dokončení po kterých přestat volat"
+
+#: admin/quota.php:219
+msgid "Add quota"
+msgstr "Přidat kvótu"
+
+#: admin/operatorskill.php:149
+msgid "Assign operators to Skills"
+msgstr "Přidělit operátory ke zkušenostem"
+
+#: admin/operatorskill.php:151
+msgid ""
+"Set which types of cases will be made available to each operator. Please "
+"note that all operators will be allowed to assign all possible outcomes to a "
+"case. This restricts which ones will be assigned to an operator."
+msgstr ""
+"Vyberte které typy případů budou dostupné všem operátorům. Nezapomeňte, že "
+"všichni operátoři budou mít oprávnění k případu přidělit všechny možné "
+"výsledky. Toto omezuje výsledky přidělené operátorovi."
+
+#: admin/operatorskill.php:272
+#: admin/index.php:70
+msgid "Modify operator skills"
+msgstr "Upravit schopnosti operátora"
+
+#: admin/operatorperformance.php:66
+msgid "Operator Performance"
+msgstr "Výkon operátora"
+
+#: admin/operatorperformance.php:73
+#: admin/shiftreport.php:65
+msgid "Please select a questionnaire"
+msgstr "Prosím zvolte dotazník"
+
+#: admin/operatorperformance.php:81
+#: admin/operatorperformance.php:104
+msgid "Calls"
+msgstr "Volání"
+
+#: admin/operatorperformance.php:81
+#: admin/operatorperformance.php:104
+msgid "Total time"
+msgstr "Celkový čas"
+
+#: admin/operatorperformance.php:81
+#: admin/operatorperformance.php:104
+msgid "Call time"
+msgstr "Čas zavolání"
+
+#: admin/operatorperformance.php:81
+#: admin/operatorperformance.php:104
+msgid "Completions p/h"
+msgstr "Dokončení za hod."
+
+#: admin/operatorperformance.php:81
+#: admin/operatorperformance.php:104
+msgid "Calls p/h"
+msgstr "Volání za hod."
+
+#: admin/operatorperformance.php:81
+#: admin/operatorperformance.php:104
+msgid "Effectiveness"
+msgstr "Účinnost"
+
+#: admin/operatorperformance.php:88
+msgid "till"
+msgstr "do"
+
+#: admin/operatorperformance.php:96
+#: admin/shiftreport.php:72
+msgid "Please select a shift"
+msgstr "Prosím zvolte směnu"
+
+#: admin/availabilitygroup.php:70
+#: admin/availabilitygroup.php:112
+msgid "Availability groups"
+msgstr "Skupiny dostupnosti"
+
+#: admin/availabilitygroup.php:107
+#: admin/availabilitygroup.php:119
+msgid "Modify"
+msgstr "Změnit"
+
+#: admin/availabilitygroup.php:114
+msgid ""
+"Availability groups define periods of time of respondent availability."
+msgstr "Skupiny dostupnosti určují časová období dostupnosti respondenta."
+
+#: admin/availabilitygroup.php:117
+msgid "No availability groups"
+msgstr "Žádné skupiny dostupnosti"
+
+#: admin/availabilitygroup.php:119
+msgid "Availablity group"
+msgstr "Skupina dostupnosti"
+
+#: admin/availabilitygroup.php:123
+#: admin/availabilitygroup.php:127
+msgid "Add availability group"
+msgstr "Přidat skupinu dostupnosti"
+
+#: admin/availabilitygroup.php:126
+msgid "Availability group name"
+msgstr ""
 
 #: admin/shiftreport.php:61
+#: admin/index.php:95
 msgid "Shift reports"
 msgstr "Hlášení směn"
 
 #: admin/shiftreport.php:92
 msgid "Reports for this shift"
 msgstr "Hlášení pro tuto směnu"
-
-#: admin/shiftreport.php:96
-#: admin/shiftreport.php:104
-#: admin/displayappointments.php:229
-#: admin/displayappointments.php:243
-#: admin/supervisor.php:231
-#: admin/supervisor.php:244
-#: admin/supervisor.php:253
-#: admin/operatorlist.php:118
-#: admin/operatorlist.php:249
-#: admin/operatorlist.php:258
-msgid "Edit"
-msgstr "Upravit"
-
-#: admin/shiftreport.php:104
-#: admin/systemsort.php:92
-#: admin/systemsort.php:106
-msgid "Date"
-msgstr "Datum"
 
 #: admin/shiftreport.php:104
 msgid "Report"
@@ -1552,159 +1524,355 @@ msgstr "Upravit hlášení pro tuto směnu"
 msgid "Modify report"
 msgstr "Změnit hlášení"
 
-#: admin/displayappointments.php:149
-msgid "Now modify case outcome"
-msgstr "Nyní změnit výsledek případu"
+#: admin/index.php:46
+msgid "Administrative Tools"
+msgstr "Nástroje správce"
 
-#: admin/displayappointments.php:151
-msgid ""
-"The appointment has been deleted. Now you must modify the case outcome"
-msgstr "Schůzka byla smazána. Nyní musíte změnit výsledek případu"
+#: admin/index.php:50
+msgid "Questionnaire creation and management"
+msgstr "Vytvoření dotazníku a správa"
 
-#: admin/displayappointments.php:152
-msgid "Modify case outcome"
-msgstr "Změnit výsledek případu"
+#: admin/index.php:51
+msgid "Create an instrument in Limesurvey"
+msgstr "Vytvořit nástroj v limesurvey:"
 
-#: admin/displayappointments.php:159
-#: admin/displayappointments.php:212
-msgid "Edit appointment"
-msgstr "Upravit schůzku"
+#: admin/index.php:52
+msgid "Create a new questionnaire"
+msgstr "Vytvořit nový dotazník"
 
-#: admin/displayappointments.php:185
-msgid "Contact phone"
-msgstr "Kontaktní telefon"
+#: admin/index.php:53
+msgid "Questionnaire management"
+msgstr "Správa dotazníku"
 
-#: admin/displayappointments.php:215
-msgid "Cancel edit"
-msgstr "Zrušit úpravu"
+#: admin/index.php:54
+msgid "Administer instruments with Limesurvey"
+msgstr "Správa nástrojů Limesurvey"
 
-#: admin/displayappointments.php:216
-msgid "Delete this appointment"
-msgstr "Smazat tuto schůzku"
+#: admin/index.php:56
+msgid "Sample/List management"
+msgstr "Správa vzorků/seznamu"
 
-#: admin/displayappointments.php:225
-msgid "Display Appointments"
-msgstr "Zobrazit schůzky"
+#: admin/index.php:57
+msgid "Import a sample file (in CSV form)"
+msgstr "Importovat vzorkový soubor (ve formátu CSV)"
 
-#: admin/displayappointments.php:227
-msgid "All appointments (with times displayed in your time zone)"
-msgstr "Všechny schůzky (časy jsou zobrazeny ve vašem časovém pásmu)"
+#: admin/index.php:58
+msgid "Sample management"
+msgstr "Správa vzorku"
 
-#: admin/displayappointments.php:229
-#: admin/displayappointments.php:243
-#: admin/supervisor.php:231
-#: admin/supervisor.php:244
-#: admin/supervisor.php:271
-#: admin/supervisor.php:285
-msgid "Delete"
-msgstr "Smazat"
+#: admin/index.php:59
+msgid "Assign samples to questionnaires"
+msgstr "Přidělit vzorky k dotazníkům"
 
-#: admin/displayappointments.php:243
-#: admin/supervisor.php:244
-msgid "Operator Name"
-msgstr "Jméno operátora"
+#: admin/index.php:60
+msgid "Set values in questionnaire to pre fill"
+msgstr "Nastavit hodnoty v dotazníku pro předvyplnění"
 
-#: admin/displayappointments.php:243
-#: admin/supervisor.php:244
-msgid "Respondent Name"
-msgstr "Jméno respondenta"
+#: admin/index.php:64
+msgid "Quota row management"
+msgstr "Správa řady kvóty"
 
-#: admin/displayappointments.php:243
-#: admin/supervisor.php:244
-msgid "Surname"
-msgstr "Příjmení"
+#: admin/index.php:66
+#: admin/index.php:68
+#: admin/index.php:111
+msgid "Operator management"
+msgstr "Správa operátorů"
 
-#: admin/displayappointments.php:243
-#: admin/supervisor.php:244
-msgid "Current outcome"
-msgstr "Současný výsledek"
+#: admin/index.php:67
+msgid "Add operators to the system"
+msgstr "Přidat operátory do systému"
 
-#: admin/displayappointments.php:243
-#: admin/supervisor.php:244
-msgid "Operator who called"
-msgstr "Operátor který volal"
+#: admin/index.php:69
+msgid "Assign operators to questionnaires"
+msgstr "Přidělit operátory k dotazníkům"
 
-#: admin/displayappointments.php:246
-msgid "No appointments in the future"
-msgstr "V budoucnu nejsou žádné schůzky"
+#: admin/index.php:72
+msgid "Availability and shift management"
+msgstr "Dostupnost a správa směny"
 
-#: admin/systemsort.php:75
-#: admin/systemsort.php:98
-#: admin/systemsort.php:99
-msgid "Monitor system wide case sorting"
-msgstr "Sledovat celosystémové řazení případů"
+#: admin/index.php:73
+msgid "Manage availablity groups"
+msgstr "Správa skupin dostupnosti"
 
-#: admin/systemsort.php:77
-msgid "Running process:"
-msgstr "Běžící proces:"
+#: admin/index.php:74
+msgid "Assign availabilities to questionnaires"
+msgstr "Přidělit dostupnosti k dotazníkům"
 
-#: admin/systemsort.php:81
-msgid "Kill signal sent: Please wait..."
-msgstr "Ukončovací signál odeslán: Prosím čekejte..."
+#: admin/index.php:75
+msgid "Shift management (add/remove)"
+msgstr "Správa směn (přidat/odstranit)"
 
-#: admin/systemsort.php:82
-msgid ""
-"Process is already closed (eg. server was rebooted) - click here to confirm"
+#: admin/index.php:77
+msgid "Questionnaire progress"
+msgstr "Postup dotazníku"
+
+#: admin/index.php:78
+msgid "Display all future appointments"
+msgstr "Zobrazit všechny budoucí schůzky"
+
+#: admin/index.php:79
+msgid "Sample call attempts report"
+msgstr "Záznam pokusů volání vzorku"
+
+#: admin/index.php:81
+msgid "Questionnaire outcomes"
+msgstr "Výsledky dotazníku"
+
+#: admin/index.php:82
+msgid "Data output"
+msgstr "Výstup dat"
+
+#: admin/index.php:85
+#: admin/outcomes.php:297
+msgid "Operator performance"
+msgstr "Výkon operátora"
+
+#: admin/index.php:87
+msgid "Client management"
+msgstr "Správa klientů"
+
+#: admin/index.php:88
+msgid "Add clients to the system"
+msgstr "Přidat klienty do systému"
+
+#: admin/index.php:91
+msgid "Supervisor functions"
+msgstr "Funkce dozorce"
+
+#: admin/index.php:92
+msgid "Assign outcomes to cases"
+msgstr "Přidělit výsledky k případům"
+
+#: admin/index.php:93
+msgid "Search the sample"
+msgstr "Prohledat vzorek"
+
+#: admin/index.php:96
+msgid "Case status and assignment"
+msgstr "Stav a přidělení případu"
+
+#: admin/index.php:97
+msgid "Bulk appointment generator"
+msgstr "Hromadný generátor schůzek"
+
+#: admin/index.php:99
+msgid "System settings"
+msgstr "Nastavení systému"
+
+#: admin/index.php:100
+msgid "Set default timezone list"
+msgstr "Nastavit seznam výchozích časových pásem"
+
+#: admin/index.php:101
+msgid "Set default shift times"
+msgstr "Nastavit výchozí doby směn"
+
+#: admin/index.php:102
+msgid "Set call restriction times"
+msgstr "Nastavit doby omezení volání"
+
+#: admin/index.php:103
+#: admin/centreinfo.php:62
+msgid "Set centre information"
+msgstr "Nastavit informace o centru"
+
+#: admin/index.php:105
+msgid "Start and monitor system wide case sorting"
+msgstr "Spustit a sledovat celosystémové řazení případů"
+
+#: admin/index.php:109
+msgid "VoIP"
+msgstr "VoIP"
+
+#: admin/index.php:110
+msgid "Start and monitor VoIP"
+msgstr "Spustit a sledovat VoIP"
+
+#: admin/index.php:112
+msgid "Extension status"
+msgstr "Stav rozšíření"
+
+#: admin/assignsample.php:115
+#: admin/assignsample.php:170
+msgid "Assign Sample: Select sample to assign"
+msgstr "Přidělit vzorek: Zvolte vzorek pro přidělení"
+
+#: admin/assignsample.php:131
+msgid "Edit sample details"
+msgstr "Upravit podrobnosti vzorku"
+
+#: admin/assignsample.php:143
+#: admin/assignsample.php:222
+msgid "Max calls (0 for unlimited)"
+msgstr "Max volání (0 pro neomezeně)"
+
+#: admin/assignsample.php:144
+#: admin/assignsample.php:223
+msgid "Max call attempts (0 for unlimited)"
+msgstr "Max pokusů o volání (0 pro neomezeně)"
+
+#: admin/assignsample.php:145
+#: admin/assignsample.php:224
+msgid "Number of answering machine messages to leave per case (0 for never)"
 msgstr ""
-"Proces již je uzavřen (např. byl restartován server) - klikněte zde pro "
-"potvrzení"
+"Počet zpráv na záznamníku které zanechat na jeden případ (0 pro nikdy)"
 
-#: admin/systemsort.php:86
-msgid "Kill the running process"
-msgstr "Ukončit běžící proces"
+#: admin/assignsample.php:146
+#: admin/assignsample.php:225
+msgid "Select from sample randomly? (otherwise sequentially)"
+msgstr "Vybrat ze vzorku náhodně? (jinak popořadě)"
 
-#: admin/systemsort.php:92
-#: admin/systemsort.php:106
-msgid "Log id"
-msgstr "ID záznamu"
+#: admin/assignsample.php:177
+msgid "Samples selected for this questionnaire"
+msgstr "Vzorky vybrané pro tento dotazník"
 
-#: admin/systemsort.php:92
-#: admin/systemsort.php:106
-msgid "Log entry"
-msgstr "Položka záznamu"
+#: admin/assignsample.php:180
+#: admin/assignsample.php:181
+msgid "Unlimited"
+msgstr "Neomezeno"
 
-#: admin/systemsort.php:100
-msgid "Click here to enable and begin system wide case sorting"
-msgstr "Klikněte zde pro zapnutí a zahájení celosystémového řazení případů"
+#: admin/assignsample.php:182
+msgid "Sequential"
+msgstr "Pořadové"
 
-#: admin/systemsort.php:101
+#: admin/assignsample.php:182
+msgid "Random"
+msgstr "Náhodné"
+
+#: admin/assignsample.php:183
+msgid "Never"
+msgstr "Nikdy"
+
+#: admin/assignsample.php:185
+#: admin/questionnaireavailability.php:117
+msgid "Click to unassign"
+msgstr "Klikněte pro zrušení přidělení"
+
+#: admin/assignsample.php:193
+msgid "Max calls"
+msgstr "Max volání"
+
+#: admin/assignsample.php:193
+msgid "Max call attempts"
+msgstr "Max pokusů o volání"
+
+#: admin/assignsample.php:193
+msgid "Answering machine messages"
+msgstr "Zprávy záznamníku"
+
+#: admin/assignsample.php:193
+msgid "Selection type"
+msgstr "Typ výběru"
+
+#: admin/assignsample.php:193
+msgid "Unassign sample"
+msgstr "Zrušit přiřazení vzorku"
+
+#: admin/assignsample.php:195
+msgid "No samples selected for this questionnaire"
+msgstr "Pro tento dotazník nejsou zvoleny žádné vzorky"
+
+#: admin/assignsample.php:209
+msgid "Add a sample to this questionnaire:"
+msgstr "Přidejte vzorek k tomuto dotazníku:"
+
+#: admin/assignsample.php:212
+msgid "Select sample:"
+msgstr "Vyberte vzorek"
+
+#: admin/centreinfo.php:66
+msgid "Set centre information: "
+msgstr "Nastavit informační centrum "
+
+#: admin/centreinfo.php:67
+msgid "Update centre information"
+msgstr "Aktualizovat informace o centru"
+
+#: admin/questionnaireavailability.php:93
+msgid "Assign availability group to questionnaire"
+msgstr "Přidělit dostupnost skupiny k dotazníku"
+
+#: admin/questionnaireavailability.php:110
+msgid "There are no availability groups selected for this questionnaire"
+msgstr "Pro tento dotazník nejsou vybrány žádné skupiny dostupnosti"
+
+#: admin/questionnaireavailability.php:114
+msgid "Availability groups selected for this questionnaire"
+msgstr "Skupiny dostupnosti vybrané pro tento dotazník"
+
+#: admin/questionnaireavailability.php:132
+msgid "Add an availability group to this questionnaire:"
+msgstr "Přidat skupinu dostupnosti pro tento dotazník:"
+
+#: admin/questionnaireavailability.php:135
+msgid "Select availability group:"
+msgstr "Vyberte skupinu dostupnosti:"
+
+#: admin/supervisorchat.php:63
 msgid ""
-"System wide case sorting is periodically (via SYSTEM_SORT_MINUTES "
-"configuration directive) sorting cases on a system wide basis instead of "
-"finding the most appropriate case each time an operator requests a new case. "
-"This may increase performance where there are a large number of cases or "
-"complex quotas in place. If you are not experiencing any performance "
-"problems, it is not recommended to use this feature."
+"Allow interviewers to chat with the supervisor over XMPP (Jabber). Required "
+"is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will "
+"need XMPP/Jabber accounts."
 msgstr ""
-"Celosystémové řazení případů pravidelně (podle příkazu nastavení "
-"SYSTEM_SORT_MINUTES) řadí případy  v celém systému místo hledání "
-"nejvhodnějšího případu pokaždé, když operátor zažádá o nový případ. To může "
-"zvýšit výkon v případě velkého počtu případů nebo složitých kvót. Pokud "
-"nezaznamenáváte žádné potíže s výkonem, nedoporučuje se tuto funkci zapínat."
+"Umožňuje tazatelům používat chat s vedoucím pomocí XMPP (Jabber). Požadavkem "
+"je server XMPP/Jabber s BOSH. Operátoři a vedoucí potřebují účty XMPP/Jabber"
 
-#: admin/systemsort.php:102
-msgid "Outcome of last process run (if any)"
-msgstr "Výsledek posledního spuštěného procesu (pokud je)"
+#: admin/supervisorchat.php:73
+msgid "Enable supervisor chat?"
+msgstr "Povolit chat s vedoucím?"
 
-#: admin/callhistory.php:80
-#: admin/callhistory.php:109
-#: admin/callhistory.php:117
-msgid "Call History List"
-msgstr "Seznam historie volání"
+#: admin/supervisorchat.php:74
+msgid "Set BOSH URL"
+msgstr "Nastavit URL BOSH"
 
-#: admin/callhistory.php:96
-#: admin/callhistory.php:111
-msgid "Date/Time call start"
-msgstr "Datum/Čas zahájení volání"
+#: admin/supervisorchat.php:75
+msgid "Supervisor XMPP/Jabber id"
+msgstr "XMPP/Jabber ID vedoucího"
 
-#: admin/callhistory.php:96
-#: admin/callhistory.php:111
-msgid "Time end"
-msgstr "Čas ukončení"
+#: admin/supervisorchat.php:76
+msgid "Update"
+msgstr "Aktualizovat"
 
-#: admin/callhistory.php:110
-msgid "Download Call History List"
-msgstr "Stáhnout seznam historie volání"
+#: admin/samplesearch.php:83
+msgid "Search sample"
+msgstr "Hledat vzorek"
+
+#: admin/samplesearch.php:100
+msgid "No cases yet assigned: Delete this sample record"
+msgstr "Zatím žádné případy nepřiděleny: Smazat tento záznam vzorku"
+
+#: admin/samplesearch.php:100
+msgid "Assigned to questionnaire: "
+msgstr "Přiděleno k dotazníku: "
+
+#: admin/samplesearch.php:110
+msgid "No records in this sample match this search criteria"
+msgstr "Žádné záznamy v tomto vzorku neodpovídají kritériím hledání"
+
+#: admin/samplesearch.php:121
+msgid "Sample id"
+msgstr "ID vzorku"
+
+#: admin/samplesearch.php:130
+msgid "Link"
+msgstr "Odkaz"
+
+#: admin/samplesearch.php:149
+msgid "Search within this sample"
+msgstr "Hledat v tomto vzorku"
+
+#: admin/samplesearch.php:151
+#, php-format
+msgid "Use the % character as a wildcard"
+msgstr "Použit znak % cjako zástupný znak"
+
+#: admin/samplesearch.php:156
+msgid "Search for:"
+msgstr "Hledat:"
+
+#: admin/samplesearch.php:158
+msgid "Start search"
+msgstr "Spustit hledání"
 
 #: admin/outcomes.php:77
 msgid "Questionnaire Outcomes"
@@ -1827,425 +1995,266 @@ msgstr "Směna"
 msgid "Shift report"
 msgstr "Hlášení směny"
 
-#: admin/outcomes.php:297
-msgid "Operator performance"
-msgstr "Výkon operátora"
+#: admin/voipmonitor.php:73
+#: admin/voipmonitor.php:95
+#: admin/voipmonitor.php:96
+msgid "Monitor VoIP Process"
+msgstr "Sledovat proces VoIP"
 
-#: admin/questionnaireavailability.php:93
-msgid "Assign availability group to questionnaire"
-msgstr "Přidělit dostupnost skupiny k dotazníku"
-
-#: admin/questionnaireavailability.php:110
-msgid "There are no availability groups selected for this questionnaire"
-msgstr "Pro tento dotazník nejsou vybrány žádné skupiny dostupnosti"
-
-#: admin/questionnaireavailability.php:114
-msgid "Availability groups selected for this questionnaire"
-msgstr "Skupiny dostupnosti vybrané pro tento dotazník"
-
-#: admin/questionnaireavailability.php:117
-msgid "Click to unassign"
-msgstr "Klikněte pro zrušení přidělení"
-
-#: admin/questionnaireavailability.php:132
-msgid "Add an availability group to this questionnaire:"
-msgstr "Přidat skupinu dostupnosti pro tento dotazník:"
-
-#: admin/questionnaireavailability.php:135
-msgid "Select availability group:"
-msgstr "Vyberte skupinu dostupnosti:"
-
-#: admin/quota.php:109
-msgid "Quota management"
-msgstr "Správa kvóty"
-
-#: admin/quota.php:134
-msgid "Current quotas (click to delete)"
-msgstr "Současné kvóty (klikněte pro smazání)"
-
-#: admin/quota.php:146
-msgid "Currently no quotas"
-msgstr "V současnosti žádné kvóty"
-
-#: admin/quota.php:152
-msgid "Stop calling this sample when:"
-msgstr "Přestat volat tomuto vzorku když:"
-
-#: admin/quota.php:152
-#: admin/quotarow.php:187
-msgid "for"
-msgstr "po"
-
-#: admin/quota.php:152
-#: admin/quotarow.php:184
-#: admin/quotarow.php:187
-msgid "completions"
-msgstr "dokončeních"
-
-#: admin/quota.php:155
-msgid "Quota reached"
-msgstr "Kvóta dosažena"
-
-#: admin/quota.php:157
-msgid "Quota not yet reached"
-msgstr "Kvóta není dosažena"
-
-#: admin/quota.php:159
-#: admin/quotarow.php:195
-msgid "Current completions: "
-msgstr "Současných dokončení: "
-
-#: admin/quota.php:167
-msgid "Select a question for the quota"
-msgstr "Vyberte otázku pro kvótu"
-
-#: admin/quota.php:192
-msgid "Enter the details for creating the quota:"
-msgstr "Zadejte podrobnosti pro vytvoření kvóty:"
-
-#: admin/quota.php:193
-#: admin/quotarow.php:275
-msgid "Pre defined values for this question:"
-msgstr "Předurčené hodnoty pro tuto otázku:"
-
-#: admin/quota.php:205
-#: admin/quotarow.php:292
-msgid "No labels defined for this question"
-msgstr "Neurčeny žádné štítky pro tuto otázku"
-
-#: admin/quota.php:207
-#: admin/quotarow.php:294
-msgid "Code value"
-msgstr "Hodnota kódu"
-
-#: admin/quota.php:213
-#: admin/quotarow.php:304
-msgid "The code value to compare"
-msgstr "Hodnota kódu pro porovnání"
-
-#: admin/quota.php:214
-#: admin/quotarow.php:305
-msgid "The type of comparison"
-msgstr "Typ porovnání"
-
-#: admin/quota.php:215
-#: admin/quotarow.php:310
-msgid "The number of completions to stop calling at"
-msgstr "Počet dokončení po kterých přestat volat"
-
-#: admin/quota.php:219
-msgid "Add quota"
-msgstr "Přidat kvótu"
-
-#: admin/supervisor.php:87
-msgid "Supervisor functions"
-msgstr "Funkce dozorce"
-
-#: admin/supervisor.php:89
-msgid "Enter a case id or select a case from the list below:"
-msgstr "Zadejte ID případu nebo ho vyberte ze seznamu níže:"
-
-#: admin/supervisor.php:100
-msgid "Select case from list of cases referred to the supervisor:"
-msgstr "Vyberte případ ze seznamu nebo případů uvedené dozorcem:"
-
-#: admin/supervisor.php:109
-msgid "Select case"
-msgstr "Vybrat případ"
-
-#: admin/supervisor.php:126
-msgid "Set an outcome for this call"
-msgstr "Vyberte výsledek pro volání"
-
-#: admin/supervisor.php:139
-#: admin/supervisor.php:321
-msgid "Set outcome"
-msgstr "Nastavit výsledek"
-
-#: admin/supervisor.php:220
-msgid "Project"
-msgstr "Projekt"
-
-#: admin/supervisor.php:223
-msgid "Current outcome:"
-msgstr "Současný výsledek:"
-
-#: admin/supervisor.php:247
-msgid "No appointments for this case"
-msgstr "Žádné schůzky pro tento případ"
-
-#: admin/supervisor.php:249
-msgid "Create appointment for this case"
-msgstr "Vytvořit schůzku pro tento případ"
-
-#: admin/supervisor.php:261
-msgid "Call list"
-msgstr "Seznam volání"
-
-#: admin/supervisor.php:267
-#: admin/databasestrings.php:82
-msgid "Phone number"
-msgstr "Telefonní číslo"
-
-#: admin/supervisor.php:267
-msgid "Change outcome"
-msgstr "Změnit výsledek"
-
-#: admin/supervisor.php:280
-msgid "Case notes"
-msgstr "Poznámky případu"
-
-#: admin/supervisor.php:302
-msgid "Modify responses for this case"
-msgstr "Změnit odpovědi pro tento případ"
-
-#: admin/supervisor.php:304
-msgid "Case not yet started in Limesurvey"
-msgstr "Případ zatím nezahájen v Limesurvey"
-
-#: admin/supervisor.php:308
-msgid "Set a case outcome"
-msgstr "Nastavit výsledek případu"
-
-#: admin/supervisor.php:358
-msgid "Update case availability"
-msgstr "Aktualizovat dostupnost případu"
-
-#: admin/supervisor.php:370
-msgid "Assign this case to operator (will appear as next case for them)"
-msgstr ""
-"Přidělit tento případ k operátorovi (bude jim zobrazen jako další případ)"
-
-#: admin/supervisor.php:382
-msgid "Assign this case to operator"
-msgstr "Přidělit tento případ k operátorovi"
-
-#: admin/supervisor.php:390
-msgid "Case does not exist"
-msgstr "Případ neexistuje"
-
-#: admin/process.php:90
-msgid "Cannot connect to VoIP Server"
-msgstr "Nelze se připojit k serveru VoIP"
-
-#: admin/clients.php:84
-msgid "Could not add"
-msgstr "Nelze přidat"
-
-#: admin/clients.php:84
-msgid "There may already be a client of this name"
-msgstr "Je možné že již existuje klient s tímto názvem"
-
-#: admin/clients.php:89
-#: admin/clients.php:104
-msgid "Add a client"
-msgstr "Přidat klienta"
-
-#: admin/clients.php:105
+#: admin/voipmonitor.php:79
 msgid ""
-"Adding a client here will allow them to access project information in the "
-"client subdirectory. You can assign a client to a particular project using "
-"the"
+"Kill signal sent: Please wait... (Note: Process will be stalled until there "
+"is activity on the VoIP Server)"
 msgstr ""
-"Když tady přidáte klienta, umožníte jim přístup k informacím o projektu v "
-"podadresáři klienta. Klienta můžete přidělit ke konkrétnímu projektu pomocí"
+"Signál ukončení zaslán: Prosím čekejte... (Poznámka: Proces bude pozastaven "
+"dokud nebude na serveru VoIP aktivita)"
 
-#: admin/clients.php:105
-msgid "Assign client to Questionnaire"
-msgstr "Přidělit klienta k dotazníku"
+#: admin/voipmonitor.php:84
+msgid "(requires activity on the VoIP Server to take effect)"
+msgstr "(pro projevení změn musí být aktivita na serveru VoIP)"
 
-#: admin/clients.php:105
-msgid "tool."
-msgstr "nástroje."
+#: admin/voipmonitor.php:97
+msgid "Click here to begin monitoring the VoIP Process"
+msgstr "Klikněte zde pro spuštění sledování procesů VoIP"
 
-#: admin/clients.php:108
-msgid "Enter the username of a client to add:"
-msgstr "Zadejte uživatelské jméno klienta klienta, který bude přidán:"
+#: admin/questionnaireprefill.php:99
+msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
+msgstr "Předvyplnit dotazník: Nastavte hodnoty dotazníku pro předvyplnění"
 
-#: admin/clients.php:110
-msgid "Enter the password of a client to add:"
-msgstr "Zadejte heslo klienta k přidání:"
+#: admin/questionnaireprefill.php:110
+msgid "Current pre fills (click to delete)"
+msgstr "Současná předvyplnění (klikněte pro podrobnosti)"
 
-#: admin/clients.php:112
-msgid "Enter the first name of a client to add:"
-msgstr "Zadejte jméno klienta k přidání:"
+#: admin/questionnaireprefill.php:120
+msgid "Currently no pre fills"
+msgstr "V současnosti žádná předvyplnění"
 
-#: admin/clients.php:113
-msgid "Enter the surname of a client to add:"
-msgstr "Zadejte příjmení klienta k přidání:"
+#: admin/questionnaireprefill.php:132
+msgid "Select a question to pre fill"
+msgstr "Vyberte otázku pro předvyplnění"
 
-#: admin/clients.php:114
-msgid "Enter the Time Zone of a client to add:"
-msgstr "Zadejte časové pásmo klienta k přidání:"
+#: admin/questionnaireprefill.php:164
+msgid "Enter a value to pre fill this question with:"
+msgstr "Zadejte hodnotu pro předvyplnění této otázky:"
 
-#: admin/availabilitygroup.php:70
-#: admin/availabilitygroup.php:90
-msgid "Availability groups"
-msgstr "Skupiny dostupnosti"
+#: admin/questionnaireprefill.php:166
+msgid "Possible uses:"
+msgstr "Možná použití:"
 
-#: admin/availabilitygroup.php:85
-#: admin/availabilitygroup.php:97
-msgid "Modify"
-msgstr "Změnit"
+#: admin/questionnaireprefill.php:168
+msgid "{Respondent:firstName} First name of the respondent"
+msgstr "{Respondent:firstName} Jméno respondenta"
 
-#: admin/availabilitygroup.php:92
+#: admin/questionnaireprefill.php:169
+msgid "{Respondent:lastName} Last name of the respondent"
+msgstr "{Respondent:lastName} Příjmení respondenta"
+
+#: admin/questionnaireprefill.php:170
+msgid "{Sample:var} A record from the sample where the column name is 'var'"
+msgstr "{Sample:var} Záznam ze vzorku, kde název sloupce je 'var'."
+
+#: admin/questionnaireprefill.php:183
+msgid "The value to pre fill"
+msgstr "Hodnota pro předvyplnění"
+
+#: admin/questionnaireprefill.php:184
+msgid "or: Select pre fill from sample list"
+msgstr "nebo: Vyberte předvyplnění ze seznamu vzorků"
+
+#: admin/questionnaireprefill.php:190
+msgid "Add pre fill"
+msgstr "Přidat předvyplnění"
+
+#: admin/samplelist.php:117
+#: admin/samplelist.php:127
+#: admin/samplelist.php:134
+#: admin/samplelist.php:270
+#: admin/samplelist.php:279
+msgid "Rename"
+msgstr "Přejmenovat"
+
+#: admin/samplelist.php:146
+#: admin/samplelist.php:179
+#: admin/samplelist.php:269
+#: admin/samplelist.php:279
+msgid "Operator viewing permissions"
+msgstr "Oprávnění zobrazení operátora"
+
+#: admin/samplelist.php:182
 msgid ""
-"Availability groups define periods of time of respondent availability."
-msgstr "Skupiny dostupnosti určují časová období dostupnosti respondenta."
+"Select which fields from this sample should be able to be viewed by operators"
+msgstr "Vyberte která pole pro tento vzorek mohou operátoři vidět"
 
-#: admin/availabilitygroup.php:95
-msgid "No availability groups"
-msgstr "Žádné skupiny dostupnosti"
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
+msgid "Field"
+msgstr "Pole"
 
-#: admin/availabilitygroup.php:97
-msgid "Availablity group"
-msgstr "Skupina dostupnosti"
+#: admin/samplelist.php:187
+#: admin/samplelist.php:224
+msgid "Example data"
+msgstr "Příklad dat"
 
-#: admin/availabilitygroup.php:103
-msgid "Add availability group"
-msgstr "Přidat skupinu dostupnosti"
+#: admin/samplelist.php:187
+msgid "Allow operator to see?"
+msgstr "Umožnit operátorovi zobrazit?"
 
-#: admin/dataoutput.php:186
-msgid "Data output"
-msgstr "Výstup dat"
+#: admin/samplelist.php:190
+msgid "Save changes"
+msgstr "Uložit změny"
 
-#: admin/dataoutput.php:202
-msgid "Download data for this questionnaire via Limesurvey"
-msgstr "Stáhnout data pro tento dotazník přes Limesurvey"
+#: admin/samplelist.php:202
+#: admin/samplelist.php:216
+#: admin/samplelist.php:224
+#: admin/samplelist.php:268
+#: admin/samplelist.php:279
+msgid "Deidentify"
+msgstr "Deidentifikace"
 
-#: admin/dataoutput.php:204
-msgid "Please select a sample"
-msgstr "Prosím vyberte vzorek"
-
-#: admin/dataoutput.php:211
-msgid "Download data for this sample via Limesurvey"
-msgstr "Stáhnout data pro tento vzorek přes Limesurvey"
-
-#: admin/dataoutput.php:218
-msgid "Download key file: select sample var"
-msgstr "Stáhnout soubor s klíčem: vyberte vzorkový var"
-
-#: admin/dataoutput.php:222
-msgid "Download complete key file"
-msgstr "Stáhnout celý soubor s klíčem"
-
-#: admin/dataoutput.php:225
-msgid "Download complete sample file with current outcomes"
-msgstr "Stáhnout celý soubor vzorku se současnými výsledky"
-
-#: admin/operatorlist.php:60
-msgid "If changing usernames, you must specify a new password"
-msgstr "Při změně uživatelských jmen musíte zadat nové heslo"
-
-#: admin/operatorlist.php:90
-msgid "Successfully updated user"
-msgstr "Uživatel úspěšně aktualizován"
-
-#: admin/operatorlist.php:94
+#: admin/samplelist.php:219
 msgid ""
-"Failed to update user. Please make sure the username and extension are unique"
+"Select which fields from this sample to deidentify. Deidentified fields will "
+"be permanently deleted from the sample."
 msgstr ""
-"Nelze aktualizovat uživatele. Ujistěte se prosím, že uživatelské jméno a "
-"přípony jsou jedinečné"
+"Vyberte která pole v tomto vzorku mají být deidentifikována. Tato pole jsou "
+"natrvalo odstraněna ze vzorku"
 
-#: admin/operatorlist.php:103
-msgid "Operator edit"
-msgstr "Úprava operátora"
+#: admin/samplelist.php:227
+msgid "Delete selected fields"
+msgstr "Smazat vybraná pole"
 
-#: admin/operatorlist.php:124
-#: admin/operatorlist.php:258
-msgid "Username"
-msgstr "Uživatelské jméno"
-
-#: admin/operatorlist.php:128
-msgid "Update password (leave blank to keep existing password)"
-msgstr "Aktualizovat heslo (nechejte prázdné pro použití současného hesla)"
-
-#: admin/operatorlist.php:134
-msgid "Extension Password"
-msgstr "Heslo rozšíření"
-
-#: admin/operatorlist.php:137
-msgid "Uses chat"
-msgstr "Používá chat"
-
-#: admin/operatorlist.php:138
-msgid "Timezone"
-msgstr "Časové pásmo"
-
-#: admin/operatorlist.php:140
-msgid "Uses VoIP"
-msgstr "Používá VoIP"
-
-#: admin/operatorlist.php:143
-msgid "Update operator"
-msgstr "Aktualizovat operátora"
-
-#: admin/operatorlist.php:236
-msgid "Windows bat file"
-msgstr "Soubor dávky Windows"
-
-#: admin/operatorlist.php:237
-msgid "*nix script file"
-msgstr "soubor skriptu *nix"
-
-#: admin/operatorlist.php:239
+#: admin/samplelist.php:263
 msgid "Enable"
 msgstr "Povolit"
 
-#: admin/operatorlist.php:241
+#: admin/samplelist.php:265
 msgid "Disable"
 msgstr "Zakázat"
 
-#: admin/operatorlist.php:245
-msgid "Enable VoIP"
-msgstr "Povolit VoIP"
+#: admin/samplelist.php:276
+msgid "Sample list"
+msgstr "Seznam vzorků"
 
-#: admin/operatorlist.php:247
-msgid "Disable VoIP"
-msgstr "Zakázat VoIP"
-
-#: admin/operatorlist.php:255
-msgid "Operator list"
-msgstr "Seznam operátorů"
-
-#: admin/operatorlist.php:258
+#: admin/samplelist.php:279
 msgid "Enable/Disable"
 msgstr "Povolit/Zakázat"
 
-#: admin/operatorlist.php:262
+#: admin/bulkappointment.php:199
+msgid "Added appointment"
+msgstr "Schůzka přidána"
+
+#: admin/bulkappointment.php:203
 msgid ""
-"Download the file for each user and save in the same folder as the voip.exe "
-"executable. When the file is executed, it will run the voip.exe program with "
-"the correct connection details to connect the operator to the VoIP server"
+"No such case id, or case set to a final outcome, or case currently assigned "
+"to an operator"
 msgstr ""
-"Stáhnout soubor za každého uživatele a uložit ho ve stejné složce jako "
-"soubor voip.exe. Když je soubor spuštěn, spustí soubor voip.exe se správnými "
-"údaii o spojení pro připojení operátora k serveru VoIP"
+"Žádné takové ID případu, nebo případ nastaven na konečný výsledek, nebo není "
+"nyní přidělen k operátorovi."
 
-#: admin/operatorlist.php:264
-msgid "Download Windows VoIP Executable"
-msgstr "Stáhnout spustitelný soubor VoIP pro Windows"
+#: admin/bulkappointment.php:209
+msgid "Result"
+msgstr "Výsledek"
 
-#: admin/operatorlist.php:265
-msgid "Download Linux VoIP Executable"
-msgstr "Stáhnout spustitelný soubor VoIP pro Linux"
+#: admin/bulkappointment.php:229
+msgid ""
+"Please check the case id's, appointment start and end times and notes are "
+"correct before accepting below"
+msgstr ""
+"Prosím zkontrolujte správnost ID případu, začátku a konce schůzky a poznámek "
+"předtím, než všechno níže přijmete"
 
-#: admin/operatorlist.php:270
-msgid "Enable/Disable VoIP"
-msgstr "Povolit/Zakázat VoIP"
+#: admin/bulkappointment.php:235
+msgid "Accept and generate bulk appointments"
+msgstr "Přijmout a hromadně vytvořit schůzky"
 
-#: admin/operatorlist.php:271
-msgid "Windows VoIP"
-msgstr "Windows VoIP"
+#: admin/bulkappointment.php:240
+msgid ""
+"The file does not contain at least caseid, starttime and endtime columns. "
+"Please try again."
+msgstr ""
+"Soubor musí obsahovat alespoň sloupce caseid, starttime a endtime. Prosím "
+"zkuste to znovu."
 
-#: admin/operatorlist.php:272
-msgid "*nix VoIP"
-msgstr "*nix VoIP"
+#: admin/bulkappointment.php:251
+msgid ""
+"Provide a headered CSV file containing at least 3 columns - caseid, "
+"starttime and endtime. Optionally you can include a note column to attach a "
+"note to the case in addition to setting an appointment. Only cases that have "
+"temporary (non final) outcomes will have appointments generated, and the "
+"outcome of the case will be updated to an appointment outcome."
+msgstr ""
+"Zadejte soubor CSV s hlavičkou obsahující alespoň 3 sloupce - caseid, "
+"starttime a endtime. Můžete také zahrnout sloupec note pro přidání poznámky "
+"k případu spolu s vytvořením schůzky."
 
-#: admin/quotarow.php:126
-msgid "Quota row management"
-msgstr "Správa řady kvóty"
+#: admin/bulkappointment.php:252
+msgid "Example CSV file:"
+msgstr "Příklad souboru CSV:"
+
+#: admin/bulkappointment.php:261
+msgid "Choose the CSV file to upload:"
+msgstr "Zvolte soubor CSV k nahrání:"
+
+#: admin/bulkappointment.php:262
+msgid "Load bulk appointment CSV"
+msgstr "Načíst CSV hromadných schůzek"
+
+#: admin/addshift.php:87
+#: admin/addshift.php:140
+msgid "Add shifts"
+msgstr "Přidat směny"
+
+#: admin/addshift.php:88
+msgid ""
+"You must be an operator (as well as have administrator access) to add/edit "
+"shifts"
+msgstr ""
+"Musíte být operátor (a také mít správcovský přístup) pro přidání/změnu směn"
+
+#: admin/addshift.php:151
+#: admin/availability.php:106
+#: admin/shifttemplate.php:93
+#: admin/callrestrict.php:93
+msgid ""
+"Your database does not have timezones installed, please see here for details"
+msgstr ""
+"Vaše databáze nemá nainstalovaná časová pásma, zde si prosím přečtěte "
+"podrobnosti"
+
+#: admin/addshift.php:163
+msgid "Add shifts in your Time Zone"
+msgstr "Přidat směny ve vašem časvém pásmu"
+
+#: admin/addshift.php:166
+msgid ""
+"Shifts allow you to restrict appointments being made, and interviewers to "
+"working on a particlar project at defined times."
+msgstr ""
+"Směny Vám umožňují omezit vytváření schůzek a tazatele na práci v konkrétním "
+"projektu v určených časech."
+
+#: admin/addshift.php:173
+msgid "Select year"
+msgstr "Vyberte rok"
+
+#: admin/addshift.php:184
+msgid "Select week of year"
+msgstr "Vyberte týden v roce"
+
+#: admin/addshift.php:238
+#: admin/availability.php:144
+#: admin/shifttemplate.php:118
+#: admin/callrestrict.php:118
+msgid "Day"
+msgstr "Den"
+
+#: admin/addshift.php:238
+msgid "Use shift?"
+msgstr "Použít směnu?"
+
+#: admin/addshift.php:263
+msgid "Submit changes"
+msgstr "Odeslat změny"
 
 #: admin/quotarow.php:154
 #: admin/quotarow.php:160
@@ -2354,32 +2363,271 @@ msgstr "Vynechat ze vzorku kde hodnota se podobá"
 msgid "Add row quota"
 msgstr "Přidat kvótu řádku"
 
-#: admin/timezonetemplate.php:87
-msgid "Add/Remove Timezones"
-msgstr "Přidat/Odstranit časové pásmo"
+#: admin/operators.php:139
+msgid "Added:"
+msgstr "Přidáno:"
 
-#: admin/timezonetemplate.php:97
+#: admin/operators.php:142
+msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
+msgstr "FreePBX byl znovu načten, aby nové rozšíření VoIP mohlo být použito"
+
+#: admin/operators.php:167
 msgid ""
-"Your database does not have timezones installed, please see here for details"
+"Could not add operator. There may already be an operator of this name:"
+msgstr "Nelze přidat operátora. Již možná existuje operátor s tímto názvem:"
+
+#: admin/operators.php:167
+msgid "Or there may already be an telephone extension number"
+msgstr "Nebo již může být zadáno číslo telefonní linky"
+
+#: admin/operators.php:175
+#: admin/operators.php:190
+msgid "Add an operator"
+msgstr "Přidat operátora"
+
+#: admin/operators.php:191
+msgid "Adding an operator here will give the user the ability to call cases"
+msgstr "Po přidání operátora zde bude mít uživatel možnost vytáčet případy"
+
+#: admin/operators.php:191
+msgid "Assign Operator to Questionnaire"
+msgstr "Přidělit operátora k dotazníku"
+
+#: admin/operators.php:191
+msgid "tool"
+msgstr "nástroj"
+
+#: admin/operators.php:192
+#: admin/clients.php:106
+msgid ""
+"Use this form to enter the username of a user based on your directory "
+"security system. For example, if you have secured the base directory of "
+"queXS using Apache file based security, enter the usernames of the users "
+"here."
 msgstr ""
-"Vaše databáze nemá nainstalovaná časová pásma, zde si prosím přečtěte "
-"podrobnosti"
+"Použijte tento formulář k zadání uživatelského jména uživatele na základě "
+"vašeho adresáře bezpečnostního systému. Například, pokud jste zabezpečili "
+"základní adresář queXS pomocí Apache souboru zabezpečení, zadejte "
+"uživatelská jména zde."
 
-#: admin/timezonetemplate.php:101
-msgid "Click to remove a Timezone from the default list"
-msgstr "Klikněte pro odstranění časového pásmu z výchozího seznamu"
+#: admin/operators.php:193
+msgid "The username and extension must be unique for each operator."
+msgstr ""
+"Uživatelské jméno a rozšíření musí být pro každého operátora jedinečné."
 
-#: admin/timezonetemplate.php:113
-msgid "Add a Timezone:"
-msgstr "Přidat časové pásmo:"
+#: admin/operators.php:195
+msgid "Enter the username of an operator to add:"
+msgstr "Zadejte uživatelské jméno operátora pro přidání:"
 
-#: admin/timezonetemplate.php:116
-msgid "Timezone: "
-msgstr "Časové pásmo: "
+#: admin/operators.php:197
+msgid "Enter the password of an operator to add:"
+msgstr "Zadejte heslo operátora pro přidání:"
 
-#: admin/timezonetemplate.php:117
-msgid "Add Timezone"
-msgstr "Přidat časové pásmo"
+#: admin/operators.php:199
+msgid "Enter the first name of an operator to add:"
+msgstr "Zadejte jméno operátora pro přidání:"
+
+#: admin/operators.php:200
+msgid "Enter the surname of an operator to add:"
+msgstr "Zadejte příjmení operátora pro přidání:"
+
+#: admin/operators.php:201
+msgid "Enter the Time Zone of an operator to add:"
+msgstr "Zadejte časové pásmo operátora pro přidání:"
+
+#: admin/operators.php:203
+msgid "Enter the telephone extension number:"
+msgstr "Zadejte číslo telefonní linky:"
+
+#: admin/operators.php:204
+msgid "Enter the telephone extension password:"
+msgstr "Zadejte heslo telefonní linky:"
+
+#: admin/operators.php:206
+msgid "Will this operator be using VoIP?"
+msgstr "Bude tento operátor používat VoIP?"
+
+#: admin/operators.php:207
+msgid "Jabber/XMPP chat user"
+msgstr "Uživatel chatu Jabber/XMPP"
+
+#: admin/operators.php:208
+msgid "Jabber/XMPP chat password"
+msgstr "Heslo chatu Jabber/XMPP"
+
+#: admin/operators.php:209
+msgid "Will this operator be using chat?"
+msgstr "Bude tento operátor používat chat?"
+
+#: admin/operators.php:210
+msgid "Is the operator a normal interviewer?"
+msgstr "Je operátor normální tazatel?"
+
+#: admin/operators.php:211
+msgid "Is the operator a supervisor?"
+msgstr "Je operátor vedoucí?"
+
+#: admin/operators.php:212
+msgid "Is the operator a refusal converter?"
+msgstr "Je operátor určen pro odmítavé respondenty?"
+
+#: admin/operators.php:213
+#: admin/clients.php:115
+msgid "Add user"
+msgstr "Přidat uživatele"
+
+#: admin/new.php:59
+msgid "New: Create new questionnaire"
+msgstr "Nový: Vytvořit nový dotazník"
+
+#: admin/new.php:116
+msgid "Successfully inserted"
+msgstr "Úspěšně vloženo"
+
+#: admin/new.php:116
+msgid "as questionnaire"
+msgstr "jako dotazník"
+
+#: admin/new.php:116
+msgid "linked to"
+msgstr "propojeno s"
+
+#: admin/new.php:119
+msgid "Error: Failed to insert questionnaire"
+msgstr "Chyba: Nelze vložit dotazník"
+
+#: admin/new.php:130
+msgid "Name for questionnaire:"
+msgstr "Název dotazníku:"
+
+#: admin/new.php:131
+msgid "Select limesurvey instrument:"
+msgstr "Výběr nástroje limesurvey:"
+
+#: admin/new.php:145
+#: admin/new.php:169
+msgid "Existing instrument:"
+msgstr "Existující nástroj:"
+
+#: admin/new.php:154
+msgid "Respondent selection type:"
+msgstr "Typ výběru respondenta:"
+
+#: admin/new.php:155
+msgid "No respondent selection (go straight to questionnaire)"
+msgstr "Žádný výběr respondenta (přejít přímo k dotazníku)"
+
+#: admin/new.php:155
+msgid "Use basic respondent selection text (below)"
+msgstr "Použít základní text výběru respondenta (níže)"
+
+#: admin/new.php:193
+msgid "Restrict appointments to shifts?"
+msgstr "Omezit schůzky na směny?"
+
+#: admin/new.php:194
+msgid "Restrict work to shifts?"
+msgstr "Omezit práci na směny?"
+
+#: admin/new.php:195
+msgid "Questionnaire for testing only?"
+msgstr "Dotazník pouze pro zkoušku?"
+
+#: admin/new.php:196
+msgid "Allow for respondent self completion via email invitation?"
+msgstr "Umožnit respondentům dotazník vyplnit pomocí e-mailové pozvánky?"
+
+#: admin/new.php:198
+msgid "Questionnaire display mode for respondent"
+msgstr "Režim zobrazení dotazníku pro respondenta"
+
+#: admin/new.php:198
+msgid "All in one"
+msgstr "Vše v jednom"
+
+#: admin/new.php:198
+msgid "Question by question"
+msgstr "Otázka za otázkou"
+
+#: admin/new.php:198
+msgid "Group at a time"
+msgstr "Skupina najednou"
+
+#: admin/new.php:199
+msgid "Limesurvey template for respondent"
+msgstr "Šablona Limesurvey pro respondenta"
+
+#: admin/new.php:211
+msgid "URL to forward respondents on self completion (required)"
+msgstr "URL pro přesměrování respondentů při samo-dokončení (vyžadováno)"
+
+#: admin/new.php:214
+msgid "Respondent selection introduction:"
+msgstr "Úvod výběru respondenta:"
+
+#: admin/new.php:215
+msgid "Respondent selection project introduction:"
+msgstr "Úvod projektu výběru respondenta:"
+
+#: admin/new.php:216
+msgid "Respondent selection callback (already started questionnaire):"
+msgstr "Zpětné vrácení výběru respondenta (dotazník již zahájen):"
+
+#: admin/new.php:217
+msgid "Message to leave on an answering machine:"
+msgstr "Zprávu, kterou zanechat na záznamníku:"
+
+#: admin/new.php:219
+msgid "Project end text (thank you screen):"
+msgstr "Text na konci projektu (obrazovka poděkování):"
+
+#: admin/new.php:220
+msgid "Project information for interviewers/operators:"
+msgstr "Informace o projektu pro tazatele/operátory:"
+
+#: admin/new.php:221
+msgid "Create Questionnaire"
+msgstr "Vytvořit dotazník"
+
+#: admin/extensionstatus.php:46
+msgid "Display extension status"
+msgstr "Zobrazit stav rozšíření"
+
+#: admin/extensionstatus.php:48
+msgid "VoIP Offline"
+msgstr "VoIP Offline"
+
+#: admin/extensionstatus.php:48
+msgid "VoIP Online"
+msgstr "VoIP Online"
+
+#: admin/extensionstatus.php:48
+msgid "Not called"
+msgstr "Nevoláno"
+
+#: admin/extensionstatus.php:48
+msgid "Done"
+msgstr "Hotovo"
+
+#: admin/extensionstatus.php:61
+msgid "Extension"
+msgstr "Rozšíření"
+
+#: admin/extensionstatus.php:61
+msgid "VoIP Status"
+msgstr "Stav VoIP"
+
+#: admin/extensionstatus.php:61
+msgid "Call state"
+msgstr "Stav volání"
+
+#: admin/extensionstatus.php:61
+msgid "Time on call"
+msgstr "Čas volání"
+
+#: admin/extensionstatus.php:64
+msgid "No operators"
+msgstr "Žádní operátoři"
 
 #: admin/databasestrings.php:32
 msgid "Not attempted or worked"
@@ -2577,6 +2825,10 @@ msgstr "Soboty"
 msgid "String"
 msgstr "Řetězec"
 
+#: admin/databasestrings.php:82
+msgid "Phone number"
+msgstr "Telefonní číslo"
+
 #: admin/databasestrings.php:83
 msgid "Primary phone number"
 msgstr "Hlavní telefonní číslo"
@@ -2609,51 +2861,39 @@ msgstr "Pozvánka samodokončení e-mailu odeslána"
 msgid "Self completed online"
 msgstr "Samodokončeno online"
 
-#: admin/extensionstatus.php:46
-msgid "Display extension status"
-msgstr "Zobrazit stav rozšíření"
+#: admin/casesbyoutcome.php:52
+msgid "Cases by outcome"
+msgstr "Případy podle výsledku"
 
-#: admin/extensionstatus.php:48
-msgid "VoIP Offline"
-msgstr "VoIP Offline"
+#: admin/casesbyoutcome.php:72
+msgid "Project"
+msgstr "Projekt"
 
-#: admin/extensionstatus.php:48
-msgid "VoIP Online"
-msgstr "VoIP Online"
+#: admin/casesbyoutcome.php:73
+msgid "Current outcome:"
+msgstr "Současný výsledek:"
 
-#: admin/extensionstatus.php:48
-msgid "Not called"
-msgstr "Nevoláno"
+#: admin/casesbyoutcome.php:84
+msgid "No cases with this outcome"
+msgstr "Žádné případy s tímto výsledkem"
 
-#: admin/extensionstatus.php:48
-msgid "Done"
-msgstr "Hotovo"
+#: admin/casesbyoutcome.php:91
+msgid "Error with input"
+msgstr "Chyba se vstupem"
 
-#: admin/extensionstatus.php:61
-msgid "VoIP Status"
-msgstr "Stav VoIP"
-
-#: admin/extensionstatus.php:61
-msgid "Call state"
-msgstr "Stav volání"
-
-#: admin/extensionstatus.php:61
-msgid "Time on call"
-msgstr "Čas volání"
-
-#: admin/extensionstatus.php:64
-msgid "No operators"
-msgstr "Žádní operátoři"
+#: admin/process.php:90
+msgid "Cannot connect to VoIP Server"
+msgstr "Nelze se připojit k serveru VoIP"
 
 #: admin/availability.php:57
 msgid "No availability group set"
 msgstr "Není nastavena žádná skupina dostupnosti"
 
-#: admin/availability.php:89
+#: admin/availability.php:95
 msgid "Modify availability"
 msgstr "Změnit dostupnost"
 
-#: admin/availability.php:114
+#: admin/availability.php:122
 #: admin/callrestrict.php:96
 msgid ""
 "Enter the start and end times for each day of the week to restrict calls "
@@ -2661,30 +2901,69 @@ msgid ""
 msgstr ""
 "Zadejte počátek a konec na každý den v týdnu pro omezení volání během"
 
-#: admin/availability.php:136
-#: admin/callrestrict.php:118
-#: admin/shifttemplate.php:118
-#: admin/addshift.php:238
-msgid "Day"
-msgstr "Den"
-
-#: admin/availability.php:152
-#: admin/callrestrict.php:134
+#: admin/availability.php:160
 #: admin/shifttemplate.php:134
+#: admin/callrestrict.php:134
 msgid "Add row"
 msgstr "Přidat řádek"
 
-#: admin/availability.php:153
+#: admin/availability.php:162
 msgid "Save changes to availabilities"
 msgstr "Uložit změny dostupnosti"
 
-#: admin/callrestrict.php:82
-msgid "Modify call restriction times"
-msgstr "Změnit časy omezení volání"
+#: admin/availability.php:166
+msgid "Delete this availability group"
+msgstr ""
 
-#: admin/callrestrict.php:135
-msgid "Save changes to restriction times"
-msgstr "Uložit změny dob omezení"
+#: admin/clients.php:84
+msgid "Could not add"
+msgstr "Nelze přidat"
+
+#: admin/clients.php:84
+msgid "There may already be a client of this name"
+msgstr "Je možné že již existuje klient s tímto názvem"
+
+#: admin/clients.php:89
+#: admin/clients.php:104
+msgid "Add a client"
+msgstr "Přidat klienta"
+
+#: admin/clients.php:105
+msgid ""
+"Adding a client here will allow them to access project information in the "
+"client subdirectory. You can assign a client to a particular project using "
+"the"
+msgstr ""
+"Když tady přidáte klienta, umožníte jim přístup k informacím o projektu v "
+"podadresáři klienta. Klienta můžete přidělit ke konkrétnímu projektu pomocí"
+
+#: admin/clients.php:105
+msgid "Assign client to Questionnaire"
+msgstr "Přidělit klienta k dotazníku"
+
+#: admin/clients.php:105
+msgid "tool."
+msgstr "nástroje."
+
+#: admin/clients.php:108
+msgid "Enter the username of a client to add:"
+msgstr "Zadejte uživatelské jméno klienta klienta, který bude přidán:"
+
+#: admin/clients.php:110
+msgid "Enter the password of a client to add:"
+msgstr "Zadejte heslo klienta k přidání:"
+
+#: admin/clients.php:112
+msgid "Enter the first name of a client to add:"
+msgstr "Zadejte jméno klienta k přidání:"
+
+#: admin/clients.php:113
+msgid "Enter the surname of a client to add:"
+msgstr "Zadejte příjmení klienta k přidání:"
+
+#: admin/clients.php:114
+msgid "Enter the Time Zone of a client to add:"
+msgstr "Zadejte časové pásmo klienta k přidání:"
 
 #: admin/shifttemplate.php:82
 msgid "Modify shift template"
@@ -2700,631 +2979,6 @@ msgstr ""
 #: admin/shifttemplate.php:135
 msgid "Save changes to shifts"
 msgstr "Uložit změny směn"
-
-#: admin/samplesearch.php:83
-msgid "Search sample"
-msgstr "Hledat vzorek"
-
-#: admin/samplesearch.php:100
-msgid "No cases yet assigned: Delete this sample record"
-msgstr "Zatím žádné případy nepřiděleny: Smazat tento záznam vzorku"
-
-#: admin/samplesearch.php:100
-msgid "Assigned to questionnaire: "
-msgstr "Přiděleno k dotazníku: "
-
-#: admin/samplesearch.php:110
-msgid "No records in this sample match this search criteria"
-msgstr "Žádné záznamy v tomto vzorku neodpovídají kritériím hledání"
-
-#: admin/samplesearch.php:121
-msgid "Sample id"
-msgstr "ID vzorku"
-
-#: admin/samplesearch.php:130
-msgid "Link"
-msgstr "Odkaz"
-
-#: admin/samplesearch.php:149
-msgid "Search within this sample"
-msgstr "Hledat v tomto vzorku"
-
-#: admin/samplesearch.php:151
-#, php-format
-msgid "Use the % character as a wildcard"
-msgstr "Použit znak % cjako zástupný znak"
-
-#: admin/samplesearch.php:156
-msgid "Search for:"
-msgstr "Hledat:"
-
-#: admin/samplesearch.php:158
-msgid "Start search"
-msgstr "Spustit hledání"
-
-#: admin/new.php:59
-msgid "New: Create new questionnaire"
-msgstr "Nový: Vytvořit nový dotazník"
-
-#: admin/new.php:116
-msgid "Successfully inserted"
-msgstr "Úspěšně vloženo"
-
-#: admin/new.php:116
-msgid "as questionnaire"
-msgstr "jako dotazník"
-
-#: admin/new.php:116
-msgid "linked to"
-msgstr "propojeno s"
-
-#: admin/new.php:119
-msgid "Error: Failed to insert questionnaire"
-msgstr "Chyba: Nelze vložit dotazník"
-
-#: admin/new.php:130
-#: admin/questionnairelist.php:328
-msgid "Name for questionnaire:"
-msgstr "Název dotazníku:"
-
-#: admin/new.php:131
-msgid "Select limesurvey instrument:"
-msgstr "Výběr nástroje limesurvey:"
-
-#: admin/new.php:145
-#: admin/new.php:169
-msgid "Existing instrument:"
-msgstr "Existující nástroj:"
-
-#: admin/new.php:151
-#: admin/index.php:51
-msgid "Create an instrument in Limesurvey"
-msgstr "Vytvořit nástroj v limesurvey:"
-
-#: admin/new.php:154
-msgid "Respondent selection type:"
-msgstr "Typ výběru respondenta:"
-
-#: admin/new.php:155
-msgid "No respondent selection (go straight to questionnaire)"
-msgstr "Žádný výběr respondenta (přejít přímo k dotazníku)"
-
-#: admin/new.php:155
-msgid "Use basic respondent selection text (below)"
-msgstr "Použít základní text výběru respondenta (níže)"
-
-#: admin/new.php:193
-#: admin/questionnairelist.php:329
-msgid "Restrict appointments to shifts?"
-msgstr "Omezit schůzky na směny?"
-
-#: admin/new.php:194
-#: admin/questionnairelist.php:330
-msgid "Restrict work to shifts?"
-msgstr "Omezit práci na směny?"
-
-#: admin/new.php:195
-#: admin/questionnairelist.php:331
-msgid "Questionnaire for testing only?"
-msgstr "Dotazník pouze pro zkoušku?"
-
-#: admin/new.php:196
-#: admin/questionnairelist.php:332
-msgid "Allow for respondent self completion via email invitation?"
-msgstr "Umožnit respondentům dotazník vyplnit pomocí e-mailové pozvánky?"
-
-#: admin/new.php:198
-#: admin/questionnairelist.php:334
-msgid "Questionnaire display mode for respondent"
-msgstr "Režim zobrazení dotazníku pro respondenta"
-
-#: admin/new.php:198
-#: admin/questionnairelist.php:334
-msgid "All in one"
-msgstr "Vše v jednom"
-
-#: admin/new.php:198
-#: admin/questionnairelist.php:334
-msgid "Question by question"
-msgstr "Otázka za otázkou"
-
-#: admin/new.php:198
-#: admin/questionnairelist.php:334
-msgid "Group at a time"
-msgstr "Skupina najednou"
-
-#: admin/new.php:199
-#: admin/questionnairelist.php:335
-msgid "Limesurvey template for respondent"
-msgstr "Šablona Limesurvey pro respondenta"
-
-#: admin/new.php:211
-#: admin/questionnairelist.php:350
-msgid "URL to forward respondents on self completion (required)"
-msgstr "URL pro přesměrování respondentů při samo-dokončení (vyžadováno)"
-
-#: admin/new.php:214
-#: admin/questionnairelist.php:353
-msgid "Respondent selection introduction:"
-msgstr "Úvod výběru respondenta:"
-
-#: admin/new.php:215
-#: admin/questionnairelist.php:354
-msgid "Respondent selection project introduction:"
-msgstr "Úvod projektu výběru respondenta:"
-
-#: admin/new.php:216
-#: admin/questionnairelist.php:355
-msgid "Respondent selection callback (already started questionnaire):"
-msgstr "Zpětné vrácení výběru respondenta (dotazník již zahájen):"
-
-#: admin/new.php:217
-#: admin/questionnairelist.php:356
-msgid "Message to leave on an answering machine:"
-msgstr "Zprávu, kterou zanechat na záznamníku:"
-
-#: admin/new.php:219
-#: admin/questionnairelist.php:358
-msgid "Project end text (thank you screen):"
-msgstr "Text na konci projektu (obrazovka poděkování):"
-
-#: admin/new.php:220
-#: admin/questionnairelist.php:359
-msgid "Project information for interviewers/operators:"
-msgstr "Informace o projektu pro tazatele/operátory:"
-
-#: admin/new.php:221
-msgid "Create Questionnaire"
-msgstr "Vytvořit dotazník"
-
-#: admin/casesbyoutcome.php:52
-msgid "Cases by outcome"
-msgstr "Případy podle výsledku"
-
-#: admin/casesbyoutcome.php:84
-msgid "No cases with this outcome"
-msgstr "Žádné případy s tímto výsledkem"
-
-#: admin/casesbyoutcome.php:91
-msgid "Error with input"
-msgstr "Chyba se vstupem"
-
-#: admin/addshift.php:87
-#: admin/addshift.php:140
-msgid "Add shifts"
-msgstr "Přidat směny"
-
-#: admin/addshift.php:88
-msgid ""
-"You must be an operator (as well as have administrator access) to add/edit "
-"shifts"
-msgstr ""
-"Musíte být operátor (a také mít správcovský přístup) pro přidání/změnu směn"
-
-#: admin/addshift.php:163
-msgid "Add shifts in your Time Zone"
-msgstr "Přidat směny ve vašem časvém pásmu"
-
-#: admin/addshift.php:166
-msgid ""
-"Shifts allow you to restrict appointments being made, and interviewers to "
-"working on a particlar project at defined times."
-msgstr ""
-"Směny Vám umožňují omezit vytváření schůzek a tazatele na práci v konkrétním "
-"projektu v určených časech."
-
-#: admin/addshift.php:173
-msgid "Select year"
-msgstr "Vyberte rok"
-
-#: admin/addshift.php:184
-msgid "Select week of year"
-msgstr "Vyberte týden v roce"
-
-#: admin/addshift.php:238
-msgid "Use shift?"
-msgstr "Použít směnu?"
-
-#: admin/addshift.php:263
-msgid "Submit changes"
-msgstr "Odeslat změny"
-
-#: admin/questionnairelist.php:274
-msgid "Questionnaire list"
-msgstr "Seznam dotazníků"
-
-#: admin/questionnairelist.php:325
-msgid "Edit instrument in Limesurvey"
-msgstr "Upravit nástroj v Limesurvey"
-
-#: admin/questionnairelist.php:357
-msgid "Edit respondent selection instrument in Limesurvey"
-msgstr "Upravit nástroj výběru respondenta v Limesurvey"
-
-#: admin/questionnairelist.php:360
-msgid "Update Questionnaire"
-msgstr "Aktualizovat dotazník"
-
-#: admin/questionnairelist.php:379
-msgid "Any collected data and the limesurvey instrument will NOT be deleted"
-msgstr "Veškerá nashromážděná data a nástroj limesurvey NEBUDOU smazány"
-
-#: admin/questionnairelist.php:380
-msgid ""
-"The questionnaire will be deleted from queXS including call history, cases, "
-"case notes, respondent details, appointments and the links between "
-"operators, clients and the questionnaire"
-msgstr ""
-"Dotazník bude smazán z queXS včetně historie volání, případů, poznámek, "
-"údajů o respondentech, schůzkách a propojení mezi operátory, klienty a "
-"dotazníkem."
-
-#: admin/questionnairelist.php:381
-msgid "Please confirm you wish to delete the questionnaire"
-msgstr "Prosím potvrďte smazání dotazníku."
-
-#: admin/questionnairelist.php:384
-msgid "Delete this questionnaire"
-msgstr "Smazat tento dotazník"
-
-#: admin/index.php:46
-msgid "Administrative Tools"
-msgstr "Nástroje správce"
-
-#: admin/index.php:50
-msgid "Questionnaire creation and management"
-msgstr "Vytvoření dotazníku a správa"
-
-#: admin/index.php:52
-msgid "Create a new questionnaire"
-msgstr "Vytvořit nový dotazník"
-
-#: admin/index.php:53
-msgid "Questionnaire management"
-msgstr "Správa dotazníku"
-
-#: admin/index.php:54
-msgid "Administer instruments with Limesurvey"
-msgstr "Správa nástrojů Limesurvey"
-
-#: admin/index.php:56
-msgid "Sample/List management"
-msgstr "Správa vzorků/seznamu"
-
-#: admin/index.php:57
-msgid "Import a sample file (in CSV form)"
-msgstr "Importovat vzorkový soubor (ve formátu CSV)"
-
-#: admin/index.php:58
-msgid "Sample management"
-msgstr "Správa vzorku"
-
-#: admin/index.php:59
-msgid "Assign samples to questionnaires"
-msgstr "Přidělit vzorky k dotazníkům"
-
-#: admin/index.php:60
-msgid "Set values in questionnaire to pre fill"
-msgstr "Nastavit hodnoty v dotazníku pro předvyplnění"
-
-#: admin/index.php:66
-#: admin/index.php:68
-#: admin/index.php:111
-msgid "Operator management"
-msgstr "Správa operátorů"
-
-#: admin/index.php:67
-msgid "Add operators to the system"
-msgstr "Přidat operátory do systému"
-
-#: admin/index.php:69
-#: admin/operatorquestionnaire.php:155
-#: admin/operatorquestionnaire.php:276
-msgid "Assign operators to questionnaires"
-msgstr "Přidělit operátory k dotazníkům"
-
-#: admin/index.php:70
-#: admin/operatorskill.php:272
-msgid "Modify operator skills"
-msgstr "Upravit schopnosti operátora"
-
-#: admin/index.php:72
-msgid "Availability and shift management"
-msgstr "Dostupnost a správa směny"
-
-#: admin/index.php:73
-msgid "Manage availablity groups"
-msgstr "Správa skupin dostupnosti"
-
-#: admin/index.php:74
-msgid "Assign availabilities to questionnaires"
-msgstr "Přidělit dostupnosti k dotazníkům"
-
-#: admin/index.php:75
-msgid "Shift management (add/remove)"
-msgstr "Správa směn (přidat/odstranit)"
-
-#: admin/index.php:77
-msgid "Questionnaire progress"
-msgstr "Postup dotazníku"
-
-#: admin/index.php:78
-msgid "Display all future appointments"
-msgstr "Zobrazit všechny budoucí schůzky"
-
-#: admin/index.php:79
-msgid "Sample call attempts report"
-msgstr "Záznam pokusů volání vzorku"
-
-#: admin/index.php:81
-msgid "Questionnaire outcomes"
-msgstr "Výsledky dotazníku"
-
-#: admin/index.php:87
-msgid "Client management"
-msgstr "Správa klientů"
-
-#: admin/index.php:88
-msgid "Add clients to the system"
-msgstr "Přidat klienty do systému"
-
-#: admin/index.php:92
-msgid "Assign outcomes to cases"
-msgstr "Přidělit výsledky k případům"
-
-#: admin/index.php:93
-msgid "Search the sample"
-msgstr "Prohledat vzorek"
-
-#: admin/index.php:96
-msgid "Case status and assignment"
-msgstr "Stav a přidělení případu"
-
-#: admin/index.php:99
-msgid "System settings"
-msgstr "Nastavení systému"
-
-#: admin/index.php:100
-msgid "Set default timezone list"
-msgstr "Nastavit seznam výchozích časových pásem"
-
-#: admin/index.php:101
-msgid "Set default shift times"
-msgstr "Nastavit výchozí doby směn"
-
-#: admin/index.php:102
-msgid "Set call restriction times"
-msgstr "Nastavit doby omezení volání"
-
-#: admin/index.php:103
-msgid "Set centre information"
-msgstr "Nastavit informace o centru"
-
-#: admin/index.php:105
-msgid "Start and monitor system wide case sorting"
-msgstr "Spustit a sledovat celosystémové řazení případů"
-
-#: admin/index.php:109
-msgid "VoIP"
-msgstr "VoIP"
-
-#: admin/index.php:110
-msgid "Start and monitor VoIP"
-msgstr "Spustit a sledovat VoIP"
-
-#: admin/index.php:112
-msgid "Extension status"
-msgstr "Stav rozšíření"
-
-#: admin/samplelist.php:117
-#: admin/samplelist.php:127
-#: admin/samplelist.php:134
-#: admin/samplelist.php:270
-#: admin/samplelist.php:279
-msgid "Rename"
-msgstr "Přejmenovat"
-
-#: admin/samplelist.php:146
-#: admin/samplelist.php:179
-#: admin/samplelist.php:269
-#: admin/samplelist.php:279
-msgid "Operator viewing permissions"
-msgstr "Oprávnění zobrazení operátora"
-
-#: admin/samplelist.php:182
-msgid ""
-"Select which fields from this sample should be able to be viewed by operators"
-msgstr "Vyberte která pole pro tento vzorek mohou operátoři vidět"
-
-#: admin/samplelist.php:187
-#: admin/samplelist.php:224
-msgid "Field"
-msgstr "Pole"
-
-#: admin/samplelist.php:187
-#: admin/samplelist.php:224
-msgid "Example data"
-msgstr "Příklad dat"
-
-#: admin/samplelist.php:190
-msgid "Save changes"
-msgstr "Uložit změny"
-
-#: admin/samplelist.php:202
-#: admin/samplelist.php:216
-#: admin/samplelist.php:224
-#: admin/samplelist.php:268
-#: admin/samplelist.php:279
-msgid "Deidentify"
-msgstr "Deidentifikace"
-
-#: admin/samplelist.php:219
-msgid ""
-"Select which fields from this sample to deidentify. Deidentified fields will "
-"be permanently deleted from the sample."
-msgstr ""
-"Vyberte která pole v tomto vzorku mají být deidentifikována. Tato pole jsou "
-"natrvalo odstraněna ze vzorku"
-
-#: admin/samplelist.php:227
-msgid "Delete selected fields"
-msgstr "Smazat vybraná pole"
-
-#: admin/samplelist.php:276
-msgid "Sample list"
-msgstr "Seznam vzorků"
-
-#: admin/import.php:51
-msgid "Import: Validating and uploading"
-msgstr "Import: Ověřování a nahrávání"
-
-#: admin/import.php:67
-msgid "Successfully imported file"
-msgstr "Soubor úspěšně importován"
-
-#: admin/import.php:71
-msgid "Error importing file. Please try again"
-msgstr "Chyba při importování souboru. Zkuste to znovu"
-
-#: admin/import.php:75
-msgid "Error:"
-msgstr "Chyba:"
-
-#: admin/import.php:75
-msgid "Please go back in your browser and fix the problem"
-msgstr "Prosím vraťte se ve svém prohlížeči a problém opravte"
-
-#: admin/import.php:87
-msgid "Import: Select columns to import"
-msgstr "Import: Vyberte sloupce pro import"
-
-#: admin/import.php:117
-msgid "Choose the CSV sample file to upload:"
-msgstr "Zvolte vzorový soubor CSV pro nahrání:"
-
-#: admin/import.php:118
-msgid "Description for file:"
-msgstr "Popis souboru:"
-
-#: admin/import.php:119
-msgid "Add sample"
-msgstr "Přidat vzorek"
-
-#: admin/samplecallattempts.php:107
-msgid "Number of cases"
-msgstr "Počet případů"
-
-#: admin/samplecallattempts.php:107
-msgid "Call attempts made"
-msgstr "Počet pokusů o volání"
-
-#: admin/samplecallattempts.php:170
-msgid "Sample call attempt"
-msgstr "Vzorový pokus o volání"
-
-#: admin/samplecallattempts.php:175
-msgid "Overall"
-msgstr "Celkem"
-
-#: admin/samplecallattempts.php:195
-msgid "Please select a quota"
-msgstr "Prosím vyberte kvótu"
-
-#: admin/samplecallattempts.php:201
-msgid "No calls for this quota"
-msgstr "Žádná volání pro tuto kvótu"
-
-#: admin/samplecallattempts.php:205
-msgid "No calls for this sample"
-msgstr "Žádná volání pro tento vzorek"
-
-#: admin/samplecallattempts.php:210
-msgid "No calls for this questionnaire"
-msgstr "Žádná volání pro tento dotazník"
-
-#: admin/operatorskill.php:149
-msgid "Assign operators to Skills"
-msgstr "Přidělit operátory ke zkušenostem"
-
-#: admin/operatorskill.php:151
-msgid ""
-"Set which types of cases will be made available to each operator. Please "
-"note that all operators will be allowed to assign all possible outcomes to a "
-"case. This restricts which ones will be assigned to an operator."
-msgstr ""
-"Vyberte které typy případů budou dostupné všem operátorům. Nezapomeňte, že "
-"všichni operátoři budou mít oprávnění k případu přidělit všechny možné "
-"výsledky. Toto omezuje výsledky přidělené operátorovi."
-
-#: admin/questionnaireprefill.php:99
-msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
-msgstr "Předvyplnit dotazník: Nastavte hodnoty dotazníku pro předvyplnění"
-
-#: admin/questionnaireprefill.php:110
-msgid "Current pre fills (click to delete)"
-msgstr "Současná předvyplnění (klikněte pro podrobnosti)"
-
-#: admin/questionnaireprefill.php:120
-msgid "Currently no pre fills"
-msgstr "V současnosti žádná předvyplnění"
-
-#: admin/questionnaireprefill.php:132
-msgid "Select a question to pre fill"
-msgstr "Vyberte otázku pro předvyplnění"
-
-#: admin/questionnaireprefill.php:155
-msgid "Enter a value to pre fill this question with:"
-msgstr "Zadejte hodnotu pro předvyplnění této otázky:"
-
-#: admin/questionnaireprefill.php:157
-msgid "Possible uses:"
-msgstr "Možná použití:"
-
-#: admin/questionnaireprefill.php:159
-msgid "{Respondent:firstName} First name of the respondent"
-msgstr "{Respondent:firstName} Jméno respondenta"
-
-#: admin/questionnaireprefill.php:160
-msgid "{Respondent:lastName} Last name of the respondent"
-msgstr "{Respondent:lastName} Příjmení respondenta"
-
-#: admin/questionnaireprefill.php:161
-msgid "{Sample:var} A record from the sample where the column name is 'var'"
-msgstr "{Sample:var} Záznam ze vzorku, kde název sloupce je 'var'."
-
-#: admin/questionnaireprefill.php:174
-msgid "The value to pre fill"
-msgstr "Hodnota pro předvyplnění"
-
-#: admin/questionnaireprefill.php:175
-msgid "or: Select pre fill from sample list"
-msgstr "nebo: Vyberte předvyplnění ze seznamu vzorků"
-
-#: admin/questionnaireprefill.php:181
-msgid "Add pre fill"
-msgstr "Přidat předvyplnění"
-
-#: admin/voipmonitor.php:73
-#: admin/voipmonitor.php:95
-#: admin/voipmonitor.php:96
-msgid "Monitor VoIP Process"
-msgstr "Sledovat proces VoIP"
-
-#: admin/voipmonitor.php:79
-msgid ""
-"Kill signal sent: Please wait... (Note: Process will be stalled until there "
-"is activity on the VoIP Server)"
-msgstr ""
-"Signál ukončení zaslán: Prosím čekejte... (Poznámka: Proces bude pozastaven "
-"dokud nebude na serveru VoIP aktivita)"
-
-#: admin/voipmonitor.php:84
-msgid "(requires activity on the VoIP Server to take effect)"
-msgstr "(pro projevení změn musí být aktivita na serveru VoIP)"
-
-#: admin/voipmonitor.php:97
-msgid "Click here to begin monitoring the VoIP Process"
-msgstr "Klikněte zde pro spuštění sledování procesů VoIP"
 
 #: admin/casestatus.php:88
 #: admin/casestatus.php:89
@@ -3371,121 +3025,462 @@ msgstr ""
 "bude potlačen normální proces plánování a budou volány hned, jak operátor "
 "bude dostupný."
 
-#: admin/assignsample.php:115
-#: admin/assignsample.php:170
-msgid "Assign Sample: Select sample to assign"
-msgstr "Přidělit vzorek: Zvolte vzorek pro přidělení"
+#: admin/dataoutput.php:202
+msgid "Download data for this questionnaire via Limesurvey"
+msgstr "Stáhnout data pro tento dotazník přes Limesurvey"
 
-#: admin/assignsample.php:131
-msgid "Edit sample details"
-msgstr "Upravit podrobnosti vzorku"
+#: admin/dataoutput.php:204
+msgid "Please select a sample"
+msgstr "Prosím vyberte vzorek"
 
-#: admin/assignsample.php:143
-#: admin/assignsample.php:222
-msgid "Max calls (0 for unlimited)"
-msgstr "Max volání (0 pro neomezeně)"
+#: admin/dataoutput.php:211
+msgid "Download data for this sample via Limesurvey"
+msgstr "Stáhnout data pro tento vzorek přes Limesurvey"
 
-#: admin/assignsample.php:144
-#: admin/assignsample.php:223
-msgid "Max call attempts (0 for unlimited)"
-msgstr "Max pokusů o volání (0 pro neomezeně)"
+#: admin/dataoutput.php:218
+msgid "Download key file: select sample var"
+msgstr "Stáhnout soubor s klíčem: vyberte vzorkový var"
 
-#: admin/assignsample.php:145
-#: admin/assignsample.php:224
-msgid "Number of answering machine messages to leave per case (0 for never)"
-msgstr ""
-"Počet zpráv na záznamníku které zanechat na jeden případ (0 pro nikdy)"
+#: admin/dataoutput.php:222
+msgid "Download complete key file"
+msgstr "Stáhnout celý soubor s klíčem"
 
-#: admin/assignsample.php:146
-#: admin/assignsample.php:225
-msgid "Select from sample randomly? (otherwise sequentially)"
-msgstr "Vybrat ze vzorku náhodně? (jinak popořadě)"
+#: admin/dataoutput.php:225
+msgid "Download complete sample file with current outcomes"
+msgstr "Stáhnout celý soubor vzorku se současnými výsledky"
 
-#: admin/assignsample.php:177
-msgid "Samples selected for this questionnaire"
-msgstr "Vzorky vybrané pro tento dotazník"
+#: admin/callrestrict.php:82
+msgid "Modify call restriction times"
+msgstr "Změnit časy omezení volání"
 
-#: admin/assignsample.php:180
-#: admin/assignsample.php:181
-msgid "Unlimited"
-msgstr "Neomezeno"
+#: admin/callrestrict.php:135
+msgid "Save changes to restriction times"
+msgstr "Uložit změny dob omezení"
 
-#: admin/assignsample.php:182
-msgid "Sequential"
-msgstr "Pořadové"
+#: admin/operatorlist.php:60
+msgid "If changing usernames, you must specify a new password"
+msgstr "Při změně uživatelských jmen musíte zadat nové heslo"
 
-#: admin/assignsample.php:182
-msgid "Random"
-msgstr "Náhodné"
+#: admin/operatorlist.php:90
+msgid "Successfully updated user"
+msgstr "Uživatel úspěšně aktualizován"
 
-#: admin/assignsample.php:183
-msgid "Never"
-msgstr "Nikdy"
-
-#: admin/assignsample.php:193
-msgid "Max calls"
-msgstr "Max volání"
-
-#: admin/assignsample.php:193
-msgid "Max call attempts"
-msgstr "Max pokusů o volání"
-
-#: admin/assignsample.php:193
-msgid "Answering machine messages"
-msgstr "Zprávy záznamníku"
-
-#: admin/assignsample.php:193
-msgid "Selection type"
-msgstr "Typ výběru"
-
-#: admin/assignsample.php:193
-msgid "Unassign sample"
-msgstr "Zrušit přiřazení vzorku"
-
-#: admin/assignsample.php:195
-msgid "No samples selected for this questionnaire"
-msgstr "Pro tento dotazník nejsou zvoleny žádné vzorky"
-
-#: admin/assignsample.php:209
-msgid "Add a sample to this questionnaire:"
-msgstr "Přidejte vzorek k tomuto dotazníku:"
-
-#: admin/assignsample.php:212
-msgid "Select sample:"
-msgstr "Vyberte vzorek"
-
-#: admin/supervisorchat.php:63
+#: admin/operatorlist.php:94
 msgid ""
-"Allow interviewers to chat with the supervisor over XMPP (Jabber). Required "
-"is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will "
-"need XMPP/Jabber accounts."
+"Failed to update user. Please make sure the username and extension are unique"
 msgstr ""
-"Umožňuje tazatelům používat chat s vedoucím pomocí XMPP (Jabber). Požadavkem "
-"je server XMPP/Jabber s BOSH. Operátoři a vedoucí potřebují účty XMPP/Jabber"
+"Nelze aktualizovat uživatele. Ujistěte se prosím, že uživatelské jméno a "
+"přípony jsou jedinečné"
 
-#: admin/supervisorchat.php:73
-msgid "Enable supervisor chat?"
-msgstr "Povolit chat s vedoucím?"
+#: admin/operatorlist.php:103
+msgid "Operator edit"
+msgstr "Úprava operátora"
 
-#: admin/supervisorchat.php:74
-msgid "Set BOSH URL"
-msgstr "Nastavit URL BOSH"
+#: admin/operatorlist.php:124
+#: admin/operatorlist.php:258
+msgid "Username"
+msgstr "Uživatelské jméno"
 
-#: admin/supervisorchat.php:75
-msgid "Supervisor XMPP/Jabber id"
-msgstr "XMPP/Jabber ID vedoucího"
+#: admin/operatorlist.php:128
+msgid "Update password (leave blank to keep existing password)"
+msgstr "Aktualizovat heslo (nechejte prázdné pro použití současného hesla)"
 
-#: admin/supervisorchat.php:76
-msgid "Update"
-msgstr "Aktualizovat"
+#: admin/operatorlist.php:134
+msgid "Extension Password"
+msgstr "Heslo rozšíření"
 
-#: admin/centreinfo.php:66
-msgid "Set centre information: "
-msgstr "Nastavit informační centrum "
+#: admin/operatorlist.php:137
+msgid "Uses chat"
+msgstr "Používá chat"
 
-#: admin/centreinfo.php:67
-msgid "Update centre information"
-msgstr "Aktualizovat informace o centru"
+#: admin/operatorlist.php:138
+msgid "Timezone"
+msgstr "Časové pásmo"
+
+#: admin/operatorlist.php:140
+msgid "Uses VoIP"
+msgstr "Používá VoIP"
+
+#: admin/operatorlist.php:143
+msgid "Update operator"
+msgstr "Aktualizovat operátora"
+
+#: admin/operatorlist.php:236
+msgid "Windows bat file"
+msgstr "Soubor dávky Windows"
+
+#: admin/operatorlist.php:237
+msgid "*nix script file"
+msgstr "soubor skriptu *nix"
+
+#: admin/operatorlist.php:245
+msgid "Enable VoIP"
+msgstr "Povolit VoIP"
+
+#: admin/operatorlist.php:247
+msgid "Disable VoIP"
+msgstr "Zakázat VoIP"
+
+#: admin/operatorlist.php:255
+msgid "Operator list"
+msgstr "Seznam operátorů"
+
+#: admin/operatorlist.php:262
+msgid ""
+"Download the file for each user and save in the same folder as the voip.exe "
+"executable. When the file is executed, it will run the voip.exe program with "
+"the correct connection details to connect the operator to the VoIP server"
+msgstr ""
+"Stáhnout soubor za každého uživatele a uložit ho ve stejné složce jako "
+"soubor voip.exe. Když je soubor spuštěn, spustí soubor voip.exe se správnými "
+"údaii o spojení pro připojení operátora k serveru VoIP"
+
+#: admin/operatorlist.php:264
+msgid "Download Windows VoIP Executable"
+msgstr "Stáhnout spustitelný soubor VoIP pro Windows"
+
+#: admin/operatorlist.php:265
+msgid "Download Linux VoIP Executable"
+msgstr "Stáhnout spustitelný soubor VoIP pro Linux"
+
+#: admin/operatorlist.php:270
+msgid "Enable/Disable VoIP"
+msgstr "Povolit/Zakázat VoIP"
+
+#: admin/operatorlist.php:271
+msgid "Windows VoIP"
+msgstr "Windows VoIP"
+
+#: admin/operatorlist.php:272
+msgid "*nix VoIP"
+msgstr "*nix VoIP"
+
+#: admin/samplecallattempts.php:107
+msgid "Number of cases"
+msgstr "Počet případů"
+
+#: admin/samplecallattempts.php:107
+msgid "Call attempts made"
+msgstr "Počet pokusů o volání"
+
+#: admin/samplecallattempts.php:170
+msgid "Sample call attempt"
+msgstr "Vzorový pokus o volání"
+
+#: admin/samplecallattempts.php:175
+msgid "Overall"
+msgstr "Celkem"
+
+#: admin/samplecallattempts.php:195
+msgid "Please select a quota"
+msgstr "Prosím vyberte kvótu"
+
+#: admin/samplecallattempts.php:201
+msgid "No calls for this quota"
+msgstr "Žádná volání pro tuto kvótu"
+
+#: admin/samplecallattempts.php:205
+msgid "No calls for this sample"
+msgstr "Žádná volání pro tento vzorek"
+
+#: admin/samplecallattempts.php:210
+msgid "No calls for this questionnaire"
+msgstr "Žádná volání pro tento dotazník"
+
+#: admin/questionnairelist.php:275
+msgid "Questionnaire list"
+msgstr "Seznam dotazníků"
+
+#: admin/questionnairelist.php:326
+msgid "Edit instrument in Limesurvey"
+msgstr "Upravit nástroj v Limesurvey"
+
+#: admin/questionnairelist.php:358
+msgid "Edit respondent selection instrument in Limesurvey"
+msgstr "Upravit nástroj výběru respondenta v Limesurvey"
+
+#: admin/questionnairelist.php:361
+msgid "Update Questionnaire"
+msgstr "Aktualizovat dotazník"
+
+#: admin/questionnairelist.php:380
+msgid "Any collected data and the limesurvey instrument will NOT be deleted"
+msgstr "Veškerá nashromážděná data a nástroj limesurvey NEBUDOU smazány"
+
+#: admin/questionnairelist.php:381
+msgid ""
+"The questionnaire will be deleted from queXS including call history, cases, "
+"case notes, respondent details, appointments and the links between "
+"operators, clients and the questionnaire"
+msgstr ""
+"Dotazník bude smazán z queXS včetně historie volání, případů, poznámek, "
+"údajů o respondentech, schůzkách a propojení mezi operátory, klienty a "
+"dotazníkem."
+
+#: admin/questionnairelist.php:382
+msgid "Please confirm you wish to delete the questionnaire"
+msgstr "Prosím potvrďte smazání dotazníku."
+
+#: admin/questionnairelist.php:385
+msgid "Delete this questionnaire"
+msgstr "Smazat tento dotazník"
+
+#: admin/timezonetemplate.php:87
+msgid "Add/Remove Timezones"
+msgstr "Přidat/Odstranit časové pásmo"
+
+#: admin/timezonetemplate.php:101
+msgid "Click to remove a Timezone from the default list"
+msgstr "Klikněte pro odstranění časového pásmu z výchozího seznamu"
+
+#: admin/timezonetemplate.php:113
+msgid "Add a Timezone:"
+msgstr "Přidat časové pásmo:"
+
+#: admin/timezonetemplate.php:116
+msgid "Timezone: "
+msgstr "Časové pásmo: "
+
+#: admin/timezonetemplate.php:117
+msgid "Add Timezone"
+msgstr "Přidat časové pásmo"
+
+#: admin/supervisor.php:89
+msgid "Enter a case id or select a case from the list below:"
+msgstr "Zadejte ID případu nebo ho vyberte ze seznamu níže:"
+
+#: admin/supervisor.php:100
+msgid "Select case from list of cases referred to the supervisor:"
+msgstr "Vyberte případ ze seznamu nebo případů uvedené dozorcem:"
+
+#: admin/supervisor.php:109
+msgid "Select case"
+msgstr "Vybrat případ"
+
+#: admin/supervisor.php:132
+msgid "Set an outcome for this call"
+msgstr "Vyberte výsledek pro volání"
+
+#: admin/supervisor.php:145
+#: admin/supervisor.php:330
+msgid "Set outcome"
+msgstr "Nastavit výsledek"
+
+#: admin/supervisor.php:256
+msgid "No appointments for this case"
+msgstr "Žádné schůzky pro tento případ"
+
+#: admin/supervisor.php:258
+msgid "Create appointment for this case"
+msgstr "Vytvořit schůzku pro tento případ"
+
+#: admin/supervisor.php:270
+msgid "Call list"
+msgstr "Seznam volání"
+
+#: admin/supervisor.php:276
+msgid "Change outcome"
+msgstr "Změnit výsledek"
+
+#: admin/supervisor.php:289
+msgid "Case notes"
+msgstr "Poznámky případu"
+
+#: admin/supervisor.php:311
+msgid "Modify responses for this case"
+msgstr "Změnit odpovědi pro tento případ"
+
+#: admin/supervisor.php:313
+msgid "Case not yet started in Limesurvey"
+msgstr "Případ zatím nezahájen v Limesurvey"
+
+#: admin/supervisor.php:317
+msgid "Set a case outcome"
+msgstr "Nastavit výsledek případu"
+
+#: admin/supervisor.php:367
+msgid "Update case availability"
+msgstr "Aktualizovat dostupnost případu"
+
+#: admin/supervisor.php:379
+msgid "Assign this case to operator (will appear as next case for them)"
+msgstr ""
+"Přidělit tento případ k operátorovi (bude jim zobrazen jako další případ)"
+
+#: admin/supervisor.php:391
+msgid "Assign this case to operator"
+msgstr "Přidělit tento případ k operátorovi"
+
+#: admin/supervisor.php:399
+msgid "Case does not exist"
+msgstr "Případ neexistuje"
+
+#: voip/downloadvoipclient.php:52
+msgid "Error: Cannot write to temporary directory"
+msgstr "Chyba: nelze zapisovat do dočasného adresáře"
+
+#: functions/functions.operator.php:166
+msgid "morning"
+msgstr "ráno"
+
+#: functions/functions.operator.php:167
+msgid "afternoon"
+msgstr "odpoledne"
+
+#: functions/functions.operator.php:168
+msgid "evening"
+msgstr "večer"
+
+#: functions/functions.operator.php:877
+msgid ""
+"ERROR: You do not have server side authentication enabled therefore queXS "
+"cannot determine which user is accessing the system."
+msgstr ""
+"CHYBA: Nemáte povoleno ověření na straně serveru a proto queXS nemůže "
+"zjistit kteří uživatelé vstupují do systému"
+
+#: functions/functions.calendar.php:265
+msgid "First name:"
+msgstr "Jméno:"
+
+#: functions/functions.calendar.php:266
+msgid "Last  name:"
+msgstr "Příjmení:"
+
+#: functions/functions.calendar.php:271
+msgid "Time Zone:"
+msgstr "Časové pásmo:"
+
+#: functions/functions.calendar.php:328
+msgid "Shift from:"
+msgstr "Směna od:"
+
+#: functions/functions.calendar.php:335
+msgid "Start Time"
+msgstr "Čas zahájení"
+
+#: functions/functions.calendar.php:385
+msgid "End Time"
+msgstr "Čas ukončení"
+
+#: functions/functions.performance.php:469
+msgid "No shift"
+msgstr "Žádná směna"
+
+#: functions/functions.performance.php:492
+msgid "Total completions"
+msgstr "Celkem dokončení"
+
+#: functions/functions.performance.php:521
+msgid "Completions this shift"
+msgstr "Dokončení tuto směnu"
+
+#: functions/functions.performance.php:544
+#: functions/functions.performance.php:590
+msgid "No previous shift"
+msgstr "Žádná předchozí směna"
+
+#: functions/functions.performance.php:564
+msgid "Completions on the previous shift"
+msgstr "Dokončení v předchozí směně"
+
+#: functions/functions.performance.php:611
+msgid "Completions this time on the previous shift"
+msgstr "Dokončení v tuto dobu v předchozí směně"
+
+#: functions/functions.performance.php:629
+msgid "No calls made for this shift"
+msgstr "Tuto směnu nikam nevoláno"
+
+#: functions/functions.performance.php:631
+msgid "Top CPH for this shift"
+msgstr "Nejvyšší volání za hodinu pro tuto směnu"
+
+#: functions/functions.performance.php:648
+msgid "No calls made for this project"
+msgstr "V tomto projektu nebylo nikdy voláno"
+
+#: functions/functions.performance.php:650
+msgid "Top CPH"
+msgstr "Nejvyšší volání za hodinu"
+
+#: functions/functions.import.php:89
+msgid "Duplicate name"
+msgstr "Duplicitní název"
+
+#: functions/functions.import.php:111
+msgid "You must select one and one only Primary Phone number"
+msgstr "Musíte zvolit jedno a pouze jedno Hlavní telefonní číslo"
+
+#: functions/functions.import.php:127
+msgid "Import?"
+msgstr "Import?"
+
+#: functions/functions.import.php:127
+msgid "Type"
+msgstr "Typ"
+
+#: functions/functions.voip.php:449
+msgid "online"
+msgstr "připojeno"
+
+#: functions/functions.voip.php:449
+msgid "offline"
+msgstr "odpojeno"
+
+#: functions/functions.voip.php:530
+msgid "Disconnected"
+msgstr "Odpojeno"
+
+#: functions/functions.voip.php:532
+msgid "Reconnected"
+msgstr "Znovu připojeno"
+
+#: functions/functions.voip.php:555
+#: functions/functions.voip.php:567
+#: functions/functions.voip.php:579
+#: functions/functions.voip.php:589
+#: functions/functions.voip.php:598
+msgid " Extension "
+msgstr " Rozšíření "
+
+#: functions/functions.voip.php:589
+msgid "Unregistered"
+msgstr "Neregistrováno"
+
+#: functions/functions.voip.php:598
+msgid "Registered"
+msgstr "Registrováno"
+
+#: functions/functions.freepbx.php:138
+#, php-format
+msgid "Reload failed because retrieve_conf encountered an error: %s"
+msgstr "Znovu načtení selhalo protože retrieve_conf narazilo na chybu: %s"
+
+#: functions/functions.freepbx.php:140
+msgid "retrieve_conf failed, config not applied"
+msgstr "retrieve_conf selhalo, nastavení není použito"
+
+#: functions/functions.freepbx.php:146
+msgid ""
+"Reload failed because FreePBX could not connect to the asterisk manager "
+"interface."
+msgstr ""
+"Znovu načtení selhalo protože FreePBX se nemohlo připojit ke správcovskému "
+"rozhraní asterisk."
+
+#: functions/functions.freepbx.php:165
+msgid ""
+"Could not reload the FOP operator panel server using the bounce_op.sh "
+"script. Configuration changes may not be reflected in the panel display."
+msgstr ""
+"Nelze znovu načíst server panelu operátora FOP, pomocí skriptu bounce_op.sh. "
+"ZMěny nastavení se nemusí na zobrazení panelu projevit."
+
+#: functions/functions.freepbx.php:174
+#, php-format
+msgid "Exit code was %s and output was: %s"
+msgstr "Kód ukončení byl %s a výstup byl: %s"
 
 #: display/index.php:111
 msgid "Display"
@@ -3498,6 +3493,15 @@ msgstr "Nemáte přiděleny žádné dotazníky"
 #: client/index.php:123
 msgid "You are not a valid client"
 msgstr "Nejste platným klientem"
+
+#: include/php-gettext-1.0.11/examples/pigs_dropin.php:77
+#: include/php-gettext-1.0.11/examples/pigs_fallback.php:76
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+"A ten příběh je vyprávěn takto.\n"
+"\n"
 
 #~ msgid "Update timezone"
 #~ msgstr "Aktualizovat časové pásmo"

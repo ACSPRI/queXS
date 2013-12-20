@@ -1,3 +1,11 @@
+queXS 1.9.2 - Changes since 1.9.1
+
+New Feature: Auto dial (set AUTO_DIAL_SECONDS in configuration) with VoIP enabled will automatically dial the first number for interviewers
+Fixed Bug: lp:1255348 Text cut off when entering some special characters
+Fixed Bug: lp:1255359 Translation strings with single quotes break some SQL queries
+Fixed Bug: lp:1257163 problem - closing case following self-completion on line
+Translations: Updated from Launchpad. Thank you especially to contributors to the Brazilian Portuguese and Italian translations that are now complete, and for the beginnings of a Hebrew translation
+
 queXS 1.9.1 - Changes since 1.9.0
 
 New Feature: Add caseid to SPSS output
