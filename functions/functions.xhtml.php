@@ -161,48 +161,54 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
  * @param bool $js Whether to use JS or not
  * @param bool $indiv Whether to display in a div or not
  * @param array|bool $select The element to select manually (element,string) (not using selected=\'selected\' in array)
+ * @param bool $print Default is true, print the chooser otherwise return as a string
  *
  */
-function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false)
+function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false, $print = true)
 {
-	if ($indiv) print "<div>";
-	print "<select id='$selectid' name='$selectid' ";
-	if ($js) print "onchange=\"LinkUp('$selectid')\"";
-	print ">";
+  $out = "";
+	if ($indiv) $out .= "<div>";
+	$out .= "<select id='$selectid' name='$selectid' ";
+	if ($js) $out .= "onchange=\"LinkUp('$selectid')\"";
+	$out .= ">";
 	if ($useblank)
 	{
-		print "<option value='";
-		if ($js) print "?";
+		$out .= "<option value='";
+		if ($js) $out .= "?";
 		if ($pass != false)
-			print $pass;
-		print "'></option>";
+			$out .= $pass;
+		$out .= "'></option>";
 	}
 	foreach($elements as $e)
 	{
 		if ($js)
 		{
-			print "<option value='?$var={$e['value']}";
+			$out .= "<option value='?$var={$e['value']}";
 			if ($pass != false)
-				print "&amp;$pass";
-			print "' ";
+				$out .= "&amp;$pass";
+			$out .= "' ";
 		}
 		else
 		{
-			print "<option value='{$e['value']}' ";
+			$out .= "<option value='{$e['value']}' ";
 		}
 
 		if ($selected == false)
 		{
 			if (isset($e['selected']))
-				print $e['selected']; 
+				$out .= $e['selected']; 
 		}
 		else
-			if (strcmp($selected[1],$e[$selected[0]]) == 0) print "selected='selected'";
+			if (strcmp($selected[1],$e[$selected[0]]) == 0) $out .= "selected='selected'";
 
-		print ">".strip_tags($e['description'])."</option>";
+		$out .= ">".strip_tags($e['description'])."</option>";
 	}
-	print "</select>";
-	if ($indiv) print "</div>";
+	$out .= "</select>";
+  if ($indiv) $out .= "</div>";
+  if ($print) 
+    print $out;
+  else 
+    return $out;
 }
 
 function xhtml_object($data, $id, $class="embeddedobject")

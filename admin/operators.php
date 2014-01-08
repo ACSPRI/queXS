@@ -57,19 +57,12 @@ if (isset($_POST['operator']))
 	$chat_user = $db->qstr($_POST['chat_user'],get_magic_quotes_gpc());
 	$chat_password = $db->qstr($_POST['chat_password'],get_magic_quotes_gpc());
 	$time_zone_name = $db->qstr($_POST['Time_zone_name'],get_magic_quotes_gpc());
-	$extension = 1000;
-	$extensionp = "";
-	if (FREEPBX_PATH == false)
-	{
-		//Manually add extension information
-		$extension = $db->qstr($_POST['extension'],get_magic_quotes_gpc());
-		$extensionp = $db->qstr($_POST['extensionp'],get_magic_quotes_gpc());
-	}
-	else
+	$extension = "";
+	if (FREEPBX_PATH != false)
 	{
 		//Generate new extension from last one in database and random password
 		$sql = "SELECT SUBSTRING_INDEX(extension, '/', -1) as ext
-			FROM operator
+			FROM extension
 			ORDER BY ext DESC
 			LIMIT 1";
 		
@@ -110,17 +103,32 @@ if (isset($_POST['operator']))
 	if (!empty($_POST['operator']))
 	{
 		$sql = "INSERT INTO operator
-			(`operator_id` ,`username` ,`firstName` ,`lastName`, `extension`,`extension_password`, `Time_zone_name`,`voip`,`chat_enable`,`chat_user`,`chat_password`)
-			VALUES (NULL , $operator, $firstname , $lastname, $extension, $extensionp, $time_zone_name, $voip, $chat, $chat_user, $chat_password);";
+			(`operator_id` ,`username` ,`firstName` ,`lastName`, `Time_zone_name`,`voip`,`chat_enable`,`chat_user`,`chat_password`)
+			VALUES (NULL , $operator, $firstname , $lastname, $time_zone_name, $voip, $chat, $chat_user, $chat_password);";
 	
 		if ($db->Execute($sql))
-		{
+    {
+			$oid = $db->Insert_ID();
+
 			if (FREEPBX_PATH !== false)
-			{
+      {
+        //add extension
+        $sql = "INSERT INTO extension (`extension`,`extension_password`,`current_operator_id`)
+                VALUES ($extension, $extensionp, $oid)";
+
+        $db->Execute($sql);
+
 				//Generate new extension in freepbx
 				include_once("../functions/functions.freepbx.php");
 				freepbx_add_extension($extensionn, $_POST["firstname"] . " " . $_POST["lastname"], $extensionnp);
-			}
+      }
+      else if (!empty($_POST['extension_id']))
+      {
+        $sql = "UPDATE extension
+                SET current_operator_id = $oid
+                WHERE extension_id = " . intval($_POST['extension_id']);
+        $db->Execute($sql);
+      }
 
 			if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false)
 			{
@@ -141,7 +149,6 @@ if (isset($_POST['operator']))
 			if (FREEPBX_PATH !== false)
 				$a .= "<br/>" . T_("FreePBX has been reloaded for the new VoIP extension to take effect");
 	
-			$oid = $db->Insert_ID();
 
 			if ($temporary)
 			{
@@ -164,7 +171,7 @@ if (isset($_POST['operator']))
 		}
 		else
 		{
-			$a = T_("Could not add operator. There may already be an operator of this name:") . " $operator " . T_("Or there may already be an telephone extension number") . ":$extension"  ;
+			$a = T_("Could not add operator. There may already be an operator of this name:") . " $operator ";
 		}
 
 
@@ -186,6 +193,12 @@ $sql = "SELECT Time_zone_name as value, Time_zone_name as description
 
 $rs = $db->GetAll($sql);
 
+$sql = "SELECT extension_id as value, extension as description
+        FROM extension
+        WHERE current_operator_id IS NULL";
+
+$ers = $db->GetAll($sql);
+
 ?>
 <h1><?php  echo T_("Add an operator"); ?></h1>
 <p><?php  echo T_("Adding an operator here will give the user the ability to call cases"); ?> <a href="operatorquestionnaire.php"><?php  echo T_("Assign Operator to Questionnaire"); ?></a> <?php  echo T_("tool"); ?>.</p>
@@ -200,8 +213,7 @@ $rs = $db->GetAll($sql);
 	<p><?php  echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
 	<p><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
 <?php  if (FREEPBX_PATH == false) { ?>
-	<p><?php  echo T_("Enter the telephone extension number:"); ?> <input name="extension" type="text"/></p>
-	<p><?php  echo T_("Enter the telephone extension password:"); ?> <input name="extensionp" type="text"/></p>
+	<p><a href='extensionstatus.php'><?php  echo T_("Select an extension for this operator:"); echo "</a>"; display_chooser($ers,"extension_id","extension_id",true,false,false,false); ?> </p>
 <?php  } ?>
 	<p><?php  echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
 	<p><?php  echo T_("Jabber/XMPP chat user"); ?>: <input name="chat_user" type="text"/></p>

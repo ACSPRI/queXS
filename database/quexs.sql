@@ -392,6 +392,23 @@ INSERT INTO `day_of_week` (`day_of_week`) VALUES(7);
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `extension`
+--
+
+CREATE TABLE IF NOT EXISTS `extension` (
+  `extension_id` int(11) NOT NULL AUTO_INCREMENT,
+  `extension` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `current_operator_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`extension_id`),
+  UNIQUE KEY `extension` (`extension`),
+  UNIQUE KEY `current_operator_id` (`current_operator_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lime_answers`
 --
 
@@ -1170,19 +1187,15 @@ CREATE TABLE `operator` (
   `username` varchar(255) collate utf8_unicode_ci NOT NULL,
   `firstName` varchar(255) collate utf8_unicode_ci NOT NULL,
   `lastName` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `extension` varchar(10) collate utf8_unicode_ci NOT NULL,
-  `extension_password` varchar(255) collate utf8_unicode_ci default NULL,
   `Time_zone_name` char(64) collate utf8_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL default '1',
   `voip` tinyint(1) NOT NULL default '1',
-  `voip_status` tinyint(1) NOT NULL default '0',
   `next_case_id` bigint(20) default NULL,
   `chat_enable` tinyint(1) default '0',
   `chat_user` varchar(255) collate utf8_unicode_ci default NULL,
   `chat_password` varchar(255) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`operator_id`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `extension` (`extension`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

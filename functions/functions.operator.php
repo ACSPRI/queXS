@@ -130,13 +130,14 @@ function is_voip_enabled($operator_id)
 
 	global $db;
 
-	$sql = "SELECT voip
-		FROM operator
-		WHERE operator_id = '$operator_id'";
+	$sql = "SELECT o.voip
+		FROM `operator` as o, `extension` as e
+    WHERE o.operator_id = '$operator_id'
+    AND e.current_operator_id = o.operator_id";
 
 	$rs = $db->GetRow($sql);
 
-	if ($rs['voip'] == '1')
+	if (isset($rs['voip']) && $rs['voip'] == '1')
 		return true;
 
 	return false;
@@ -617,9 +618,10 @@ function get_case_id($operator_id, $create = false)
 						$db->Execute("SET @row := 0");
 		
 						$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-							SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(extension,'/',-1) as phone, CONCAT(firstName, ' ', lastName)
-							FROM operator
-							WHERE enabled = 1";
+							SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(o.extension,'/',-1) as phone, CONCAT(o.firstName, ' ', o.lastName)
+							FROM operator as o, `extension` as e
+              WHERE o.enabled = 1
+              AND e.current_operator_id = o.operator_id";
 		
 						$db->Execute($sql);
 					}
@@ -796,9 +798,9 @@ function set_extension_status($operator_id,$online = true)
 
 	if ($online) $s = 1;
 
-	$sql = "UPDATE `operator`
-		SET voip_status = '$s'
-		WHERE operator_id = '$operator_id'";
+	$sql = "UPDATE `extension`
+		SET status = '$s'
+		WHERE current_operator_id = '$operator_id'";
 
 	$db->Execute($sql);
 }
@@ -814,12 +816,12 @@ function get_extension_status($operator_id)
 {
 	global $db;
 		
-	$sql = "SELECT o.voip_status
-		FROM `operator` as o
-		WHERE o.operator_id = '$operator_id'";
+	$sql = "SELECT e.status
+		FROM `extension` as e
+    WHERE e.current_operator_id = '$operator_id'";
 
 	$rs = $db->GetRow($sql);
-	if (!empty($rs) && $rs['voip_status'] == 1  ) return true;
+	if (!empty($rs) && $rs['status'] == 1  ) return true;
 	return false;		
 }
 
@@ -834,9 +836,9 @@ function get_extension_password($operator_id)
 {
 	global $db;
 		
-	$sql = "SELECT o.extension_password
-		FROM `operator` as o
-		WHERE o.operator_id = '$operator_id'";
+	$sql = "SELECT e.extension_password
+		FROM `extension` as e
+		WHERE e.current_operator_id = '$operator_id'";
 
 	$rs = $db->GetRow($sql);
 	if (!empty($rs) && isset($rs['extension_password'])) return $rs['extension_password'];
@@ -854,9 +856,9 @@ function get_extension($operator_id)
 {
 	global $db;
 		
-	$sql = "SELECT o.extension
-		FROM `operator` as o
-		WHERE o.operator_id = '$operator_id'";
+	$sql = "SELECT e.extension
+		FROM `extension` as e
+    WHERE e.current_operator_id = '$operator_id'";
 
 	$rs = $db->GetRow($sql);
 	if (!empty($rs) && isset($rs['extension'])) return $rs['extension'];

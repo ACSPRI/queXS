@@ -51,6 +51,27 @@ if (isset($_GET['auto']))
 
 print "<h1>" . T_("Work has ended. That is it") . "</h1>";
 
+if (ALLOW_OPERATOR_EXTENSION_SELECT && VOIP_ENABLED)
+{
+  //unassign extension
+  include_once("functions/functions.operator.php");
+  $operator_id = get_operator_id();
+
+  if (get_case_id($operator_id) == false && is_voip_enabled($operator_id))
+  {
+    $sql = "UPDATE `extension`
+            SET current_operator_id = NULL
+            WHERE current_operator_id = $operator_id";
+
+    $rs = $db->Execute($sql);
+
+    if ($rs)
+    {
+      print "<p>" . T_("You have been unassigned from your extension") ."</p>";
+    }
+  }  
+}
+
 print "<p><a href='index.php'>" . T_("Go back to work") . "</a></p>";
 
 xhtml_foot();

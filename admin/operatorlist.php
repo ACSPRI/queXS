@@ -67,8 +67,6 @@ if (isset($_POST['submit']))
 			firstName = " . $db->qstr($_POST['firstName']) . ",
 			chat_user = " . $db->qstr($_POST['chat_user']) . ",
 			chat_password = " . $db->qstr($_POST['chat_password']) . ",
-			extension = " . $db->qstr($_POST['extension']) . ",
-			extension_password = " . $db->qstr($_POST['extension_password']) . ",
 			Time_zone_name = " . $db->qstr($_POST['timezone']) . ",
 			voip = $voip, enabled = $enabled, chat_enable = $chat_enable
 			WHERE operator_id = $operator_id";
@@ -76,7 +74,32 @@ if (isset($_POST['submit']))
 		$rs = $db->Execute($sql);
 
 		if (!empty($rs))
-		{
+    {
+      //only update extension if we aren't on a case
+      $sql = "SELECT case_id
+              FROM `case`
+              WHERE current_operator_id = $operator_id";
+
+      $cc= $db->GetOne($sql);
+
+      if (empty($cc))
+      {
+        $sql = "UPDATE extension
+                SET current_operator_id = NULL
+                WHERE current_operator_id= $operator_id";
+
+        $db->Execute($sql);
+  
+        if (!empty($_POST['extension_id']))
+        {
+          $sql = "UPDATE extension
+                  SET current_operator_id = $operator_id
+                  WHERE extension_id = " . intval($_POST['extension_id']);
+  
+          $db->Execute($sql);
+        }
+      }
+
 			if (HTPASSWD_PATH !== false && !empty($_POST['password']))
 			{
 				//update password in htaccess
@@ -91,7 +114,7 @@ if (isset($_POST['submit']))
 		}
 		else
 		{
-			$msg = T_("Failed to update user. Please make sure the username and extension are unique");
+			$msg = T_("Failed to update user. Please make sure the username is unique");
 		}
 	}
 	$_GET['edit'] = $operator_id;
@@ -119,6 +142,14 @@ if (isset($_GET['edit']))
 	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
 	if (!empty($msg)) print "<h3>$msg</h3>";
 
+  $sql = "SELECT extension_id as value, extension as description,
+        CASE WHEN current_operator_id = $operator_id THEN 'selected=\'selected\'' ELSE '' END AS selected
+        FROM extension
+        WHERE current_operator_id IS NULL
+        OR current_operator_id = $operator_id";
+
+  $ers = $db->GetAll($sql);
+
 	?>
 	<form action="?" method="post">
 	<div><label for="username"><?php echo T_("Username") . ": "; ?></label><input type='text' name='username' value="<?php echo $rs['username'];?>"/></div>
@@ -130,9 +161,8 @@ if (isset($_GET['edit']))
 	?>
 	<div><label for="firstName"><?php echo T_("First name") . ": "; ?></label><input type='text' name='firstName' value="<?php echo $rs['firstName'];?>"/></div>
 	<div><label for="lastName"><?php echo T_("Last name") . ": "; ?></label><input type='text' name='lastName' value="<?php echo $rs['lastName'];?>"/></div>
-	<div><label for="extension"><?php echo T_("Extension") . ": "; ?></label><input type='text' name='extension' value="<?php echo $rs['extension'];?>"/></div>
-	<div><label for="extension_password"><?php echo T_("Extension Password") . ": "; ?></label><input type='text' name='extension_password' value="<?php echo $rs['extension_password'];?>"/></div>
-	<div><label for="chat_user"><?php echo T_("Jabber/XMPP chat user") . ": "; ?></label><input type='text' name='chat_user' value="<?php echo $rs['chat_user'];?>"/></div>
+ 	<div><label for="extension_id"><?php  echo T_("Extension"); echo "</label>"; display_chooser($ers,"extension_id","extension_id",true,false,false,false); ?> </div>
+  <div><label for="chat_user"><?php echo T_("Jabber/XMPP chat user") . ": "; ?></label><input type='text' name='chat_user' value="<?php echo $rs['chat_user'];?>"/></div>
 	<div><label for="chat_password"><?php echo T_("Jabber/XMPP chat password") . ": "; ?></label><input type='text' name='chat_password' value="<?php echo $rs['chat_password'];?>"/></div>
 	<div><label for="chat_enable"><?php echo T_("Uses chat") . "? ";?></label><input type="checkbox" name="chat_enable" <?php if ($rs['chat_enable'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
 	<div><label for="timezone"><?php echo T_("Timezone") . ": ";?></label><?php display_chooser($tz,"timezone","timezone",false,false,false,false,array("value",$rs['Time_zone_name'])); ?></div>
@@ -200,9 +230,9 @@ if (isset($_GET['operator_id']))
 {
 	$operator_id = intval($_GET['operator_id']);
 
-	$sql = "SELECT *,SUBSTRING_INDEX(extension, '/', -1) as ext
-		FROM operator
-		WHERE operator_id = $operator_id";
+	$sql = "SELECT *,SUBSTRING_INDEX(e.extension, '/', -1) as ext
+		FROM extension as e
+		WHERE e.current_operator_id = $operator_id";
 
 	$rs = $db->GetRow($sql);
 
@@ -232,7 +262,8 @@ if (isset($_GET['operator_id']))
 if ($display)
 {
 	$sql = "SELECT
-			CONCAT(firstName, ' ', lastName) as name,
+    CONCAT(firstName, ' ', lastName) as name,
+      e.extension,
 			CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . TQ_("Windows bat file") . "</a>') as winbat,
 			CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . TQ_("*nix script file") . "</a>') as sh,
 			CASE WHEN enabled = 0 THEN
@@ -248,14 +279,15 @@ if ($display)
 			END as voipenabledisable,
 			CONCAT('<a href=\'?edit=',operator_id,'\'>" . TQ_("Edit") . "</a>')  as edit,
 			username
-		FROM operator";
+      FROM operator
+      LEFT JOIN `extension` as e ON (e.current_operator_id = operator_id)";
 	
 	$rs = $db->GetAll($sql);
 	
 	xhtml_head(T_("Operator list"),true,array("../css/table.css"));
 	
-	$columns = array("name","username","enabledisable","edit");
-	$titles = array(T_("Operator"),T_("Username"),T_("Enable/Disable"),T_("Edit"));
+	$columns = array("name","username","extension","enabledisable","edit");
+	$titles = array(T_("Operator"),T_("Username"),T_("Extension"),T_("Enable/Disable"),T_("Edit"));
 
 	if (VOIP_ENABLED)
 	{

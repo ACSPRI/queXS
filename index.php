@@ -52,6 +52,21 @@ if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
 	include_once("waitnextcase_interface2.php");
 	die();
 }
+else if (ALLOW_OPERATOR_EXTENSION_SELECT && VOIP_ENABLED)
+{
+  $sql = "SELECT o.voip,e.extension_id
+          FROM `operator` as o
+          LEFT JOIN `extension` as e ON (e.current_operator_id = o.operator_id)
+          WHERE o.operator_id = $operator_id";
+
+  $ve = $db->GetRow($sql);
+
+  if ($ve['voip'] == 1 && empty($ve['extension_id']))
+  {
+    include_once("selectextension.php");
+    die();
+  }
+}
 
 $db->StartTrans();
 
