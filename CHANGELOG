@@ -1,3 +1,33 @@
+queXS 1.10.0 - Changes since 1.9.2
+
+New Feature: Operators can choose extension (see: https://blueprints.launchpad.net/quexs/+spec/operatorextension)
+New Feature: Accept case referrals (see: https://blueprints.launchpad.net/quexs/+spec/referral)
+Fixed Bug: Timezone detection not choosing best number
+
+Database updates:
+
+ALTER TABLE `questionnaire` ADD `referral` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `self_complete`
+
+CREATE TABLE IF NOT EXISTS `extension` (
+  `extension_id` int(11) NOT NULL AUTO_INCREMENT,
+  `extension` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `current_operator_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`extension_id`),
+  UNIQUE KEY `extension` (`extension`),
+  UNIQUE KEY `current_operator_id` (`current_operator_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+INSERT INTO `extension` (extension,password,current_operator_id,status)
+SELECT extension,extension_password,operator_id,voip_status
+FROM operator;
+
+ALTER TABLE `operator`
+DROP `extension`,
+DROP `extension_password`,
+DROP `voip_status`;
+
 queXS 1.9.2 - Changes since 1.9.1
 
 New Feature: Auto dial (set AUTO_DIAL_SECONDS in configuration) with VoIP enabled will automatically dial the first number for interviewers
