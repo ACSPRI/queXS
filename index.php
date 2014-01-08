@@ -147,12 +147,14 @@ print $script;
 
 $case_id = get_case_id($operator_id,true);
 
-$sql = "SELECT q.self_complete
+$sql = "SELECT q.self_complete as sc,q.referral as r
         FROM questionnaire as q, `case` as c
         WHERE c.case_id = $case_id 
         AND c.questionnaire_id = q.questionnaire_id";
 
-$sc = $db->GetOne($sql);
+$scr = $db->GetRow($sql);
+$sc = $scr['sc'];
+$ref = $scr['r'];
 
 ?>
 
@@ -162,6 +164,7 @@ $sc = $db->GetOne($sql);
 	<div class='box important'><a href="javascript:poptastic('call.php');"><?php  echo T_("Call/Hangup"); ?></a></div>
 	<div class='box'><a href="javascript:poptastic('supervisor.php');"><?php  echo T_("Supervisor"); ?></a></div>
 	<?php if ($sc == 1) { ?><div class='box'><a href="javascript:poptastic('email.php');"><?php  echo T_("Email"); ?></a></div><?php } ?>
+	<?php if ($ref == 1) { ?><div class='box'><a href="javascript:poptastic('referral.php');"><?php  echo T_("Referral"); ?></a></div><?php } ?>
 	<div class='box' id='recbox'><a id='reclink' class='offline' href="javascript:poptastic('record.php?start=start');"><?php  echo T_("Start REC"); ?></a></div>
 	<?php  if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.png' alt='<?php  echo T_('Arrow for expanding or contracting'); ?>'/></div> <?php  } ?>
 	<div class='box'><a href='index.php?'><?php  echo T_("Restart"); ?></a></div>

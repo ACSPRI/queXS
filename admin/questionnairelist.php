@@ -225,9 +225,11 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	$rws = 0;
 	$rs = 0;
 	$respsc = 0;
+	$referral = 0;
 	if (isset($_POST['ras'])) $ras = 1;
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['respsc'])) $respsc = 1;
+	if (isset($_POST['referral'])) $referral = 1;
 	
 	$name = $db->qstr(html_entity_decode($_POST['description'],ENT_QUOTES,'UTF-8'));
 	if (isset($_POST['rs_intro']))
@@ -243,7 +245,7 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 
 
 	$sql = "UPDATE questionnaire
-		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', self_complete = $respsc
+		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', self_complete = $respsc, referral = $referral
 		WHERE questionnaire_id = '$questionnaire_id'";
 
 	$db->Execute($sql);
@@ -303,7 +305,7 @@ if (isset($_GET['modify']))
 
 	$rs = $db->GetRow($sql);
 
-	$testing = $rws = $ras = $rsc = "checked=\"checked\"";
+	$referral = $testing = $rws = $ras = $rsc = "checked=\"checked\"";
 	$rscd = "";	
 
 	$aio = $qbq = $gat = "";
@@ -315,6 +317,7 @@ if (isset($_GET['modify']))
 	if ($rs['restrict_appointments_shifts'] != 1) $ras = "";
 	if ($rs['restrict_work_shifts'] != 1) $rws = "";
 	if ($rs['testing'] != 1) $testing = "";
+	if ($rs['referral'] != 1) $referral = "";
 	if ($rs['self_complete'] == 0)
 	{
 		$rsc = "";
@@ -330,6 +333,7 @@ if (isset($_GET['modify']))
 		<p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" <?php  echo $ras; ?>/></p>
 		<p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" <?php  echo $rws; ?>/></p>
 		<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox" disabled="true" <?php  echo $testing; ?>/></p>
+		<p><?php  echo T_("Allow operators to generate referrals?"); ?> <input name="referral" type="checkbox" <?php  echo $referral; ?>/></p>
 		<p><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> <input name="respsc" type="checkbox" <?php echo $rsc ?>  onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" /></p>
 		<div id='limesc' <?php echo $rscd; ?>>
 		<p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option <?php echo $aio;?> value="survey"><?php echo T_("All in one"); ?></option><option <?php echo $qbq; ?> value="question"><?php echo T_("Question by question"); ?></option><option <?php echo $gat; ?> value="group"><?php echo T_("Group at a time"); ?></option></select></p>

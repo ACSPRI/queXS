@@ -1384,6 +1384,7 @@ CREATE TABLE `questionnaire` (
   `lime_rs_sid` int(11) default NULL,
   `info` text collate utf8_unicode_ci,
   `self_complete` tinyint(1) NOT NULL default '0',
+  `referral` TINYINT( 1 ) NOT NULL DEFAULT '0',
   `lime_mode` varchar(64) collate utf8_unicode_ci default NULL COMMENT 'Limesurvey mode for respondent self completion',
   `lime_template` varchar(128) collate utf8_unicode_ci default NULL COMMENT 'Limesurvey template for respondent self completion',
   `lime_endurl` varchar(256) collate utf8_unicode_ci default NULL COMMENT 'Forwarding end URL for respondent self completion',
