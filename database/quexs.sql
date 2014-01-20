@@ -1195,7 +1195,7 @@ CREATE TABLE `operator` (
   `chat_user` varchar(255) collate utf8_unicode_ci default NULL,
   `chat_password` varchar(255) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`operator_id`),
-  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
