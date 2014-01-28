@@ -1362,7 +1362,38 @@ CREATE TABLE `process_log` (
 --
 
 
+-- Table structure for table `qsqr_question`
+--
+--
+
+CREATE TABLE `qsqr_question` (
+   `qsqr_question_id` bigint(20) NOT NULL AUTO_INCREMENT,
+   `questionnaire_sample_quota_row_id` bigint(20) NOT NULL,
+   `lime_sgqa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+   `value` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
+   `comparison` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+   `description` text COLLATE utf8_unicode_ci NOT NULL,
+   PRIMARY KEY (`qsqr_question_id`),
+   KEY `questionnaire_sample_quota_row_id` (`questionnaire_sample_quota_row_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `qsqr_sample`
+--
+
+CREATE TABLE `qsqr_sample` (
+  `qsqr_sample_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `questionnaire_sample_quota_row_id` bigint(20) NOT NULL,
+  `exclude_var` char(128) COLLATE utf8_unicode_ci NOT NULL,
+  `exclude_val` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `comparison` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`qsqr_sample_id`),
+  KEY `questionnaire_sample_quota_row_id` (`questionnaire_sample_quota_row_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
 
 --
 -- Table structure for table `questionnaire`

@@ -179,11 +179,12 @@ if ($questionnaire_id)
 
 		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
 		//b. (Replicate quota) Exclude selected sample records (where lime_sgqa == -1) 
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,qsq.description,current_completions, priority, autoprioritise
-			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
+		$sql = "SELECT questionnaire_sample_quota_row_id,qsqr_question.lime_sgqa,value,completions,quota_reached,lime_sid,qsq.description,current_completions, priority, autoprioritise
+			FROM questionnaire_sample_quota_row as qsq, questionnaire as q, qsqr_question
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
-			AND q.questionnaire_id = '$questionnaire_id'";
+      AND q.questionnaire_id = '$questionnaire_id'
+      AND qsqr_question.questionnaire_sample_quota_row_id = qsq.questionnaire_sample_quota_row_id";
 	
 		$r = $db->GetAll($sql);
 
@@ -210,9 +211,23 @@ if ($questionnaire_id)
 			//We need to calc Sample size, Sample drawn, Sample remain
 			$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
 				FROM sample as s
-				JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
-				JOIN sample_var as sv ON (sv.sample_id = s.sample_id AND sv.var LIKE '{$v['exclude_var']}' AND sv.val LIKE '{$v['exclude_val']}')
-				LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
+        JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id) ";
+
+      $sql2 = "SELECT exclude_val,exclude_var,comparison
+               FROM qsqr_sample
+               WHERE questionnaire_sample_quota_row_id = {$v['questionnaire_sample_quota_row_id']}";
+
+      $rev = $db->GetAll($sql2);
+
+      //reduce sample by every item in the qsqr_sample table
+      $x = 1;
+      foreach($rev as $ev)
+      {
+          $sql .= " JOIN sample_var as sv$x ON (sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+          $x++;
+      }
+
+			$sql .=	" LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
 				WHERE s.import_id = '$sample_import_id'
 				GROUP BY (c.sample_id is not null)";
 

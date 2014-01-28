@@ -112,12 +112,12 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['va
 
 if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_sample_quota_row_id']))
 {
-	//need to remove quota
+	//need to edit quota
 
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$questionnaire_sample_quota_row_id = bigintval($_GET['questionnaire_sample_quota_row_id']);
 
-	open_row_quota($questionnaire_sample_quota_row_id);
+  //open_row_quota($questionnaire_sample_quota_row_id);
 }
 
 $questionnaire_id = false;
@@ -160,9 +160,9 @@ if ($questionnaire_id != false)
 			print "<h3>" . T_("Copied quotas") . "</h3>";
 		}
 
-		print "<h1>" . T_("Current row quotas (click to delete)") . "</h1>";
+		print "<h1>" . T_("Current row quotas (click to edit)") . "</h1>";
 		
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,current_completions
+		$sql = "SELECT questionnaire_sample_quota_row_id,qsq.description
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
@@ -177,7 +177,12 @@ if ($questionnaire_id != false)
 		else
 		{
 			foreach($r as $v)
-			{
+      {
+        print "<div><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;questionnaire_sample_quota_row_id={$v['questionnaire_sample_quota_row_id']}'>" . $v['description'] . "</a>";
+
+      }
+      /*
+
 				if ($v['lime_sgqa'] == -1)
 					print "<div><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;questionnaire_sample_quota_row_id={$v['questionnaire_sample_quota_row_id']}'>" . T_("Replicate: Where") . " " . $v['exclude_var'] . " " . T_("like") . " " . $v['exclude_val'] . "</a> - ";
 				else if ($v['lime_sgqa'] == -2)
@@ -197,30 +202,9 @@ if ($questionnaire_id != false)
 				print "</div>";
 	
 			}
+       */
 
-	
-			$sql = "SELECT s.sample_import_id as value,s.description, '' AS selected
-			 	FROM sample_import as s, questionnaire_sample as q
-				WHERE q.questionnaire_id = $questionnaire_id
-				AND q.sample_import_id = s.sample_import_id
-				AND s.sample_import_id != '$sample_import_id'";
-	
-			$ss = $db->GetAll($sql);
-
-			if (!empty($ss))
-			{
-				print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking): ");
-				display_chooser($ss,"copy_sample_import_id","copy_sample_import_id",false,false,false,false);
-				print "<input type='submit' id='submit' value=\"" . T_("Copy") . "\"/></p></form>";
-
-                print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking) with adjusting: ");
-				display_chooser($ss,"copy_sample_import_id_with_adjustment","copy_sample_import_id_with_adjustment",false,false,false,false);
-				print "<input type='submit' id='submit' value=\"" . T_("Copy adjustments") . "\"/></p></form>";
-			}
-
-		}
-	
-	
+    //new quota 
 		print "<h1>" . T_("Select a question for the row quota") . "</h1>";
 		
 		$sql = "SELECT lime_sid

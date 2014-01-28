@@ -158,6 +158,22 @@ if (isset($_POST['questionnaire_id']) && isset($_POST['submit']))
 
 	$db->Execute($sql);
 
+  $sql = "DELETE FROM qsqr_question
+    WHERE questionnaire_sample_quota_row_id IN (
+      SELECT questionnaire_sample_quota_row_id
+      FROM questionnaire_sample_quota_row
+      WHERE questionnaire_id = $questionnaire_id)";
+
+  $db->Execute($sql);
+
+  $sql = "DELETE FROM qsqr_sample
+    WHERE questionnaire_sample_quota_row_id IN (
+      SELECT questionnaire_sample_quota_row_id
+      FROM questionnaire_sample_quota_row
+      WHERE questionnaire_id = $questionnaire_id)";
+
+  $db->Execute($sql);
+
 	$sql = "DELETE FROM `questionnaire_sample_quota_row`
 		WHERE questionnaire_id = $questionnaire_id";
 
