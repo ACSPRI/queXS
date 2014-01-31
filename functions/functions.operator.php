@@ -1463,6 +1463,17 @@ function open_row_quota($questionnaire_sample_quota_row_id,$delete = true)
 			WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
 
 		$db->Execute($sql);
+
+    $sql = "DELETE FROM qsqr_sample
+			WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
+
+    $db->Execute($sql);
+
+    $sql = "DELETE FROM qsqr_question
+			WHERE questionnaire_sample_quota_row_id = '$questionnaire_sample_quota_row_id'";
+
+		$db->Execute($sql);
+
 	}
 
 	$sql = "DELETE FROM questionnaire_sample_quota_row_exclude
@@ -1503,16 +1514,28 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
 	$rs = $db->GetRow($sql);
 
 	if (isset($coun['c']) && $coun['c'] == 0)
-	{
-		//store list of sample records to exclude
-		$sql = "INSERT INTO questionnaire_sample_quota_row_exclude (questionnaire_sample_quota_row_id,questionnaire_id,sample_id)
-			SELECT $questionnaire_sample_quota_row_id,qs.questionnaire_id,s.sample_id
-			FROM sample as s, sample_var as sv, questionnaire_sample_quota_row as qs
-			WHERE s.import_id = qs.sample_import_id
-			AND qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id
-			AND s.sample_id = sv.sample_id
-			AND sv.var = qs.exclude_var
-			AND qs.exclude_val LIKE sv.val";
+  {
+      $sql2 = "SELECT exclude_val,exclude_var,comparison
+               FROM qsqr_sample
+               WHERE questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id";
+
+      $rev = $db->GetAll($sql2);
+      
+      //store list of sample records to exclude
+  		$sql = "INSERT INTO questionnaire_sample_quota_row_exclude (questionnaire_sample_quota_row_id,questionnaire_id,sample_id)
+        			SELECT $questionnaire_sample_quota_row_id,qs.questionnaire_id,s.sample_id 
+              FROM sample as s ";
+			
+      //reduce sample by every item in the qsqr_sample table
+      $x = 1;
+      foreach($rev as $ev)
+      {
+          $sql .= " JOIN sample_var as sv$x ON (sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+          $x++;
+      }
+
+      $sql = "JOIN questionnaire_sample_quota_row as qs ON (qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id)
+        WHERE s.import_id = qs.sample_import_id";
 
 		$db->Execute($sql);
 
@@ -1536,22 +1559,35 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
  * @param int $questionnaire_id
  * @param int $sample_import_id
  * @param int $copy_sample_import_id The sample_import_id to copy to
+ * @param bool $blocking Block (copy quota)?
  */
-function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_id)
+function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_id, $block = false)
 {
 	global $db;
 
 	$db->StartTrans();
 
-	//Set quota_reached to 0 always
+  //Set quota_reached to 0 always if not blocking
+  $b = 0;
+  if ($block == true) 
+    $b = "quota_reached";
 
-	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description)
-		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions,exclude_var,exclude_val,0,description
+	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,completions,quota_reached,description)
+		SELECT questionnaire_id, $copy_sample_import_id, completions,$b,description
 		FROM questionnaire_sample_quota_row
 		WHERE questionnaire_id = '$questionnaire_id'
 		AND sample_import_id = '$sample_import_id'";
 	
-	$db->Execute($sql);
+  $db->Execute($sql);
+
+  $nqsqr = $db->Insert_ID();
+
+  $sql = "INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var,exclude_val,comparison,description)
+    SELECT $nqsqr, qs.exclude_var, qs.exclude_val, qs.comparison, qs.description
+    FROM qsqr_sample as qs, questionnaire_sample_quota_row as q
+    WHERE qs.questionnaire_sample_quota_row_id = q.questionnaire_sample_quota_row_id
+    AND q.questionnaire_id = '$questionnaire_id'
+    AND q.sample_import_id = '$sample_import_id'";
 
 	update_quotas($questionnaire_id);
 
@@ -1568,22 +1604,7 @@ function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_
  */
 function copy_row_quota_with_blocking($questionnaire_id,$sample_import_id,$copy_sample_import_id)
 {
-	global $db;
-
-	$db->StartTrans();
-
-	//Set quota_reached to 0 always
-
-	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description)
-		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description
-		FROM questionnaire_sample_quota_row
-		WHERE questionnaire_id = '$questionnaire_id'
-		AND sample_import_id = '$sample_import_id'";
-
-	$db->Execute($sql);
-
-
-	update_quotas($questionnaire_id);
+  copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_id,true);
 
 	$db->CompleteTrans();
 }
@@ -1602,6 +1623,7 @@ function copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,$copy
     // Copy quotas (defalt Quexs function)
     copy_row_quota_with_blocking($questionnaire_id,$sample_import_id,$copy_sample_import_id);
 
+  /*
 	$db->StartTrans();
 
     // Select quotas from the old sample rows and calculate
@@ -1642,7 +1664,8 @@ function copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,$copy
 		}
 	}
 
-	$db->CompleteTrans();
+  $db->CompleteTrans();
+   */
 }
 
 
@@ -1660,12 +1683,14 @@ function update_row_quota($questionnaire_id,$case_id = false)
 
 	$db->StartTrans();
 
-	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val,qsq.current_completions,qsq.priority,qsq.autoprioritise
-		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,completions,quota_reached,q.lime_sid,qsq.current_completions,qsq.priority,qsq.autoprioritise
+		FROM questionnaire_sample_quota_row as qsq, questionnaire as q, qsqr_question as qq
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
-		AND qsq.quota_reached != '1'
-		AND qsq.lime_sgqa != -1";
+    AND qsq.quota_reached != '1'
+    AND qq.questionnaire_sample_quota_row_id = qsq.questionnaire_sample_quota_row_id
+    AND qq.lime_sgqa != -1
+    GROUP BY qsq.questionnaire_sample_quota_row_id";
 
 	$rs = $db->GetAll($sql);
 
@@ -1676,7 +1701,25 @@ function update_row_quota($questionnaire_id,$case_id = false)
 
 		//update all row quotas for this questionnaire
 		foreach($rs as $r)
-		{
+    {
+      $lime_sid = $r['lime_sid'];
+      $qsqri = $r['questionnaire_sample_quota_row_id'];
+
+      //all variables to exclude for this row quota
+      $sql2 = "SELECT exclude_val,exclude_var,comparison
+               FROM qsqr_sample
+               WHERE questionnaire_sample_quota_row_id = $qsqri";
+
+      $rev = $db->GetAll($sql2);
+
+      //all variables to check in limesurvey for this row quota
+      $sql2 = "SELECT lime_sgqa,value,comparison
+               FROM qsqr_question
+               WHERE questionnaire_sample_quota_row_id = $qsqri";
+
+      $qev = $db->GetAll($sql2);
+
+
 			//whether a completion was changed for this quota
 			$updatequota = false;
 
@@ -1684,10 +1727,45 @@ function update_row_quota($questionnaire_id,$case_id = false)
 			//the quota criteria, and if so, increment the quota completions counter
 			if ($case_id != false)
 			{
-				if ($r['lime_sgqa'] == -2)
-					$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var']);
-				else
-					$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison']);
+        if ($r['lime_sgqa'] == -2)
+        {
+          //just determine if this case is linked to a matching sample record
+
+          $sql2 = "SELECT count(*) as c
+                   FROM " . LIME_PREFIX . "survey_$lime_sid as s
+                   JOIN `case` as c ON (c.case_id = '$case_id')
+                   JOIN `sample` as sam ON (c.sample_id = sam.sample_id) ";
+          
+          $x = 1;
+          foreach($rev as $ev)
+          {
+            $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+            $x++;
+          }
+
+          $sql2 .= " WHERE s.token = c.token";
+
+          $match = $db->GetOne($sql2); 
+          //$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var']);
+        }
+        else
+        {
+          //determine if the case is linked to a matching limesurvey record
+          
+          $sql2 = "SELECT count(*) as c
+                   FROM " . LIME_PREFIX . "survey_$lime_sid as s
+                   JOIN `case` as c ON (c.case_id = '$case_id')
+                   JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
+                   WHERE s.token = c.token
+                   ";
+
+          foreach($qev as $ev)
+            $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
+
+           $match = $db->GetOne($sql2);
+
+          //$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison']);
+        }
 
 				if ($match == 1)
 				{
@@ -1705,10 +1783,47 @@ function update_row_quota($questionnaire_id,$case_id = false)
 			}
 			else
 			{
-				if ($r['lime_sgqa'] == -2)
-					$completions = limesurvey_quota_replicate_completions($r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['exclude_val'],$r['exclude_var']);
-				else
-					$completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
+        if ($r['lime_sgqa'] == -2)
+        {
+          //find all completions from cases with matching sample records
+
+          $sql2 = "SELECT count(*) as c
+                  FROM " . LIME_PREFIX . "survey_$lime_sid as s
+                  JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
+                  JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')";
+
+          $x = 1;
+          foreach($rev as $ev)
+          {
+            $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+            $x++;
+          }
+
+          $sql2 .= "  WHERE s.submitdate IS NOT NULL
+                  AND s.token = c.token";
+
+          $completions = $db->GetOne($sql2);
+
+          //$completions = limesurvey_quota_replicate_completions($r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['exclude_val'],$r['exclude_var']);
+        }
+        else
+        {
+          //find all completions from cases with matching limesurvey records
+          $sql2 = "SELECT count(*) as c 
+                  FROM " . LIME_PREFIX . "survey_$lime_sid as s 
+                  JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id') 
+                  JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id') 
+                  WHERE s.submitdate IS NOT NULL 
+                  AND s.token = c.token ";
+
+          foreach($qev as $ev)
+            $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
+
+           $completions = $db->GetOne($sql2);
+
+         // $completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
+        }
+
 				$updatequota = true;
 			}
 
@@ -1821,16 +1936,37 @@ function update_quota_priorities($questionnaire_id)
 		$qsqri = $r['questionnaire_sample_quota_row_id'];
 		$priority = $r['priority'];
 
+    $sql2 = "SELECT exclude_val,exclude_var,comparison
+             FROM qsqr_sample
+             WHERE questionnaire_sample_quota_row_id = $qsqri";
+
+    $rev = $db->GetAll($sql2);
+      
+
 		//find all cases that match this quota, and update it to the new priority
-		$sql = "UPDATE sample as s, sample_var as sv, questionnaire_sample_quota_row as qs, questionnaire_sample_exclude_priority as qsep
+    $sql = "UPDATE sample as s, questionnaire_sample_quota_row as qs, questionnaire_sample_exclude_priority as qsep ";
+
+    //reduce sample by every item in the qsqr_sample table
+    $x = 1;
+    foreach ($rev as $ev)
+    {
+      $sql .= ", sample_var as sv$x";
+      $x++;
+    }
+
+    $sql .= "
 			SET qsep.priority = '$priority'
 			WHERE s.import_id = qs.sample_import_id
 			AND qs.questionnaire_sample_quota_row_id = '$qsqri'
-			AND s.sample_id = sv.sample_id
-			AND sv.var = qs.exclude_var
-			AND qs.exclude_val LIKE sv.val
 			AND qsep.questionnaire_id = qs.questionnaire_id
-			AND qsep.sample_id = s.sample_id";
+      AND qsep.sample_id = s.sample_id ";
+
+    $x = 1;
+    foreach ($rev as $ev)
+    {
+      $sql .= " AND sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+      $x++;
+    }
 
 
 		$db->Execute($sql);
