@@ -1683,7 +1683,7 @@ function update_row_quota($questionnaire_id,$case_id = false)
 
 	$db->StartTrans();
 
-	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,completions,quota_reached,q.lime_sid,qsq.current_completions,qsq.priority,qsq.autoprioritise
+	$sql = "SELECT qsq.questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,completions,quota_reached,q.lime_sid,qsq.current_completions,qsq.priority,qsq.autoprioritise,qq.lime_sgqa
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q, qsqr_question as qq
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
@@ -1703,6 +1703,7 @@ function update_row_quota($questionnaire_id,$case_id = false)
 		foreach($rs as $r)
     {
       $lime_sid = $r['lime_sid'];
+      $sample_import_id = $r['sample_import_id'];
       $qsqri = $r['questionnaire_sample_quota_row_id'];
 
       //all variables to exclude for this row quota
@@ -1718,7 +1719,6 @@ function update_row_quota($questionnaire_id,$case_id = false)
                WHERE questionnaire_sample_quota_row_id = $qsqri";
 
       $qev = $db->GetAll($sql2);
-
 
 			//whether a completion was changed for this quota
 			$updatequota = false;
@@ -1964,7 +1964,7 @@ function update_quota_priorities($questionnaire_id)
     $x = 1;
     foreach ($rev as $ev)
     {
-      $sql .= " AND sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+      $sql .= " AND sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}' ";
       $x++;
     }
 
