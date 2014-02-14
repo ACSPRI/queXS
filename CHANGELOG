@@ -1,3 +1,8 @@
+queXS 1.10.1 - Changes since 1.10.0
+
+Fixed Bug: Database creation fails due to additional comma (new installations)
+Translations updated - Thank you!
+
 queXS 1.10.0 - Changes since 1.9.2
 
 New Feature: Operators can choose extension (see: https://blueprints.launchpad.net/quexs/+spec/operatorextension)
