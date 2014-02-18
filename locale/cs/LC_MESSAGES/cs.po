@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-02 14:31+1000\n"
-"PO-Revision-Date: 2013-07-27 21:47+0000\n"
+"POT-Creation-Date: 2014-01-08 15:30+1000\n"
+"PO-Revision-Date: 2013-12-24 14:41+0000\n"
 "Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-12-19 23:41+0000\n"
-"X-Generator: Launchpad (build 16872)\n"
+"X-Launchpad-Export-Date: 2014-02-14 03:56+0000\n"
+"X-Generator: Launchpad (build 16916)\n"
 
 #: callhistory.php:56
 msgid "Case History List"
@@ -35,7 +35,7 @@ msgid "Case ID"
 msgstr "ID případu"
 
 #: callhistory.php:83
-#: index_interface2.php:210
+#: index_interface2.php:212
 #: calllist.php:84
 msgid "Outcome"
 msgstr "Výsledek"
@@ -95,74 +95,79 @@ msgstr "Ukončit hovor s výsledkem: Firemní číslo"
 
 #: index_interface2.php:195
 #: waitnextcase_interface2.php:49
-#: index.php:130
+#: index.php:145
 msgid "queXS"
 msgstr "queXS"
 
-#: index_interface2.php:211
+#: index_interface2.php:213
 #: appointment.php:121
-#: index.php:146
+#: index.php:163
 msgid "Appointment"
 msgstr "Schůzka"
 
-#: index_interface2.php:212
-#: index.php:149
+#: index_interface2.php:214
+#: index.php:166
 msgid "Email"
 msgstr "E-mail"
 
-#: index_interface2.php:213
+#: index_interface2.php:215
+#: index.php:167
+msgid "Referral"
+msgstr ""
+
+#: index_interface2.php:216
 #: waitnextcase_interface2.php:55
 msgid "End work"
 msgstr "Ukončit práci"
 
-#: index_interface2.php:291
-#: index.php:151
+#: index_interface2.php:294
+#: index.php:169
 msgid "Arrow for expanding or contracting"
 msgstr "Šipka pro rozbalení/sbalení"
 
-#: index_interface2.php:303
-#: index.php:202
+#: index_interface2.php:306
+#: index.php:220
 msgid "Notes"
 msgstr "Poznámky"
 
-#: index_interface2.php:311
-#: index.php:220
+#: index_interface2.php:314
+#: index.php:238
 msgid "Contact details"
 msgstr "Kontaktní údaje"
 
-#: index_interface2.php:320
-#: index.php:229
+#: index_interface2.php:323
+#: index.php:247
 msgid "Call history"
 msgstr "Historie volání"
 
-#: index_interface2.php:329
-#: index.php:238
+#: index_interface2.php:332
+#: index.php:256
 msgid "Shifts"
 msgstr "Směny"
 
-#: index_interface2.php:338
-#: index.php:247
+#: index_interface2.php:341
+#: index.php:265
 msgid "Appointments"
 msgstr "Schůzky"
 
-#: index_interface2.php:347
-#: index.php:256
+#: index_interface2.php:350
+#: index.php:274
 msgid "Performance"
 msgstr "Výkon"
 
-#: index_interface2.php:355
-#: index.php:264
+#: index_interface2.php:358
+#: index.php:282
 msgid "Work history"
 msgstr "Historie práce"
 
-#: index_interface2.php:363
+#: index_interface2.php:366
 #: project_info.php:61
-#: index.php:272
+#: index.php:290
 msgid "Project information"
 msgstr "Informace o projektu"
 
-#: index_interface2.php:372
-#: index.php:288
+#: index_interface2.php:375
+#: index.php:306
 msgid "Info"
 msgstr "Informace"
 
@@ -190,7 +195,7 @@ msgid "Begin the manual recording now..."
 msgstr "Spustit ruční nahrávání nyní..."
 
 #: record.php:78
-#: index.php:150
+#: index.php:168
 msgid "Start REC"
 msgstr "Spustit nahrávání"
 
@@ -340,27 +345,27 @@ msgstr "Žádný případ"
 msgid "Get a new case"
 msgstr "Obdržet nový případ"
 
-#: index.php:145
+#: index.php:162
 msgid "End"
 msgstr "Konec"
 
-#: index.php:147
+#: index.php:164
 msgid "Call/Hangup"
 msgstr "Zavolat/Zavěsit"
 
-#: index.php:148
+#: index.php:165
 msgid "Supervisor"
 msgstr "Vedoucí"
 
-#: index.php:152
+#: index.php:170
 msgid "Restart"
 msgstr "Restartovat"
 
-#: index.php:210
+#: index.php:228
 msgid "Availability"
 msgstr "Dostupnost"
 
-#: index.php:280
+#: index.php:298
 msgid "Supervisor chat"
 msgstr "Chat s vedoucím"
 
@@ -518,6 +523,34 @@ msgstr "Zvednuto"
 msgid "Not Answered"
 msgstr "Nezvednuto"
 
+#: selectextension.php:99
+msgid ""
+"There are no extensions available, please contact the supervisor or click "
+"below to try again for an available extension"
+msgstr ""
+
+#: selectextension.php:100
+msgid "Try again"
+msgstr ""
+
+#: selectextension.php:104
+msgid "Select extension"
+msgstr ""
+
+#: selectextension.php:105
+msgid ""
+"Please select your extension from the list below then click on 'Choose "
+"extension'"
+msgstr ""
+
+#: selectextension.php:108
+msgid "Extension"
+msgstr "Rozšíření"
+
+#: selectextension.php:110
+msgid "Choose extension"
+msgstr ""
+
 #: endwork.php:45
 msgid "End of work"
 msgstr "Konec práce"
@@ -530,7 +563,11 @@ msgstr "Byli jste automaticky odhlášeni z práce kvůli nečinnosti"
 msgid "Work has ended. That is it"
 msgstr "Práce skončila. Toť vše"
 
-#: endwork.php:54
+#: endwork.php:70
+msgid "You have been unassigned from your extension"
+msgstr ""
+
+#: endwork.php:75
 msgid "Go back to work"
 msgstr "Vrátit se do práce"
 
@@ -639,7 +676,6 @@ msgstr "Přidat respondenta"
 
 #: contactdetails.php:92
 #: respondent.php:96
-#: casenote.php:69
 msgid "Go back"
 msgstr "Jít zpět"
 
@@ -817,7 +853,6 @@ msgstr "Tato směna"
 
 #: performance.php:78
 #: performance.php:85
-#: admin/quotareport.php:284
 msgid "Completions"
 msgstr "Dokončení"
 
@@ -838,27 +873,27 @@ msgstr "VoIP zapnuto"
 msgid "VoIP Off"
 msgstr "VoIP vypnuto"
 
-#: status.php:100
+#: status.php:102
 msgid "No VoIP"
 msgstr "Žádné VoIP"
 
-#: status.php:104
+#: status.php:106
 msgid "No call"
 msgstr "Žádné volání"
 
-#: status.php:108
+#: status.php:110
 msgid "To be coded"
 msgstr "Bude zakódováno"
 
-#: status.php:112
+#: status.php:114
 msgid "Requesting"
 msgstr "Požadavek"
 
-#: status.php:128
+#: status.php:130
 msgid "APPT"
 msgstr "SCHŮZKA"
 
-#: status.php:129
+#: status.php:131
 msgid "MISSED"
 msgstr "ZMEŠKÁNO"
 
@@ -880,19 +915,19 @@ msgstr "pro zobrazení scénáře volání"
 
 #: nocallavailable.php:177
 msgid "Will dial in"
-msgstr ""
+msgstr "Bude vytočeno za"
 
 #: nocallavailable.php:178
 msgid "Dialling now"
-msgstr ""
+msgstr "Nyní vytáčeno"
 
 #: nocallavailable.php:184
 msgid "Will end case in"
-msgstr ""
+msgstr "Případ bude ukončen za"
 
 #: nocallavailable.php:185
 msgid "Ending case now"
-msgstr ""
+msgstr "Případ je nyní ukončován"
 
 #: nocallavailable.php:203
 msgid "seconds"
@@ -903,13 +938,49 @@ msgid ""
 "Your VoIP extension is not active. Please activate VoIP by clicking once on "
 "the red button that says 'VoIP Off'"
 msgstr ""
+"Vaše rozšíření VoIP není aktivní. Prosím aktivujte VoIP kliknutím na červené "
+"tlačítko s nápisem 'VoIP vypnuto'"
 
 #: nocallavailable.php:222
 msgid "Auto dialling unavailable as VoIP is not enabled"
-msgstr ""
+msgstr "Automatické vytáčení nedostupné protože VoIP není zapnuto"
 
 #: nocallavailable.php:228
 msgid "Auto dialling unavailable as you are already on a call"
+msgstr "Automatické vytáčení nedostupné protože již voláte"
+
+#: referral.php:167
+msgid "Generated referral to case id"
+msgstr ""
+
+#: referral.php:173
+msgid "Generated as referral from case id"
+msgstr ""
+
+#: referral.php:179
+msgid "Created referral case - you may now close this window"
+msgstr ""
+
+#: referral.php:183
+msgid ""
+"Failed to create referral case - please check your input and try again"
+msgstr ""
+
+#: referral.php:189
+msgid "You must supply a primary phone number"
+msgstr ""
+
+#: referral.php:209
+#: referral.php:243
+msgid "Create referral"
+msgstr ""
+
+#: referral.php:241
+msgid "Call this new referral immediately after this case?"
+msgstr ""
+
+#: referral.php:248
+msgid "Referrals not available for this questionnaire"
 msgstr ""
 
 #: rs_quota_end.php:61
@@ -1103,14 +1174,21 @@ msgid "Assign clients to questionnaires"
 msgstr "Přidělit klienty k dotazníkům"
 
 #: admin/quotareport.php:109
+#: admin/index.php:80
 msgid "Quota report"
 msgstr "Hlášení kvóty"
 
 #: admin/quotareport.php:111
+#: admin/quota.php:110
+#: admin/assignsample.php:171
+#: admin/questionnaireavailability.php:94
+#: admin/outcomes.php:80
 msgid "Select a questionnaire from the list below"
 msgstr "Vyberte dotazník ze seznamu níže"
 
 #: admin/quotareport.php:118
+#: admin/quota.php:123
+#: admin/samplesearch.php:84
 msgid "Select a sample from the list below"
 msgstr "Vyberte vzorek ze seznamu níže"
 
@@ -1197,6 +1275,7 @@ msgid "Description for file:"
 msgstr "Popis souboru:"
 
 #: admin/import.php:119
+#: admin/assignsample.php:227
 msgid "Add sample"
 msgstr "Přidat vzorek"
 
@@ -1485,7 +1564,7 @@ msgstr "Přidat skupinu dostupnosti"
 
 #: admin/availabilitygroup.php:126
 msgid "Availability group name"
-msgstr ""
+msgstr "Název skupiny dostupnosti"
 
 #: admin/shiftreport.php:61
 #: admin/index.php:95
@@ -2214,7 +2293,6 @@ msgstr ""
 #: admin/addshift.php:151
 #: admin/availability.php:106
 #: admin/shifttemplate.php:93
-#: admin/callrestrict.php:93
 msgid ""
 "Your database does not have timezones installed, please see here for details"
 msgstr ""
@@ -2244,7 +2322,6 @@ msgstr "Vyberte týden v roce"
 #: admin/addshift.php:238
 #: admin/availability.php:144
 #: admin/shifttemplate.php:118
-#: admin/callrestrict.php:118
 msgid "Day"
 msgstr "Den"
 
@@ -2363,41 +2440,37 @@ msgstr "Vynechat ze vzorku kde hodnota se podobá"
 msgid "Add row quota"
 msgstr "Přidat kvótu řádku"
 
-#: admin/operators.php:139
+#: admin/operators.php:147
 msgid "Added:"
 msgstr "Přidáno:"
 
-#: admin/operators.php:142
+#: admin/operators.php:150
 msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
 msgstr "FreePBX byl znovu načten, aby nové rozšíření VoIP mohlo být použito"
 
-#: admin/operators.php:167
+#: admin/operators.php:174
 msgid ""
 "Could not add operator. There may already be an operator of this name:"
 msgstr "Nelze přidat operátora. Již možná existuje operátor s tímto názvem:"
 
-#: admin/operators.php:167
-msgid "Or there may already be an telephone extension number"
-msgstr "Nebo již může být zadáno číslo telefonní linky"
-
-#: admin/operators.php:175
-#: admin/operators.php:190
+#: admin/operators.php:182
+#: admin/operators.php:203
 msgid "Add an operator"
 msgstr "Přidat operátora"
 
-#: admin/operators.php:191
+#: admin/operators.php:204
 msgid "Adding an operator here will give the user the ability to call cases"
 msgstr "Po přidání operátora zde bude mít uživatel možnost vytáčet případy"
 
-#: admin/operators.php:191
+#: admin/operators.php:204
 msgid "Assign Operator to Questionnaire"
 msgstr "Přidělit operátora k dotazníku"
 
-#: admin/operators.php:191
+#: admin/operators.php:204
 msgid "tool"
 msgstr "nástroj"
 
-#: admin/operators.php:192
+#: admin/operators.php:205
 #: admin/clients.php:106
 msgid ""
 "Use this form to enter the username of a user based on your directory "
@@ -2410,68 +2483,64 @@ msgstr ""
 "základní adresář queXS pomocí Apache souboru zabezpečení, zadejte "
 "uživatelská jména zde."
 
-#: admin/operators.php:193
+#: admin/operators.php:206
 msgid "The username and extension must be unique for each operator."
 msgstr ""
 "Uživatelské jméno a rozšíření musí být pro každého operátora jedinečné."
 
-#: admin/operators.php:195
+#: admin/operators.php:208
 msgid "Enter the username of an operator to add:"
 msgstr "Zadejte uživatelské jméno operátora pro přidání:"
 
-#: admin/operators.php:197
+#: admin/operators.php:210
 msgid "Enter the password of an operator to add:"
 msgstr "Zadejte heslo operátora pro přidání:"
 
-#: admin/operators.php:199
+#: admin/operators.php:212
 msgid "Enter the first name of an operator to add:"
 msgstr "Zadejte jméno operátora pro přidání:"
 
-#: admin/operators.php:200
+#: admin/operators.php:213
 msgid "Enter the surname of an operator to add:"
 msgstr "Zadejte příjmení operátora pro přidání:"
 
-#: admin/operators.php:201
+#: admin/operators.php:214
 msgid "Enter the Time Zone of an operator to add:"
 msgstr "Zadejte časové pásmo operátora pro přidání:"
 
-#: admin/operators.php:203
-msgid "Enter the telephone extension number:"
-msgstr "Zadejte číslo telefonní linky:"
+#: admin/operators.php:216
+msgid "Select an extension for this operator:"
+msgstr ""
 
-#: admin/operators.php:204
-msgid "Enter the telephone extension password:"
-msgstr "Zadejte heslo telefonní linky:"
-
-#: admin/operators.php:206
+#: admin/operators.php:218
 msgid "Will this operator be using VoIP?"
 msgstr "Bude tento operátor používat VoIP?"
 
-#: admin/operators.php:207
+#: admin/operators.php:219
 msgid "Jabber/XMPP chat user"
 msgstr "Uživatel chatu Jabber/XMPP"
 
-#: admin/operators.php:208
+#: admin/operators.php:220
 msgid "Jabber/XMPP chat password"
 msgstr "Heslo chatu Jabber/XMPP"
 
-#: admin/operators.php:209
+#: admin/operators.php:221
 msgid "Will this operator be using chat?"
 msgstr "Bude tento operátor používat chat?"
 
-#: admin/operators.php:210
+#: admin/operators.php:222
 msgid "Is the operator a normal interviewer?"
 msgstr "Je operátor normální tazatel?"
 
-#: admin/operators.php:211
+#: admin/operators.php:223
 msgid "Is the operator a supervisor?"
 msgstr "Je operátor vedoucí?"
 
-#: admin/operators.php:212
+#: admin/operators.php:224
 msgid "Is the operator a refusal converter?"
 msgstr "Je operátor určen pro odmítavé respondenty?"
 
-#: admin/operators.php:213
+#: admin/operators.php:225
 #: admin/clients.php:115
 msgid "Add user"
 msgstr "Přidat uživatele"
@@ -2480,154 +2549,201 @@ msgstr "Přidat uživatele"
 msgid "New: Create new questionnaire"
 msgstr "Nový: Vytvořit nový dotazník"
 
-#: admin/new.php:116
+#: admin/new.php:118
 msgid "Successfully inserted"
 msgstr "Úspěšně vloženo"
 
-#: admin/new.php:116
+#: admin/new.php:118
 msgid "as questionnaire"
 msgstr "jako dotazník"
 
-#: admin/new.php:116
+#: admin/new.php:118
 msgid "linked to"
 msgstr "propojeno s"
 
-#: admin/new.php:119
+#: admin/new.php:121
 msgid "Error: Failed to insert questionnaire"
 msgstr "Chyba: Nelze vložit dotazník"
 
-#: admin/new.php:130
+#: admin/new.php:132
 msgid "Name for questionnaire:"
 msgstr "Název dotazníku:"
 
-#: admin/new.php:131
+#: admin/new.php:133
 msgid "Select limesurvey instrument:"
 msgstr "Výběr nástroje limesurvey:"
 
-#: admin/new.php:145
-#: admin/new.php:169
+#: admin/new.php:147
+#: admin/new.php:171
 msgid "Existing instrument:"
 msgstr "Existující nástroj:"
 
-#: admin/new.php:154
+#: admin/new.php:156
 msgid "Respondent selection type:"
 msgstr "Typ výběru respondenta:"
 
-#: admin/new.php:155
+#: admin/new.php:157
 msgid "No respondent selection (go straight to questionnaire)"
 msgstr "Žádný výběr respondenta (přejít přímo k dotazníku)"
 
-#: admin/new.php:155
+#: admin/new.php:157
 msgid "Use basic respondent selection text (below)"
 msgstr "Použít základní text výběru respondenta (níže)"
 
-#: admin/new.php:193
+#: admin/new.php:195
 msgid "Restrict appointments to shifts?"
 msgstr "Omezit schůzky na směny?"
 
-#: admin/new.php:194
+#: admin/new.php:196
 msgid "Restrict work to shifts?"
 msgstr "Omezit práci na směny?"
 
-#: admin/new.php:195
+#: admin/new.php:197
 msgid "Questionnaire for testing only?"
 msgstr "Dotazník pouze pro zkoušku?"
 
-#: admin/new.php:196
+#: admin/new.php:198
+msgid "Allow operators to generate referrals?"
+msgstr ""
+
+#: admin/new.php:199
 msgid "Allow for respondent self completion via email invitation?"
 msgstr "Umožnit respondentům dotazník vyplnit pomocí e-mailové pozvánky?"
 
-#: admin/new.php:198
+#: admin/new.php:201
 msgid "Questionnaire display mode for respondent"
 msgstr "Režim zobrazení dotazníku pro respondenta"
 
-#: admin/new.php:198
+#: admin/new.php:201
 msgid "All in one"
 msgstr "Vše v jednom"
 
-#: admin/new.php:198
+#: admin/new.php:201
 msgid "Question by question"
 msgstr "Otázka za otázkou"
 
-#: admin/new.php:198
+#: admin/new.php:201
 msgid "Group at a time"
 msgstr "Skupina najednou"
 
-#: admin/new.php:199
+#: admin/new.php:202
 msgid "Limesurvey template for respondent"
 msgstr "Šablona Limesurvey pro respondenta"
 
-#: admin/new.php:211
+#: admin/new.php:214
 msgid "URL to forward respondents on self completion (required)"
 msgstr "URL pro přesměrování respondentů při samo-dokončení (vyžadováno)"
 
-#: admin/new.php:214
+#: admin/new.php:217
 msgid "Respondent selection introduction:"
 msgstr "Úvod výběru respondenta:"
 
-#: admin/new.php:215
+#: admin/new.php:218
 msgid "Respondent selection project introduction:"
 msgstr "Úvod projektu výběru respondenta:"
 
-#: admin/new.php:216
+#: admin/new.php:219
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr "Zpětné vrácení výběru respondenta (dotazník již zahájen):"
 
-#: admin/new.php:217
+#: admin/new.php:220
 msgid "Message to leave on an answering machine:"
 msgstr "Zprávu, kterou zanechat na záznamníku:"
 
-#: admin/new.php:219
+#: admin/new.php:222
 msgid "Project end text (thank you screen):"
 msgstr "Text na konci projektu (obrazovka poděkování):"
 
-#: admin/new.php:220
+#: admin/new.php:223
 msgid "Project information for interviewers/operators:"
 msgstr "Informace o projektu pro tazatele/operátory:"
 
-#: admin/new.php:221
+#: admin/new.php:224
 msgid "Create Questionnaire"
 msgstr "Vytvořit dotazník"
 
-#: admin/extensionstatus.php:46
+#: admin/extensionstatus.php:101
+msgid ""
+"Failed to add extension. There already may be an extension of this name"
+msgstr ""
+
+#: admin/extensionstatus.php:133
 msgid "Display extension status"
 msgstr "Zobrazit stav rozšíření"
 
-#: admin/extensionstatus.php:48
+#: admin/extensionstatus.php:146
+#: admin/extensionstatus.php:209
+msgid "Extension name (such as SIP/1000):"
+msgstr ""
+
+#: admin/extensionstatus.php:147
+#: admin/extensionstatus.php:210
+msgid "Extension password:"
+msgstr ""
+
+#: admin/extensionstatus.php:149
+msgid "Edit extension"
+msgstr ""
+
+#: admin/extensionstatus.php:155
+msgid "Delete extension"
+msgstr ""
+
+#: admin/extensionstatus.php:160
+msgid "Unassign the operator from this extension to be able to delete it"
+msgstr ""
+
+#: admin/extensionstatus.php:168
+msgid "Unassign"
+msgstr ""
+
+#: admin/extensionstatus.php:168
+msgid "End case to change assignment"
+msgstr ""
+
+#: admin/extensionstatus.php:169
 msgid "VoIP Offline"
 msgstr "VoIP Offline"
 
-#: admin/extensionstatus.php:48
+#: admin/extensionstatus.php:169
 msgid "VoIP Online"
 msgstr "VoIP Online"
 
-#: admin/extensionstatus.php:48
+#: admin/extensionstatus.php:170
 msgid "Not called"
 msgstr "Nevoláno"
 
-#: admin/extensionstatus.php:48
+#: admin/extensionstatus.php:170
 msgid "Done"
 msgstr "Hotovo"
 
-#: admin/extensionstatus.php:61
-msgid "Extension"
-msgstr "Rozšíření"
+#: admin/extensionstatus.php:200
+msgid "Assignment"
+msgstr ""
 
-#: admin/extensionstatus.php:61
+#: admin/extensionstatus.php:200
 msgid "VoIP Status"
 msgstr "Stav VoIP"
 
-#: admin/extensionstatus.php:61
+#: admin/extensionstatus.php:200
 msgid "Call state"
 msgstr "Stav volání"
 
-#: admin/extensionstatus.php:61
+#: admin/extensionstatus.php:200
 msgid "Time on call"
 msgstr "Čas volání"
 
-#: admin/extensionstatus.php:64
-msgid "No operators"
-msgstr "Žádní operátoři"
+#: admin/extensionstatus.php:203
+msgid "No extensions"
+msgstr ""
+
+#: admin/extensionstatus.php:205
+msgid "Add an extension"
+msgstr ""
+
+#: admin/extensionstatus.php:211
+msgid "Add extension"
+msgstr ""
 
 #: admin/databasestrings.php:32
 msgid "Not attempted or worked"
@@ -2894,7 +3010,6 @@ msgid "Modify availability"
 msgstr "Změnit dostupnost"
 
 #: admin/availability.php:122
-#: admin/callrestrict.php:96
 msgid ""
 "Enter the start and end times for each day of the week to restrict calls "
 "within"
@@ -2903,7 +3018,6 @@ msgstr ""
 
 #: admin/availability.php:160
 #: admin/shifttemplate.php:134
-#: admin/callrestrict.php:134
 msgid "Add row"
 msgstr "Přidat řádek"
 
@@ -2913,7 +3027,7 @@ msgstr "Uložit změny dostupnosti"
 
 #: admin/availability.php:166
 msgid "Delete this availability group"
-msgstr ""
+msgstr "Smazat tuto skupinu dostupnosti"
 
 #: admin/clients.php:84
 msgid "Could not add"
@@ -3030,6 +3144,7 @@ msgid "Download data for this questionnaire via Limesurvey"
 msgstr "Stáhnout data pro tento dotazník přes Limesurvey"
 
 #: admin/dataoutput.php:204
+#: admin/samplecallattempts.php:184
 msgid "Please select a sample"
 msgstr "Prosím vyberte vzorek"
 
@@ -3061,71 +3176,64 @@ msgstr "Uložit změny dob omezení"
 msgid "If changing usernames, you must specify a new password"
 msgstr "Při změně uživatelských jmen musíte zadat nové heslo"
 
-#: admin/operatorlist.php:90
+#: admin/operatorlist.php:113
 msgid "Successfully updated user"
 msgstr "Uživatel úspěšně aktualizován"
 
-#: admin/operatorlist.php:94
-msgid ""
-"Failed to update user. Please make sure the username and extension are unique"
+#: admin/operatorlist.php:117
+msgid "Failed to update user. Please make sure the username is unique"
 msgstr ""
-"Nelze aktualizovat uživatele. Ujistěte se prosím, že uživatelské jméno a "
-"přípony jsou jedinečné"
 
-#: admin/operatorlist.php:103
+#: admin/operatorlist.php:126
 msgid "Operator edit"
 msgstr "Úprava operátora"
 
-#: admin/operatorlist.php:124
-#: admin/operatorlist.php:258
+#: admin/operatorlist.php:155
+#: admin/operatorlist.php:290
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: admin/operatorlist.php:128
+#: admin/operatorlist.php:159
 msgid "Update password (leave blank to keep existing password)"
 msgstr "Aktualizovat heslo (nechejte prázdné pro použití současného hesla)"
 
-#: admin/operatorlist.php:134
-msgid "Extension Password"
-msgstr "Heslo rozšíření"
-
-#: admin/operatorlist.php:137
+#: admin/operatorlist.php:167
 msgid "Uses chat"
 msgstr "Používá chat"
 
-#: admin/operatorlist.php:138
+#: admin/operatorlist.php:168
 msgid "Timezone"
 msgstr "Časové pásmo"
 
-#: admin/operatorlist.php:140
+#: admin/operatorlist.php:170
 msgid "Uses VoIP"
 msgstr "Používá VoIP"
 
-#: admin/operatorlist.php:143
+#: admin/operatorlist.php:173
 msgid "Update operator"
 msgstr "Aktualizovat operátora"
 
-#: admin/operatorlist.php:236
+#: admin/operatorlist.php:267
 msgid "Windows bat file"
 msgstr "Soubor dávky Windows"
 
-#: admin/operatorlist.php:237
+#: admin/operatorlist.php:268
 msgid "*nix script file"
 msgstr "soubor skriptu *nix"
 
-#: admin/operatorlist.php:245
+#: admin/operatorlist.php:276
 msgid "Enable VoIP"
 msgstr "Povolit VoIP"
 
-#: admin/operatorlist.php:247
+#: admin/operatorlist.php:278
 msgid "Disable VoIP"
 msgstr "Zakázat VoIP"
 
-#: admin/operatorlist.php:255
+#: admin/operatorlist.php:287
 msgid "Operator list"
 msgstr "Seznam operátorů"
 
-#: admin/operatorlist.php:262
+#: admin/operatorlist.php:294
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
@@ -3135,23 +3243,23 @@ msgstr ""
 "soubor voip.exe. Když je soubor spuštěn, spustí soubor voip.exe se správnými "
 "údaii o spojení pro připojení operátora k serveru VoIP"
 
-#: admin/operatorlist.php:264
+#: admin/operatorlist.php:296
 msgid "Download Windows VoIP Executable"
 msgstr "Stáhnout spustitelný soubor VoIP pro Windows"
 
-#: admin/operatorlist.php:265
+#: admin/operatorlist.php:297
 msgid "Download Linux VoIP Executable"
 msgstr "Stáhnout spustitelný soubor VoIP pro Linux"
 
-#: admin/operatorlist.php:270
+#: admin/operatorlist.php:302
 msgid "Enable/Disable VoIP"
 msgstr "Povolit/Zakázat VoIP"
 
-#: admin/operatorlist.php:271
+#: admin/operatorlist.php:303
 msgid "Windows VoIP"
 msgstr "Windows VoIP"
 
-#: admin/operatorlist.php:272
+#: admin/operatorlist.php:304
 msgid "*nix VoIP"
 msgstr "*nix VoIP"
 
@@ -3187,27 +3295,27 @@ msgstr "Žádná volání pro tento vzorek"
 msgid "No calls for this questionnaire"
 msgstr "Žádná volání pro tento dotazník"
 
-#: admin/questionnairelist.php:275
+#: admin/questionnairelist.php:277
 msgid "Questionnaire list"
 msgstr "Seznam dotazníků"
 
-#: admin/questionnairelist.php:326
+#: admin/questionnairelist.php:329
 msgid "Edit instrument in Limesurvey"
 msgstr "Upravit nástroj v Limesurvey"
 
-#: admin/questionnairelist.php:358
+#: admin/questionnairelist.php:362
 msgid "Edit respondent selection instrument in Limesurvey"
 msgstr "Upravit nástroj výběru respondenta v Limesurvey"
 
-#: admin/questionnairelist.php:361
+#: admin/questionnairelist.php:365
 msgid "Update Questionnaire"
 msgstr "Aktualizovat dotazník"
 
-#: admin/questionnairelist.php:380
+#: admin/questionnairelist.php:384
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
 msgstr "Veškerá nashromážděná data a nástroj limesurvey NEBUDOU smazány"
 
-#: admin/questionnairelist.php:381
+#: admin/questionnairelist.php:385
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
@@ -3217,11 +3325,11 @@ msgstr ""
 "údajů o respondentech, schůzkách a propojení mezi operátory, klienty a "
 "dotazníkem."
 
-#: admin/questionnairelist.php:382
+#: admin/questionnairelist.php:386
 msgid "Please confirm you wish to delete the questionnaire"
 msgstr "Prosím potvrďte smazání dotazníku."
 
-#: admin/questionnairelist.php:385
+#: admin/questionnairelist.php:389
 msgid "Delete this questionnaire"
 msgstr "Smazat tento dotazník"
 
@@ -3319,19 +3427,19 @@ msgstr "Případ neexistuje"
 msgid "Error: Cannot write to temporary directory"
 msgstr "Chyba: nelze zapisovat do dočasného adresáře"
 
-#: functions/functions.operator.php:166
+#: functions/functions.operator.php:167
 msgid "morning"
 msgstr "ráno"
 
-#: functions/functions.operator.php:167
+#: functions/functions.operator.php:168
 msgid "afternoon"
 msgstr "odpoledne"
 
-#: functions/functions.operator.php:168
+#: functions/functions.operator.php:169
 msgid "evening"
 msgstr "večer"
 
-#: functions/functions.operator.php:877
+#: functions/functions.operator.php:903
 msgid ""
 "ERROR: You do not have server side authentication enabled therefore queXS "
 "cannot determine which user is accessing the system."
@@ -3428,27 +3536,27 @@ msgstr "připojeno"
 msgid "offline"
 msgstr "odpojeno"
 
-#: functions/functions.voip.php:530
+#: functions/functions.voip.php:528
 msgid "Disconnected"
 msgstr "Odpojeno"
 
-#: functions/functions.voip.php:532
+#: functions/functions.voip.php:530
 msgid "Reconnected"
 msgstr "Znovu připojeno"
 
-#: functions/functions.voip.php:555
-#: functions/functions.voip.php:567
-#: functions/functions.voip.php:579
-#: functions/functions.voip.php:589
-#: functions/functions.voip.php:598
+#: functions/functions.voip.php:553
+#: functions/functions.voip.php:565
+#: functions/functions.voip.php:577
+#: functions/functions.voip.php:587
+#: functions/functions.voip.php:596
 msgid " Extension "
 msgstr " Rozšíření "
 
-#: functions/functions.voip.php:589
+#: functions/functions.voip.php:587
 msgid "Unregistered"
 msgstr "Neregistrováno"
 
-#: functions/functions.voip.php:598
+#: functions/functions.voip.php:596
 msgid "Registered"
 msgstr "Registrováno"
 
@@ -3503,11 +3611,17 @@ msgstr ""
 "A ten příběh je vyprávěn takto.\n"
 "\n"
 
+#~ msgid "Enter the telephone extension password:"
+#~ msgstr "Zadejte heslo telefonní linky:"
+
 #~ msgid "Update timezone"
 #~ msgstr "Aktualizovat časové pásmo"
 
 #~ msgid "Update password"
 #~ msgstr "Aktualizovat heslo"
+
+#~ msgid "No operators"
+#~ msgstr "Žádní operátoři"
 
 #~ msgid "Max call attempts:"
 #~ msgstr "Max pokusů o volání:"
@@ -3520,3 +3634,6 @@ msgstr ""
 
 #~ msgid "Sequentially selected"
 #~ msgstr "Vybrány popořadě"
+
+#~ msgid "Enter the telephone extension number:"
+#~ msgstr "Zadejte číslo telefonní linky:"

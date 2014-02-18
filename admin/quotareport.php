@@ -179,7 +179,7 @@ if ($questionnaire_id)
 
 		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
 		//b. (Replicate quota) Exclude selected sample records (where lime_sgqa == -1) 
-		$sql = "SELECT questionnaire_sample_quota_row_id,qsqr_question.lime_sgqa,value,completions,quota_reached,lime_sid,qsq.description,current_completions, priority, autoprioritise
+		$sql = "SELECT qsq.questionnaire_sample_quota_row_id,qsqr_question.lime_sgqa,completions,quota_reached,lime_sid,qsq.description,current_completions, priority, autoprioritise
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q, qsqr_question
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
@@ -257,7 +257,7 @@ if ($questionnaire_id)
 					$status = T_("open");
 			}
 			
-			$report[] = array("strata" => "<a href='quotarow.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='text' size='3' value='$priority' id='p$qsqr' name='p$qsqr' />", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
+			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='text' size='3' value='$priority' id='p$qsqr' name='p$qsqr' />", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
 		}
 
 		//c. (Questionnaire quota) Monitor outcomes of questions in completed questionnaires, and abort interview when completion limit is reached 
