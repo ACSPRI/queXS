@@ -69,6 +69,26 @@ include("../functions/functions.operator.php");
 
 global $db;
 
+
+if (isset($_GET['delete']))
+{
+  if (isset($_GET['qsqrqi']))
+  {
+    $qsqrqi = bigintval($_GET['qsqrqi']);
+    $sql = "DELETE FROM qsqr_question
+            WHERE qsqr_question_id = $qsqrqi";
+    $db->Execute($sql);
+  }
+  if (isset($_GET['qsqrsi']))
+  {
+    $qsqrsi = bigintval($_GET['qsqrsi']);
+    $sql = "DELETE FROM qsqr_sample
+            WHERE qsqr_sample_id = $qsqrsi";
+    $db->Execute($sql);
+  }
+}
+
+
 if (isset($_POST['add_quota']))
 {
 	//need to add quota
@@ -89,6 +109,30 @@ if (isset($_POST['add_quota']))
 	//update_quotas($questionnaire_id);
 }
 
+if (isset($_POST['edit_quota']))
+{
+	$completions = intval($_POST['completions']);
+	$autoprioritise = 0;
+	if (isset($_POST['autoprioritise'])) $autoprioritise = 1;
+	$priority = intval($_POST['priority']);
+	$description = $db->quote($_POST['description']);
+  $qsqri = bigintval($_POST['qsqri']);
+
+  $sql = "UPDATE questionnaire_sample_quota_row 
+          SET completions = $completions,
+              autoprioritise = $autoprioritise,
+              priority = $priority,
+              description = $description
+          WHERE questionnaire_sample_quota_row_id = $qsqri";
+
+	$db->Execute($sql);
+
+  $_GET['qsqri'] = $qsqri;
+  $_GET['edit'] = "edit";
+	//Make sure to calculate on the spot
+	//update_quotas($questionnaire_id);
+}
+
 
 $qsqri = false;
 $qsqrid = false;
@@ -96,7 +140,7 @@ if (isset($_GET['qsqri']) & isset($_GET['edit']))
 {
   $qsqri = bigintval($_GET['qsqri']);
 
-  $sql = "SELECT questionnaire_id,sample_import_id,description
+  $sql = "SELECT questionnaire_id,sample_import_id,description,autoprioritise,priority,completions
           FROM questionnaire_sample_quota_row
           WHERE questionnaire_sample_quota_row_id = $qsqri";
 
@@ -105,6 +149,35 @@ if (isset($_GET['qsqri']) & isset($_GET['edit']))
   $_GET['questionnaire_id'] = $rs['questionnaire_id'];
   $_GET['sample_import_id'] = $rs['sample_import_id'];
   $qsqrid = $rs['description'];
+  $qsqrich = "";
+  if ($rs['autoprioritise'] == 1)
+     $qsqrich = "checked=\"checked\"";
+  $qsqric = $rs['completions'];
+  $qsqrip = $rs['priority'];
+
+  if (isset($_POST['adds']))
+  {
+    $comparison = $db->qstr($_POST['comparisons']);
+    $exvar = $db->qstr(substr($_POST['sample_var'],12,strpos($_POST['sample_var'],'&')-12));
+    $exval = $db->qstr($_POST['exclude_val']);
+    //add ssample
+    $sql = "INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var,exclude_val,comparison)
+            VALUES ($qsqri,$exvar,$exval,$comparison)";
+
+    $db->Execute($sql);
+  }
+
+  if (isset($_POST['addq']))
+  {
+    $comparison = $db->qstr($_POST['comparison']);
+    $value = $db->qstr($_POST['value']);
+    $sgqa = $db->qstr(substr($_POST['sgqa'],6,strpos($_POST['sgqa'],'&')-6));
+    //add ssample
+    $sql = "INSERT INTO qsqr_question (questionnaire_sample_quota_row_id,lime_sgqa,value,comparison)
+            VALUES ($qsqri,$sgqa,$value,$comparison)";
+
+    $db->Execute($sql);
+  }
 }
 
 $questionnaire_id = false;
@@ -140,14 +213,13 @@ if ($questionnaire_id != false)
       print "<h2>" . T_("Quota") . ": $qsqrid</h2>";
       print "<p><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . T_("Go back") . "</a></p>";
   
-      print "<h2>" . T_("Edit row quota") . "</h2>";
       ?>
       <form action="?<?php echo "questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id"; ?>" method="post">
 				<p>
-				<label for="description"><?php  echo T_("Describe this quota"); ?> </label><input type="text" name="description" id="description"/>		<br/>
-				<label for="priority"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?> </label><input type="text" name="priority" id="priority" value="50"/>		<br/>
-				<label for="autoprioritise"><?php  echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> </label><input type="checkbox" name="autoprioritise" id="autoprioritise"/>		<br/>
-        <label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
+        <label for="description"><?php  echo T_("Describe this quota"); ?> </label><input type="text" name="description" id="description" value="<?php echo $qsqrid;?>"/>		<br/>
+        <label for="priority"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?> </label><input type="text" name="priority" id="priority" value="<?php echo $qsqrip;?>"/>		<br/>
+        <label for="autoprioritise"><?php  echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> </label><input type="checkbox" name="autoprioritise" id="autoprioritise" <?php echo $qsqrich; ?>/>		<br/>
+        <label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions" value="<?php echo $qsqric; ?>"/>		<br/>
         <input type="hidden" name="qsqri" value="<?php echo $qsqri; ?>"/>
 				<input type="submit" name="edit_quota" value="<?php  print(T_("Edit row quota")); ?>"/></p>
       </form>
@@ -155,7 +227,7 @@ if ($questionnaire_id != false)
 
       //display questionnaire references
       $sql = "SELECT qsqr_question_id,lime_sgqa,value,comparison,description,
-              CONCAT('<a href=\'?delete=delete&amp;qsqrqi=', qsqr_question_id, '\'>" . TQ_("Delete") .  "</a>') as qdelete
+              CONCAT('<a href=\'?edit=edit&amp;qsqri=$qsqri&amp;delete=delete&amp;qsqrqi=', qsqr_question_id, '\'>" . TQ_("Delete") .  "</a>') as qdelete
               FROM qsqr_question
               WHERE questionnaire_sample_quota_row_id = $qsqri";
 
@@ -164,7 +236,7 @@ if ($questionnaire_id != false)
 
       if (empty($rs))
       {
-        print "<h3>" . T_("All completed responses will be counted") . "</h3>";
+        print "<h3>" . T_("All completed responses that match the sample criteria below will be counted towards the quota") . "</h3>";
       }
       else
       {
@@ -180,8 +252,12 @@ if ($questionnaire_id != false)
 
       $lime_sid = $db->GetOne($sql);
 
+      $ssgqa = "''";
+      if (isset($_GET['sgqa']))
+        $ssgqa = $db->qstr($_GET['sgqa']);
+
       //select question
-  		$sql = "SELECT CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) as value, CASE WHEN lq.parent_qid = 0 THEN lq.question ELSE CONCAT(lq2.question, ': ', lq.question) END as description, '' AS selected
+  		$sql = "SELECT CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) as value, CASE WHEN lq.parent_qid = 0 THEN lq.question ELSE CONCAT(lq2.question, ': ', lq.question) END as description, CASE WHEN $ssgqa LIKE CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) THEN 'selected=\'selected\'' ELSE '' END AS selected
 	  		FROM `" . LIME_PREFIX . "questions` AS lq
   			LEFT JOIN `" . LIME_PREFIX . "questions` AS lq2 ON ( lq2.qid = lq.parent_qid )
   			JOIN `" . LIME_PREFIX . "groups` as g ON (g.gid = lq.gid)
@@ -192,20 +268,22 @@ if ($questionnaire_id != false)
   
       if (!empty($rs))
       {
+        print "<form method='post' action='?qsqri=$qsqri&amp;edit=edit'>";
         print "<h4>" . T_("Add restriction based on answered questions") . "</h4>";
         print "<label for='sgqa'>" . T_("Question") . "</label>";
-        display_chooser($rs,"sgqa","sgqa",false,"qsqri=$qsqri",false,false);
+        display_chooser($rs,"sgqa","sgqa",false,"edit=edit&amp;qsqri=$qsqri",true,false);
         ?>
         <br/><label for="comparison"><?php  echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
   			<label for="value"><?php  echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
         <input type="submit" name="addq" value="<?php echo TQ_("Add restriction") ?>"/>
+        </form>
         <?php
       }
 
       //list sample records to exclude
 
       $sql = "SELECT qsqr_sample_id,exclude_var,exclude_val,comparison,description,
-              CONCAT('<a href=\'?delete=delete&amp;qsqrsi=',qsqr_sample_id,'\'>" . TQ_("Delete") .  "</a>') as sdelete
+              CONCAT('<a href=\'?qsqri=$qsqri&amp;edit=edit&amp;delete=delete&amp;qsqrsi=',qsqr_sample_id,'\'>" . TQ_("Delete") .  "</a>') as sdelete
               FROM qsqr_sample
               WHERE questionnaire_sample_quota_row_id = $qsqri";
 
@@ -213,17 +291,21 @@ if ($questionnaire_id != false)
 
       if (empty($rs))
       {
-        print "<h3>" . T_("All sample records will be counted") . "</h3>";
+        print "<h3>" . T_("All sample records will be excluded") . "</h3>";
       }
       else
       {
-        print "<h3>" . T_("Only completed responses that have the following sample details will be counted") . "</h3>";
+        print "<h3>" . T_("Completed responses that have the following sample details will be counted towards the quota and excluded when the quota is reached") . "</h3>";
         xhtml_table($rs,array('exclude_var','comparison','exclude_val','sdelete'),array(T_("Sample record"),T_("Comparison"),T_("Value"),T_("Delete")));
       }
 
 
+      $ssample_var = "''";
+      if (isset($_GET['sample_var']))
+        $ssample_var = $db->qstr($_GET['sample_var']);
+
       //add sample references (records from sample to exclude when quota reached)
-			$sql = "SELECT sv.var as value, sv.var as description, '' AS selected
+			$sql = "SELECT sv.var as value, sv.var as description, CASE WHEN sv.var LIKE $ssample_var THEN 'selected=\'selected\'' ELSE '' END AS selected
       				FROM sample_var AS sv, sample AS s
       				WHERE s.import_id = $sample_import_id
       				AND s.sample_id = sv.sample_id
@@ -233,25 +315,30 @@ if ($questionnaire_id != false)
 
       if (!empty($rs))
       {
+        if ($ssample_var == "''")
+           $ssample_var = "'" . $rs[0]['value']. "'";
+
         print "<h4>" . T_("Add restriction based on sample records") . "</h4>";
+        print "<form method='post' action='?edit=edit&amp;qsqri=$qsqri'>";
         print "<label for='sample_var'>" . T_("Sample record") . "</label>";
-			  display_chooser($db->GetAll($sql),"sample_var","sample_var",false,"qsqri=$qsqri",false,false);
+			  display_chooser($rs,"sample_var","sample_var",false,"edit=edit&amp;qsqri=$qsqri",true,false);
         ?>
         <br/><label for="comparisons"><?php  echo T_("The type of comparison"); ?></label><select name="comparisons" id="comparisons"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
-    		<label for="exclude_val"><?php  echo T_("Value"); ?></label>
+        <label for="exclude_val"><?php  echo T_("Value"); ?></label>
 				<?php 
 				
 				$sql = "SELECT sv.val as value, sv.val as description, ''  AS selected
 					FROM sample_var AS sv, sample AS s
 					WHERE s.import_id = $sample_import_id
 					AND s.sample_id = sv.sample_id
-					AND sv.var = '$sample_var'
+					AND sv.var = $ssample_var
 					GROUP BY sv.val";
 
 				display_chooser($db->GetAll($sql),"exclude_val","exclude_val",false,false,false,false);
 				flush();
 		    ?>
         <br/><input type="submit" name="adds" value="<?php echo TQ_("Add restriction") ?>"/>
+        </form>
         <?php
       }
     }
@@ -265,7 +352,9 @@ if ($questionnaire_id != false)
     $sql = "SELECT questionnaire_sample_quota_row_id,qsq.description,
             CONCAT('<a href=\'?edit=edit&amp;qsqri=',questionnaire_sample_quota_row_id,'\'>', qsq.description, '</a>') as qedit,
             CONCAT('<input type=\'checkbox\' name=\'select_',questionnaire_sample_quota_row_id,'\'/>') as qselect,
-            qsq.completions,qsq.quota_reached,qsq.current_completions
+            qsq.completions,qsq.quota_reached,qsq.current_completions,
+            CASE WHEN qsq.autoprioritise = 1 THEN '" . TQ_("Yes") . "' ELSE '" . TQ_("No") . "' END AS ap, qsq.priority,
+            CASE WHEN qsq.quota_reached = 1 THEN '" . TQ_("closed") . "' ELSE '" . TQ_("open") . "' END AS status
             FROM questionnaire_sample_quota_row as qsq, questionnaire as q
       			WHERE qsq.questionnaire_id = '$questionnaire_id'
       			AND qsq.sample_import_id = '$sample_import_id'
@@ -280,7 +369,7 @@ if ($questionnaire_id != false)
 		}
 		else
 		{
-       xhtml_table($r,array('qedit','completions','current_completions','qselect'),array(T_("Description"),T_("Quota"),T_("Completions"),T_("Select")));
+       xhtml_table($r,array('qedit','completions','current_completions','status','priority','ap','qselect'),array(T_("Description"),T_("Quota"),T_("Completions"),T_("Status"),T_("Priority"),T_("Auto prioritise"),T_("Select")));
        print "<input type='submit' name='submitdelete' value='" . TQ_("Delete selected") . "'/>";
        print "<input type='submit' name='submitexport' value='" . TQ_("Export selected") . "'/>";
 
