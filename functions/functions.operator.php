@@ -1668,6 +1668,184 @@ function copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,$copy
    */
 }
 
+/**
+ * Update a single row quota
+ *
+ * @param int $qsqri The quota row id
+ * @param int|bool $case_id The case id if known to limit the scope of the search
+ * @return bool If priorities need to be updated or not
+ */
+function update_single_row_quota($qsqri,$case_id = false)
+{
+  global $db;
+
+  $sql = "SELECT q.lime_sid, qs.questionnaire_id, qs.sample_import_id, qs.completions, qs.autoprioritise
+          FROM questionnaire as q, questionnaire_sample_quota_row as qs
+          WHERE q.questionnaire_id = qs.questionnaire_id
+          AND qs.questionnaire_sample_quota_row_id = $qsqri";
+
+  $rs = $db->GetRow($sql);
+
+  $lime_sid = $rs['lime_sid'];
+  $questionnaire_id = $rs['questionnaire_id'];
+  $sample_import_id = $rs['sample_import_id'];
+  $target_completions = $rs['completions'];
+  $autoprioritise = $rs['autoprioritise'];
+
+  //all variables to exclude for this row quota
+  $sql2 = "SELECT exclude_val,exclude_var,comparison
+           FROM qsqr_sample
+           WHERE questionnaire_sample_quota_row_id = $qsqri";
+
+  $rev = $db->GetAll($sql2);
+
+  //all variables to check in limesurvey for this row quota
+  $sql2 = "SELECT lime_sgqa,value,comparison
+           FROM qsqr_question
+           WHERE questionnaire_sample_quota_row_id = $qsqri";
+
+  $qev = $db->GetAll($sql2);
+
+  //whether a completion was changed for this quota
+  $updatequota = false;
+  //whether priorites need to be updated
+  $update = false;
+  //default completions at 0
+  $completions = 0;
+
+  //if a case_Id is specified, we can just check if this case matches
+  //the quota criteria, and if so, increment the quota completions counter
+  if ($case_id != false)
+  {
+    if (empty($qev))
+    {
+      //just determine if this case is linked to a matching sample record
+      $sql2 = "SELECT count(*) as c
+               FROM " . LIME_PREFIX . "survey_$lime_sid as s
+               JOIN `case` as c ON (c.case_id = '$case_id')
+               JOIN `sample` as sam ON (c.sample_id = sam.sample_id) ";
+      
+      $x = 1;
+      foreach($rev as $ev)
+      {
+        $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+        $x++;
+      }
+
+      $sql2 .= " WHERE s.token = c.token";
+
+      $match = $db->GetOne($sql2); 
+    }
+    else
+    {
+      //determine if the case is linked to a matching limesurvey record
+      $sql2 = "SELECT count(*) as c
+               FROM " . LIME_PREFIX . "survey_$lime_sid as s
+               JOIN `case` as c ON (c.case_id = '$case_id')
+               JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
+               WHERE s.token = c.token
+               ";
+
+      foreach($qev as $ev)
+        $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
+
+      $match = $db->GetOne($sql2);
+    }
+
+    if ($match == 1)
+    {
+      //increment completions
+      $sql = "SELECT (current_completions + 1) as c
+        FROM questionnaire_sample_quota_row
+        WHERE questionnaire_sample_quota_row_id = '$qsqri'";
+      $cc = $db->GetRow($sql);
+
+      $completions = $cc['c'];
+      
+      $updatequota = true;
+    }
+  }
+  else
+  {
+    if (empty($qev))
+    {
+      //find all completions from cases with matching sample records
+
+      $sql2 = "SELECT count(*) as c
+              FROM " . LIME_PREFIX . "survey_$lime_sid as s
+              JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
+              JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')";
+
+      $x = 1;
+      foreach($rev as $ev)
+      {
+        $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+        $x++;
+      }
+
+      $sql2 .= "  WHERE s.submitdate IS NOT NULL
+              AND s.token = c.token";
+
+      $completions = $db->GetOne($sql2);
+    }
+    else
+    {
+      //find all completions from cases with matching limesurvey records
+      $sql2 = "SELECT count(*) as c 
+              FROM " . LIME_PREFIX . "survey_$lime_sid as s 
+              JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id') 
+              JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id') 
+              WHERE s.submitdate IS NOT NULL 
+              AND s.token = c.token ";
+
+      foreach($qev as $ev)
+        $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
+
+       $completions = $db->GetOne($sql2);
+    }
+
+    $updatequota = true;
+  }
+
+  if ($updatequota)
+  {
+    if ($completions >= $target_completions)
+    {
+      //set row quota to reached
+      $sql = "UPDATE questionnaire_sample_quota_row
+        SET quota_reached = '1', current_completions = '$completions'
+        WHERE questionnaire_sample_quota_row_id = '$qsqri'";
+
+      $db->Execute($sql);
+
+      close_row_quota($qsqri,false); //don't update priorires just yet
+      $update = true;
+    }
+    else
+    {
+      $sql = "UPDATE questionnaire_sample_quota_row
+        SET current_completions = '$completions' ";
+
+      //If autopriority is set update it here
+      if ($autoprioritise == 1)
+      {
+        //priority is 100 - the percentage of completions
+        $pr = 100 - round(100 * ($completions / $target_completions));
+        $sql .= ", priority = '$pr' ";				
+
+        //need to update quotas now
+        $update = true;
+      }
+
+      $sql .= " WHERE questionnaire_sample_quota_row_id = '$qsqri'";
+
+      $db->Execute($sql);
+
+   }
+  }
+  return $update;
+}
+
 
 /**
  * Update the row quota table
@@ -1683,197 +1861,30 @@ function update_row_quota($questionnaire_id,$case_id = false)
 
 	$db->StartTrans();
 
-	$sql = "SELECT qsq.questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,completions,quota_reached,q.lime_sid,qsq.current_completions,qsq.priority,qsq.autoprioritise,qq.lime_sgqa
-		FROM questionnaire_sample_quota_row as qsq, questionnaire as q, qsqr_question as qq
+	$sql = "SELECT qsq.questionnaire_sample_quota_row_id
+		FROM questionnaire_sample_quota_row as qsq
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
-		AND q.questionnaire_id = '$questionnaire_id'
     AND qsq.quota_reached != '1'
-    AND qq.questionnaire_sample_quota_row_id = qsq.questionnaire_sample_quota_row_id
-    AND qq.lime_sgqa != -1
     GROUP BY qsq.questionnaire_sample_quota_row_id";
 
 	$rs = $db->GetAll($sql);
 
-	if (isset($rs) && !empty($rs))
-	{
-		//include limesurvey functions
-		include_once(dirname(__FILE__).'/functions.limesurvey.php');
-
-		//update all row quotas for this questionnaire
-		foreach($rs as $r)
+  if (isset($rs) && !empty($rs))
+  {
+    foreach ($rs as $r)
     {
-      $lime_sid = $r['lime_sid'];
-      $sample_import_id = $r['sample_import_id'];
-      $qsqri = $r['questionnaire_sample_quota_row_id'];
+      $tmp = update_single_row_quota($r['questionnaire_sample_quota_row_id'],$case_id);
+      if ($tmp) 
+        $update = true;
+    }
+  }
 
-      //all variables to exclude for this row quota
-      $sql2 = "SELECT exclude_val,exclude_var,comparison
-               FROM qsqr_sample
-               WHERE questionnaire_sample_quota_row_id = $qsqri";
-
-      $rev = $db->GetAll($sql2);
-
-      //all variables to check in limesurvey for this row quota
-      $sql2 = "SELECT lime_sgqa,value,comparison
-               FROM qsqr_question
-               WHERE questionnaire_sample_quota_row_id = $qsqri";
-
-      $qev = $db->GetAll($sql2);
-
-			//whether a completion was changed for this quota
-			$updatequota = false;
-
-			//if a case_Id is specified, we can just check if this case matches
-			//the quota criteria, and if so, increment the quota completions counter
-			if ($case_id != false)
-			{
-        if ($r['lime_sgqa'] == -2)
-        {
-          //just determine if this case is linked to a matching sample record
-
-          $sql2 = "SELECT count(*) as c
-                   FROM " . LIME_PREFIX . "survey_$lime_sid as s
-                   JOIN `case` as c ON (c.case_id = '$case_id')
-                   JOIN `sample` as sam ON (c.sample_id = sam.sample_id) ";
-          
-          $x = 1;
-          foreach($rev as $ev)
-          {
-            $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
-            $x++;
-          }
-
-          $sql2 .= " WHERE s.token = c.token";
-
-          $match = $db->GetOne($sql2); 
-          //$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var']);
-        }
-        else
-        {
-          //determine if the case is linked to a matching limesurvey record
-          
-          $sql2 = "SELECT count(*) as c
-                   FROM " . LIME_PREFIX . "survey_$lime_sid as s
-                   JOIN `case` as c ON (c.case_id = '$case_id')
-                   JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
-                   WHERE s.token = c.token
-                   ";
-
-          foreach($qev as $ev)
-            $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
-
-           $match = $db->GetOne($sql2);
-
-          //$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison']);
-        }
-
-				if ($match == 1)
-				{
-					//increment completions
-					$sql = "SELECT (current_completions + 1) as c
-						FROM questionnaire_sample_quota_row
-						WHERE questionnaire_sample_quota_row_id = {$r['questionnaire_sample_quota_row_id']}";
-					$cc = $db->GetRow($sql);
-
-					$completions = $cc['c'];
-					
-					$updatequota = true;
-				}
-
-			}
-			else
-			{
-        if ($r['lime_sgqa'] == -2)
-        {
-          //find all completions from cases with matching sample records
-
-          $sql2 = "SELECT count(*) as c
-                  FROM " . LIME_PREFIX . "survey_$lime_sid as s
-                  JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
-                  JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')";
-
-          $x = 1;
-          foreach($rev as $ev)
-          {
-            $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
-            $x++;
-          }
-
-          $sql2 .= "  WHERE s.submitdate IS NOT NULL
-                  AND s.token = c.token";
-
-          $completions = $db->GetOne($sql2);
-
-          //$completions = limesurvey_quota_replicate_completions($r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['exclude_val'],$r['exclude_var']);
-        }
-        else
-        {
-          //find all completions from cases with matching limesurvey records
-          $sql2 = "SELECT count(*) as c 
-                  FROM " . LIME_PREFIX . "survey_$lime_sid as s 
-                  JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id') 
-                  JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id') 
-                  WHERE s.submitdate IS NOT NULL 
-                  AND s.token = c.token ";
-
-          foreach($qev as $ev)
-            $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
-
-           $completions = $db->GetOne($sql2);
-
-         // $completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
-        }
-
-				$updatequota = true;
-			}
-
-			if ($updatequota)
-			{
-				if ($completions >= $r['completions'])
-				{
-					//set row quota to reached
-					$sql = "UPDATE questionnaire_sample_quota_row
-						SET quota_reached = '1', current_completions = '$completions'
-						WHERE questionnaire_sample_quota_row_id = {$r['questionnaire_sample_quota_row_id']}";
-	
-					$db->Execute($sql);
-	
-					close_row_quota($r['questionnaire_sample_quota_row_id'],false); //don't update priorires just yet
-					$update = true;
-				}
-				else
-				{
-					$sql = "UPDATE questionnaire_sample_quota_row
-						SET current_completions = '$completions' ";
-
-					//If autopriority is set update it here
-					if ($r['autoprioritise'] == 1)
-					{
-						//priority is 100 - the percentage of completions
-						$pr = 100 - round(100 * ($completions / $r['completions']));
-						$sql .= ", priority = '$pr' ";				
-
-						//need to update quotas now
-						$update = true;
-					}
-	
-					$sql .= " WHERE questionnaire_sample_quota_row_id = {$r['questionnaire_sample_quota_row_id']}";
-	
-					$db->Execute($sql);
-
-				}
-
-
-			}
-
-		}
-		if ($update) update_quota_priorities($questionnaire_id);
-	}
+  if ($update) 
+    update_quota_priorities($questionnaire_id);
 
 	$db->CompleteTrans();
 
 	return false;
-
 }
 
 /**

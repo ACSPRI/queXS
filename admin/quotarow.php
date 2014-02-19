@@ -72,12 +72,17 @@ global $db;
 
 if (isset($_GET['delete']))
 {
+  $qsqri = bigintval($_GET['qsqri']);
+
   if (isset($_GET['qsqrqi']))
   {
     $qsqrqi = bigintval($_GET['qsqrqi']);
     $sql = "DELETE FROM qsqr_question
             WHERE qsqr_question_id = $qsqrqi";
     $db->Execute($sql);
+
+	  //Make sure to calculate on the spot
+  	update_single_row_quota($qsqri);
   }
   if (isset($_GET['qsqrsi']))
   {
@@ -85,6 +90,9 @@ if (isset($_GET['delete']))
     $sql = "DELETE FROM qsqr_sample
             WHERE qsqr_sample_id = $qsqrsi";
     $db->Execute($sql);
+
+	  //Make sure to calculate on the spot
+  	update_single_row_quota($qsqri);
   }
 }
 
@@ -103,10 +111,12 @@ if (isset($_POST['add_quota']))
 	$sql = "INSERT INTO questionnaire_sample_quota_row(questionnaire_id, sample_import_id, completions, description, priority, autoprioritise)
 		VALUES ($questionnaire_id, $sample_import_id, $completions, $description, $priority, $autoprioritise)";
 
-	$db->Execute($sql);
+  $db->Execute($sql);
+
+  $qq = $db->Insert_ID();
 
 	//Make sure to calculate on the spot
-	//update_quotas($questionnaire_id);
+	update_single_row_quota($qq);
 }
 
 if (isset($_POST['edit_quota']))
@@ -129,8 +139,9 @@ if (isset($_POST['edit_quota']))
 
   $_GET['qsqri'] = $qsqri;
   $_GET['edit'] = "edit";
+
 	//Make sure to calculate on the spot
-	//update_quotas($questionnaire_id);
+	update_single_row_quota($qsqri);
 }
 
 
@@ -165,6 +176,9 @@ if (isset($_GET['qsqri']) & isset($_GET['edit']))
             VALUES ($qsqri,$exvar,$exval,$comparison)";
 
     $db->Execute($sql);
+
+	  //Make sure to calculate on the spot
+  	update_single_row_quota($qsqri);
   }
 
   if (isset($_POST['addq']))
@@ -177,6 +191,9 @@ if (isset($_GET['qsqri']) & isset($_GET['edit']))
             VALUES ($qsqri,$sgqa,$value,$comparison)";
 
     $db->Execute($sql);
+
+  	//Make sure to calculate on the spot
+  	update_single_row_quota($qsqri);
   }
 }
 

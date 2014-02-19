@@ -178,13 +178,12 @@ if ($questionnaire_id)
 		$report[] = array("strata" => T_("Total sample"), "quota" => $drawn + $remain, "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => ROUND(($completions / ($drawn + $remain)) * 100,2));
 
 		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
-		//b. (Replicate quota) Exclude selected sample records (where lime_sgqa == -1) 
-		$sql = "SELECT qsq.questionnaire_sample_quota_row_id,qsqr_question.lime_sgqa,completions,quota_reached,lime_sid,qsq.description,current_completions, priority, autoprioritise
-			FROM questionnaire_sample_quota_row as qsq, questionnaire as q, qsqr_question
-			WHERE qsq.questionnaire_id = '$questionnaire_id'
+		//b. (Replicate quota) Exclude selected sample records (where no qsqr_question rows) 
+		$sql = "SELECT qsq.questionnaire_sample_quota_row_id,completions,quota_reached,lime_sid,qsq.description,current_completions, priority, autoprioritise
+      FROM questionnaire_sample_quota_row as qsq, questionnaire as q
+      WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
-      AND q.questionnaire_id = '$questionnaire_id'
-      AND qsqr_question.questionnaire_sample_quota_row_id = qsq.questionnaire_sample_quota_row_id";
+      AND q.questionnaire_id = '$questionnaire_id'";
 	
 		$r = $db->GetAll($sql);
 
@@ -198,15 +197,8 @@ if ($questionnaire_id)
 			$qsqr = $v['questionnaire_sample_quota_row_id'];
 			
 
-			if ($v['lime_sgqa'] == -1)
-			{
-				$v['completions'] = "";
-				$perc = "";
-			}
-			else
-			{
-				$perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
-			}
+      $perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
+			
 
 			//We need to calc Sample size, Sample drawn, Sample remain
 			$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
@@ -242,7 +234,7 @@ if ($questionnaire_id)
 				if ($r['type'] == 0) $remain = $r['count'];
 			}
 
-			if ($completions < $v['completions'] || $v['lime_sgqa'] == -1) //if completions less than the quota, allow for closing/opening
+			if ($completions < $v['completions']) //if completions less than the quota, allow for closing/opening
 			{
 				if ($v['quota_reached'] == 1)
 					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;open=open'>" . T_("closed") . "</a>";
