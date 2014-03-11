@@ -3416,10 +3416,25 @@
 		//Add all sample variables for this case
 		global $connect;
 
-		$sql = "SELECT sv.var,sv.val
-			FROM sample_var as sv, `case` as c
-			WHERE c.sample_id = sv.sample_id
-			AND c.token = '{$_SESSION['token']}'";
+		$use_call = true;
+		if (strlen($_SESSION['token']) == 15)
+			$use_call = false;
+
+		if ($use_call)
+		{
+			$sql = "SELECT sv.var,sv.val
+				FROM sample_var as sv, `case` as c, `call` as cl
+				WHERE c.sample_id = sv.sample_id
+				AND c.case_id = cl.case_id
+				AND cl.call_id = '{$_SESSION['token']}'";
+		}
+		else
+		{
+			$sql = "SELECT sv.var,sv.val
+				FROM sample_var as sv, `case` as c
+				WHERE c.sample_id = sv.sample_id
+				AND c.token = '{$_SESSION['token']}'";
+		}
 
 		$queXSrs = $connect->GetAssoc($sql);
 		
@@ -3434,46 +3449,57 @@
                     );
 		}
 
+		if ($use_call)
+		{
+			$osql = "FROM operator as o, `call` as cl
+				 WHERE o.operator_id = cl.operator_id
+				 AND cl.case_id = '{$_SESSION['token']}'";
+
+			$rsql =	"FROM respondent as r, `call` as cl
+			 	 WHERE cl.case_id = '{$_SESSION['token']}'
+				 AND r.respondent_id = cl.respondent_id";
+		}
+		else
+		{
+			$osql = "FROM operator as o, `case` as c
+	 			 WHERE c.token = '{$_SESSION['token']}'
+				 AND o.operator_id = c.current_operator_id";
+
+			$rsql =	"FROM respondent as r, `case` as c, call_attempt as ca
+			 	 WHERE c.token = '{$_SESSION['token']}'
+				 AND ca.case_id = c.case_id
+				 AND ca.end IS NULL
+				 AND r.respondent_id = ca.respondent_id";
+		}
+
 		//add operator and respondent details
 		$this->knownVars["OPERATOR:FIRSTNAME"] = 
-			array('code' => $connect->GetOne("	SELECT o.firstName
-								FROM operator as o, `case` as c
-								WHERE c.token = '{$_SESSION['token']}'
-								AND o.operator_id = c.current_operator_id"),
+			array('code' => $connect->GetOne("	SELECT o.firstName " . $osql
+							),
 		            'jsName_on'=>'',
                 	    'jsName'=>'',
 	                    'readWrite'=>'N',
         	            );
 
 		$this->knownVars["OPERATOR:LASTNAME"] = 
-			array('code' => $connect->GetOne("	SELECT o.lastName
-								FROM operator as o, `case` as c
-								WHERE c.token = '{$_SESSION['token']}'
-								AND o.operator_id = c.current_operator_id"),
+			array('code' => $connect->GetOne("	SELECT o.lastName " . $osql
+							),
 		            'jsName_on'=>'',
                 	    'jsName'=>'',
 	                    'readWrite'=>'N',
         	            );
 
 		$this->knownVars["RESPONDENT:FIRSTNAME"] = 
-			array('code' => $connect->GetOne("	SELECT r.firstName
-								FROM respondent as r, `case` as c, call_attempt as ca
-								WHERE c.token = '{$_SESSION['token']}'
-								AND ca.case_id = c.case_id
-								AND ca.end IS NULL
-								AND r.respondent_id = ca.respondent_id"),
+			array('code' => $connect->GetOne("	SELECT r.firstName " . $rsql
+							),
 		            'jsName_on'=>'',
                 	    'jsName'=>'',
 	                    'readWrite'=>'N',
         	            );
 
 		$this->knownVars["RESPONDENT:LASTNAME"] = 
-			array('code' => $connect->GetOne("	SELECT r.lastName
-								FROM respondent as r, `case` as c, call_attempt as ca
-								WHERE c.token = '{$_SESSION['token']}'
-								AND ca.case_id = c.case_id
-								AND ca.end IS NULL
-								AND r.respondent_id = ca.respondent_id"),
+			array('code' => $connect->GetOne("	SELECT r.lastName "  . $rsql
+							),
 		            'jsName_on'=>'',
                 	    'jsName'=>'',
 	                    'readWrite'=>'N',
