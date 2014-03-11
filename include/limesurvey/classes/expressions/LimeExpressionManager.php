@@ -3453,10 +3453,10 @@
 		{
 			$osql = "FROM operator as o, `call` as cl
 				 WHERE o.operator_id = cl.operator_id
-				 AND cl.case_id = '{$_SESSION['token']}'";
+				 AND cl.call_id = '{$_SESSION['token']}'";
 
 			$rsql =	"FROM respondent as r, `call` as cl
-			 	 WHERE cl.case_id = '{$_SESSION['token']}'
+			 	 WHERE cl.call_id = '{$_SESSION['token']}'
 				 AND r.respondent_id = cl.respondent_id";
 		}
 		else
