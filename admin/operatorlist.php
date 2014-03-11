@@ -108,6 +108,9 @@ if (isset($_POST['submit']))
 				$htp->deleteUser($_POST["existing_username"]);
 				$htp->deleteUser($_POST["username"]);
 				$htp->addUser($_POST["username"],$_POST["password"]);
+				$htg = New Htgroup(HTGROUP_PATH);
+				$htg->deleteUserFromGroup($_POST["existing_username"],HTGROUP_INTERVIEWER);
+				$htg->addUserToGroup($_POST["username"],HTGROUP_INTERVIEWER);
 			}
 
 			$msg = T_("Successfully updated user");
