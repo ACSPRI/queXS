@@ -263,7 +263,8 @@ $quexsfilterstate = questionnaireSampleFilterstate();
             ."<option value='interviewtimec' id='interviewtimec' />".$clang->gT("Total interview time over all calls (mins)")."</option>\n"
             ."<option value='interviewtimel' id='interviewtimel' />".$clang->gT("Interview time for last call (mins)")."</option>\n"
             ."<option value='lastnumber' id='lastnumber' />".$clang->gT("Last number dialled")."</option>\n"
-            ."<option value='operatoru' id='operatoru' />".$clang->gT("Operator username for last call")."</option>\n";
+            ."<option value='operatoru' id='operatoru' />".$clang->gT("Operator username for last call")."</option>\n"
+            ."<option value='shiftr' id='shiftr' />".$clang->gT("Shift report")."</option>\n";
 
 
 	$sql = "SELECT sv.var,sv.val
@@ -500,6 +501,18 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
 			ORDER BY cl5.call_id DESC
 			LIMIT 1) as operatoru ";
     }
+    if (in_array('shiftr',$_POST['attribute_select']))
+    {
+      $dquery .= ",  (SELECT GROUP_CONCAT(DISTINCT sr1.report SEPARATOR '|')
+      FROM `call` as cl6, `case` as ca8, `shift` as sh1, `shift_report` as sr1
+      WHERE cl6.case_id = ca8.case_id
+      AND ca8.token = {$dbprefix}survey_$surveyid.token
+      AND sr1.shift_id = sh1.shift_id
+      AND sh1.questionnaire_id = ca8.questionnaire_id
+      AND cl6.start >= sh1.start
+      AND cl6.end < sh1.end
+      GROUP BY sr1.shift_id) as shiftr ";
+    }
     if (in_array('token',$_POST['attribute_select']))
     {
         $dquery .= ", {$dbprefix}tokens_$surveyid.token";
@@ -619,6 +632,11 @@ for ($i=0; $i<$fieldcount; $i++)
     {
         if ($type == "csv") {$firstline .= "\"".$elang->gT("Operator username for last call")."\"$separator";}
         else {$firstline .= $elang->gT("Operator username for last call")."$separator";}
+    }
+    elseif ($fieldinfo == "shiftr")
+    {
+        if ($type == "csv") {$firstline .= "\"".$elang->gT("Shift report")."\"$separator";}
+        else {$firstline .= $elang->gT("Shift report")."$separator";}
     }
     elseif ($fieldinfo == "caseid")
     {
@@ -923,7 +941,7 @@ elseif ($answers == "long")        //chose complete answers
             $fqid=0;            // By default fqid is set to zero
             $field=$dresult->FetchField($i);
             $fieldinfo=$field->name;
-            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed"  && $fieldinfo != "caseoutcome"&& $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft"&& $fieldinfo != "casenotes"&& $fieldinfo != "interviewtimec"&& $fieldinfo != "interviewtimel"&& $fieldinfo != "lastnumber"&& $fieldinfo != "operatoru")
+            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed"  && $fieldinfo != "caseoutcome"&& $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft"&& $fieldinfo != "casenotes"&& $fieldinfo != "interviewtimec"&& $fieldinfo != "interviewtimel"&& $fieldinfo != "lastnumber"&& $fieldinfo != "operatoru"&& $fieldinfo != "shiftr")
             {
                 $fielddata=$fieldmap[$fieldinfo];
                 $fqid=$fielddata['qid'];
@@ -970,6 +988,9 @@ elseif ($answers == "long")        //chose complete answers
                             break;
   			case "operatoru":
 	                    $ftitle=$elang->gT("Operator username for last call").":";
+                            break;
+   			case "shiftr":
+	                    $ftitle=$elang->gT("Shift report").":";
                             break;
                         case "datestamp":
                             $ftitle=$elang->gT("Date Last Action").":";
