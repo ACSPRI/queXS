@@ -66,6 +66,7 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 	}
 	if (!$body) return;
 ?>
+  <meta charset="utf-8"/>
 	</head>
 <?php 
 	if ($bodytext) print "<body $bodytext>"; else print "<body>";

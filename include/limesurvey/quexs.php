@@ -35,6 +35,29 @@
  */
 require_once(dirname(__FILE__).'/../../config.inc.php');
 
+/**
+ * Enable translations
+ */
+
+if (function_exists("T_setlocale"))
+{
+  $locale = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+  if (empty($locale)) $locale = DEFAULT_LOCALE;
+  T_setlocale(LC_MESSAGES, $locale);
+  T_bindtextdomain($locale,  dirname(__FILE__)."/../../locale");
+  T_bind_textdomain_codeset($locale, 'UTF-8');
+  T_textdomain($locale);
+
+  function TQ_($msg)
+  {
+    $msg = T_($msg);
+      $msg = str_replace(array('\\',"\0"),array('\\\\',"\\\0"),$msg);
+      return str_replace("'","\\'",$msg);
+  }
+}
+else
+  require_once(dirname(__FILE__).'/../../lang.inc.php');
+
 
 /**
  * Template for the self completion user
@@ -145,7 +168,7 @@ function quexs_completed_by_respondent($surveyid,$clienttoken)
 
   //Add a case note to clarify (need to translate this string)
   $sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
-          VALUES ($case_id,1,'Self completed online',CONVERT_TZ(NOW(),'System','UTC'))";
+          VALUES ($case_id,1,'" . TQ_("Self completed online") . "',CONVERT_TZ(NOW(),'System','UTC'))";
 
   $db->Execute($sql);
 }
@@ -336,9 +359,9 @@ function get_period_of_day($respondent_id)
 	if (!empty($rs))
 		$hour = $rs['h'];
 
-	if ($hour < 12) return "morning";
-	if ($hour < 17) return "afternoon";
-	return "evening";
+	if ($hour < 12) return T_("morning");
+	if ($hour < 17) return T_("afternoon");
+	return T_("evening");
 }
 
 
@@ -479,9 +502,8 @@ function get_outcome_variable($variable)
 	$db = newADOConnection(DB_TYPE);
 	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	$db->SetFetchMode(ADODB_FETCH_ASSOC);
-
-
-	$sql = "SELECT description as r
+  
+  $sql = "SELECT description as r
 		FROM outcome
 		WHERE outcome_id = '$variable'";
 
@@ -489,7 +511,7 @@ function get_outcome_variable($variable)
 
 	if (empty($rs)) return "";
 
-	return $rs['r'];
+	return T_($rs['r']);
 
 }
 
@@ -649,10 +671,9 @@ function quexs_core_replace()
 	$core['CALLATTEMPTS'] = get_call_attempts($case_id);
 		
 	$on_appointment = is_on_appointment($case_id,$operator_id);
-	//todo: These must be internationalised, but I think I need to use Limesurveys so as not to conflict?
-	$str = "Not on an appointment";
+	$str = T_("Not on an appointment");
 	if ($on_appointment)
-		$str = "On an appointment";
+		$str = T_("On an appointment");
 	$core['ONAPPOINTMENT'] = $str;
 
 	$core['PERIODOFDAY'] =  get_period_of_day($respondent_id);
@@ -729,10 +750,9 @@ function quexs_template_replace($string)
 	while (stripos($string, "{ONAPPOINTMENT}") !== false)
 	{
 		$on_appointment = is_on_appointment($case_id,$operator_id);
-		//todo: These must be internationalised, but I think I need to use Limesurveys so as not to conflict?
-		$str = "Not on an appointment";
+		$str = T_("Not on an appointment");
 		if ($on_appointment)
-			$str = "On an appointment";
+			$str = T_("On an appointment");
 		$string=str_ireplace("{ONAPPOINTMENT}", $str, $string);
 	}
 
@@ -964,7 +984,7 @@ function get_questionnaire_sample_list($lime_sid,$selected = "")
 
 	$return = "";
 
-	$sql = "(SELECT q.questionnaire_id, q.description AS qdes, 0 as sample_import_id, 'All samples' AS sdes
+	$sql = "(SELECT q.questionnaire_id, q.description AS qdes, 0 as sample_import_id, '" . TQ_("All samples") . "' AS sdes
 		FROM questionnaire AS q
 		WHERE q.lime_sid = '$lime_sid')
 		UNION
