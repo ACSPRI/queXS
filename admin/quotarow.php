@@ -70,6 +70,85 @@ include("../functions/functions.operator.php");
 global $db;
 
 
+if (isset($_POST['submitdelete']))
+{
+  foreach($_POST as $key => $val)
+  {
+    if (substr($key,0,7) == "select_")
+    {
+      $tmp = bigintval(substr($key,7));
+      open_row_quota($tmp);
+    }
+  }
+}
+
+if (isset($_POST['submitexport']))
+{
+  $csv = array();
+  foreach($_POST as $key => $val)
+  {
+    if (substr($key,0,7) == "select_")
+    {
+      $tmp = bigintval(substr($key,7));
+
+      $sql = "SELECT description,completions,autoprioritise
+              FROM questionnaire_sample_quota_row
+              WHERE questionnaire_sample_quota_row_id = $tmp";
+
+      $rs = $db->GetRow($sql);
+
+      $sql = "SELECT lime_sgqa,comparison,value
+              FROM qsqr_question
+              WHERE questionnaire_sample_quota_row_id = $tmp";
+
+      $q2 = $db->GetAll($sql);
+
+      $sql = "SELECT exclude_var as samplerecord,comparison,exclude_val as value
+              FROM qsqr_sample
+              WHERE questionnaire_sample_quota_row_id = $tmp";
+
+      $q3 = $db->GetAll($sql);
+
+      $ta = array($rs['description'],$rs['completions'],$rs['autoprioritise']);
+
+      //just search where col 1 looks like 333X2X2 and assume it is a question
+
+      foreach($q2 as $qr)
+        foreach($qr as $qe => $val)
+          $ta[] = $val;
+    
+      foreach($q3 as $qr)
+        foreach($qr as $qe => $val)
+          $ta[] = $val;
+
+      $csv[] = $ta;
+    }
+  }
+  if (!empty($csv))
+  {
+    $fn = T_("Quota") .".csv";
+
+  	header("Content-Type: text/csv");
+  	header("Content-Disposition: attachment; filename=$fn");
+  	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
+  	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
+  	Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+  	header("Pragma: no-cache");                          // HTTP/1.0
+
+    foreach($csv as $cr)
+    {
+      for ($i = 0; $i < count($cr); $i++)
+      {
+        echo str_replace(","," ",$cr[$i]);
+        if ($i < (count($cr) - 1)) 
+          echo ",";
+      }
+      echo "\n";      
+    }
+    die();
+  }
+}
+
 if (isset($_GET['delete']))
 {
   $qsqri = bigintval($_GET['qsqri']);
@@ -225,6 +304,70 @@ if ($questionnaire_id != false)
 
 	if ($sample_import_id != false)
   {
+    if (isset($_POST['import_quota']))
+    {
+      if (isset($_FILES['file']['tmp_name']))
+      {
+        $handle = fopen($_FILES['file']['tmp_name'], "r");
+      	while (($data = fgetcsv($handle)) !== FALSE) 
+        {
+          if (count($data) > 2)
+          {
+            //one quota record per row
+          	$completions = intval($data[1]);
+          	$autoprioritise = 0;
+          	if ($data[2] != 0) $autoprioritise = 1;
+          	$description = $db->quote($data[0]);
+      
+          	$sql = "INSERT INTO questionnaire_sample_quota_row(questionnaire_id, sample_import_id, completions, description, priority, autoprioritise)
+                		VALUES ($questionnaire_id, $sample_import_id, $completions, $description, 50, $autoprioritise)";
+
+            $db->Execute($sql);
+
+            $qq = $db->Insert_ID();
+
+            if (count($data) > 5) //also some other records
+            {
+              //check if records exist (come in triplets
+              for ($i = 1; isset($data[$i * 3]) && !empty($data[$i*3]); $i++)
+              {
+                if (preg_match("/\d+X\d+X.+/",$data[$i*3]))
+                {
+                  //is a limesurvey question
+                  $comparison = $db->qstr($data[($i*3) + 1]);
+                  $value = $db->qstr($data[($i*3) + 2]);
+                  $sgqa = $db->qstr($data[$i*3]);
+
+                  $sql = "INSERT INTO qsqr_question (questionnaire_sample_quota_row_id,lime_sgqa,value,comparison)
+                          VALUES ($qq,$sgqa,$value,$comparison)";
+
+                  $db->Execute($sql);
+                }
+                else
+                {
+                  //is a sample variable
+                  $comparison = $db->qstr($data[($i*3) + 1]);
+                  $value = $db->qstr($data[($i*3) + 2]);
+                  $var = $db->qstr($data[$i*3]);
+
+                  $sql = "INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var,exclude_val,comparison)
+                          VALUES ($qq,$var,$value,$comparison)";
+
+                  $db->Execute($sql);
+                 }
+              }
+            }
+
+          	//Make sure to calculate on the spot
+          	update_single_row_quota($qq);
+          }
+        }
+      	fclose($handle);
+      }
+    }
+
+
+
     if ($qsqri != false)
     {
       print "<h2>" . T_("Quota") . ": $qsqrid</h2>";
@@ -404,6 +547,15 @@ if ($questionnaire_id != false)
         <label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
 				<input type="submit" name="add_quota" value="<?php  print(T_("Add row quota")); ?>"/></p>
     </form>
+    <?php
+
+    print "<h2>" . T_("Import row quota") . "</h2>";
+    ?>
+  <form enctype="multipart/form-data" action="<?php echo "?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id"; ?>" method="post">
+	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
+	<p><?php  echo T_("Choose the CSV row quota file to import:"); ?><input name="file" type="file" /></p>
+	<p><input type="submit" name="import_quota" value="<?php  print(T_("Import row quota")); ?>"/></p>
+	</form>
     <?php
     }
   }
