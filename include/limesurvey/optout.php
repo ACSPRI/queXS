@@ -76,10 +76,11 @@ else
 
 	$case_id = $connect->GetOne($sql);
 
+    include_once(dirname(__FILE__) . '/quexs.php');
 
 	//Add a case note to clarify (need to translate this string)
 	$sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
-		VALUES ($case_id,1,'Self completion refused via opt out function',CONVERT_TZ(NOW(),'System','UTC'))";
+		VALUES ($case_id,1,'" . TQ_("Self completion refused via opt out function") . "',CONVERT_TZ(NOW(),'System','UTC'))";
 
 	$connect->Execute($sql);
 

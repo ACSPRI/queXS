@@ -788,8 +788,8 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
     //queXS Addition
     include_once("../quexs.php");
-    $browseoutput .= "&nbsp;".$clang->gT("Questionnaire and Sample selection:")."<select id='quexsfilterinc' name='quexsfilterinc' onchange='javascript:document.getElementById(\"limit\").value=\"\";submit();'>\n"
-    ."\t<option value='all' >".$clang->gT("All queXS questionnaires and samples associated with this instrument")."</option>\n"
+    $browseoutput .= "&nbsp;".T_("Questionnaire and Sample selection:")."<select id='quexsfilterinc' name='quexsfilterinc' onchange='javascript:document.getElementById(\"limit\").value=\"\";submit();'>\n"
+    ."\t<option value='all' >".T_("All queXS questionnaires and samples associated with this instrument")."</option>\n"
     . get_questionnaire_sample_list($surveyid,$quexsfilterstate)
     ."</select>\n";
 

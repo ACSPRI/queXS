@@ -1697,7 +1697,8 @@ function do_list_radio($ia)
 	$quexs_appointment = false;
 	if (strncasecmp($ansrow['answer'],"{SCHEDULEAPPOINTMENT}",21) == 0)
 	{
-		$ansrow['answer'] = $clang->gT("Schedule Appointment");
+	  include_once(dirname(__FILE__) . '/quexs.php');
+		$ansrow['answer'] = T_("Schedule Appointment");
 		$quexs_appointment = true;
 	}
 
@@ -1916,7 +1917,8 @@ function do_listwithcomment($ia)
 		$quexs_appointment = false;
 		if (strncasecmp($ansrow['answer'],"{SCHEDULEAPPOINTMENT}",21) == 0)
 		{
-			$ansrow['answer'] = $clang->gT("Schedule Appointment");
+      include_once(dirname(__FILE__) . '/quexs.php');
+			$ansrow['answer'] = T_("Schedule Appointment");
 			$quexs_appointment = true;
 		}
 

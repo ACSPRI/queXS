@@ -107,8 +107,8 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
     //queXS Addition
     include_once("../quexs.php");
-    $exportoutput .= "<li><label for='quexsfilterinc'>".$clang->gT("Questionnaire and Sample selection:")."</label><select id='quexsfilterinc' name='quexsfilterinc'>\n"
-    ."\t<option value='all' >".$clang->gT("All queXS questionnaires and samples associated with this instrument")."</option>\n"
+    $exportoutput .= "<li><label for='quexsfilterinc'>".T_("Questionnaire and Sample selection:")."</label><select id='quexsfilterinc' name='quexsfilterinc'>\n"
+    ."\t<option value='all' >".T_("All queXS questionnaires and samples associated with this instrument")."</option>\n"
     . get_questionnaire_sample_list($surveyid,$quexsfilterstate)
     ."</select></li></ul></fieldset>\n";
 
@@ -254,17 +254,17 @@ $quexsfilterstate = questionnaireSampleFilterstate();
  	$exportoutput .= "<option value='$attr_name' id='$attr_name' />".$attr_desc."</option>\n";
  	}
 
-            $exportoutput .= "<option value='token' id='token' />".$clang->gT("Token")."</option>\n"
-            ."<option value='caseid' id='caseid' />".$clang->gT("Case ID")."</option>\n"
-            ."<option value='caseoutcome' id='caseoutcome' />".$clang->gT("Case outcome")."</option>\n"
-            ."<option value='callattempts' id='callattempts' />".$clang->gT("Number of call attempts")."</option>\n"
-            ."<option value='messagesleft' id='messagesleft' />".$clang->gT("Number of answering machine messages left")."</option>\n"
-            ."<option value='casenotes' id='casenotes' />".$clang->gT("Case notes")."</option>\n"
-            ."<option value='interviewtimec' id='interviewtimec' />".$clang->gT("Total interview time over all calls (mins)")."</option>\n"
-            ."<option value='interviewtimel' id='interviewtimel' />".$clang->gT("Interview time for last call (mins)")."</option>\n"
-            ."<option value='lastnumber' id='lastnumber' />".$clang->gT("Last number dialled")."</option>\n"
-            ."<option value='operatoru' id='operatoru' />".$clang->gT("Operator username for last call")."</option>\n"
-            ."<option value='shiftr' id='shiftr' />".$clang->gT("Shift report")."</option>\n";
+            $exportoutput .= "<option value='token' id='token' />".T_("Token")."</option>\n"
+            ."<option value='caseid' id='caseid' />".T_("Case ID")."</option>\n"
+            ."<option value='caseoutcome' id='caseoutcome' />".T_("Case outcome")."</option>\n"
+            ."<option value='callattempts' id='callattempts' />".T_("Number of call attempts")."</option>\n"
+            ."<option value='messagesleft' id='messagesleft' />".T_("Number of answering machine messages left")."</option>\n"
+            ."<option value='casenotes' id='casenotes' />".T_("Case notes")."</option>\n"
+            ."<option value='interviewtimec' id='interviewtimec' />".T_("Total interview time over all calls (mins)")."</option>\n"
+            ."<option value='interviewtimel' id='interviewtimel' />".T_("Interview time for last call (mins)")."</option>\n"
+            ."<option value='lastnumber' id='lastnumber' />".T_("Last number dialled")."</option>\n"
+            ."<option value='operatoru' id='operatoru' />".T_("Operator username for last call")."</option>\n"
+            ."<option value='shiftr' id='shiftr' />".T_("Shift report")."</option>\n";
 
 
 	$sql = "SELECT sv.var,sv.val
@@ -600,53 +600,53 @@ for ($i=0; $i<$fieldcount; $i++)
 
     if ($fieldinfo == "callattempts")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Number of call attempts")."\"$separator";}
-        else {$firstline .= $elang->gT("Number of call attempts")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Number of call attempts")."\"$separator";}
+        else {$firstline .= T_("Number of call attempts")."$separator";}
     }
     elseif ($fieldinfo == "messagesleft")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Number of answering machine messages left")."\"$separator";}
-        else {$firstline .= $elang->gT("Number of answering machine messages left")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Number of answering machine messages left")."\"$separator";}
+        else {$firstline .= T_("Number of answering machine messages left")."$separator";}
     }
     elseif ($fieldinfo == "casenotes")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case notes")."\"$separator";}
-        else {$firstline .= $elang->gT("Case notes")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Case notes")."\"$separator";}
+        else {$firstline .= T_("Case notes")."$separator";}
     }
     elseif ($fieldinfo == "interviewtimec")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Total interview time over all calls (mins)")."\"$separator";}
-        else {$firstline .= $elang->gT("Total interview time over all calls (mins)")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Total interview time over all calls (mins)")."\"$separator";}
+        else {$firstline .= T_("Total interview time over all calls (mins)")."$separator";}
     }
     elseif ($fieldinfo == "interviewtimel")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Interview time for last call (mins)")."\"$separator";}
-        else {$firstline .= $elang->gT("Interview time for last call (mins)")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Interview time for last call (mins)")."\"$separator";}
+        else {$firstline .= T_("Interview time for last call (mins)")."$separator";}
     }
     elseif ($fieldinfo =="lastnumber")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Last number dialled")."\"$separator";}
-        else {$firstline .= $elang->gT("Last number dialled")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Last number dialled")."\"$separator";}
+        else {$firstline .= T_("Last number dialled")."$separator";}
     }
     elseif ($fieldinfo == "operatoru")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Operator username for last call")."\"$separator";}
-        else {$firstline .= $elang->gT("Operator username for last call")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Operator username for last call")."\"$separator";}
+        else {$firstline .= T_("Operator username for last call")."$separator";}
     }
     elseif ($fieldinfo == "shiftr")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Shift report")."\"$separator";}
-        else {$firstline .= $elang->gT("Shift report")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Shift report")."\"$separator";}
+        else {$firstline .= T_("Shift report")."$separator";}
     }
     elseif ($fieldinfo == "caseid")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case ID")."\"$separator";}
-        else {$firstline .= $elang->gT("Case ID")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Case ID")."\"$separator";}
+        else {$firstline .= T_("Case ID")."$separator";}
     }
     elseif ($fieldinfo == "caseoutcome")
     {
-        if ($type == "csv") {$firstline .= "\"".$elang->gT("Case outcome")."\"$separator";}
-        else {$firstline .= $elang->gT("Case outcome")."$separator";}
+        if ($type == "csv") {$firstline .= "\"".T_("Case outcome")."\"$separator";}
+        else {$firstline .= T_("Case outcome")."$separator";}
     }
     elseif ($fieldinfo == "email")
     {
@@ -963,34 +963,34 @@ elseif ($answers == "long")        //chose complete answers
                     switch($fieldinfo)
                     {
 			case "caseid":
-	                    $ftitle=$elang->gT("Case ID").":";
+	                    $ftitle=T_("Case ID").":";
                             break;
  			case "caseoutcome":
-	                    $ftitle=$elang->gT("Case outcome").":";
+	                    $ftitle=T_("Case outcome").":";
                             break;
  			case "callattempts":
-	                    $ftitle=$elang->gT("Number of call attempts").":";
+	                    $ftitle=T_("Number of call attempts").":";
                             break;
  			case "messagesleft":
-	                    $ftitle=$elang->gT("Number of answering machine messages left").":";
+	                    $ftitle=T_("Number of answering machine messages left").":";
                             break;
   			case "casenotes":
-	                    $ftitle=$elang->gT("Case notes").":";
+	                    $ftitle=T_("Case notes").":";
                             break;
   			case "interviewtimec":
-	                    $ftitle=$elang->gT("Total interview time over all calls (mins)").":";
+	                    $ftitle=T_("Total interview time over all calls (mins)").":";
                             break;
   			case "interviewtimel":
-	                    $ftitle=$elang->gT("Interview time for last call (mins)").":";
+	                    $ftitle=T_("Interview time for last call (mins)").":";
                             break;
   			case "lastnumber":
-	                    $ftitle=$elang->gT("Last number dialled").":";
+	                    $ftitle=T_("Last number dialled").":";
                             break;
   			case "operatoru":
-	                    $ftitle=$elang->gT("Operator username for last call").":";
+	                    $ftitle=T_("Operator username for last call").":";
                             break;
    			case "shiftr":
-	                    $ftitle=$elang->gT("Shift report").":";
+	                    $ftitle=T_("Shift report").":";
                             break;
                         case "datestamp":
                             $ftitle=$elang->gT("Date Last Action").":";

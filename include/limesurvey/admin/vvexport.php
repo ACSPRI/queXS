@@ -66,8 +66,8 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
     //queXS Addition
     include_once("../quexs.php");
-    $vvoutput .= "<li><label for='quexsfilterinc'>".$clang->gT("Questionnaire and Sample selection:")."</label><select id='quexsfilterinc' name='quexsfilterinc'>\n"
-    ."\t<option value='all' >".$clang->gT("All queXS questionnaires and samples associated with this instrument")."</option>\n"
+    $vvoutput .= "<li><label for='quexsfilterinc'>".T_("Questionnaire and Sample selection:")."</label><select id='quexsfilterinc' name='quexsfilterinc'>\n"
+    ."\t<option value='all' >".T_("All queXS questionnaires and samples associated with this instrument")."</option>\n"
     . get_questionnaire_sample_list($surveyid,$quexsfilterstate)
     ."</select></li>\n";
 
