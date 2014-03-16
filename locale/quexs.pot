@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-17 09:58+1000\n"
+"POT-Creation-Date: 2014-03-17 10:47+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -3200,72 +3200,76 @@ msgstr ""
 msgid "Add Timezone"
 msgstr ""
 
-#: admin/supervisor.php:89
+#: admin/supervisor.php:133
 msgid "Enter a case id or select a case from the list below:"
 msgstr ""
 
-#: admin/supervisor.php:100
+#: admin/supervisor.php:144
 msgid "Select case from list of cases referred to the supervisor:"
 msgstr ""
 
-#: admin/supervisor.php:109
+#: admin/supervisor.php:153
 msgid "Select case"
 msgstr ""
 
-#: admin/supervisor.php:132
+#: admin/supervisor.php:176
 msgid "Set an outcome for this call"
 msgstr ""
 
-#: admin/supervisor.php:145
-#: admin/supervisor.php:330
+#: admin/supervisor.php:189
+#: admin/supervisor.php:374
 msgid "Set outcome"
 msgstr ""
 
-#: admin/supervisor.php:256
+#: admin/supervisor.php:300
 msgid "No appointments for this case"
 msgstr ""
 
-#: admin/supervisor.php:258
+#: admin/supervisor.php:302
 msgid "Create appointment for this case"
 msgstr ""
 
-#: admin/supervisor.php:270
+#: admin/supervisor.php:314
 msgid "Call list"
 msgstr ""
 
-#: admin/supervisor.php:276
+#: admin/supervisor.php:320
 msgid "Change outcome"
 msgstr ""
 
-#: admin/supervisor.php:289
+#: admin/supervisor.php:333
 msgid "Case notes"
 msgstr ""
 
-#: admin/supervisor.php:311
+#: admin/supervisor.php:355
 msgid "Modify responses for this case"
 msgstr ""
 
-#: admin/supervisor.php:313
+#: admin/supervisor.php:357
 msgid "Case not yet started in Limesurvey"
 msgstr ""
 
-#: admin/supervisor.php:317
+#: admin/supervisor.php:361
 msgid "Set a case outcome"
 msgstr ""
 
-#: admin/supervisor.php:367
+#: admin/supervisor.php:411
 msgid "Update case availability"
 msgstr ""
 
-#: admin/supervisor.php:379
+#: admin/supervisor.php:423
 msgid "Assign this case to operator (will appear as next case for them)"
 msgstr ""
 
-#: admin/supervisor.php:391
+#: admin/supervisor.php:435
 msgid "Assign this case to operator"
 msgstr ""
 
-#: admin/supervisor.php:399
+#: admin/supervisor.php:441
+msgid "Remove all sample details and contact numbers from this case"
+msgstr ""
+
+#: admin/supervisor.php:454
 msgid "Case does not exist"
 msgstr ""
 
