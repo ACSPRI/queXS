@@ -216,7 +216,7 @@ else if(isset($_GET['respondent_id']))
 					<input type="hidden" name="year" value="<?php  print $year; ?>"/>
 					<input type="hidden" name="respondent_id" value="<?php  print $respondent_id; ?>"/>
 					<input type="hidden" name="contact_phone_id" value="<?php  print $contact_phone_id; ?>"/>
-					<input type="submit" value="Make appointment"/></p>
+					<input type="submit" value="<?php echo TQ_("Schedule Appointment"); ?>"/></p>
 					</form>
 					<?php 
 				}
