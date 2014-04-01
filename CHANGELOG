@@ -1,3 +1,16 @@
+queXS 1.10.2 - Changes since 1.10.1
+
+New Feature: Shift report in data output
+New feature: Deidentify a case
+
+Fixed bug: OPERATOR and RESPONDENT replacements not working in respondent selection module
+Fixed bug: Not adding interviewer to htgroup when changing username
+Fixed bug: Not all browsers recognise text as UTF-8
+Fixed bug: Not all strings being translated
+Fixed bug: Session expiry occurring when moving from respondent selection module to questionnaire
+
+Updated translations and the beginning of a German translation - Thank you Daniel.
+
 queXS 1.10.1 - Changes since 1.10.0
 
 Fixed Bug: Database creation fails due to additional comma (new installations)
