@@ -56,7 +56,8 @@ if (isset($_GET['loadall']) && $_GET['loadall'] == "reload" && isset($_GET['toke
 	$_POST['token']=$_GET['token'];
  	
  	//Must destroy the session
- 	session_unset();
+  session_unset();
+  @session_destroy();
 }
 
 //end queXS Addition
@@ -426,35 +427,6 @@ if (isset($_SESSION['srid']))
 {
     $saved_id = $_SESSION['srid'];
 }
-
-if (!isset($_SESSION['s_lang'])  && (isset($move)) )
-// geez ... a session time out! RUN!
-{
-    if (isset($_REQUEST['rootdir']))
-    {
-        safe_die('You cannot start this script directly');
-    }
-    require_once(dirname(__FILE__).'/classes/core/language.php');
-    $baselang = GetBaseLanguageFromSurveyID($surveyid);
-    $clang = new limesurvey_lang($baselang);
-    //A nice exit
-    sendcacheheaders();
-    doHeader();
-
-    echo templatereplace(file_get_contents(sGetTemplatePath($defaulttemplate)."/startpage.pstpl"));
-    echo "\t<div id='wrapper'>\n"
-    ."\t<p id='tokenmessage'>\n"
-    ."\t<span class='error'>".$clang->gT("ERROR")."</span><br /><br />\n"
-    ."\t".$clang->gT("We are sorry but your session has expired.")."<br /><br />\n"
-    ."\t".$clang->gT("Either you have been inactive for too long, you have cookies disabled for your browser, or there were problems with your connection.")."<br /><br />\n"
-    ."\t".sprintf($clang->gT("Please contact %s ( %s ) for further assistance."),$siteadminname,$siteadminemail)."<br /><br />\n"
-    ."\t</p>\n"
-    ."\t</div>\n";
-
-    echo templatereplace(file_get_contents(sGetTemplatePath($defaulttemplate)."/endpage.pstpl"));
-    doFooter();
-    exit;
-};
 
 if (isset($move) && (preg_match('/^changelang_/',$move)))
 {
