@@ -1980,7 +1980,7 @@ function end_case($operator_id)
 				//code as eligible if ever eligible, or if referred to the supervisor, code as that if last call
 				$sql = "SELECT c.outcome_id as outcome_id
 					FROM `call` as c
-					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id AND (o.eligible = 1 OR o.outcome_type_id = 2) )
+					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id AND (o.eligible = 1 OR o.outcome_type_id = 2 OR o.outcome_type_id = 1) )
 					WHERE c.case_id = '$case_id'
 					ORDER BY c.call_id DESC";
 			
