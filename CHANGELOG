@@ -1,3 +1,9 @@
+queXS 1.10.3 - Changes since 1.10.2
+
+Fixed bug: Initial page is always Call/Hangup even if on a call or no case available
+Fixed bug: When last outcome is Technical Phone Problems, case outcome set to not attempted or worked
+Translations: Almost complete Simplified Chinese translation added - Thank you!
+
 queXS 1.10.2 - Changes since 1.10.1
 
 New Feature: Shift report in data output
