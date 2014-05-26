@@ -59,8 +59,8 @@ if ($operator_id)
 {
 
 	$sql = "SELECT *,SUBSTRING_INDEX(extension, '/', -1) as ext
-		FROM operator
-		WHERE operator_id = $operator_id";
+		FROM extension
+		WHERE current_operator_id = $operator_id";
 
 	$rs = $db->GetRow($sql);
 
