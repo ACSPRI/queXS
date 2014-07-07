@@ -1685,9 +1685,9 @@ function update_row_quota($questionnaire_id,$case_id = false)
 			if ($case_id != false)
 			{
 				if ($r['lime_sgqa'] == -2)
-					$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var']);
+					$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var'],$r['sample_import_id']);
 				else
-					$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison']);
+					$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison'],$r['sample_import_id']);
 
 				if ($match == 1)
 				{
