@@ -352,7 +352,7 @@ function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison
  * @author Adam Zammit <adam.zammit@acspri.org.au>
  * @since  2012-04-30
  */
-function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var,$import_id)
+function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var,$sample_import_id)
 {
 	global $db;
 	
