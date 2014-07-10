@@ -76,7 +76,6 @@ function is_process_killed($process_id)
 	$sql = "SELECT `process_id`
 		FROM `process`
 		WHERE `kill` = 1
-		AND `stop` IS NULL
 		AND `process_id` = '$process_id'";
 
 	$rs = $db->GetRow($sql);

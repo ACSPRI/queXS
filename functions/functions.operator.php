@@ -1735,7 +1735,9 @@ function update_row_quota($questionnaire_id,$case_id = false)
 					if ($r['autoprioritise'] == 1)
 					{
 						//priority is 100 - the percentage of completions
-						$pr = 100 - round(100 * ($completions / $r['completions']));
+            $pr = 100 - round(100 * ($completions / $r['completions']));
+            if ($pr < 0) 
+                $pr = 0;
 						$sql .= ", priority = '$pr' ";				
 
 						//need to update quotas now
