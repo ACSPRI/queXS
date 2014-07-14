@@ -1,3 +1,11 @@
+queXS 1.10.4 - Changes since 1.10.3
+
+Fixed bug: Quota priority could get below 0
+Fixed bug: Process won't close itself if forced killed before it has a chance to close
+Fixed bug: lp:1338395 - Quotas being incremented in samples that have not yet been accessed
+Fixed bug: Download VoIP client script failing
+Translations: Updated from Launchpad. Thank you for contributing!
+
 queXS 1.10.3 - Changes since 1.10.2
 
 Fixed bug: Initial page is always Call/Hangup even if on a call or no case available
