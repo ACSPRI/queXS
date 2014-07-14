@@ -45,11 +45,14 @@ include ("functions/functions.xhtml.php");
  */
 include("functions/functions.operator.php");
 
-$db->StartTrans();
 
 
 $popupcall = false;
 $operator_id = get_operator_id();
+
+if ($operator_id === false) die();
+
+$db->StartTrans();
 
 if (isset($_GET['endwork']))
 {
@@ -235,7 +238,7 @@ if (!$call_id)
 	if ($appointment)
 	{
 		//create a call on the appointment number
-		$sql = "SELECT cp.*
+		$sql = "SELECT cp.*, a.respondent_id
 			FROM contact_phone as cp, appointment as a
 			WHERE cp.case_id = '$case_id'
 			AND a.appointment_id = '$appointment'
@@ -273,6 +276,19 @@ if (!$call_id)
 	if (!empty($rs))
 	{
 		$contact_phone_id = $rs['contact_phone_id'];				
+
+		if (!isset($rs['respondent_id']))
+		{
+			$sql = "SELECT respondent_id
+				FROM respondent
+				WHERE case_id = $case_id";
+
+			$respondent_id = $db->GetOne($sql);
+		}
+		else
+		{
+			$respondent_id = $rs['respondent_id'];
+		}
 
 		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
 	}
