@@ -51,10 +51,10 @@ if (isset($_GET['auto']))
 
 print "<h1>" . T_("Work has ended. That is it") . "</h1>";
 
+include_once("functions/functions.operator.php");
 if (ALLOW_OPERATOR_EXTENSION_SELECT && VOIP_ENABLED)
 {
   //unassign extension
-  include_once("functions/functions.operator.php");
   $operator_id = get_operator_id();
 
   if (get_case_id($operator_id) == false && is_voip_enabled($operator_id))
