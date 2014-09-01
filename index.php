@@ -191,7 +191,10 @@ if ($ca)
 	}
 }
 
-$data = "nocallavailable.php";
+if (!is_respondent_selection($operator_id))
+  $data = get_limesurvey_url($operator_id);
+else 
+  $data = get_respondentselection_url($operator_id);
 
 $db->CompleteTrans();
 

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-01-08 15:30+1000\n"
+"POT-Creation-Date: 2014-03-17 10:47+1000\n"
 "PO-Revision-Date: 2013-03-08 01:20+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-02-14 03:56+0000\n"
-"X-Generator: Launchpad (build 16916)\n"
+"X-Launchpad-Export-Date: 2014-07-14 01:01+0000\n"
+"X-Generator: Launchpad (build 17111)\n"
 
 #: callhistory.php:56
 msgid "Case History List"
@@ -321,6 +321,10 @@ msgstr "σε"
 
 #: appointment.php:210
 msgid "Appointment with myself only?"
+msgstr ""
+
+#: appointment.php:219
+msgid "Schedule Appointment"
 msgstr ""
 
 #: calllist.php:56
@@ -3120,87 +3124,87 @@ msgstr ""
 msgid "If changing usernames, you must specify a new password"
 msgstr ""
 
-#: admin/operatorlist.php:113
+#: admin/operatorlist.php:116
 msgid "Successfully updated user"
 msgstr ""
 
-#: admin/operatorlist.php:117
+#: admin/operatorlist.php:120
 msgid "Failed to update user. Please make sure the username is unique"
 msgstr ""
 
-#: admin/operatorlist.php:126
+#: admin/operatorlist.php:129
 msgid "Operator edit"
 msgstr ""
 
-#: admin/operatorlist.php:155
-#: admin/operatorlist.php:290
+#: admin/operatorlist.php:158
+#: admin/operatorlist.php:293
 msgid "Username"
 msgstr ""
 
-#: admin/operatorlist.php:159
+#: admin/operatorlist.php:162
 msgid "Update password (leave blank to keep existing password)"
 msgstr ""
 
-#: admin/operatorlist.php:167
+#: admin/operatorlist.php:170
 msgid "Uses chat"
 msgstr ""
 
-#: admin/operatorlist.php:168
+#: admin/operatorlist.php:171
 msgid "Timezone"
 msgstr ""
 
-#: admin/operatorlist.php:170
+#: admin/operatorlist.php:173
 msgid "Uses VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:173
+#: admin/operatorlist.php:176
 msgid "Update operator"
 msgstr ""
 
-#: admin/operatorlist.php:267
+#: admin/operatorlist.php:270
 msgid "Windows bat file"
 msgstr ""
 
-#: admin/operatorlist.php:268
+#: admin/operatorlist.php:271
 msgid "*nix script file"
 msgstr ""
 
-#: admin/operatorlist.php:276
+#: admin/operatorlist.php:279
 msgid "Enable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:278
+#: admin/operatorlist.php:281
 msgid "Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:287
+#: admin/operatorlist.php:290
 msgid "Operator list"
 msgstr ""
 
-#: admin/operatorlist.php:294
+#: admin/operatorlist.php:297
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
 
-#: admin/operatorlist.php:296
+#: admin/operatorlist.php:299
 msgid "Download Windows VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:297
+#: admin/operatorlist.php:300
 msgid "Download Linux VoIP Executable"
 msgstr ""
 
-#: admin/operatorlist.php:302
+#: admin/operatorlist.php:305
 msgid "Enable/Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:303
+#: admin/operatorlist.php:306
 msgid "Windows VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:304
+#: admin/operatorlist.php:307
 msgid "*nix VoIP"
 msgstr ""
 
@@ -3291,72 +3295,76 @@ msgstr ""
 msgid "Add Timezone"
 msgstr ""
 
-#: admin/supervisor.php:89
+#: admin/supervisor.php:133
 msgid "Enter a case id or select a case from the list below:"
 msgstr ""
 
-#: admin/supervisor.php:100
+#: admin/supervisor.php:144
 msgid "Select case from list of cases referred to the supervisor:"
 msgstr ""
 
-#: admin/supervisor.php:109
+#: admin/supervisor.php:153
 msgid "Select case"
 msgstr ""
 
-#: admin/supervisor.php:132
+#: admin/supervisor.php:176
 msgid "Set an outcome for this call"
 msgstr ""
 
-#: admin/supervisor.php:145
-#: admin/supervisor.php:330
+#: admin/supervisor.php:189
+#: admin/supervisor.php:374
 msgid "Set outcome"
 msgstr ""
 
-#: admin/supervisor.php:256
+#: admin/supervisor.php:300
 msgid "No appointments for this case"
 msgstr ""
 
-#: admin/supervisor.php:258
+#: admin/supervisor.php:302
 msgid "Create appointment for this case"
 msgstr ""
 
-#: admin/supervisor.php:270
+#: admin/supervisor.php:314
 msgid "Call list"
 msgstr ""
 
-#: admin/supervisor.php:276
+#: admin/supervisor.php:320
 msgid "Change outcome"
 msgstr ""
 
-#: admin/supervisor.php:289
+#: admin/supervisor.php:333
 msgid "Case notes"
 msgstr ""
 
-#: admin/supervisor.php:311
+#: admin/supervisor.php:355
 msgid "Modify responses for this case"
 msgstr ""
 
-#: admin/supervisor.php:313
+#: admin/supervisor.php:357
 msgid "Case not yet started in Limesurvey"
 msgstr ""
 
-#: admin/supervisor.php:317
+#: admin/supervisor.php:361
 msgid "Set a case outcome"
 msgstr ""
 
-#: admin/supervisor.php:367
+#: admin/supervisor.php:411
 msgid "Update case availability"
 msgstr ""
 
-#: admin/supervisor.php:379
+#: admin/supervisor.php:423
 msgid "Assign this case to operator (will appear as next case for them)"
 msgstr ""
 
-#: admin/supervisor.php:391
+#: admin/supervisor.php:435
 msgid "Assign this case to operator"
 msgstr ""
 
-#: admin/supervisor.php:399
+#: admin/supervisor.php:441
+msgid "Remove all sample details and contact numbers from this case"
+msgstr ""
+
+#: admin/supervisor.php:454
 msgid "Case does not exist"
 msgstr ""
 
@@ -3531,6 +3539,101 @@ msgstr ""
 
 #: client/index.php:123
 msgid "You are not a valid client"
+msgstr ""
+
+#: include/limesurvey/quexs.php:674
+#: include/limesurvey/quexs.php:753
+msgid "Not on an appointment"
+msgstr ""
+
+#: include/limesurvey/quexs.php:676
+#: include/limesurvey/quexs.php:755
+msgid "On an appointment"
+msgstr ""
+
+#: include/limesurvey/quexs.php:987
+msgid "All samples"
+msgstr ""
+
+#: include/limesurvey/common_functions.php:6298
+msgid "queXS: Number of call attempts"
+msgstr ""
+
+#: include/limesurvey/common_functions.php:6299
+msgid "queXS: On appointment?"
+msgstr ""
+
+#: include/limesurvey/common_functions.php:6300
+msgid "queXS: Percentage complete"
+msgstr ""
+
+#: include/limesurvey/common_functions.php:6301
+msgid "queXS: Number of answering machine messages left"
+msgstr ""
+
+#: include/limesurvey/optout.php:83
+msgid "Self completion refused via opt out function"
+msgstr ""
+
+#: include/limesurvey/admin/browse.php:791
+msgid "Questionnaire and Sample selection:"
+msgstr ""
+
+#: include/limesurvey/admin/browse.php:792
+msgid "All queXS questionnaires and samples associated with this instrument"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:257
+msgid "Token"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:259
+#: include/limesurvey/admin/exportresults.php:648
+#: include/limesurvey/admin/exportresults.php:649
+#: include/limesurvey/admin/exportresults.php:969
+msgid "Case outcome"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:260
+#: include/limesurvey/admin/exportresults.php:603
+#: include/limesurvey/admin/exportresults.php:604
+#: include/limesurvey/admin/exportresults.php:972
+msgid "Number of call attempts"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:261
+#: include/limesurvey/admin/exportresults.php:608
+#: include/limesurvey/admin/exportresults.php:609
+#: include/limesurvey/admin/exportresults.php:975
+msgid "Number of answering machine messages left"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:263
+#: include/limesurvey/admin/exportresults.php:618
+#: include/limesurvey/admin/exportresults.php:619
+#: include/limesurvey/admin/exportresults.php:981
+msgid "Total interview time over all calls (mins)"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:264
+#: include/limesurvey/admin/exportresults.php:623
+#: include/limesurvey/admin/exportresults.php:624
+#: include/limesurvey/admin/exportresults.php:984
+msgid "Interview time for last call (mins)"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:265
+#: include/limesurvey/admin/exportresults.php:628
+#: include/limesurvey/admin/exportresults.php:629
+#: include/limesurvey/admin/exportresults.php:987
+msgid "Last number dialled"
+msgstr ""
+
+#: include/limesurvey/admin/exportresults.php:266
+#: include/limesurvey/admin/exportresults.php:633
+#: include/limesurvey/admin/exportresults.php:634
+#: include/limesurvey/admin/exportresults.php:990
+msgid "Operator username for last call"
 msgstr ""
 
 #: include/php-gettext-1.0.11/examples/pigs_dropin.php:77

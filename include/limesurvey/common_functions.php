@@ -6294,10 +6294,11 @@ function GetTokenFieldsAndNames($surveyid, $onlyAttributes=false, $quexs=true)
 
     if ($quexs)
     {
-     $basic_attrs_names[] = $clang->gT('queXS: Number of call attempts'); //queXS addition
-     $basic_attrs_names[] = $clang->gT('queXS: On appointment?'); //queXS addition
-     $basic_attrs_names[] = $clang->gT('queXS: Percentage complete'); //queXS addition
-     $basic_attrs_names[] = $clang->gT('queXS: Number of answering machine messages left'); //queXS addition
+     include_once(dirname(__FILE__) . '/quexs.php');
+     $basic_attrs_names[] = T_('queXS: Number of call attempts'); //queXS addition
+     $basic_attrs_names[] = T_('queXS: On appointment?'); //queXS addition
+     $basic_attrs_names[] = T_('queXS: Percentage complete'); //queXS addition
+     $basic_attrs_names[] = T_('queXS: Number of answering machine messages left'); //queXS addition
     }
 
     $thissurvey=getSurveyInfo($surveyid);

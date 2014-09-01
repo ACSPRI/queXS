@@ -313,20 +313,21 @@ function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sam
  * @param string $lime_sgqa The limesurvey SGQA
  * @param int $lime_sid The limesurvey survey id 
  * @param int $case_id The case id
- * @param int $sample_import_id The sample import ID
  * @param string $value The value to compare
  * @param string $comparison The type of comparison
+ * @param int $sample_import_id The sample import ID
+ *
  * @return bool|int False if failed, otherwise 1 if matched, 0 if doesn't
  * 
  */
-function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison)
+function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison,$sample_import_id)
 {
 	global $db;
 
 	$sql = "SELECT count(*) as c
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.case_id = '$case_id')
-		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
+		JOIN `sample` as sam ON (c.sample_id = sam.sample_id and sam.import_id = $sample_import_id)
 		WHERE s.token = c.token
 		AND s.`$lime_sgqa` $comparison '$value'";
 
@@ -345,19 +346,20 @@ function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison
  * @param int $case_id The case id
  * @param string $val The sample value to compare
  * @param string $var The sample variable to compare
+ * @param int $sample_import_id The sample import id we are looking at
  * 
  * @return bool|int False if failed, otherwise 1 if matched, 0 if doesn't
  * @author Adam Zammit <adam.zammit@acspri.org.au>
  * @since  2012-04-30
  */
-function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var)
+function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var,$sample_import_id)
 {
 	global $db;
 	
 	$sql = "SELECT count(*) as c
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.case_id = '$case_id')
-		JOIN `sample` as sam ON (c.sample_id = sam.sample_id)
+		JOIN `sample` as sam ON (c.sample_id = sam.sample_id and sam.import_id = $sample_import_id)
 		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
 		WHERE s.token = c.token";
 

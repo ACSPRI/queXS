@@ -72,6 +72,50 @@ $operator_id = get_operator_id();
 $case_id = false;
 if (isset($_GET['case_id'])) 	$case_id = bigintval($_GET['case_id']);
 
+if (isset($_GET['deidentify']))
+{	
+	//remove all sample vars
+	$db->StartTrans();
+
+	$sql = "SELECT sample_id
+		FROM `case`
+		WHERE case_id = $case_id";
+
+	$sample_id = $db->GetOne($sql);
+
+	$sql = "DELETE FROM sample_var
+		WHERE sample_id = $sample_id";
+
+	$db->Execute($sql);
+
+	//clear number from sample table
+		
+	$sql = "UPDATE `sample`
+		SET phone = ''
+		WHERE sample_id = $sample_id";
+
+	$db->Execute($sql);
+
+	//clear respondent table (firstName,lastName)
+
+	$sql = "UPDATE `respondent`
+		SET firstName = '', lastName = ''
+		WHERE case_id = $case_id";
+
+	$db->Execute($sql);
+
+	//clear contact phone (phone,description)
+
+	$sql = "UPDATE `contact_phone`
+		SET phone = '', description = ''
+		WHERE case_id = $case_id";
+
+	$db->Execute($sql);
+
+	$db->CompleteTrans();
+}
+
+
 
 if (isset($_GET['case_note_id']))
 {
@@ -237,7 +281,7 @@ if ($case_id != false)
 		print "<h3>" . T_("Appointments")."</h3>";
 
 		//View appointments
-		$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . TQ_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". TQ_("Delete") . "</a>') as link, CONCAT('<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'>". TQ_("Edit") . "</a>') as edit
+		$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',o.Time_zone_name) as start, CONVERT_TZ(a.end,'UTC',o.Time_zone_name) as end, r.firstName, r.lastName, IFNULL(ou.description,'" . T_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, CONCAT('<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'>". TQ_("Delete") . "</a>') as link, CONCAT('<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'>". TQ_("Edit") . "</a>') as edit
 		FROM appointment as a
 		JOIN (`case` as c, respondent as r, questionnaire as q, operator as o, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
 		LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id)
@@ -392,6 +436,17 @@ if ($case_id != false)
 		</form>
 		<?php 
 
+		//deidentify record
+		print "<h3>" . T_("Deidentify") . "</h3>";
+		print "<p>" . T_("Remove all sample details and contact numbers from this case") . "</p>";
+		?>
+		<form method="get" action="?">
+		<p>
+		<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>
+		<input class="submitclass" type="submit" name="deidentify" id="deidentify" value="<?php echo T_("Deidentify");?>"/>
+		</p>
+		</form>
+		<?php
 	
 	}
 	else
