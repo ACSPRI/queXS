@@ -184,7 +184,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 	//Set all cases as unavailable
 	$sql = "UPDATE `case`
 		SET sortorder = NULL
-		WHERE 1";
+		WHERE sortorder IS NOT NULL";
 
 	$db->Execute($sql);
 
@@ -245,7 +245,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 	//First set all sample records as unavailable
 	$sql = "UPDATE `questionnaire_sample_exclude_priority`
 		SET sortorder = NULL
-		WHERE 1";
+		WHERE sortorder IS NOT NULL";
 
 	$db->Execute($sql);
 
