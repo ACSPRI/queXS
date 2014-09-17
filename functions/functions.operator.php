@@ -860,12 +860,12 @@ function get_extension_password($operator_id)
 {
 	global $db;
 		
-	$sql = "SELECT e.extension_password
+	$sql = "SELECT e.password
 		FROM `extension` as e
 		WHERE e.current_operator_id = '$operator_id'";
 
 	$rs = $db->GetRow($sql);
-	if (!empty($rs) && isset($rs['extension_password'])) return $rs['extension_password'];
+	if (!empty($rs) && isset($rs['password'])) return $rs['password'];
 	return false;		
 }
 

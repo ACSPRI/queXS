@@ -113,7 +113,7 @@ if (isset($_POST['operator']))
 			if (FREEPBX_PATH !== false)
       {
         //add extension
-        $sql = "INSERT INTO extension (`extension`,`extension_password`,`current_operator_id`)
+        $sql = "INSERT INTO extension (`extension`,`password`,`current_operator_id`)
                 VALUES ($extension, $extensionp, $oid)";
 
         $db->Execute($sql);
