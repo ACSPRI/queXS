@@ -71,11 +71,11 @@ class voip {
 	{
 		$ret = $this->query("Action: IAXPeerList\r\n\r\n","PeerlistComplete");
 
-		$c = spliti("\r\n\r\n",$ret);
+		$c = preg_split("/\r\n\r\n/i",$ret);
 		$chans = array();
 		foreach ($c as $s)
 		{
-			if(eregi("Event: PeerEntry.*ObjectName: ([0-9a-zA-Z-]+).*Status: ([/0-9a-zA-Z-]+)",$s,$regs))
+			if(preg_match("{Event: PeerEntry.*ObjectName: ([0-9a-zA-Z-]+).*Status: ([/0-9a-zA-Z-]+)}i",$s,$regs))
 			{
 				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
 				$chan = substr($regs[1],0,4);
@@ -98,18 +98,18 @@ class voip {
 	{
 		$ret = $this->query("Action: Status\r\n\r\n","StatusComplete");
 
-		$c = spliti("\r\n\r\n",$ret);
+		$c = preg_split("/\r\n\r\n/i",$ret);
 		$chans = array();
 		foreach ($c as $s)
 		{
-			if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*BridgedChannel: ((SIP/|IAX2/)[/0-9a-zA-Z-]+)",$s,$regs))
+			if(preg_match("{Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*BridgedChannel: ((SIP/|IAX2/)[/0-9a-zA-Z-]+)}i",$s,$regs))
 			{
 				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
 				$ccs = explode('-',$regs[1]);
 				$chan = $ccs[0];
 				$chans[$chan] = array($regs[1],$regs[3]);
 			}
-			else if(eregi("Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+)",$s,$regs))
+			else if(preg_match("{Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+)}i",$s,$regs))
 			{
 				//print T_("Channel: ") . $regs[1] .  "\n";
 				$ccs = explode('-', $regs[1]);
@@ -266,7 +266,7 @@ class voip {
 			if ($type == "SIP")
 			{
 				$ret = $this->query("Action: ExtensionState\r\nContext: from-internal\r\nExten: $ext\r\nActionID: \r\n\r\n","Status:");
-				if(eregi("Status: ([0-9]+)",$ret,$regs))
+				if(preg_match("{Status: ([0-9]+)}i",$ret,$regs))
 				{
 					if (isset($regs[1]))
 					{
@@ -545,7 +545,7 @@ class voipWatch extends voip {
 				/**
 				 * The call is ringing
 				 */
-				if (eregi("Event: Dial.*SubEvent: Begin.*Channel: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
+				if (preg_match("{Event: Dial.*SubEvent: Begin.*Channel: ((SIP/|IAX2/)[0-9]+)}i",$line,$regs))
 				{
 					list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -557,7 +557,7 @@ class voipWatch extends voip {
 				/**
 				 * The call has been answered
 				 */
-				else if (eregi("Event: Bridge.*Channel1: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
+				else if (preg_match("{Event: Bridge.*Channel1: ((SIP/|IAX2/)[0-9]+)}i",$line,$regs))
 				{
 					list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -569,7 +569,7 @@ class voipWatch extends voip {
 				/**
 				 * The call has been hung up
 				 */
-				else if (eregi("Event: Hangup.*Channel: ((SIP/|IAX2/)[0-9]+)",$line,$regs))
+				else if (preg_match("{Event: Hangup.*Channel: ((SIP/|IAX2/)[0-9]+)}i",$line,$regs))
 				{
 					list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -582,7 +582,7 @@ class voipWatch extends voip {
 				/**
 				 * The status of an extension has changed to unregistered
 				 */
-				else if (eregi("Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Unregistered",$line,$regs))
+				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Unregistered}i",$line,$regs))
 				{
 					print T_("Unregistered") . T_(" Extension ") . $regs[1] . "\n";
 					$this->setExtensionStatus($regs[1],false);
@@ -591,7 +591,7 @@ class voipWatch extends voip {
 				/**
 				 * The status of an extension has changed to registered
 				 */
-				else if (eregi("Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Registered",$line,$regs))
+				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Registered}i",$line,$regs))
 				{
 					print T_("Registered") . T_(" Extension ") . $regs[1] . "\n";
 					$this->setExtensionStatus($regs[1],true);
