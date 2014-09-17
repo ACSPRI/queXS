@@ -95,6 +95,12 @@ if (!defined('VOIP_ADMIN_PASS')) define('VOIP_ADMIN_PASS','amp111');
 if (!defined('VOIP_PORT')) define('VOIP_PORT','5038');
 
 /**
+ * The Asterisk context to originate calls from (in FreePBX this should be 
+ * 'from-internal' otherwise try 'default'
+ */
+if (!defined('ORIGINATE_CONTEXT')) define('ORIGINATE_CONTEXT','from-internal');
+
+/**
  * The freepbx root path (if installed) otherwise false to disable freepbx integration
  */
 if (!defined ('FREEPBX_PATH')) define('FREEPBX_PATH', false);
