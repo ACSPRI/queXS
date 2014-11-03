@@ -88,8 +88,11 @@ register_shutdown_function('disable_systemsort');
 //all output send to database instead of stdout
 ob_start('update_callback',2);
 
+$closecasescounter = 0;
+
 print T_("Sorting cases process starting");
 
+$closecasesinterval = (24 * 60) / SYSTEM_SORT_MINUTES; //check for closed cases once every day
 $sleepinterval = 10; // in seconds so we can monitor if the process has been killed
 
 while (!is_process_killed($process_id)) //check if process killed every $sleepinterval
@@ -97,202 +100,227 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 	//Make sure that the system knows we are system sorting 
 	set_setting('systemsort',true);	
 
-	print T_("Sorting cases");
+  if ($closecasescounter == 0 || $closecasescounter > $closecasesinterval)
+  {
+	  $time_start = microtime(true);
+    print T_("Checking for cases open for more than 24 hours");
 
-	$time_start = microtime(true);
+    $closecasescounter = 0;
+  	$db->StartTrans();
 
-	$db->StartTrans();
+  	//find all call attempts without an end that started more than 24 hours ago
+  
+  	$sql = "SELECT case_id, call_attempt_id
+  		FROM `call_attempt` 
+  		WHERE TIMESTAMPDIFF(HOUR, start, CONVERT_TZ(NOW(),'System','UTC')) > 24
+  		AND end IS NULL";
+  	
+  	$rs = $db->GetAll($sql);
+  	
+  	foreach ($rs as $r)
+  	{
+  		//refer to supervisor if case still assigned
+  	
+  		$sql = "UPDATE `case`
+  			SET current_operator_id = NULL, current_outcome_id = 5
+  			WHERE case_id = '{$r['case_id']}'
+  			AND current_operator_id IS NOT NULL
+  			AND current_call_id IS NULL";
+  
+  		$db->Execute($sql);
+  
+  		//add note
 
-	//find all call attempts without an end that started more than 24 hours ago
+      $sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
+        VALUES ('{$r['case_id']}',1,'" . TQ_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
 
-	$sql = "SELECT case_id, call_attempt_id
-		FROM `call_attempt` 
-		WHERE TIMESTAMPDIFF(HOUR, start, CONVERT_TZ(NOW(),'System','UTC')) > 24
-		AND end IS NULL";
-	
-	$rs = $db->GetAll($sql);
-	
-	foreach ($rs as $r)
-	{
-		//refer to supervisor if case still assigned
-	
-		$sql = "UPDATE `case`
-			SET current_operator_id = NULL, current_outcome_id = 5
-			WHERE case_id = '{$r['case_id']}'
-			AND current_operator_id IS NOT NULL
-			AND current_call_id IS NULL";
+      $db->Execute($sql);
+    
+      //finish the call attempt
+        
+      $sql =	"UPDATE `call_attempt` 
+         SET end = start
+         WHERE call_attempt_id = '{$r['call_attempt_id']}'";
 
-		$db->Execute($sql);
+      $db->Execute($sql);
 
-		//add note
+      print T_("System automatically closed case as not closed for more than 24 hours") . " - " . T_("Case id") . ": {$r['case_id']}";
+    }
+    
+    //find all calls without an end that started more than 24 hours ago
+    
+    $sql = "SELECT case_id, call_id
+      FROM `call` 
+      WHERE TIMESTAMPDIFF(HOUR, start, CONVERT_TZ(NOW(),'System','UTC')) > 24
+      AND end IS NULL";
+    
+    $rs = $db->GetAll($sql);
+    
+    foreach ($rs as $r)
+    {
+      //refer to supervisor if case still assigned
+    
+      $sql = "UPDATE `case`
+        SET current_operator_id = NULL, current_outcome_id = 5, current_call_id = NULL
+        WHERE case_id = '{$r['case_id']}'
+        AND current_operator_id IS NOT NULL";
 
-		$sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
-			VALUES ('{$r['case_id']}',1,'" . TQ_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
+      $db->Execute($sql);
 
-		$db->Execute($sql);
-	
-		//finish the call attempt
-			
-		$sql =	"UPDATE `call_attempt` 
-			 SET end = start
-			 WHERE call_attempt_id = '{$r['call_attempt_id']}'";
+      //add note
+    
+      $sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
+        VALUES ('{$r['case_id']}',1,'" . TQ_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
 
-		$db->Execute($sql);
+      $db->Execute($sql);
 
-		print T_("System automatically closed case as not closed for more than 24 hours") . " - " . T_("Case id") . ": {$r['case_id']}";
-	}
-	
-	//find all calls without an end that started more than 24 hours ago
-	
-	$sql = "SELECT case_id, call_id
-		FROM `call` 
-		WHERE TIMESTAMPDIFF(HOUR, start, CONVERT_TZ(NOW(),'System','UTC')) > 24
-		AND end IS NULL";
-	
-	$rs = $db->GetAll($sql);
-	
-	foreach ($rs as $r)
-	{
-		//refer to supervisor if case still assigned
-	
-		$sql = "UPDATE `case`
-			SET current_operator_id = NULL, current_outcome_id = 5, current_call_id = NULL
-			WHERE case_id = '{$r['case_id']}'
-			AND current_operator_id IS NOT NULL";
+      //finish the call 
+        
+      $sql =	"UPDATE `call` 
+         SET end = start, outcome_id = 5, state = 5
+         WHERE call_id = '{$r['call_id']}'";
 
-		$db->Execute($sql);
+      $db->Execute($sql);
 
-		//add note
-	
-		$sql = "INSERT INTO case_note (case_id,operator_id,note,`datetime`)
-			VALUES ('{$r['case_id']}',1,'" . TQ_("System automatically closed case as not closed for more than 24 hours") ."', CONVERT_TZ(NOW(),'System','UTC'))";
+      print T_("System automatically closed case as not closed for more than 24 hours") . " - " . T_("Case id") . ": {$r['case_id']}";
+    }
 
-		$db->Execute($sql);
+    $result = $db->CompleteTrans();
+  
+    $time_end = microtime(true);
+  	$timer = $time_end - $time_start;
 
-		//finish the call 
-			
-		$sql =	"UPDATE `call` 
-			 SET end = start, outcome_id = 5, state = 5
-			 WHERE call_id = '{$r['call_id']}'";
+	  if ($result)
+		  print T_("Completed case closing") . ". " . T_("This task took") . ": $timer " . T_("seconds");
+  	else
+  		print T_("Failed to complete caes closing") . ". " . T_("This task took") . ": $timer " . T_("seconds");
+  }
 
-		$db->Execute($sql);
 
-		print T_("System automatically closed case as not closed for more than 24 hours") . " - " . T_("Case id") . ": {$r['case_id']}";
-	}
-	
-	
-	//Set all cases as unavailable
-	$sql = "UPDATE `case`
-		SET sortorder = NULL
-		WHERE sortorder IS NOT NULL";
+  $closecasescounter++;
 
-	$db->Execute($sql);
-
-	
-	//Update quotas for all enabled questionnaires
-	$sql = "SELECT questionnaire_id
+  //Sort cases on a questionnaire by questionnaire basis
+	$sql = "SELECT questionnaire_id, description
 		FROM questionnaire
 		WHERE enabled = 1";
 
 	$qs = $db->GetAll($sql);
 
 	foreach($qs as $q)
-		update_quotas($q['questionnaire_id']);	
+  {
+    print T_("Sorting cases for ") . $q['description'];
+
+    $questionnaire_id = $q['questionnaire_id'];
+
+  	$time_start = microtime(true);
+
+    $db->StartTrans();
+
+  	//Set all cases as unavailable
+  	$sql = "UPDATE `case`
+  		SET sortorder = NULL
+      WHERE sortorder IS NOT NULL
+      AND questionnaire_id = '$questionnaire_id'";
+
+  	$db->Execute($sql);
+
+
+    //update quotas  
+		update_quotas($questionnaire_id);	
 	
 
-	//Sort current cases for all enabled questionnaires
+  	//Sort current cases for this questionnaire
 	
-	
-	$sql = "SELECT c.case_id
-		FROM `case`  as c
-		LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
-		JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
-		JOIN (questionnaire_sample as qs, questionnaire as q,  outcome as ou) on (c.questionnaire_id = q.questionnaire_id and qs.sample_import_id = s.import_id and ou.outcome_id = c.current_outcome_id and q.enabled = 1 and qs.questionnaire_id = c.questionnaire_id)
-		LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
-		LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
-		LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
-		LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
-		LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
-		LEFT JOIN case_availability AS casa ON (casa.case_id = c.case_id)
-		LEFT JOIN availability AS ava ON (ava.availability_group_id = casa.availability_group_id)
-		WHERE c.current_operator_id IS NULL
-		AND (casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
-		AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
-		AND ap.case_id is NULL
-		AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
-		AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
-		AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
-		AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
-		AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
-	AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-		GROUP BY c.case_id
-		ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, a.start ASC, qsep.priority DESC";
-	
-	$rs = $db->GetAll($sql);
+		$sql = "SELECT c.case_id
+	  	FROM `case`  as c
+  		LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
+  		JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
+  		JOIN (questionnaire_sample as qs, questionnaire as q,  outcome as ou) on (c.questionnaire_id = q.questionnaire_id and qs.sample_import_id = s.import_id and ou.outcome_id = c.current_outcome_id and q.questionnaire_id = '$questionnaire_id' and qs.questionnaire_id = c.questionnaire_id)
+  		LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
+  		LEFT JOIN appointment as ap on (ap.case_id = c.case_id AND ap.completed_call_id is NULL AND (ap.start > CONVERT_TZ(NOW(),'System','UTC')))
+  		LEFT JOIN appointment as apn on (apn.case_id = c.case_id AND apn.completed_call_id is NULL AND (CONVERT_TZ(NOW(),'System','UTC') >= apn.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= apn.end))
+  		LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+  		LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
+  		LEFT JOIN case_availability AS casa ON (casa.case_id = c.case_id)
+  		LEFT JOIN availability AS ava ON (ava.availability_group_id = casa.availability_group_id)
+      WHERE c.current_operator_id IS NULL
+      AND c.questionnaire_id = '$questionnaire_id'
+  		AND (casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
+  		AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
+  		AND ap.case_id is NULL
+  		AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
+  		AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
+  		AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
+  		AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
+  		AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
+    	AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+  		GROUP BY c.case_id
+  		ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, a.start ASC, qsep.priority DESC";
+    	
+  	$rs = $db->GetAll($sql);
 
-	$i = 1;
-	foreach ($rs as $r)
-	{
-		$sql = "UPDATE `case`
-			SET sortorder = '$i'
-			WHERE case_id = '{$r['case_id']}'";
-
-		$db->Execute($sql);
-		$i++;
-	}
-	
-
-	//First set all sample records as unavailable
-	$sql = "UPDATE `questionnaire_sample_exclude_priority`
-		SET sortorder = NULL
-		WHERE sortorder IS NOT NULL";
-
-	$db->Execute($sql);
-
-
-
-	//Sort sample list where attached to an enabled questionnaire
-
-	$sql = "SELECT s.sample_id as sample_id,qs.questionnaire_id as questionnaire_id
-		FROM sample as s
-		JOIN (questionnaire_sample as qs, questionnaire as q, sample_import as si) on (qs.sample_import_id = s.import_id and si.sample_import_id = s.import_id and q.questionnaire_id = qs.questionnaire_id AND q.enabled = 1)
-		LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
-		LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
-		LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
-		LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = qs.questionnaire_id AND qsep.sample_id = s.sample_id)
-		WHERE c.case_id is NULL
-		AND ((qsep.questionnaire_id IS NULL) or qsep.exclude = 0)
-		AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
-		AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
-		AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-		GROUP BY s.sample_id,qs.questionnaire_id
-		ORDER BY qsep.priority DESC, rand() * qs.random_select, s.sample_id";
-				
-	$rs = $db->GetAll($sql);
-
-	$i = 1;
-	foreach ($rs as $r)
-	{
-	        $sql = "INSERT INTO questionnaire_sample_exclude_priority (questionnaire_id,sample_id,exclude,priority,sortorder)
-	                VALUES ('{$r['questionnaire_id']}', '{$r['sample_id']}', 0, 50,'$i')
-	                ON DUPLICATE KEY UPDATE sortorder = '$i'";
-
-		$db->Execute($sql);
-		$i++;
-	}
-	
+    $i = 1;
+  	foreach ($rs as $r)
+  	{
+  		$sql = "UPDATE `case`
+  			SET sortorder = '$i'
+  			WHERE case_id = '{$r['case_id']}'";
+  
+  		$db->Execute($sql);
+  		$i++;
+  	}
 	
 
+    //First set all sample records as unavailable
+    $sql = "UPDATE `questionnaire_sample_exclude_priority`
+      SET sortorder = NULL
+      WHERE sortorder IS NOT NULL
+      AND questionnaire_id = '$questionnaire_id'";
 
-	$result = $db->CompleteTrans();
-	
-	$time_end = microtime(true);
-	$timer = $time_end - $time_start;
+    $db->Execute($sql);
 
-	if ($result)
-		print T_("Completed sort") . ". " . T_("This task took") . ": $timer " . T_("seconds");
-	else
-		print T_("Failed to complete sort") . ". " . T_("This task took") . ": $timer " . T_("seconds");
+
+    //Sort sample list where attached to this questionnaire
+
+    $sql = "SELECT s.sample_id as sample_id,qs.questionnaire_id as questionnaire_id
+      FROM sample as s
+      JOIN (questionnaire_sample as qs, questionnaire as q, sample_import as si) on (qs.sample_import_id = s.import_id and si.sample_import_id = s.import_id and q.questionnaire_id = qs.questionnaire_id AND q.questionnaire_id = '$questionnaire_id')
+      LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
+      LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+      LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
+      LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = qs.questionnaire_id AND qsep.sample_id = s.sample_id)
+      WHERE c.case_id is NULL
+      AND ((qsep.questionnaire_id IS NULL) or qsep.exclude = 0)
+      AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
+      AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
+      AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+      GROUP BY s.sample_id,qs.questionnaire_id
+      ORDER BY qsep.priority DESC, rand() * qs.random_select, s.sample_id";
+          
+    $rs = $db->GetAll($sql);
+
+    $i = 1;
+    foreach ($rs as $r)
+    {
+            $sql = "INSERT INTO questionnaire_sample_exclude_priority (questionnaire_id,sample_id,exclude,priority,sortorder)
+                    VALUES ('{$r['questionnaire_id']}', '{$r['sample_id']}', 0, 50,'$i')
+                    ON DUPLICATE KEY UPDATE sortorder = '$i'";
+
+      $db->Execute($sql);
+      $i++;
+    }
+    
+
+    $result = $db->CompleteTrans();
+    
+    $time_end = microtime(true);
+    $timer = $time_end - $time_start;
+
+    if ($result)
+      print T_("Completed sort") . ". " . T_("This task took") . ": $timer " . T_("seconds");
+    else
+      print T_("Failed to complete sort") . ". " . T_("This task took") . ": $timer " . T_("seconds");
+  }
 
 	for ($i = 0; $i < (SYSTEM_SORT_MINUTES * 60); $i += $sleepinterval)
 	{
