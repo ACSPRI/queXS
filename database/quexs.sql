@@ -1447,6 +1447,7 @@ CREATE TABLE `questionnaire_sample` (
   `call_attempt_max` int(11) NOT NULL default '0',
   `random_select` tinyint(1) NOT NULL default '0',
   `answering_machine_messages` int(11) NOT NULL default '1',
+  `allow_new` TINYINT( 1 ) NOT NULL DEFAULT '1',
   PRIMARY KEY  (`questionnaire_id`,`sample_import_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
