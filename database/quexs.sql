@@ -1555,6 +1555,13 @@ CREATE TABLE `questionnaire_sample_quota_row_exclude` (
 --
 
 
+
+CREATE TABLE `questionnaire_timeslot` (
+`questionnaire_id` bigint( 20 ) NOT NULL ,
+`availability_group_id` bigint( 20 ) NOT NULL ,
+PRIMARY KEY ( `questionnaire_id` , `availability_group_id` )
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
