@@ -609,7 +609,6 @@ function get_case_id($operator_id, $create = false)
 				 *    
 				 *   THINGS TO ADD:
 				 *
-				 *   @todo also option of "time of day" calls - try once in the morning/etc
 				 *   @todo also could check the respondent_not_available table to see if now is a "bad time" to call
 				 */	
 			
@@ -625,10 +624,12 @@ function get_case_id($operator_id, $create = false)
 					LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
 					LEFT JOIN case_availability AS casa ON (casa.case_id = c.case_id)
 					LEFT JOIN availability AS ava ON (ava.availability_group_id = casa.availability_group_id)
+					LEFT JOIN questionnaire_timeslot AS qast ON (qast.questionnaire_id = c.questionnaire_id)
 					JOIN operator_skill as os on (os.operator_id = op.operator_id and os.outcome_type_id = ou.outcome_type_id)
 					WHERE c.current_operator_id IS NULL
 					AND (casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
-					AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
+          AND (qast.questionnaire_id IS NULL OR ((SELECT COUNT(*) FROM availability WHERE availability.availability_group_id = qast.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= availability.end)) >= 1 AND (SELECT COUNT(call_id) FROM `call`, availability WHERE call.case_id = c.case_id AND call.outcome_id != 1 AND (availability.availability_group_id = qast.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(call.start,'UTC',s.Time_zone_name)) AND TIME(CONVERT_TZ(call.start, 'UTC' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(call.start, 'UTC' , s.Time_zone_name)) <= availability.end))) < (SELECT COUNT(call.call_id) FROM `call`, questionnaire_timeslot, availability WHERE call.case_id = c.case_id AND call.outcome_id != 1 AND questionnaire_timeslot.questionnaire_id = c.questionnaire_id AND (availability.availability_group_id = questionnaire_timeslot.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(call.start,'UTC',s.Time_zone_name)) AND TIME(CONVERT_TZ(call.start, 'UTC' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(call.start, 'UTC' , s.Time_zone_name)) <= availability.end))  GROUP BY availability.availability_group_id ORDER BY COUNT(call.call_id) DESC LIMIT 1)))
+          AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
 					AND ap.case_id is NULL
 					AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
 					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL AND os.outcome_type_id != 2)
@@ -639,8 +640,8 @@ function get_case_id($operator_id, $create = false)
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
 					ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, a.start ASC, qsep.priority DESC
 					LIMIT 1";
-		
-					//apn.appointment_id contains the id of an appointment if we are calling on an appointment
+
+ 				//apn.appointment_id contains the id of an appointment if we are calling on an appointment
 			}
 			$r2 = $db->GetRow($sql);
 	

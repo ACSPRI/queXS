@@ -3,6 +3,13 @@ queXS 1.11.0 - Changes since 1.10.4
 
 ALTER TABLE `questionnaire_sample` ADD `allow_new` TINYINT( 1 ) NOT NULL DEFAULT '1';
 
+CREATE TABLE `questionnaire_timeslot` (
+`questionnaire_id` bigint( 20 ) NOT NULL ,
+`availability_group_id` bigint( 20 ) NOT NULL ,
+PRIMARY KEY ( `questionnaire_id` , `availability_group_id` )
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+
+
 
 queXS 1.10.4 - Changes since 1.10.3
 

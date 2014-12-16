@@ -92,7 +92,7 @@ if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['ques
 
 xhtml_head(T_("Assign call attempt time slots to questionnaire"),true,false,array("../js/window.js"));
 
-print "<p>" . T_("Assigning call attempt time slots to questionnaires will only allow cases to be attempted in a time slot for the n + 1th time where it has been called at least n times in all assigned timeslots") ."</p>";
+print "<p>" . T_("Assigning call attempt time slots to questionnaires will only allow cases to be attempted in a time slot for the n + 1th time where it has been called at least n times in all assigned timeslots. Please note timeslots must cover all possible time periods otherwise no cases will be available during missing timeslots.") ."</p>";
 
 print "<h3>" . T_("Select a questionnaire from the list below") . "</h3>";
 display_questionnaire_chooser($questionnaire_id);
