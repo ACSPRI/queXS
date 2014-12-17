@@ -320,6 +320,7 @@ if ($case_id != false)
 			xhtml_table($rs,array("start","des","phone","link","firstName"),array(T_("Date/Time"),T_("Outcome"),T_("Phone number"),T_("Change outcome"),T_("Operator")));
 		}
 
+    //view timeslots
     $sql = "SELECT count(*)
             FROM questionnaire_timeslot as q, `case` as c
             WHERE c.case_id = $case_id
@@ -327,18 +328,17 @@ if ($case_id != false)
 
     if ($db->GetOne($sql) >= 1)
     {
-      print "<h3>" . T_("Calls by timeslot") . "</h3>";
-      print "<p>" . T_("(excludes Not attempted or worked)") . "<p>";
+      print "<h3>" . T_("Call attempts by timeslot") . "</h3>";
 
-      $sql = "SELECT ag.description, (SELECT COUNT(*) FROM availability as a, `call` as ca WHERE ca.outcome_id != 1 AND ca.case_id = c.case_id AND a.availability_group_id = ag.availability_group_id
+      $sql = "SELECT ag.description, (SELECT COUNT(*) FROM availability as a, `call_attempt` as ca WHERE ca.case_id = c.case_id AND a.availability_group_id = ag.availability_group_id
               AND (a.day_of_week = DAYOFWEEK(CONVERT_TZ(ca.start,'UTC','Australia/Victoria')) 
               AND TIME(CONVERT_TZ(ca.start, 'UTC' , 'Australia/Victoria')) >= a.start 
               AND TIME(CONVERT_TZ(ca.start, 'UTC' ,'Australia/Victoria')) <= a.end))  as cou
               FROM availability_group as ag, `case` as c, `questionnaire_timeslot` as qt
-              WHERE c.case_id = 24
+              WHERE c.case_id = '$case_id'
               AND qt.questionnaire_id = c.questionnaire_id AND ag.availability_group_id = qt.availability_group_id";
 
-      xhtml_table($db->GetAll($sql),array('description','cou'),array(T_("Time slot"),T_("Calls")));
+      xhtml_table($db->GetAll($sql),array('description','cou'),array(T_("Time slot"),T_("Call attempts")));
    
     }
 
