@@ -331,11 +331,12 @@ if ($case_id != false)
       print "<h3>" . T_("Call attempts by timeslot") . "</h3>";
 
       $sql = "SELECT ag.description, (SELECT COUNT(*) FROM availability as a, `call_attempt` as ca WHERE ca.case_id = c.case_id AND a.availability_group_id = ag.availability_group_id
-              AND (a.day_of_week = DAYOFWEEK(CONVERT_TZ(ca.start,'UTC','Australia/Victoria')) 
-              AND TIME(CONVERT_TZ(ca.start, 'UTC' , 'Australia/Victoria')) >= a.start 
-              AND TIME(CONVERT_TZ(ca.start, 'UTC' ,'Australia/Victoria')) <= a.end))  as cou
-              FROM availability_group as ag, `case` as c, `questionnaire_timeslot` as qt
+              AND (a.day_of_week = DAYOFWEEK(CONVERT_TZ(ca.start,'UTC',s.Time_zone_name)) 
+              AND TIME(CONVERT_TZ(ca.start, 'UTC' , s.Time_zone_name)) >= a.start 
+              AND TIME(CONVERT_TZ(ca.start, 'UTC' , s.Time_zone_name)) <= a.end))  as cou
+              FROM availability_group as ag, `case` as c, `questionnaire_timeslot` as qt, sample as s
               WHERE c.case_id = '$case_id'
+              AND s.sample_id = c.sample_id
               AND qt.questionnaire_id = c.questionnaire_id AND ag.availability_group_id = qt.availability_group_id";
 
       xhtml_table($db->GetAll($sql),array('description','cou'),array(T_("Time slot"),T_("Call attempts")));
