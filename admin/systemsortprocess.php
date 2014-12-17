@@ -193,7 +193,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 	  if ($result)
 		  print T_("Completed case closing") . ". " . T_("This task took") . ": $timer " . T_("seconds");
   	else
-  		print T_("Failed to complete caes closing") . ". " . T_("This task took") . ": $timer " . T_("seconds");
+  		print T_("Failed to complete case closing") . ". " . T_("This task took") . ": $timer " . T_("seconds");
   }
 
 

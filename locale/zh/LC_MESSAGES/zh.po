@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-03-17 10:47+1000\n"
-"PO-Revision-Date: 2014-05-09 09:17+0000\n"
-"Last-Translator: Shihui Yin <yinsh@nsrcruc.org>\n"
+"PO-Revision-Date: 2014-09-01 03:16+0000\n"
+"Last-Translator: Daniel lee <liding@ruc.edu.cn>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-14 01:01+0000\n"
-"X-Generator: Launchpad (build 17111)\n"
+"X-Launchpad-Export-Date: 2014-12-17 00:20+0000\n"
+"X-Generator: Launchpad (build 17286)\n"
 "Language: zh\n"
 
 #: callhistory.php:56
@@ -52,12 +52,12 @@ msgstr "没有电话调查员"
 #: rs_answeringmachine_interface2.php:64
 #: rs_answeringmachine.php:64
 msgid "Respondent Selection - Answering machine"
-msgstr "调查对象选项 - 电话答录机"
+msgstr "受访者筛选 - 电话答录机"
 
 #: rs_answeringmachine_interface2.php:78
 #: rs_answeringmachine.php:78
 msgid "Do not leave a message, please hang up"
-msgstr "请挂机，不要留言。"
+msgstr "不留言，直接挂机"
 
 #: rs_answeringmachine_interface2.php:81
 #: rs_answeringmachine.php:81
@@ -67,12 +67,12 @@ msgstr "结束电话：业务电话答录机"
 #: rs_answeringmachine_interface2.php:86
 #: rs_answeringmachine.php:86
 msgid "End call with outcome: Answering machine Message left"
-msgstr "结束电话：已留电话答录机留言"
+msgstr "结束电话：已给答录机留言"
 
 #: rs_answeringmachine_interface2.php:90
 #: rs_answeringmachine.php:90
 msgid "End call with outcome: Answering machine No message left"
-msgstr "结束电话：未留电话答录机留言"
+msgstr "结束电话：未给答录机留言"
 
 #: rs_answeringmachine_interface2.php:91
 #: rs_business_interface2.php:62
@@ -84,15 +84,15 @@ msgstr "返回"
 
 #: rs_business_interface2.php:55
 msgid "Respondent Selection - Business answers"
-msgstr "调查对象选项 - 业务应答"
+msgstr "受访者筛选-商业电话"
 
 #: rs_business_interface2.php:59
 msgid "Sorry to bother you, I have called the wrong number"
-msgstr "对不起，打扰了，我拨错电话号码了"
+msgstr "对不起，打扰了，我拨错号码了"
 
 #: rs_business_interface2.php:61
 msgid "End call with outcome: Business number"
-msgstr "结束电话：业务电话号码"
+msgstr "结束电话：业务号码"
 
 #: index_interface2.php:195
 #: waitnextcase_interface2.php:49
@@ -144,7 +144,7 @@ msgstr "呼叫历史"
 #: index_interface2.php:332
 #: index.php:256
 msgid "Shifts"
-msgstr "时区转换"
+msgstr "调查时段"
 
 #: index_interface2.php:341
 #: index.php:265
@@ -210,7 +210,7 @@ msgstr "停止手动录音..."
 
 #: rs_callback_interface2.php:66
 msgid "Respondent Selection - Call back"
-msgstr "受访者选项 - 稍后再拨"
+msgstr "受访者筛选-稍后回拨"
 
 #: rs_callback_interface2.php:80
 msgid "You are: "
@@ -223,16 +223,16 @@ msgstr ""
 
 #: rs_callback_interface2.php:87
 msgid "Yes - Continue where we left off"
-msgstr "是的 - 继续上次调查"
+msgstr "是的 - 继续上次没说完的"
 
 #: rs_callback_interface2.php:88
 #: rs_project_intro.php:81
 msgid "End call with outcome: Refusal by respondent"
-msgstr "结束电话：调查对象拒绝接受电话调查"
+msgstr "结束电话：受访者拒访"
 
 #: rs_project_intro.php:59
 msgid "Respondent Selection - Project Introduction"
-msgstr "选择调查对象 - 项目介绍"
+msgstr "受访者筛选-项目介绍"
 
 #: rs_project_intro.php:79
 msgid "Yes - Continue"
@@ -268,7 +268,7 @@ msgstr "选择一个受访者"
 
 #: appointment.php:134
 msgid "Create new respondent:"
-msgstr "寻找新的受访者："
+msgstr "创建新受访者"
 
 #: appointment.php:137
 msgid "Add this respondent"
@@ -345,7 +345,7 @@ msgstr "无受访者"
 
 #: waitnextcase_interface2.php:54
 msgid "Get a new case"
-msgstr "调取新访问"
+msgstr "调取新样本"
 
 #: index.php:162
 msgid "End"
@@ -357,7 +357,7 @@ msgstr "呼叫/挂机"
 
 #: index.php:165
 msgid "Supervisor"
-msgstr "调查督导员"
+msgstr "督导员"
 
 #: index.php:170
 msgid "Restart"
@@ -369,7 +369,7 @@ msgstr "可选时间"
 
 #: index.php:298
 msgid "Supervisor chat"
-msgstr "调查督导员聊天室"
+msgstr "与督导通话"
 
 #: info.php:56
 msgid "Information"
@@ -587,7 +587,7 @@ msgstr "无可呼叫电话号码"
 #: rs_intro.php:65
 #: rs_intro_interface2.php:65
 msgid "Respondent Selection - Introduction"
-msgstr "受访者选项 - 中心介绍"
+msgstr "受访者筛选 - 介绍"
 
 #: rs_intro.php:117
 #: rs_intro_interface2.php:117
@@ -630,11 +630,11 @@ msgstr "结束电话：无法联系（此电话号码联系人目前没空：没
 
 #: shifts.php:57
 msgid "Shift List"
-msgstr "时区转换列表"
+msgstr "可用调查时段"
 
 #: shifts.php:80
 msgid "No shifts for this project"
-msgstr "该项目无时区转换"
+msgstr "无可用的调查时段"
 
 #: shifts.php:82
 #: shifts.php:103
@@ -643,7 +643,7 @@ msgstr "开始"
 
 #: shifts.php:101
 msgid "No future shifts scheduled"
-msgstr "无时区转换时刻表"
+msgstr "还未设置调查时段计划"
 
 #: shifts.php:103
 #: nocaseavailable.php:138
@@ -652,7 +652,7 @@ msgstr "问卷"
 
 #: rs_project_end_interface2.php:62
 msgid "Respondent Selection - Project end"
-msgstr "受访者选项 - 项目结束"
+msgstr "受访者筛选 - 项目结束"
 
 #: rs_project_end_interface2.php:80
 msgid "Call automatically ended with outcome: Complete - End case"
@@ -764,19 +764,19 @@ msgstr "错误：问卷未分派样本"
 
 #: nocaseavailable.php:135
 msgid "Current shifts available:"
-msgstr "当前可用时区转换："
+msgstr "当前可用调查时段："
 
 #: nocaseavailable.php:138
 msgid "Shift start"
-msgstr "开始时区转换"
+msgstr "可用调查时段开始"
 
 #: nocaseavailable.php:138
 msgid "Shift end"
-msgstr "时区转换结束"
+msgstr "可用调查时段结束"
 
 #: nocaseavailable.php:141
 msgid "ERROR: No shifts at this time"
-msgstr "错误：当前无时区转换"
+msgstr "错误：当前没有调查时段(没有安排调查员轮班)"
 
 #: nocaseavailable.php:161
 msgid "Call restrictions:"
@@ -842,7 +842,7 @@ msgstr "备注"
 
 #: performance.php:77
 msgid "This shift"
-msgstr "该时区转换"
+msgstr "当前调查时段"
 
 #: performance.php:78
 #: performance.php:85
@@ -976,7 +976,7 @@ msgstr "被引荐的受访者没时间接受本次问卷调查"
 
 #: rs_quota_end.php:61
 msgid "Respondent Selection - Project Quota End"
-msgstr "受访者选项 - 项目配额结束"
+msgstr "受访者筛选 - 项目配额结束"
 
 #: rs_quota_end.php:72
 #: rs_quota_end.php:78
@@ -1077,7 +1077,7 @@ msgstr "呼叫调查督导员前，请等待本次呼叫应答"
 #: admin/systemsort.php:98
 #: admin/systemsort.php:99
 msgid "Monitor system wide case sorting"
-msgstr "监控系统大规模访问排序"
+msgstr "监控全系统访问排序"
 
 #: admin/systemsort.php:77
 msgid "Running process:"
@@ -1124,9 +1124,9 @@ msgid ""
 "complex quotas in place. If you are not experiencing any performance "
 "problems, it is not recommended to use this feature."
 msgstr ""
-"系统大规模访问排序定期（使用SYSTEM_SORT_MINUTES配置指令）进行系统范围内的大规模访问排序， "
-"而不是在每次电话调查员请求一个新访问的时候寻找最合适的访问。这样可以在有大量访问或复杂配额的时候提高效率。如果您没有任何访问效率方面的问题，我们不推荐您使"
-"用该功能。"
+"全系统访问排序定期（使用SYSTEM_SORT_MINUTES配置指令）进行系统范围内的访问排序， "
+"而不是在每次电话调查员请求一个新访问的时候寻找最合适的访问对象。这样可以在有大量访问或复杂配额的时候提高效率。如果您没有任何访问效率方面的问题，我们不推荐"
+"您使用本功能。"
 
 #: admin/systemsort.php:102
 msgid "Outcome of last process run (if any)"
@@ -1459,7 +1459,7 @@ msgid ""
 "Set which types of cases will be made available to each operator. Please "
 "note that all operators will be allowed to assign all possible outcomes to a "
 "case. This restricts which ones will be assigned to an operator."
-msgstr "给每位电话调查员设置哪种类型的访问有效。请注意，所有电话调查员都有权给访问分派所有可能的结果。这限定了哪些访问会被分派给哪位电话调查员。"
+msgstr "给每位调查员设置可访样本。请注意，每个调查员都有权给访问样本选择所有可能的结果。这里的设置可以设置各位调查员可以被分派的样本类型。"
 
 #: admin/operatorskill.php:272
 #: admin/index.php:70
@@ -1512,7 +1512,7 @@ msgstr "直到"
 #: admin/operatorperformance.php:96
 #: admin/shiftreport.php:72
 msgid "Please select a shift"
-msgstr "请选择一个时区转换"
+msgstr "请选择一个可用调查时段"
 
 #: admin/availabilitygroup.php:70
 #: admin/availabilitygroup.php:112
@@ -1549,11 +1549,11 @@ msgstr "可用组名"
 #: admin/shiftreport.php:61
 #: admin/index.php:95
 msgid "Shift reports"
-msgstr "时区转换报告"
+msgstr "调查时段报告"
 
 #: admin/shiftreport.php:92
 msgid "Reports for this shift"
-msgstr "该转换报告"
+msgstr "该调查时段概况"
 
 #: admin/shiftreport.php:104
 msgid "Report"
@@ -1561,11 +1561,11 @@ msgstr "报告"
 
 #: admin/shiftreport.php:107
 msgid "Create new report for this shift"
-msgstr "给该转换创建新报告"
+msgstr "创建调查时段报告"
 
 #: admin/shiftreport.php:113
 msgid "Enter report for this shift"
-msgstr "给该转换输入报告"
+msgstr "输入调查时段报告"
 
 #: admin/shiftreport.php:117
 msgid "Add report"
@@ -1577,7 +1577,7 @@ msgstr "该报告在数据库中不存在"
 
 #: admin/shiftreport.php:158
 msgid "Edit report for this shift"
-msgstr "给该转换编辑报告"
+msgstr "编辑调查时段报告"
 
 #: admin/shiftreport.php:163
 msgid "Modify report"
@@ -1593,7 +1593,7 @@ msgstr "问卷创建及管理"
 
 #: admin/index.php:51
 msgid "Create an instrument in Limesurvey"
-msgstr "在LimeSurvey中创建提示语："
+msgstr "在LimeSurvey中创建主问卷"
 
 #: admin/index.php:52
 msgid "Create a new questionnaire"
@@ -1605,7 +1605,7 @@ msgstr "问卷管理"
 
 #: admin/index.php:54
 msgid "Administer instruments with Limesurvey"
-msgstr "用LimeSurvey管理提示"
+msgstr "用LimeSurvey管理主问卷"
 
 #: admin/index.php:56
 msgid "Sample/List management"
@@ -1613,7 +1613,7 @@ msgstr "样本/列表管理"
 
 #: admin/index.php:57
 msgid "Import a sample file (in CSV form)"
-msgstr "导入样本文件（CSV格式）"
+msgstr "导入样本（CSV格式）"
 
 #: admin/index.php:58
 msgid "Sample management"
@@ -1639,7 +1639,7 @@ msgstr "电话调查员管理"
 
 #: admin/index.php:67
 msgid "Add operators to the system"
-msgstr "在系统中添加电话调查员"
+msgstr "添加电话调查员"
 
 #: admin/index.php:69
 msgid "Assign operators to questionnaires"
@@ -1647,7 +1647,7 @@ msgstr "给问卷分派电话调查员"
 
 #: admin/index.php:72
 msgid "Availability and shift management"
-msgstr "有效时间及时区转换管理"
+msgstr "受访对象可及性及访问员电访时段管理"
 
 #: admin/index.php:73
 msgid "Manage availablity groups"
@@ -1659,7 +1659,7 @@ msgstr "给问卷分派有效时间"
 
 #: admin/index.php:75
 msgid "Shift management (add/remove)"
-msgstr "时区转换管理（添加/移除）"
+msgstr "调查时段管理（添加/移除）"
 
 #: admin/index.php:77
 msgid "Questionnaire progress"
@@ -1724,7 +1724,7 @@ msgstr "设置默认时区列表"
 
 #: admin/index.php:101
 msgid "Set default shift times"
-msgstr "设置默认转换时间"
+msgstr "设置默认的调查时段"
 
 #: admin/index.php:102
 msgid "Set call restriction times"
@@ -1737,7 +1737,7 @@ msgstr "设置中心信息"
 
 #: admin/index.php:105
 msgid "Start and monitor system wide case sorting"
-msgstr "开始并监控系统大规模访问排序"
+msgstr "开始并监控全系统访问排序"
 
 #: admin/index.php:109
 msgid "VoIP"
@@ -1820,7 +1820,7 @@ msgstr "电话答录机留言"
 
 #: admin/assignsample.php:193
 msgid "Selection type"
-msgstr "选项类型"
+msgstr "受访者筛选方式"
 
 #: admin/assignsample.php:193
 msgid "Unassign sample"
@@ -2031,11 +2031,11 @@ msgstr "该问卷无结果记录"
 
 #: admin/outcomes.php:276
 msgid "No shift reports: Add report"
-msgstr "无时区转换报告：添加报告"
+msgstr "无时时段报告：添加报告"
 
 #: admin/outcomes.php:276
 msgid "View shift reports"
-msgstr "查看时区转换报告"
+msgstr "查看时段报告"
 
 #: admin/outcomes.php:276
 msgid "View operator performance"
@@ -2043,15 +2043,15 @@ msgstr "查看电话调查员绩效"
 
 #: admin/outcomes.php:295
 msgid "No shifts defined for this questionnaire"
-msgstr "该问卷未定义时区转换"
+msgstr "该问卷没有设置可用调查时段"
 
 #: admin/outcomes.php:297
 msgid "Shift"
-msgstr "时区转换"
+msgstr "调查时段（访问员轮班）"
 
 #: admin/outcomes.php:297
 msgid "Shift report"
-msgstr "时区转换报告"
+msgstr "时段报告"
 
 #: admin/voipmonitor.php:73
 #: admin/voipmonitor.php:95
@@ -2063,11 +2063,11 @@ msgstr "监控VoIP进程"
 msgid ""
 "Kill signal sent: Please wait... (Note: Process will be stalled until there "
 "is activity on the VoIP Server)"
-msgstr "终止信号发送：请等待...（注意：进程将阻塞直到VoIP服务器有活动）"
+msgstr "终止信号发送：请等待...（注意：进程将直到VoIP服务器有反应才会停止）"
 
 #: admin/voipmonitor.php:84
 msgid "(requires activity on the VoIP Server to take effect)"
-msgstr "（需要VoIP服务器有活动才有效）"
+msgstr "（需要VoIP服务器有反应动作才有效）"
 
 #: admin/voipmonitor.php:97
 msgid "Click here to begin monitoring the VoIP Process"
@@ -2075,7 +2075,7 @@ msgstr "点击开始监控VoIP进程"
 
 #: admin/questionnaireprefill.php:99
 msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
-msgstr "预设答案问卷：设置问卷预设值"
+msgstr "加载问卷预填字段：设置问卷预填信息"
 
 #: admin/questionnaireprefill.php:110
 msgid "Current pre fills (click to delete)"
@@ -2134,12 +2134,12 @@ msgstr "重命名"
 #: admin/samplelist.php:269
 #: admin/samplelist.php:279
 msgid "Operator viewing permissions"
-msgstr "电话调查员查看许可"
+msgstr "电话调查员浏览权限"
 
 #: admin/samplelist.php:182
 msgid ""
 "Select which fields from this sample should be able to be viewed by operators"
-msgstr "选择样本中哪些域对电话调查员可见"
+msgstr "设置调查员可浏览的样本信息"
 
 #: admin/samplelist.php:187
 #: admin/samplelist.php:224
@@ -2201,7 +2201,7 @@ msgstr "已添加预约"
 msgid ""
 "No such case id, or case set to a final outcome, or case currently assigned "
 "to an operator"
-msgstr "没有所需访问编号，或所需访问已形成最终结果，或所需访问当前已分派给电话调查员"
+msgstr "无此样本编号，已经完结，或已被分派给其他调查员"
 
 #: admin/bulkappointment.php:209
 msgid "Result"
@@ -2249,13 +2249,13 @@ msgstr "加载批量预约CSV"
 #: admin/addshift.php:87
 #: admin/addshift.php:140
 msgid "Add shifts"
-msgstr "添加时区转换"
+msgstr "添加调查时段"
 
 #: admin/addshift.php:88
 msgid ""
 "You must be an operator (as well as have administrator access) to add/edit "
 "shifts"
-msgstr "您必须是电话调查员（以及具有管理员访问权限）才可以添加/编辑时区转换"
+msgstr "您必须是电话调查员（以及具有管理员访问权限）才可以添加/编辑调查时段"
 
 #: admin/addshift.php:151
 #: admin/availability.php:106
@@ -2266,13 +2266,13 @@ msgstr "您的数据库没有安装时区，请看这里查看详细信息"
 
 #: admin/addshift.php:163
 msgid "Add shifts in your Time Zone"
-msgstr "在您的时区内添加时区转换"
+msgstr "在您的时区内添加可用调查时段"
 
 #: admin/addshift.php:166
 msgid ""
 "Shifts allow you to restrict appointments being made, and interviewers to "
 "working on a particlar project at defined times."
-msgstr "时区转换允许您将特定项目的预约、访问员的工作限定在规定的时间段内。"
+msgstr "可用调查时段允许您将特定项目的预约、访问员的工作限定在规定的时间段内。"
 
 #: admin/addshift.php:173
 msgid "Select year"
@@ -2290,7 +2290,7 @@ msgstr "日"
 
 #: admin/addshift.php:238
 msgid "Use shift?"
-msgstr "使用时区转换？"
+msgstr "使用调查时段？"
 
 #: admin/addshift.php:263
 msgid "Submit changes"
@@ -2410,7 +2410,7 @@ msgstr "FreePBX已重新加载以启用新的VoIP分机"
 #: admin/operators.php:174
 msgid ""
 "Could not add operator. There may already be an operator of this name:"
-msgstr "不能添加电话调查员。可能调查员姓名已存在："
+msgstr "无法添加调查员。系统中可能已有同名访问员："
 
 #: admin/operators.php:182
 #: admin/operators.php:203
@@ -2419,7 +2419,7 @@ msgstr "添加电话调查员"
 
 #: admin/operators.php:204
 msgid "Adding an operator here will give the user the ability to call cases"
-msgstr "在此添加电话调查员会给新调查员呼叫受访者的访问功能"
+msgstr "在此添加电话调查员，将允许新调查员呼叫受访者"
 
 #: admin/operators.php:204
 msgid "Assign Operator to Questionnaire"
@@ -2525,32 +2525,32 @@ msgstr "问卷名："
 
 #: admin/new.php:133
 msgid "Select limesurvey instrument:"
-msgstr "选择LimeSurvey提示语："
+msgstr "选择LimeSurvey主问卷："
 
 #: admin/new.php:147
 #: admin/new.php:171
 msgid "Existing instrument:"
-msgstr "已存在的提示语："
+msgstr "已有问卷工具："
 
 #: admin/new.php:156
 msgid "Respondent selection type:"
-msgstr "受访者选项类型："
+msgstr "受访者筛选方式"
 
 #: admin/new.php:157
 msgid "No respondent selection (go straight to questionnaire)"
-msgstr "无受访者选项（直接开始问卷）"
+msgstr "不进行受访者筛选（直接开始问卷）"
 
 #: admin/new.php:157
 msgid "Use basic respondent selection text (below)"
-msgstr "使用基本的受访者选项文本（如下）"
+msgstr "使用基本的受访者筛选文本（如下）"
 
 #: admin/new.php:195
 msgid "Restrict appointments to shifts?"
-msgstr "将预约限定在时区转换内？"
+msgstr "将预约限定在调查时段内？"
 
 #: admin/new.php:196
 msgid "Restrict work to shifts?"
-msgstr "将访问限定在时区转换内？"
+msgstr "将访问限定在调查时段内？"
 
 #: admin/new.php:197
 msgid "Questionnaire for testing only?"
@@ -2590,15 +2590,15 @@ msgstr "受访者自助完成问卷后的跳转链接（必要）"
 
 #: admin/new.php:217
 msgid "Respondent selection introduction:"
-msgstr "受访者选项说明："
+msgstr "受访者筛选说明："
 
 #: admin/new.php:218
 msgid "Respondent selection project introduction:"
-msgstr "受访者选项项目说明："
+msgstr "受访者筛选-项目说明："
 
 #: admin/new.php:219
 msgid "Respondent selection callback (already started questionnaire):"
-msgstr "受访者选项复查（已开始的问卷）："
+msgstr "受访者筛选回叫（已开始的问卷）："
 
 #: admin/new.php:220
 msgid "Message to leave on an answering machine:"
@@ -3032,17 +3032,17 @@ msgstr "输入要添加的客户的时区："
 
 #: admin/shifttemplate.php:82
 msgid "Modify shift template"
-msgstr "修改时区转换模板"
+msgstr "修改调查时段模板"
 
 #: admin/shifttemplate.php:96
 msgid ""
 "Enter standard shift start and end times for each day of the week in local "
 "time"
-msgstr "按当地时间输入一周每天的标准起止时间转换"
+msgstr "按当地时间输入一周每天的标准调查起止时段"
 
 #: admin/shifttemplate.php:135
 msgid "Save changes to shifts"
-msgstr "保存对时区转换的修改"
+msgstr "保存对调查时段的修改"
 
 #: admin/casestatus.php:88
 #: admin/casestatus.php:89
@@ -3071,7 +3071,7 @@ msgstr "分派给电话调查员"
 
 #: admin/casestatus.php:119
 msgid "Choose operator to assign selected cases to"
-msgstr "选择电话调查员分派已选的访问"
+msgstr "将选定的样本分给哪个调查员，请选择"
 
 #: admin/casestatus.php:122
 msgid "Assign cases to operator queue"
@@ -3084,8 +3084,7 @@ msgid ""
 "operator, it will override the normal scheduling process and call them as "
 "soon as the operator is available."
 msgstr ""
-"按问卷和样本列出访问，并允许将访问分派给指定的电话调查员以立即成为下一个待呼叫访问。如果您将访问分派给电话调查员，将优先于正常的访问调度过程，当调查员可以"
-"呼叫时，立即呼叫分派的访问。"
+"按问卷和样本列出样本，可以设置样本被呼叫的顺序。如果您将样本分派给特定调查员，该将优先于正常的访问调度过程，调查员将优先呼叫被分派的样本。"
 
 #: admin/dataoutput.php:202
 msgid "Download data for this questionnaire via Limesurvey"
@@ -3187,16 +3186,16 @@ msgid ""
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
-"给每个用户下载该文件，并保存在与可执行程序voip.exe相同的文件夹内。当该文件执行时，会启动voip.exe程序，使用正确的连接信息将电话调查员连接到"
-"VoIP服务器"
+"为每个用户下载列表中的脚本文件。同时下载客户端文件voip.exe。两者保存在同一文件夹内。执行本脚本文件将启动voip.exe程序，并自动利用其中的连接"
+"信息将电话调查员连接到VoIP服务器"
 
 #: admin/operatorlist.php:299
 msgid "Download Windows VoIP Executable"
-msgstr "下载Windows下的VoIP可执行文件"
+msgstr "VoIP客户端(Windows)"
 
 #: admin/operatorlist.php:300
 msgid "Download Linux VoIP Executable"
-msgstr "下载Linux下的VoIP可执行文件"
+msgstr "VoIP客户端(Linux)"
 
 #: admin/operatorlist.php:305
 msgid "Enable/Disable VoIP"
@@ -3204,11 +3203,11 @@ msgstr "启用/禁用VoIP"
 
 #: admin/operatorlist.php:306
 msgid "Windows VoIP"
-msgstr "Windows下的VoIP"
+msgstr "VoIP Windows客户端"
 
 #: admin/operatorlist.php:307
 msgid "*nix VoIP"
-msgstr "*nix VoIP"
+msgstr "VoIP L/Unix等客户端"
 
 #: admin/samplecallattempts.php:107
 msgid "Number of cases"
@@ -3248,11 +3247,11 @@ msgstr "问卷列表"
 
 #: admin/questionnairelist.php:329
 msgid "Edit instrument in Limesurvey"
-msgstr "在LimeSurvey中编辑提示"
+msgstr "在LimeSurvey中编辑主问卷"
 
 #: admin/questionnairelist.php:362
 msgid "Edit respondent selection instrument in Limesurvey"
-msgstr "在LimeSurvey中编辑受访者选项提示"
+msgstr "在LimeSurvey中编辑受访者筛选工具"
 
 #: admin/questionnairelist.php:365
 msgid "Update Questionnaire"
@@ -3260,7 +3259,7 @@ msgstr "更新问卷"
 
 #: admin/questionnairelist.php:384
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
-msgstr "任何收集的数据和LimeSurvey提示都不会被删除"
+msgstr "任何收集的数据和LimeSurvey主问卷都不会被删除"
 
 #: admin/questionnairelist.php:385
 msgid ""
@@ -3356,7 +3355,7 @@ msgstr "更新访问有效时间"
 
 #: admin/supervisor.php:423
 msgid "Assign this case to operator (will appear as next case for them)"
-msgstr "将该访问分派给电话调查员（会作为下一个访问出现在调查员访问页面）"
+msgstr "将该样本分派给电话调查员（作为下一个访问样本出现在调查员的访问页面）"
 
 #: admin/supervisor.php:435
 msgid "Assign this case to operator"
@@ -3406,7 +3405,7 @@ msgstr "时区："
 
 #: functions/functions.calendar.php:328
 msgid "Shift from:"
-msgstr "转换自："
+msgstr "调查时段为："
 
 #: functions/functions.calendar.php:335
 msgid "Start Time"
@@ -3418,7 +3417,7 @@ msgstr "结束时间"
 
 #: functions/functions.performance.php:469
 msgid "No shift"
-msgstr "无转换"
+msgstr "无可用调查时段"
 
 #: functions/functions.performance.php:492
 msgid "Total completions"
@@ -3426,28 +3425,28 @@ msgstr "完成总数"
 
 #: functions/functions.performance.php:521
 msgid "Completions this shift"
-msgstr "本次转换完成数"
+msgstr "本调查时段完成数"
 
 #: functions/functions.performance.php:544
 #: functions/functions.performance.php:590
 msgid "No previous shift"
-msgstr "无先前转换"
+msgstr "没有更早的调查时段了"
 
 #: functions/functions.performance.php:564
 msgid "Completions on the previous shift"
-msgstr "先前转换完成数"
+msgstr "此前调查时段的完成数"
 
 #: functions/functions.performance.php:611
 msgid "Completions this time on the previous shift"
-msgstr "本次先前转换完成数"
+msgstr "以往调查时段的相应完成数"
 
 #: functions/functions.performance.php:629
 msgid "No calls made for this shift"
-msgstr "本次转换无呼叫"
+msgstr "该调查时段没有进行呼叫"
 
 #: functions/functions.performance.php:631
 msgid "Top CPH for this shift"
-msgstr "本次转换最高呼叫频率"
+msgstr "本时段最高的小时完成量"
 
 #: functions/functions.performance.php:648
 msgid "No calls made for this project"
@@ -3455,7 +3454,7 @@ msgstr "该项目无呼叫"
 
 #: functions/functions.performance.php:650
 msgid "Top CPH"
-msgstr "最高呼叫频率"
+msgstr "最高小时完成量"
 
 #: functions/functions.import.php:89
 msgid "Duplicate name"
@@ -3524,7 +3523,7 @@ msgstr "重新加载失败，FreePBX无法连接到asterisk管理员界面"
 msgid ""
 "Could not reload the FOP operator panel server using the bounce_op.sh "
 "script. Configuration changes may not be reflected in the panel display."
-msgstr "无法用bounce_op.sh脚本重新加载FOP电话调查员版面服务器。配置面板可能不能改变系统配置。"
+msgstr "无法用bounce_op.sh脚本重新加载FOP电话调查员控制面板。面板可能没有反映系统配置修改。"
 
 #: functions/functions.freepbx.php:174
 #, php-format
@@ -3583,7 +3582,7 @@ msgstr "问卷及样本选择："
 
 #: include/limesurvey/admin/browse.php:792
 msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr "与该提示语相关的所有queXS问卷和样本"
+msgstr "所有与该主问卷相关的queXS问卷和样本"
 
 #: include/limesurvey/admin/exportresults.php:257
 msgid "Token"
