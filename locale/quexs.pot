@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-17 11:16+1000\n"
+"POT-Creation-Date: 2014-12-19 10:21+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -24,7 +24,7 @@ msgid "No calls ever made"
 msgstr ""
 
 #: callhistory.php:83 calllist.php:84 casenote.php:110
-#: admin/supervisor.php:320 admin/supervisor.php:360
+#: admin/supervisor.php:320 admin/supervisor.php:361
 msgid "Date/Time"
 msgstr ""
 
@@ -333,7 +333,7 @@ msgstr ""
 #: admin/operatorperformance.php:81 admin/operatorperformance.php:104
 #: admin/shiftreport.php:104 admin/outcomes.php:187
 #: admin/extensionstatus.php:200 admin/operatorlist.php:293
-#: admin/supervisor.php:320 admin/supervisor.php:360
+#: admin/supervisor.php:320 admin/supervisor.php:361
 msgid "Operator"
 msgstr ""
 
@@ -662,12 +662,12 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: availability.php:123 admin/supervisor.php:416
+#: availability.php:123 admin/supervisor.php:417
 msgid ""
 "Select groups to limit availability (Selecting none means always available)"
 msgstr ""
 
-#: availability.php:143 admin/supervisor.php:439
+#: availability.php:143 admin/supervisor.php:440
 msgid "Availability groups not defined for this questionnaire"
 msgstr ""
 
@@ -795,15 +795,15 @@ msgstr ""
 msgid "Case Notes"
 msgstr ""
 
-#: casenote.php:66 casenote.php:105 admin/supervisor.php:367
+#: casenote.php:66 casenote.php:105 admin/supervisor.php:368
 msgid "Add note"
 msgstr ""
 
-#: casenote.php:108 admin/supervisor.php:358
+#: casenote.php:108 admin/supervisor.php:359
 msgid "No notes"
 msgstr ""
 
-#: casenote.php:110 admin/bulkappointment.php:230 admin/supervisor.php:360
+#: casenote.php:110 admin/bulkappointment.php:230 admin/supervisor.php:361
 msgid "Note"
 msgstr ""
 
@@ -890,8 +890,8 @@ msgid "Ending case now"
 msgstr ""
 
 #: nocallavailable.php:203 admin/systemsortprocess.php:194
-#: admin/systemsortprocess.php:196 admin/systemsortprocess.php:322
-#: admin/systemsortprocess.php:324
+#: admin/systemsortprocess.php:196 admin/systemsortprocess.php:323
+#: admin/systemsortprocess.php:325
 msgid "seconds"
 msgstr ""
 
@@ -1235,7 +1235,7 @@ msgid "Completed case closing"
 msgstr ""
 
 #: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
-#: admin/systemsortprocess.php:322 admin/systemsortprocess.php:324
+#: admin/systemsortprocess.php:323 admin/systemsortprocess.php:325
 msgid "This task took"
 msgstr ""
 
@@ -1247,11 +1247,11 @@ msgstr ""
 msgid "Sorting cases for "
 msgstr ""
 
-#: admin/systemsortprocess.php:322
+#: admin/systemsortprocess.php:323
 msgid "Completed sort"
 msgstr ""
 
-#: admin/systemsortprocess.php:324
+#: admin/systemsortprocess.php:325
 msgid "Failed to complete sort"
 msgstr ""
 
@@ -1301,8 +1301,8 @@ msgstr ""
 
 #: admin/displayappointments.php:229 admin/displayappointments.php:243
 #: admin/questionnairelist.php:396 admin/questionnairelist.php:407
-#: admin/supervisor.php:284 admin/supervisor.php:297 admin/supervisor.php:346
-#: admin/supervisor.php:360
+#: admin/supervisor.php:284 admin/supervisor.php:297 admin/supervisor.php:347
+#: admin/supervisor.php:361
 msgid "Delete"
 msgstr ""
 
@@ -1487,7 +1487,7 @@ msgstr ""
 msgid "No time slots"
 msgstr ""
 
-#: admin/availabilitygroup.php:119 admin/supervisor.php:341
+#: admin/availabilitygroup.php:119 admin/supervisor.php:342
 msgid "Time slot"
 msgstr ""
 
@@ -2115,8 +2115,8 @@ msgid "Save changes"
 msgstr ""
 
 #: admin/samplelist.php:202 admin/samplelist.php:216 admin/samplelist.php:224
-#: admin/samplelist.php:268 admin/samplelist.php:279 admin/supervisor.php:461
-#: admin/supervisor.php:467
+#: admin/samplelist.php:268 admin/samplelist.php:279 admin/supervisor.php:462
+#: admin/supervisor.php:468
 msgid "Deidentify"
 msgstr ""
 
@@ -2212,7 +2212,7 @@ msgstr ""
 
 #: admin/addshift.php:151 admin/availability.php:106
 #: admin/shifttemplate.php:93 admin/callrestrict.php:93
-#: admin/timezonetemplate.php:97
+#: admin/timezonetemplate.php:104
 msgid ""
 "Your database does not have timezones installed, please see here for details"
 msgstr ""
@@ -3242,23 +3242,31 @@ msgstr ""
 msgid "Delete this questionnaire"
 msgstr ""
 
-#: admin/timezonetemplate.php:87
+#: admin/timezonetemplate.php:92
 msgid "Add/Remove Timezones"
 msgstr ""
 
-#: admin/timezonetemplate.php:101
+#: admin/timezonetemplate.php:107 admin/timezonetemplate.php:111
+msgid "Set default timezone"
+msgstr ""
+
+#: admin/timezonetemplate.php:110
+msgid "Default Timezone: "
+msgstr ""
+
+#: admin/timezonetemplate.php:115
 msgid "Click to remove a Timezone from the default list"
 msgstr ""
 
-#: admin/timezonetemplate.php:113
+#: admin/timezonetemplate.php:127
 msgid "Add a Timezone:"
 msgstr ""
 
-#: admin/timezonetemplate.php:116
+#: admin/timezonetemplate.php:130
 msgid "Timezone: "
 msgstr ""
 
-#: admin/timezonetemplate.php:117
+#: admin/timezonetemplate.php:131
 msgid "Add Timezone"
 msgstr ""
 
@@ -3278,7 +3286,7 @@ msgstr ""
 msgid "Set an outcome for this call"
 msgstr ""
 
-#: admin/supervisor.php:189 admin/supervisor.php:396
+#: admin/supervisor.php:189 admin/supervisor.php:397
 msgid "Set outcome"
 msgstr ""
 
@@ -3302,46 +3310,46 @@ msgstr ""
 msgid "Call attempts by timeslot"
 msgstr ""
 
-#: admin/supervisor.php:341
+#: admin/supervisor.php:342
 msgid "Call attempts"
 msgstr ""
 
-#: admin/supervisor.php:355 include/limesurvey/admin/exportresults.php:262
+#: admin/supervisor.php:356 include/limesurvey/admin/exportresults.php:262
 #: include/limesurvey/admin/exportresults.php:613
 #: include/limesurvey/admin/exportresults.php:614
 #: include/limesurvey/admin/exportresults.php:978
 msgid "Case notes"
 msgstr ""
 
-#: admin/supervisor.php:377
+#: admin/supervisor.php:378
 msgid "Modify responses for this case"
 msgstr ""
 
-#: admin/supervisor.php:379
+#: admin/supervisor.php:380
 msgid "Case not yet started in Limesurvey"
 msgstr ""
 
-#: admin/supervisor.php:383
+#: admin/supervisor.php:384
 msgid "Set a case outcome"
 msgstr ""
 
-#: admin/supervisor.php:433
+#: admin/supervisor.php:434
 msgid "Update case availability"
 msgstr ""
 
-#: admin/supervisor.php:444
+#: admin/supervisor.php:445
 msgid "Assign this case to operator (will appear as next case for them)"
 msgstr ""
 
-#: admin/supervisor.php:456
+#: admin/supervisor.php:457
 msgid "Assign this case to operator"
 msgstr ""
 
-#: admin/supervisor.php:462
+#: admin/supervisor.php:463
 msgid "Remove all sample details and contact numbers from this case"
 msgstr ""
 
-#: admin/supervisor.php:475
+#: admin/supervisor.php:476
 msgid "Case does not exist"
 msgstr ""
 
