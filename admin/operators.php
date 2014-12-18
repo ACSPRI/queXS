@@ -211,7 +211,7 @@ $ers = $db->GetAll($sql);
 <?php  } ?>
 	<p><?php  echo T_("Enter the first name of an operator to add:"); ?> <input name="firstname" type="text"/></p>
 	<p><?php  echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
-	<p><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
+	<p><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",get_setting("DEFAULT_TIME_ZONE"))); ?> </p>
 <?php  if (FREEPBX_PATH == false) { ?>
 	<p><a href='extensionstatus.php'><?php  echo T_("Select an extension for this operator:"); echo "</a>"; display_chooser($ers,"extension_id","extension_id",true,false,false,false); ?> </p>
 <?php  } ?>

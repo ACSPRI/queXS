@@ -9,6 +9,8 @@ CREATE TABLE `questionnaire_timeslot` (
 PRIMARY KEY ( `questionnaire_id` , `availability_group_id` )
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 
+INSERT INTO `setting` (`setting_id`,`field`,`value`)
+VALUES (NULL , 'DEFAULT_TIME_ZONE', 's:18:"Australia/Victoria";');
 
 
 queXS 1.10.4 - Changes since 1.10.3

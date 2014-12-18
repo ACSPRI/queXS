@@ -101,7 +101,7 @@ if (isset($_POST['submit']))
 
 		$rs = $db->GetAll($sql);
 
-		$tzone = DEFAULT_TIME_ZONE; //set this to default
+		$tzone = get_setting("DEFAULT_TIME_ZONE"); //set this to default
 
 		//Get the timezone
 		foreach($rs as $r)

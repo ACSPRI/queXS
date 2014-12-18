@@ -41,12 +41,6 @@
 
 
 /**
- * The default time zone
- */
-if (!defined('DEFAULT_TIME_ZONE')) define('DEFAULT_TIME_ZONE', 'Australia/Victoria');
-
-
-/**
  * Date time format for displaying 
  * 
  * see http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_date-format 

@@ -39,11 +39,6 @@
  */
 
 /**
- * The default time zone
- */
-define('DEFAULT_TIME_ZONE', 'Australia/Victoria');
-
-/**
  * Flag for VoIP with Asterisk to be enabled or not
  */
 define('VOIP_ENABLED',false);

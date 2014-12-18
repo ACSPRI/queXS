@@ -58,6 +58,11 @@ include("../functions/functions.input.php");
 global $db;
 
 
+if (isset($_POST['dtime_zone']))
+{
+  set_setting('DEFAULT_TIME_ZONE', $_POST['dtime_zone']);
+}
+
 if (isset($_GET['time_zone']))
 {
 	//need to add sample to questionnaire
@@ -86,8 +91,10 @@ if (isset($_GET['tz']))
 
 xhtml_head(T_("Add/Remove Timezones"),true,array("../css/shifts.css"),array("../js/window.js"));
 
+$dtz = get_setting("DEFAULT_TIME_ZONE");
+
 $sql = "SELECT name as value, name as description, 
-		CASE WHEN name LIKE '" . DEFAULT_TIME_ZONE . "' THEN 'selected=\'selected\'' ELSE '' END AS selected
+		CASE WHEN name LIKE '$dtz' THEN 'selected=\'selected\'' ELSE '' END AS selected
 	FROM mysql.time_zone_name";
 
 $tzl = $db->GetAll($sql);
@@ -97,6 +104,13 @@ if (empty($tzl) || !$tzl)
         print "<div class='warning'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
 }
 
+print "<h1>" . T_("Set default timezone") . ": </h1>";
+		?>
+		<form action="" method="post"><p>
+		<label for="dtime_zone"><?php  echo T_("Default Timezone: "); ?></label><?php  display_chooser($tzl, 'dtime_zone', 'dtime_zone', false,  false, false, false, false); ?>
+		<input type="submit" name="set_dtimezone" value="<?php  echo T_("Set default timezone"); ?>"/></p>
+		</form>
+		<?php 
 
 print "<h1>" . T_("Click to remove a Timezone from the default list") . "</h1>";
 

@@ -1787,6 +1787,10 @@ CREATE TABLE `setting` (
 -- Dumping data for table `setting`
 --
 
+INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES
+(1, 'DEFAULT_TIME_ZONE', 's:18:"Australia/Victoria";'),
+(2, 'systemsort', 'b:0;');
+
 
 -- --------------------------------------------------------
 
