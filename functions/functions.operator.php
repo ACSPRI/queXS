@@ -1665,7 +1665,6 @@ function update_row_quota($questionnaire_id,$case_id = false)
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
-		AND qsq.quota_reached != '1'
 		AND qsq.lime_sgqa != -1";
 
 	$rs = $db->GetAll($sql);
