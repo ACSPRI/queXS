@@ -1,5 +1,20 @@
 queXS 1.11.0 - Changes since 1.10.4
 
+New Feature: System sort on a questionnaire by questionnaire basis
+New Feature: Time slots for cases (make sure cases are called over specified timeslots equally)
+New Feature: Ability to disable and enable new records being drawn from a sample
+New Feature: Default timezone can be set in Administrative interface instead of config file
+
+Fixed Bug: lp:1394819 Automatic dialling doesn't work when using "No respondent selection"
+Fixed Bug: lp:1394818 - Quota completions not displayed above 100%
+Fixed Bug: Operator extension not clearing correctly at end of work
+Fixed Bug: Notices generated when running index_update.php
+Fixed Bug: lp:1362415 Use of eregi and split are deprecated
+Fixed Bug: lp:1362418 - Cannot originate calls on Asterisk 11
+
+Translations: Updated from Launchpad. Thank you!
+
+Database updates:
 
 ALTER TABLE `questionnaire_sample` ADD `allow_new` TINYINT( 1 ) NOT NULL DEFAULT '1';
 
