@@ -205,7 +205,6 @@ msgid "You are: "
 msgstr ""
 
 #: rs_callback_interface2.php:80 rs_callback.php:80
-#, php-format
 msgid "% complete"
 msgstr ""
 
@@ -1889,7 +1888,6 @@ msgid "Search within this sample"
 msgstr ""
 
 #: admin/samplesearch.php:151
-#, php-format
 msgid "Use the % character as a wildcard"
 msgstr ""
 
