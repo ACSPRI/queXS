@@ -119,15 +119,21 @@ function display_shift_chooser($questionnaire_id, $shift_id = false)
  *
  * @param int $questionnaire_id The questionnaire id
  * @param int|bool $sample_import_id The sample import id or false if none selected
+ * @param bool $disabled Display disabled samples? (default is true)
  */
-function display_sample_chooser($questionnaire_id, $sample_import_id = false)
+function display_sample_chooser($questionnaire_id, $sample_import_id = false, $disabled = true)
 {
 	global $db;
+
+  $s = "";
+
+  if (!$disabled)
+    $s = " AND si.enabled = 1 ";
 
 	$sql = "SELECT s.sample_import_id,si.description,CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM questionnaire_sample as s, sample_import as si
 		WHERE s.questionnaire_id = '$questionnaire_id'
-		AND s.sample_import_id = si.sample_import_id";
+		AND s.sample_import_id = si.sample_import_id $s";
 		
 	$rs = $db->GetAll($sql);
 
