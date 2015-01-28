@@ -172,6 +172,7 @@ if (!empty($surveys))
 }
 
 $CKEditor = new CKEditor();
+$CKEditor->basePath = "../include/ckeditor/";
 
 $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 	array("Cut","Copy","Paste","PasteText","PasteFromWord","-","Print","SpellChecker"),
