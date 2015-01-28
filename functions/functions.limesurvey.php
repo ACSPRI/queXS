@@ -291,6 +291,16 @@ function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sam
 {
 	global $db;
 
+  $sql = "SELECT COUNT(*)
+          FROM information_schema.tables
+          WHERE table_schema = 'quexs'
+          AND table_name = '" . LIME_PREFIX . "survey_$lime_sid'";
+
+  $rs = $db->GetOne($sql);
+
+  if ($rs != 1)
+    return false;
+
 	$sql = "SELECT count(*) as c
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
@@ -389,6 +399,16 @@ function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var,$sample_i
 function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sample_import_id,$value,$comparison)
 {
 	global $db;
+
+  $sql = "SELECT COUNT(*)
+          FROM information_schema.tables
+          WHERE table_schema = 'quexs'
+          AND table_name = '" . LIME_PREFIX . "survey_$lime_sid'";
+
+  $rs = $db->GetOne($sql);
+
+  if ($rs != 1)
+    return false;
 
 	$sql = "SELECT count(*) as c
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
