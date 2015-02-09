@@ -1,3 +1,12 @@
+Database updates:
+
+CREATE TABLE `questionnaire_sample_timeslot` (
+`questionnaire_id` bigint( 20 ) NOT NULL ,
+`sample_import_id` bigint( 20 ) NOT NULL ,
+`availability_group_id` bigint( 20 ) NOT NULL ,
+PRIMARY KEY ( `questionnaire_id` , `availability_group_id` , `sample_import_id` )
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+
 queXS 1.11.1 - Changes since 1.11.0
 
 Fixed Bug: Quota priority not able to override sort of last call made

@@ -1554,6 +1554,15 @@ CREATE TABLE `questionnaire_sample_quota_row_exclude` (
 -- Dumping data for table `questionnaire_sample_quota_row_exclude`
 --
 
+CREATE TABLE `questionnaire_sample_timeslot` (
+`questionnaire_id` bigint( 20 ) NOT NULL ,
+`sample_import_id` bigint( 20 ) NOT NULL ,
+`availability_group_id` bigint( 20 ) NOT NULL ,
+PRIMARY KEY ( `questionnaire_id` , `availability_group_id` , `sample_import_id` )
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
 
 
 CREATE TABLE `questionnaire_timeslot` (
