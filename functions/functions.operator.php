@@ -625,7 +625,7 @@ function get_case_id($operator_id, $create = false)
 					LEFT JOIN case_availability AS casa ON (casa.case_id = c.case_id)
 					LEFT JOIN availability AS ava ON (ava.availability_group_id = casa.availability_group_id)
 					LEFT JOIN questionnaire_timeslot AS qast ON (qast.questionnaire_id = c.questionnaire_id)
-					LEFT JOIN questionnaire_sample_timeslot AS qasts ON (qasts.questionnaire_id = c.questionnaire_id AND quasts.sample_import_id = si.sample_import_id)
+					LEFT JOIN questionnaire_sample_timeslot AS qasts ON (qasts.questionnaire_id = c.questionnaire_id AND qasts.sample_import_id = si.sample_import_id)
 					JOIN operator_skill as os on (os.operator_id = op.operator_id and os.outcome_type_id = ou.outcome_type_id)
 					WHERE c.current_operator_id IS NULL
 					AND ((apn.appointment_id IS NOT NULL) OR casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
