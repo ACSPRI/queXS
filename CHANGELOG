@@ -1,3 +1,14 @@
+queXS 1.11.1 - Changes since 1.11.0
+
+Fixed Bug: Quota priority not able to override sort of last call made
+Fixed Bug lp:1410503 required URLto the CKeditor installation directory
+Fixed Bug lp:1411703 Asign cases even with sample disabled and sample unassigned from questionnaire
+Fixed Bug lp:1412389 removed language restriction
+Fixes Bug lp:141380 System sort process fails when quotas enabled and limesurvey instrument de-activated
+Fix error in translation where thinks it is a wildcard
+
+Translations: Updated from Launchpad. Thank you again!
+
 queXS 1.11.0 - Changes since 1.10.4
 
 New Feature: System sort on a questionnaire by questionnaire basis
