@@ -43,7 +43,7 @@
  * 
  * @see xhtml_foot()
  */
-function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false,$clearrefresh=false)
+function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false,$clearrefresh=false,$subtitle=false)
 {
 print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 ?>
@@ -70,6 +70,8 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 	</head>
 <?php 
 	if ($bodytext) print "<body $bodytext>"; else print "<body>";
+	print "<h1 class='header text-primary'>" . "$title" . "&emsp;&emsp;<small>" . "$subtitle" . "</small></h1>"; 
+	/* Let's print header that equals to menu item and page title !!!, move previous headers to "subtitles"*/
 }
 
 /**
@@ -78,9 +80,13 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
  * @see xhtml_head()
  */
 
-function xhtml_foot()
-{
+function xhtml_foot($javascript = false){		//added javascript files array to the footer 
+	if ($javascript)  
+		foreach ($javascript as $j) print "<script type='text/javascript' src='$j'></script>";
 ?>
+		<!---  Scroll to Top of the page    -->
+	<span class="totop" style="display:none;"><a href=" "><i class="fa fa-3x fa-arrow-circle-o-up"></i></br><?php echo T_("UP");?></a></span> 
+	
 	</body>
 	</html>
 
@@ -97,18 +103,23 @@ function xhtml_foot()
  * @param bool|array $highlight False if nothing to highlight else an array containing the field to highlight
  * @param bool|array $total False if nothing to total else an array containing the fields to total
  * 
+ *		AD:>	for  @value    $class = "tclass" added  "Bootstrap" table classes  
+ *		AD:> 	added 	@param  string  $id - > to transfer table ID if required 
+ *		AD:> 	added 	@param  string  $name - > to transfer table name if required
  */
-function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight=false,$total=false)
+function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight=false,$total=false,$id,$name)
 {
 	$tot = array();
-	print "<table class='$class'>";
+	if ($class == "tclass") $class = "table-hover table-bordered table-condensed tclass";
+	print "<table class='$class' id='$id' name='$name'>";
 	if ($head)
 	{
-		print "<tr>";
+		print "<thead class='highlight'><tr>";   // ! added <thead> to table formatting
 		foreach ($head as $e)
 			print"<th>$e</th>";
-		print "</tr>";
+		print "</tr></thead>";
 	}
+	print "<tbody>";
 	foreach($content as $row)
 	{
 		if ($highlight && isset($row[key($highlight)]) && $row[key($highlight)] == current($highlight))
@@ -142,7 +153,7 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 		}
 		print "</tr>";
 	}
-	print "</table>";
+	print "</tbody></table>";
 }
 
 
@@ -165,11 +176,11 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
  * @param bool $print Default is true, print the chooser otherwise return as a string
  *
  */
-function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false, $print = true)
+function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false, $print = true, $class=false)
 {
   $out = "";
-	if ($indiv) $out .= "<div>";
-	$out .= "<select id='$selectid' name='$selectid' ";
+	if ($indiv) $out .= "<div class='$class'>";
+	$out .= "<select id='$selectid' name='$selectid' class='form-control'" ;
 	if ($js) $out .= "onchange=\"LinkUp('$selectid')\"";
 	$out .= ">";
 	if ($useblank)
@@ -215,9 +226,9 @@ function display_chooser($elements, $selectid, $var, $useblank = true, $pass = f
 function xhtml_object($data, $id, $class="embeddedobject")
 {
 	if (browser_ie())
-		print '<iframe class="'.$class.'" id="'.$id.'" src="'.$data.'" frameBorder="0"><p>Error, try with Firefox</p></iframe>';
+		print '<iframe class="'.$class.'" id="'.$id.'" src="'.$data.'" frameBorder="0"><p>Error while loading data from  ' . "$data" . ', try with Frefox </p></iframe>';
 	else
-		print '<object class="'.$class.'" id="'.$id.'" data="'.$data.'" standby="Loading panel..." type="application/xhtml+xml"><p>Error, try with Firefox</p></object>';
+		print '<object class="'.$class.'" id="'.$id.'" data="'.$data.'" standby="Loading panel..." type="application/xhtml+xml"><p>Error while loading data from  ' . "$data" . ', try with Frefox </p></object>';
 }
 
 /**
@@ -232,6 +243,4 @@ function browser_ie()
     else
         return false;
 }
-
-
 ?>
