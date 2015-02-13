@@ -31,31 +31,29 @@
  */
  
 /**
-
+ * Language file
  */
 include_once("lang.inc.php");
-/**
- * Configuration file
- */
-include_once("config.inc.php");
 
 /**
  * XHTML functions
  */
 include_once("functions/functions.xhtml.php");
 
-/**
- * Operator functions
- */
-include_once("functions/functions.operator.php");
-		$operator_id = get_operator_id();
-		end_call_attempt($operator_id);
-		end_case($operator_id);
-
 xhtml_head(T_("queXS"), false, array("css/index_interface2.css","css/tabber_interface2.css"),array("js/tabber_interface2.js"));
 
 if (isset($_GET['auto']))
 {
+	include_once("functions/functions.operator.php");
+
+	$operator_id = get_operator_id();
+	$case_id = get_case_id($operator_id,false);
+	end_case($operator_id);
+	 //add case note  
+      $sql = "INSERT INTO case_note (case_note_id,case_id,operator_id,note,`datetime`)
+        VALUES (NULL,'$case_id','$operator_id','" . TQ_("Operator Automatically logged out after: ") . AUTO_LOGOUT_MINUTES . TQ_(" minutes") . "', CONVERT_TZ(NOW(),'System','UTC'))";
+      $db->Execute($sql);
+
 	print "<h1>" . T_("You have been automatically logged out of work due to inactivity") . "</h1>";
 }
 
