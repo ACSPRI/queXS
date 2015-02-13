@@ -37,7 +37,7 @@ include ("../lang.inc.php");
 /**
  * Config file
  */
-include ("../config.inc.php");
+ include ("../config.inc.php");
  include ("../functions/functions.xhtml.php");
  $username = $_SERVER['PHP_AUTH_USER'];
  ?>
@@ -51,13 +51,10 @@ include ("../config.inc.php");
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" >
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" >
-<link rel="stylesheet" href="../css/style.css" >
-<!--
-<script type="text/javascript" src="../js/modernizr.js"></script>
--->
+<link rel="stylesheet" href="../include/bootstrap-3.3.2/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../include/font-awesome-4.3.0/css/font-awesome.css" />
+<link rel="stylesheet" href="../css/style.css" />
+
 </head>
   <body>
 
@@ -68,15 +65,14 @@ include ("../config.inc.php");
 		<i class="fa fa-globe fa-2x fa-spin"></i></a>		
 		<a class="navbar-brand" href="index.php"><?php echo COMPANY_NAME ;?> <span class="bold"><?php echo ADMIN_PANEL_NAME ;?></span></a>
 	  </div >
-	  
-	  <!--- User menu // not connected and not working yet //  could be hidden -->	  
+
 	    <ul class="nav navbar-nav pull-right">
           <li class="dropdown pull-right user-data">            
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-              <i class="fa fa-user fa fa-fw "></i><b><?php print T_("User") . "&ensp;" . $username ;?></b>&ensp;<b class="caret lg"></b>              
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" min-width: 160px;">
+              <i class="fa fa-user fa fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
             </a>
-            <ul class="dropdown-menu" >
-              <li><a href="?page=profile.php"><i class="fa fa-list fa-fw "></i>&ensp;<?php print T_("Profile"); ?></a></li>
+			<!--- User menu // not connected to pages so not working yet //  could be hidden -->
+            <ul class="dropdown-menu" role="menu">
               <li><a href="?page=settings.php"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
 			  <li><a href="../screenloc.php"><i class="fa fa-lock fa-fw "></i>&ensp;<?php print T_("Lock Screen"); ?></a></li>
               <li><a href="../logout.php"><i class="fa fa-sign-out fa-fw "></i>&ensp;<?php print T_("Logout"); ?> </a></li>
@@ -146,11 +142,6 @@ include ("../config.inc.php");
                 <li><a href="?page=dataoutput.php"><i class="fa fa-download fa-fw"></i><?php print T_("Data output") ;?></a></li>
               </ul>
           </li>
-<!--      <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-signal"></i><span><?php //print T_("Performance") ;?></span></a>
-              <ul class="" style="">
-                <li><a href="?page=operatorperformance.php"><i class="fa fa-coffee"></i><?php //print T_("Operator performance") ;?></a></li>
-              </ul>
-          </li>  																																		-->
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-user-secret fa-fw"></i><span><?php print T_("Clients") ;?></span></a>
               <ul class="" style="">
                 <li><a href="?page=clients.php"><i class="fa fa-lg fa-user-plus fa-fw"></i><?php print T_("Add clients to the system") ;?></a></li>
@@ -198,26 +189,9 @@ include ("../config.inc.php");
 		<div class="clearfix"></div>
 	</div>
 
-<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="../js/jquery-2.1.3.min.js"></script>
+<script src="../include/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/admin.js"></script>	
 
-<!--  implemented basket.js  -->
-<script type="text/javascript" src="../include/rsvp-latest.min.js"></script>
-<script type="text/javascript" src="../include/basket.js/dist/basket.min.js"></script>
-<script type="text/javascript">
-	basket.require({ url: '//code.jquery.com/jquery-2.1.3.min.js' })
-		.then(function () {
-			basket.require(
-				{ url: '//code.jquery.com/jquery-migrate-1.2.1.min.js' },
-				{ url: '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js' }
-			)
-		});
-	basket.require(
-		{ url: '../include/bs-data-table/js/vendor/jquery.sortelements.js' },
-		{ url: '../include/bs-data-table/js/jquery.bdt.js' },
-		{ url: '../js/bootstrap-switch.min.js' }
-	);
-</script>
 </body>
 </html>

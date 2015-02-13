@@ -45,13 +45,13 @@ font-weight: bold !important;
     color: #337ab7;
     text-decoration: blink;
 }
-/*
+
 .table-hover>tbody>tr:hover{
 	background-color:#ddd !important;
 }
-*/
+
 .highlight {
-	background-color: #cccccc;
+	background-color: #ccc;
 }
 .btn-lime{
 background-color:#C0CA55;

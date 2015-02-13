@@ -59,7 +59,7 @@ $('.modal').appendTo($('body'));*/
 $('[data-toggle="tooltip"]').tooltip();
 /*
 $('[switch="yes"]').bootstrapSwitch();	
-$('#bs-table').bdt();*/
 
+$('#bs-table').bdt();*/
 
 //alert ("custom js OK"); //test js 

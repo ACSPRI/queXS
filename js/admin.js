@@ -21,16 +21,15 @@ $(this).next("ul").slideUp(350);
 }
 });
 
-$("#nav > li.has_sub > a.open").addClass("subdrop").next("ul").show();
-
 $(".menubutton").click(function(){
 if(!$(".content").hasClass("enlarged")){
+$("#nav .has_sub ul").removeAttr("style");
 $(".content").addClass("enlarged");
 }else{
 $(".content").removeClass("enlarged");
 }
 });
-/**/
+
 $(".sidebar-dropdown a").on('click',function(e){
 e.preventDefault();
 if(!$(this).hasClass("open")) {
