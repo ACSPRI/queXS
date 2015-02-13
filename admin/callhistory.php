@@ -50,20 +50,19 @@ include ("../functions/functions.xhtml.php");
 include("../functions/functions.operator.php");
 
 $css = array(
-//"../css/bootstrap-default.css",
-"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css", 
-"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css",
-"http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
-"../include/bs-data-table/css/jquery.bdt.css", "../css/custom.css",
+"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
+"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
+"../include/font-awesome-4.3.0/css/font-awesome.css",
+"../include/bs-data-table/css/jquery.bdt.css",
 //"../css/bootstrap-switch.min.css",
 //"../css/table.css",
 "../css/custom.css"
 			);
 $js_head = array(
 //"../js/modernizr.js",
-"//code.jquery.com/jquery-2.1.3.min.js",
+"../js/jquery-2.1.3.min.js",
 //"//code.jquery.com/jquery-migrate-1.2.1.min.js",
-"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js",
+"../include/bootstrap-3.3.2/js/bootstrap.min.js",
 //"../js/bootstrap-switch.min.js"
 				);
 $js_foot = array(
@@ -142,7 +141,7 @@ if ($operator_id)
 }
 else
 {
-	//xhtml_head(T_("Call History List"),true,$css,$js_head);
+
 	print "<div class='alert alert-warning col-sm-4'>" . T_("No operator") . "</div>";
 }
 
