@@ -383,6 +383,7 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 		$sql = "SELECT val as phone
 			FROM sample_var
 			WHERE sample_id = '$sample_id'
+			AND val > 0
 			AND val is NOT NULL
 			AND val != \"\"
 			AND (`type` = 2 or `type` = 3)
@@ -396,7 +397,7 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 			foreach ($r5 as $r5v)
 			{
 				$tnum =  preg_replace("/[^0-9]/", "",$r5v['phone']); 
-				if (empty($tnum)) $tnum = "312345678"; //handle error condition
+				if (empty($tnum)) $tnum = "88888888"; //handle error condition
 				$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
 					VALUES ($case_id,$i,$tnum,'')";
 				$db->Execute($sql);
@@ -406,7 +407,7 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 		else
 		{
 			$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-				VALUES ($case_id,1,312345678,'test only')";
+				VALUES ($case_id,1,88888888,'test only')";
 			$db->Execute($sql);
 		}
 
