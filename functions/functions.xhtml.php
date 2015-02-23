@@ -43,7 +43,7 @@
  * 
  * @see xhtml_foot()
  */
-function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false,$clearrefresh=false,$subtitle=false)
+function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false,$clearrefresh=false,$subtitle="")
 {
 print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 ?>
@@ -70,7 +70,7 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 	</head>
 <?php 
 	if ($bodytext) print "<body $bodytext>"; else print "<body>";
-	print "<h1 class='header text-primary'>" . "$title" . "&emsp;&emsp;<small>" . "$subtitle" . "</small></h1>"; 
+	print "<h1 class='header text-primary'>" . "$title" . "&emsp;&emsp;<small class='text-capitalize'>" . "$subtitle" . "</small></h1>"; 
 	/* Let's print header that equals to menu item and page title !!!, move previous headers to "subtitles"*/
 }
 
@@ -107,7 +107,7 @@ function xhtml_foot($javascript = false){		//added javascript files array to the
  *		AD:> 	added 	@param  string  $id - > to transfer table ID if required 
  *		AD:> 	added 	@param  string  $name - > to transfer table name if required
  */
-function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight=false,$total=false,$id,$name)
+function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight=false,$total=false,$id=false,$name=false)
 {
 	$tot = array();
 	if ($class == "tclass") $class = "table-hover table-bordered table-condensed tclass";
@@ -174,7 +174,7 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
  * @param bool $indiv Whether to display in a div or not
  * @param array|bool $select The element to select manually (element,string) (not using selected=\'selected\' in array)
  * @param bool $print Default is true, print the chooser otherwise return as a string
- *
+ *	
  */
 function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false, $print = true, $class=false)
 {
