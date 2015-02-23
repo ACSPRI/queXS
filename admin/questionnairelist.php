@@ -56,6 +56,23 @@ include("../include/ckeditor/ckeditor.php");
 
 global $db;
 
+$css = array(
+"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
+"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
+"../include/font-awesome-4.3.0/css/font-awesome.css",
+"../include/bootstrap-toggle/css/bootstrap-toggle.min.css",
+"../css/custom.css"
+			);
+$js_head = array(
+"../js/jquery-2.1.3.min.js",
+"../include/bootstrap-3.3.2/js/bootstrap.min.js"
+				);
+$js_foot = array(
+"../js/new.js",
+"../include/bootstrap-toggle/js/bootstrap-toggle.min.js",
+"../js/bootstrap-confirmation.js",
+"../js/custom.js"
+				);
 
 if (isset($_POST['questionnaire_id']) && isset($_POST['submit']))
 {
@@ -192,7 +209,6 @@ if (isset($_POST['questionnaire_id']) && isset($_POST['submit']))
 	$db->Execute($sql);
 
 	$db->CompleteTrans();
-
 }
 
 if (isset($_GET['disable']))
@@ -230,7 +246,7 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['respsc'])) $respsc = 1;
 	if (isset($_POST['referral'])) $referral = 1;
-	
+
 	$name = $db->qstr(html_entity_decode($_POST['description'],ENT_QUOTES,'UTF-8'));
 	if (isset($_POST['rs_intro']))
 	{
@@ -243,7 +259,6 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	$info  = $db->qstr(html_entity_decode($_POST['info'],ENT_QUOTES,'UTF-8'));
 	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],ENT_QUOTES,'UTF-8'));
 
-
 	$sql = "UPDATE questionnaire
 		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', self_complete = $respsc, referral = $referral
 		WHERE questionnaire_id = '$questionnaire_id'";
@@ -255,7 +270,6 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 		$sql = "UPDATE questionnaire
 			SET rs_intro = $rs_intro, rs_project_intro = $rs_project_intro, rs_callback =  $rs_callback, rs_answeringmachine = $rs_answeringmachine
 			WHERE questionnaire_id = '$questionnaire_id'";
-
 		$db->Execute($sql);
 	}
 
@@ -268,42 +282,17 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 		$sql = "UPDATE questionnaire
 			SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
 			WHERE questionnaire_id = $questionnaire_id";
-
 		$db->Execute($sql);
 	}
-
 }
-
-xhtml_head(T_("Questionnaire list"),true,array("../css/table.css"),array("../js/new.js"));
-	
 
 if (isset($_GET['modify']))
 {
 	$questionnaire_id = intval($_GET['modify']);
 
-	$CKEditor = new CKEditor();
-  $CKEditor->basePath = "../include/ckeditor/";
-	
-	$ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
-		array("Cut","Copy","Paste","PasteText","PasteFromWord","-","Print","SpellChecker"),
-		array("Undo","Redo","-","Find","Replace","-","SelectAll","RemoveFormat"),
-		"/",
-		array("Bold","Italic","Underline","Strike","-","Subscript","Superscript"),
-		array("NumberedList","BulletedList","-","Outdent","Indent","Blockquote"),
-		array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
-		array('BidiLtr', 'BidiRtl'),
-		array('Link','Unlink','Anchor'),
-		array('Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'),
-		"/",
-		array('Styles','Format','Font','FontSize'),
-		array('TextColor','BGColor'),
-		array('About')),
-		"extraPlugins" => "tokens");
-	
 	$sql = "SELECT *
 		FROM questionnaire
 		WHERE questionnaire_id = $questionnaire_id";
-
 	$rs = $db->GetRow($sql);
 
 	$referral = $testing = $rws = $ras = $rsc = "checked=\"checked\"";
@@ -314,7 +303,6 @@ if (isset($_GET['modify']))
 	if ($rs['lime_mode'] == "question") $qbq = "selected=\"selected\"";
 	if ($rs['lime_mode'] == "group") $gat = "selected=\"selected\"";
 
-
 	if ($rs['restrict_appointments_shifts'] != 1) $ras = "";
 	if ($rs['restrict_work_shifts'] != 1) $rws = "";
 	if ($rs['testing'] != 1) $testing = "";
@@ -324,49 +312,109 @@ if (isset($_GET['modify']))
 		$rsc = "";
 		$rscd = "style='display:none;'";
 	}
-	
-	echo "<h1>" . $rs['description'] . "</h1>";
-	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
-	echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'>" . T_("Edit instrument in Limesurvey") . "</a></p>";
-	?>
-		<form action="?modify=<?php  echo $questionnaire_id; ?>" method="post">
-		<p><?php  echo T_("Name for questionnaire:"); ?> <input type="text" name="description" value="<?php  echo $rs['description']; ?>"/></p>
-		<p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" <?php  echo $ras; ?>/></p>
-		<p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" <?php  echo $rws; ?>/></p>
-		<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox" disabled="true" <?php  echo $testing; ?>/></p>
-		<p><?php  echo T_("Allow operators to generate referrals?"); ?> <input name="referral" type="checkbox" <?php  echo $referral; ?>/></p>
-		<p><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> <input name="respsc" type="checkbox" <?php echo $rsc ?>  onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" /></p>
-		<div id='limesc' <?php echo $rscd; ?>>
-		<p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option <?php echo $aio;?> value="survey"><?php echo T_("All in one"); ?></option><option <?php echo $qbq; ?> value="question"><?php echo T_("Question by question"); ?></option><option <?php echo $gat; ?> value="group"><?php echo T_("Group at a time"); ?></option></select></p>
-		<p><?php echo T_("Limesurvey template for respondent");?>: <select name="lime_template">
-		<?php 
-		if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
-		    while (false !== ($entry = readdir($handle))) {
-		        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
-		            echo "<option value=\"$entry\" ";
-			    if ($rs['lime_template'] == $entry) echo " selected=\"selected\" ";
-			    echo ">$entry</option>";
-			
-		        }
-		    }
-		    closedir($handle);
-		}
-		?>
-		</select></p>
-		<p><?php echo T_("URL to forward respondents on self completion (required)");?>: <input name="lime_endurl" type="text" value="<?php echo $rs['lime_endurl']; ?>"/></p>
+
+	xhtml_head(T_("Modify Questionnaire "),true,$css,$js_head, false, false, false, " &ensp;<span class=' text-uppercase'>" . "$rs[description]" . "</span>");
+
+	$CKEditor = new CKEditor();
+	$CKEditor->basePath = "../include/ckeditor/";
+
+	$ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
+	array("Cut","Copy","Paste","PasteText","PasteFromWord","-","Print","SpellChecker"),
+	array("Undo","Redo","-","Find","Replace","-","SelectAll","RemoveFormat"),
+	array('Link','Unlink','Anchor'),
+	array('Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'),
+	array('About'),
+	"/",
+	array("Bold","Italic","Underline","Strike","-","Subscript","Superscript"),
+	array("NumberedList","BulletedList","-","Outdent","Indent","Blockquote"),
+	array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
+	array('BidiLtr', 'BidiRtl'),
+	array('Styles','Format','Font','FontSize'),
+	array('TextColor','BGColor')),
+	"extraPlugins" => "tokens");
+?>
+	<div class="form-group">
+		<div class="col-sm-2"><a href='questionnairelist.php' class='btn btn-default pull-left' ><i class='fa fa-chevron-left fa-lg' style='color:blue;'></i>&emsp;<?php  echo T_("Go back"); ?></a></div>
+		<div class="col-sm-8"><?php // ?> </div>
+		<div class="col-sm-2"><?php echo "<a class='btn btn-default btn-lime pull-right' href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> </div>
+	</div>
+
+<form action="?modify=<?php  echo $questionnaire_id; ?>" method="post" class="form-horizontal col-sm-12">
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Edit"),"&ensp;", T_("Name for questionnaire:"); ?> </label>
+		<div class="col-sm-4"><input type="text" name="description" class="form-control" value="<?php  echo $rs['description']; ?>" label="<?php   echo T_("Name for questionnaire:") ; ?> "/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Restrict appointments to shifts?"); ?> </label>
+		<div class="col-sm-4" style="height: 30px;"><input  name="ras" type="checkbox" <?php  echo $ras; ?> data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/> </div>
+	</div>
+	<div class="form-group"><label class="col-sm-4 control-label" ><?php  echo T_("Restrict work to shifts?"); ?> </label>
+		<div class="col-sm-4" style="height: 30px;" ><input name="rws" type="checkbox" <?php  echo $rws; ?> data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Questionnaire for testing only?"); ?> </label>
+		<div class="col-sm-4" style="height: 30px;" ><input name="testing" type="checkbox" disabled="true" data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>" <?php  echo $testing; ?> data-onstyle="danger" /></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Allow operators to generate referrals?"); ?></label>
+		<div class="col-sm-4" style="height: 30px;"> <input name="referral" type="checkbox"  <?php  echo $referral; ?> data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> </label>
+		<div class="col-sm-4" style="height: 30px;"><input name="respsc" id="respsc" type="checkbox" <?php echo $rsc ?> onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/></div>
+	</div>
+<div id="limesc" <?php echo $rscd; ?> >
+<div class="form-group">
+	<label class="col-sm-4 control-label" ><?php echo T_("Questionnaire display mode for respondent");?>: </label>
+	<div class="col-sm-4">
+		<select class="form-control"  name="lime_mode">
+			<option <?php echo $aio;?> value="survey"><?php echo T_("All in one"); ?></option>
+			<option <?php echo $qbq;?> value="question"><?php echo T_("Question by question"); ?></option>
+			<option <?php echo $gat;?> value="group"><?php echo T_("Group at a time"); ?></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-sm-4 control-label" ><?php echo T_("Limesurvey template for respondent");?>: </label>
+	<div class="col-sm-4">
+		<select class="form-control"  name="lime_template">
+<?php 
+	if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
+	    while (false !== ($entry = readdir($handle))) {
+	        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
+	            echo "<option value=\"$entry\" ";
+		    if ($rs['lime_template'] == $entry) echo " selected=\"selected\" ";
+		    echo ">$entry</option>";
+	        }
+	    }
+	    closedir($handle);
+	}
+?>
+		</select>
+	</div>
+</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
+		<div class="col-sm-4">
+			<input class="form-control"  name="lime_endurl" type="text" value="<?php echo $rs['lime_endurl']; ?>"/>
 		</div>
-		<?php  if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
-		<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);?></p>
-		<p><?php  echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro",$rs['rs_project_intro'],$ckeditorConfig);?></p>
-		<p><?php  echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback",$rs['rs_callback'],$ckeditorConfig);?> </p>
-		<p><?php  echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine",$rs['rs_answeringmachine'],$ckeditorConfig);?> </p>
-		<?php  } else if (!empty($rs['lime_rs_sid'])) { echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></p>"; } ?>
-		<p><?php  echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end",$rs['rs_project_end'],$ckeditorConfig); ?></p>
-		<p><?php  echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info",$rs['info'],$ckeditorConfig); ?></p>
-		<p><input type="submit" name="update" value="<?php  echo T_("Update Questionnaire"); ?>"/></p>
-		</form>
-	<?php 
-	
+	</div>
+</div>
+<?php 
+if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) {
+	echo "<p><h4 style='text-align:center;' >" . T_("Respondent selection introduction:") . "</h4>"; echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);
+	echo "</p><p><h4 style='text-align:center;' >" . T_("Respondent selection project introduction:") . "</h4>"; echo $CKEditor->editor("rs_project_intro",$rs['rs_project_intro'],$ckeditorConfig);
+	echo "</p><p><h4 style='text-align:center;' >" . T_("Respondent selection callback (already started questionnaire):") . "</h4>"; echo $CKEditor->editor("rs_callback",$rs['rs_callback'],$ckeditorConfig);
+	echo "</p><p><h4 style='text-align:center;' >" . T_("Message to leave on an answering machine:") . "</h4>"; echo $CKEditor->editor("rs_answeringmachine",$rs['rs_answeringmachine'],$ckeditorConfig);
+	echo "</p>";  } 
+else if (!empty($rs['lime_rs_sid'])) { echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></p>"; } 
+	echo "<p><h4 style='text-align:center;' >" . T_("Project end text (thank you screen):") . "</h4>"; echo $CKEditor->editor("rs_project_end",$rs['rs_project_end'],$ckeditorConfig);
+	echo "</p><p><h4 style='text-align:center;' >" . T_("Project information for interviewers/operators:") . "</h4>"; echo $CKEditor->editor("info",$rs['info'],$ckeditorConfig);
+	echo "</p>";
+?>	
+	<p><a href="questionnairelist.php" class="btn btn-default"><i class="fa fa-chevron-left fa-lg" style="color:blue;"></i>&emsp;<?php echo  T_("Go back") ; ?></a><input type="submit" class="btn btn-primary col-sm-offset-4"  name="update" value="<?php  echo T_("Update Questionnaire"); ?>"/></p>
+</form>  
+<?php 
 }
 else if (isset($_GET['delete']))
 {
@@ -375,47 +423,89 @@ else if (isset($_GET['delete']))
 	$sql = "SELECT *
 		FROM questionnaire
 		WHERE questionnaire_id = $questionnaire_id";
-
 	$rs = $db->GetRow($sql);
-
-	echo "<h1>" . $rs['description'] . "</h1>";
 	
-	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
+	xhtml_head(T_("Delete Questionnaire"),true,$css,$js_head, false, false, false, "&ensp;<span class='text-uppercase'>" . "$rs[description]" . "</span>");
 
-	print "<p>" . T_("Any collected data and the limesurvey instrument will NOT be deleted") . "</p>"; 
+	print "<div class='alert alert-danger'><p>" . T_("Any collected data and the limesurvey instrument will NOT be deleted") . "</p>"; 
 	print "<p>" . T_("The questionnaire will be deleted from queXS including call history, cases, case notes, respondent details, appointments and the links between operators, clients and the questionnaire") . "</p>";
-	print "<p>" . T_("Please confirm you wish to delete the questionnaire") . "</p>";
+	print "<p>" . T_("Please confirm you wish to delete the questionnaire") . "</p></div>";
 
 	print "<form method='post' action='?'>";
-	print "<p><input type='submit' name='submit' value=\"" . T_("Delete this questionnaire") . "\"/>";
+	print "<p>&emsp;&emsp;<a href='questionnairelist.php' class='btn btn-default' ><i class='fa fa-chevron-left fa-lg' style='color:blue;'></i>&emsp;" . T_("Go back") . "</a><input type='submit' name='submit' class='btn btn-danger col-sm-offset-4' value=\"" . T_("Delete this questionnaire") . "\"/>";
 	print "<input type='hidden' name='questionnaire_id' value='$questionnaire_id'/></p>";
 	print "</form>";
 }
 else
 {
-	$columns = array("description","enabledisable","modify","deletee");
-	$titles = array(T_("Questionnaire"),T_("Enable/Disable"),T_("Modify"),T_("Delete"));
-	
-	$sql = "SELECT
-			description,
-			CASE WHEN enabled = 0 THEN
-				CONCAT('<a href=\'?enable=',questionnaire_id,'\'>" . TQ_("Enable") . "</a>') 
-			ELSE
-				CONCAT('<a href=\'?disable=',questionnaire_id,'\'>" . TQ_("Disable") . "</a>') 
-			END
-			as enabledisable,
-			CONCAT('<a href=\'?modify=',questionnaire_id,'\'>" . TQ_("Modify"). "</a>') as modify,
-			CONCAT('<a href=\'?delete=',questionnaire_id,'\'>" . TQ_("Delete"). "</a>') as deletee
+	xhtml_head(T_("Questionnaire management"),true,$css,$js_head, false, false, false, "Questionnaire list");
+	echo "<div class='form-group'>
+		<a href='' onclick='history.back();return false;' class='btn btn-default'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a>
+		<a href='new.php' class='btn btn-default col-sm-offset-6' ><i class='fa fa-file-text-o fa-lg'></i>&emsp;" . T_("Create a new questionnaire") . "</a>
+	</div>";
+	print "<div>"; // add  timeslots, callattempts,  quotas?
+
+	$sql = "SELECT 
+		CONCAT('&ensp;<b class=\'badge\'>',questionnaire_id,'</b>&ensp;') as qid,
+		CONCAT('<h4>',description,'</h4>') as description,
+		CASE WHEN enabled = 0 THEN
+			CONCAT('&ensp;<span class=\'btn label label-default\'>" . TQ_("Disabled") . "</span>&ensp;')
+		ELSE
+			CONCAT('&ensp;<span class=\'btn label label-primary\'>" . TQ_("Enabled") . "</span>&ensp;')
+		END as status,
+		CASE WHEN enabled = 0 THEN
+			CONCAT('&ensp;<a href=\'?enable=',questionnaire_id,'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Enable") . "\' class=\'fa fa-toggle-off fa-3x\' style=\'color:grey;\'></i></a>&ensp;')
+		ELSE
+			CONCAT('&ensp;<a href=\'\' data-toggle=\'confirmation\' data-href=\'?disable=',questionnaire_id,'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Disable") . "\' class=\'fa fa-toggle-on fa-3x\'></i></a>&ensp;')
+		END as enabledisable,
+		CONCAT('<a href=\'?modify=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Edit Questionnaire") . "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-edit fa-2x \'></i></a>') as modify,
+		CONCAT('<a href=\'" . LIME_URL . "admin/admin.php?sid=',lime_sid,'\' class=\'btn\' title=\'" . T_("Edit Lime survey") . "&ensp;',lime_sid,'\' data-toggle=\'tooltip\'><i class=\'btn-lime fa fa-lemon-o fa-2x\'></i></a>') as inlime,
+		CASE WHEN enabled = 0 THEN 
+			CONCAT('<i class=\'btn fa fa-calendar fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'addshift.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Shifts") . "&ensp;\n" . TQ_("questionnaire") . "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-calendar fa-2x\'></i></a>')
+		END as shifts,
+		CASE WHEN enabled = 0 THEN 
+			CONCAT('<i class=\'btn fa fa-square-o fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'questionnaireprefill.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Pre-fill questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-check-square-o fa-2x\'></i></a>')
+		END as prefill,
+		CASE WHEN enabled = 1 THEN
+			CONCAT('<i class=\'btn fa fa-trash-o fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'?delete=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Delete questionnaire") . "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-trash-o fa-2x\' style=\'color:red;\'></i></a>')
+		END as deletee,
+		CASE WHEN enabled = 0 THEN
+			CONCAT('<i class=\'btn fa fa-bar-chart fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'outcomes.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Outcomes for questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-bar-chart fa-2x\'></i></a>')
+		END as outcomes,
+		CONCAT('<a href=\'callhistory.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Call history"). "&ensp;\n" . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-phone fa-2x\'></i></a>') as calls,
+		CASE WHEN enabled = 0 THEN
+			CONCAT('<i class=\'btn fa fa-download fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'dataoutput.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Data output"). "&ensp;\n" . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-download fa-2x\'></i></a>')
+		END as  dataout,
+		CASE WHEN enabled = 0 THEN 
+			CONCAT('<i class=\'btn fa fa-book fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'assignsample.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Assigned samples"). "\' data-toggle=\'tooltip\'><i class=\'fa fa-book fa-2x\'></i></a>')
+		END as assample,
+		CASE WHEN enabled = 0 THEN 
+			CONCAT('<i class=\'btn fa fa-question-circle fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'casestatus.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Case status and assignment"). "\' data-toggle=\'tooltip\'><i class=\'fa fa-question-circle fa-2x\'></i></a>')
+		END as casestatus
 		FROM questionnaire";
-		
 	$rs = $db->GetAll($sql);
-		
+
+	$columns = array("qid","description","status","enabledisable","outcomes","calls","casestatus","shifts","assample","dataout","modify","inlime","prefill","deletee");
+	xhtml_table($rs,$columns,false,"table-hover table-condensed "); 
 	
-	xhtml_table($rs,$columns,$titles);
+print "</div>";
 }
-
-	
-xhtml_foot();
-
-
+xhtml_foot($js_foot);
 ?>
+<script type="text/javascript">
+$('[data-toggle="confirmation"]').confirmation()
+</script>

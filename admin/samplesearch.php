@@ -46,14 +46,68 @@ include ("../db.inc.php");
  */
 include("../functions/functions.xhtml.php");
 
-
 /**
  * Input functions
  */
 include("../functions/functions.input.php");
 
 global $db;
+$css = array(
+"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
+"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
+"../include/font-awesome-4.3.0/css/font-awesome.css",
+"../include/bs-data-table/css/jquery.bdt.css",
+"../css/custom.css"
+			);
+$js_head = array(
+"../js/jquery-2.1.3.min.js",
+"../include/bootstrap-3.3.2/js/bootstrap.min.js",
+				);
+$js_foot = array(
+"../include/bs-data-table/js/vendor/jquery.sortelements.js",
+"../include/bs-data-table/js/jquery.bdt.js",
+"../js/window.js",
+"../js/custom.js"
+				);
 
+$sample_import_id = false;
+if (isset($_GET['sample_import_id'])) 	$sample_import_id = bigintval($_GET['sample_import_id']);
+
+$subtitle = T_("Search within this sample");
+
+xhtml_head(T_("Search the sample"),true,$css,$js_head);
+
+?>
+<div class="modal fade delete-confirm" id="delete-confirm" tabindex="-1" role="dialog" aria-labelledby="delete-confirm" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title text-danger " ><?php echo T_("WARNING !");?></h4>
+        </div>
+		<div class="modal-body">
+			<p><?php echo T_("Are you shure you want to delete") . "&ensp;" . T_("Sample ID") . "&ensp;<b class='text-danger'>" . "</b>?";?></p>		
+		</div>
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><?php echo T_("NOOOO...");?></button>
+        <a  class="btn btn-danger" href=" "><?php echo T_("Yes"),",&ensp;",T_("Delete");?></a>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+echo "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left' ><i class='fa fa-chevron-left text-primary'></i>&emsp;" . T_("Go back") . "</a>";
+
+$sql = "SELECT sample_import_id as value,description, CASE WHEN sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+	FROM sample_import";
+$r = $db->GetAll($sql);
+
+if(!empty($r))
+
+	print "<div class=' form-inline form-group col-md-6'><h4 class='control-label form-group col-sm-6 text-right'>" . T_("Select sample ") . "&emsp;</h4>";
+	display_chooser($r,"sample_import_id","sample_import_id",true,false,true,false);
+	
+	print "</div>";
 
 if (isset($_GET['sample_id']))
 {
@@ -65,102 +119,77 @@ if (isset($_GET['sample_id']))
 
 	$sql = "DELETE FROM sample_var
 		WHERE sample_id = '$sample_id'";
-
 	$db->Execute($sql);
 
 	$sql = "DELETE FROM sample
 		WHERE sample_id = '$sample_id'";
-
 	$db->Execute($sql);
 
 	$db->CompleteTrans();
+	
+	print "<div class='alert alert-danger pull-left  form-group col-sm-6' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p>" . T_("Sample ID") .  "&ensp;<b>" . $sample_id . "</b>&ensp;" . T_("Deleted") . ".</p></div>";
 }
 
-
-$sample_import_id = false;
-if (isset($_GET['sample_import_id'])) 	$sample_import_id = bigintval($_GET['sample_import_id']);
-
-xhtml_head(T_("Search sample"),true,array("../css/table.css"),array("../js/window.js"));
-print "<h1>" . T_("Select a sample from the list below") . "</h1>";
-
-$sql = "SELECT sample_import_id as value,description, CASE WHEN sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-	FROM sample_import";
-
-$r = $db->GetAll($sql);
-
-if(!empty($r))
-	display_chooser($r,"sample_import_id","sample_import_id");
+print "<div class='clearfix'></div>";
 
 if ($sample_import_id != false)
 {
-	if (isset($_GET['search']))
-	{
-		$search = $db->qstr($_GET['search']);
-
-		$sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN CONCAT('<a href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id , '\'>" . TQ_("No cases yet assigned: Delete this sample record") . "</a>') ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\'>" . TQ_("Assigned to questionnaire: ") . "', q.description, '</a>') END as link
+		$sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN 
+		CONCAT('<a href=\'\' data-toggle=\'modal\' data-target=\'.delete-confirm\' data-href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id ,'\' data-sample_id=\' ', sv.sample_id ,' \'  class=\'btn center-block\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Delete sample record") . " ', sv.sample_id ,'\' class=\'fa fa-2x fa-trash-o text-danger\'></i></a>')
+		ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\' data-toggle=\'tooltip\' title=\'" . TQ_("Assigned to case ID :") . " ', c.case_id , '\'><b>', c.case_id ,'</b></a>')
+		END as link
 			FROM sample_var AS sv
 			JOIN (sample as s) ON (s.import_id = '$sample_import_id' and sv.sample_id = s.sample_id)
 			LEFT JOIN (`case` AS c, questionnaire AS q) ON ( c.sample_id = sv.sample_id AND q.questionnaire_id = c.questionnaire_id )
-			WHERE sv.val LIKE $search
-			GROUP BY s.sample_id,c.case_id";
-
+			GROUP BY s.sample_id, c.case_id";
 		$r = $db->GetAll($sql);
+		
+		if ($r) {
 
-		if (empty($r))
-			print "<p>" . T_("No records in this sample match this search criteria") . "</p>";
-		else
-		{
-			//add sample information to results
 			$sql = "SELECT var
 				FROM sample_var
-				WHERE sample_id = {$r[0]['sample_id']}";
+				WHERE sample_id = {$r[0]['sample_id']}
+				ORDER by var ASC";
 
 			$rs = $db->GetAll($sql);
 
 			$fnames = array("sample_id");
 			$fdesc = array(T_("Sample id"));
-
+			
+			$fnames[] = "link";
+			$fdesc[] = T_("Case ID");
+			
 			foreach($rs as $rsw)
 			{
 				$fnames[] = $rsw['var'];
 				$fdesc[] = $rsw['var'];
 			}
-
-			$fnames[] = "link";
-			$fdesc[] = T_("Link");
-
 			foreach($r as &$rw)
 			{
 				$sql = "SELECT var,val
 					FROM sample_var
 					WHERE sample_id = {$rw['sample_id']}";
-
 				$rs = $db->GetAll($sql);
-
 				foreach($rs as $rsw)
 					$rw[$rsw['var']] = $rsw['val'];
-			}	
-
-			xhtml_table($r,$fnames,$fdesc);
+			}
+			
+			print "<div class='form-group'>";
+			xhtml_table($r,$fnames,$fdesc,"tclass",false,false,"bs-table");
+			print "</div>";
 		}
-
-	}
-
-	print "<h1>" . T_("Search within this sample") . "</h1>";
-
-	print "<p>" . T_("Use the % character as a wildcard") ."</p>";
-
-	?>
-	<form action="" method="get">
-	<p>
-		<label for="search"><?php  echo T_("Search for:"); ?></label><input type="text" name="search" id="search"/><br/>
-		<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
-		<input type="submit" name="searchsub" value="<?php  echo T_("Start search"); ?>"/>
-	</p>
-	</form>
-	<?php 
+		else print "<div class='alert alert-info col-sm-6 ' role='alert'><h4>" . T_("There's no data in this sample.") .  "</h4></div>";
 }
-xhtml_foot();
-
-
+xhtml_foot($js_foot);
 ?>
+<script type="text/javascript">
+$('#bs-table').bdt();
+$('#delete-confirm').on('show.bs.modal', function (event) {
+  var a = $(event.relatedTarget)
+  var href = a.data('href') 
+  var sample_id =a.data('sample_id')
+  var modal = $(this)
+  modal.find('.modal-body p b').text( +sample_id )
+  modal.find('.modal-footer a').attr('href', href)
+})
+</script>
