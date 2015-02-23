@@ -215,9 +215,10 @@ if ($ca)
 				print "<form method='post' action='?'><div class='text'>";
 				print "<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>";
 				print "<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
+				if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}'>" . T_('Dial') . "</a>";
 				if (!empty($r['description'])) print " - " . $r['description'];
 				print "</label>";
-				print "</div></form><br />";
+				print "</div></form></br>";
 			}
 			print "</div>";
 		}
