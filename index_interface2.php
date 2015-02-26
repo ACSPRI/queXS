@@ -227,6 +227,7 @@ $ref = $scr['referral'];
 $ca = get_call_attempt($operator_id,true);
 $call_id = get_call($operator_id);
 $appointment = false;
+$availability = is_using_availability($case_id);
 if ($ca)
 {
 	$appointment = is_on_appointment($ca);
@@ -321,6 +322,14 @@ xhtml_object($data,"main-content");
 					print "tabbertabdefault"; ?>">
 	  <h2><?php  echo T_("Notes"); ?></h2>
 	  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("casenote.php","main-casenotes");?></div>
+   </div>
+<?php  }?>
+
+<?php  if ($availability) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'availability' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'availability' && $appointment)) 
+					print "tabbertabdefault"; ?>">
+	  <h2><?php  echo T_("Availability"); ?></h2>
+	  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("availability.php","main-casenotes");?></div>
    </div>
 <?php  }?>
 
