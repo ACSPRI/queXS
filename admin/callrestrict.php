@@ -44,6 +44,22 @@ include ("../db.inc.php");
  */
 include ("../functions/functions.xhtml.php");
 
+$css = array(
+"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
+//"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
+"../include/clockpicker/dist/bootstrap-clockpicker.min.css",
+"../css/custom.css"
+			);
+$js_head = array(
+"../js/jquery-2.1.3.min.js",
+"../include/bootstrap-3.3.2/js/bootstrap.min.js",
+"../js/addrow-v2.js",
+				);
+$js_foot = array(
+"../include/clockpicker/dist/bootstrap-clockpicker.js",
+"../js/custom.js"
+				);
+
 global $db;
 
 $year="2008";
@@ -79,21 +95,21 @@ if (isset($_POST['day']))
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Modify call restriction times"),true,array("../css/shifts.css"),array("../js/addrow-v2.js"));
+xhtml_head(T_("Set call restriction times"),true,$css,$js_head);//,array("../css/shifts.css"),array("../js/addrow-v2.js")
 
 /**
  * Display warning if timezone data not installed
  *
  */
 
-$sql = "SELECT CONVERT_TZ(NOW(),'Australia/Victoria','UTC') as t";
+$sql = "SELECT CONVERT_TZ(NOW(),'" . DEFAULT_TIME_ZONE . "','UTC') as t";//'Australia/Victoria'
 $rs = $db->GetRow($sql);
 
 if (empty($rs) || !$rs || empty($rs['t']))
-	print "<div class='warning'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
+	print "<div class='alert alert-danger'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
 
 
-print "<h2>" . T_("Enter the start and end times for each day of the week to restrict calls within") . "</h2>";
+print "<div class='well'>" . T_("Enter the start and end times for each day of the week to restrict calls within") . "</div>";
 
 /**
  * Begin displaying currently loaded restriction times
@@ -112,30 +128,33 @@ $daysofweek = $db->GetAll($sql);
 translate_array($daysofweek,array("description"));	
 	
 ?>
-	<form method="post" action="">
-	<table>
+	<div class=" panel-body col-sm-4"><form method="post" action="">
+	<table class="table-hover table-condensed " id="restrict"><thead class="highlight">
 <?php 
-	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr>";
+	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr></thead><tbody>";
 	$count = 0;
 	foreach($shifts as $shift)
 	{
-		print "<tr id='row-$count' class='row_to_clone'><td>";
+		print "<tr id='row-$count' ><td>";//class='row_to_clone'  /* these are not the rows to clone...*/
 		display_chooser($daysofweek, "day[$count]", false, true, false, false, false, array("description",$shift['dt']));
-		print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td></tr>";
+		print "</td><td><input class=\"form-control clockpicker\" size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input class=\"form-control clockpicker\" name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td></tr>";
 		$count++;
 	}
 	print "<tr class='row_to_clone' id='row-$count'><td>"; 
 	display_chooser($daysofweek, "day[$count]", false, true, false, false, false, false);
-	print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"00:00:00\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"00:00:00\"/></td></tr>";
+	print "</td><td><input class=\"form-control clockpicker\" size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"08:00:00\"/></td><td><input class=\"form-control clockpicker\" name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"20:00:00\"/></td></tr>";
 
 
 ?>
-	</table>
-	<div><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></div>
-	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to restriction times"); ?>"/></p>
-	</form>
-<?php 
-	
-
-xhtml_foot();
+	</tbody></table>
+	<a class="btn btn-default btn-sm" onclick="addRow(); return false;" href=""><?php  echo T_("Add row"); ?></a><br/><br/>
+	<input class="btn btn-default " type="submit" name="submit" value="<?php  echo T_("Save changes to restriction times"); ?>"/>
+	</form></div>
+<?php
+xhtml_foot($js_foot);
 ?>
+<script type="text/javascript">
+$('.clockpicker').clockpicker({
+    autoclose: true
+});
+</script>

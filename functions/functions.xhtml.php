@@ -146,10 +146,10 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 		print "<tr>";
 		foreach ($fields as $e)
 		{
-			print "<td>";
+			print "<td><b>";
 			if (in_array($e,$total))
 				print $tot[$e];
-			print "</td>";
+			print "</b></td>";
 		}
 		print "</tr>";
 	}
@@ -176,11 +176,11 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
  * @param bool $print Default is true, print the chooser otherwise return as a string
  *	
  */
-function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false, $print = true, $class=false)
+function display_chooser($elements, $selectid, $var, $useblank = true, $pass = false, $js = true, $indiv = true, $selected = false, $print = true, $divclass=false, $selectclass="form-control")
 {
   $out = "";
-	if ($indiv) $out .= "<div class='$class'>";
-	$out .= "<select id='$selectid' name='$selectid' class='form-control'" ;
+	if ($indiv) $out .= "<div class='$divclass'>";
+	$out .= "<select id='$selectid' name='$selectid' class='$selectclass'" ;
 	if ($js) $out .= "onchange=\"LinkUp('$selectid')\"";
 	$out .= ">";
 	if ($useblank)

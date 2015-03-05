@@ -90,7 +90,7 @@ function addRow() {
             continue;
         s = t[0] + "[" + rowCount.toString() + "]";
         element.setAttribute("name", s);
-        element.value = "";
+        //element.value = "";   /*   <-- this row deletes cloned tag values */
     }
     
     elements = newRow.getElementsByTagName("select");
@@ -108,9 +108,13 @@ function addRow() {
         element.value = "";
     }
 
-
     /* Add the newly-created row to the table */
     templateRow.parentNode.appendChild(newRow);
+	
+	/* init clockpicker for added row*/
+	$('.clockpicker').clockpicker({
+    autoclose: true
+	});
     return true;
 }
 

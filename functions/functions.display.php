@@ -3,8 +3,6 @@
  * Functions relating to displaying for XHTML
  *
  *
- *
- *
  *	This file is part of queXS
  *	
  *	queXS is free software; you can redistribute it and/or modify
@@ -31,7 +29,6 @@
  * 
  */
 
-
 /**
  * Configuration file
  */
@@ -43,22 +40,15 @@ include_once(dirname(__FILE__).'/../config.inc.php');
 include_once(dirname(__FILE__).'/../db.inc.php');
 
 
-
-
-
-
-
-
 /**
  * Display a list of questionnaires to choose from in a drop down list
  *
  * @param int|bool $questionnaire_id The questionnaire id or false if none selecetd
  *
  */
-function display_questionnaire_chooser($questionnaire_id = false, $overall = false)
+function display_questionnaire_chooser($questionnaire_id = false, $overall = false, $divclass=false, $selectclass=false)
 {
 	global $db;
-
 
 	$sql = "SELECT questionnaire_id,description,CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM questionnaire
@@ -66,7 +56,7 @@ function display_questionnaire_chooser($questionnaire_id = false, $overall = fal
 		
 	$rs = $db->GetAll($sql);
 
-	print "<div><select id='questionnaire' name='questionnaire' onchange=\"LinkUp('questionnaire')\"><option value='?'></option>";
+	print "<div class='$divclass'><select class='$selectclass' id='questionnaire' name='questionnaire' onchange=\"LinkUp('questionnaire')\"><option value='?'></option>";
 	if (!empty($rs))
 	{
 		if (is_array($overall))
@@ -92,7 +82,7 @@ function display_questionnaire_chooser($questionnaire_id = false, $overall = fal
  * @param int $questionnaire_id The questionnaire id
  * @param int|bool $shift_id The shift id or false if none selected
  */
-function display_shift_chooser($questionnaire_id, $shift_id = false)
+function display_shift_chooser($questionnaire_id, $shift_id = false, $divclass=false, $selectclass=false)
 {
 	global $db;
 
@@ -103,7 +93,7 @@ function display_shift_chooser($questionnaire_id, $shift_id = false)
 		
 	$rs = $db->GetAll($sql);
 
-	print "<div><select id='shift' name='shift' onchange=\"LinkUp('shift')\"><option value='?questionnaire_id=$questionnaire_id'></option>";
+	print "<div class='$divclass'><select class='$selectclass' id='shift' name='shift' onchange=\"LinkUp('shift')\"><option value='?questionnaire_id=$questionnaire_id'></option>";
 	if (!empty($rs))
 	{
 		foreach($rs as $r)
@@ -121,13 +111,13 @@ function display_shift_chooser($questionnaire_id, $shift_id = false)
  * @param int|bool $sample_import_id The sample import id or false if none selected
  * @param bool $disabled Display disabled samples? (default is true)
  */
-function display_sample_chooser($questionnaire_id, $sample_import_id = false, $disabled = true)
+function display_sample_chooser($questionnaire_id, $sample_import_id = false, $disabled = true, $divclass=false, $selectclass=false)
 {
 	global $db;
 
-  $s = "";
+	$s = "";
 
-  if (!$disabled)
+	if (!$disabled)
     $s = " AND si.enabled = 1 ";
 
 	$sql = "SELECT s.sample_import_id,si.description,CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
@@ -137,7 +127,7 @@ function display_sample_chooser($questionnaire_id, $sample_import_id = false, $d
 		
 	$rs = $db->GetAll($sql);
 
-	print "<div><select id='sample' name='sample' onchange=\"LinkUp('sample')\"><option value='?questionnaire_id=$questionnaire_id'></option>";
+	print "<div class='$divclass'><select class='$selectclass' id='sample' name='sample' onchange=\"LinkUp('sample')\"><option value='?questionnaire_id=$questionnaire_id'></option>";
 	if (!empty($rs))
 	{
 		foreach($rs as $r)
@@ -155,7 +145,7 @@ function display_sample_chooser($questionnaire_id, $sample_import_id = false, $d
  * @param int $sample_import_id The sample import id 
  * @param int|bool $qsqri The sample import id or false if none selected
  */
-function display_quota_chooser($questionnaire_id, $sample_import_id, $qsqri = false)
+function display_quota_chooser($questionnaire_id, $sample_import_id, $qsqri = false,  $divclass=false, $selectclass=false)
 {
 	global $db;
 
@@ -166,7 +156,7 @@ function display_quota_chooser($questionnaire_id, $sample_import_id, $qsqri = fa
 		
 	$rs = $db->GetAll($sql);
 
-	print "<div><select id='questionnaire_sample_quota_row_id' name='questionnaire_sample_quota_row_id' onchange=\"LinkUp('questionnaire_sample_quota_row_id')\"><option value='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'></option>";
+	print "<div class='$divclass'><select class='$selectclass' id='questionnaire_sample_quota_row_id' name='questionnaire_sample_quota_row_id' onchange=\"LinkUp('questionnaire_sample_quota_row_id')\"><option value='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'></option>";
 	if (!empty($rs))
 	{
 		foreach($rs as $r)
@@ -176,7 +166,5 @@ function display_quota_chooser($questionnaire_id, $sample_import_id, $qsqri = fa
 	}
 	print "</select></div>";
 }
-
-
 
 ?>
