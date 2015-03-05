@@ -123,8 +123,8 @@ function verify_fields($fields)
  */
 function display_table($data)
 {
-	print "<table>";
-	print "<tr><th></th><th>" . T_("Import?") . "</th><th>" . T_("Name") . "</th><th>" . T_("Type") . "</th><th>" . T_("Allow operator to see?") . "</th></tr>";
+	print "<table class='table-hover table-bordered table-condensed tclass'><thead class='highlight'>";
+	print "<tr><th>" . T_("Selected file column name") . "</th><th>" . T_("Import ?") . "</th><th class='col-sm-4'>" . T_("New Sample Variable Name") . "</th><th>" . T_("Variable Type") . "</th><th>" . T_("Show to operator?") . "</th></tr></thead><tbody>";
 	$row = 1;
 
 	global $db;
@@ -140,21 +140,24 @@ function display_table($data)
 		$checked = "checked";
 		if (empty($val)) $val = "samp_$row";
 
-		print "<tr><td>$value</td><td><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\"/></td><td><input type=\"text\" value=\"$val\" name=\"n_$row\"/></td><td>";
-		print "<select name=\"t_$row\">";
-		$selected = "selected=\"selected\"";
-		foreach($rs as $r)
-		{
-			print "<option value=\"{$r['type']}\" $selected>" . T_($r['description']) . "</option>";
-			$selected = "";
-		}
-		print "</select></td>";
-		print "<td><input type=\"checkbox\" name=\"a_$row\"/></td>";
+		print "<tr><td>$value</td>
+					<td><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\" switch=\"yes\" data-size=\"small\" data-on-text=\"" . TQ_("Yes") . "\" data-off-text=" . TQ_("No") . " /></td>
+					<td><input type=\"text\" value=\"$val\" name=\"n_$row\" class=\"form-control\" /></td>
+					<td>";
+					print "<select name=\"t_$row\" class=\"form-control\">";
+					print "<option value=\"\" $selected></option>";
+					$selected = "selected=\"selected\"";
+					foreach($rs as $r)
+					{
+						print "<option value=\"{$r['type']}\" >" . T_($r['description']) . "</option>";
+						$selected = "";
+					}
+					print "</select></td>";
+			print "<td>&emsp;<input type=\"checkbox\" name=\"a_$row\" switch=\"yes\" data-size=\"small\" data-on-text=\"" . TQ_("Yes") . "\" data-off-text=" . TQ_("No") . " /></td>";
 		print "</tr>";
 		$row++;
-
 	}	
-	print "</table>";
+	print "</tbody></table>";
 
 }
 
