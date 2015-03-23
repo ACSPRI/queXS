@@ -78,14 +78,14 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 
 	$sql = "SELECT 	CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id,
 			o.description as outcomes,
-			si.description as samples, s.Time_zone_name as timezone, (SELECT COUNT(*) FROM `call` WHERE `call`.case_id = c.case_id) as nrcalls, (SELECT COUNT(*) FROM call_attempt WHERE call_attempt.case_id = c.case_id) as nrattempts, 	
+			si.description as samples, s.Time_zone_name as timezone, TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,s.Time_zone_name),'". TIME_FORMAT ."') as time, (SELECT COUNT(*) FROM `call` WHERE `call`.case_id = c.case_id) as nrcalls, (SELECT COUNT(*) FROM call_attempt WHERE call_attempt.case_id = c.case_id) as nrattempts, 	
 			CASE WHEN ca.end IS NULL THEN '" . TQ_("Available") . "'
 				WHEN TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL co.default_delay_minutes MINUTE),'System','UTC'))) < 0 THEN '" . TQ_("Available") . "'
 				ELSE CONCAT(ROUND(TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL co.default_delay_minutes MINUTE),'System','UTC'))) / 60),'&emsp;" . TQ_("minutes") . "')
 			END AS availableinmin,
 			CASE WHEN oq.operator_id IS NULL THEN 
 				CONCAT('')
-			ELSE CONCAT('<span class=\'text-info\'>', oq.firstName,' ',oq.lastname,'</span>')
+			ELSE CONCAT('<span class=\'text-info\'>', oq.firstName,' ',oq.lastName,'</span>')
 			END AS assignedoperator,
 			CASE WHEN oq.operator_id IS NULL THEN 
 				CONCAT('')
@@ -112,7 +112,12 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 
 	print ("<form method=\"post\" action=\"?questionnaire_id=$questionnaire_id&sample_import_id=$sample_id\">");
 
-	xhtml_table($db->GetAll($sql),array('case_id','samples','timezone','nrattempts','nrcalls','outcomes','availableinmin','assignedoperator','ordr','flag'),array(T_("Case id"),T_("Sample"),T_("Timezone"),T_("Call attempts"),T_("Calls"),T_("Outcome"),T_("Available in"),T_("Assigned to"),T_("Order"),"<i class='fa fa-check-square-o fa-lg'></i>"), "tclass",false,false,"bs-table");
+	$datacol = array('case_id','samples','timezone','time','nrattempts','nrcalls','outcomes','availableinmin','assignedoperator','ordr','flag');
+	$headers = array(T_("Case id"),T_("Sample"),T_("Timezone"),T_("Time NOW"),T_("Call attempts"),T_("Calls"),T_("Outcome"),T_("Available in"),T_("Assigned to"),T_("Order"),"<i class='fa fa-check-square-o fa-lg'></i>");
+	
+	if (isset($_GET['sample_import_id'])){ 	unset($datacol[1]);  unset($headers[1]); }
+	
+	xhtml_table($db->GetAll($sql),$datacol,$headers,"tclass",false,false,"bs-table");
 	
 	$sql = "SELECT operator_id as value,CONCAT(firstName,' ', lastName) as description, '' selected
 		FROM operator
@@ -225,13 +230,16 @@ $outcome_id = false;
 
 print "<div class='form-group '><h3 class=' col-sm-2 text-right'>" . T_("Questionnaire") . ":</h3>";
 display_questionnaire_chooser($questionnaire_id, false, "pull-left", "form-control");
-print "<h3 class=' col-sm-2 text-right'>" . T_("Sample") . ":</h3>";
-display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control");
-print "</div>
-	 <div class='clearfix'></div>";
-if ($questionnaire_id)
-	case_status_report($questionnaire_id,$sample_import_id,$outcome_id);
 
+
+if ($questionnaire_id){
+	print "<h3 class=' col-sm-2 text-right'>" . T_("Sample") . ":</h3>";
+	display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control");
+	print "</div>
+	 <div class='clearfix'></div>";
+	
+	case_status_report($questionnaire_id,$sample_import_id,$outcome_id);
+}
 xhtml_foot($js_foot);
 ?>
 <script type="text/javascript">

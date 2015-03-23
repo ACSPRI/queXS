@@ -72,7 +72,7 @@ $operator_id = get_operator_id();
 	Modified Call history list to have more information more suitable way with filtering, soring, paging and submenu for Cse history with asterisk records....
 	Need to be linked with cdr records from asterisk!! for monitoring (requires addtional field for call_attempt table to request and store asterisk UniqueID  as a reference to CDR .wav file list  at /var/spool/asterisk/monitor/ )
 */
-
+	
 if ($operator_id)
 {
 	if (isset($_GET['questionnaire_id'])) $qid = $_GET['questionnaire_id'];
@@ -85,9 +85,9 @@ if ($operator_id)
 
 	$sql .=	" as case_id, q.description as qd , contact_phone.phone as cpi, sample_import.description as spl 
 		FROM `call` as c
-		JOIN (operator as op, respondent as r) on (op.operator_id = '$operator_id' and r.respondent_id = c.respondent_id)";
-	if ($qid) $quest = "$qid and q.questionnaire_id= $qid"; else $quest = "q.questionnaire_id";
-	if ($sid) $samimpid = "$sid and sample_import.sample_import_id=$sid"; else $samimpid = "sample_import.sample_import_id";
+		JOIN (operator as op, respondent as r) on (op.operator_id = '$operator_id' AND r.respondent_id = c.respondent_id)";
+	if ($qid) $quest = "$qid AND q.questionnaire_id= $qid"; else $quest = "q.questionnaire_id";
+	if ($sid) $samimpid = "$sid AND sample_import.sample_import_id=$sid"; else $samimpid = "sample_import.sample_import_id";
 	
 	$sql .=	" 
 		JOIN (`case` as ca, questionnaire as q) ON (ca.case_id = c.case_id AND ca.questionnaire_id = $quest)
@@ -102,11 +102,10 @@ if ($operator_id)
 		$sql .= " LIMIT 500";
 	else $sql .= " LIMIT 5000";
 	
-	$rs = $db->Execute($sql);
-	
+	$rs = $db->Execute($sql);		
 	if (empty($rs))
 	{
-		print "<div class='alert alert-warning col-sm-6'>" . T_("No calls ever made") . "</div>";
+		print "<div class='alert alert-warning col-sm-6'><p>" . T_("No calls ever made") . "</p></div>";
 	}
 	else
 	{
@@ -131,16 +130,24 @@ if ($operator_id)
 			}
 
 			exit;
-		}			
+		}
 		else
 		{
-			$rs = $rs->GetArray();
-			translate_array($rs,array("des"));
 			xhtml_head(T_("Call History List"),true,$css,$js_head);
+			
 			echo "<div class='form-group col-sm-2'><a href='' onclick='history.back();return false;' class='btn btn-default'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a></div>";
 
-			$datacol = array("start_date", "start_time","end","case_id","qd","spl","cpi","opname","descr","casenotes","firstName");
-			$headers = array(T_("Date"), T_("Start time"), T_("End time"),T_("Case ID"),T_("Questionnaire"),T_("Sample"),T_("Phone number"),T_("Operator"),T_("Outcome"),T_("Case notes"),T_("Respondent"));
+			$rs = $rs->GetArray();
+			if (count($rs) ==0)
+			{
+				print "<div class='alert alert-info col-sm-6'><h3>" . T_("NO Call history records for Your query") . "</h3></div>";
+			}
+			else
+			{
+				translate_array($rs,array("des"));
+				
+				$datacol = array("start_date", "start_time","end","case_id","qd","spl","cpi","opname","descr","casenotes","firstName");
+				$headers = array(T_("Date"), T_("Start time"), T_("End time"),T_("Case ID"),T_("Questionnaire"),T_("Sample"),T_("Phone number"),T_("Operator"),T_("Outcome"),T_("Case notes"),T_("Respondent"));
 
 			if (isset($_GET['questionnaire_id'])){
 				$sql = "SELECT description FROM `questionnaire` WHERE `questionnaire_id` = $qid ";
@@ -154,9 +161,12 @@ if ($operator_id)
 				print "<h3><small>" . T_("Sample") . "&emsp;ID: $sid</small>&emsp;" . $ds . "</h3>";
 				unset($datacol[5]);  unset($headers[5]); }
 				
-			print "<a href='?csv=csv&amp;questionnaire_id=$qid&amp;dq=" . $dq . "&amp;sample_import_id=$sid&amp;ds=" . $ds . "' class='btn btn-default  pull-right'><i class='fa fa-download fa-lg text-primary'></i>&emsp;" . T_("Download Call History List") . "</a>";
+				print "&nbsp;<a href='?csv=csv&amp;questionnaire_id=$qid&amp;dq=" . $dq . "&amp;sample_import_id=$sid&amp;ds=" . $ds . "' class='btn btn-default  pull-right'><i class='fa fa-download fa-lg text-primary'></i>&emsp;" . T_("Download Call History List") . "</a>
+				"; //<a href='../../admin/config.php' target='_blank' class='btn btn-default  col-sm-offset-6 '><i class='fa fa-link fa-lg text-primary'></i>&emsp;" . T_("Go to Call History Report") . "</a>&nbsp;
+				
+				xhtml_table($rs,$datacol,$headers,"tclass",false,false,"bs-table");
 			
-			xhtml_table($rs,$datacol,$headers,"tclass",false,false,"bs-table");
+			}
 		}
 	}
 }

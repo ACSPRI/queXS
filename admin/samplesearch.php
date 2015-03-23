@@ -56,14 +56,17 @@ $css = array(
 "../include/bootstrap-3.3.2/css/bootstrap.min.css", 
 "../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
 "../include/font-awesome-4.3.0/css/font-awesome.css",
+/* "../include/bootgrid/jquery.bootgrid.css", */
 "../include/bs-data-table/css/jquery.bdt.css",
 "../css/custom.css"
 			);
 $js_head = array(
 "../js/jquery-2.1.3.min.js",
 "../include/bootstrap-3.3.2/js/bootstrap.min.js",
+/* "../include/bootgrid/jquery.bootgrid.min.js", */
 				);
 $js_foot = array(
+
 "../include/bs-data-table/js/vendor/jquery.sortelements.js",
 "../include/bs-data-table/js/jquery.bdt.js",
 "../js/window.js",
@@ -135,7 +138,7 @@ print "<div class='clearfix'></div>";
 if ($sample_import_id != false)
 {
 		$sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN 
-		CONCAT('<a href=\'\' data-toggle=\'modal\' data-target=\'.delete-confirm\' data-href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id ,'\' data-sample_id=\' ', sv.sample_id ,' \'  class=\'btn center-block\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Delete sample record") . " ', sv.sample_id ,'\' class=\'fa fa-2x fa-trash-o text-danger\'></i></a>')
+		CONCAT('&emsp;<a href=\'\' data-toggle=\'modal\' data-target=\'.delete-confirm\' data-href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id ,'\' data-sample_id=\' ', sv.sample_id ,' \'  class=\'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Delete sample record") . " ', sv.sample_id ,'\' class=\'fa fa-2x fa-trash-o text-danger\'></i></a>&emsp;')
 		ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\' data-toggle=\'tooltip\' title=\'" . TQ_("Assigned to case ID :") . " ', c.case_id , '\'><b>', c.case_id ,'</b></a>')
 		END as link
 			FROM sample_var AS sv
@@ -146,18 +149,18 @@ if ($sample_import_id != false)
 		
 		if ($r) {
 
-			$sql = "SELECT var
-				FROM sample_var
-				WHERE sample_id = {$r[0]['sample_id']}
-				ORDER by var ASC";
-
-			$rs = $db->GetAll($sql);
 
 			$fnames = array("sample_id");
 			$fdesc = array(T_("Sample id"));
 			
 			$fnames[] = "link";
 			$fdesc[] = T_("Case ID");
+			
+			$sql = "SELECT var
+				FROM sample_var
+				WHERE sample_id = {$r[0]['sample_id']}
+				ORDER by var ASC";
+			$rs = $db->GetAll($sql);
 			
 			foreach($rs as $rsw)
 			{
@@ -170,10 +173,11 @@ if ($sample_import_id != false)
 					FROM sample_var
 					WHERE sample_id = {$rw['sample_id']}";
 				$rs = $db->GetAll($sql);
-				foreach($rs as $rsw)
+				foreach($rs as $rsw){
 					$rw[$rsw['var']] = $rsw['val'];
+				}
 			}
-			
+
 			print "<div class='form-group'>";
 			xhtml_table($r,$fnames,$fdesc,"tclass",false,false,"bs-table");
 			print "</div>";
@@ -184,6 +188,12 @@ xhtml_foot($js_foot);
 ?>
 <script type="text/javascript">
 $('#bs-table').bdt();
+/* $('#bs-table').bootgrid({ 
+	ajax: true,
+	post: "$sample_import_id",
+	url: "?sample_import_id=\"$sample_import_id\"",
+ }); */
+	
 $('#delete-confirm').on('show.bs.modal', function (event) {
   var a = $(event.relatedTarget)
   var href = a.data('href') 
