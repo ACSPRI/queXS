@@ -339,29 +339,29 @@ if (isset($_GET['modify']))
 		<div class="col-sm-2"><?php echo "<a class='btn btn-default btn-lime pull-right' href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> </div>
 	</div>
 
-<form action="?modify=<?php  echo $questionnaire_id; ?>" method="post" class="form-horizontal col-sm-12">
+<form action="?modify=<?php  echo $questionnaire_id; ?>" method="post" class="form-horizontal col-sm-12 form-group ">
 	<div class="form-group">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Edit"),"&ensp;", T_("Name for questionnaire:"); ?> </label>
-		<div class="col-sm-4"><input type="text" name="description" class="form-control" value="<?php  echo $rs['description']; ?>" label="<?php   echo T_("Name for questionnaire:") ; ?> "/></div>
+		<div class="col-sm-4"><input type="text" name="description" class="form-control" required value="<?php  echo $rs['description']; ?>" label="<?php   echo T_("Name for questionnaire:") ; ?> "/></div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Restrict appointments to shifts?"); ?> </label>
-		<div class="col-sm-4" style="height: 30px;"><input  name="ras" type="checkbox" <?php  echo $ras; ?> data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/> </div>
+		<div class="col-sm-4" style="height: 30px;"><input  name="ras" type="checkbox" <?php  echo $ras; ?> data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/> </div>
 	</div>
 	<div class="form-group"><label class="col-sm-4 control-label" ><?php  echo T_("Restrict work to shifts?"); ?> </label>
-		<div class="col-sm-4" style="height: 30px;" ><input name="rws" type="checkbox" <?php  echo $rws; ?> data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/></div>
+		<div class="col-sm-4" style="height: 30px;" ><input name="rws" type="checkbox" <?php  echo $rws; ?> data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/></div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Questionnaire for testing only?"); ?> </label>
-		<div class="col-sm-4" style="height: 30px;" ><input name="testing" type="checkbox" disabled="true" data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>" <?php  echo $testing; ?> data-onstyle="danger" /></div>
+		<div class="col-sm-4" style="height: 30px;" ><input name="testing" type="checkbox" disabled="true" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php  echo $testing; ?> data-onstyle="danger" data-width="80"/></div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Allow operators to generate referrals?"); ?></label>
-		<div class="col-sm-4" style="height: 30px;"> <input name="referral" type="checkbox"  <?php  echo $referral; ?> data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/></div>
+		<div class="col-sm-4" style="height: 30px;"> <input name="referral" type="checkbox"  <?php  echo $referral; ?> data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/></div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> </label>
-		<div class="col-sm-4" style="height: 30px;"><input name="respsc" id="respsc" type="checkbox" <?php echo $rsc ?> onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" data-toggle="toggle" data-on="<?php echo T_("YES"); ?>" data-off="<?php echo T_("NO"); ?>"/></div>
+		<div class="col-sm-4" style="height: 30px;"><input name="respsc" id="respsc" type="checkbox" <?php echo $rsc ?> onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/></div>
 	</div>
 <div id="limesc" <?php echo $rscd; ?> >
 <div class="form-group">
@@ -396,23 +396,82 @@ if (isset($_GET['modify']))
 	<div class="form-group">
 		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
 		<div class="col-sm-4">
-			<input class="form-control"  name="lime_endurl" type="text" value="<?php echo $rs['lime_endurl']; ?>"/>
+			<input class="form-control" name="lime_endurl" type="url" required placeholder="<?php print SITE_URL ;?>" value="<?php echo $rs['lime_endurl']; ?>"/>
 		</div>
 	</div>
 </div>
 <?php 
-if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) {
-	echo "<p><h4 style='text-align:center;' >" . T_("Respondent selection introduction:") . "</h4>"; echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);
-	echo "</p><p><h4 style='text-align:center;' >" . T_("Respondent selection project introduction:") . "</h4>"; echo $CKEditor->editor("rs_project_intro",$rs['rs_project_intro'],$ckeditorConfig);
-	echo "</p><p><h4 style='text-align:center;' >" . T_("Respondent selection callback (already started questionnaire):") . "</h4>"; echo $CKEditor->editor("rs_callback",$rs['rs_callback'],$ckeditorConfig);
-	echo "</p><p><h4 style='text-align:center;' >" . T_("Message to leave on an answering machine:") . "</h4>"; echo $CKEditor->editor("rs_answeringmachine",$rs['rs_answeringmachine'],$ckeditorConfig);
-	echo "</p>";  } 
-else if (!empty($rs['lime_rs_sid'])) { echo "<p><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></p>"; } 
-	echo "<p><h4 style='text-align:center;' >" . T_("Project end text (thank you screen):") . "</h4>"; echo $CKEditor->editor("rs_project_end",$rs['rs_project_end'],$ckeditorConfig);
-	echo "</p><p><h4 style='text-align:center;' >" . T_("Project information for interviewers/operators:") . "</h4>"; echo $CKEditor->editor("info",$rs['info'],$ckeditorConfig);
-	echo "</p>";
+if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
+		
+	<div class="panel  panel-default" >
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title text-primary "><?php  echo T_("Respondent selection introduction:");?></h3>
+		</div>
+		<div class="content">
+			<?php echo $CKEditor->editor("rs_intro",$rs['rs_intro'],$ckeditorConfig);?>
+		</div>
+	</div>
+	
+	<div class="panel  panel-default" >
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title text-primary "><?php echo T_("Respondent selection project introduction:");?></h3>
+		</div>
+		<div class="content">
+			<?php echo $CKEditor->editor("rs_project_intro",$rs['rs_project_intro'],$ckeditorConfig);?>
+		</div>
+	</div>
+	
+	<div class="panel  panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title text-primary"><?php echo T_("Respondent selection callback (already started questionnaire):");?></h3>
+		</div>
+		<div class="content">
+			<?php  echo $CKEditor->editor("rs_callback",$rs['rs_callback'],$ckeditorConfig);?>
+		</div>
+	</div>
+	
+	<div class="panel  panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title "><?php echo T_("Message to leave on an answering machine:");?></h3>
+		</div>
+		<div class="content">
+			<?php  echo $CKEditor->editor("rs_answeringmachine",$rs['rs_answeringmachine'],$ckeditorConfig);?>
+		</div>
+	</div>
+	
+	<?php	
+	}
+else if (!empty($rs['lime_rs_sid'])) { 
+	echo "<div class='well text-center'><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></div>"; } 	
 ?>	
-	<p><a href="questionnairelist.php" class="btn btn-default"><i class="fa fa-chevron-left fa-lg" style="color:blue;"></i>&emsp;<?php echo  T_("Go back") ; ?></a><input type="submit" class="btn btn-primary col-sm-offset-4"  name="update" value="<?php  echo T_("Update Questionnaire"); ?>"/></p>
+
+	<div class="panel  panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title "><?php  echo T_("Project end text (thank you screen):");?></h3>
+		</div>
+		<div class="content" >
+			<?php  echo $CKEditor->editor("rs_project_end",$rs['rs_project_end'],$ckeditorConfig);?>
+		</div>
+	</div>
+
+	<div class="panel panel-default ">
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title"><?php echo T_("Project information for interviewers/operators:");?></h3>
+		</div>
+		<div class="content">
+			<?php  echo $CKEditor->editor("info",$rs['info'],$ckeditorConfig);?>
+		</div>
+	</div>
+	
+	<a href="questionnairelist.php" class="btn btn-default"><i class="fa fa-chevron-left fa-lg" style="color:blue;"></i>&emsp;<?php echo  T_("Go back") ; ?></a>
+	<input type="submit" class="btn btn-primary col-sm-offset-4"  name="update" value="<?php  echo T_("Update Questionnaire"); ?>"/>
+	
 </form>  
 <?php 
 }

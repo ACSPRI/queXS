@@ -1,7 +1,7 @@
 /* Widget minimize */
 $('.wminimize').click(function(e){
 e.preventDefault();
-var $wcontent = $(this).parent().parent().next('.content');
+var $wcontent = $(this).parent().next('.content');
 if($wcontent.is(':visible'))
 {
 $(this).removeClass('fa-chevron-circle-up text-primary').addClass('fa-chevron-circle-down text-danger');
@@ -35,7 +35,7 @@ $('body,html').animate({scrollTop: 0}, 500);
 /* panel close 
 $('.pclose').click(function(e){
 e.preventDefault();
-var $pbox = $(this).parent().parent().parent();
+var $pbox = $(this).parent().parent();
 $pbox.hide(100);
 });*/
 
@@ -54,12 +54,4 @@ pickDate: false
 /* Modal fix 
 $('.modal').appendTo($('body'));*/
 
-/*Bootstrap Data table, tooltip and bs switch  init */
-
 $('[data-toggle="tooltip"]').tooltip();
-/*
-$('[switch="yes"]').bootstrapSwitch();	
-
-$('#bs-table').bdt();*/
-
-//alert ("custom js OK"); //test js 
