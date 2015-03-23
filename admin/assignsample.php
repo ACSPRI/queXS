@@ -59,13 +59,13 @@ $css = array(
 "../include/bootstrap-3.3.2/css/bootstrap.min.css", 
 "../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
 "../include/font-awesome-4.3.0/css/font-awesome.css",
-"../css/bootstrap-switch.min.css",
+"../include/bootstrap-toggle/css/bootstrap-toggle.min.css",
 "../css/custom.css"
 			);
 $js_head = array(
 "../js/jquery-2.1.3.min.js",
 "../include/bootstrap-3.3.2/js/bootstrap.min.js",
-"../js/bootstrap-switch.min.js",
+"../include/bootstrap-toggle/js/bootstrap-toggle.min.js",
 "../js/window.js"
 				);
 $js_foot = array(
@@ -160,19 +160,25 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 		?>
 		<form action="?questionnaire_id=<?php echo $questionnaire_id;?>" method="post" class="form-horizontal">
 		
-		<label for="call_max" class="control-label col-sm-4"><?php echo T_("Max calls");?></label><div class="col-sm-1"><input type="text" name="call_max" id="call_max" value="<?php echo $qs['call_max'];?>" class="form-control"/></div><label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
-		<label for="call_attempt_max" class="control-label col-sm-4"><?php echo T_("Max call attempts");?></label><div class="col-sm-1"><input type="text" name="call_attempt_max" id="call_attempt_max" value="<?php echo $qs['call_attempt_max'];?>" class="form-control"/></div><label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
-		<label for="answering_machine_messages" class="control-label col-sm-4"><?php echo T_("Number of answering machine messages to leave per case");?></label><div class="col-sm-1"> <input type="text" name="answering_machine_messages" id="answering_machine_messages" value="<?php echo $qs['answering_machine_messages'];?>" class="form-control"/></div><label class="control-label text-info"><?php echo "0 = " . T_("Never");?></label><br/><br/>
-		<label for="selecttype" class="control-label col-sm-4"><?php echo T_("Select from sample randomly?");?></label><div class="col-sm-1"><input type="checkbox" id = "selecttype" name="selecttype" <?php echo $selected;?> switch="yes" data-size="small" data-on-text="<?php echo T_("Yes");?>" data-off-text="<?php echo T_("No");?>"/></div><label class="control-label text-info"><?php echo T_("No") ." = ". T_("Sequentially");?></label><br/><br/>
-		<label for="allownew" class="control-label col-sm-4"><?php echo T_("Allow new numbers to be drawn?");?></label><div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" <?php echo $allownew;?> class="col-sm-1" switch="yes" data-size="small" data-on-text="<?php echo T_("Yes");?>" data-off-text="<?php echo T_("No");?>"/></div><br/><br/>
+		<label for="call_max" class="control-label col-sm-4"><?php echo T_("Max calls");?></label>
+		<div class="col-sm-1"><input type="number" min="0" max="20" style="width:6em;" name="call_max" id="call_max" value="<?php echo $qs['call_max'];?>" class="form-control"/></div>
+		<label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
+		<label for="call_attempt_max" class="control-label col-sm-4"><?php echo T_("Max call attempts");?></label>
+		<div class="col-sm-1"><input type="number" min="0" max="20" style="width:6em;" name="call_attempt_max" id="call_attempt_max" value="<?php echo $qs['call_attempt_max'];?>" class="form-control"/></div>
+		<label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
+		<label for="answering_machine_messages" class="control-label col-sm-4"><?php echo T_("Number of answering machine messages to leave per case");?></label>
+		<div class="col-sm-1"> <input type="number" min="0" max="20" style="width:6em;" name="answering_machine_messages" id="answering_machine_messages" value="<?php echo $qs['answering_machine_messages'];?>" class="form-control"/></div>
+		<label class="control-label text-info"><?php echo "0 = " . T_("Never");?></label><br/><br/>
+		<label for="selecttype" class="control-label col-sm-4"><?php echo T_("Select from sample randomly?");?></label>
+		<div class="col-sm-1"><input type="checkbox" id = "selecttype" name="selecttype" <?php echo $selected;?> data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
+		<label class="control-label text-info"><?php echo T_("No") ." = ". T_("Sequentially");?></label><br/><br/>
+		<label for="allownew" class="control-label col-sm-4"><?php echo T_("Allow new numbers to be drawn?");?></label>
+		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" <?php echo $allownew;?> class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/>
 		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="hidden" name="sample_import_id" value="<?php  print($sid); ?>"/>
 		<div class="col-sm-12 text-center"><button type="submit" name="edit" class="btn btn-primary"><i class="fa fa-floppy-o fa-lg"></i>&emsp;<?php echo T_("Save changes");?></button></div>
 		</form></div>
-		
-<script type="text/javascript">
-$('[switch="yes"]').bootstrapSwitch();
-</script>
+
 
 		<?php 
 		xhtml_foot($js_foot);
@@ -238,18 +244,28 @@ if ($questionnaire_id != false)
 		print "<div class='panel-body form-group'><h3 class='text-primary'>" . T_("Add a sample to this questionnaire:") . "</h3>";
 		?>
 		<form action="" method="get" class="form-horizontal">
-		<label for="sample" class="control-label  col-sm-4"><?php  echo T_("Select sample:");?></label><div class="col-sm-3"><select name="sample" id="sample" class="form-control " >
+		<label for="sample" class="control-label  col-sm-4"><?php  echo T_("Select sample:");?></label>
+		<div class="col-sm-3"><select name="sample" id="sample" class="form-control " >
 		<?php foreach($qs as $q) { print "<option value=\"{$q['sample_import_id']}\">{$q['description']}</option>"; } ?> </select></div><br/><br/>
 		
-		<label for="call_max" class="control-label col-sm-4"><?php echo T_("Max calls");?></label><div class="col-sm-1"><input type="text" name="call_max" id="call_max" value="0" class="form-control"/></div><label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
+		<label for="call_max" class="control-label col-sm-4"><?php echo T_("Max calls");?></label>
+		<div class="col-sm-1"><input type="number" min="0" max="20" style="width:6em;" name="call_max" id="call_max" value="0" class="form-control"/></div>
+		<label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
 		
-		<label for="call_attempt_max" class="control-label col-sm-4"><?php echo T_("Max call attempts");?></label><div class="col-sm-1"><input type="text" name="call_attempt_max" id="call_attempt_max" value="0" class="form-control"/></div><label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
+		<label for="call_attempt_max" class="control-label col-sm-4"><?php echo T_("Max call attempts");?></label>
+		<div class="col-sm-1"><input type="number" min="0" max="20" style="width:6em;" name="call_attempt_max" id="call_attempt_max" value="0" class="form-control"/></div>
+		<label class="control-label text-info"><?php echo "0 = " . T_("Unlimited");?></label><br/><br/>
 		
-		<label for="answering_machine_messages" class="control-label col-sm-4"><?php echo T_("Number of answering machine messages to leave per case");?></label><div class="col-sm-1"> <input type="text" name="answering_machine_messages" id="answering_machine_messages" value="0" class="form-control"/></div><label class="control-label text-info"><?php echo "0 = " . T_("Never");?></label><br/><br/>
+		<label for="answering_machine_messages" class="control-label col-sm-4"><?php echo T_("Number of answering machine messages to leave per case");?></label>
+		<div class="col-sm-1"><input type="number" min="0" max="20" style="width:6em;" name="answering_machine_messages" id="answering_machine_messages" value="0" class="form-control"/></div>
+		<label class="control-label text-info"><?php echo "0 = " . T_("Never");?></label><br/><br/>
 		
-		<label for="selecttype" class="control-label col-sm-4"><?php echo T_("Select from sample randomly?");?></label><div class="col-sm-1"><input type="checkbox" id = "selecttype" name="selecttype" switch="yes" data-size="small" data-on-text="<?php echo T_("Yes");?>" data-off-text="<?php echo T_("No");?>"/></div><label class="control-label text-info"><?php echo T_("No") ." = ". T_("Sequentially");?></label><br/><br/>
+		<label for="selecttype" class="control-label col-sm-4"><?php echo T_("Select from sample randomly?");?></label>
+		<div class="col-sm-1"><input type="checkbox" id = "selecttype" name="selecttype" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
+		<label class="control-label text-info"><?php echo T_("No") ." = ". T_("Sequentially");?></label><br/><br/>
 		
-		<label for="allownew" class="control-label col-sm-4"><?php echo T_("Allow new numbers to be drawn?");?></label><div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" checked="checked" class="col-sm-1" switch="yes" data-size="small" data-on-text="<?php echo T_("Yes");?>" data-off-text="<?php echo T_("No");?>"/></div><br/><br/>
+		<label for="allownew" class="control-label col-sm-4"><?php echo T_("Allow new numbers to be drawn?");?></label>
+		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" checked="checked" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/>
 		
 		<input type="hidden" name="questionnaire_id" value="<?php print($questionnaire_id);?>"/>
 		
@@ -262,6 +278,5 @@ if ($questionnaire_id != false)
 xhtml_foot($js_foot);
 ?>
 <script type="text/javascript">
-$('[switch="yes"]').bootstrapSwitch();
 $('[data-toggle="confirmation"]').confirmation()
 </script>

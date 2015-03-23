@@ -103,8 +103,8 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 
 	translate_array($outcomes,array("description"));
 
-	$rep = array("sample","callattempts");
-	$rept = array(T_("Number of cases"),T_("Call attempts made"));
+	$rep = array("callattempts","sample");
+	$rept = array(T_("Call attempts made"),T_("Number of cases"));
 	$totals = array("sample");
 
 	$outcomesfilled = array();
@@ -162,17 +162,17 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 	}
 
 	xhtml_table($overall,$rep,$rept,"tclass",false,$totals);
-	
+	print "</br>";
 	return true;
 }
 
 
-xhtml_head(T_("Sample call attempt"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Sample call attempt"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 
-print "<h2>" . T_("Please select a questionnaire") . "</h2>";
+print "<h3 class='form-inline pull-left'>" . T_("Please select a questionnaire") . "&emsp;</h3>";
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = intval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id,array(-1,T_("Overall")));
+display_questionnaire_chooser($questionnaire_id,array(-1,T_("Overall")),"form-inline clearfix", "form-control");
 
 
 if ($questionnaire_id || $questionnaire_id == -1)
@@ -181,10 +181,10 @@ if ($questionnaire_id || $questionnaire_id == -1)
 	{
 		if ($questionnaire_id != -1)
 		{
-			print "<h2>" . T_("Please select a sample") . "</h2>";
+			print "<h3 class='form-inline pull-left'>" . T_("Please select a sample") . "&emsp;</h3>";
 			$sample_import_id = false;
 			if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
-			display_sample_chooser($questionnaire_id,$sample_import_id);
+			display_sample_chooser($questionnaire_id,$sample_import_id,false,"form-inline clearfix", "form-control");
 
 			if ($sample_import_id)
 			{
@@ -192,22 +192,23 @@ if ($questionnaire_id || $questionnaire_id == -1)
 				{
 					$questionnaire_sample_quota_row_id = false;
 					if (isset($_GET['questionnaire_sample_quota_row_id'])) $questionnaire_sample_quota_row_id = bigintval($_GET['questionnaire_sample_quota_row_id']);
-					print "<h2>" . T_("Please select a quota") . "</h2>";
-					display_quota_chooser($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id);
+					print "<h3 class='form-inline pull-left'>" . T_("Please select a quota") . "&emsp;</h3>";
+					display_quota_chooser($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id,"form-inline clearfix", "form-control");
 		
 					if ($questionnaire_sample_quota_row_id)
 					{
 						if (!sample_call_attempt_report($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id))
-							print "<p>" . T_("No calls for this quota") . "</p>";
+							print "<p class='well text-danger'>" . T_("No calls for this quota") . "</p>";
+						
 					}
 				}
 				else
-					print "<p>" . T_("No calls for this sample") . "</p>";
+					print "<p class='well text-danger'>" . T_("No calls for this sample") . "</p>";
 			}
 		}
 	}
 	else
-		print "<p>" . T_("No calls for this questionnaire") . "</p>";
+		print "<p class='well text-danger'>" . T_("No calls for this questionnaire") . "</p>";
 }
 
 xhtml_foot();
