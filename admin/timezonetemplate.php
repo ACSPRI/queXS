@@ -57,10 +57,10 @@ include("../functions/functions.input.php");
 
 global $db;
 
-
 if (isset($_POST['dtime_zone']))
 {
   set_setting('DEFAULT_TIME_ZONE', $_POST['dtime_zone']);
+  
 }
 
 if (isset($_GET['time_zone']))
@@ -89,49 +89,49 @@ if (isset($_GET['tz']))
 }
 
 
-xhtml_head(T_("Add/Remove Timezones"),true,array("../css/shifts.css"),array("../js/window.js"));
+xhtml_head(T_("Set Timezones"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js")); //,"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css"
 
 $dtz = get_setting("DEFAULT_TIME_ZONE");
 
 $sql = "SELECT name as value, name as description, 
 		CASE WHEN name LIKE '$dtz' THEN 'selected=\'selected\'' ELSE '' END AS selected
-	FROM mysql.time_zone_name";
+		FROM mysql.time_zone_name
+		WHERE `Name` LIKE 'Europe%' OR `Name` LIKE 'Asia%' ";
 
 $tzl = $db->GetAll($sql);
 
 if (empty($tzl) || !$tzl)
 {
-        print "<div class='warning'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
+        print "<div class='alert alert-danger'>" . T_("Your database does not have timezones installed, please see here for details") . "<a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'> ... </a></div>";
 }
 
-print "<h1>" . T_("Set default timezone") . ": </h1>";
+print "<div class='col-sm-4 '><h3 class=''>" . T_("Default Timezone: ") . "&emsp;<b class='text-primary'>$dtz</b></h3>";//<div class='panel-body'>
 		?>
-		<form action="" method="post"><p>
-		<label for="dtime_zone"><?php  echo T_("Default Timezone: "); ?></label><?php  display_chooser($tzl, 'dtime_zone', 'dtime_zone', false,  false, false, false, false); ?>
-		<input type="submit" name="set_dtimezone" value="<?php  echo T_("Set default timezone"); ?>"/></p>
+		<form action="" method="post" class="form-horizontal">
+		<?php  display_chooser($tzl, 'dtime_zone', 'dtime_zone',false,false,false,true,false,true,"form-inline pull-left"); ?>&emsp;
+		<input type="submit" class='btn btn-default fa' name="set_dtimezone" value="<?php  echo T_("Set default timezone"); ?>"/>
 		</form>
 		<?php 
+print "</div>";
 
-print "<h1>" . T_("Click to remove a Timezone from the default list") . "</h1>";
+print "<div class='col-sm-5'><h3>" . T_("Timezone list") . "</h3>";
 
-$sql = "SELECT Time_zone_name
-	FROM timezone_template";
+$sql = "SELECT Time_zone_name, TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,Time_zone_name),'". TIME_FORMAT ."') as time, CONCAT('<p class=\'text-center\' style=\'margin-bottom: 3px;\'><b class=\'label label-default\' style=\'font-size:85%;\'>', TIME_FORMAT(TIMEDIFF( CONVERT_TZ(NOW(),'$dtz','$dtz'),CONVERT_TZ(NOW(), Time_zone_name,'$dtz')),' %H : %i'), '</b></p>') AS timediff,
+CONCAT('<a href=\"?tz=', Time_zone_name ,'\" title=\"" . T_("Remove Timezone") . "\"><i class=\"fa fa-trash fa-lg text-danger\">" . T_("Remove") . "</i></a>') as link
+	FROM timezone_template ORDER BY time ASC";
 
 $qs = $db->GetAll($sql);
+		xhtml_table($qs, array("Time_zone_name","timediff","time","link"), array(T_("Timezone name"),T_("Time diff to Default Time zone"),T_("Current time"),T_("Remove")));
+print "</div>";
 
-foreach($qs as $q)
-{
-	print "<p><a href=\"?tz={$q['Time_zone_name']}\">{$q['Time_zone_name']} </a></p>";
-}
-
-print "<h1>" . T_("Add a Timezone:") . "</h1>";
+print "<div class='col-sm-3'><h3 class=''>" . T_("Add a Timezone:") . "&emsp;</h3>";
 		?>
-		<form action="" method="get"><p>
-		<label for="time_zone"><?php  echo T_("Timezone: "); ?></label><?php  display_chooser($tzl, 'time_zone', 'time_zone', false,  false, false, false, false); ?>
-		<input type="submit" name="add_timezone" value="<?php  echo T_("Add Timezone"); ?>"/></p>
+		<form action="" method="get" class="form-horizontal">
+		<?php  display_chooser($tzl, 'time_zone', 'time_zone',false,false,false,true,false,true,"form-inline pull-left"); ?>&emsp;
+		<input type="submit" class='btn btn-default fa' name="add_timezone" value="<?php  echo T_("Add Timezone"); ?>"/>
 		</form>
 		<?php 
+print "</div>";
+
 xhtml_foot();
-
-
 ?>
