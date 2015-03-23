@@ -57,7 +57,7 @@ if (isset($_POST['submit']))
 
 	if (HTPASSWD_PATH !== false && $_POST['existing_username'] != $_POST['username'] && empty($_POST['password']))
 	{
-		$msg = T_("If changing usernames, you must specify a new password");
+		$msg = "<div class='alert alert-danger'><h3>" . T_("If changing usernames, you must specify a new password") . "</h3></div>";
 	}
 	else
 	{
@@ -113,11 +113,11 @@ if (isset($_POST['submit']))
 				$htg->addUserToGroup($_POST["username"],HTGROUP_INTERVIEWER);
 			}
 
-			$msg = T_("Successfully updated user");
+			$msg = "<div class='alert alert-info'><h3>" . T_("Successfully updated user") . ": " . $_POST['username'] . "</h3></div>";
 		}
 		else
 		{
-			$msg = T_("Failed to update user. Please make sure the username is unique");
+			$msg = "<div class='alert alert-danger'><h3>" . T_("Failed to update user") . ": " . $_POST['username'] . " " . T_("Please make sure the username is unique") . "</h3></div>";
 		}
 	}
 	$_GET['edit'] = $operator_id;
@@ -126,7 +126,7 @@ if (isset($_POST['submit']))
 
 if (isset($_GET['edit']))
 {
-	xhtml_head(T_("Operator edit"),true,array("../css/table.css"));
+	xhtml_head(T_("Edit Operator settings"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css", "../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js"));
 
 	$operator_id = intval($_GET['edit']);
 
@@ -140,10 +140,51 @@ if (isset($_GET['edit']))
 		FROM timezone_template";
 
 	$tz = $db->GetAll($sql);
+?>
 
-	print "<h2>" . T_("Edit") . ": " . $rs['username'] . "</h2>";
-	echo "<p><a href='?'>" . T_("Go back") . "</a></p>";
-	if (!empty($msg)) print "<h3>$msg</h3>";
+<script type="text/javascript">	
+//Password generator
+upp = new Array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+low = new Array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+dig = new Array('0','1','2','3','4','5','6','7','8','9');
+sym = new Array('~','!','@','#','$','%','^','&','*','(',')','_','+','=','|',';','.','/','?','<','>','{','}','[',']');
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------
+function rnd(x,y,z) { 
+	var num;
+	do {
+		num = parseInt(Math.random()*z);
+		if (num >= x && num <= y) break;
+	} while (true);
+return(num);
+}
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------
+function generate() {																
+	var pwd = '';
+	var res, s;
+	var k = 0;
+	var n = document.operform.number.value;
+	var pass = new Array();
+	var w = rnd(30,80,100);
+	for (var r = 0; r < w; r++) {
+		res = rnd(1,25,100); pass[k] = upp[res]; k++; 
+		res = rnd(1,25,100); pass[k] = low[res]; k++;
+		res = rnd(1,9,100); pass[k] = dig[res]; k++;
+		res = rnd(1,24,100); pass[k] = sym[res]; k++;		
+	}
+	for (var i = 0; i < n; i++) {
+		s = rnd(1,k-1,100);
+		pwd+= pass[s];
+	}
+	document.operform.password.value = pwd;
+}
+</script>
+
+<div class="form-group clearfix"><div class="col-sm-3"><a href='?' class="btn btn-default"><?php echo T_("Go back") ;?></a></div><div class="col-sm-6">
+<?php
+	print "<h3>" . T_("Operator") . ": " . $rs['username'] . "</h3>";
+	echo "</div></div>";
+	
+	if (!empty($msg)) echo $msg;
 
   $sql = "SELECT extension_id as value, extension as description,
         CASE WHEN current_operator_id = $operator_id THEN 'selected=\'selected\'' ELSE '' END AS selected
@@ -152,37 +193,78 @@ if (isset($_GET['edit']))
         OR current_operator_id = $operator_id";
 
   $ers = $db->GetAll($sql);
-
-	?>
-	<form action="?" method="post">
-	<div><label for="username"><?php echo T_("Username") . ": "; ?></label><input type='text' name='username' value="<?php echo $rs['username'];?>"/></div>
-	<?php
-	if (HTPASSWD_PATH !== false) 
-	{ ?>
-	<div><label for="password"><?php echo T_("Update password (leave blank to keep existing password)") . ": "; ?></label><input type='text' name='password'/></div>
-	<?php }
-	?>
-	<div><label for="firstName"><?php echo T_("First name") . ": "; ?></label><input type='text' name='firstName' value="<?php echo $rs['firstName'];?>"/></div>
-	<div><label for="lastName"><?php echo T_("Last name") . ": "; ?></label><input type='text' name='lastName' value="<?php echo $rs['lastName'];?>"/></div>
- 	<div><label for="extension_id"><?php  echo T_("Extension"); echo "</label>"; display_chooser($ers,"extension_id","extension_id",true,false,false,false); ?> </div>
-  <div><label for="chat_user"><?php echo T_("Jabber/XMPP chat user") . ": "; ?></label><input type='text' name='chat_user' value="<?php echo $rs['chat_user'];?>"/></div>
-	<div><label for="chat_password"><?php echo T_("Jabber/XMPP chat password") . ": "; ?></label><input type='text' name='chat_password' value="<?php echo $rs['chat_password'];?>"/></div>
-	<div><label for="chat_enable"><?php echo T_("Uses chat") . "? ";?></label><input type="checkbox" name="chat_enable" <?php if ($rs['chat_enable'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
-	<div><label for="timezone"><?php echo T_("Timezone") . ": ";?></label><?php display_chooser($tz,"timezone","timezone",false,false,false,false,array("value",$rs['Time_zone_name'])); ?></div>
-	<div><label for="enabled"><?php echo T_("Enabled") . "? ";?></label><input type="checkbox" name="enabled" <?php if ($rs['enabled'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
-	<div><label for="voip"><?php echo T_("Uses VoIP") . "? ";?></label><input type="checkbox" name="voip" <?php if ($rs['voip'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+  
+?>
+	<form action="?" method="post" class="form-horizontal panel-body" name="operform">
+	<div class="form-group">
+		<label for="username" class="col-sm-3 control-label"><?php echo T_("Username") . ": "; ?></label>
+		<div class="col-sm-3"><input type='text' name='username' class="form-control" value="<?php echo $rs['username'];?>"/></div>
+	</div>
+<?php if (HTPASSWD_PATH !== false) { ?>
+	<div class="form-group">
+		<label for="password" class="col-sm-3 control-label"><?php echo T_("Password") . ": "; ?></label>
+		<div class="col-sm-3"><input type='text' name='password' class="form-control" placeholder="<?php echo T_("leave blank to keep existing password");?>"/></div>
+		<div class="col-sm-6 form-inline">&emsp;
+			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default"/>&emsp;<?php echo T_("Password with");?>&ensp;
+			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;" class="form-control" />&ensp;<?php echo T_("characters");?>
+		</div>
+	</div>
+<?php } ?>
+	<div class="form-group">
+		<label for="firstName" class="col-sm-3 control-label"><?php echo T_("First name") . ": "; ?></label>
+		<div class="col-sm-3"><input type='text' name='firstName' class="form-control" value="<?php echo $rs['firstName'];?>"/></div>
+	</div>
+	<div class="form-group">
+		<label for="lastName" class="col-sm-3 control-label"><?php echo T_("Last name") . ": "; ?></label>
+		<div class="col-sm-3"><input type='text' name='lastName'  class="form-control" value="<?php echo $rs['lastName'];?>"/></div>
+	</div>
+	<div class="form-group">
+		<label for="timezone" class="col-sm-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
+		<div class="col-sm-3"><?php display_chooser($tz,"timezone","timezone",false,false,false,true,array("value",$rs['Time_zone_name']),true,"form-inline"); ?></div>
+		<div class="col-sm-6 form-inline">
+			<?php echo T_("Edit") . "&emsp;";?>
+			<a  href='timezonetemplate.php' class="btn btn-default"><?php echo T_("TimeZones list");?></a>
+		</div>
+	</div>
+ 	<div class="form-group">
+		<label for="extension_id" class="col-sm-3 control-label"><?php  echo T_("Extension") . ": "; ?></label> 
+		<div class="col-sm-3"><?php echo display_chooser($ers,"extension_id","extension_id",true,false,false,true,false,true,"form-inline"); ?> </div>
+		<div class="col-sm-6 form-inline">
+			<?php echo T_("Edit") . "&emsp;";?>
+			<a  href='extensionstatus.php' class="btn btn-default"><?php echo T_("Extensions");?></a>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="voip" class="col-sm-3 control-label"><?php echo T_("Uses VoIP") . "? ";?></label>
+		<div class="col-sm-3"><input type="checkbox" name="voip" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['voip'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+	</div>
+	<div class="form-group">
+		<label for="chat_user" class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat user") . ": "; ?></label>
+		<div class="col-sm-3"><input type='text' name='chat_user' class="form-control" value="<?php echo $rs['chat_user'];?>"/></div>
+	</div>
+	<div class="form-group">
+		<label for="chat_password" class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat password") . ": "; ?></label>
+		<div class="col-sm-3"><input type='text' name='chat_password' class="form-control" value="<?php echo $rs['chat_password'];?>"/></div>
+	</div>
+	<div class="form-group">
+		<label for="chat_enable" class="col-sm-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>
+		<div class="col-sm-3"><input type="checkbox" name="chat_enable" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['chat_enable'] == 1) echo "checked=\"checked\"";?> value="1"/></div>
+	</div>
+	<div class="form-group">
+		<label for="enabled" class="col-sm-3 control-label"><?php echo T_("Enabled") . "? ";?></label>
+		<div class="col-sm-3"><input type="checkbox" name="enabled" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['enabled'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+	</div>
 	<div><input type='hidden' name='operator_id' value='<?php echo $operator_id;?>'/></div>
 	<div><input type='hidden' name='existing_username' value="<?php echo $rs['username'];?>"/></div>
-	<div><input type="submit" name="submit" value="<?php echo T_("Update operator");?>"/></div>
-	</form>
-	<?php	
 
-	
+	<div class="form-group"><div class="col-sm-3 col-sm-offset-3"><input type="submit" name="submit" class="btn btn-primary btn-block" value="<?php echo T_("Update operator");?>"/></div></div>
+	</form>
+
+
+	<?php	
 	xhtml_foot();
 	exit();
 }
-
-
 
 if (isset($_GET['voipdisable']))
 {
@@ -205,7 +287,6 @@ if (isset($_GET['voipenable']))
 
 	$db->Execute($sql);	
 }
-
 
 if (isset($_GET['disable']))
 {
@@ -265,51 +346,61 @@ if (isset($_GET['operator_id']))
 if ($display)
 {
 	$sql = "SELECT
-    CONCAT(firstName, ' ', lastName) as name,
-      e.extension,
-			CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . TQ_("Windows bat file") . "</a>') as winbat,
-			CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . TQ_("*nix script file") . "</a>') as sh,
-			CASE WHEN enabled = 0 THEN
-				CONCAT('<a href=\'?enable=',operator_id,'\'>" . TQ_("Enable") . "</a>') 
-			ELSE
-				CONCAT('<a href=\'?disable=',operator_id,'\'>" . TQ_("Disable") . "</a>') 
-			END
-			as enabledisable,
-			CASE WHEN voip = 0 THEN
-				CONCAT('<a href=\'?voipenable=',operator_id,'\'>" . TQ_("Enable VoIP") . "</a>') 
-			ELSE
-				CONCAT('<a href=\'?voipdisable=',operator_id,'\'>" . TQ_("Disable VoIP") . "</a>') 
-			END as voipenabledisable,
-			CONCAT('<a href=\'?edit=',operator_id,'\'>" . TQ_("Edit") . "</a>')  as edit,
-			username
-      FROM operator
-      LEFT JOIN `extension` as e ON (e.current_operator_id = operator_id)";
-	
+    CONCAT(firstName, ' ', lastName) as name, 
+	CONCAT ('<a href=\'extensionstatus.php?edit=',e.extension_id,'\'>', e.extension ,'</a>') as `extension`,
+	CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . TQ_("Win .bat file") . "</a>') as winbat,
+	CONCAT('<a href=\'?sh=sh&amp;operator_id=',operator_id,'\'>" . TQ_("*nix script file") . "</a>') as sh,
+	CASE WHEN enabled = 0 THEN
+		CONCAT('&ensp;<a href=\'?enable=',operator_id,'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Enable") . "\' class=\'fa fa-toggle-off fa-2x\' style=\'color:grey;\'></i></a>&ensp;') 
+	ELSE
+		CONCAT('&ensp;<a href=\'?disable=',operator_id,'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Disable") . "\' class=\'fa fa-toggle-on fa-2x\'></i></a>&ensp;')
+	END as enabledisable,
+	CASE WHEN voip = 0 THEN
+		CONCAT('<a href=\'?voipenable=',operator_id,'\'>" . TQ_("Enable VoIP") . "</a>') 
+	ELSE
+		CONCAT('<a href=\'?voipdisable=',operator_id,'\'>" . TQ_("Disable VoIP") . "</a>') 
+	END as voipenabledisable,
+	CONCAT('&emsp;<a href=\'?edit=',operator_id,'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Edit") . "\' class=\'fa fa-pencil-square-o fa-lg\'></i></a>&emsp;') as edit,  username
+    FROM operator
+    LEFT JOIN `extension` as e ON (e.current_operator_id = operator_id)";
+
 	$rs = $db->GetAll($sql);
 	
-	xhtml_head(T_("Operator list"),true,array("../css/table.css"));
+	xhtml_head(T_("Operator list"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../css/custom.css"));
 	
 	$columns = array("name","username","extension","enabledisable","edit");
-	$titles = array(T_("Operator"),T_("Username"),T_("Extension"),T_("Enable/Disable"),T_("Edit"));
-
+	$titles = array(T_("Operator"),T_("Username"),T_("Extension"),"&emsp;<i class='fa fa-lg fa-power-off '></i>","&emsp;<i class='fa fa-lg fa-pencil-square-o'></i>"); 
+	
 	if (VOIP_ENABLED)
 	{
-		print "<p>" . T_("Download the file for each user and save in the same folder as the voip.exe executable. When the file is executed, it will run the voip.exe program with the correct connection details to connect the operator to the VoIP server") . "</p>";
-	
-		print "<p><a href='../voipclient.exe'>" . T_("Download Windows VoIP Executable")  . "</a></p>";
-		print "<p><a href='../voipclient'>" . T_("Download Linux VoIP Executable")  . "</a></p>";
-
 		$columns[] = "voipenabledisable";
 		$columns[] = "winbat";
 		$columns[] = "sh";
-		$titles[] = T_("Enable/Disable VoIP");
-		$titles[] = T_("Windows VoIP");
-		$titles[] = T_("*nix VoIP");
+		$titles[] = T_("VoIP ON/Off");
+		$titles[] = T_("Win file");//Windows VoIP
+		$titles[] = T_("*nix flle");//*nix VoIP
 	}
-
+	echo "<div class=' col-sm-10'><div class=' panel-body'>";
 	xhtml_table($rs,$columns,$titles);
-
+	echo "</div></div>";
 	
+	echo "<div class='form-group col-sm-2'>
+			<div class='panel-body'><a href='operators.php?add=add' class='btn btn-default btn-block'><i class='fa fa-lg fa-user-plus'></i>&emsp;" . T_("Add an operator") . "</a></div>
+			<div class='panel-body'><a href='extensionstatus.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-whatsapp'></i>&emsp;" . T_("Extensions") . "</a></div>
+			<div class='panel-body'><a href='operatorquestionnaire.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-link'></i>  " . T_("Assign to questionnaire") . "</a></div>
+			<div class='panel-body'><a href='operatorskill.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-user-md'></i>&emsp;" . T_("Operator skills") . "</a></div>
+			<div class='panel-body'><a href='operatorperformance.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-signal'></i>&emsp;" . T_("Operator performance") . "</a></div>";
+			
+	if (VOIP_ENABLED)
+	{
+		print "<div class='well'>" . T_("Download the file for each user and save in the same folder as the voip.exe executable. When the file is executed, it will run the voip.exe program with the correct connection details to connect the operator to the VoIP server"). "</br></br>";
+	
+		print "<a href='../voip/voipclient.exe' class='btn btn-default btn-block' title='" . T_("Download Windows VoIP Client Executable file")  . "'><i class='fa fa-lg fa-download'></i>&emsp;" . T_("Download Win file")  . "</a></br>";
+		print "<a href='../voip/voipclient' class='btn btn-default btn-block' title='" . T_("Download Linux VoIP Executable file")  . "'><i class='fa fa-lg fa-download'></i>&emsp;" . T_("Download Linux file")  . "</a></div>";
+
+	}
+	print	"</div>";
+		
 	xhtml_foot();
 }
 ?>

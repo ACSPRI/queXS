@@ -223,7 +223,7 @@ function get_stats_total($rs)
 		$callsph = round($calls/($totaltime/3600),4);
 	}
 
-	$rs[] = array("effectiveness" => $effectiveness, "completions" => $completions,"time" => sec_to_time($totaltime),"totalcalls" => $calls,"callt" => sec_to_time($calltime),"CPH" => $cph,"CALLSPH" => $callsph);
+	$rs[] = array("effectiveness" => '<b>' . $effectiveness . '</b>', "completions" =>  '<b>' .$completions. '</b>',"time" =>  '<b>' . sec_to_time($totaltime). '</b>',"totalcalls" =>  '<b>' . $calls. '</b>',"callt" =>  '<b>' . sec_to_time($calltime). '</b>',"CPH" =>  '<b>' . $cph. '</b>',"CALLSPH" =>  '<b>' . $callsph. '</b>');
 
 	return $rs;
 }
