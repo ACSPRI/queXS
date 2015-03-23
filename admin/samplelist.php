@@ -48,13 +48,13 @@ $css = array(
 "../include/bootstrap-3.3.2/css/bootstrap.min.css", 
 "../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
 "../include/font-awesome-4.3.0/css/font-awesome.css",
-"../css/bootstrap-switch.min.css",
+"../include/bootstrap-toggle/css/bootstrap-toggle.min.css",
 "../css/custom.css"
 			);
 $js_head = array(
 "../js/jquery-2.1.3.min.js",
 "../include/bootstrap-3.3.2/js/bootstrap.min.js",
-"../js/bootstrap-switch.min.js"
+"../include/bootstrap-toggle/js/bootstrap-toggle.min.js",
 				);
 $js_foot = array(
 "../js/bootstrap-confirmation.js",
@@ -167,7 +167,7 @@ if (isset($_GET['view']))
 	$sample_id = $db->GetOne($sql);
 
 	$sql = "SELECT si.description, sv.val, sv.var,
-		CONCAT('<input type=\'checkbox\' ', CASE WHEN (sir.restrict IS NULL || sir.restrict = 0) THEN 'checked=\"checked\"' ELSE '' END   ,' name=\'',sv.var,'\' value=\'11\' switch=\'yes\' data-size=\'small\' data-on-text=" . TQ_("Yes") . " data-off-text=" . TQ_("No") . " />') as box,
+		CONCAT('<input type=\'checkbox\' ', CASE WHEN (sir.restrict IS NULL || sir.restrict = 0) THEN 'checked=\"checked\"' ELSE '' END   ,' name=\'',sv.var,'\' value=\'11\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\"/>') as box,
 		sir.restrict IS NULL as existss
 		FROM sample_import as si
 		JOIN `sample` as s ON (s.import_id = si.sample_import_id AND s.sample_id = $sample_id)
@@ -198,9 +198,7 @@ if (isset($_GET['view']))
 	<div><input type='hidden' name='sample_import_id' value='<?php echo $sample_import_id;?>'/></div></br>
 	<div class="col-md-offset-4"><button type="submit" name="submitvp" class="btn btn-default"> <i class="fa fa-eye fa-lg fa-fw text-primary"></i>&emsp;<?php  echo T_("Save changes");?></button></div>
 	</form>
-	<script type="text/javascript">
-		$('[switch="yes"]').bootstrapSwitch();
-	</script>
+
 <?php
 }
 	xhtml_foot();
@@ -217,7 +215,7 @@ if (isset($_GET['edit']))
 	$sample_import_id = intval($_GET['edit']);
 
 	$sql = "SELECT si.description, sv.val, sv.var,
-		CONCAT('<input type=\'checkbox\' name=\'',sv.var,'\' value=\'',sv.var,'\' switch=\'yes\' data-size=\'small\' data-on-color=\'danger\' data-on-text=" . TQ_("Yes") . " data-off-text=" . TQ_("No") . " />') as box
+		CONCAT('<input type=\'checkbox\' name=\'',sv.var,'\' value=\'',sv.var,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\" data-onstyle=\'danger\'/>') as box
 		FROM sample_import as si, sample_var as sv, sample as s
 		WHERE si.sample_import_id = $sample_import_id
 		AND sv.sample_id = s.sample_id
@@ -238,9 +236,7 @@ if ($rs){
 	</br>
 	<div class="col-md-offset-3"><button type="submit" name="submit" class="btn btn-danger"> <i class="fa fa-trash-o fa-lg fa-fw "></i>&emsp;<?php echo T_("Delete selected fields");?></button></div>
 	</form>
-	<script type="text/javascript">
-$('[switch="yes"]').bootstrapSwitch();
-</script>
+
 <?php	
 	}
 else 
@@ -310,6 +306,5 @@ xhtml_table($rs,$columns, false, "table-hover table-condensed ");
 xhtml_foot($js_foot);
 ?>
 <script type="text/javascript">
-//$('[switch="yes"]').bootstrapSwitch()
 $('[data-toggle="confirmation"]').confirmation()
 </script>
