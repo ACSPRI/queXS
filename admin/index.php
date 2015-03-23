@@ -108,10 +108,10 @@ include ("../lang.inc.php");
           </li>
 		  <li class="has_sub"><a href="" class=""><i class="fa fa-calendar fa-lg"></i><span><?php print T_("Time slots and shifts") ;?></span></a>
               <ul class="" style="">
-                <li><a href="?page=availabilitygroup.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Manage Time slots") ;?></a></li>
-                <li><a href="?page=questionnaireavailability.php"><i class="fa fa-thumb-tack fa-fw"></i><?php print T_("Assign Time slots to questionnaires") ;?></a></li>
-				<li><a href="?page=questionnairecatimeslots.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign call attempt time slots to questionnaire") ; ?></a></li>
-				<li><a href="?page=questionnairecatimeslotssample.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign call attempt time slots to questionnaire sample") ; ?></a></li>
+                <li><a href="?page=assigntimeslots.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign Time slots") ;?></a></li>
+           <!--     <li><a href="?page=questionnaireavailability.php"><i class="fa fa-thumb-tack fa-fw"></i><?php // print T_("Assign Time slots to questionnaires") ;?></a></li>
+				<li><a href="?page=questionnairecatimeslots.php"><i class="fa fa-link fa-fw"></i><?php // print T_("Assign call attempt time slots to questionnaire") ; ?></a></li>
+				<li><a href="?page=questionnairecatimeslotssample.php"><i class="fa fa-link fa-fw"></i><?php // print T_("Assign call attempt time slots to questionnaire sample") ; ?></a></li> -->
                 <li><a href="?page=addshift.php"><i class="fa fa-calendar-o fa-fw"></i><?php print T_("Shift management") ;?></a></li>
               </ul>
           </li>
@@ -125,7 +125,7 @@ include ("../lang.inc.php");
               <ul class="" style="">
                 <li><a href="?page=operators.php"><i class="fa fa-user-plus fa-fw"></i><?php print T_("Add operators to the system") ;?></a></li>
                 <li><a href="?page=operatorlist.php"><i class="fa fa-user fa-fw"></i><?php print T_("Operator management") ;?></a></li>
-                <li><a href="?page=exten_tab.php "><i class="fa fa-phone-square fa-fw"></i><?php print T_("Extension status") ;?></a></li>
+                <li><a href="?page=extensionstatus.php "><i class="fa fa-phone fa-fw"></i><?php print T_("Extension status") ;?></a></li>
                 <li><a href="?page=operatorquestionnaire.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign operators to questionnaires") ;?></a></li>
                 <li><a href="?page=operatorskill.php"><i class="fa fa-user-md fa-fw"></i><?php print T_("Modify operator skills") ;?></a></li>
                 <li><a href="?page=operatorperformance.php"><i class="fa fa-signal fa-fw"></i><?php print T_("Operator performance") ;?></a></li>
@@ -133,7 +133,7 @@ include ("../lang.inc.php");
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-line-chart"></i><span><?php print T_("Results") ;?></span></a>
               <ul class="" style="">
-                <li><a href="?page=displayappointments.php"><i class="fa fa-list-ul fa-fw"></i><span><?php print T_("Display all future appointments") ;?></span></a></li>
+                <li><a href="?page=displayappointments.php"><i class="fa fa-clock-o fa-fw"></i><span><?php print T_("Display all future appointments") ;?></span></a></li>
                 <li><a href="?page=samplecallattempts.php"><i class="fa fa-table fa-fw"></i><?php print T_("Sample call attempts report") ;?></a></li>
                 <li><a href="?page=callhistory.php" class=""><i class="fa fa-history fa-fw"></i><?php print T_("Call history") ;?></a></li>
                 <li><a href="?page=shiftreport.php"><i class="fa fa-th-large fa-fw"></i><?php print T_("Shift reports") ;?></a></li>
@@ -158,6 +158,7 @@ include ("../lang.inc.php");
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-gear"></i><span><?php print T_("System settings") ;?></span></a>
               <ul class="" style="">
                 <li><a href="?page=timezonetemplate.php"><i class="fa fa-globe fa-fw"></i><?php print T_("Set default timezone list") ;?></a></li>
+				<li><a href="?page=availabilitygroup.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Manage Time slots") ;?></a></li>
                 <li><a href="?page=shifttemplate.php"><i class="fa fa-calendar fa-fw"></i><?php print T_("Set default shift times") ;?></a></li>
                 <li><a href="?page=callrestrict.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Set call restriction times") ;?></a></li>
                 <li><a href="?page=centreinfo.php"><i class="fa fa-university fa-fw"></i><?php print T_("Set centre information") ;?></a></li>
@@ -172,7 +173,7 @@ include ("../lang.inc.php");
 		  <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-tty"></i><span><?php print T_("VoIP");?><i class="fa fa-toggle-on pull-right" style="font-size:1.5em !important; margin-right:20px;"></i></span></a>
              <ul class="" style="">
                <li><a href="?page=voipmonitor.php"><i class="fa fa-power-off v"></i><?php print T_("Start and monitor VoIP") ;?></a></li>
-               <li><a href="?page=extensionstatus.php"><i class="fa fa-asterisk fa-fw"></i><?php print T_("Extension status") ;?></a></li>
+              <!-- <li><a href="?page=extensionstatus.php"><i class="fa fa-asterisk fa-fw"></i><?php //print T_("Extension status") ;?></a></li> -->
              </ul>
 		  </li>
 		  
@@ -183,7 +184,7 @@ include ("../lang.inc.php");
     </div>
 
 	<!-- Main page container -->
-	<?php $page = "callhistory.php"; if (isset($_GET['page'])) $page = $_GET['page']; ?>
+	<?php $page = "questionnairelist.php"; if (isset($_GET['page'])) $page = $_GET['page']; ?>
 	<div class="mainbar" id=" "><?php xhtml_object($page,' '); ?></div>
 
 		<div class="clearfix"></div>
