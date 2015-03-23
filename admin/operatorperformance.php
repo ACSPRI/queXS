@@ -63,16 +63,16 @@ include("../functions/functions.input.php");
  */
 include("../functions/functions.operator.php");
 
-xhtml_head(T_("Operator Performance"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Operator Performance"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 
 //$rs = get_stats_total(get_stats());
 //print "<h2>" . T_("Overall") . "</h2>";
 //xhtml_table($rs,array("firstName","completions","totalcalls","time","callt","CPH","CALLSPH","effectiveness"),array(T_("Operator"),T_("Completions"),T_("Calls"),T_("Total time"),T_("Call time"),T_("Completions p/h"),T_("Calls p/h"),T_("Effectiveness")));
 
 $questionnaire_id = false;
-print "<h3>" . T_("Please select a questionnaire") . "</h3>";
+print "<h3 class='form-inline pull-left'>" . T_("Please select a questionnaire") . "&emsp;</h3>";
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id);
+display_questionnaire_chooser($questionnaire_id,false,"form-inline clearfix", "form-control");
 
 if ($questionnaire_id)
 {
@@ -93,9 +93,9 @@ if ($questionnaire_id)
 		
 	$rs = $db->GetAll($sql);
 
-	print "<h3>" . T_("Please select a shift") . "</h3>";
+	print "</br><h3 class='form-inline pull-left'>" . T_("Please select a shift") . "&emsp;</h3>";
 	
-	display_chooser($rs,"shift_id","shift_id",true,"questionnaire_id=$questionnaire_id");
+	display_chooser($rs,"shift_id","shift_id",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"form-inline form-group");//,false,true,false,true,"pull-left"
 
 	if ($shift_id)
 	{
@@ -106,8 +106,5 @@ if ($questionnaire_id)
 }
 
 xhtml_foot();
-
-
-
 ?>
 

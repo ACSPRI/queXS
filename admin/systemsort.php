@@ -72,9 +72,9 @@ if ($p)
 		set_setting('systemsort',false);
 	}
 
-	xhtml_head(T_("Monitor system wide case sorting"),true,array("../css/table.css"),false,false,false,true);
+	xhtml_head(T_("Monitor system wide case sorting"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),false,false,false,true);
 
-	print "<h1>" . T_("Running process:") . " $p</h1>";
+	print "<h2>" . T_("Running process:") . " $p</h2>";
 
 	if (is_process_killed($p))
 	{
@@ -91,15 +91,16 @@ if ($p)
         {
                 xhtml_table($d,array('process_log_id','datetime','data'),array(T_("Log id"), T_("Date"), T_("Log entry")));
         }
-
 }
 else
 {
-	xhtml_head(T_("Monitor system wide case sorting"),true,array("../css/table.css"));
-	print "<h2>" . T_("Monitor system wide case sorting") . "</h2>";
+	xhtml_head(T_("Monitor system wide case sorting"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"));
+	//print "<h2>" . T_("Monitor system wide case sorting") . "</h2>";
 	print "<p><a href='?watch=watch'>" . T_("Click here to enable and begin system wide case sorting") . "</a></p>";
-	print "<p>"  . T_("System wide case sorting is periodically (via SYSTEM_SORT_MINUTES configuration directive) sorting cases on a system wide basis instead of finding the most appropriate case each time an operator requests a new case. This may increase performance where there are a large number of cases or complex quotas in place. If you are not experiencing any performance problems, it is not recommended to use this feature.") . "</p>";
+	print "<div class='well pull-right col-sm-4'><p>"  . T_("System wide case sorting is periodically (via SYSTEM_SORT_MINUTES configuration directive) sorting cases on a system wide basis instead of finding the most appropriate case each time an operator requests a new case. This may increase performance where there are a large number of cases or complex quotas in place. If you are not experiencing any performance problems, it is not recommended to use this feature.") . "</p></div>";
+	
 	print "<h2>" . T_("Outcome of last process run (if any)") . "</h2>";
+	
 	$d = process_get_last_data(2);
         if ($d !== false)
         {

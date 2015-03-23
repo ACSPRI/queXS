@@ -58,26 +58,34 @@ if (isset($_POST['update']))
 	set_setting("chat_enabled",$enable);
 }
 
-xhtml_head(T_("Supervisor chat"),true,false,array("../js/window.js"));
+xhtml_head(T_("Supervisor chat"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js", "../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../js/window.js"));
 
-print "<p>" . T_("Allow interviewers to chat with the supervisor over XMPP (Jabber). Required is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will need XMPP/Jabber accounts.") . "</p>";
+print "<p class='well'>" . T_("Allow interviewers to chat with the supervisor over XMPP (Jabber). Required is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will need XMPP/Jabber accounts.") . "</p>";
 
 		$e = get_setting("chat_enabled");
 		$checked = "checked='checked'";
 		if (empty($e))
 			$checked = "";
+?>
+		<form action="" method="post" class="form-horizontal">
 
-		?>
-		<form action="" method="post">
-		<p>
-		<div><label for="enable"><?php  echo T_("Enable supervisor chat?"); ?>: </label><input id='enable' type='checkbox' name='enable' val='1' <?php echo $checked; ?>/></div>
-		<div><label for="bosh"><?php  echo T_("Set BOSH URL"); ?>: </label><input id='bosh' type='text' name='bosh'  value='<?php echo get_setting("bosh_service"); ?>'/></div>
-		<div><label for="supervisor"><?php  echo T_("Supervisor XMPP/Jabber id"); ?>: </label><input id='supervisor' name='supervisor' type='text' value='<?php echo get_setting("supervisor_xmpp"); ?>'/></div>
-		<div><input type="submit" id="update" name="update" value="<?php  echo T_("Update"); ?>"/></div>
-		</p>
+		<div class="form-group form-inline">
+			<label class="control-label col-sm-3" for="enable"><?php  echo T_("Enable supervisor chat?"); ?>: </label>
+			<input id='enable' type='checkbox' data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80" name='enable' val='1' <?php echo $checked; ?>/>
+		</div>
+		<div class="form-group form-inline">
+			<label class="control-label col-sm-3" for="bosh"><?php  echo T_("Set BOSH URL"); ?>: </label>
+			<input id='bosh' type='text' name='bosh' class="form-control pull-left" required size="60" value='<?php echo get_setting("bosh_service"); ?>'/>
+		</div>
+		<div class="form-group form-inline">
+			<label class="control-label col-sm-3" for="supervisor"><?php  echo T_("Supervisor XMPP/Jabber id"); ?>: </label>
+			<input id='supervisor' name='supervisor' type='text' class="form-control pull-left" required size="60" value='<?php echo get_setting("supervisor_xmpp"); ?>'/>
+		</div>
+		
+		<input type="submit" id="update" name="update" class="btn btn-primary col-sm-offset-3 col-sm-3" value="<?php  echo T_("Update"); ?>"/>
+		
 		</form>
-		<?php 
+
+<?php 
 xhtml_foot();
-
-
 ?>

@@ -125,7 +125,8 @@ function validate_bulk_appointment($tmpfname)
 
 if (isset($_POST['tmpfname']))
 {
-	xhtml_head("queXS",true,array("../css/table.css"));
+	$subtitle = T_("Result");
+	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),false,false,false,false,$subtitle);
 	$todo = validate_bulk_appointment($_POST['tmpfname']);
 
 	if (is_array($todo))
@@ -213,60 +214,76 @@ if (isset($_POST['tmpfname']))
 else if (isset($_POST['import_file']))
 {
 	//file has been submitted
-	
-	xhtml_head("queXS",true,array("../css/table.css"));
+	$subtitle = T_("Check data to submit");
+	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),false,false,false,false,$subtitle);
 	?>
-	<form action="" method="post">
+	<form action="" method="post" >
 	<?php 
 
 	$tmpfname = tempnam(TEMPORARY_DIRECTORY, "FOO");
+
 	move_uploaded_file($_FILES['file']['tmp_name'],$tmpfname);
 
 	$todo = validate_bulk_appointment($tmpfname);
-
-	if (is_array($todo))
-	{
-		print "<p>" . T_("Please check the case id's, appointment start and end times and notes are correct before accepting below") . "</p>";
+		
+	if (is_array($todo) && !empty($todo)) {
+			
+		print "<p class='well'>" . T_("Please check the case id's, appointment start and end times and notes are correct before accepting below") . "</p>";
 		$todoh = array(T_("Case id"), T_("Start time"), T_("End time"), T_("Note"));
 		xhtml_table($todo,array(0,1,2,3),$todoh);
 		?>
 		<form action="" method="post">
-		<p><input type="hidden" name="tmpfname" value="<?php  echo $tmpfname; ?>" /></p>
-		<p><input type="submit" name="import_file" value="<?php  echo T_("Accept and generate bulk appointments"); ?>"/></p>
+			<input type="hidden" name="tmpfname" value="<?php  echo $tmpfname; ?>" />
+			<input type="submit" name="import_file" value="<?php  echo T_("Accept and generate bulk appointments"); ?>" class="btn btn-primary"/>
 		</form>
 		<?php 
 	}
 	else
-		print "<p>" . T_("The file does not contain at least caseid, starttime and endtime columns. Please try again.") ."</p>";
-
+		print "<p class='well text-danger'>" . T_("The file does not contain at least caseid, starttime and endtime columns. Please try again.") ."</p>";
+	
+	print "</form>";
+	
+	
 	xhtml_foot();
 
 }
 else
 {
 	//need to supply file to upload
-	xhtml_head(T_("Import: Select file to upload"),true,array("../css/table.css"));
+	$subtitle = T_("Import: Select file to upload");
+	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../js/bootstrap-filestyle.min.js"),false,false,false,$subtitle );
+	
+	$ua = $_SERVER['HTTP_USER_AGENT'];
+	if (preg_match('/Firefox/i', $ua)) $csv= "text/csv"; else $csv= ".csv";
+	
 	?>
-	<h1><?php echo T_("Bulk appointment generator"); ?></h1>
-	<p><?php echo T_("Provide a headered CSV file containing at least 3 columns - caseid, starttime and endtime. Optionally you can include a note column to attach a note to the case in addition to setting an appointment. Only cases that have temporary (non final) outcomes will have appointments generated, and the outcome of the case will be updated to an appointment outcome."); ?><p>
-	<p><?php echo T_("Example CSV file:"); ?></p>
-	<div><table class="tclass">
-	<tr><th>caseid</th><th>starttime</th><th>endtime</th><th>note</th></tr>
-	<tr><td>1</td><td>2012-08-15 11:00:00</td><td>2012-08-15 13:00:00</td><td>Appointment automatically generated</td></tr>
-	<tr><td>2</td><td>2012-08-15 12:00:00</td><td>2012-08-15 14:00:00</td><td>Appointment automatically generated</td></tr>
-	<tr><td>3</td><td>2012-08-15 13:00:00</td><td>2012-08-15 15:00:00</td><td>Appointment automatically generated</td></tr>
-	</table></div>
+	
+	<p class="well"><?php echo T_("Provide a headered CSV file containing at least 3 columns - caseid, starttime and endtime. </br> Optionally you can include a note column to attach a note to the case in addition to setting an appointment. </br>Only cases that have temporary (non final) outcomes will have appointments generated, and the outcome of the case will be updated to an appointment outcome."); ?><p>
+	
+	<div class="panel-body">
+		<h5><u><?php echo T_("Example CSV file:"); ?></u></h5>
+		<table class="table-bordered table-condensed form-group">
+			<tr><th>caseid</th><th>starttime</th><th>endtime</th><th>note</th></tr>
+			<tr><td>1</td><td>2012-08-15 11:00:00</td><td>2012-08-15 13:00:00</td><td>Appointment automatically generated</td></tr>
+			<tr><td>2</td><td>2012-08-15 12:00:00</td><td>2012-08-15 14:00:00</td><td>Appointment automatically generated</td></tr>
+			<tr><td>3</td><td>2012-08-15 13:00:00</td><td>2012-08-15 15:00:00</td><td>Appointment automatically generated</td></tr>
+		</table>
+	</div>
+	
 	<form enctype="multipart/form-data" action="" method="post">
-	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
-	<p><?php  echo T_("Choose the CSV file to upload:"); ?><input name="file" type="file" /></p>
-	<p><input type="submit" name="import_file" value="<?php  echo T_("Load bulk appointment CSV"); ?>"/></p>
+	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+	
+	<h4 class="pull-left" ><?php  echo T_("Select bulk appointment CSV file to upload"); ?>:&ensp;</h4>
+	
+	<div class="col-sm-4">
+		<input name="file" class="filestyle" type="file" required data-buttonBefore="true" data-iconName="fa fa-folder-open fa-lg text-primary " data-buttonText="<?php  echo T_("Select file"); ?>" type="file" accept="<?php echo $csv; ?>"/>&emsp;
+	</div>
+	<button type="submit" class="btn btn-primary" name="import_file" value=""><i class='fa fa-upload fa-lg'></i>&emsp;<?php  echo "" . T_("Upload file"); ?></button>
+	
 	</form>
 
 	<?php 
 	xhtml_foot();
-
 }
-
-
 
 ?>
