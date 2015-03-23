@@ -86,7 +86,7 @@ function verify_fields($fields)
 	{
 		if (array_key_exists($fields["n_$val"], $names))
 		{
-			return T_("Duplicate name");
+			return T_("Duplicate column name") . ":&emsp;<b>" . $fields["n_$val"] . "</b>";
 		}
 		else
 		{
@@ -141,7 +141,7 @@ function display_table($data)
 		if (empty($val)) $val = "samp_$row";
 
 		print "<tr><td>$value</td>
-					<td><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\" switch=\"yes\" data-size=\"small\" data-on-text=\"" . TQ_("Yes") . "\" data-off-text=" . TQ_("No") . " /></td>
+					<td class='text-center'><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\" data-toggle=\"toggle\" data-size=\"small\" data-on=\"" . TQ_("Yes") . "\" data-off=" . TQ_("No") . " /></td>
 					<td><input type=\"text\" value=\"$val\" name=\"n_$row\" class=\"form-control\" /></td>
 					<td>";
 					print "<select name=\"t_$row\" class=\"form-control\">";
@@ -153,7 +153,7 @@ function display_table($data)
 						$selected = "";
 					}
 					print "</select></td>";
-			print "<td>&emsp;<input type=\"checkbox\" name=\"a_$row\" switch=\"yes\" data-size=\"small\" data-on-text=\"" . TQ_("Yes") . "\" data-off-text=" . TQ_("No") . " /></td>";
+			print "<td class=\"text-center\"><input type=\"checkbox\" name=\"a_$row\" data-toggle=\"toggle\" data-size=\"small\" data-on=\"" . TQ_("Yes") . "\" data-off=" . TQ_("No") . " /></td>";
 		print "</tr>";
 		$row++;
 	}	
