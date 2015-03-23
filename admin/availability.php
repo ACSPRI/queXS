@@ -118,7 +118,7 @@ if (empty($rs) || !$rs || empty($rs['t']))
 	print "<div class='alert alert-danger'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
 
 
-print "<div><a class='btn btn-default' href='availabilitygroup.php'>" . T_("Go back") . "</a></div>";
+print "<div><a class='btn btn-default' href='availabilitygroup.php'>" . T_("Go back") . "</a></div><br/>";
 
 
 $sql = "SELECT description 
@@ -129,9 +129,8 @@ $rs = $db->GetRow($sql);
 
 $description = $rs['description'];
 
-print "<h3>" . T_("Time slot name") . " :&emsp;<span class = 'text-primary'>" . $rs['description'] . "</span></h3>";
+print "<h3>" . T_("Time slot") . " :&emsp;<span class = 'text-primary '>" . $rs['description'] . "</span></h3>";
 
-print "<div class='well'>" . T_("Enter the start and end times for each day of the week to restrict calls within") . "</div>";
 /**
  * Begin displaying currently loaded restriction times
  */
@@ -151,9 +150,12 @@ translate_array($daysofweek,array("description"));
 	
 ?>
 	<div class=" panel-body col-sm-4"><form method="post" action="">
-	<p><label class="control-label"for="description"><?php echo T_("Time slot group name");  ?>: </label><input class="form-control" type="text" name="description" id="description" value="<?php echo $description;?>"/></p>
+	<p><label class="control-label"for="description"><?php echo T_("Edit Time slot group name");  ?>: </label><input class="form-control" type="text" name="description" id="description" value="<?php echo $description;?>"/></p>
 	<table class="table-hover table-condensed "><thead class="highlight">
 <?php 
+
+	print "<div class='well text-info'>" . T_("Enter the start and end times for each day of the week to restrict calls within") . "</div>";
+
 	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr></thead><tbody>";
 	$count = 0;
 	foreach($availabilitys as $availability)

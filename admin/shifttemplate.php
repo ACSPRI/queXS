@@ -102,7 +102,7 @@ if (empty($rs) || !$rs || empty($rs['t']))
 
 /**
  * Display warning if timezone data not installed
-
+ *
  */
 
 //print "<h1>" . T_("Set default shift times") . "</h1>";
@@ -135,15 +135,14 @@ translate_array($daysofweek,array("description"));
 		print "<tr id='row-$count'><td>";// class='row_to_clone' /* these are not the rows to clone...*/
 		display_chooser($daysofweek, "day[$count]", false, true, false, false, false, array("description",$shift['dt']));
 		print "</td>
-		<td>	<input class=\"form-control clockpicker\" size=\"8\" maxlength=\"8\" name=\"start[$count]\" type=\"text\" value=\"{$shift['start']}\"/></td>
-		<td>	<input class=\"form-control clockpicker\" size=\"8\" maxlength=\"8\" name=\"end[$count]\" type=\"text\" value=\"{$shift['end']}\"/></td>
-		</tr>";
+		<td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"start[$count]\" type=\"text\" value=\"{$shift['start']}\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td>
+		<td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"end[$count]\" type=\"text\" value=\"{$shift['end']}\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td></tr>";
 		$count++;
 	}
 	print "<tr  class='row_to_clone' id='row-$count'><td>";
 	display_chooser($daysofweek, "day[$count]", false, true, false, false, false, false);
-	print "	</td>	<td><input class=\"form-control clockpicker\" size=\"8\" maxlength=\"8\" name=\"start[$count]\" type=\"text\" value=\"08:00:00\"/></td>
-					<td><input class=\"form-control clockpicker\" size=\"8\" maxlength=\"8\" name=\"end[$count]\"   type=\"text\"  value=\"20:00:00\"/></td></tr>";
+	print "	</td><td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"start[$count]\" type=\"text\" value=\"08:00:00\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td>
+			<td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"end[$count]\"   type=\"text\"  value=\"20:00:00\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td></tr>";
 
 ?>
 	</tbody></table>
