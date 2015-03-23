@@ -106,19 +106,20 @@ if (isset($_POST['submit']))
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Quota report"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Quota report"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 
-print "<h2>" . T_("Select a questionnaire from the list below") . "</h2>";
+print "<h3 class='form-inline pull-left'>" . T_("Select a questionnaire") . ":&emsp;</h3>";
+
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id);
+display_questionnaire_chooser($questionnaire_id,false,"form-inline form-group", "form-control");
 
 if ($questionnaire_id)
 {
-	print "<h2>" . T_("Select a sample from the list below") . "</h2>";
+	print "<h3 class='form-inline pull-left'>" . T_("Select a sample") . ":&emsp;</h3>";
 	$sample_import_id = false;
 	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
-	display_sample_chooser($questionnaire_id,$sample_import_id);
+	display_sample_chooser($questionnaire_id,$sample_import_id,false,"form-inline form-group clearfix", "form-control");
 
 	if ($sample_import_id)
 	{
@@ -281,13 +282,17 @@ if ($questionnaire_id)
 		}
 
 		print "<form action='' method='post'>";
-		xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc","priority","autoprioritise"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete"),T_("Set priority"),T_("Auto prioritise")),"tclass",false,false);
-		print "<p><input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/><input type='submit' id='submit' name='submit' value='" . TQ_("Update priorities") . "'/></p></form>";
+			xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc","priority","autoprioritise"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete"),T_("Set priority"),T_("Auto prioritise")),"tclass",false,false);
+			
+		if ($report[0]("strata") != T_("Total sample"))
+			print "<input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/></br>
+					<input type='submit' id='submit' name='submit' class='btn btn-primary fa'value='" . TQ_("Update priorities") . "'/>";
+					
+		print "</form>";
 	}
 	
 }
 
 xhtml_foot();
-
 
 ?>

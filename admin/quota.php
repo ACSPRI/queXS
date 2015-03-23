@@ -106,32 +106,41 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_sample_quota_
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Quota management"),true,false,array("../js/window.js"));
-print "<h1>" . T_("Select a questionnaire from the list below") . "</h1>";
+xhtml_head(T_("Quota management"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+print "<h3 class='form-inline pull-left'>" . T_("Questionnaire") . ":&emsp;</h3>";
 
 $sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
  	FROM questionnaire
 	WHERE enabled = 1";
-display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id");
-
+display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id", true,false,true,true,false,true,"form-inline pull-left ");
 
 if ($questionnaire_id != false)
 {
 	$sample_import_id = false;
 	if (isset($_GET['sample_import_id'])) 	$sample_import_id = bigintval($_GET['sample_import_id']);
 
-	print "<h1>" . T_("Select a sample from the list below") . "</h1>";
+	
 	
 	$sql = "SELECT s.sample_import_id as value,s.description, CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 	 	FROM sample_import as s, questionnaire_sample as q
 		WHERE q.questionnaire_id = $questionnaire_id
 		AND q.sample_import_id = s.sample_import_id";
+	$s = $db->GetAll($sql);
+	if (!empty($s)){
+		
+		print "<h3 class='form-inline  pull-left'>&emsp;&emsp;&emsp;" . T_("Sample") . ": &emsp;</h3>";
+		display_chooser($db->GetAll($sql),"sample","sample_import_id",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"pull-left");
+	
+	} else {
+		print "<div class='clearfix'></div><div class='well text-info'>" . T_("No samples assigned to this questionnaire.") . "</div>";
+		
+	}
 
-	display_chooser($db->GetAll($sql),"sample","sample_import_id",true,"questionnaire_id=$questionnaire_id");
-
+	print "<div class='clearfix'></div>";
+	
 	if ($sample_import_id != false)
 	{
-		print "<h1>" . T_("Current quotas (click to delete)") . "</h1>";
+		print "<h2>" . T_("Current quotas") . ":</h2>";//(click to delete)
 		
 		$sql = "SELECT questionnaire_sample_quota_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison
 			FROM questionnaire_sample_quota as qsq, questionnaire as q
@@ -143,7 +152,7 @@ if ($questionnaire_id != false)
 	
 		if (empty($r))
 		{
-			print "<p>" . T_("Currently no quotas") . "</p>";
+			print "<p class='well text-info'>" . T_("Currently no quotas") . "</p>";
 		}
 		else
 		{
@@ -164,7 +173,7 @@ if ($questionnaire_id != false)
 		}
 	
 	
-		print "<h1>" . T_("Select a question for the quota") . "</h1>";
+		print "<h3 class=' '>" . T_("Select a question for the quota") . "</h3>";
 		
 		$sql = "SELECT lime_sid
 			FROM questionnaire
@@ -182,47 +191,70 @@ if ($questionnaire_id != false)
 			LEFT JOIN `" . LIME_PREFIX . "questions` AS lq2 ON ( lq2.qid = lq.parent_qid )
 			JOIN `" . LIME_PREFIX . "groups` as g ON (g.gid = lq.gid)
 			WHERE lq.sid = '$lime_sid'
-			ORDER BY g.group_order ASC, lq.question_order ASC";
+			ORDER BY lq.parent_qid ASC, lq.question_order ASC";//, lq.parent_qid ASC  lq.qid ASC,
 			
 	
-		display_chooser($db->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
+		display_chooser($db->GetAll($sql),"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id",true,true,false,true,"form-group");
+		
+		print "<div class='clearfix'></div>";
 	
 		if ($sgqa != false)
 		{
-			print "<h1>" . T_("Enter the details for creating the quota:") . "</h1>";
-			print "<h2>" . T_("Pre defined values for this question:") . "</h2>";
+			
+			print "<div class='col-sm-6 panel-body'><h3>" . T_("Enter the details for creating the quota:") . "</h3>";
+
+			?>
+			<form action="" method="get" class="form-inline form-group">
+			
+			<p><label for="comparison"><?php  echo T_("The type of comparison"); ?>:&emsp;</label>
+			<select name="comparison" class='form-control' id="comparison">
+				<option value="LIKE">LIKE</option>
+				<option value="NOT LIKE">NOT LIKE</option>
+				<option value="=">=</option><option value="!=">!=</option>
+				<option value="&lt;">&lt;</option>
+				<option value="&gt;">&gt;</option>
+				<option value="&lt;=">&lt;=</option>
+				<option value="&gt;=">&gt;=</option></select></p>
+				
+			<p><label for="value"><?php  echo T_("The code value to compare"); ?>:&emsp;</label>
+			<input type="text" name="value" id="value" class="form-control" size="35" required /></p>
+			
+			<p><label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?>:&emsp;</label>
+			<input type="number" name="completions" id="completions" class="form-control" size="6" maxlength="6" style="width:8em;" required /></p>
+			
+			<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
+			<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
+			<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
+			
+			<p><input type="submit" name="add_quota" value="<?php  print(T_("Add quota")); ?>" class="btn btn-primary fa"/></p>
+			</form>
+			<?php 
+			
+			print "</div>";
+			
+			print "<div class='col-sm-6 panel-body'><h3>" . T_("Code values for this question") . ":</h3>";
 
 			$qid = explode("X", $sgqa);
 			$qid = $qid[2];
 
-			$sql = "SELECT l.code,l.answer as title
+			$sql = "SELECT CONCAT('<b class=\'fa\'>&emsp;', l.code , '</b>')as code,l.answer as title
 				FROM `" . LIME_PREFIX . "answers` as l 
 				WHERE l.qid = '$qid'";
 
 			$rs = $db->GetAll($sql);
 
 			if (!isset($rs) || empty($rs))
-				print "<p>" . T_("No labels defined for this question") ."</p>";
+				print "<p class='well text-info'>" . T_("No labels defined for this question") ."</p>";
 			else
 				xhtml_table($rs,array('code','title'),array(T_("Code value"), T_("Description")));
-
-
-			?>
-			<form action="" method="get">
-			<p>
-			<label for="value"><?php  echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
-			<label for="comparison"><?php  echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
-			<label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
-			<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
-			<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
-			<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
-			<input type="submit" name="add_quota" value="<?php  print(T_("Add quota")); ?>"/></p>
-			</form>
-			<?php 
+			
+			
+			print "</div>";
+			
 		}
 	}
 }
-xhtml_foot();
 
+xhtml_foot();
 
 ?>

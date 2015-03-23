@@ -123,13 +123,13 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_sample_quota_
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Quota row management"),true,false,array("../js/window.js"));
-print "<h1>" . T_("Select a questionnaire from the list below") . "</h1>";
+xhtml_head(T_("Quota row management"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+print "<h3 class='form-inline pull-left'>" . T_("Questionnaire") . ":&emsp;</h3>";
 
 $sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
  	FROM questionnaire
 	WHERE enabled = 1";
-display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id");
+display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id", true,false,true,true,false,true,"form-inline pull-left ");
 
 
 if ($questionnaire_id != false)
@@ -137,30 +137,36 @@ if ($questionnaire_id != false)
 	$sample_import_id = false;
 	if (isset($_GET['sample_import_id'])) 	$sample_import_id = bigintval($_GET['sample_import_id']);
 
-	print "<h1>" . T_("Select a sample from the list below") . "</h1>";
+	
 	
 	$sql = "SELECT s.sample_import_id as value,s.description, CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 	 	FROM sample_import as s, questionnaire_sample as q
 		WHERE q.questionnaire_id = $questionnaire_id
 		AND q.sample_import_id = s.sample_import_id";
-
-	display_chooser($db->GetAll($sql),"sample","sample_import_id",true,"questionnaire_id=$questionnaire_id");
-
+	$s = $db->GetAll($sql);
+	if (!empty($s)){
+		print "<h3 class='form-inline pull-left'>&emsp;&emsp;&emsp;" . T_("Sample") . ":&emsp;</h3>";
+		display_chooser($s,"sample","sample_import_id",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"pull-left");
+	} else {	
+		print "<div class='clearfix'></div><div class='well text-info'>" . T_("No samples assigned to this questionnaire.") . "</div>";
+	}
+	print "<div class='clearfix'></div>";
+	
 	if ($sample_import_id != false)
 	{
 		if (isset($_POST['copy_sample_import_id']))
 		{
 			copy_row_quota($questionnaire_id,$sample_import_id,bigintval($_POST['copy_sample_import_id']));
-			print "<h3>" . T_("Copied quotas") . "</h3>";
+			print "<h3>" . T_("Copied quotas") . ":</h3>";
 		}
 
         if (isset($_POST['copy_sample_import_id_with_adjustment']))
 		{
 			copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,bigintval($_POST['copy_sample_import_id_with_adjustment']));
-			print "<h3>" . T_("Copied quotas") . "</h3>";
+			print "<h3>" . T_("Copied quotas with adjustment") . ":</h3>";
 		}
 
-		print "<h1>" . T_("Current row quotas (click to delete)") . "</h1>";
+		print "<h2>" . T_("Current row quotas ") . ":</h2>"; //(click to delete)
 		
 		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,current_completions
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
@@ -172,7 +178,7 @@ if ($questionnaire_id != false)
 	
 		if (empty($r))
 		{
-			print "<p>" . T_("Currently no row quotas") . "</p>";
+			print "<p class='well text-info'>" . T_("Currently no row quotas") . "</p>";
 		}
 		else
 		{
@@ -198,7 +204,6 @@ if ($questionnaire_id != false)
 	
 			}
 
-	
 			$sql = "SELECT s.sample_import_id as value,s.description, '' AS selected
 			 	FROM sample_import as s, questionnaire_sample as q
 				WHERE q.questionnaire_id = $questionnaire_id
@@ -209,19 +214,21 @@ if ($questionnaire_id != false)
 
 			if (!empty($ss))
 			{
-				print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking): ");
-				display_chooser($ss,"copy_sample_import_id","copy_sample_import_id",false,false,false,false);
+				print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'>
+						<p>" . T_("Copy quotas for this sample to (No error/duplicate checking): ");
+						display_chooser($ss,"copy_sample_import_id","copy_sample_import_id",false,false,false,false);
 				print "<input type='submit' id='submit' value=\"" . T_("Copy") . "\"/></p></form>";
 
-                print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'><p>" . T_("Copy quotas for this sample to (No error/duplicate checking) with adjusting: ");
-				display_chooser($ss,"copy_sample_import_id_with_adjustment","copy_sample_import_id_with_adjustment",false,false,false,false);
+                print "<form action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' method='post'>
+						<p>" . T_("Copy quotas for this sample to (No error/duplicate checking) with adjusting: ");
+						display_chooser($ss,"copy_sample_import_id_with_adjustment","copy_sample_import_id_with_adjustment",false,false,false,false);
 				print "<input type='submit' id='submit' value=\"" . T_("Copy adjustments") . "\"/></p></form>";
 			}
 
 		}
 	
 	
-		print "<h1>" . T_("Select a question for the row quota") . "</h1>";
+		print "<h3>" . T_("Select a question for the row quota") . ":&emsp;</h3>";
 		
 		$sql = "SELECT lime_sid
 			FROM questionnaire
@@ -239,7 +246,7 @@ if ($questionnaire_id != false)
 			LEFT JOIN `" . LIME_PREFIX . "questions` AS lq2 ON ( lq2.qid = lq.parent_qid )
 			JOIN `" . LIME_PREFIX . "groups` as g ON (g.gid = lq.gid)
 			WHERE lq.sid = '$lime_sid'
-			ORDER BY g.group_order ASC, lq.question_order ASC";
+			ORDER BY lq.parent_qid ASC, lq.question_order ASC";
 
 		$rs = $db->GetAll($sql);
 		
@@ -252,6 +259,8 @@ if ($questionnaire_id != false)
 		array_unshift($rs,array("value" => -2, "description" => T_("Sample only quota"), "selected" => $selected));
 
 		display_chooser($rs,"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id");
+		
+		print "</br>";
 	
 		if ($sgqa != false)
 		{
@@ -259,7 +268,7 @@ if ($questionnaire_id != false)
 			if (isset($_GET['sample_var']))
 				$sample_var = $_GET['sample_var'];
 
-			print "<h1>" . T_("Select the sample variable to exclude") . "</h1>";
+			print "<h3 class='form-inline pull-left'>" . T_("Select the sample variable to exclude") . ":&emsp;</h3>";
 
 			$sql = "SELECT sv.var as value, sv.var as description, CASE WHEN sv.var LIKE '$sample_var' THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM sample_var AS sv, sample AS s
@@ -267,53 +276,55 @@ if ($questionnaire_id != false)
 				AND s.sample_id = sv.sample_id
 				GROUP BY sv.var";
 
-			display_chooser($db->GetAll($sql),"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;sgqa=$sgqa");
+			display_chooser($db->GetAll($sql),"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;sgqa=$sgqa",true,true,false,true,"pull-left");
+			
+			print "<div class='clearfix form-group'></div>";
 
 			if ($sample_var != false)
 			{
-				print "<h1>" . T_("Enter the details for creating the row quota:") . "</h1>";
-				print "<h2>" . T_("Pre defined values for this question:") . "</h2>";
-
-				$rs = "";
-
-				if ($sgqa != -2 && $sgqa != -1 && !empty($sgqa))
-				{
-					$qid = explode("X", $sgqa);
-					$qid = $qid[2];
-		
-					$sql = "SELECT l.code,l.answer as title
-						FROM `" . LIME_PREFIX . "answers` as l
-						WHERE l.qid = '$qid'";
-		
-					$rs = $db->GetAll($sql);
-				}
-	
-				if (!isset($rs) || empty($rs))
-					print "<p>" . T_("No labels defined for this question") ."</p>";
-				else
-					xhtml_table($rs,array('code','title'),array(T_("Code value"), T_("Description")));
-	
-	
+							
+				print "<div class='col-sm-6 panel-body'><h3>" . T_("Enter the details for creating the row quota:") . "</h3>";
+				
 				?>
-				<form action="" method="get">
-				<p>
-				<label for="description"><?php  echo T_("Describe this quota"); ?> </label><input type="text" name="description" id="description"/>		<br/>
-				<label for="priority"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?> </label><input type="text" name="priority" id="priority" value="50"/>		<br/>
-				<label for="autoprioritise"><?php  echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> </label><input type="checkbox" name="autoprioritise" id="autoprioritise"/>		<br/>
+				<form action="" method="get" class="form-inline table">
+				
+				<p><label for="description"><?php  echo T_("Describe this quota"); ?>:&emsp;</label>
+				<input type="text" class="form-control" name="description" id="description" required size="60"/></p>
+				
+				<p><label for="priority"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?>:&emsp;</label>
+				<input type="number" class="form-control" name="priority" id="priority" value="50" min="0" max="100" style="width:5em;"/></p>
+				
+				<p><label for="autoprioritise"><?php  echo T_("Should the priority be automatically updated ?</br> (based on the number of completions in this quota)"); ?>&emsp;</label>
+				<input type="checkbox" name="autoprioritise" id="autoprioritise"/></p>
 				<?php  if ($sgqa != -1) { if ($sgqa != -2) { ?>
-				<label for="value"><?php  echo T_("The code value to compare"); ?> </label><input type="text" name="value" id="value"/>		<br/>
-				<label for="comparison"><?php  echo T_("The type of comparison"); ?></label><select name="comparison" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select><br/>
+				
+				<p><label for="comparison"><?php  echo T_("The type of comparison"); ?>:&emsp;</label>
+				<select name="comparison" class="form-control" id="comparison">
+					<option value="LIKE">LIKE</option>
+					<option value="NOT LIKE">NOT LIKE</option>
+					<option value="=">=</option><option value="!=">!=</option>
+					<option value="&lt;">&lt;</option><option value="&gt;">&gt;</option>
+					<option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option>
+				</select></p>
+				
+				<p><label for="value"><?php  echo T_("The code value to compare"); ?>:&emsp;</label>
+				<input type="text" class="form-control" name="value" id="value" required /></p>
+				
 				<?php  } else { ?>
 				<input type="hidden" name="value" value="-2"/>
 				<input type="hidden" name="comparison" value="-2"/>
 				<?php  } ?>
-				<label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?> </label><input type="text" name="completions" id="completions"/>		<br/>
+				
+				<p><label for="completions"><?php  echo T_("The number of completions to stop calling at"); ?>:&emsp;</label>
+				<input type="number" class="form-control" name="completions" id="completions" size="6" maxlength="6" style="width:6em;" required/></p>
+				
 				<?php  } else { ?>
 				<input type="hidden" name="value" value="-1"/>
 				<input type="hidden" name="comparison" value="-1"/>
 				<input type="hidden" name="completions" value="-1"/>
 				<?php  } ?>
-				<label for="exclude_val"><?php  echo T_("Exclude from the sample where the value is like"); ?></label>
+				
+				<p><label for="exclude_val"><?php  echo T_("Exclude from the sample where the value is like"); ?>:&emsp;</label>
 				<?php 
 				
 				$sql = "SELECT sv.val as value, sv.val as description, ''  AS selected
@@ -326,19 +337,45 @@ if ($questionnaire_id != false)
 				display_chooser($db->GetAll($sql),"exclude_val","exclude_val",false,false,false,false);
 				flush();
 				?>
-				<br/>
+				</p>
 				<input type="hidden" name="exclude_var" value="<?php  print($sample_var); ?>"/>
 				<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 				<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
 				<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
-				<input type="submit" name="add_quota" value="<?php  print(T_("Add row quota")); ?>"/></p>
+				
+				<input type="submit" name="add_quota" value="<?php  print(T_("Add row quota")); ?>" class="btn btn-primary fa"/>
 				</form>
 				<?php 
+				
+				print "</div>";
+				
+				print "<div class='col-sm-6 panel-body'><h3>" . T_("Code values for this question") . ":</h3>";
+
+				$rs = "";
+
+				if ($sgqa != -2 && $sgqa != -1 && !empty($sgqa))
+				{
+					$qid = explode("X", $sgqa);
+					$qid = $qid[2];
+		
+					$sql = "SELECT CONCAT('<b class=\'fa\'>&emsp;', l.code , '</b>')as code, l.answer as title
+						FROM `" . LIME_PREFIX . "answers` as l
+						WHERE l.qid = '$qid'";
+		
+					$rs = $db->GetAll($sql);
+				}
+	
+				if (!isset($rs) || empty($rs))
+					print "<p class='well text-info'>" . T_("No labels defined for this question") ."</p>";
+				else
+					xhtml_table($rs,array('code','title'),array(T_("Code value"), T_("Description")));
+				
+				print "</div>";
 			}
 		}
 	}
 }
-xhtml_foot();
 
+xhtml_foot();
 
 ?>
