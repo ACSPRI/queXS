@@ -111,7 +111,7 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 {
 	$tot = array();
 	if ($class == "tclass") $class = "table-hover table-bordered table-condensed tclass";
-	print "<table class='$class' id='$id' name='$name'>";
+	print "<table class=\"$class\" id=\"$id\" name=\"$name\">";
 	if ($head)
 	{
 		print "<thead class='highlight'><tr>";   // ! added <thead> to table formatting
@@ -143,7 +143,7 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 	}
 	if ($total)
 	{
-		print "<tr>";
+		print "</tbody><tfoot><tr>";
 		foreach ($fields as $e)
 		{
 			print "<td><b>";
@@ -151,9 +151,12 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 				print $tot[$e];
 			print "</b></td>";
 		}
-		print "</tr>";
+		print "</tr></tfoot>";
 	}
-	print "</tbody></table>";
+	else{
+		print "</tbody>";
+	}
+	print "</table>";
 }
 
 
