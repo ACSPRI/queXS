@@ -14,7 +14,7 @@ div, form {
 
 ul,ol {
     text-align: left;
-    font-size: 10pt;
+    font-size: 0.9em;/* 10pt; */
     color: #000;
 }
 
@@ -51,12 +51,12 @@ a:hover {
 }
 
 th, p, div {
-    font-size: 10pt;
+    font-size: 1.1em; /* 10pt; */
 }
 
 fieldset {
-    padding:0 6px 0px 6px;
-    margin: 3px;
+    padding:0 6px/*  0px 6px */;
+    margin: 5px;
     border-color:#D2E0F2 #8195BA #8195BA #D2E0F2;
     border-style: solid;
     border-width: 1px;
@@ -272,7 +272,7 @@ font-size:11px;
 
 input, select, button {
     color: navy;
-    font: 10px verdana, arial, sans-serif;
+   /*  font: 10px verdana, arial, sans-serif; */
 }
 
 /* Uncomment these styles if you are using a system theme with a dark background
@@ -1287,17 +1287,18 @@ background-color: #8195BA;
 div.left
 {
 float:left;
-width:300px;
+width: 49%;/* 300px; */
 }
 
 div.right {
  float:right;
- width:300px;
+ width:49%;/* 300px; */
 }
 
 .wrap2columns {
-width:600px;
+width:auto; /* 600px; */
 margin:0 auto;
+padding:10px;
 }
 
 #resultexport ul {
