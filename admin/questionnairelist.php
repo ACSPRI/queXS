@@ -314,7 +314,7 @@ if (isset($_GET['modify']))
 	}
 
 	xhtml_head(T_("Modify Questionnaire "),true,$css,$js_head, false, false, false, " &ensp;<span class=' text-uppercase'>" . "$rs[description]" . "</span>");
-	
+
 	$CKEditor = new CKEditor();
 	$CKEditor->basePath = "../include/ckeditor/";
 
@@ -361,7 +361,7 @@ if (isset($_GET['modify']))
 	</div>
 	<div class="form-group">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> </label>
-		<div class="col-sm-4" style="height: 30px;"><input name="respsc" id="respsc" type="checkbox" <?php echo $rsc ?> onchange="if(this.checked==true) {show(this,'limesc'); $('#url').attr('required','required');} else{ hide(this,'limesc'); $('#url').removeAttr('required');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/></div>
+		<div class="col-sm-4" style="height: 30px;"><input name="respsc" id="respsc" type="checkbox" <?php echo $rsc ?> onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/></div>
 	</div>
 <div id="limesc" <?php echo $rscd; ?> >
 <div class="form-group">
@@ -396,7 +396,7 @@ if (isset($_GET['modify']))
 	<div class="form-group">
 		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
 		<div class="col-sm-4">
-			<input class="form-control" name="lime_endurl" id="url" type="url" placeholder="<?php print SITE_URL ;?>" value="<?php echo $rs['lime_endurl']; ?>"/>
+			<input class="form-control" name="lime_endurl" type="url" required placeholder="<?php print SITE_URL ;?>" value="<?php echo $rs['lime_endurl']; ?>"/>
 		</div>
 	</div>
 </div>
@@ -566,5 +566,5 @@ print "</div>";
 xhtml_foot($js_foot);
 ?>
 <script type="text/javascript">
-$('[data-toggle="confirmation"]').confirmation();
+$('[data-toggle="confirmation"]').confirmation()
 </script>
