@@ -123,7 +123,7 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_sample_quota_
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Quota row management"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Quota row management"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../js/window.js"));
 print "<h3 class='form-inline pull-left'>" . T_("Questionnaire") . ":&emsp;</h3>";
 
 $sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
@@ -295,7 +295,7 @@ if ($questionnaire_id != false)
 				<input type="number" class="form-control" name="priority" id="priority" value="50" min="0" max="100" style="width:5em;"/></p>
 				
 				<p><label for="autoprioritise"><?php  echo T_("Should the priority be automatically updated ?</br> (based on the number of completions in this quota)"); ?>&emsp;</label>
-				<input type="checkbox" name="autoprioritise" id="autoprioritise"/></p>
+				<input type="checkbox" name="autoprioritise" id="autoprioritise" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="warning"/></p>
 				<?php  if ($sgqa != -1) { if ($sgqa != -2) { ?>
 				
 				<p><label for="comparison"><?php  echo T_("The type of comparison"); ?>:&emsp;</label>

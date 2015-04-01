@@ -278,7 +278,7 @@ else
 	<div class="col-sm-4">
 		<input name="file" class="filestyle" type="file" required data-buttonBefore="true" data-iconName="fa fa-folder-open fa-lg text-primary " data-buttonText="<?php  echo T_("Select file"); ?>" type="file" accept="<?php echo $csv; ?>"/>&emsp;
 	</div>
-	<button type="submit" class="btn btn-primary" name="import_file" value=""><i class='fa fa-upload fa-lg'></i>&emsp;<?php  echo "" . T_("Upload file"); ?></button>
+	<button type="submit" class="btn btn-primary" name="import_file" value=""><i class='fa fa-upload fa-lg'></i>&emsp;<?php  echo T_("Upload file"); ?></button>
 	
 	</form>
 

@@ -98,9 +98,7 @@ else
 	//print "<h2>" . T_("Monitor system wide case sorting") . "</h2>";
 	print "<p><a href='?watch=watch'>" . T_("Click here to enable and begin system wide case sorting") . "</a></p>";
 	print "<div class='well pull-right col-sm-4'><p>"  . T_("System wide case sorting is periodically (via SYSTEM_SORT_MINUTES configuration directive) sorting cases on a system wide basis instead of finding the most appropriate case each time an operator requests a new case. This may increase performance where there are a large number of cases or complex quotas in place. If you are not experiencing any performance problems, it is not recommended to use this feature.") . "</p></div>";
-	
 	print "<h2>" . T_("Outcome of last process run (if any)") . "</h2>";
-	
 	$d = process_get_last_data(2);
         if ($d !== false)
         {
