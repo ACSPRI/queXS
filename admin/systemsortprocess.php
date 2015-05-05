@@ -289,7 +289,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 
     $sql = "SELECT s.sample_id as sample_id,qs.questionnaire_id as questionnaire_id
       FROM sample as s
-      JOIN (questionnaire_sample as qs, questionnaire as q, sample_import as si) on (qs.sample_import_id = s.import_id and si.sample_import_id = s.import_id and q.questionnaire_id = qs.questionnaire_id AND q.questionnaire_id = '$questionnaire_id')
+      JOIN (questionnaire_sample as qs, questionnaire as q, sample_import as si) on (qs.sample_import_id = s.import_id and si.sample_import_id = s.import_id and q.questionnaire_id = qs.questionnaire_id AND q.questionnaire_id = '$questionnaire_id' AND qs.allow_new = 1)
       LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
       LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
       LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
