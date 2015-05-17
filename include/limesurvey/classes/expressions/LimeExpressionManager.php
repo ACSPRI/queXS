@@ -3422,17 +3422,19 @@
 
 		if ($use_call)
 		{
-			$sql = "SELECT sv.var,sv.val
-				FROM sample_var as sv, `case` as c, `call` as cl
+			$sql = "SELECT sivr.var,sv.val
+				FROM sample_var as sv, `case` as c, `call` as cl, `sample_import_var_restrict` as sivr
 				WHERE c.sample_id = sv.sample_id
 				AND c.case_id = cl.case_id
+				AND sv.var_id = sivr.var_id
 				AND cl.call_id = '{$_SESSION['token']}'";
 		}
 		else
 		{
-			$sql = "SELECT sv.var,sv.val
-				FROM sample_var as sv, `case` as c
+			$sql = "SELECT sivr.var,sv.val
+				FROM sample_var as sv, `case` as c, `sample_import_var_restrict` as sivr
 				WHERE c.sample_id = sv.sample_id
+				AND sv.var_id = sivr.var_id
 				AND c.token = '{$_SESSION['token']}'";
 		}
 
@@ -3504,10 +3506,6 @@
                 	    'jsName'=>'',
 	                    'readWrite'=>'N',
         	            );
-
-
-
-				
 	
             }
             else
@@ -3535,13 +3533,13 @@
 		//Add all sample variables for this questionnaire
 		global $connect;
 
-		$sql = "SELECT sv.var,sv.val
-			FROM `questionnaire` as q, questionnaire_sample as qs, sample as s, sample_var as sv
-			WHERE q.lime_sid = $surveyid 
-			AND qs.questionnaire_id = q.questionnaire_id 
-			AND s.import_id = qs.sample_import_id
-			AND sv.sample_id = s.sample_id
-			GROUP BY qs.sample_import_id,sv.var";
+		$sql = "SELECT sivr.var,sv.val
+				FROM `questionnaire` as q, questionnaire_sample as qs, sample_var as sv, `sample_import_var_restrict` as sivr
+				WHERE q.lime_sid = $surveyid
+				AND qs.questionnaire_id = q.questionnaire_id
+				AND sivr.sample_import_id = qs.sample_import_id 
+				AND sv.var_id = sivr.var_id 
+				GROUP BY qs.sample_import_id,sivr.var";
 
 		$queXSrs = $connect->GetAssoc($sql);
 		

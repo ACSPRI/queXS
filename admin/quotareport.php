@@ -143,44 +143,10 @@ if ($questionnaire_id)
 	
 		//Rows to display: Strata Status Quota Sample Sample Used Sample Remaining Completes % Complete
 
-		// Firstly, for the entire sample
 
 		//We need to calc Sample size, Sample drawn, Sample remain, Completions, %complete
-		$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
-			FROM sample as s
-			JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
-			LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
-			WHERE s.import_id = '$sample_import_id'
-			GROUP BY (c.sample_id is not null)";
- 
-		$rs = $db->GetAll($sql);
-
-		//type == 1 is drawn from sample, type == 0 is remains in sample
-		$drawn = 0;
-		$remain = 0;
-		
-		foreach ($rs as $r)
-		{
-			if ($r['type'] == 1) $drawn = $r['count'];
-			if ($r['type'] == 0) $remain = $r['count'];
-		}
-
-		$sql = "SELECT count(*) as count
-			FROM `case` as c, sample as s
-			WHERE c.current_outcome_id = 10
-			AND s.import_id = '$sample_import_id'
-			AND s.sample_id = c.sample_id
-			AND c.questionnaire_id = '$questionnaire_id'";
-
-		$rs = $db->GetRow($sql);
-		
-		$completions = $rs['count'];
-
-		$report[] = array("strata" => T_("Total sample"), "quota" => $drawn + $remain, "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => ROUND(($completions / ($drawn + $remain)) * 100,2));
-
-		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
 		//b. (Replicate quota) Exclude selected sample records (where lime_sgqa == -1) 
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,qsq.description,current_completions, priority, autoprioritise
+		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var_id,exclude_var,exclude_val,qsq.description,current_completions, priority, autoprioritise
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
@@ -207,12 +173,14 @@ if ($questionnaire_id)
 			{
 				$perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
 			}
-
+			
+			if($v['exclude_var_id'] > 0) $excl = "sv.var_id = '{$v['exclude_var_id']}'"; else $excl = "sv.var LIKE '{$v['exclude_var']}'";
+			
 			//We need to calc Sample size, Sample drawn, Sample remain
 			$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
 				FROM sample as s
 				JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
-				JOIN sample_var as sv ON (sv.sample_id = s.sample_id AND sv.var LIKE '{$v['exclude_var']}' AND sv.val LIKE '{$v['exclude_val']}')
+				JOIN sample_var as sv ON (sv.sample_id = s.sample_id AND sv.val LIKE '{$v['exclude_val']}' AND $excl )
 				LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
 				WHERE s.import_id = '$sample_import_id'
 				GROUP BY (c.sample_id is not null)";
@@ -243,7 +211,7 @@ if ($questionnaire_id)
 					$status = T_("open");
 			}
 			
-			$report[] = array("strata" => "<a href='quotarow.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='text' size='3' value='$priority' id='p$qsqr' name='p$qsqr' />", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
+			$report[] = array("strata" => "<a href='quotarow.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
 		}
 
 		//c. (Questionnaire quota) Monitor outcomes of questions in completed questionnaires, and abort interview when completion limit is reached 
@@ -281,10 +249,46 @@ if ($questionnaire_id)
 			$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
 		}
 
+		
+		// At the end   - >  the entire sample
+
+		//We need to calc Sample size, Sample drawn, Sample remain, Completions, %complete
+		$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
+			FROM sample as s
+			JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
+			LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
+			WHERE s.import_id = '$sample_import_id'
+			GROUP BY (c.sample_id is not null)";
+ 
+		$rs = $db->GetAll($sql);
+
+		//type == 1 is drawn from sample, type == 0 is remains in sample
+		$drawn = 0;
+		$remain = 0;
+		
+		foreach ($rs as $r)
+		{
+			if ($r['type'] == 1) $drawn = $r['count'];
+			if ($r['type'] == 0) $remain = $r['count'];
+		}
+
+		$sql = "SELECT count(*) as count
+			FROM `case` as c, sample as s
+			WHERE c.current_outcome_id = 10
+			AND s.import_id = '$sample_import_id'
+			AND s.sample_id = c.sample_id
+			AND c.questionnaire_id = '$questionnaire_id'";
+
+		$rs = $db->GetRow($sql);
+		
+		$completions = $rs['count'];
+
+		$report[] = array("strata" => T_("Total sample"), "quota" => $drawn + $remain, "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => ROUND(($completions / ($drawn + $remain)) * 100,2));
+		
 		print "<form action='' method='post'>";
 			xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc","priority","autoprioritise"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete"),T_("Set priority"),T_("Auto prioritise")),"tclass",false,false);
 			
-		if ($report[0]("strata") != T_("Total sample"))
+		if (count($report) > 1)
 			print "<input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/></br>
 					<input type='submit' id='submit' name='submit' class='btn btn-primary fa'value='" . TQ_("Update priorities") . "'/>";
 					

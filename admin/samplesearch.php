@@ -156,25 +156,25 @@ if ($sample_import_id != false)
 			$fnames[] = "link";
 			$fdesc[] = T_("Case ID");
 			
-			$sql = "SELECT var
-				FROM sample_var
-				WHERE sample_id = {$r[0]['sample_id']}
+			$sql = "SELECT var,var_id
+				FROM sample_import_var_restrict
+				WHERE sample_import_id = $sample_import_id
 				ORDER by var ASC";
 			$rs = $db->GetAll($sql);
 			
 			foreach($rs as $rsw)
 			{
-				$fnames[] = $rsw['var'];
+				$fnames[] = $rsw['var_id'];
 				$fdesc[] = $rsw['var'];
 			}
 			foreach($r as &$rw)
 			{
-				$sql = "SELECT var,val
+				$sql = "SELECT var_id,val
 					FROM sample_var
 					WHERE sample_id = {$rw['sample_id']}";
 				$rs = $db->GetAll($sql);
 				foreach($rs as $rsw){
-					$rw[$rsw['var']] = $rsw['val'];
+					$rw[$rsw['var_id']] = $rsw['val'];
 				}
 			}
 

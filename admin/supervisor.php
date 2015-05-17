@@ -281,7 +281,7 @@ if ($case_id != false)
 		$db->CompleteTrans();
 	}
 	
-	$sql = "SELECT o.description,o.outcome_id, q.description as qd, si.description as sd
+	$sql = "SELECT o.description,o.outcome_id, q.description as qd, si.description as sd, s.import_id as sid
 		FROM `case` as c, `outcome` as o, questionnaire as q, sample as s, sample_import as si
 		WHERE c.case_id = '$case_id'
 		AND q.questionnaire_id = c.questionnaire_id
@@ -299,11 +299,12 @@ if ($case_id != false)
 				<h2 class=''>". T_("Current outcome:") ."<span class='text-info'> " . T_($rs['description']) . "</span></h2>";
 
 		$current_outcome_id = $rs['outcome_id'];
+		$sid = $rs['sid'];
 
 		// view sample details
 		print "<div class='panel-body'><h4 class=''><i class='fa fa-book'></i>&emsp;" . T_("Sample details")."</h4>";
 		
-		$sql = "SELECT sv.sample_id, c.case_id , s.Time_zone_name, 
+		$sql = "SELECT sv.sample_id, c.case_id , s.Time_zone_name,
 			TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,s.Time_zone_name),'". TIME_FORMAT ."') as time 
 			FROM sample_var AS sv
 			LEFT JOIN (`case` AS c , sample as s) ON ( c.sample_id = sv.sample_id AND s.sample_id = c.sample_id ) WHERE c.case_id = '$case_id'
@@ -312,26 +313,28 @@ if ($case_id != false)
 		if ($r){
 		$fnames = array("sample_id", "Time_zone_name", "time");
 		$fdesc = array(T_("Sample id"),T_("Timezone"),T_("Time NOW"));
-		
-		$sql = "SELECT var
-				FROM sample_var
-				WHERE sample_id = {$r[0]['sample_id']} AND type IN (2,3,6,7)
+		$varr= array();
+		$sql = "SELECT var,var_id
+				FROM sample_import_var_restrict
+				WHERE sample_import_id = $sid AND type IN (2,3,6,7)
 				ORDER by var DESC";
 		$rs = $db->GetAll($sql);
 
 			foreach($rs as $rsw)
 			{
-				$fnames[] = $rsw['var'];
+				$fnames[] = $rsw['var_id'];
 				$fdesc[] = $rsw['var'];
+				$varr[] = $rsw['var_id']; //array for valid var_id's
 			}
+			$varr= implode(",",$varr);
 			foreach($r as &$rw)
 			{
-				$sql = "SELECT var,val
+				$sql = "SELECT var_id,val
 					FROM sample_var
-					WHERE sample_id = {$rw['sample_id']} AND type IN (2,3,6,7)";
+					WHERE sample_id = {$rw['sample_id']} AND var_id IN ($varr)";
 				$rs = $db->GetAll($sql);
 				foreach($rs as $rsw){
-					$rw[$rsw['var']] = $rsw['val'];
+					$rw[$rsw['var_id']] = $rsw['val'];
 				}
 			}
 		

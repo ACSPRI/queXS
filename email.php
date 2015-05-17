@@ -97,10 +97,11 @@ if (isset($_POST['firstname']))
 		$fieldsarray["{SID}"]=$fieldsarray["{SURVEYID}"]=$lime_sid;
 		//$fieldsarray["{SURVEYNAME}"]=$thissurvey["surveyls_title"];
 
-		$sql = "SELECT s.var,s.val
-			FROM `sample_var` as s, `case` as c
+		$sql = "SELECT sivr.var,sv.val
+			FROM `sample_var` as sv, `sample_import_var_restrict` as sivr, `case` as c
 			WHERE c.case_id = $case_id
-			AND s.sample_id = c.sample_id";
+			AND sv.sample_id = c.sample_id
+			AND sivr.var_id = sv.var_id";
 
 		$attributes = $db->GetAssoc($sql);
 
@@ -317,11 +318,11 @@ $sc = $db->GetOne($sql);
 
 if ($sc == 1)
 {
-	$sql = "SELECT sv1.val as firstname, sv2.val as lastname, sv3.val as email
+	$sql = "SELECT 
+(SELECT  sv.val from sample_var as sv, `sample_import_var_restrict` as sivr WHERE sivr.var_id = sv.var_id AND sv.sample_id = c.sample_id AND sivr.type =6) as firstname, 
+(SELECT  sv.val from sample_var as sv, `sample_import_var_restrict` as sivr WHERE sivr.var_id = sv.var_id AND sv.sample_id = c.sample_id AND sivr.type =7) as lastname, 
+(SELECT  sv.val from sample_var as sv, `sample_import_var_restrict` as sivr WHERE sivr.var_id = sv.var_id AND sv.sample_id = c.sample_id AND sivr.type =8) as email
 		FROM `case` as c
-		LEFT JOIN sample_var as sv1 on (sv1.sample_id = c.sample_id AND sv1.type = 6)
-		LEFT JOIN sample_var as sv2 on (sv2.sample_id = c.sample_id AND sv2.type = 7)
-		LEFT JOIN sample_var as sv3 on (sv3.sample_id = c.sample_id AND sv3.type = 8)
 		WHERE c.case_id = $case_id";
 	
 	$rs = $db->GetRow($sql);

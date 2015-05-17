@@ -184,8 +184,9 @@ function get_sample_variable($variable,$case_id)
 
 	$sql = "SELECT s.val as r
 		FROM sample_var as s
-		JOIN `case` as c on (c.case_id = '$case_id' and s.sample_id = c.sample_id)
-		WHERE s.var = '$variable'";
+		JOIN `case` as c on (c.case_id = '$case_id' and s.sample_id = c.sample_id), `sample_import_var_restrict` as sivr
+		WHERE sivr.var = '$variable'
+		AND s.var_id = sivr.var_id";
 
 	$rs = $db->GetRow($sql);
 
@@ -237,7 +238,6 @@ function get_respondent_variable($variable,$respondent_id)
 		WHERE respondent_id = '$respondent_id'";
 
 	$rs = $db->GetRow($sql);
-
 
 	if (empty($rs)) return "";
 
@@ -380,14 +380,15 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		//$db->Execute("SET @row := 0");
 
-		$sql = "SELECT val as phone
-			FROM sample_var
-			WHERE sample_id = '$sample_id'
-			AND val > 0
-			AND val is NOT NULL
-			AND val != \"\"
-			AND (`type` = 2 or `type` = 3)
-			ORDER BY `type` DESC";
+		$sql = "SELECT sv.val as phone
+			FROM sample_var as sv, sample_import_var_restrict as sivr
+			WHERE sv.sample_id = '$sample_id'
+			AND sv.var_id = sivr.var_id
+			AND sv.val > 0
+			AND sv.val is NOT NULL
+			AND sv.val != \"\"
+			AND sivr.`type` IN (2,3)
+			ORDER BY sivr.`type` DESC";
 
 		$r5 = $db->GetAll($sql);
 
@@ -418,8 +419,8 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 	$sql = "INSERT INTO respondent (case_id,firstName,lastName,Time_zone_name) 
 		SELECT $case_id as case_id, IFNULL(s1.val,'') as firstName, IFNULL(s2.val,'') as lastName, s3.Time_zone_name as Time_zone_name  
 		FROM sample as s3
-		LEFT JOIN sample_var as s2 on (s2.sample_id = '$sample_id' and s2.type = 7) 
-		LEFT JOIN sample_var as s1 on (s1.sample_id = '$sample_id' and s1.type = 6) 
+		LEFT JOIN (sample_var as s2 , sample_import_var_restrict as sivr2) on (s2.sample_id = '$sample_id' and s2.var_id = sivr2.var_id and sivr2.type = 7)  
+		LEFT JOIN (sample_var as s1 , sample_import_var_restrict as sivr1) on (s1.sample_id = '$sample_id' and s1.var_id = sivr1.var_id and sivr1.type = 6) 
 		WHERE s3.sample_id = '$sample_id'";
 
 	$db->Execute($sql);
@@ -637,8 +638,8 @@ function get_case_id($operator_id, $create = false)
 					AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
 					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL AND os.outcome_type_id != 2)
 					AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL AND os.outcome_type_id != 2)
-					AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE case_id = c.case_id) < qs.call_attempt_max))
-					AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
+					AND ((apn.appointment_id IS NOT NULL) or qs.call_attempt_max = 0 or ((SELECT count(*) FROM call_attempt WHERE call_attempt.case_id = c.case_id) < qs.call_attempt_max))
+					AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE `call`.case_id = c.case_id) < qs.call_max))
 					AND (apn.require_operator_id IS NULL OR apn.require_operator_id = '$operator_id')
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
 					ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, qsep.priority DESC, a.start ASC
@@ -1515,7 +1516,7 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
 			WHERE s.import_id = qs.sample_import_id
 			AND qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id
 			AND s.sample_id = sv.sample_id
-			AND sv.var = qs.exclude_var
+			AND sv.var_id = qs.exclude_var_id
 			AND qs.exclude_val LIKE sv.val";
 
 		$db->Execute($sql);
@@ -1549,8 +1550,8 @@ function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_
 
 	//Set quota_reached to 0 always
 
-	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description)
-		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions,exclude_var,exclude_val,0,description
+	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var_id,exclude_var,exclude_val,quota_reached,description)
+		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions,exclude_var_id,exclude_var,exclude_val,0,description
 		FROM questionnaire_sample_quota_row
 		WHERE questionnaire_id = '$questionnaire_id'
 		AND sample_import_id = '$sample_import_id'";
@@ -1578,8 +1579,8 @@ function copy_row_quota_with_blocking($questionnaire_id,$sample_import_id,$copy_
 
 	//Set quota_reached to 0 always
 
-	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description)
-		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions,exclude_var,exclude_val,quota_reached,description
+	$sql = "INSERT INTO questionnaire_sample_quota_row (questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,exclude_var_id,exclude_var,exclude_val,quota_reached,description)
+		SELECT questionnaire_id, $copy_sample_import_id, lime_sgqa,value,comparison,completions, exclude_var_id,exclude_var,exclude_val, quota_reached,description
 		FROM questionnaire_sample_quota_row
 		WHERE questionnaire_id = '$questionnaire_id'
 		AND sample_import_id = '$sample_import_id'";
@@ -1609,7 +1610,7 @@ function copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,$copy
 	$db->StartTrans();
 
     // Select quotas from the old sample rows and calculate
-	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var_id,qsq.exclude_var,qsq.exclude_val
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
@@ -1664,7 +1665,7 @@ function update_row_quota($questionnaire_id,$case_id = false)
 
 	$db->StartTrans();
 
-	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val,qsq.current_completions,qsq.priority,qsq.autoprioritise
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid, qsq.exclude_var_id,qsq.exclude_var,qsq.exclude_val,qsq.current_completions,qsq.priority,qsq.autoprioritise
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
@@ -1688,7 +1689,7 @@ function update_row_quota($questionnaire_id,$case_id = false)
 			if ($case_id != false)
 			{
 				if ($r['lime_sgqa'] == -2)
-					$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var'],$r['sample_import_id']);
+					$match = limesurvey_quota_replicate_match($r['lime_sid'],$case_id,$r['exclude_val'],$r['exclude_var_id'],$r['sample_import_id']);
 				else
 					$match = limesurvey_quota_match($r['lime_sgqa'],$r['lime_sid'],$case_id,$r['value'],$r['comparison'],$r['sample_import_id']);
 
@@ -1709,7 +1710,7 @@ function update_row_quota($questionnaire_id,$case_id = false)
 			else
 			{
 				if ($r['lime_sgqa'] == -2)
-					$completions = limesurvey_quota_replicate_completions($r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['exclude_val'],$r['exclude_var']);
+					$completions = limesurvey_quota_replicate_completions($r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['exclude_val'],$r['exclude_var_id']);
 				else
 					$completions = limesurvey_quota_completions($r['lime_sgqa'],$r['lime_sid'],$r['questionnaire_id'],$r['sample_import_id'],$r['value'],$r['comparison']);
 				$updatequota = true;
@@ -1832,7 +1833,7 @@ function update_quota_priorities($questionnaire_id)
 			WHERE s.import_id = qs.sample_import_id
 			AND qs.questionnaire_sample_quota_row_id = '$qsqri'
 			AND s.sample_id = sv.sample_id
-			AND sv.var = qs.exclude_var
+			AND sv.var_id = qs.exclude_var_id
 			AND qs.exclude_val LIKE sv.val
 			AND qsep.questionnaire_id = qs.questionnaire_id
 			AND qsep.sample_id = s.sample_id";

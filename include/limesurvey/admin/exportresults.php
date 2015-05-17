@@ -267,13 +267,13 @@ $quexsfilterstate = questionnaireSampleFilterstate();
             ."<option value='shiftr' id='shiftr' />".T_("Shift report")."</option>\n";
 
 
-	$sql = "SELECT sv.var,sv.val
-		FROM `questionnaire` as q, questionnaire_sample as qs, sample as s, sample_var as sv
-		WHERE q.lime_sid = $surveyid 
+	$sql = "SELECT sivr.var,sv.val
+		FROM `questionnaire` as q, questionnaire_sample as qs, sample_var as sv, `sample_import_var_restrict` as sivr
+		WHERE q.lime_sid = $surveyid
 		AND qs.questionnaire_id = q.questionnaire_id 
-		AND s.import_id = qs.sample_import_id
-		AND sv.sample_id = s.sample_id
-		GROUP BY qs.sample_import_id,sv.var";
+		AND sivr.sample_import_id = qs.sample_import_id
+		AND sv.var_id = sivr.var_id
+		GROUP BY qs.sample_import_id,sivr.var";
 
 	$queXSrs = $connect->GetAssoc($sql);
 
@@ -305,13 +305,13 @@ if ($tokenTableExists)
 {
     $aTokenFieldNames=GetTokenFieldsAndNames($surveyid,false,true);
 
-	$sql = "SELECT sv.var,sv.val
-		FROM `questionnaire` as q, questionnaire_sample as qs, sample as s, sample_var as sv
-		WHERE q.lime_sid = $surveyid 
+	$sql = "SELECT sivr.var,sv.val
+		FROM `questionnaire` as q, questionnaire_sample as qs, sample_var as sv, `sample_import_var_restrict` as sivr
+		WHERE q.lime_sid = $surveyid
 		AND qs.questionnaire_id = q.questionnaire_id 
-		AND s.import_id = qs.sample_import_id
-		AND sv.sample_id = s.sample_id
-		GROUP BY qs.sample_import_id,sv.var";
+		AND sivr.sample_import_id = qs.sample_import_id
+		AND sv.var_id = sivr.var_id
+		GROUP BY qs.sample_import_id,sivr.var";
 
 	$attributeFields = $connect->GetAssoc($sql);
 
@@ -554,10 +554,11 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
         if (in_array("SAMPLE:$attr_name",$_POST['attribute_select']))
         {
             $dquery .= ", (	SELECT sv.val
-				FROM sample_var as sv, `case` as c3
+				FROM sample_var as sv, `case` as c3,`sample_import_var_restrict` as sivr
 				WHERE c3.token = {$dbprefix}survey_$surveyid.token
 				AND c3.sample_id = sv.sample_id
-				AND sv.var LIKE '$attr_name') as attribute_$i ";
+				AND sivr.var_id = sv.var_id
+				AND sivr.var LIKE '$attr_name') as attribute_$i ";
 
 		$attributeFieldAndNames["attribute_$i"] = $attr_name;
 

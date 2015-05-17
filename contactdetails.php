@@ -148,12 +148,12 @@ else
 
 	//display sample details
 	//  use sample_import_var_restrict to limit
-	$sql = "SELECT s.var,s.val
-		FROM sample_var as s
-		JOIN `case` as c on (c.case_id = '$case_id' and c.sample_id = s.sample_id)
-		JOIN `sample` as sa ON (sa.sample_id = c.sample_id)
-		LEFT JOIN sample_import_var_restrict as sv ON (sv.var LIKE s.var AND sa.import_id = sv.sample_import_id)
-		WHERE (sv.restrict IS NULL OR sv.restrict = 0)";
+	$sql = "SELECT sivr.var,sv.val
+			FROM `sample_var` as sv, `sample_import_var_restrict` as sivr, `case` as c
+			WHERE c.case_id = '$case_id'
+			AND sv.sample_id = c.sample_id
+			AND sivr.var_id = sv.var_id
+			AND (sivr.restrict IS NULL OR sivr.restrict = 0)";
 	
 	$rs = $db->GetAll($sql);
 

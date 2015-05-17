@@ -69,7 +69,7 @@ include("../functions/functions.operator.php");
 
 global $db;
 
-if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['value']) && isset($_GET['completions']) && isset($_GET['sample_import_id']) && isset($_GET['comparison']) && isset($_GET['exclude_var']) && isset($_GET['exclude_val']))
+if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['value']) && isset($_GET['completions']) && isset($_GET['sample_import_id']) && isset($_GET['comparison']) && isset($_GET['exclude_var_id']) && isset($_GET['exclude_var']) && isset($_GET['exclude_val']))
 {
 	//need to add quota
 	$value = -1;
@@ -97,12 +97,13 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sgqa'])  && isset($_GET['va
 		}
 		$completions = $db->quote($_GET['completions']);
 	}
+	$exclude_var_id = $db->quote($_GET['exclude_var_id']);
 	$exclude_val = $db->quote($_GET['exclude_val']);
 	$exclude_var = $db->quote($_GET['exclude_var']);
 	$description = $db->quote($_GET['description']);
 
-	$sql = "INSERT INTO questionnaire_sample_quota_row(questionnaire_id, sample_import_id, lime_sgqa,value,completions,comparison,exclude_var,exclude_val,description, priority, autoprioritise)
-		VALUES ($questionnaire_id, $sample_import_id, $sgqa, $value, $completions, $comparison, $exclude_var, $exclude_val, $description, $priority, $autoprioritise)";
+	$sql = "INSERT INTO questionnaire_sample_quota_row(questionnaire_id, sample_import_id, lime_sgqa,value,completions,comparison,exclude_var_id,exclude_var,exclude_val,description, priority, autoprioritise)
+		VALUES ($questionnaire_id, $sample_import_id, $sgqa, $value, $completions, $comparison, $exclude_var_id, $exclude_var, $exclude_val, $description, $priority, $autoprioritise)";
 
 	$db->Execute($sql);
 
@@ -168,7 +169,7 @@ if ($questionnaire_id != false)
 
 		print "<h2>" . T_("Current row quotas ") . ":</h2>"; //(click to delete)
 		
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var,exclude_val,current_completions
+		$sql = "SELECT questionnaire_sample_quota_row_id, lime_sgqa, value, completions, quota_reached, lime_sid, comparison, exclude_var, exclude_val, current_completions
 			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 			WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
@@ -246,7 +247,7 @@ if ($questionnaire_id != false)
 			LEFT JOIN `" . LIME_PREFIX . "questions` AS lq2 ON ( lq2.qid = lq.parent_qid )
 			JOIN `" . LIME_PREFIX . "groups` as g ON (g.gid = lq.gid)
 			WHERE lq.sid = '$lime_sid'
-			ORDER BY lq.parent_qid ASC, lq.question_order ASC";
+			ORDER BY CASE WHEN lq2.question_order IS NULL THEN lq.question_order ELSE lq2.question_order + (lq.question_order / 1000) END ASC";
 
 		$rs = $db->GetAll($sql);
 		
@@ -264,23 +265,26 @@ if ($questionnaire_id != false)
 	
 		if ($sgqa != false)
 		{
-			$sample_var = false;
-			if (isset($_GET['sample_var']))
-				$sample_var = $_GET['sample_var'];
+			$sample_var_id = false;
+			if (isset($_GET['sample_var_id']))
+				$sample_var_id = $_GET['sample_var_id'];
 
 			print "<h3 class='form-inline pull-left'>" . T_("Select the sample variable to exclude") . ":&emsp;</h3>";
 
-			$sql = "SELECT sv.var as value, sv.var as description, CASE WHEN sv.var LIKE '$sample_var' THEN 'selected=\'selected\'' ELSE '' END AS selected
-				FROM sample_var AS sv, sample AS s
-				WHERE s.import_id = $sample_import_id
-				AND s.sample_id = sv.sample_id
-				GROUP BY sv.var";
+			$sql = "SELECT sivr.var_id as value, sivr.var as description, 
+					CASE WHEN sivr.var_id = '$sample_var_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+					FROM `sample_import_var_restrict` as sivr
+					WHERE sivr.sample_import_id = '$sample_import_id'";
+					
+			$rsv = $db->GetAll($sql);
+			
+			$sample_var = $rsv[0]['description'];
 
-			display_chooser($db->GetAll($sql),"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;sgqa=$sgqa",true,true,false,true,"pull-left");
+			display_chooser($rsv,"sample_var_id","sample_var_id",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;sgqa=$sgqa",true,true,false,true,"pull-left");
 			
 			print "<div class='clearfix form-group'></div>";
 
-			if ($sample_var != false)
+			if ($sample_var_id != false)
 			{
 							
 				print "<div class='col-sm-6 panel-body'><h3>" . T_("Enter the details for creating the row quota:") . "</h3>";
@@ -331,7 +335,7 @@ if ($questionnaire_id != false)
 					FROM sample_var AS sv, sample AS s
 					WHERE s.import_id = $sample_import_id
 					AND s.sample_id = sv.sample_id
-					AND sv.var = '$sample_var'
+					AND sv.var_id = '$sample_var_id'
 					GROUP BY sv.val";
 
 				display_chooser($db->GetAll($sql),"exclude_val","exclude_val",false,false,false,false);
@@ -339,6 +343,7 @@ if ($questionnaire_id != false)
 				?>
 				</p>
 				<input type="hidden" name="exclude_var" value="<?php  print($sample_var); ?>"/>
+				<input type="hidden" name="exclude_var_id" value="<?php  print($sample_var_id); ?>"/>
 				<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 				<input type="hidden" name="sample_import_id" value="<?php  print($sample_import_id); ?>"/>
 				<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>

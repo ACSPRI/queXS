@@ -130,7 +130,7 @@ function display_table($data)
 	global $db;
 
 	$sql = "SELECT description,type
-		FROM sample_var_type";
+		FROM sample_var_type ORDER BY type ASC";
 
 	$rs = $db->GetAll($sql);
 
@@ -145,11 +145,11 @@ function display_table($data)
 					<td><input type=\"text\" value=\"$val\" name=\"n_$row\" class=\"form-control\" /></td>
 					<td>";
 					print "<select name=\"t_$row\" class=\"form-control\">";
-					print "<option value=\"\" $selected></option>";
+					//print "<option value=\"\" $selected></option>";
 					$selected = "selected=\"selected\"";
 					foreach($rs as $r)
 					{
-						print "<option value=\"{$r['type']}\" >" . T_($r['description']) . "</option>";
+						print "<option value=\"{$r['type']}\" $selected>" . T_($r['description']) . "</option>";
 						$selected = "";
 					}
 					print "</select></td>";
@@ -212,6 +212,7 @@ function import_file($file, $description, $fields, $firstrow = 2)
 
 	$selected_type = array();
 	$selected_name = array();
+	$sirv_id = array();
 
 	foreach($fields as $key => $val)
 	{
@@ -229,10 +230,12 @@ function import_file($file, $description, $fields, $firstrow = 2)
 			}
 			
 			$sql = "INSERT INTO sample_import_var_restrict
-				(`sample_import_id`,`var`,`restrict`)
-				VALUES ($id,'" . $fields["n_" . substr($key,2)] . "',$restrict)";
+				(`sample_import_id`,`var`,`type`,`restrict`)
+				VALUES ($id,'" . $fields["n_" . substr($key,2)] . "','" . $fields["t_" . substr($key,2)] . "',$restrict)";
 
-			$db->Execute($sql);			
+			$db->Execute($sql);
+			
+			$sirv_id[substr($key,2)] = $db->Insert_ID(); // 
 		}
 	}
 
@@ -312,8 +315,8 @@ function import_file($file, $description, $fields, $firstrow = 2)
 				{
 					$dkey = $db->Quote($data[$key - 1]);			
 		
-					$sql = "INSERT INTO sample_var (sample_id,var,val,type)
-						VALUES ('$sid','$val',{$dkey},'{$selected_type[$key]}')";
+					$sql = "INSERT INTO sample_var (sample_id,var_id,var,val,type)
+						VALUES ('$sid','{$sirv_id[$key]}','$val',{$dkey},'{$selected_type[$key]}')";
 		
 					$db->Execute($sql);
 				
