@@ -59,16 +59,16 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$sample_import_id = bigintval($_GET['sample_import_id']);
 
-	$sql = "SELECT sv.var as value
-		FROM `sample_var` as sv
-		WHERE sv.sample_id = (SELECT sample_id FROM sample WHERE import_id = '$sample_import_id' LIMIT 1)";
+	$sql = "SELECT sivr.var as value, sivr.var_id as var_id
+		FROM `sample_import_var_restrict` as sivr
+		WHERE sivr.sample_import_id = $sample_import_id";
 
 	$svars = $db->GetAll($sql);
 
-	$fn = "key_all_";
-	if (isset($_GET['sample'])) $fn = "sample_all_";
+	$fn = "key_";
+	if (isset($_GET['sample'])) $fn = "sample_";
 
-	$fn .= $questionnaire_id . "_" . $sample_import_id .".csv";
+	$fn .= T_("ALL") . "_Qid=" . $questionnaire_id . "_Sid=" . $sample_import_id .".csv";
 
 	header("Content-Type: text/csv");
 	header("Content-Disposition: attachment; filename=$fn");
@@ -116,18 +116,18 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 	//left join if getting whole sample file
 	if (isset($_GET['sample'])) $sql .= "LEFT ";
 
-	$sql .= "JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id' AND c.sample_id = sample.sample_id) ";
+	$sql .= "JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id' AND c.sample_id = `sample`.sample_id) ";
 
 	if (isset($_GET['sample'])) $sql .= " LEFT JOIN `outcome` as o ON (o.outcome_id = c.current_outcome_id)";
 
 	$i = 0;
 	foreach ($svars as $s)
 	{
-		$sql .= " LEFT JOIN sample_var AS sv$i ON (sv$i.sample_id = sample.sample_id AND sv$i.var = '{$s['value']}') ";
+		$sql .= " LEFT JOIN sample_var AS sv$i ON (sv$i.sample_id = `sample`.sample_id AND sv$i.var_id = '{$s['var_id']}') ";
 		$i++;
 	}
 
-	$sql .= " WHERE sample.import_id = '$sample_import_id'";
+	$sql .= " WHERE `sample`.import_id = '$sample_import_id'";
 
 	$list = $db->GetAll($sql);
 
@@ -152,23 +152,23 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 	exit;
 }
 
-if (isset($_GET['sample_var']))
-{
+if (isset($_GET['sample_var'])){ 
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$sample_import_id = bigintval($_GET['sample_import_id']);
-	$sample_var = $db->quote($_GET['sample_var']);
+	$varid = intval($_GET['sample_var']);
 
-	$sql = "SELECT c.token,c.case_id, sv.val
-		FROM sample, `case` as c, sample_var as sv
-		WHERE c.questionnaire_id = '$questionnaire_id'
-		AND sample.import_id = '$sample_import_id'
-		AND c.sample_id = sample.sample_id
-		AND sv.sample_id = sample.sample_id
-		AND sv.var = $sample_var";
+	$sql = "SELECT c.token, c.case_id, sv.val, sivr.var
+		FROM `case` as c, `sample_import_var_restrict` as sivr, `sample_var` as sv
+		WHERE c.questionnaire_id = $questionnaire_id
+		AND sivr.sample_import_id = $sample_import_id
+		AND c.sample_id = sv.sample_id 
+		AND sivr.var_id = sv.var_id
+		AND sivr.var_id = $varid";
 
 	$list = $db->GetAll($sql);
+	$sample_var = $list[0]['var'];
 
-	$fn = "key_$questionnaire_id" . "_" . $sample_import_id .".csv";
+	$fn = "key-" . $sample_var . "_Qid=$questionnaire_id" . "_Sid=" . $sample_import_id .".csv";
 
 	header("Content-Type: text/csv");
 	header("Content-Disposition: attachment; filename=$fn");
@@ -219,14 +219,15 @@ if ($questionnaire_id)
 		print "&emsp;&emsp;<a href='" .LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid&amp;quexsfilterinc=$questionnaire_id:$sample_import_id' class='btn btn-default fa btn-lime'>" . T_("Download data for this sample via Limesurvey") . "</a></div>";
 		
 		//get sample vars
-		$sql = "SELECT sv.var as value, sv.var as description 
-			FROM `sample_var` as sv
-			WHERE sv.sample_id = (SELECT sample_id FROM sample WHERE import_id = '$sample_import_id' LIMIT 1)";
+		$sql = "SELECT sivr.var_id as value, sivr.var as description
+		FROM `sample_import_var_restrict` as sivr
+		WHERE sivr.sample_import_id = $sample_import_id";
+		$rs = $db->GetAll($sql);
 	
 		//download a key file linking the caseid to the sample
 		print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Download key file: select sample var") . ":&emsp;</h3>";
 
-		display_chooser($db->GetAll($sql),"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id",true,true,false,true,"form-inline pull-left");
+		display_chooser($rs,"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id",true,true,false,true,"form-inline pull-left"); 
 		
 	//	print "</div><div class='form-group col-sm-offset-4'>";
 		
