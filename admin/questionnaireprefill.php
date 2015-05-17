@@ -171,12 +171,10 @@ if ($questionnaire_id != false)
 		print "<li>" . T_("{Sample:var} A record from the sample where the column name is 'var'") . "</li>";	
 		print "</ul></div>";
 		
-		$sql = "SELECT sv.var as description, CONCAT('{Sample:', sv.var, '}') as value
-			FROM `sample` AS s, sample_var AS sv, questionnaire_sample as qs
+		$sql = "SELECT sivr.var as description, CONCAT('{Sample:', sivr.var, '}') as value
+			FROM `sample_import_var_restrict` as sivr, questionnaire_sample as qs
 			WHERE qs.questionnaire_id = '$questionnaire_id' 
-			AND s.import_id = qs.sample_import_id
-			AND s.sample_id = sv.sample_id
-			GROUP BY sv.var";
+			AND sivr.sample_import_id = qs.sample_import_id";
 		?>
 		<form action="" method="get" class="form-inline form-group">
 		<label for="value"><?php  echo T_("The value to pre fill"); ?>:&emsp;</label><input type="text" name="value" id="value" size="50" class="form-control"/>

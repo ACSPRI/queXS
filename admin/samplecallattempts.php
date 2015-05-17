@@ -79,7 +79,7 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 	$qs = "";
 	if ($qsqri !== false)
 		$qs = "JOIN questionnaire_sample_quota_row as q ON (q.questionnaire_sample_quota_row_id = '$qsqri')
-			JOIN sample_var ON (sample_var.sample_id = c.sample_id AND sample_var.var LIKE q.exclude_var AND sample_var.val LIKE q.exclude_val)";
+			JOIN sample_var ON (sample_var.sample_id = c.sample_id AND sample_var.var_id = q.exclude_var_id AND sample_var.val LIKE q.exclude_val)";
 
 	$sql = "SELECT ca1 AS callattempts, COUNT( ca1 ) AS sample
 		FROM (	SELECT count( ca.call_attempt_id ) AS ca1
@@ -211,6 +211,6 @@ if ($questionnaire_id || $questionnaire_id == -1)
 		print "<p class='well text-danger'>" . T_("No calls for this questionnaire") . "</p>";
 }
 
-xhtml_foot();
+xhtml_foot("../js/custom.js");
 
 ?>
