@@ -283,11 +283,11 @@ function validate_email($email){
  * @param int $questionnaire_id The questionnaire ID
  * @param int $sample_import_id The sample import ID
  * @param string $val The value to compare
- * @param string $var The variable to compare
+ * --- changed @param string $var the variable to compare
+ * to          @param string $var_id  - ID for  variable to compare
  * @return bool|int False if failed, otherwise the number of completions
- * 
  */
-function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sample_import_id,$val,$var)
+function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sample_import_id,$val,$var_id)
 {
 	global $db;
 
@@ -305,7 +305,7 @@ function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sam
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
-		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
+		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var_id = '$var_id' AND sv.val LIKE '$val')
 		WHERE s.submitdate IS NOT NULL
 		AND s.token = c.token";
 
@@ -355,14 +355,15 @@ function limesurvey_quota_match($lime_sgqa,$lime_sid,$case_id,$value,$comparison
  * @param int $lime_sid The Limesurvey survey id
  * @param int $case_id The case id
  * @param string $val The sample value to compare
- * @param string $var The sample variable to compare
+ * --- changed @param string $var the variable to compare
+ * to          @param string $var_id  - ID for  variable to compare
  * @param int $sample_import_id The sample import id we are looking at
  * 
  * @return bool|int False if failed, otherwise 1 if matched, 0 if doesn't
  * @author Adam Zammit <adam.zammit@acspri.org.au>
  * @since  2012-04-30
  */
-function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var,$sample_import_id)
+function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var_id,$sample_import_id)
 {
 	global $db;
 	
@@ -370,7 +371,7 @@ function limesurvey_quota_replicate_match($lime_sid,$case_id,$val,$var,$sample_i
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.case_id = '$case_id')
 		JOIN `sample` as sam ON (c.sample_id = sam.sample_id and sam.import_id = $sample_import_id)
-		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var LIKE '$var' AND sv.val LIKE '$val')
+		JOIN `sample_var` as sv ON (sv.sample_id = sam.sample_id AND sv.var_id = '$var_id' AND sv.val LIKE '$val')
 		WHERE s.token = c.token";
 
 	$rs = $db->GetRow($sql);
