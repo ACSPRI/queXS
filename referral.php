@@ -69,11 +69,12 @@ if (isset($_POST['submit']))
 {
 	$case_id = get_case_id($operator_id);
 
-	$sql = "SELECT s.var
-		FROM sample_var as s, `case` as c
-		WHERE c.case_id = '$case_id'
-		AND s.sample_id = c.sample_id
-		AND s.type = 3";
+	$sql = "SELECT sivr.var
+			FROM `sample_import_var_restrict` as sivr, `sample_var` as s, `case` as c
+			WHERE c.case_id = '$case_id'
+            AND s.var_id = sivr.var_id
+			AND s.sample_id = c.sample_id
+			AND sivr.type = 3";
 
 	$pphone = $db->GetOne($sql);
 
@@ -94,10 +95,11 @@ if (isset($_POST['submit']))
 		$import_id = $db->GetOne($sql);
 
 		//get all sample records
-		$sql = "SELECT s.var,s.val, s.type
-			FROM sample_var as s, `case` as c
+		$sql = "SELECT sivr.var,s.val, sivr.type
+			FROM `sample_import_var_restrict` as sivr, `sample_var` as s, `case` as c
 			WHERE c.case_id = '$case_id'
-			AND s.sample_id = c.sample_id";
+			AND s.sample_id = c.sample_id
+			AND s.var_id = sivr.var_id";
 
 		$rs = $db->GetAll($sql);
 
@@ -124,14 +126,28 @@ if (isset($_POST['submit']))
 		//insert sample var records
 		foreach($rs as $r)
 		{
-			$sql = "INSERT INTO `sample_var` (`sample_id`,`var`,`val`,`type`)
-				VALUES ('$sample_id','{$r['var']}'," . $db->qstr($_POST['v_' . $r['var']]) . ",'{$r['type']}')";
+			
+			$sql = "INSERT INTO `sample_import_var_restrict` (`var`,`type`)
+					VALUES ('{$r['var']}','{$r['type']}')";
 			$db->Execute($sql);
+
+			$varid = $db->Insert_ID();
+			
+			$sql = "INSERT INTO `sample_var` (`sample_id`,`var_id`,`val`)
+				VALUES ('$sample_id','$varid'," . $db->qstr($_POST['v_' . $r['var']]) . ")";
+			$db->Execute($sql);
+
 		}
 
 		//Add CASEREFERREDFROM record
-		$sql = "INSERT INTO `sample_var` (`sample_id`,`var`,`val`,`type`)
-			VALUES ('$sample_id','CASEREFERREDFROM','$case_id','1')";
+		$sql = "INSERT INTO `sample_import_var_restrict` (`var`,`type`)
+				VALUES ('CASEREFERREDFROM','1')";
+		$db->Execute($sql);
+		
+		$varid = $db->Insert_ID();
+		
+		$sql = "INSERT INTO `sample_var` (`sample_id`,`var_id`,`val`)
+			VALUES ('$sample_id','$varid','$case_id')";
 
 		$db->Execute($sql);
 
@@ -212,11 +228,12 @@ if ($sc == 1)
 
 	//Create a list of sample records matching this current case 
 
-	$sql = "SELECT sv.var,t.description,sv.type
-		FROM sample_var as sv, `case` as c, sample_var_type as t
-		WHERE sv.sample_id = c.sample_id
-		AND c.case_id = '$case_id'
-		AND sv.type = t.type";
+	$sql = "SELECT sivr.var,t.description,sivr.type
+		FROM `sample_import_var_restrict` as sivr,`sample_var` as sv, `case` as c, `sample_var_type` as t
+		WHERE c.case_id = '$case_id'
+		AND sv.sample_id = c.sample_id
+		AND sv.var_id = sivr.var_id
+		AND sivr.type = t.type";
 
 	$rs = $db->GetAll($sql);
 
