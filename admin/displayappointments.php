@@ -127,11 +127,17 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(($_GET['new'
 		
 		xhtml_head($title,true,$css,$js_head,false,false,false,$subtitle);
 		$lang = DEFAULT_LOCALE;
+		$sql = "SELECT CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, CONVERT_TZ(s.end,'UTC',r.Time_zone_name) as enddate FROM `shift` as s, `case` as c, `respondent` as r WHERE s.questionnaire_id = c.questionnaire_id AND c.case_id = $case_id AND r.case_id = c.case_id ORDER BY  s.end DESC LIMIT 1";
+			$rs = $db->GetRow($sql); $startdate = $rs['startdate'];$enddate = $rs['enddate'];
+			
 		print "<script type='text/javascript'> 
 		$(document).ready(function() { var startDateTextBox = $('#start'); var endDateTextBox = $('#end');
+		/* var std = '$startdate'.split(/[- :]/);
+		var etd = '$enddate'.split(/[- :]/); */
 			$.timepicker.datetimeRange( 
 				startDateTextBox,endDateTextBox,{
 				minInterval: (1000*60*15), // 15min
+				numberOfMonths: 2,
 				dateFormat: 'yy-mm-dd', 
 				timeFormat: 'HH:mm:ss',
 				showSecond: false,
@@ -141,13 +147,13 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(($_GET['new'
 				stepMinute: 5,
 				hourGrid: 2,
 				minuteGrid: 10,
-				start: {minDateTime: new Date()}, // start picker options
-				end: { } // end picker options
+				minDate: '$startdate',
+				maxDate: '$enddate',
 				});});</script>";
 
 		if ($_GET['new'] =='new'){
-			$start = date("Y-m-d H:m:s");
-			$end = date("Y-m-d H:m:s", mktime(0,0,0,date("m"),date("d")+7,date("Y")));
+			$start = $startdate;
+			$end = $enddate;
 			$rtz = $_GET['rtz'];
 		} 
 		if  (isset($_GET['appointment_id'])) {
@@ -189,7 +195,7 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(($_GET['new'
 			print "<label class='text-right col-sm-2 control-label'>" . T_("Respondent TimeZone") . ":</label>
 					<h4 class='col-sm-2  text-danger text-uppercase  fa-lg'>" . $rtz . "</h4>
 					<label class=''>" . T_("Respondent Time") . ":&emsp;<b class='fa fa-2x '>" . date("H:i:s") . "</b></label>";
-			
+
 			print "<br/><br/><label class='pull-left text-right control-label col-sm-2' for='start'>" . T_("Start time") . "</label>
 					<div class='pull-left'><input class='form-control' type='text' value='$start' id='start' name='start'/></div>";
 			print "<br/><br/><label class='pull-left text-right control-label col-sm-2' for='end'>" . T_("End time") . "</label>
@@ -214,7 +220,7 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(($_GET['new'
 			
 			if ($_GET['new'] == 'new') { print "<input type='hidden' value='create' id='new' name='new'/><input type='hidden' value='$case_id' id='case_id' name='case_id'/>";}
 
-			print "<div class='clearfix form-group'></div><br/><br/>
+			print "<div class='clearfix'></div><br/><br/>
 				<div class='col-sm-2'><a href='' onclick='history.back();return false;' class='btn btn-default pull-left'><i class='fa fa-ban fa-lg'></i>&emsp;" . T_("Cancel edit") . "</a></div>";
 			
 			print "<div class='col-sm-2'><button type='submit' class='btn btn-primary btn-block'><i class='fa fa-floppy-o fa-lg'></i>&emsp;" . T_("Save changes") . "</button></div>";
