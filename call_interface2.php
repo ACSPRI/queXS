@@ -81,13 +81,13 @@ function display_outcomes($contacted,$ca,$case_id)
 	//see if the case is completed
 	if ($completed)
 	{
-		$sql = "SELECT outcome_id,description
+		$sql = "SELECT outcome_id,description,contacted
 			FROM outcome
 			WHERE outcome_id = 10";
 	}
 	else if (limesurvey_is_quota_full($case_id))
 	{
-		$sql = "SELECT outcome_id,description
+		$sql = "SELECT outcome_id,description,contacted
 			FROM outcome
 			WHERE outcome_id = 32";
 	}
@@ -105,27 +105,35 @@ function display_outcomes($contacted,$ca,$case_id)
 		if (!empty($rs))
 		{
 			//we have an appointment made ... only select appointment ID's
-			$sql = "SELECT outcome_id,description
+			$sql = "SELECT outcome_id,description,contacted
 				FROM outcome
-				WHERE outcome_type_id = '5'";		
+				WHERE outcome_id = '19'";	//outcome_type_id = '5'	
 		}
 		else
 		{
 			if ($contacted === false)
 			{
+				print "<div class=\"form-group\" ><a href=\"?contacted=1\" class=\"btn btn-info\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\">".T_("CONTACTED")."</a>";
+				print "<a href=\"?contacted=0\" class=\"btn btn-default\" style=\"margin-left: 30px; margin-right: 15px; min-width: 150px;\">".T_("NOT CONTACTED")."</a></div>";
+
+				if (isset ($_GET['contacted'])){
+					
+				$contacted = bigintval($_GET['contacted']);
+
 				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
-					WHERE outcome_id != 10
-					ORDER BY contacted ASC, outcome_id ASC"; //don't show completed if not
+					WHERE contacted = '$contacted'
+					AND outcome_id NOT IN(5,10,19,21,40,41,33,34)"; 
+				}
 			}
 			else
 			{
 				$contacted = bigintval($contacted);
 		
-				$sql = "SELECT outcome_id,description
+				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
 					WHERE contacted = '$contacted'
-					AND outcome_id != 10"; //don't show completed if not
+					AND outcome_id NOT IN(5,10,19,21,40,41,33,34)";
 			}
 		}
 	}
@@ -136,12 +144,15 @@ function display_outcomes($contacted,$ca,$case_id)
 	{
 		$do = false;
 		if (isset($_GET['defaultoutcome'])) $do = bigintval($_GET['defaultoutcome']);
+
 		foreach($rs as $r)
 		{
 			if ($do == $r['outcome_id']) $selected = "checked='checked'"; else $selected = "";
-			if (isset($r['contacted']) && $r['contacted'] == 1) $highlight = "style='color:blue;'"; else $highlight = "";
-			print "<div><label $highlight class='label'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>" . T_($r['description']) . "</label></div>";
+			if (isset($r['contacted']) && $r['contacted'] == 1) $highlight = "text-primary"; else $highlight = "text-default";
+			print "<li><label class='$highlight'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>&emsp;" . T_($r['description']) . "</label></li>";
 		}
+		
+		$_POST['confirm'] = true;
 	}
 	print "</div>";
 
@@ -289,10 +300,10 @@ if (isset($_GET['newstate']))
 	$db->Execute($sql);
 }
 
-$js = "js/window_interface2.js";
-if (browser_ie()) $js = "js/window_ie6_interface2.js";
 
-xhtml_head(T_("Call"),true,array("css/call.css"),array($js,"include/jquery-ui/js/jquery-1.4.2.min.js"));
+if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js";
+
+xhtml_head(T_("Set outcome"),true,array("include/bootstrap-3.3.2/css/bootstrap.min.css"/* ,"css/call.css" */),array($js,"include/jquery-ui/js/jquery-1.4.2.min.js"));
 
 $state = is_on_call($operator_id);
 switch($state)
@@ -464,10 +475,13 @@ switch($state)
 	case 2: //ringing
 	case 3: //answered
 	case 4: //requires coding
-		print "<div class='status'>" . T_("Requires coding") . "</div>";
-		print "<form action='?' method='post'>";
+	//	print "<div class='status'>" . T_("Requires coding") . "</div>";
+		print "<form action='?' method='post'><div class=\"form-group\">";
 		display_outcomes(false,$call_attempt_id,$case_id);
-		print "<div><input type='submit' value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></div></form>";
+		print_r($rs);
+		if ($_POST['confirm']){
+			print "</div><input type='submit' class=\"btn btn-primary\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
+		}
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done
 	default:
