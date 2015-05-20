@@ -67,7 +67,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 	$js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Contact details"),true,array("css/table.css","css/respondent_interface2.css"),$js);
+xhtml_head(T_("Contact details"),false,array("css/table.css","css/respondent_interface2.css"),$js);
 
 
 global $db;
