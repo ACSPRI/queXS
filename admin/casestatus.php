@@ -106,7 +106,7 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 		LEFT JOIN case_queue as cq ON (cq.case_id = c.case_id)
 		LEFT JOIN operator as oq ON (cq.operator_id = oq.operator_id)
 		WHERE c.current_operator_id IS NULL $q $o
-		ORDER BY availableinmin ASC";
+		ORDER BY c.case_id ASC";
 
 //	print $sql;
 
@@ -116,7 +116,7 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 	$headers = array(T_("Case id"),T_("Sample"),T_("Timezone"),T_("Time NOW"),T_("Call attempts"),T_("Calls"),T_("Outcome"),T_("Available in"),T_("Assigned to"),T_("Order"),"<i class='fa fa-check-square-o fa-lg'></i>");
 	
 	if (isset($_GET['sample_import_id'])){ 	unset($datacol[1]);  unset($headers[1]); }
-	
+
 	xhtml_table($db->GetAll($sql),$datacol,$headers,"tclass",false,false,"bs-table");
 	
 	$sql = "SELECT operator_id as value,CONCAT(firstName,' ', lastName) as description, '' selected

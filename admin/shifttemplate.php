@@ -83,8 +83,8 @@ if (isset($_POST['day']))
 			$start = $db->qstr($_POST['start'][$key],get_magic_quotes_gpc());
 			$end = $db->qstr($_POST['end'][$key],get_magic_quotes_gpc());
 
-			$sql = "INSERT INTO shift_template (day_of_week,start,end)
-				VALUES ('$val',$start,$end)";
+			$sql = "INSERT INTO shift_template(day_of_week,start,end)
+				VALUES ($val,$start,$end)";
 			$db->Execute($sql);
 		}
 	}
@@ -112,13 +112,13 @@ print "<div class='well'><t>" . T_("Enter standard shift start and end times for
  * Begin displaying currently loaded shifts
  */
 
-$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT('$year',' ','$woy',' ',day_of_week -1),'%x %v %w' ), '%W' ) AS dt,day_of_week,start,end
+$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT('$year',' ','$woy',' ',day_of_week -1),'%x %v %w'), '%W') AS dt,day_of_week,start,end
 	FROM shift_template";	
 		
 $shifts = $db->GetAll($sql);
 translate_array($shifts,array("dt"));		
 	
-$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year,' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as description, day_of_week as value, '' as selected 
+$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT('$year',' ','$woy',' ',day_of_week - 1),'%x %v %w'), '%W') as description, day_of_week as value, '' as selected 
 	FROM day_of_week";
 	
 $daysofweek = $db->GetAll($sql);

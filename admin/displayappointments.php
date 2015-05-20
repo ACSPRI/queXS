@@ -132,8 +132,6 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(($_GET['new'
 			
 		print "<script type='text/javascript'> 
 		$(document).ready(function() { var startDateTextBox = $('#start'); var endDateTextBox = $('#end');
-		/* var std = '$startdate'.split(/[- :]/);
-		var etd = '$enddate'.split(/[- :]/); */
 			$.timepicker.datetimeRange( 
 				startDateTextBox,endDateTextBox,{
 				minInterval: (1000*60*15), // 15min
@@ -233,11 +231,10 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(($_GET['new'
 else {
 	$operator_id = get_operator_id();
 	$subtitle = T_("Appointments"); 
-	xhtml_head(T_("Display Appointments"),true,$css,$js_head, false,30); //array("../css/table.css")
-	
+	xhtml_head(T_("Display Appointments"),true,$css,$js_head,false,30); //array("../css/table.css")
 	print "<h3>" . T_("All appointments (with times displayed in your time zone)") . "</h3>";
 
-	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',@@session.time_zone) as start, CONVERT_TZ(a.end,'UTC',@@session.time_zone) as end, CONCAT(r.firstName, ' ', r.lastName) as resp, IFNULL(ou.description,'" . TQ_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, 
+	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',@@session.time_zone) as start, CONVERT_TZ(a.end,'UTC',@@session.time_zone) as end,CONCAT(r.firstName, ' ', r.lastName) as resp, IFNULL(ou.description,'" . TQ_("Not yet called") . "') as outcome, oo.firstName as makerName, ooo.firstName as callerName, 
 	CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, 
 	CONCAT('&emsp;<a href=\'\'><i class=\'fa fa-trash-o fa-lg text-danger\' toggle=\'confirmation\' data-placement=\'left\' data-href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'  ></i></a>&emsp;') as link, 
 	CONCAT('&emsp;<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'><i class=\'fa fa-pencil-square-o fa-lg\' ></i></a>&emsp;') as edit,IFNULL(ao.firstName,'" . TQ_("Any operator") . "') as witho 

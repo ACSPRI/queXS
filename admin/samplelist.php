@@ -121,16 +121,16 @@ if (isset($_POST['ed']))
 			else if ($val == 8) $eml++;
 		}
 		/* if($prph == 1) {$ch1 = true;} 
-
-
-
-
-
-
-
-
-
-
+			else { echo "<div class='alert alert-warning'>", T_("Please check that One and One Only Primary Phone number is selected"), "</div>";} 
+			
+		if (( ($pcd +$st) <= 2 )&&($pcd == 1 || $st == 1)) {$ch2 = true;} 
+			else { echo "<div class='alert alert-warning'>",  T_("Please check selected types for Postcode and/or State"), "</div>";} 
+// ! need to add DB tables check for existing timezone data in tables and additional check if prefix_timezone selected
+		if (( ($fn + $ln) <= 2 )&&($fn == 1 || $ln == 1)) {$ch3 = true;} 
+			else { echo "<div class='alert alert-warning'>", T_("Please check selected types for Firstname and/or Lastname"), "</div>";} 
+		if ($eml < 2) {$ch4 = true;} 
+			else { echo "<div class='alert alert-warning'>", T_("Too many e-mail fields. Please check selected types for E-mail."), "</div>"; }
+			
 		if ($ch1 && $ch2 && $ch3 && $ch4)  */$typecheck = true; //echo $ch1,$ch2,$ch3,$ch4, "typecheck=",$typecheck, "</br>" ; 
 		
 		if ($typecheck){
@@ -496,7 +496,7 @@ echo "<div class='form-group'>
 		<a href='import.php' class='btn btn-default col-sm-offset-4' ><i class='fa fa-upload fa-lg'></i>&emsp;" . T_("Import a sample file") . "</a>
 	</div>";
 $columns = array("id","description","cnt","status","enabledisable","calls","did","ssearch","delsample"); //"vp","rname",
-//$titles = array(T_("ID"),T_("Sample"), T_("Call History"),T_("Enable/Disable"), T_("Status"), T_("Deidentify"), T_("View"), T_("Rename"), T_("Search")); 
+//$titles = array(T_("ID"),T_("Sample"),T_("Records"), T_("Call History"),T_("Enable/Disable"), T_("Status"), T_("Deidentify"), T_("View"), T_("Rename"), T_("Search"), T_("Delete sample")); 
 xhtml_table($rs,$columns, false, "table-hover table-condensed ");
 
 xhtml_foot($js_foot);

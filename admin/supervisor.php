@@ -305,7 +305,7 @@ if ($case_id != false)
 		print "<div class='panel-body'><h4 class=''><i class='fa fa-book'></i>&emsp;" . T_("Sample details")."</h4>";
 		
 		$sql = "SELECT sv.sample_id, c.case_id , s.Time_zone_name,
-			TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,s.Time_zone_name),'". TIME_FORMAT ."') as time 
+			TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,s.Time_zone_name),'". TIME_FORMAT ."') as time
 			FROM sample_var AS sv
 			LEFT JOIN (`case` AS c , sample as s) ON ( c.sample_id = sv.sample_id AND s.sample_id = c.sample_id ) WHERE c.case_id = '$case_id'
 			GROUP BY sv.sample_id";
@@ -355,8 +355,8 @@ if ($case_id != false)
 		CONCAT (oo.firstName,' ', oo.lastName) as makerName, 
 		CONCAT (ooo.firstName,' ', ooo.lastName) as callerName,
 		CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id,
-		CONCAT('&emsp;<a href=\'\' data-toggle=\'confirmation\' data-placement=\'left\' data-href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'><i class=\'fa fa-trash fa-lg text-danger\' data-toggle=\'tooltip\' title=\'" . TQ_("Delete") . "\'></i></a>&emsp;') as link,
-		CONCAT('&emsp;<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\' data-toggle=\'tooltip\' title=\'" . TQ_("Edit") . "\' ><i class=\'fa fa-edit fa-lg\'></i></a>&emsp;') as edit
+		CONCAT('&emsp;<a href=\'\' data-toggle=\'confirmation\' data-placement=\'left\' data-href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id,'&amp;delete=delete\'><i class=\'fa fa-trash fa-lg text-danger\' data-toggle=\'tooltip\' title=\'" . TQ_("Delete") . "\'></i></a>&emsp;') as link,
+		CONCAT('&emsp;<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\' data-toggle=\'tooltip\' title=\'" . TQ_("Edit") . "\'><i class=\'fa fa-edit fa-lg\'></i></a>&emsp;') as edit
 		FROM appointment as a
 		JOIN (`case` as c, respondent as r, questionnaire as q, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
 		LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id)
@@ -378,7 +378,7 @@ if ($case_id != false)
 		if ($r[0]['sample_id']){
 			$rtz= $r[0]['Time_zone_name'];
 			print "&emsp;<a href='displayappointments.php?case_id=$case_id&rtz=$rtz&new=new' class='btn btn-default'><i class='fa fa-clock-o fa-lg'></i>&emsp;" . T_("Create appointment") . "</a>"; }
-// *		
+
 		print "</div>";
 
 
@@ -411,7 +411,7 @@ if ($case_id != false)
 		print "<div class='panel-body col-sm-6'><h4 class=''><i class='fa fa-file-text'></i>&emsp;" . T_("Case notes")."</h4>";
 
 		if (empty($rs))
-			print "<p class='alert text-info '>" . T_("No notes") . "</p>";
+			print "<p class='alert text-info'>" . T_("No notes") . "</p>";
 		else {
 			xhtml_table($rs,array("time","firstName","note","link"),array(T_("Date/Time"),T_("Operator"),T_("Note"),"&emsp;<i class='fa fa-trash fa-lg'></i>&emsp;"));
 			print "<br/>";
@@ -420,7 +420,7 @@ if ($case_id != false)
 		?>
 		<form method="get" action="?" class="form-inline" >	
 		<input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/>
-		<input type="text" class="textclass form-control" name="note" id="note" style="width: 80%;"/>&ensp;
+		<input type="text" class="textclass form-control" name="note" id="note" style="width: 70%;"/>&ensp;
 		<button class="submitclass btn btn-default" type="submit" name="submit"><i class="fa fa-file-text"></i>&emsp;<?php  echo T_("Add note"); ?></button> 
 		</form>
 		<?php 
@@ -483,11 +483,9 @@ if ($case_id != false)
 			print "<div class='alert text-danger' role='alert'>" . T_("Case not yet started in Limesurvey") .  "</div>";
 		print "</div></div>";
 		
-		
-		
 		if ($r[0]['sample_id']){   // if sample data exists  view availability
 		
-		print "<div class='panel-body col-sm-6'><h4 class=''><i class='fa fa-calendar'></i>&emsp;" . T_("Availability groups") .  "</h4>";
+		print "<div class='panel-body col-sm-6'><h4 class=''><i class='fa fa-calendar'></i>&emsp;" . T_("Availability groups") . "</h4>";
 		if (is_using_availability($case_id))
 		{
 			//List all availability group items and whether selected or not (all selected by default unless >= 1 availability group is in use for this case
@@ -502,7 +500,7 @@ if ($case_id != false)
 
 			//Display all availability groups as checkboxes
 			print "<form action='?' method='get' class='form-horizontal '>";
-			print "<h5 class=''>" . T_("Select groups to limit availability (Selecting none means always available)") .  "</h5><div class='col-sm-8'>";
+			print "<h5 class=''>" . T_("Select groups to limit availability (Selecting none means always available)") .  "</h5><div class='col-sm-6'>";
 			foreach ($rs as $r)
 			{
 				$checked = "";
@@ -549,7 +547,7 @@ if ($case_id != false)
 		?>
 		<form method="get" action="?">
 		<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>
-		<button class=" btn btn-danger" name="deidentify"  id="deidentify"><i class="fa fa-trash fa-lg"></i>&emsp;<?php echo T_("Deidentify");?></button>
+		<button class=" btn btn-danger" name="deidentify" id="deidentify" data-toggle="confirmation" ><i class="fa fa-trash fa-lg"></i>&emsp;<?php echo T_("Deidentify");?></button>
 		</form></div>
 		<?php }
 	}
@@ -561,9 +559,8 @@ if ($case_id != false)
 xhtml_foot($js_foot);//  deidentify  data-toggle="modal" type="submit"submitclass
 ?>
 
-
 <script type="text/javascript">
-$('[data-toggle="confirmation"]').confirmation()
+$('[data-toggle="confirmation"]').confirmation();
 $("#deidentify").click(function(){
 		$("#deidentify-confirm").modal('show');});
 </script>

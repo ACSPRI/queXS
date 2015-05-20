@@ -1107,7 +1107,7 @@ textarea.updater-changelog {
 #importquestion li label:first-child,
 #bouncesettings li label:first-child,
 #importquestion li label:first-child {
-    width: 44%;
+    width: 50%;
     text-align: right;
     margin-right: 0.5em;
     float: left;
@@ -1331,7 +1331,7 @@ padding:10px;
 }
 
 #statistics_general_filter {
-    width:650px;
+    width:950px;
     margin:0 auto;
 }
 
@@ -1341,15 +1341,15 @@ clear:both;
 
 
 #statistics_general_filter #left {
-    width:270px;
-    height:125px;
+    width:47%;
+    height:131px;
     float:left;
     clear:left;
 }
 
 #statistics_general_filter #right {
-    width:330px;
-    height:125px;
+    width:47%;
+    /* height:125px; */
     float:right;
     clear:none;
 }

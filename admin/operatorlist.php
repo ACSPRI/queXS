@@ -345,7 +345,7 @@ if (isset($_GET['operator_id']))
 
 if ($display)
 {
-	$sql = "SELECT
+	$sql = "SELECT operator_id,
     CONCAT(firstName, ' ', lastName) as name, 
 	CONCAT ('<a href=\'extensionstatus.php?edit=',e.extension_id,'\'>', e.extension ,'</a>') as `extension`,
 	CONCAT('<a href=\'?winbat=winbat&amp;operator_id=',operator_id,'\'>" . TQ_("Win .bat file") . "</a>') as winbat,
@@ -368,8 +368,8 @@ if ($display)
 	
 	xhtml_head(T_("Operator list"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../css/custom.css"));
 	
-	$columns = array("name","username","extension","enabledisable","edit");
-	$titles = array(T_("Operator"),T_("Username"),T_("Extension"),"&emsp;<i class='fa fa-lg fa-power-off '></i>","&emsp;<i class='fa fa-lg fa-pencil-square-o'></i>"); 
+	$columns = array("operator_id","name","username","extension","enabledisable","edit");
+	$titles = array("ID",T_("Operator"),T_("Username"),T_("Extension"),"&emsp;<i class='fa fa-lg fa-power-off '></i>","&emsp;<i class='fa fa-lg fa-pencil-square-o'></i>"); 
 	
 	if (VOIP_ENABLED)
 	{

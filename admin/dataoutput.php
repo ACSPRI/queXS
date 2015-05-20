@@ -1,5 +1,4 @@
-<?php 
-/**
+<?php /**
  * Output data as a fixed width ASCII file
  *
  *
@@ -196,7 +195,7 @@ xhtml_head(T_("Data output"),true,array("../include/bootstrap-3.3.2/css/bootstra
 print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Please select a questionnaire") . ":&emsp;</h3>";
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id,false,"form-inline pull-left", "form-control");
+display_questionnaire_chooser($questionnaire_id,false,"form-inline col-sm-3 pull-left", "form-control");
 
 if ($questionnaire_id)
 {
@@ -207,17 +206,16 @@ if ($questionnaire_id)
 	$ls = $db->GetRow($sql);
 	$lsid = $ls['lime_sid'];
 
-	print "&emsp;&emsp;<a href='" . LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid' class='btn btn-default fa btn-lime'>".  T_("Download data for this questionnaire via Limesurvey") . "</a></div>";
+	print "&emsp;<a href='" . LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid' class='btn btn-default fa btn-lime'>".  T_("Download data for this questionnaire via Limesurvey") . "</a></div>";
 
 	print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Please select a sample") . ":&emsp;</h3>";
 	$sample_import_id = false;
 	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
-	display_sample_chooser($questionnaire_id,$sample_import_id,false,"form-inline pull-left", "form-control");
+	display_sample_chooser($questionnaire_id,$sample_import_id,false,"form-inline col-sm-3 pull-left", "form-control");
 
 	if ($sample_import_id)
 	{
-		print "&emsp;&emsp;<a href='" .LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid&amp;quexsfilterinc=$questionnaire_id:$sample_import_id' class='btn btn-default fa btn-lime'>" . T_("Download data for this sample via Limesurvey") . "</a></div>";
-		
+		print "&emsp;<a href='" .LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid&amp;quexsfilterinc=$questionnaire_id:$sample_import_id' class='btn btn-default fa btn-lime'>" . T_("Download data for this sample via Limesurvey") . "</a></div>";
 		//get sample vars
 		$sql = "SELECT sivr.var_id as value, sivr.var as description
 		FROM `sample_import_var_restrict` as sivr
@@ -225,18 +223,17 @@ if ($questionnaire_id)
 		$rs = $db->GetAll($sql);
 	
 		//download a key file linking the caseid to the sample
-		print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Download key file: select sample var") . ":&emsp;</h3>";
+		print "<div class='form-group '><h3 class='col-sm-4 text-right'>" . T_("Download key file: select sample var") . ":&emsp;</h3>";
 
-		display_chooser($rs,"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id",true,true,false,true,"form-inline pull-left"); 
+		display_chooser($rs,"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id",true,true,false,true,"form-inline col-sm-3 pull-left");
 		
-	//	print "</div><div class='form-group col-sm-offset-4'>";
+		print "</div><div class=' col-sm-4'>";
 		
 		//download complete key file
-		print "&emsp;&emsp;<a href='?key=key&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default fa'>" . T_("Download complete key file") . "</a>";
+		print "<a href='?key=key&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default fa'>" . T_("Download complete key file") . "</a></br></br>";
 
 		//download complete sample file with outcomes
-		print "&emsp;&emsp;<a href='?sample=sample&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default fa'>" . T_("Download complete sample file with current outcomes") . "</a></div>";
-
+		print "<a href='?sample=sample&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default fa'>" . T_("Download complete sample file with current outcomes") . "</a></div>";
 	}
 }
 
