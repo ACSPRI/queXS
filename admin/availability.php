@@ -54,7 +54,7 @@ if (isset($_GET['availability_group']))
 else if (isset($_POST['availability_group']))
 	$availability_group = intval($_POST['availability_group']);
 else
-	die(T_("No availability group set"));
+	die(T_("No time slot group set"));
 
 
 if (isset($_POST['day']))
@@ -92,7 +92,7 @@ if (isset($_POST['day']))
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Modify availability"),true,array("../css/shifts.css"),array("../js/addrow-v2.js"));
+xhtml_head(T_("Modify time slots"),true,array("../css/shifts.css"),array("../js/addrow-v2.js"));
 
 /**
  * Display warning if timezone data not installed
@@ -158,12 +158,12 @@ translate_array($daysofweek,array("description"));
 ?>
 	</table>
 	<p><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></p>
-	<p><label for="description"><?php echo T_("Availability group name");  ?>: </label><input type="text" name="description" id="description" value="<?php echo $description;?>"/></p>
-	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to availabilities"); ?>"/></p>
+	<p><label for="description"><?php echo T_("Time slot group name");  ?>: </label><input type="text" name="description" id="description" value="<?php echo $description;?>"/></p>
+	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to time slot group"); ?>"/></p>
 	<input type="hidden" name="availability_group" value="<?php  echo $availability_group;?>"/>
 	</form>
 	<form method="post" action="availabilitygroup.php">
-	<p><input type="submit" name="subdel" value="<?php  echo T_("Delete this availability group"); ?>"/></p>
+	<p><input type="submit" name="subdel" value="<?php  echo T_("Delete this time slot group"); ?>"/></p>
 	<input type="hidden" name="availability_group" value="<?php  echo $availability_group;?>"/>
 	</form>
 <?php 

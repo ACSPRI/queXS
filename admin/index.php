@@ -70,8 +70,10 @@ print "<li><a href=\"?page=operatorquestionnaire.php\">" . T_("Assign operators 
 print "<li><a href=\"?page=operatorskill.php\">" . T_("Modify operator skills") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Availability and shift management") . "</h3><ul>";
-print "<li><a href=\"?page=availabilitygroup.php\">" . T_("Manage availablity groups") . "</a></li>";
+print "<li><a href=\"?page=availabilitygroup.php\">" . T_("Manage time slots") . "</a></li>";
 print "<li><a href=\"?page=questionnaireavailability.php\">" . T_("Assign availabilities to questionnaires") . "</a></li>";
+print "<li><a href=\"?page=questionnairecatimeslots.php\">" . T_("Assign call attempt time slots to questionnaire") . "</a></li>";
+print "<li><a href=\"?page=questionnairecatimeslotssample.php\">" . T_("Assign call attempt time slots to questionnaire sample") . "</a></li>";
 print "<li><a href=\"?page=addshift.php\">" . T_("Shift management (add/remove)") . "</a></li></ul></li>";
 
 print "<li><h3>" . T_("Questionnaire progress") . "</h3>";

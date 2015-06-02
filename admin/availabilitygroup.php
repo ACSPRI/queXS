@@ -67,7 +67,7 @@ include("../functions/functions.input.php");
 
 global $db;
 
-xhtml_head(T_("Availability groups"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Time slots"),true,array("../css/table.css"),array("../js/window.js"));
 
 if (isset($_POST['subdel']))
 {
@@ -109,22 +109,22 @@ $sql = "SELECT description,
 	
 	$rs = $db->GetAll($sql);
 
-print "<h3>" . T_("Availability groups")."</h3>";
+print "<h3>" . T_("Time slots")."</h3>";
 
-print "<p>" . T_("Availability groups define periods of time of respondent availability.") . "</p>";
+print "<p>" . T_("Time slots define periods of time during particular days of the week. These are used for the availability function and also the call attempt time slot function.") . "</p>";
 
 if (empty($rs))
-	print "<p>" . T_("No availability groups") . "</p>";
+	print "<p>" . T_("No time slots") . "</p>";
 else
-	xhtml_table($rs,array("description","link"),array(T_("Availablity group"),T_("Modify")));
+	xhtml_table($rs,array("description","link"),array(T_("Time slot"),T_("Modify")));
 
 
 //add an availablity group
-print "<h3>" . T_("Add availability group") . "</h3>";
+print "<h3>" . T_("Add time slot") . "</h3>";
 ?>
 <form method="post" action="?">
-	<p><label for="availability_group"><?php echo T_("Availability group name"); ?>: </label><input type="text" class="textclass" name="availability_group" id="availability_group"/></p>
-	<p><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add availability group"); ?>"/>
+	<p><label for="availability_group"><?php echo T_("Time slot name"); ?>: </label><input type="text" class="textclass" name="availability_group" id="availability_group"/></p>
+	<p><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add time slot"); ?>"/>
 	</p>
 </form>
 <?php 

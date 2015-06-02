@@ -69,10 +69,11 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 	$am = bigintval($_GET['answering_machine_messages']);
 	$selecttype = 0;
 	if (isset($_GET['selecttype'])) $selecttype = 1;
+	$an = 0;
+	if (isset($_GET['allownew'])) $an = 1;
 
-
-	$sql = "INSERT INTO questionnaire_sample(questionnaire_id,sample_import_id,call_max,call_attempt_max,random_select,answering_machine_messages)
-		VALUES('$questionnaire_id','$sid','$cm','$cam','$selecttype','$am')";
+	$sql = "INSERT INTO questionnaire_sample(questionnaire_id,sample_import_id,call_max,call_attempt_max,random_select,answering_machine_messages,allow_new)
+		VALUES('$questionnaire_id','$sid','$cm','$cam','$selecttype','$am', '$an')";
 
 	$db->Execute($sql);
 
@@ -89,13 +90,17 @@ if (isset($_POST['edit']))
 	$am = bigintval($_POST['answering_machine_messages']);
 	$selecttype = 0;
 	if (isset($_POST['selecttype'])) $selecttype = 1;
+	$an = 0;
+	if (isset($_POST['allownew'])) $an = 1;
+
 
 
 	$sql = "UPDATE questionnaire_sample
 		SET call_max = '$cm',
 		call_attempt_max = '$cam',
 		random_select = '$selecttype',
-		answering_machine_messages = '$am'
+    answering_machine_messages = '$am',
+    allow_new = '$an'
 		WHERE questionnaire_id = '$questionnaire_id'
 		AND sample_import_id = '$sid'";
 
@@ -119,7 +124,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 				q.call_max,
 				q.call_attempt_max,
 				q.random_select,
-				q.answering_machine_messages
+        q.answering_machine_messages,
+        q.allow_new
 			FROM questionnaire_sample as q, sample_import as si, questionnaire as qr
 			WHERE q.sample_import_id = si.sample_import_id
 			AND q.questionnaire_id = '$questionnaire_id'
@@ -134,9 +140,11 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 
 		print "<p><a href='?questionnaire_id=$questionnaire_id'>" . T_("Go back") . "</a></p>";
 
-		$selected ="";
+		$allownew = $selected ="";
 		if ($qs['random_select'] == 1)
 			$selected = "checked=\"checked\"";
+		if ($qs['allow_new'] == 1)
+			$allownew = "checked=\"checked\"";
 
 		?>
 		<form action="?questionnaire_id=<?php echo $questionnaire_id;?>" method="post">
@@ -144,6 +152,7 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 		<label for="call_attempt_max"><?php  echo T_("Max call attempts (0 for unlimited)"); ?></label><input type="text" name="call_attempt_max" id="call_attempt_max" value="<?php echo $qs['call_attempt_max'];?>"/>		<br/>
 		<label for="answering_machine_messages"><?php  echo T_("Number of answering machine messages to leave per case (0 for never)"); ?></label><input type="text" name="answering_machine_messages" id="answering_machine_messages" value="<?php echo $qs['answering_machine_messages'];?>"/>		<br/>
 		<label for="selecttype"><?php  echo T_("Select from sample randomly? (otherwise sequentially)"); ?></label><input type="checkbox" id = "selecttype" name="selecttype" <?php echo $selected;?> />		<br/>
+		<label for="allownew"><?php  echo T_("Allow new numbers to be drawn?"); ?></label><input type="checkbox" id = "allownew" name="allownew" <?php echo $allownew;?> />		<br/>
 		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="hidden" name="sample_import_id" value="<?php  print($sid); ?>"/>
 		<input type="submit" name="edit" value="<?php echo T_("Edit"); ?>"/></p>
@@ -181,6 +190,7 @@ if ($questionnaire_id != false)
 			CASE WHEN q.call_attempt_max = 0 THEN '" . TQ_("Unlimited") . "' ELSE q.call_attempt_max END AS call_attempt_max,
 			CASE WHEN q.random_select = 0 THEN '" . TQ_("Sequential") . "' ELSE '". TQ_("Random") . "' END as random_select,
 			CASE WHEN q.answering_machine_messages = 0 THEN '" . TQ_("Never") . "' ELSE q.answering_machine_messages END as answering_machine_messages,
+			CASE WHEN q.allow_new = 0 THEN '" . TQ_("No") . "' ELSE '".TQ_("Yes")."' END as allow_new,
 			CONCAT('<a href=\"?edit=edit&amp;questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . TQ_("Edit") ."</a>') as edit,
 			CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\">"  . TQ_("Click to unassign") ."</a>') as unassign
 		FROM questionnaire_sample as q, sample_import as si
@@ -190,7 +200,7 @@ if ($questionnaire_id != false)
 	$qs = $db->GetAll($sql);
 
 	if (!empty($qs))
-		xhtml_table($qs,array("description","call_max","call_attempt_max","answering_machine_messages","random_select","edit","unassign"),array(T_("Sample"), T_("Max calls"), T_("Max call attempts"), T_("Answering machine messages"), T_("Selection type"), T_("Edit"), T_("Unassign sample") ));
+		xhtml_table($qs,array("description","call_max","call_attempt_max","answering_machine_messages","random_select","allow_new","edit","unassign"),array(T_("Sample"), T_("Max calls"), T_("Max call attempts"), T_("Answering machine messages"), T_("Selection type"), T_("Allow new numbers to be drawn?"), T_("Edit"), T_("Unassign sample") ));
 	else
 		print "<p>" . T_("No samples selected for this questionnaire") . "</p>";
 
@@ -223,6 +233,7 @@ if ($questionnaire_id != false)
 		<label for="call_attempt_max"><?php  echo T_("Max call attempts (0 for unlimited)"); ?></label><input type="text" name="call_attempt_max" id="call_attempt_max" value="0"/>		<br/>
 		<label for="answering_machine_messages"><?php  echo T_("Number of answering machine messages to leave per case (0 for never)"); ?></label><input type="text" name="answering_machine_messages" id="answering_machine_messages" value="1"/>		<br/>
 		<label for="selecttype"><?php  echo T_("Select from sample randomly? (otherwise sequentially)"); ?></label><input type="checkbox" id = "selecttype" name="selecttype" />		<br/>
+		<label for="allownew"><?php  echo T_("Allow new numbers to be drawn?"); ?></label><input type="checkbox" id = "allownew" name="allownew" checked="checked" />		<br/>
 		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="submit" name="add_sample" value="<?php echo T_("Add sample");?>"/></p>
 		</form>

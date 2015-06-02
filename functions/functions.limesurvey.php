@@ -291,6 +291,16 @@ function limesurvey_quota_replicate_completions($lime_sid,$questionnaire_id,$sam
 {
 	global $db;
 
+  $sql = "SELECT COUNT(*)
+          FROM information_schema.tables
+          WHERE table_schema = '".DB_NAME."'
+          AND table_name = '" . LIME_PREFIX . "survey_$lime_sid'";
+
+  $rs = $db->GetOne($sql);
+
+  if ($rs != 1)
+    return false;
+
 	$sql = "SELECT count(*) as c
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
@@ -390,6 +400,16 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
 {
 	global $db;
 
+  $sql = "SELECT COUNT(*)
+          FROM information_schema.tables
+          WHERE table_schema = '".DB_NAME."'
+          AND table_name = '" . LIME_PREFIX . "survey_$lime_sid'";
+
+  $rs = $db->GetOne($sql);
+
+  if ($rs != 1)
+    return false;
+
 	$sql = "SELECT count(*) as c
 		FROM " . LIME_PREFIX . "survey_$lime_sid as s
 		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
@@ -412,18 +432,18 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
  * Based on GetQuotaInformation() from common.php in Limesurvey
  *
  * @param int $lime_quota_id The quota id to get information on
- * @param string $baselang The base language for getting information from questions
  * @return array An array containing the question information for comparison
  */
-function get_limesurvey_quota_info($lime_quota_id,$baselang = DEFAULT_LOCALE)
+function get_limesurvey_quota_info($lime_quota_id)
 {
 	global $db;
 
 	$ret = array();
 
-	$sql = "SELECT *
-		FROM ".LIME_PREFIX."quota_members
-		WHERE quota_id='$lime_quota_id'";
+	$sql = "SELECT q.*,s.language
+		FROM ".LIME_PREFIX."quota_members as q, ".LIME_PREFIX."surveys as s
+    WHERE q.quota_id='$lime_quota_id'
+    AND s.sid = q.sid";
 	
 	$rs = $db->GetAll($sql);
 
@@ -431,11 +451,12 @@ function get_limesurvey_quota_info($lime_quota_id,$baselang = DEFAULT_LOCALE)
 	{
 		$lime_qid = $quota_entry['qid'];
 		$surveyid = $quota_entry['sid'];
+		$language = $quota_entry['language'];
 
 		$sql = "SELECT type, title,gid
 			FROM ".LIME_PREFIX."questions
 			WHERE qid='$lime_qid' 
-			AND language='$baselang'";
+			AND language='$language'";
 
 		$qtype = $db->GetRow($sql);
 	

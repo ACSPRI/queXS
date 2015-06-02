@@ -270,7 +270,7 @@ function import_file($file, $description, $fields, $firstrow = 2)
 		
 				//first find the timezone
 		
-				$tzone = DEFAULT_TIME_ZONE; //set this to default
+				$tzone = get_setting("DEFAULT_TIME_ZONE"); //set this to default
 		
 				/**
 				 * Determine time zone from all possible sources in sample_var_type table

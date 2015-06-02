@@ -1,3 +1,12 @@
+Database updates:
+
+CREATE TABLE `questionnaire_sample_timeslot` (
+`questionnaire_id` bigint( 20 ) NOT NULL ,
+`sample_import_id` bigint( 20 ) NOT NULL ,
+`availability_group_id` bigint( 20 ) NOT NULL ,
+PRIMARY KEY ( `questionnaire_id` , `availability_group_id` , `sample_import_id` )
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+
 CREATE TABLE `qsqr_question` (
    `qsqr_question_id` bigint(20) NOT NULL AUTO_INCREMENT,
    `questionnaire_sample_quota_row_id` bigint(20) NOT NULL,
@@ -37,6 +46,46 @@ ALTER TABLE `questionnaire_sample_quota_row`
   DROP `comparison`,
   DROP `exclude_var`,
   DROP `exclude_val`;
+
+queXS 1.11.1 - Changes since 1.11.0
+
+Fixed Bug: Quota priority not able to override sort of last call made
+Fixed Bug lp:1410503 required URLto the CKeditor installation directory
+Fixed Bug lp:1411703 Asign cases even with sample disabled and sample unassigned from questionnaire
+Fixed Bug lp:1412389 removed language restriction
+Fixes Bug lp:141380 System sort process fails when quotas enabled and limesurvey instrument de-activated
+Fix error in translation where thinks it is a wildcard
+
+Translations: Updated from Launchpad. Thank you again!
+
+queXS 1.11.0 - Changes since 1.10.4
+
+New Feature: System sort on a questionnaire by questionnaire basis
+New Feature: Time slots for cases (make sure cases are called over specified timeslots equally)
+New Feature: Ability to disable and enable new records being drawn from a sample
+New Feature: Default timezone can be set in Administrative interface instead of config file
+
+Fixed Bug: lp:1394819 Automatic dialling doesn't work when using "No respondent selection"
+Fixed Bug: lp:1394818 - Quota completions not displayed above 100%
+Fixed Bug: Operator extension not clearing correctly at end of work
+Fixed Bug: Notices generated when running index_update.php
+Fixed Bug: lp:1362415 Use of eregi and split are deprecated
+Fixed Bug: lp:1362418 - Cannot originate calls on Asterisk 11
+
+Translations: Updated from Launchpad. Thank you!
+
+Database updates:
+
+ALTER TABLE `questionnaire_sample` ADD `allow_new` TINYINT( 1 ) NOT NULL DEFAULT '1';
+
+CREATE TABLE `questionnaire_timeslot` (
+`questionnaire_id` bigint( 20 ) NOT NULL ,
+`availability_group_id` bigint( 20 ) NOT NULL ,
+PRIMARY KEY ( `questionnaire_id` , `availability_group_id` )
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+
+INSERT INTO `setting` (`setting_id`,`field`,`value`)
+VALUES (NULL , 'DEFAULT_TIME_ZONE', 's:18:"Australia/Victoria";');
 
 queXS 1.10.4 - Changes since 1.10.3
 

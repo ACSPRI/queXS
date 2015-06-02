@@ -232,7 +232,7 @@ function display_respondent_form($respondent_id = false,$case_id = false)
 	/**
 	 * Use the default time zone if none other to work with
 	 */
-	$rzone = DEFAULT_TIME_ZONE;
+	$rzone = get_setting("DEFAULT_TIME_ZONE");
 	$fn = "";
 	$ln = "";
 

@@ -158,8 +158,7 @@ else
 <?php 
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
-	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id
-	AND sl.surveyls_language = 'en' )
+	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
 	WHERE s.active = 'Y'";
 
 $surveys = $db->GetAll($sql);
@@ -173,6 +172,7 @@ if (!empty($surveys))
 }
 
 $CKEditor = new CKEditor();
+$CKEditor->basePath = "../include/ckeditor/";
 
 $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 	array("Cut","Copy","Paste","PasteText","PasteFromWord","-","Print","SpellChecker"),

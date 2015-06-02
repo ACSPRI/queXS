@@ -41,12 +41,6 @@
 
 
 /**
- * The default time zone
- */
-if (!defined('DEFAULT_TIME_ZONE')) define('DEFAULT_TIME_ZONE', 'Australia/Victoria');
-
-
-/**
  * Date time format for displaying 
  * 
  * see http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html#function_date-format 
@@ -93,6 +87,12 @@ if (!defined('VOIP_ADMIN_PASS')) define('VOIP_ADMIN_PASS','amp111');
  * The Asterisk server port for the monitor interface
  */
 if (!defined('VOIP_PORT')) define('VOIP_PORT','5038');
+
+/**
+ * The Asterisk context to originate calls from (in FreePBX this should be 
+ * 'from-internal' otherwise try 'default'
+ */
+if (!defined('ORIGINATE_CONTEXT')) define('ORIGINATE_CONTEXT','from-internal');
 
 /**
  * The freepbx root path (if installed) otherwise false to disable freepbx integration

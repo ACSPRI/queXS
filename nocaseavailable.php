@@ -141,6 +141,8 @@ else
 	?> <p class='error'><?php  echo T_("ERROR: No shifts at this time"); ?></p> <?php 
 }
 
+/* Disable as too time consuming
+
 //call restrictions and outside times
 $sql = "SELECT count(*) as c
 	FROM operator_questionnaire as oq
@@ -169,7 +171,7 @@ else
 	print "<p>" . T_("There are ") . $rs['c'] . T_(" unassigned case(s) available within the specified call restrictions") . "</p>";
 }
 
-
+ */
 
 ?>
 <p><?php  echo T_("Limesurvey links:"); ?></p>

@@ -191,7 +191,7 @@ if ($ca)
 	}
 }
 
-if (!is_respondent_selection($operator_id))
+if (!is_respondent_selection($operator_id) && AUTO_DIAL_SECONDS == false)
   $data = get_limesurvey_url($operator_id);
 else 
   $data = get_respondentselection_url($operator_id);

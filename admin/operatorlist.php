@@ -255,9 +255,9 @@ if (isset($_GET['operator_id']))
 			header("Pragma: public");                          // HTTP/1.0
 	
 			if (isset($_GET['winbat']))
-				echo "voipclient.exe -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME'];
+				echo "voipclient.exe -i -u {$rs['ext']} -p {$rs['password']} -h " . $_SERVER['SERVER_NAME'];
 			else
-				echo "./voipclient -i -u {$rs['ext']} -p {$rs['extension_password']} -h " . $_SERVER['SERVER_NAME'];
+				echo "./voipclient -i -u {$rs['ext']} -p {$rs['password']} -h " . $_SERVER['SERVER_NAME'];
 		}
 	}
 }

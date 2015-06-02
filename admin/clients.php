@@ -111,7 +111,7 @@ if ($a)
 <?php  } ?>
 	<p><?php  echo T_("Enter the first name of a client to add:"); ?> <input name="firstname" type="text"/></p>
 	<p><?php  echo T_("Enter the surname of a client to add:"); ?> <input name="lastname" type="text"/></p>
-	<p><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of a client to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",DEFAULT_TIME_ZONE)); ?> </p>
+	<p><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of a client to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",get_setting("DEFAULT_TIME_ZONE"))); ?> </p>
 	<p><input type="submit" value="<?php  echo T_("Add user"); ?>" /></p>
 </form>
 

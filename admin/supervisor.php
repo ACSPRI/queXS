@@ -319,7 +319,30 @@ if ($case_id != false)
 			translate_array($rs,array("des"));
 			xhtml_table($rs,array("start","des","phone","link","firstName"),array(T_("Date/Time"),T_("Outcome"),T_("Phone number"),T_("Change outcome"),T_("Operator")));
 		}
-	
+
+    //view timeslots
+    $sql = "SELECT count(*)
+            FROM questionnaire_timeslot as q, `case` as c
+            WHERE c.case_id = $case_id
+            AND c.questionnaire_id = q.questionnaire_id";
+
+    if ($db->GetOne($sql) >= 1)
+    {
+      print "<h3>" . T_("Call attempts by timeslot") . "</h3>";
+
+      $sql = "SELECT ag.description, (SELECT COUNT(*) FROM availability as a, `call_attempt` as ca WHERE ca.case_id = c.case_id AND a.availability_group_id = ag.availability_group_id
+              AND (a.day_of_week = DAYOFWEEK(CONVERT_TZ(ca.start,'UTC',s.Time_zone_name)) 
+              AND TIME(CONVERT_TZ(ca.start, 'UTC' , s.Time_zone_name)) >= a.start 
+              AND TIME(CONVERT_TZ(ca.start, 'UTC' , s.Time_zone_name)) <= a.end))  as cou
+              FROM availability_group as ag, `case` as c, `questionnaire_timeslot` as qt, sample as s
+              WHERE c.case_id = '$case_id'
+              AND s.sample_id = c.sample_id
+              AND qt.questionnaire_id = c.questionnaire_id AND ag.availability_group_id = qt.availability_group_id";
+
+      xhtml_table($db->GetAll($sql),array('description','cou'),array(T_("Time slot"),T_("Call attempts")));
+   
+    }
+
 		//view notes
 		$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.datetime,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as time, op.firstName, op.lastName, c.note as note,  CONCAT('<a href=\'?case_id=$case_id&amp;case_note_id=', c.case_note_id, '\'>". TQ_("Delete") . "</a>') as link 
 				FROM `case_note` as c
@@ -416,7 +439,6 @@ if ($case_id != false)
 		{
 			print "<p>" . T_("Availability groups not defined for this questionnaire") . "</p>";
 		}
-
 
 
 		//assign this to an operator for their next case

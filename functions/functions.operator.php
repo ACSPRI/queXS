@@ -367,10 +367,10 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 		$db->Execute("SET @row := 0");
 
 		$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-			SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(e.extension,'/',-1) as phone, CONCAT(o.firstName, ' ', o.lastName)
-			FROM operator as o, `extension` as e
-      WHERE o.enabled = 1
-      AND e.current_operator_id = o.operator_id";
+			SELECT $case_id as case_id,@row := @row + 1 AS priority,IFNULL(SUBSTRING_INDEX(e.extension,'/',-1),'312345678') as phone, CONCAT(o.firstName, ' ', o.lastName)
+      FROM operator as o
+      LEFT JOIN `extension` as e ON (e.current_operator_id = o.operator_id)
+      WHERE o.enabled = 1";
 	
 		$db->Execute($sql);
 	}
@@ -609,7 +609,6 @@ function get_case_id($operator_id, $create = false)
 				 *    
 				 *   THINGS TO ADD:
 				 *
-				 *   @todo also option of "time of day" calls - try once in the morning/etc
 				 *   @todo also could check the respondent_not_available table to see if now is a "bad time" to call
 				 */	
 			
@@ -625,10 +624,14 @@ function get_case_id($operator_id, $create = false)
 					LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = c.questionnaire_id AND qsep.sample_id = c.sample_id)
 					LEFT JOIN case_availability AS casa ON (casa.case_id = c.case_id)
 					LEFT JOIN availability AS ava ON (ava.availability_group_id = casa.availability_group_id)
+					LEFT JOIN questionnaire_timeslot AS qast ON (qast.questionnaire_id = c.questionnaire_id)
+					LEFT JOIN questionnaire_sample_timeslot AS qasts ON (qasts.questionnaire_id = c.questionnaire_id AND qasts.sample_import_id = si.sample_import_id)
 					JOIN operator_skill as os on (os.operator_id = op.operator_id and os.outcome_type_id = ou.outcome_type_id)
 					WHERE c.current_operator_id IS NULL
-					AND (casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
-					AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
+					AND ((apn.appointment_id IS NOT NULL) OR casa.case_id IS NULL OR (ava.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= ava.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= ava.end  ))
+          AND ((apn.appointment_id IS NOT NULL) OR qast.questionnaire_id IS NULL OR ((SELECT COUNT(*) FROM availability WHERE availability.availability_group_id = qast.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= availability.end)) >= 1 AND (SELECT COUNT(call_attempt_id) FROM `call_attempt`, availability WHERE call_attempt.case_id = c.case_id AND (availability.availability_group_id = qast.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(call_attempt.start,'UTC',s.Time_zone_name)) AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) <= availability.end))) = (   SELECT (SELECT COUNT(*) FROM availability, call_attempt WHERE call_attempt.case_id = c.case_id AND availability.availability_group_id = availability_group.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(call_attempt.start,'UTC',s.Time_zone_name)) AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) <= availability.end))  as cou FROM availability_group, questionnaire_timeslot WHERE questionnaire_timeslot.questionnaire_id = c.questionnaire_id AND availability_group.availability_group_id = questionnaire_timeslot.availability_group_id ORDER BY cou ASC LIMIT 1)))
+          AND ((apn.appointment_id IS NOT NULL) OR qasts.questionnaire_id IS NULL OR ((SELECT COUNT(*) FROM availability WHERE availability.availability_group_id = qasts.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= availability.end)) >= 1 AND (SELECT COUNT(call_attempt_id) FROM `call_attempt`, availability WHERE call_attempt.case_id = c.case_id AND (availability.availability_group_id = qasts.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(call_attempt.start,'UTC',s.Time_zone_name)) AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) <= availability.end))) = (   SELECT (SELECT COUNT(*) FROM availability, call_attempt WHERE call_attempt.case_id = c.case_id AND availability.availability_group_id = availability_group.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(call_attempt.start,'UTC',s.Time_zone_name)) AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(call_attempt.start, 'UTC' , s.Time_zone_name)) <= availability.end))  as cou FROM availability_group, questionnaire_sample_timeslot WHERE questionnaire_sample_timeslot.questionnaire_id = c.questionnaire_id AND questionnaire_sample_timeslot.sample_import_id = si.sample_import_id AND availability_group.availability_group_id = questionnaire_sample_timeslot.availability_group_id ORDER BY cou ASC LIMIT 1)))
+          AND (a.call_id is NULL or (a.end < CONVERT_TZ(DATE_SUB(NOW(), INTERVAL ou.default_delay_minutes MINUTE),'System','UTC')))
 					AND ap.case_id is NULL
 					AND ((qsep.questionnaire_id is NULL) or qsep.exclude = 0)
 					AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL AND os.outcome_type_id != 2)
@@ -637,10 +640,10 @@ function get_case_id($operator_id, $create = false)
 					AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
 					AND (apn.require_operator_id IS NULL OR apn.require_operator_id = '$operator_id')
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-					ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, a.start ASC, qsep.priority DESC
+					ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, qsep.priority DESC, a.start ASC
 					LIMIT 1";
-		
-					//apn.appointment_id contains the id of an appointment if we are calling on an appointment
+
+ 				//apn.appointment_id contains the id of an appointment if we are calling on an appointment
 			}
 			$r2 = $db->GetRow($sql);
 	
@@ -681,7 +684,7 @@ function get_case_id($operator_id, $create = false)
 				  
 					$sql = "SELECT s.sample_id as sample_id,c.case_id as case_id,qs.questionnaire_id as questionnaire_id,CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) as resptime, q.testing as testing
 						FROM sample as s
-						JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, sample_import as si, operator_skill as os) on (op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and si.sample_import_id = s.import_id and os.operator_id = op.operator_id and os.outcome_type_id = 1 and q.enabled = 1)
+						JOIN (questionnaire_sample as qs, operator_questionnaire as o, questionnaire as q, operator as op, sample_import as si, operator_skill as os) on (op.operator_id = '$operator_id' and qs.sample_import_id = s.import_id and o.operator_id = op.operator_id and o.questionnaire_id = qs.questionnaire_id and q.questionnaire_id = o.questionnaire_id and si.sample_import_id = s.import_id and os.operator_id = op.operator_id and os.outcome_type_id = 1 and q.enabled = 1 and qs.allow_new = 1)
 						LEFT JOIN `case` as c on (c.sample_id = s.sample_id and c.questionnaire_id = qs.questionnaire_id)
 						LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
 						LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
@@ -860,12 +863,12 @@ function get_extension_password($operator_id)
 {
 	global $db;
 		
-	$sql = "SELECT e.extension_password
+	$sql = "SELECT e.password
 		FROM `extension` as e
 		WHERE e.current_operator_id = '$operator_id'";
 
 	$rs = $db->GetRow($sql);
-	if (!empty($rs) && isset($rs['extension_password'])) return $rs['extension_password'];
+	if (!empty($rs) && isset($rs['password'])) return $rs['password'];
 	return false;		
 }
 

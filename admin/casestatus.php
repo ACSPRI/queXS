@@ -96,7 +96,8 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 		JOIN questionnaire as q ON (q.questionnaire_id = c.questionnaire_id and q.enabled = 1)
 		JOIN outcome as o ON (o.outcome_id = c.current_outcome_id AND o.outcome_type_id = 1)
 		JOIN sample as s ON (s.sample_id = c.sample_id $s)
-		JOIN sample_import as si ON (s.import_id = si.sample_import_id)
+    JOIN sample_import as si ON (s.import_id = si.sample_import_id AND si.enabled = 1)
+    JOIN questionnaire_sample as qs ON (qs.questionnaire_id = q.questionnaire_id AND qs.sample_import_id = s.import_id)
 		LEFT JOIN `call` as ca ON (ca.call_id = c.last_call_id)
 		LEFT JOIN outcome as co ON (co.outcome_id = ca.outcome_id)
 		LEFT JOIN case_queue as cq ON (cq.case_id = c.case_id)
@@ -207,7 +208,7 @@ $outcome_id = false;
 print "<label for='questionnaire'>" . T_("Questionnaire") . ":</label>";
 display_questionnaire_chooser($questionnaire_id);
 print "<label for='sample'>" . T_("Sample") . ":</label>";
-display_sample_chooser($questionnaire_id,$sample_import_id);
+display_sample_chooser($questionnaire_id,$sample_import_id,false);
 
 if ($questionnaire_id)
 	case_status_report($questionnaire_id,$sample_import_id,$outcome_id);

@@ -53,6 +53,7 @@ include("../include/ckeditor/ckeditor.php");
 global $db;
 
 $CKEditor = new CKEditor();
+$CKEditor->basePath = "../include/ckeditor/";
 
 if (isset($_POST['information']))
 {
