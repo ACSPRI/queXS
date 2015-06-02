@@ -367,10 +367,10 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 		$db->Execute("SET @row := 0");
 
 		$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-			SELECT $case_id as case_id,@row := @row + 1 AS priority,SUBSTRING_INDEX(e.extension,'/',-1) as phone, CONCAT(o.firstName, ' ', o.lastName)
-			FROM operator as o, `extension` as e
-      WHERE o.enabled = 1
-      AND e.current_operator_id = o.operator_id";
+			SELECT $case_id as case_id,@row := @row + 1 AS priority,IFNULL(SUBSTRING_INDEX(e.extension,'/',-1),'312345678') as phone, CONCAT(o.firstName, ' ', o.lastName)
+      FROM operator as o
+      LEFT JOIN `extension` as e ON (e.current_operator_id = o.operator_id)
+      WHERE o.enabled = 1";
 	
 		$db->Execute($sql);
 	}
