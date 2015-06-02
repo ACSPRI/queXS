@@ -1,3 +1,16 @@
+queXS 1.12.0 - Changes since 1.11.1
+
+New Feature: Complex row quotas (see: https://blueprints.launchpad.net/quexs/+spec/complexquota) - Thank you Marco for sponsoring this feature
+New Feature: Time slots extended to cover sample by sample as well as questionnaire by questionnaire - Thank you for sponsoring this feature
+
+Fixed Bug: Check for available cases on no case available page is too time consuming
+Fixed Bug lp:1436664 - System sort process fails where database name not 'quexs'
+Fixed Bug lp:1452070 - New numbers still drawn when 'allow new numbers to be drawn' set to No
+Fixed Bug lp:1459935 - When no operators have an extension assigned, questionnaires in test mode fail to create phone numbers for new cases
+
+Translations: Updated from Launchpad - thank you especially to Russian and Spanish translators for updating your translations!
+
+
 Database updates:
 
 CREATE TABLE `questionnaire_sample_timeslot` (
