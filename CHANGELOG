@@ -24,8 +24,8 @@ CREATE TABLE `qsqr_sample` (
 
 INSERT INTO qsqr_question (questionnaire_sample_quota_row_id,lime_sgqa,value,comparison)
 SELECT questionnaire_sample_quota_row_id, lime_sgqa, value, comparison
-FROM questionnaire_sample_quota_row;
-WHERE lime_sgqa != -1 AND lime_sgqa != -2
+FROM questionnaire_sample_quota_row
+WHERE lime_sgqa != -1 AND lime_sgqa != -2;
 
 INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var,exclude_val,comparison)
 SELECT questionnaire_sample_quota_row_id, exclude_var,exclude_val, 'LIKE'
