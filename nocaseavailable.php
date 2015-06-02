@@ -226,11 +226,10 @@ if (isset($rs) && !empty($rs))
 }
 
 //quota row's full
-$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid
-	FROM questionnaire_sample_quota_row as qsq, questionnaire as q, operator_questionnaire as oq
+$sql = "SELECT qsq.questionnaire_sample_quota_row_id,qsq.quota_reached,qsq.description
+	FROM questionnaire_sample_quota_row as qsq, operator_questionnaire as oq
 	WHERE oq.operator_id = '$operator_id'
-	AND qsq.questionnaire_id = oq.questionnaire_id
-	AND q.questionnaire_id = oq.questionnaire_id";
+	AND qsq.questionnaire_id = oq.questionnaire_id";
 	
 $rs = $db->GetAll($sql);
 
@@ -240,7 +239,7 @@ if (isset($rs) && !empty($rs))
 	{
 		if ($r['quota_reached'] == 1)
 		{
-			print "<p class='error'>" . T_("POSSIBLE ERROR: Row quota reached for this question") . " - " . $r['lime_sgqa'];
+			print "<p class='error'>" . T_("POSSIBLE ERROR: Row quota reached for this quota") . " - " . $r['description'];
 		}
 	}
 }
