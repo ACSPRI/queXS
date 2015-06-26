@@ -77,9 +77,23 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 		$s = "JOIN sample as s ON (s.sample_id = c.sample_id AND s.import_id = '$sample_id')";
 
 	$qs = "";
-	if ($qsqri !== false)
-		$qs = "JOIN questionnaire_sample_quota_row as q ON (q.questionnaire_sample_quota_row_id = '$qsqri')
-			JOIN sample_var ON (sample_var.sample_id = c.sample_id AND sample_var.var_id = q.exclude_var_id AND sample_var.val LIKE q.exclude_val)";
+
+  if ($qsqri !== false)
+  {
+	  $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
+             FROM qsqr_sample
+             WHERE questionnaire_sample_quota_row_id = $qsqri";
+
+    $rev = $db->GetAll($sql2);
+
+    //reduce sample by every item in the qsqr_sample table
+    $x = 1;
+    foreach($rev as $ev)
+    {
+      $qs .= " JOIN sample_var_id as sv$x ON (sv$x.sample_id = c.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+      $x++;
+    }
+  }
 
 	$sql = "SELECT ca1 AS callattempts, COUNT( ca1 ) AS sample
 		FROM (	SELECT count( ca.call_attempt_id ) AS ca1

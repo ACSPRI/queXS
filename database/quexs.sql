@@ -1362,7 +1362,39 @@ CREATE TABLE `process_log` (
 --
 
 
+-- Table structure for table `qsqr_question`
+--
+--
+
+CREATE TABLE `qsqr_question` (
+   `qsqr_question_id` bigint(20) NOT NULL AUTO_INCREMENT,
+   `questionnaire_sample_quota_row_id` bigint(20) NOT NULL,
+   `lime_sgqa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+   `value` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
+   `comparison` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+   `description` text COLLATE utf8_unicode_ci NOT NULL,
+   PRIMARY KEY (`qsqr_question_id`),
+   KEY `questionnaire_sample_quota_row_id` (`questionnaire_sample_quota_row_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `qsqr_sample`
+--
+
+CREATE TABLE `qsqr_sample` (
+  `qsqr_sample_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `questionnaire_sample_quota_row_id` bigint(20) NOT NULL,
+  `exclude_var` char(128) COLLATE utf8_unicode_ci NOT NULL,
+  `exclude_val` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `comparison` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`qsqr_sample_id`),
+  KEY `questionnaire_sample_quota_row_id` (`questionnaire_sample_quota_row_id`),
+  KEY `exclude_var` (`exclude_var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
 
 --
 -- Table structure for table `questionnaire`
@@ -1513,12 +1545,7 @@ CREATE TABLE `questionnaire_sample_quota_row` (
   `questionnaire_sample_quota_row_id` bigint(20) NOT NULL auto_increment,
   `questionnaire_id` bigint(20) NOT NULL,
   `sample_import_id` bigint(20) NOT NULL,
-  `lime_sgqa` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `value` varchar(2048) collate utf8_unicode_ci NOT NULL,
-  `comparison` varchar(15) collate utf8_unicode_ci NOT NULL default 'LIKE',
   `completions` int(11) NOT NULL,
-  `exclude_var` char(128) collate utf8_unicode_ci NOT NULL,
-  `exclude_val` varchar(256) collate utf8_unicode_ci NOT NULL,
   `quota_reached` tinyint(1) NOT NULL default '0',
   `current_completions` int(11) NOT NULL default '0',
   `description` text collate utf8_unicode_ci NOT NULL,
@@ -1526,8 +1553,7 @@ CREATE TABLE `questionnaire_sample_quota_row` (
   `autoprioritise` tinyint(1) NOT NULL default '0' COMMENT 'Should this row have it''s priority automatically adjusted to 100 - (completions %)',
   PRIMARY KEY  (`questionnaire_sample_quota_row_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
-  KEY `sample_import_id` (`sample_import_id`),
-  KEY `exclude_var` (`exclude_var`)
+  KEY `sample_import_id` (`sample_import_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

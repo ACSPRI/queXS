@@ -144,13 +144,14 @@ if ($questionnaire_id)
 		//Rows to display: Strata Status Quota Sample Sample Used Sample Remaining Completes % Complete
 
 
-		//We need to calc Sample size, Sample drawn, Sample remain, Completions, %complete
-		//b. (Replicate quota) Exclude selected sample records (where lime_sgqa == -1) 
-		$sql = "SELECT questionnaire_sample_quota_row_id,lime_sgqa,value,completions,quota_reached,lime_sid,comparison,exclude_var_id,exclude_var,exclude_val,qsq.description,current_completions, priority, autoprioritise
-			FROM questionnaire_sample_quota_row as qsq, questionnaire as q
-			WHERE qsq.questionnaire_id = '$questionnaire_id'
+
+		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
+		//b. (Replicate quota) Exclude selected sample records (where no qsqr_question rows) 
+		$sql = "SELECT qsq.questionnaire_sample_quota_row_id,completions,quota_reached,lime_sid,qsq.description,current_completions, priority, autoprioritise
+      FROM questionnaire_sample_quota_row as qsq, questionnaire as q
+      WHERE qsq.questionnaire_id = '$questionnaire_id'
 			AND qsq.sample_import_id = '$sample_import_id'
-			AND q.questionnaire_id = '$questionnaire_id'";
+      AND q.questionnaire_id = '$questionnaire_id'";
 	
 		$r = $db->GetAll($sql);
 
@@ -164,24 +165,28 @@ if ($questionnaire_id)
 			$qsqr = $v['questionnaire_sample_quota_row_id'];
 			
 
-			if ($v['lime_sgqa'] == -1)
-			{
-				$v['completions'] = "";
-				$perc = "";
-			}
-			else
-			{
-				$perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
-			}
-			
-			if($v['exclude_var_id'] > 0) $excl = "sv.var_id = '{$v['exclude_var_id']}'"; else $excl = "sv.var LIKE '{$v['exclude_var']}'";
+      $perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
 			
 			//We need to calc Sample size, Sample drawn, Sample remain
 			$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
 				FROM sample as s
-				JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
-				JOIN sample_var as sv ON (sv.sample_id = s.sample_id AND sv.val LIKE '{$v['exclude_val']}' AND $excl )
-				LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
+        JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id) ";
+
+      $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
+               FROM qsqr_sample
+               WHERE questionnaire_sample_quota_row_id = {$v['questionnaire_sample_quota_row_id']}";
+
+      $rev = $db->GetAll($sql2);
+
+      //reduce sample by every item in the qsqr_sample table
+      $x = 1;
+      foreach($rev as $ev)
+      {
+          $sql .= " JOIN sample_var as sv$x ON (sv$x.sample_id = s.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+          $x++;
+      }
+
+			$sql .=	" LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
 				WHERE s.import_id = '$sample_import_id'
 				GROUP BY (c.sample_id is not null)";
 
@@ -196,7 +201,7 @@ if ($questionnaire_id)
 				if ($r['type'] == 0) $remain = $r['count'];
 			}
 
-			if ($completions < $v['completions'] || $v['lime_sgqa'] == -1) //if completions less than the quota, allow for closing/opening
+			if ($completions < $v['completions']) //if completions less than the quota, allow for closing/opening
 			{
 				if ($v['quota_reached'] == 1)
 					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;open=open'>" . T_("closed") . "</a>";
@@ -211,7 +216,7 @@ if ($questionnaire_id)
 					$status = T_("open");
 			}
 			
-			$report[] = array("strata" => "<a href='quotarow.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
+			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
 		}
 
 		//c. (Questionnaire quota) Monitor outcomes of questions in completed questionnaires, and abort interview when completion limit is reached 
