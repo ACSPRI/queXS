@@ -761,7 +761,6 @@ function get_case_id($operator_id, $create = false)
 
 }
 
-
 /**
  * Get the token based on the case id
  * 
