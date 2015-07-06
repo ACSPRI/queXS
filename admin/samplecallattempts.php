@@ -90,7 +90,7 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
     $x = 1;
     foreach($rev as $ev)
     {
-      $qs .= " JOIN sample_var_id as sv$x ON (sv$x.sample_id = c.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+      $qs .= " JOIN sample_var as sv$x ON (sv$x.sample_id = c.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
       $x++;
     }
   }
@@ -213,7 +213,6 @@ if ($questionnaire_id || $questionnaire_id == -1)
 					{
 						if (!sample_call_attempt_report($questionnaire_id,$sample_import_id,$questionnaire_sample_quota_row_id))
 							print "<p class='well text-danger'>" . T_("No calls for this quota") . "</p>";
-						
 					}
 				}
 				else
