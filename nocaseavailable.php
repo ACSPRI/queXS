@@ -141,43 +141,40 @@ else
 	?> <p class='error'><?php  echo T_("ERROR: No shifts at this time"); ?></p> <?php 
 }
 
-/* Disable as too time consuming
+/* Disable as too time consuming */
 
 //call restrictions and outside times
-$sql = "SELECT count(*) as c
+$sql = "SELECT count(s.sample_id) as count_samples
 	FROM operator_questionnaire as oq
-	JOIN (questionnaire_sample as qs, sample_import as si, sample as s) on (
-		qs.questionnaire_id = oq.questionnaire_id
-		and si.sample_import_id = qs.sample_import_id
-		and s.import_id = si.sample_import_id)
-	LEFT JOIN call_restrict as cr on (
-		cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name))
-		and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start
-		and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+	JOIN (questionnaire_sample as qs, sample_import as si, sample as s) on (qs.questionnaire_id = oq.questionnaire_id and si.sample_import_id = qs.sample_import_id and s.import_id = si.sample_import_id)
+        LEFT JOIN (`case` as c ,  `outcome` as ou) on (s.sample_id = c.sample_id and (ou.outcome_id = c.current_outcome_id  || c.case_id IS NULL))
+	LEFT JOIN call_restrict as cr on ( cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start 	and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
 	WHERE operator_id = '$operator_id'
-		AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)";
+	AND si.enabled = 1
+	AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
+    AND ou.outcome_type_id IN( SELECT outcome_type_id FROM operator_skill WHERE operator_id = '$operator_id')
+	AND ou.outcome_id NOT IN (10,25,28,33,34,40) ";
 
 $rs = $db->GetRow($sql);
 
 ?>
 <p><?php  echo T_("Call restrictions:"); ?></p>
 <?php 
-if ($rs['c'] == 0)
+if ($rs['count_samples'] == 0)
 {
 	?> <p class='error'><?php  echo T_("ERROR: There are no cases available that fall within call restrictions"); ?></p> <?php 
 }
 else
 {
-	print "<p>" . T_("There are ") . $rs['c'] . T_(" unassigned case(s) available within the specified call restrictions") . "</p>";
+	print "<p>" . T_("There are ") . $rs['count_samples'] . T_(" unassigned case(s) available within the specified call restrictions") . "</p>";
 }
 
- */
 
-?>
-<p><?php  echo T_("Limesurvey links:"); ?></p>
-<?php 
+
 
 //no link to limesurvey
+echo "<p>" . T_("Limesurvey links:") . "</p>";
+
 $sql = "SELECT q.lime_sid, q.description
 	FROM questionnaire as q, operator_questionnaire as oq
 	WHERE oq.operator_id = '$operator_id'

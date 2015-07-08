@@ -101,11 +101,13 @@ else
 
 	//no sample
 	$sql = "SELECT q.questionnaire_id, q.description, si.description as sdescription, si.sample_import_id
-	FROM questionnaire as q, sample_import as si, questionnaire_sample as qs
+	FROM questionnaire as q, sample_import as si LEFT JOIN questionnaire_sample_quota AS qsq ON (qsq.sample_import_id = si.sample_import_id), questionnaire_sample as qs
 	WHERE q.questionnaire_id IN ($oqid)
 	AND si.enabled = 1
+	AND (qsq.quota_reached = 0 OR qsq.quota_reached IS NULL)
 	AND qs.questionnaire_id = q.questionnaire_id
-	AND si.sample_import_id = qs.sample_import_id";
+	AND si.sample_import_id = qs.sample_import_id
+	GROUP BY si.sample_import_id";
 
 	$rs = $db->GetAll($sql);
 
@@ -182,16 +184,17 @@ else
 	print "</div>";
 }
 
-		if ($cases_count['count_samples'] != 0 or $new_samples['count_samples'] != 0){
 ?>
 			<div id="">
 				<ul class="wait_wrapper">
+<?php if ($cases_count['count_samples'] != 0 or $new_samples['count_samples'] != 0){  ?>
 					<li class="wait_li_1"><a href="index_interface2.php"><?php  echo T_("Get a new case"); ?> <img src="css/images/play.jpg" /></a></li>
+<?php } ?>
 					<li class="wait_li_2"><a href="endwork.php"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
 				</ul>
 			</div>
 <?php 
-			}
+			
 xhtml_foot();
 
 ?>

@@ -111,19 +111,19 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 {
 	$tot = array();
 	if ($class == "tclass") $class = "table-hover table-bordered table-condensed tclass";
-	print "<table class=\"$class\" id=\"$id\" name=\"$name\">";
+	print "<table class=\"$class\" id=\"$id\" name=\"$name\" data-toggle=\"table\" data-toolbar=\"filter-bar\" data-show-filter=\"true\" >";
 	if ($head)
 	{
-		print "<thead class='highlight'><tr>";   // ! added <thead> to table formatting
+		print "<thead class=\"highlight\"><tr>";
 		foreach ($head as $e)
-			print"<th>$e</th>";
+			print"<th data-field=\"$e\" data-sortable=\"true\">$e</th>";
 		print "</tr></thead>";
 	}
 	print "<tbody>";
 	foreach($content as $row)
 	{
 		if ($highlight && isset($row[key($highlight)]) && $row[key($highlight)] == current($highlight))
-			print "<tr class='highlight'>";
+			print "<tr class=\"highlight\">";
 		else
 			print "<tr>";
 
