@@ -106,7 +106,7 @@ if (isset($_POST['submit']))
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Quota report"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Quota report"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/iCheck/icheck.min.js","../js/window.js"));
 
 print "<h3 class='form-inline pull-left'>" . T_("Select a questionnaire") . ":&emsp;</h3>";
 
@@ -216,7 +216,7 @@ if ($questionnaire_id)
 					$status = T_("open");
 			}
 			
-			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
+			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "&emsp;&emsp;<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
 		}
 
 		//c. (Questionnaire quota) Monitor outcomes of questions in completed questionnaires, and abort interview when completion limit is reached 
@@ -295,7 +295,7 @@ if ($questionnaire_id)
 			
 		if (count($report) > 1)
 			print "<input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/></br>
-					<input type='submit' id='submit' name='submit' class='btn btn-primary fa'value='" . TQ_("Update priorities") . "'/>";
+					<button type='submit' id='submit' name='submit' class='btn btn-primary'/><i class=\"fa fa-refresh fa-lg\"></i>&emsp;" . TQ_("Update priorities") . "</button>";
 					
 		print "</form>";
 	}
@@ -303,5 +303,11 @@ if ($questionnaire_id)
 }
 
 xhtml_foot();
-
 ?>
+
+<script type="text/javascript">
+$('input').iCheck({
+	checkboxClass: 'icheckbox_square-blue',
+	increaseArea: '30%'
+});
+</script>

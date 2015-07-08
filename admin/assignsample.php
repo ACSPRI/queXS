@@ -173,10 +173,10 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 		<div class="col-sm-1"><input type="checkbox" id = "selecttype" name="selecttype" <?php echo $selected;?> data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
 		<label class="control-label text-info"><?php echo T_("No") ." = ". T_("Sequentially");?></label><br/><br/>
 		<label for="allownew" class="control-label col-sm-4"><?php echo T_("Allow new numbers to be drawn?");?></label>
-		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" <?php echo $allownew;?> class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/>
+		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" <?php echo $allownew;?> class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/><br/>
 		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="hidden" name="sample_import_id" value="<?php  print($sid); ?>"/>
-		<div class="col-sm-12 text-center"><button type="submit" name="edit" class="btn btn-primary"><i class="fa fa-floppy-o fa-lg"></i>&emsp;<?php echo T_("Save changes");?></button></div>
+		<div class="col-sm-offset-4 col-sm-3"><button type="submit" name="edit" class="btn btn-primary"><i class="fa fa-floppy-o fa-lg"></i>&emsp;<?php echo T_("Save changes");?></button></div>
 		</form></div>
 
 
@@ -265,11 +265,11 @@ if ($questionnaire_id != false)
 		<label class="control-label text-info"><?php echo T_("No") ." = ". T_("Sequentially");?></label><br/><br/>
 		
 		<label for="allownew" class="control-label col-sm-4"><?php echo T_("Allow new numbers to be drawn?");?></label>
-		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" checked="checked" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/>
+		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" checked="checked" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/><br/>
 		
 		<input type="hidden" name="questionnaire_id" value="<?php print($questionnaire_id);?>"/>
 		
-		<div class="col-sm-12 text-center"><button type="submit" name="add_sample" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i>&emsp;<?php echo T_("Add sample");?></button></div>
+		<div class="col-sm-offset-4 col-sm-3"><button type="submit" name="add_sample" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i>&emsp;<?php echo T_("Add sample");?></button></div>
 		
 		</form></div>
 		<?php 

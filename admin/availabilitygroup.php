@@ -73,7 +73,7 @@ $js_head = array(
 				);
 $js_foot = array(
 "../js/window.js",
-//"../js/custom.js"
+"../js/custom.js"
 				);
 global $db;
 

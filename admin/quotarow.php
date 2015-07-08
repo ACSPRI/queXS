@@ -284,7 +284,7 @@ if (isset($_GET['qsqri']) & isset($_GET['edit']))
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Quota row management"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../include/iCheck/icheck.min.js","../js/window.js"));
+xhtml_head(T_("Quota row management"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../include/iCheck/icheck.min.js","../js/window.js"));
 print "<h3 class='form-inline pull-left'>" . T_("Questionnaire") . ":&emsp;</h3>";
 
 $sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
@@ -386,19 +386,17 @@ if ($questionnaire_id != false)
       ?>
 	  <div class='panel-body' >
       <form action="?<?php echo "questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id"; ?>" method="post" class="form-inline table">
-		<p><label for="description" class="control-label"><?php  echo T_("Describe this quota"); ?>:&emsp;</label><input type="text" name="description" id="description" class="form-control" value="<?php echo $qsqrid;?>" required size="70"/></p>
-        <p><label for="priority" class="control-label"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?>:&emsp;</label><input type="number" class="form-control" name="priority" id="priority" value="<?php echo $qsqrip;?>" min="0" max="100" style="width:5em;"/></p>
-        <p><label for="completions" class="control-label"><?php  echo T_("The number of completions to stop calling at"); ?>:&emsp;</label><input type="number" class="form-control" name="completions" id="completions" value="<?php echo $qsqric; ?>" min="0" size="6" maxlength="6" style="width:6em;" required /></p>
-		<p><label for="autoprioritise" class="control-label"><?php  echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?>&emsp;</label><input type="checkbox" name="autoprioritise" id="autoprioritise" <?php echo $qsqrich; ?>data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="warning"/></p>
+		<p><label for="description" class="control-label"><?php  echo T_("Describe this quota"); ?>:&emsp;</label><input type="text" name="description" id="description" class="form-control" value="<?php echo $qsqrid;?>" required size="70"/>&emsp;&emsp;<label for="completions" class="control-label"><?php  echo T_("The number of completions to stop calling at"); ?>:&emsp;</label><input type="number" class="form-control" name="completions" id="completions" value="<?php echo $qsqric; ?>" min="0" size="6" maxlength="6" style="width:6em;" required /></p>
+        <p><label for="priority" class="control-label"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?>:&emsp;</label><input type="number" class="form-control" name="priority" id="priority" value="<?php echo $qsqrip;?>" min="0" max="100" style="width:5em;"/>&emsp;&emsp;<label for="autoprioritise" class="control-label"><?php  echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?>&emsp;</label><input type="checkbox" name="autoprioritise" id="autoprioritise" <?php echo $qsqrich; ?>data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="warning"/></p>
         <input type="hidden" name="qsqri" value="<?php echo $qsqri; ?>"/>
-		<p><button type="submit" name="edit_quota" class="btn btn-primary"><?php  print(T_("Save changes")); ?></button></p>
+		<p><button type="submit" name="edit_quota" class="btn btn-primary"><i class="fa fa-floppy-o fa-lg"></i>&emsp;<?php  print(T_("Save changes")); ?></button></p>
       </form>
 	  </div>
       <?php
 
       //display questionnaire references
       $sql = "SELECT qsqr_question_id,lime_sgqa,value,comparison,description,
-              CONCAT('<a href=\'?edit=edit&amp;qsqri=$qsqri&amp;delete=delete&amp;qsqrqi=', qsqr_question_id, '\'>" . TQ_("Delete") .  "</a>') as qdelete
+              CONCAT('&emsp;<a href=\'?edit=edit&amp;qsqri=$qsqri&amp;delete=delete&amp;qsqrqi=', qsqr_question_id, '\'><i class=\"fa fa-trash-o fa-lg text-danger\"></i></a>&emsp;') as qdelete
               FROM qsqr_question
               WHERE questionnaire_sample_quota_row_id = $qsqri";
   
@@ -415,7 +413,7 @@ if ($questionnaire_id != false)
       else
       {
         print "<div class='well'><h4 class='text-info'>" . T_("Only completed responses that have answered the following will be counted") . "</h4>";
-        xhtml_table($rs,array('description','lime_sgqa','comparison','value','qdelete'),array(T_("Description"),T_("SGQ code"),T_("Comparison"),T_("Value"),T_("Delete")));
+        xhtml_table($rs,array('description','lime_sgqa','comparison','value','qdelete'),array(T_("Description"),T_("SGQ code"),T_("Comparison"),T_("Value"),"&emsp;<i class='fa fa-trash-o fa-lg' data-toggle='tooltip' title='" . T_("Delete") . "'></i>&emsp;"));
 		print "</div>";
       }
 
@@ -451,12 +449,10 @@ if ($questionnaire_id != false)
 		if (isset($_GET['sgqa'])){
         ?>
 		<div class='col-sm-6 panel-body form-inline'>
-		<p><label for="description" class="control-label"><?php  echo T_("Description"); ?>:&emsp;</label><input type="text" class="form-control" name="description" id="description"  size="80"/></p>
 		<p><label for="comparison" class="control-label"><?php  echo T_("The type of comparison"); ?>:&emsp;</label>
-			<select name="comparison" class="form-control" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select>
-		</p>
-  		<p><label for="value" class="control-label"><?php  echo T_("The code value to compare"); ?>:&emsp;</label><input type="text" name="value" id="value" class="form-control" required /></p>
-        <p><button type="submit" name="addq" class="btn btn-primary"/><?php echo TQ_("Add restriction") ?></button></p>
+			<select name="comparison" class="form-control" id="comparison"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select>&emsp;&emsp;<label for="value" class="control-label"><?php  echo T_("The code value to compare"); ?>:&emsp;</label><input type="text" name="value" id="value" class="form-control" required /></p>
+        <p><label for="description" class="control-label"><?php  echo T_("Description"); ?>:&emsp;</label><input type="text" class="form-control" name="description" id="description"  size="80"/></p>
+		<p><button type="submit" name="addq" class="btn btn-primary"/><i class="fa fa-plus-circle fa-lg"></i>&emsp;<?php echo TQ_("Add restriction") ?></button></p>
 		</div></form>
         <?php
 		
@@ -487,7 +483,7 @@ if ($questionnaire_id != false)
       //list sample records to exclude
 
       $sql = "SELECT qsqr_sample_id,exclude_var_id,exclude_var,exclude_val,comparison,description,
-              CONCAT('<a href=\'?qsqri=$qsqri&amp;edit=edit&amp;delete=delete&amp;qsqrsi=',qsqr_sample_id,'\'><i class=\"fa fa-trash-o fa-lg text-danger\"></i>&ensp;" . TQ_("Delete") .  "</a>') as sdelete
+              CONCAT('&emsp;<a href=\'?qsqri=$qsqri&amp;edit=edit&amp;delete=delete&amp;qsqrsi=',qsqr_sample_id,'\'><i class=\"fa fa-trash-o fa-lg text-danger\"></i></a>&emsp;') as sdelete
               FROM qsqr_sample
               WHERE questionnaire_sample_quota_row_id = $qsqri";
 
@@ -503,7 +499,7 @@ if ($questionnaire_id != false)
       else
       {
         print "<div class='well'><h4 class='text-info'>" . T_("Completed responses that have the following sample details will be counted towards the quota and excluded when the quota is reached") . "</h4>";
-        xhtml_table($rs,array('description','exclude_var_id','exclude_var','comparison','exclude_val','sdelete'),array(T_("Description"),T_("Sample var ID"),T_("Sample variable"),T_("Comparison"),T_("Value"),T_("Delete")));
+        xhtml_table($rs,array('description','exclude_var_id','exclude_var','comparison','exclude_val','sdelete'),array(T_("Description"),T_("Sample var ID"),T_("Sample variable"),T_("Comparison"),T_("Value"),"&emsp;<i class='fa fa-trash-o fa-lg' data-toggle='tooltip' title='" . T_("Delete") . "'></i>&emsp;"));
 		print "</div>";
       }
 
@@ -552,7 +548,7 @@ if ($questionnaire_id != false)
 			&emsp;</p>
 			<p><label for="description" class="control-label"><?php  echo T_("Description"); ?>:&emsp;</label><input type="text" class="form-control" name="description" id="description"  size="80"/></p>
 			<input type="hidden" name="sample_var" value="<?php  print $sample_var; ?>"/>
-			<input type="submit" class="btn btn-primary" name="adds" value="<?php echo TQ_("Add restriction"); ?>"/>
+			<p><button type="submit" class="btn btn-primary" name="adds" value=""/><i class="fa fa-plus-circle fa-lg"></i>&emsp;<?php echo TQ_("Add restriction") ?></button></p>
         <?php
 		} else { print "</p>";}		
 		print "</form>";
@@ -562,7 +558,7 @@ if ($questionnaire_id != false)
     else
     {
 		$sql = "SELECT questionnaire_sample_quota_row_id,qsq.description,
-            CONCAT('<a href=\'?edit=edit&amp;qsqri=',questionnaire_sample_quota_row_id,'\'>', qsq.description, '</a>') as qedit,
+            CONCAT('&emsp;<a href=\'?edit=edit&amp;qsqri=',questionnaire_sample_quota_row_id,'\'><i class=\"fa fa-pencil-square-o fa-lg text-danger\"></i></a>&emsp;') as qedit,
             CONCAT('<div class=\'text-center\'><input type=\'checkbox\' name=\'select_',questionnaire_sample_quota_row_id,'\'/></div>') as qselect,
             qsq.completions,qsq.quota_reached,qsq.current_completions,
             CASE WHEN qsq.autoprioritise = 1 THEN '" . TQ_("Yes") . "' ELSE '" . TQ_("No") . "' END AS ap, qsq.priority,
@@ -580,8 +576,8 @@ if ($questionnaire_id != false)
 		else
 		{
 			print "<form method='post' action='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>";
-				print "<div class='col-sm-12 panel-body'></br><h2>" . T_("Current row quotas (click to edit)") . "</h2><div class='pull-left'>";
-				xhtml_table($r,array('qedit','completions','current_completions','status','priority','ap','qselect'),array(T_("Description"),T_("Quota"),T_("Completions"),T_("Status"),T_("Priority"),T_("Auto prioritise"),T_("Select")));
+				print "<div class='col-sm-12 panel-body'></br><h2>" . T_("Current row quotas") . "</h2><div class='pull-left'>";
+				xhtml_table($r,array('description','qedit','completions','current_completions','status','priority','ap','qselect'),array(T_("Description"),"&emsp;<i class='fa fa-pencil-square-o fa-lg' data-toggle='tooltip' title='" . T_("Edit") . "'></i>&emsp;",T_("Quota"),T_("Completions"),T_("Status"),T_("Priority"),T_("Auto prioritise"),"&emsp;<i class='fa fa-check-square-o fa-lg' data-toggle='tooltip' title='" . T_("Select") . "'></i>&emsp;"));
 				print "</div><div class='pull-left'></br>";
 				print "<button class='btn btn-default col-sm-offset-2' type='submit' name='submitexport'><i class=\"fa fa-download fa-lg text-primary\"></i>&emsp;" . TQ_("Export selected") . "</button></br></br>";
 				print "<button class='btn btn-default col-sm-offset-2' type='submit' name='submitdelete'><i class=\"fa fa-trash-o fa-lg text-danger\"></i>&emsp;
@@ -596,7 +592,7 @@ if ($questionnaire_id != false)
 			<p><label for="priority" class="control-label"><?php  echo T_("Quota priority (50 is default, 100 highest, 0 lowest)"); ?>:&emsp;</label><input type="number" class="form-control" name="priority" id="priority" value="50" min="0" max="100" style="width:5em;"/></p>
 			<p><label for="completions" class="control-label"><?php  echo T_("The number of completions to stop calling at"); ?>:&emsp;</label><input type="number" class="form-control" name="completions" id="completions" min="0" size="6" maxlength="6" style="width:6em;" required/></p>
 			<p><label for="autoprioritise" class="control-label"><?php  echo T_("Should the priority be automatically updated based on the number of completions in this quota?"); ?> &emsp;</label><input type="checkbox" name="autoprioritise" id="autoprioritise" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="warning"/></p>
-			<p><input type="submit" class="btn btn-primary" name="add_quota" value="<?php  print(T_("Add row quota")); ?>"/></p>
+			<p><button type="submit" class="btn btn-primary" name="add_quota"/><i class="fa fa-plus-circle fa-lg"></i>&emsp;<?php  print(T_("Add row quota")); ?></button></p>
 		</form>
 		</div>
     <?php
@@ -609,7 +605,7 @@ if (preg_match('/Firefox/i', $ua)) $csv= "text/csv"; else $csv= ".csv";
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 				<h4><?php  echo T_("Choose the CSV row quota file to import:"); ?></h4>
 				<p><input id="file" name="file" type="file" class="filestyle form-group" required data-buttonBefore="true" data-iconName="fa fa-folder-open fa-lg text-primary " data-buttonText="<?php  echo T_("Select file"); ?>..." accept="<?php echo $csv; ?>"/></p>
-				<button type="submit" class="btn btn-primary" name="import_quota" ><?php  print(T_("Import row quota")); ?></button>
+				<button type="submit" class="btn btn-primary" name="import_quota" ><i class="fa fa-upload fa-lg"></i>&emsp;<?php  print(T_("Import row quota")); ?></button>
 			</form>
 		</div>
     <?php

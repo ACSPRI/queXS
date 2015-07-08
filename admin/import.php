@@ -124,15 +124,15 @@ else
 	<!-- File Button --> 
 	<div class="form-group">
 	
-		<label class="col-md-4 control-label" for="file"><?php  echo T_("Choose the CSV sample file to upload:"); ?></label>
+		<label class="col-md-4 control-label" for="file"><?php  echo T_("Choose the CSV sample file to upload"); ?>:</label>
 		<div class="col-md-4">
-			<input id="file" name="file" class="filestyle" required data-buttonBefore="true" data-iconName="fa fa-folder-open fa-lg text-primary " data-buttonText="<?php  echo T_("Select file"); ?>" type="file" accept="<?php echo $csv; ?>" />
+			<input id="file" name="file" class="filestyle" required data-buttonBefore="true" data-iconName="fa fa-folder-open fa-lg text-primary " data-buttonText="<?php  echo T_("Select file"); ?>..." type="file" accept="<?php echo $csv; ?>" />
 		</div>
 	</div>
 
 	<!-- Text input-->
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="description"><?php  echo T_("Sample description :"); ?></label>  
+		<label class="col-md-4 control-label" for="description"><?php  echo T_("Sample description"); ?>:</label>  
 		<div class="col-md-4">
 			<input id="description" name="description" type="text" required placeholder="<?php  echo T_("Enter new sample name..."); ?>" class="form-control">
 		</div>
