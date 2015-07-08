@@ -242,7 +242,7 @@ else {
 	JOIN (`case` as c, respondent as r, questionnaire as q, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id) 
 	LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id) 
 	LEFT JOIN operator AS ao ON ao.operator_id = a.require_operator_id 
-	WHERE a.end >= CONVERT_TZ(NOW(),'System','UTC') 
+	WHERE a.end >= CONVERT_TZ(NOW(),'System','UTC') AND c.current_outcome_id !=10 
 	ORDER BY a.start ASC";
 	
 	$rs = $db->GetAll($sql);
