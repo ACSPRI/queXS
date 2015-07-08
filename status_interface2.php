@@ -67,7 +67,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 	$js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Status"),false,array("css/status_interface2.css"),$js);
+xhtml_head(T_("Status"),false,array("include/bootstrap-3.3.2/css/bootstrap.min.css","css/status_interface2.css"),$js);
 
 $ca = get_call_attempt($operator_id,false);
 if ($ca)
@@ -173,7 +173,7 @@ if ($ca)
 			$apdate = $rs['time'];
 
 
-			print "<div class='tobecoded statusbox form-group'>" . T_("Appointment") . ": " . $apdate .  "</div><div style='clear: both;'/>";
+			print "<div class='tobecoded statusbox'>" . T_("Appointment") . ": " . $apdate .  "</div><div style='clear: both;'/>";
 			//if (missed_appointment($ca)) print "<div class='tobecoded statusbutton'>" . T_("MISSED") . "</div>";
 		}
 
@@ -212,13 +212,13 @@ if ($ca)
 			print "<div>";
 			foreach($rs as $r)
 			{
-				print "<form method='post' action='?'><div class='text form-group'>";
+				print "<form method='post' action='?'><div class='text'>";
 				print "<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>";
 				print "<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
 				if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}'>" . T_('Dial') . "</a>";
 				if (!empty($r['description'])) print " - " . $r['description'];
 				print "</label>";
-				print "</div></form><br/><br/>";
+				print "</div></form></br>";
 			}
 			print "</div>";
 		}
