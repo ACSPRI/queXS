@@ -250,7 +250,26 @@ else {
 		translate_array($rs,array("outcome"));
 		xhtml_table($rs,array("description","case_id","start","end","edit","makerName","witho","resp","outcome","callerName","link"),array(T_("Questionnaire"),T_("Case ID"),T_("Start"),T_("End"),"&emsp;<i class='fa fa-pencil-square-o fa-lg' data-toggle='tooltip' title='" . T_("Edit") . "'></i>&emsp;",T_("Created by"),T_("Appointment with"),T_("Respondent"),T_("Current outcome"),T_("Operator who called"),"&emsp;<i class='fa fa-trash-o fa-lg' data-toggle='tooltip' title='" . T_("Delete") . "'></i>&emsp;"),"tclass",false,false,"bs-table");
 		
-	} else print "<p>" . T_("No appointments in the future") . "</p>";
+	} else print "<h4 class='well text-info'>" . T_("No future appointments") . "</h4>";
+	
+	print "<h3 style='color:red'>" . T_("Missed appointments (with times displayed in your time zone)") . "</h3>";
+
+	$sql = "SELECT q.description, CONVERT_TZ(a.start,'UTC',@@session.time_zone) as start, CONVERT_TZ(a.end,'UTC',@@session.time_zone) as end, CONCAT(r.firstName, ' ', r.lastName) as resp, 
+	CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id, 
+	CONCAT('&emsp;<a href=\'\'><i class=\'fa fa-trash-o fa-lg text-danger\' toggle=\'confirmation\' data-placement=\'left\' data-href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '&amp;delete=delete\'  ></i></a>&emsp;') as link, 
+	CONCAT('&emsp;<a href=\'?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\'><i class=\'fa fa-pencil-square-o fa-lg\' ></i></a>&emsp;') as edit 
+	FROM appointment as a 
+	JOIN (`case` as c, respondent as r, questionnaire as q, `sample` as s, sample_import as si) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and s.sample_id = c.sample_id and s.import_id= si.sample_import_id) 
+	LEFT JOIN (`call` as ca) ON (ca.call_id = a.completed_call_id)
+	WHERE q.enabled=1 AND si.enabled = 1 AND a.end < CONVERT_TZ(NOW(),'System','UTC') AND a.completed_call_id IS NULL
+	GROUP BY c.case_id
+	ORDER BY a.start ASC";
+	
+	$rs = $db->GetAll($sql);
+	if (!empty($rs)) {
+		xhtml_table($rs,array("description","case_id","start","end","edit","resp","link"),array(T_("Questionnaire"),T_("Case ID"),T_("Start"),T_("End"),"&emsp;<i class='fa fa-pencil-square-o fa-lg' data-toggle='tooltip' title='" . T_("Edit") . "'></i>&emsp;",T_("Respondent"),"&emsp;<i class='fa fa-trash-o fa-lg' data-toggle='tooltip' title='" . T_("Delete") . "'></i>&emsp;"),"tclass",false,false,"bs-table");
+		
+	} else print "<h4 class='well text-info'>" . T_("No appointments missed") . "</h4>";
 	
 }
 xhtml_foot($js_foot);
