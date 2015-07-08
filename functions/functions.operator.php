@@ -1536,10 +1536,12 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
           $x++;
       }
 
-      $sql = "JOIN questionnaire_sample_quota_row as qs ON (qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id)
+      $sql .= "JOIN questionnaire_sample_quota_row as qs ON (qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id)
         WHERE s.import_id = qs.sample_import_id";
 
 		$db->Execute($sql);
+		
+		if ($db->HasFailedTrans()) die ($sql);		
 
 		if ($update) 
 		{
@@ -1921,7 +1923,7 @@ function update_quota_priorities($questionnaire_id)
 
 	$sql = "INSERT INTO questionnaire_sample_exclude_priority (questionnaire_id,sample_id,exclude,priority)
 		SELECT '$questionnaire_id', s.sample_id, 0, 50
-		FROM sample AS s, questionnaire_sample as qs
+		FROM `sample` as s, questionnaire_sample as qs
 		WHERE qs.questionnaire_id = '$questionnaire_id'
 		AND s.import_id = qs.sample_import_id
 		ON DUPLICATE KEY UPDATE exclude = 0, priority = 50";
@@ -1949,43 +1951,37 @@ function update_quota_priorities($questionnaire_id)
 		$qsqri = $r['questionnaire_sample_quota_row_id'];
 		$priority = $r['priority'];
 
-    $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
+		$sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
              FROM qsqr_sample
              WHERE questionnaire_sample_quota_row_id = $qsqri";
 
-    $rev = $db->GetAll($sql2);
-      
+		$rev = $db->GetAll($sql2);
 
 		//find all cases that match this quota, and update it to the new priority
-    $sql = "UPDATE sample as s, questionnaire_sample_quota_row as qs, questionnaire_sample_exclude_priority as qsep ";
+		$sql = "UPDATE sample as s, questionnaire_sample_quota_row as qs, questionnaire_sample_exclude_priority as qsep ";
 
-    //reduce sample by every item in the qsqr_sample table
-    $x = 1;
-    foreach ($rev as $ev)
-    {
-      $sql .= ", sample_var as sv$x";
-      $x++;
-    }
+		//reduce sample by every item in the qsqr_sample table
+		$x = 1;
+		foreach ($rev as $ev)
+		{
+			$sql .= ", sample_var as sv$x";
+			$x++;
+		}
 
-    $sql .= "
-			SET qsep.priority = '$priority'
+		$sql .= " SET qsep.priority = '$priority'
 			WHERE s.import_id = qs.sample_import_id
 			AND qs.questionnaire_sample_quota_row_id = '$qsqri'
-			AND s.sample_id = sv$x.sample_id
-			AND sv$x.var_id = qs.exclude_var_id
 			AND qsep.questionnaire_id = qs.questionnaire_id
-      AND qsep.sample_id = s.sample_id ";
-
-    $x = 1;
-    foreach ($rev as $ev)
-    {
-      $sql .= " AND sv$x.sample_id = s.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}' ";
-      $x++;
-    }
-
+			AND qsep.sample_id = s.sample_id ";
+			
+		$x = 1;
+		foreach ($rev as $ev)
+		{
+		$sql .= " AND sv$x.sample_id = s.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}' ";
+		$x++;
+		}
 
 		$db->Execute($sql);
-		
 
 		if ($db->HasFailedTrans()) die ($sql);			
 	}
