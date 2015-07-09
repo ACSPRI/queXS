@@ -1534,7 +1534,7 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
           $x++;
       }
 
-      $sql = "JOIN questionnaire_sample_quota_row as qs ON (qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id)
+      $sql .= "JOIN questionnaire_sample_quota_row as qs ON (qs.questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id)
         WHERE s.import_id = qs.sample_import_id";
 
 		$db->Execute($sql);
