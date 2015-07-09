@@ -204,16 +204,16 @@ if ($questionnaire_id)
 			if ($completions < $v['completions']) //if completions less than the quota, allow for closing/opening
 			{
 				if ($v['quota_reached'] == 1)
-					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;open=open'>" . T_("closed") . "</a>";
+					$status = "<span class='label label-default fa-lg'>" . T_("closed") . "</span><a class='btn' data-toggle='tooltip' title='" . T_("open") . "' href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;open=open'><i class='fa fa-lock fa-2x' style='color:red;'></i></a>";
 				else
-					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;close=close'>" . T_("open") . "</a>";
+					$status = "<span class='label label-primary fa-lg'>" . T_("open") . "&emsp;</span><a class='btn' data-toggle='tooltip' title='" . T_("close") . "' href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;close=close'><i class='fa fa-unlock fa-2x'></i></a>";
 			}
 			else
 			{
 				if ($v['quota_reached'] == 1)
-					$status = T_("closed");
+					$status = "<span class='label label-default fa-lg'>" . T_("closed") . "</span>";
 				else
-					$status = T_("open");
+					$status = "<span class='label label-primary fa-lg'>" . T_("open") . "&emsp;</span>";
 			}
 			
 			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "&emsp;&emsp;<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
@@ -302,7 +302,7 @@ if ($questionnaire_id)
 	
 }
 
-xhtml_foot();
+xhtml_foot(array("../js/custom.js"));
 ?>
 
 <script type="text/javascript">

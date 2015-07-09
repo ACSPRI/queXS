@@ -292,7 +292,6 @@ $sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id
 	WHERE enabled = 1";
 display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id", true,false,true,true,false,true,"form-inline pull-left ");
 
-
 if ($questionnaire_id != false)
 {
 	$sample_import_id = false;
@@ -310,6 +309,9 @@ if ($questionnaire_id != false)
 	} else {	
 		print "<div class='clearfix'></div><div class='well text-info'>" . T_("No samples assigned to this questionnaire.") . "</div>";
 	}
+
+	print "<div class='col-sm-2 pull-right'><a href='quotareport.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-info btn-block'><i class='fa fa-filter fa-lg'></i>&emsp;" . T_("To quota report") . "</a></div>";
+	
 	print "<div class='clearfix'></div>";
 	
 
@@ -380,7 +382,7 @@ if ($questionnaire_id != false)
 
     if ($qsqri != false)
     {
-      print "<h2 class='col-sm-2 '><a href='' onclick='history.back();return false;' class='btn btn-default'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a></h2>";
+      print "<h2 class='col-sm-2'><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default'><i class='fa fa-arrow-up fa-lg text-primary'></i>&emsp;" . T_("To Row quotas") . "</a></h2>";
       print "<h2>" . T_("Quota") . ": $qsqrid</h2>";
 	  
       ?>

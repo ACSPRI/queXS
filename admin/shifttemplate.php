@@ -118,7 +118,7 @@ $sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT('$year',' ','$woy',' ',day_of_week
 $shifts = $db->GetAll($sql);
 translate_array($shifts,array("dt"));		
 	
-$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT('$year',' ','$woy',' ',day_of_week - 1),'%x %v %w'), '%W') as description, day_of_week as value, '' as selected 
+$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year,' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as description, day_of_week as value, '' as selected 
 	FROM day_of_week";
 	
 $daysofweek = $db->GetAll($sql);
