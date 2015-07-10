@@ -143,7 +143,7 @@ if ($questionnaire_id != false)
 	if (isset($_GET['sgqa'])) 	$sgqa = $_GET['sgqa'];
 
 	$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid) AS value,
-		CASE WHEN qo.question IS NULL THEN q.question ELSE CONCAT(qo.question,' : ',q.question) END as description,
+		CONCAT( q.sid, 'X', q.gid, 'X', q.qid, '&ensp;->&ensp;' , CASE WHEN qo.question IS NULL THEN q.question ELSE CONCAT(qo.question,' : ',q.question) END) as description,
 		CASE WHEN CONCAT(q.sid, 'X', q.gid, 'X', q.qid) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM `" . LIME_PREFIX . "questions` AS q
 		LEFT JOIN `" . LIME_PREFIX . "questions` as qo ON (qo.qid = q.parent_qid)
