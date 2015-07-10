@@ -130,7 +130,7 @@ if (isset($_GET['unassign']))
   $db->CompleteTrans();
 }
 
-xhtml_head(T_("Extensions & status"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Extensions & status"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 ?>
 <script type="text/javascript">	
 //Password generator

@@ -126,7 +126,7 @@ if (isset($_POST['submit']))
 
 if (isset($_GET['edit']))
 {
-	xhtml_head(T_("Edit Operator settings"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css", "../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js"));
+	xhtml_head(T_("Edit Operator settings"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css", "../css/custom.css"),array("../include/jquery/jquery.min.js","../include/bootstrap/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js"));
 
 	$operator_id = intval($_GET['edit']);
 
@@ -366,7 +366,7 @@ if ($display)
 
 	$rs = $db->GetAll($sql);
 	
-	xhtml_head(T_("Operator list"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../css/custom.css"));
+	xhtml_head(T_("Operator list"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/font-awesome/css/font-awesome.css","../css/custom.css"));
 	
 	$columns = array("operator_id","name","username","extension","enabledisable","edit");
 	$titles = array("ID",T_("Operator"),T_("Username"),T_("Extension"),"&emsp;<i class='fa fa-lg fa-power-off '></i>","&emsp;<i class='fa fa-lg fa-pencil-square-o'></i>"); 

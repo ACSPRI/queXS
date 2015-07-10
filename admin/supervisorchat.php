@@ -58,7 +58,7 @@ if (isset($_POST['update']))
 	set_setting("chat_enabled",$enable);
 }
 
-xhtml_head(T_("Supervisor chat"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js", "../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../js/window.js"));
+xhtml_head(T_("Supervisor chat"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../css/custom.css"),array("../include/jquery/jquery.min.js", "../include/bootstrap/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../js/window.js"));
 
 print "<p class='well'>" . T_("Allow interviewers to chat with the supervisor over XMPP (Jabber). Required is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will need XMPP/Jabber accounts.") . "</p>";
 

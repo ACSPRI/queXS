@@ -49,7 +49,7 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.operator.php");
 
-xhtml_head(T_("Cases by outcome"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"));
+xhtml_head(T_("Cases by outcome"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"));
 
 print "<div class='col-sm-3'><a onclick='history.back();return false;' href='' class='btn btn-default'>&emsp;" . T_("Go back") . "&emsp;</a></div>";
 

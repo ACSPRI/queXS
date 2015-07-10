@@ -54,7 +54,7 @@ include ("functions/functions.operator.php");
  */
 include ("functions/functions.limesurvey.php");
 
-$js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
+$js = array("js/popup.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {  
@@ -62,7 +62,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 }
 
 
-xhtml_head(T_("Respondent Selection - Introduction"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
+xhtml_head(T_("Respondent Selection - Introduction"),true,array("css/rs.css","include/jquery-ui/jquery-ui.min.css"), $js);
 
 //display introduction text
 

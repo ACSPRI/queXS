@@ -303,7 +303,7 @@ if (isset($_GET['newstate']))
 
 if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js";
 
-xhtml_head(T_("Set outcome"),true,array("include/bootstrap-3.3.2/css/bootstrap.min.css"/* ,"css/call.css" */),array($js,"include/jquery-ui/js/jquery-1.4.2.min.js"));
+xhtml_head(T_("Set outcome"),true,array("include/bootstrap/css/bootstrap.min.css"/* ,"css/call.css" */),array($js,"include/jquery/jquery-1.4.2.min.js"));
 
 $state = is_on_call($operator_id);
 switch($state)

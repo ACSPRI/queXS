@@ -175,7 +175,7 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 }
 
 
-xhtml_head(T_("Add an operator"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css", "../css/custom.css"), array("../js/jquery-2.1.3.min.js", "../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js"));
+xhtml_head(T_("Add an operator"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css", "../css/custom.css"), array("../include/jquery/jquery.min.js", "../include/bootstrap/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js"));
 
 if ($a) {
   echo $a; 

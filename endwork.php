@@ -41,7 +41,7 @@ include_once("lang.inc.php");
  * XHTML functions
  */
 include_once("functions/functions.xhtml.php");
-
+include_once("functions/functions.operator.php");
 xhtml_head(T_("End of work"));
 
 if (isset($_GET['auto']))
@@ -51,7 +51,7 @@ if (isset($_GET['auto']))
 
 print "<h1>" . T_("Work has ended. That is it") . "</h1>";
 
-include_once("functions/functions.operator.php");
+
 if (ALLOW_OPERATOR_EXTENSION_SELECT && VOIP_ENABLED)
 {
   //unassign extension

@@ -66,7 +66,7 @@ include("../functions/functions.operator.php");
 include("../functions/functions.input.php");
 
 $css = array(
-"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
+"../include/bootstrap/css/bootstrap.min.css", 
 "../css/custom.css"
 			);
 $js_head = array(

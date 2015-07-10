@@ -70,7 +70,7 @@ if ($p)
 			kill_process($p);
 	}
 
-	xhtml_head(T_("Monitor VoIP Process"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),false,false,false,true);
+	xhtml_head(T_("Monitor VoIP Process"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),false,false,false,true);
 
 	print "<h2>" . T_("Running process:") . " $p</h2>";
 
@@ -92,7 +92,7 @@ if ($p)
 }
 else
 {
-	xhtml_head(T_("Monitor VoIP Process"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"));
+	xhtml_head(T_("Monitor VoIP Process"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"));
 	//print "<h2>" . T_("Monitor VoIP Process") . "</h2>";
 	print "<p><a class='btn btn-warning' href='?watch=watch'>" . T_("Click here to begin monitoring the VoIP Process") . "</a></p>";
 	print "<h3>" . T_("Outcome of last process run (if any)") . "</h3>";

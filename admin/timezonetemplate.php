@@ -89,7 +89,7 @@ if (isset($_GET['tz']))
 }
 
 
-xhtml_head(T_("Set Timezones"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js")); //,"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css"
+xhtml_head(T_("Set Timezones"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js")); //,"../include/bootstrap/css/bootstrap-theme.min.css"
 
 $dtz = get_setting("DEFAULT_TIME_ZONE");
 

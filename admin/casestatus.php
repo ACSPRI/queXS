@@ -28,16 +28,16 @@ include("../functions/functions.display.php");
 include("../functions/functions.input.php");
 
 $css = array(
-"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
-"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
-"../include/font-awesome-4.3.0/css/font-awesome.css",
+"../include/bootstrap/css/bootstrap.min.css", 
+"../include/bootstrap/css/bootstrap-theme.min.css",
+"../include/font-awesome/css/font-awesome.css",
 "../include/bs-data-table/css/jquery.bdt.css",
 //"../include/iCheck/skins/square/blue.css",
 "../css/custom.css"
 			);
 $js_head = array(
-"../js/jquery-2.1.3.min.js",
-"../include/bootstrap-3.3.2/js/bootstrap.min.js"
+"../include/jquery/jquery.min.js",
+"../include/bootstrap/js/bootstrap.min.js"
 				);
 $js_foot = array(
 "../include/bs-data-table/js/vendor/jquery.sortelements.js",
@@ -230,8 +230,6 @@ $outcome_id = false;
 
 print "<div class='form-group '><h3 class=' col-sm-2 text-right'>" . T_("Questionnaire") . ":</h3>";
 display_questionnaire_chooser($questionnaire_id, false, "pull-left", "form-control");
-
-
 if ($questionnaire_id){
 	print "<h3 class=' col-sm-2 text-right'>" . T_("Sample") . ":</h3>";
 	display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control");

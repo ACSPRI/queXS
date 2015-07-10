@@ -63,7 +63,7 @@ include("../functions/functions.input.php");
  */
 include("../functions/functions.operator.php");
 
-xhtml_head(T_("Operator Performance"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Operator Performance"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 
 //$rs = get_stats_total(get_stats());
 //print "<h2>" . T_("Overall") . "</h2>";

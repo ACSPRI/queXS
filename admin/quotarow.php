@@ -284,7 +284,7 @@ if (isset($_GET['qsqri']) & isset($_GET['edit']))
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Quota row management"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/bootstrap-3.3.2/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../include/iCheck/icheck.min.js","../js/window.js"));
+xhtml_head(T_("Quota row management"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../include/font-awesome/css/font-awesome.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../include/bootstrap/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../include/iCheck/icheck.min.js","../js/window.js"));
 print "<h3 class='form-inline pull-left'>" . T_("Questionnaire") . ":&emsp;</h3>";
 
 $sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected

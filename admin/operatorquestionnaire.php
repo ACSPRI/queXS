@@ -149,7 +149,7 @@ $sql = "SELECT operator_id, CONCAT(firstName,' ', lastName ) as opname, username
 $operators = $db->GetAll($sql);
 
 
-xhtml_head(T_("Assign operators to questionnaires"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/iCheck/icheck.min.js"));
+xhtml_head(T_("Assign operators to questionnaires"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../include/iCheck/icheck.min.js"));
 
 ?>
 

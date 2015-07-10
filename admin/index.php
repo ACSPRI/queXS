@@ -51,12 +51,12 @@ include ("../lang.inc.php");
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-<link rel="stylesheet" href="../include/bootstrap-3.3.2/css/bootstrap.min.css" />
-<link rel="stylesheet" href="../include/font-awesome-4.3.0/css/font-awesome.css" />
+<link rel="stylesheet" href="../include/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../include/font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" href="../css/style.css" />
 
 </head>
-  <body>
+<body>
 
 <div class="page-header-fixed navbar navbar-fixed-top " role="banner">
     <div class="container" style=" width: auto; padding-left: 1px;">
@@ -190,8 +190,8 @@ include ("../lang.inc.php");
 		<div class="clearfix"></div>
 	</div>
 
-<script src="../js/jquery-2.1.3.min.js"></script>
-<script src="../include/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<script src="../include/jquery/jquery.min.js"></script>
+<script src="../include/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/admin.js"></script>	
 
 </body>

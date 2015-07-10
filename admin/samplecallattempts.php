@@ -181,7 +181,7 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 }
 
 
-xhtml_head(T_("Sample call attempt"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Sample call attempt"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 
 print "<h3 class='form-inline pull-left'>" . T_("Please select a questionnaire") . "&emsp;</h3>";
 $questionnaire_id = false;

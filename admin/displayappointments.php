@@ -33,19 +33,19 @@ include ("../functions/functions.input.php");
 include ("../functions/functions.calendar.php");
 
 $css = array(
-"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
-"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
-"../include/font-awesome-4.3.0/css/font-awesome.css",
-"../include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css",
+"../include/bootstrap/css/bootstrap.min.css", 
+"../include/bootstrap/css/bootstrap-theme.min.css",
+"../include/font-awesome/css/font-awesome.css",
+"../include/jquery-ui/jquery-ui.min.css",
 "../include/timepicker/jquery-ui.min.css",
 "../include/timepicker/jquery-ui-timepicker-addon.css",
 "../css/custom.css"
 			);
 $js_head = array(
-"../js/jquery-2.1.3.min.js",
-"../include/bootstrap-3.3.2/js/bootstrap.min.js",
+"../include/jquery/jquery.min.js",
+"../include/bootstrap/js/bootstrap.min.js",
 "../include/timepicker/jquery-ui.min.js",
-//"../include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js",
+//"../include/jquery-ui/jquery-ui.min.js",
 "../include/timepicker/jquery-ui-timepicker-addon.js",
 "../include/timepicker/jquery-ui-timepicker-ru.js",
 				);

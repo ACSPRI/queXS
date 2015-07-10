@@ -40,7 +40,7 @@ include_once("lang.inc.php");
  */
 include_once("functions/functions.xhtml.php");
 
-xhtml_head(T_("Standby"),false,array("include/bootstrap-3.3.2/css/bootstrap.min.css","css/index_interface2.css"), array(), false, 300);
+xhtml_head(T_("Standby"),false,array("include/bootstrap/css/bootstrap.min.css","css/index_interface2.css"), array(), false, 300);
 
 if (isset($_GET['auto']))
 {

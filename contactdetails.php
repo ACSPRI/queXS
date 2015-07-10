@@ -63,7 +63,7 @@ $js = array("js/window.js");
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {
-        $js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+        $js[] = "include/jquery/jquery-1.4.2.min.js";
 	$js[] = "js/childnap.js";
 }
 

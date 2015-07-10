@@ -190,7 +190,7 @@ if (isset($_GET['sample_var'])){
 }
 
 
-xhtml_head(T_("Data output"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Data output"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 
 print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Please select a questionnaire") . ":&emsp;</h3>";
 $questionnaire_id = false;

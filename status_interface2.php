@@ -63,11 +63,11 @@ else
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {
-	$js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+	$js[] = "include/jquery/jquery-1.4.2.min.js";
 	$js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Status"),false,array("include/bootstrap-3.3.2/css/bootstrap.min.css","css/status_interface2.css"),$js);
+xhtml_head(T_("Status"),false,array("include/bootstrap/css/bootstrap.min.css","css/status_interface2.css"),$js);
 
 $ca = get_call_attempt($operator_id,false);
 if ($ca)

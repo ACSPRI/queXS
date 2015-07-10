@@ -60,7 +60,7 @@ if (isset($_POST['information']))
 	set_setting("information",$_POST['information']);
 }
 
-xhtml_head(T_("Set centre information"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Set centre information"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 ?>
 		<form action="" method="post" class="panel-body">
 		<!-- <label for="information"><?php  //echo T_("Set centre information: "); ?></label> -->

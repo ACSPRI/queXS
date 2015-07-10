@@ -96,7 +96,7 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_prefill_id'])
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Pre fill questionnaire: Set values for questionnaire to prefill"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+xhtml_head(T_("Pre fill questionnaire: Set values for questionnaire to prefill"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 print "<h3 class='form-inline pull-left'>" . T_("Select a questionnaire") . ":&emsp;</h3>";
 
 $sql = "SELECT questionnaire_id as value,description, 

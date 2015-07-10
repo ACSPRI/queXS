@@ -72,7 +72,7 @@ if ($p)
 		set_setting('systemsort',false);
 	}
 
-	xhtml_head(T_("Monitor system wide case sorting"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),false,false,false,true);
+	xhtml_head(T_("Monitor system wide case sorting"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),false,false,false,true);
 
 	print "<h2>" . T_("Running process:") . " $p</h2>";
 
@@ -94,7 +94,7 @@ if ($p)
 }
 else
 {
-	xhtml_head(T_("Monitor system wide case sorting"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"));
+	xhtml_head(T_("Monitor system wide case sorting"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"));
 	//print "<h2>" . T_("Monitor system wide case sorting") . "</h2>";
 	print "<p><a href='?watch=watch'>" . T_("Click here to enable and begin system wide case sorting") . "</a></p>";
 	print "<div class='well pull-right col-sm-4'><p>"  . T_("System wide case sorting is periodically (via SYSTEM_SORT_MINUTES configuration directive) sorting cases on a system wide basis instead of finding the most appropriate case each time an operator requests a new case. This may increase performance where there are a large number of cases or complex quotas in place. If you are not experiencing any performance problems, it is not recommended to use this feature.") . "</p></div>";

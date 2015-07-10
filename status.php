@@ -70,7 +70,7 @@ if ($state == 4 && AUTO_POPUP)
 $js = array("js/popupkeep.js");
 if (AUTO_LOGOUT_MINUTES !== false)
 {  
-        $js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+        $js[] = "include/jquery/jquery-1.4.2.min.js";
         $js[] = "js/childnap.js";
 }
 

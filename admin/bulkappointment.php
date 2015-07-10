@@ -126,7 +126,7 @@ function validate_bulk_appointment($tmpfname)
 if (isset($_POST['tmpfname']))
 {
 	$subtitle = T_("Result");
-	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),false,false,false,false,$subtitle);
+	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),false,false,false,false,$subtitle);
 	$todo = validate_bulk_appointment($_POST['tmpfname']);
 
 	if (is_array($todo))
@@ -215,7 +215,7 @@ else if (isset($_POST['import_file']))
 {
 	//file has been submitted
 	$subtitle = T_("Check data to submit");
-	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"),false,false,false,false,$subtitle);
+	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),false,false,false,false,$subtitle);
 	?>
 	<form action="" method="post" >
 	<?php 
@@ -251,7 +251,7 @@ else
 {
 	//need to supply file to upload
 	$subtitle = T_("Import: Select file to upload");
-	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/font-awesome-4.3.0/css/font-awesome.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../js/bootstrap-filestyle.min.js"),false,false,false,$subtitle );
+	xhtml_head(T_("Bulk appointment generator"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/font-awesome/css/font-awesome.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../js/bootstrap-filestyle.min.js"),false,false,false,$subtitle );
 	
 	$ua = $_SERVER['HTTP_USER_AGENT'];
 	if (preg_match('/Firefox/i', $ua)) $csv= "text/csv"; else $csv= ".csv";

@@ -115,10 +115,10 @@ if(isset($_POST['start']) && isset($_POST['end']) && isset($_POST['day']) && iss
 $js = array("js/window.js");
 if (AUTO_LOGOUT_MINUTES !== false)
 {
-    $js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+    $js[] = "include/jquery/jquery-1.4.2.min.js";
 	$js[] = "js/childnap.js";
 }
-xhtml_head(T_("Create appointment"),false,array("include/bootstrap-3.3.2/css/bootstrap.min.css", "css/respondent.css"),$js);//"include/clockpicker/dist/bootstrap-clockpicker.min.css",
+xhtml_head(T_("Create appointment"),false,array("include/bootstrap/css/bootstrap.min.css", "css/respondent.css"),$js);//"include/clockpicker/dist/bootstrap-clockpicker.min.css",
 
 //select a respondent from a list or create a new one
 print "<h4>" . T_("Respondent") . ":";

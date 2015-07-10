@@ -144,7 +144,7 @@ $sql = "SELECT operator_id, CONCAT(firstName,' ', lastName) as description, user
 $operators = $db->GetAll($sql);
 
 
-xhtml_head(T_("Assign operators to Skills"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../js/jquery-2.1.3.min.js","../include/iCheck/icheck.min.js"));
+xhtml_head(T_("Assign operators to Skills"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../include/iCheck/icheck.min.js"));
 
 print "<div class='well'>" . T_("Set which types of cases will be made available to each operator. </br> Please note that all operators will be allowed to assign all possible outcomes to a case. This restricts which ones will be assigned to an operator.") . "</div>";
 

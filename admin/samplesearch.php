@@ -53,16 +53,16 @@ include("../functions/functions.input.php");
 
 global $db;
 $css = array(
-"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
-"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
-"../include/font-awesome-4.3.0/css/font-awesome.css",
+"../include/bootstrap/css/bootstrap.min.css", 
+"../include/bootstrap/css/bootstrap-theme.min.css",
+"../include/font-awesome/css/font-awesome.css",
 /* "../include/bootgrid/jquery.bootgrid.css", */
 "../include/bs-data-table/css/jquery.bdt.css",
 "../css/custom.css"
 			);
 $js_head = array(
-"../js/jquery-2.1.3.min.js",
-"../include/bootstrap-3.3.2/js/bootstrap.min.js",
+"../include/jquery/jquery.min.js",
+"../include/bootstrap/js/bootstrap.min.js",
 /* "../include/bootgrid/jquery.bootgrid.min.js", */
 				);
 $js_foot = array(

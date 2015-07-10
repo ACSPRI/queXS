@@ -51,7 +51,7 @@ include("functions/functions.operator.php");
 
 $js = false;
 if (AUTO_LOGOUT_MINUTES !== false)
-        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
+        $js = array("include/jquery/jquery-1.4.2.min.js","js/childnap.js");
 
 xhtml_head(T_("Case Notes"),false,array("css/table.css","css/casenote.css"),$js,  (isset($_GET['add'])) ? "onload=\"document.getElementById('note').focus();\"" : false);
 

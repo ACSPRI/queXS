@@ -56,9 +56,9 @@ include("../functions/functions.display.php");
 include("../functions/functions.input.php");
 
 $css = array(
-"../include/bootstrap-3.3.2/css/bootstrap.min.css", 
-"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
-//"../include/font-awesome-4.3.0/css/font-awesome.css",
+"../include/bootstrap/css/bootstrap.min.css", 
+"../include/bootstrap/css/bootstrap-theme.min.css",
+//"../include/font-awesome/css/font-awesome.css",
 "../css/custom.css"
 			);
 $js_head = array(

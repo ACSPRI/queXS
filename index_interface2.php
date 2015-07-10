@@ -159,7 +159,7 @@ if (isset($_GET['endcase']))
 
 }
 
-$js = array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
+$js = array("js/popup.js","js/tabber.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 $body = true;
 $script = "";
 if (AUTO_LOGOUT_MINUTES !== false)
@@ -194,7 +194,7 @@ else if (HEADER_EXPANDER_MANUAL)
 }
 
 
-xhtml_head(T_("Case"), $body, array("css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
+xhtml_head(T_("Case"), $body, array("css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/jquery-ui.min.css") , $js);
 print $script;
 
 $case_id = get_case_id($operator_id,true);

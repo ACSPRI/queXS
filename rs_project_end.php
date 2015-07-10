@@ -59,7 +59,7 @@ if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
 	die();
 }
 
-$js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
+$js = array("js/popup.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {  
@@ -68,7 +68,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 
 
 
-xhtml_head(T_("Respondent Selection - Project end"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"), $js);
+xhtml_head(T_("Respondent Selection - Project end"),true,array("css/rs.css","include/jquery-ui/jquery-ui.min.css"), $js);
 
 $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);

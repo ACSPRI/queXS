@@ -86,7 +86,7 @@ if (isset($_POST['client']))
 }
 
 
-xhtml_head(T_("Add a client"),true,array("../include/bootstrap-3.3.2/css/bootstrap.min.css","../css/custom.css"));
+xhtml_head(T_("Add a client"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"));
 
 $sql = "SELECT Time_zone_name as value, Time_zone_name as description
 	FROM timezone_template";

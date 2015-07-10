@@ -49,7 +49,7 @@ include ("functions/functions.xhtml.php");
  */
 include("functions/functions.operator.php");
 
-$js = array("include/jquery-ui/js/jquery-1.4.2.min.js","include/strophe/strophe.js","js/supervisorchat.js");
+$js = array("include/jquery/jquery-1.4.2.min.js","include/strophe/strophe.js","js/supervisorchat.js");
 if (AUTO_LOGOUT_MINUTES !== false)
         $js[] = "js/childnap.js";
 
