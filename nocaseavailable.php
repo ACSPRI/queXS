@@ -80,7 +80,8 @@ $operator_id = get_operator_id();
 $sql = "SELECT oq.questionnaire_id, q.description, CASE WHEN q.enabled = 1 THEN '" . TQ_("Enabled") . "' ELSE '" . TQ_("Disabled") . "' END as enabled
 	FROM operator_questionnaire as oq, questionnaire as q
 	WHERE oq.operator_id = '$operator_id'
-	AND q.questionnaire_id = oq.questionnaire_id";
+	AND q.questionnaire_id = oq.questionnaire_id
+	AND q.enabled = 1";
 
 $rs = $db->GetAll($sql);
 
@@ -102,7 +103,9 @@ $sql = "SELECT oq.questionnaire_id, q.description, si.description as sdescriptio
 	WHERE oq.operator_id = '$operator_id'
 	AND q.questionnaire_id = oq.questionnaire_id
 	AND qs.questionnaire_id = q.questionnaire_id
-	AND si.sample_import_id = qs.sample_import_id";
+	AND si.sample_import_id = qs.sample_import_id
+	AND q.enabled = 1
+	AND si.enabled = 1";
 
 $rs = $db->GetAll($sql);
 
@@ -121,7 +124,7 @@ else
 //shift restrictions and no shift
 $sql = "SELECT q.description, CONVERT_TZ(sh.start, 'UTC', o.Time_zone_name) as st, CONVERT_TZ(sh.end, 'UTC', o.Time_zone_name) as en
 	FROM operator_questionnaire AS oq
-	JOIN (questionnaire AS q, operator as o) ON ( oq.questionnaire_id = q.questionnaire_id and o.operator_id = oq.operator_id)
+	JOIN (questionnaire AS q, operator as o) ON ( oq.questionnaire_id = q.questionnaire_id and o.operator_id = oq.operator_id AND q.enabled = 1)
 	LEFT JOIN shift AS sh ON (
 		sh.questionnaire_id = oq.questionnaire_id
 		AND (CONVERT_TZ( NOW( ) , 'System', 'UTC' ) >= sh.start )
@@ -178,7 +181,8 @@ echo "<p>" . T_("Limesurvey links:") . "</p>";
 $sql = "SELECT q.lime_sid, q.description
 	FROM questionnaire as q, operator_questionnaire as oq
 	WHERE oq.operator_id = '$operator_id'
-	AND q.questionnaire_id = oq.questionnaire_id";
+	AND q.questionnaire_id = oq.questionnaire_id
+	AND q.enabled = 1";
 
 $rs = $db->GetAll($sql);
 
@@ -207,7 +211,8 @@ $sql = "SELECT questionnaire_sample_quota_id,q.questionnaire_id,sample_import_id
 	FROM questionnaire_sample_quota as qsq, questionnaire as q, operator_questionnaire as oq
 	WHERE oq.operator_id = '$operator_id'
 	AND qsq.questionnaire_id = oq.questionnaire_id
-	AND q.questionnaire_id = oq.questionnaire_id";
+	AND q.questionnaire_id = oq.questionnaire_id
+	AND q.enabled = 1";
 	
 $rs = $db->GetAll($sql);
 
