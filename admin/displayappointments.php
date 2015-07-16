@@ -261,7 +261,7 @@ else {
 	FROM appointment as a 
 	JOIN (`case` as c, respondent as r, questionnaire as q, `sample` as s, sample_import as si) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and s.sample_id = c.sample_id and s.import_id= si.sample_import_id) 
 	LEFT JOIN (`call` as ca) ON (ca.call_id = a.completed_call_id)
-	WHERE q.enabled=1 AND si.enabled = 1 AND a.end < CONVERT_TZ(NOW(),'System','UTC') AND a.completed_call_id IS NULL
+	WHERE q.enabled=1 AND si.enabled = 1 AND a.end < CONVERT_TZ(NOW(),'System','UTC') AND a.completed_call_id IS NULL AND c.current_outcome_id !=10
 	GROUP BY c.case_id
 	ORDER BY a.start ASC";
 	
