@@ -156,7 +156,7 @@ $sql = "SELECT count(s.sample_id) as count_samples
 	AND si.enabled = 1
 	AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
     AND ou.outcome_type_id IN( SELECT outcome_type_id FROM operator_skill WHERE operator_id = '$operator_id')
-	AND ou.outcome_id NOT IN (10,25,28,33,34,40) ";
+	AND ou.outcome_id NOT IN (10,25,28,34,35,40) ";
 
 $rs = $db->GetRow($sql);
 

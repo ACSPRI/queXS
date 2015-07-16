@@ -123,7 +123,7 @@ function display_outcomes($contacted,$ca,$case_id)
 				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
 					WHERE contacted = '$contacted'
-					AND outcome_id NOT IN(5,10,19,21,40,41,33,34)"; 
+					AND outcome_id NOT IN(5,10,19,21,40,41,34,35)"; 
 				}
 			}
 			else
@@ -133,7 +133,7 @@ function display_outcomes($contacted,$ca,$case_id)
 				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
 					WHERE contacted = '$contacted'
-					AND outcome_id NOT IN(5,10,19,21,40,41,33,34)";
+					AND outcome_id NOT IN(5,10,19,21,40,41,34,35)";
 			}
 		}
 	}

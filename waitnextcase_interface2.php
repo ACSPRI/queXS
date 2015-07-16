@@ -138,7 +138,7 @@ else
 		
 			//assigned to operator
 	
-			// call restrictions and outside times, operator skill and filter outcomes 10,25,28,33,34,40
+			// call restrictions and outside times, operator skill and filter outcomes 10,25,28,34,35,40
 			$sql = "SELECT COUNT( DISTINCT sv.sample_id) as count_samples
 			FROM `sample` as s
 			JOIN `sample_var` as sv on( s.sample_id = sv.sample_id )
@@ -149,7 +149,7 @@ else
             AND s.import_id IN ($siid)
 			AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
 			AND ou.outcome_type_id IN( SELECT outcome_type_id FROM operator_skill WHERE operator_id = '$operator_id')
-			AND ou.outcome_id NOT IN (10,25,28,33,34,40)";
+			AND ou.outcome_id NOT IN (10,25,28,34,35,40)";
 			$cases_count = $db->GetRow($sql);
 
 			if ($cases_count['count_samples'] == 0){
