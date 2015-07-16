@@ -194,7 +194,7 @@ else if (HEADER_EXPANDER_MANUAL)
 }
 
 
-xhtml_head(T_("Case"), $body, array("css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/jquery-ui.min.css") , $js);
+xhtml_head(T_("Case"), $body, array("include/bootstrap/css/bootstrap.min.css","css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/jquery-ui.min.css") , $js);
 print $script;
 
 $case_id = get_case_id($operator_id,true);
@@ -208,9 +208,10 @@ $scr = $db->GetRow($sql);
 $sc = $scr['self_complete'];
 $ref = $scr['referral'];
 
-?>
 
-<ul id="casefunctions" class="header">
+?>
+<div id="casefunctions" class="col-sm-2">
+<ul id="casefunctions" class="header ">
     <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><?php  echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
     <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><?php  echo T_("Appointment"); ?><img src="css/images/plius.jpg" /></a></li>
 <?php if ($sc == 1) { ?>
@@ -221,15 +222,15 @@ $ref = $scr['referral'];
 <?php } ?>
     <li id="item_3_e" class="item_3_full_height"><a href="?endwork=endwork"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
 </ul>
+</div>
 
-
-<div id="qstatus" class="header">
+<div id="qstatus" class="header col-sm-4">
 <?php xhtml_object("status_interface2.php","main-qstatus");?>
 <?php  if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.jpg' alt='<?php  echo T_('Arrow for expanding or contracting'); ?>'/></div> <?php  } ?>
 </div>
 
 
-<div id="calllist" class="header">
+<div id="calllist" class="header col-sm-6">
 
 
 <div class="tabber" id="tab-main">
@@ -396,7 +397,6 @@ if (!$call_id)
 		{
 			$respondent_id = $rs['respondent_id'];
 		}
-
 		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
 	}
 }
