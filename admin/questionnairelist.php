@@ -45,7 +45,7 @@ include("../db.inc.php");
 include("../functions/functions.xhtml.php");
 
 /**
- * Input functions
+ * Display functions
  */
 include("../functions/functions.display.php");
 
@@ -55,7 +55,7 @@ include("../functions/functions.display.php");
 include("../functions/functions.input.php");
 
 /**
- * CKEditor
+ * Limesurvey functions
  */
 include("../functions/functions.limesurvey.php");
 
