@@ -44,11 +44,26 @@ include ("../db.inc.php");
  */
 include ("../functions/functions.xhtml.php");
 
+$css = array(
+"../include/bootstrap/css/bootstrap.min.css", 
+//"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
+"../include/clockpicker/dist/bootstrap-clockpicker.min.css",
+"../css/custom.css"
+			);
+$js_head = array(
+"../include/jquery/jquery.min.js",
+"../include/bootstrap/js/bootstrap.min.js",
+"../js/addrow-v2.js",
+				);
+$js_foot = array(
+"../include/clockpicker/dist/bootstrap-clockpicker.js",
+"../js/custom.js"
+				);
+
 global $db;
 
 $year="2008";
 $woy="1";
-
 
 if (isset($_POST['day']))
 {
@@ -56,7 +71,6 @@ if (isset($_POST['day']))
 	
 	$sql = "DELETE FROM shift_template
 		WHERE 1";
-
 	$db->Execute($sql);
 	
 	foreach($_POST['day'] as $key => $val)
@@ -69,73 +83,77 @@ if (isset($_POST['day']))
 			$start = $db->qstr($_POST['start'][$key],get_magic_quotes_gpc());
 			$end = $db->qstr($_POST['end'][$key],get_magic_quotes_gpc());
 
-			$sql = "INSERT INTO shift_template (day_of_week,start,end)
-				VALUES ('$val',$start,$end)";
-
+			$sql = "INSERT INTO shift_template(day_of_week,start,end)
+				VALUES ($val,$start,$end)";
 			$db->Execute($sql);
 		}
 	}
-
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Modify shift template"),true,array("../css/shifts.css"),array("../js/addrow-v2.js"));
+xhtml_head(T_("Set default shift times"),true,$css,$js_head);//T_("Modify shift template"),array("../css/shifts.css"),array("../js/addrow-v2.js")
+
+$sql = "SELECT CONVERT_TZ(NOW(),'" . DEFAULT_TIME_ZONE . "','UTC') as t";//'Australia/Victoria'
+
+$rs = $db->GetRow($sql);
+
+if (empty($rs) || !$rs || empty($rs['t']))
+	print "<div class='alert alert-danger'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
 
 /**
  * Display warning if timezone data not installed
  *
  */
 
-$sql = "SELECT CONVERT_TZ(NOW(),'Australia/Victoria','UTC') as t";
-$rs = $db->GetRow($sql);
-
-if (empty($rs) || !$rs || empty($rs['t']))
-	print "<div class='warning'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
-
-
-print "<h2>" . T_("Enter standard shift start and end times for each day of the week in local time") . "</h2>";
+//print "<h1>" . T_("Set default shift times") . "</h1>";
+print "<div class='well'><t>" . T_("Enter standard shift start and end times for each day of the week in local time") . "</t></div>";
 
 /**
  * Begin displaying currently loaded shifts
  */
 
-$sql = "SELECT DATE_FORMAT( STR_TO_DATE( CONCAT( '$year', ' ', '$woy', ' ', day_of_week -1 ) , '%x %v %w' ) , '%W' ) AS dt,day_of_week,start,end
+$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT('$year',' ','$woy',' ',day_of_week -1),'%x %v %w'), '%W') AS dt,day_of_week,start,end
 	FROM shift_template";	
 		
 $shifts = $db->GetAll($sql);
 translate_array($shifts,array("dt"));		
 	
-$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as description, day_of_week as value, '' as selected 
+$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year,' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as description, day_of_week as value, '' as selected 
 	FROM day_of_week";
 	
 $daysofweek = $db->GetAll($sql);
 translate_array($daysofweek,array("description"));	
 
 ?>
-	<form method="post" action="">
-	<table>
+	<div class="panel-body col-sm-4"><form method="post" action="" class="form-horizontal">
+	<table class="table-hover table-condensed " id="shifts"><thead class="text-center highlight">
 <?php 
-	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr>";
+	print "<tr ><th >" . T_("Day") . "</th><th  >" . T_("Start") . "</th><th >" . T_("End") . "</th></tr></thead><tbody>";
 	$count = 0;
 	foreach($shifts as $shift)
 	{
-		print "<tr id='row-$count' class='row_to_clone'><td>";
+		print "<tr id='row-$count'><td>";// class='row_to_clone' /* these are not the rows to clone...*/
 		display_chooser($daysofweek, "day[$count]", false, true, false, false, false, array("description",$shift['dt']));
-		print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td></tr>";
+		print "</td>
+		<td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"start[$count]\" type=\"text\" value=\"{$shift['start']}\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td>
+		<td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"end[$count]\" type=\"text\" value=\"{$shift['end']}\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td></tr>";
 		$count++;
 	}
-	print "<tr class='row_to_clone' id='row-$count'><td>"; 
+	print "<tr  class='row_to_clone' id='row-$count'><td>";
 	display_chooser($daysofweek, "day[$count]", false, true, false, false, false, false);
-	print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"00:00:00\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"00:00:00\"/></td></tr>";
-
+	print "	</td><td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"start[$count]\" type=\"text\" value=\"08:00:00\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td>
+			<td><div class=\"input-group clockpicker\"><input readonly class=\"form-control\" size=\"8\" maxlength=\"8\" name=\"end[$count]\"   type=\"text\"  value=\"20:00:00\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td></tr>";
 
 ?>
-	</table>
-	<div><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></div>
-	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to shifts"); ?>"/></p>
-	</form>
+	</tbody></table>
+	<a class="btn btn-default btn-sm" onclick="addRow(); return false;" href=""><?php  echo T_("Add row"); ?></a><br/><br/>
+	<input class="btn btn-default " type="submit" name="submit" value="<?php  echo T_("Save changes to shifts"); ?>"/>
+	</form></div>
 <?php 
-	
-
-xhtml_foot();
+xhtml_foot($js_foot);
 ?>
+<script type="text/javascript">
+$('.clockpicker').clockpicker({
+    autoclose: true
+});
+</script>

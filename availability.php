@@ -51,9 +51,9 @@ include("functions/functions.operator.php");
 
 $js = false;
 if (AUTO_LOGOUT_MINUTES !== false)
-        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
+        $js = array("include/jquery/jquery-1.4.2.min.js","js/childnap.js");
 
-xhtml_head(T_("Availability"),true,array("css/table.css"),$js);
+xhtml_head(T_("Availability"),false,array("css/table.css"),$js);
 
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);

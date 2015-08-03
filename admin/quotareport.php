@@ -106,19 +106,20 @@ if (isset($_POST['submit']))
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Quota report"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Quota report"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/font-awesome/css/font-awesome.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../include/bootstrap/js/bootstrap.min.js","../include/iCheck/icheck.min.js","../js/window.js"));
 
-print "<h2>" . T_("Select a questionnaire from the list below") . "</h2>";
+print "<h3 class='form-inline pull-left'>" . T_("Select a questionnaire") . ":&emsp;</h3>";
+
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id);
+display_questionnaire_chooser($questionnaire_id,false,"form-inline form-group", "form-control");
 
 if ($questionnaire_id)
 {
-	print "<h2>" . T_("Select a sample from the list below") . "</h2>";
+	print "<h3 class='form-inline pull-left'>" . T_("Select a sample") . ":&emsp;</h3>";
 	$sample_import_id = false;
 	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
-	display_sample_chooser($questionnaire_id,$sample_import_id);
+	display_sample_chooser($questionnaire_id,$sample_import_id,false,"form-inline form-group clearfix", "form-control");
 
 	if ($sample_import_id)
 	{
@@ -142,40 +143,7 @@ if ($questionnaire_id)
 	
 		//Rows to display: Strata Status Quota Sample Sample Used Sample Remaining Completes % Complete
 
-		// Firstly, for the entire sample
 
-		//We need to calc Sample size, Sample drawn, Sample remain, Completions, %complete
-		$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
-			FROM sample as s
-			JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
-			LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
-			WHERE s.import_id = '$sample_import_id'
-			GROUP BY (c.sample_id is not null)";
- 
-		$rs = $db->GetAll($sql);
-
-		//type == 1 is drawn from sample, type == 0 is remains in sample
-		$drawn = 0;
-		$remain = 0;
-		
-		foreach ($rs as $r)
-		{
-			if ($r['type'] == 1) $drawn = $r['count'];
-			if ($r['type'] == 0) $remain = $r['count'];
-		}
-
-		$sql = "SELECT count(*) as count
-			FROM `case` as c, sample as s
-			WHERE c.current_outcome_id = 10
-			AND s.import_id = '$sample_import_id'
-			AND s.sample_id = c.sample_id
-			AND c.questionnaire_id = '$questionnaire_id'";
-
-		$rs = $db->GetRow($sql);
-		
-		$completions = $rs['count'];
-
-		$report[] = array("strata" => T_("Total sample"), "quota" => $drawn + $remain, "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => ROUND(($completions / ($drawn + $remain)) * 100,2));
 
 		//a. (Standard quota) Monitor outcomes of questions in completed questionnaires, and exclude selected sample records when completion limit is reached
 		//b. (Replicate quota) Exclude selected sample records (where no qsqr_question rows) 
@@ -199,13 +167,12 @@ if ($questionnaire_id)
 
       $perc = ($v['completions'] <= 0 ? 0 : ROUND(($completions / ($v['completions'])) * 100,2));
 			
-
 			//We need to calc Sample size, Sample drawn, Sample remain
 			$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
 				FROM sample as s
         JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id) ";
 
-      $sql2 = "SELECT exclude_val,exclude_var,comparison
+      $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
                FROM qsqr_sample
                WHERE questionnaire_sample_quota_row_id = {$v['questionnaire_sample_quota_row_id']}";
 
@@ -215,7 +182,7 @@ if ($questionnaire_id)
       $x = 1;
       foreach($rev as $ev)
       {
-          $sql .= " JOIN sample_var as sv$x ON (sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+          $sql .= " JOIN sample_var as sv$x ON (sv$x.sample_id = s.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
           $x++;
       }
 
@@ -237,19 +204,19 @@ if ($questionnaire_id)
 			if ($completions < $v['completions']) //if completions less than the quota, allow for closing/opening
 			{
 				if ($v['quota_reached'] == 1)
-					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;open=open'>" . T_("closed") . "</a>";
+					$status = "<span class='label label-default fa-lg'>" . T_("closed") . "</span><a class='btn' data-toggle='tooltip' title='" . T_("open") . "' href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;open=open'><i class='fa fa-lock fa-2x' style='color:red;'></i></a>";
 				else
-					$status = "<a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;close=close'>" . T_("open") . "</a>";
+					$status = "<span class='label label-primary fa-lg'>" . T_("open") . "&emsp;</span><a class='btn' data-toggle='tooltip' title='" . T_("close") . "' href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;rowquota=$qsqr&amp;close=close'><i class='fa fa-unlock fa-2x'></i></a>";
 			}
 			else
 			{
 				if ($v['quota_reached'] == 1)
-					$status = T_("closed");
+					$status = "<span class='label label-default fa-lg'>" . T_("closed") . "</span>";
 				else
-					$status = T_("open");
+					$status = "<span class='label label-primary fa-lg'>" . T_("open") . "&emsp;</span>";
 			}
 			
-			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='text' size='3' value='$priority' id='p$qsqr' name='p$qsqr' />", "autoprioritise" => "<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
+			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "&emsp;&emsp;<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
 		}
 
 		//c. (Questionnaire quota) Monitor outcomes of questions in completed questionnaires, and abort interview when completion limit is reached 
@@ -287,14 +254,60 @@ if ($questionnaire_id)
 			$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
 		}
 
+		
+		// At the end   - >  the entire sample
+
+		//We need to calc Sample size, Sample drawn, Sample remain, Completions, %complete
+		$sql = "SELECT (c.sample_id is not null) as type, count(*) as count
+			FROM sample as s
+			JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
+			LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
+			WHERE s.import_id = '$sample_import_id'
+			GROUP BY (c.sample_id is not null)";
+ 
+		$rs = $db->GetAll($sql);
+
+		//type == 1 is drawn from sample, type == 0 is remains in sample
+		$drawn = 0;
+		$remain = 0;
+		
+		foreach ($rs as $r)
+		{
+			if ($r['type'] == 1) $drawn = $r['count'];
+			if ($r['type'] == 0) $remain = $r['count'];
+		}
+
+		$sql = "SELECT count(*) as count
+			FROM `case` as c, sample as s
+			WHERE c.current_outcome_id = 10
+			AND s.import_id = '$sample_import_id'
+			AND s.sample_id = c.sample_id
+			AND c.questionnaire_id = '$questionnaire_id'";
+
+		$rs = $db->GetRow($sql);
+		
+		$completions = $rs['count'];
+
+		$report[] = array("strata" => T_("Total sample"), "quota" => $drawn + $remain, "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => ROUND(($completions / ($drawn + $remain)) * 100,2));
+		
 		print "<form action='' method='post'>";
-		xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc","priority","autoprioritise"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete"),T_("Set priority"),T_("Auto prioritise")),"tclass",false,false);
-		print "<p><input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/><input type='submit' id='submit' name='submit' value='" . TQ_("Update priorities") . "'/></p></form>";
+			xhtml_table($report,array("strata","status","quota","sample","sampleused","sampleremain","completions","perc","priority","autoprioritise"),array(T_("Strata"),T_("Status"),T_("Quota"),T_("Sample"),T_("Sample Used"),T_("Sample Remaining"),T_("Completions"),T_("% Complete"),T_("Set priority"),T_("Auto prioritise")),"tclass",false,false);
+			
+		if (count($report) > 1)
+			print "<input type='hidden' name='questionnaire_id' id='questionnaire_id' value='$questionnaire_id'/></br>
+					<button type='submit' id='submit' name='submit' class='btn btn-primary'/><i class=\"fa fa-refresh fa-lg\"></i>&emsp;" . TQ_("Update priorities") . "</button>";
+					
+		print "</form>";
 	}
 	
 }
 
-xhtml_foot();
-
-
+xhtml_foot(array("../js/custom.js"));
 ?>
+
+<script type="text/javascript">
+$('input').iCheck({
+	checkboxClass: 'icheckbox_square-blue',
+	increaseArea: '30%'
+});
+</script>

@@ -71,7 +71,7 @@ if (!defined('ALLOW_OPERATOR_EXTENSION_SELECT')) define('ALLOW_OPERATOR_EXTENSIO
 /**
  * The Asterisk server address
  */
-if (!defined('VOIP_SERVER')) define('VOIP_SERVER','asterisk.dcarf');
+if (!defined('VOIP_SERVER')) define('VOIP_SERVER','localhost');
 
 /**
  * The Asterisk server username for the monitor interface
@@ -284,7 +284,7 @@ if (!defined('TEMPORARY_DIRECTORY')) define('TEMPORARY_DIRECTORY', "/tmp");
  */
 if (!defined('DB_USER')) define('DB_USER', 'quexs');
 if (!defined('DB_PASS')) define('DB_PASS', 'quexs');
-if (!defined('DB_HOST')) define('DB_HOST', 'databasedev.dcarf');
+if (!defined('DB_HOST')) define('DB_HOST', 'localhost');
 if (!defined('DB_NAME')) define('DB_NAME', 'quexs');
 if (!defined('DB_TYPE')) define('DB_TYPE', 'mysqlt');
 
@@ -301,6 +301,11 @@ if (!defined('LDB_PASS')) define('LDB_PASS', DB_PASS);
 if (!defined('LDB_HOST')) define('LDB_HOST', DB_HOST);
 if (!defined('LDB_NAME')) define('LDB_NAME', DB_NAME);
 if (!defined('LDB_TYPE')) define('LDB_TYPE', DB_TYPE);
+
+
+if (!defined('COMPANY_NAME')) define ('COMPANY_NAME', 'queXS ');
+if (!defined('ADMIN_PANEL_NAME')) define ('ADMIN_PANEL_NAME',' Administration Panel');
+
 
 /**
  * Debugging

@@ -96,18 +96,19 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_prefill_id'])
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Pre fill questionnaire: Set values for questionnaire to prefill"),true,false,array("../js/window.js"));
-print "<h1>" . T_("Select a questionnaire from the list below") . "</h1>";
+xhtml_head(T_("Pre fill questionnaire: Set values for questionnaire to prefill"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+print "<h3 class='form-inline pull-left'>" . T_("Select a questionnaire") . ":&emsp;</h3>";
 
-$sql = "SELECT questionnaire_id as value,description, CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+$sql = "SELECT questionnaire_id as value,description, 
+	CASE WHEN questionnaire_id = '$questionnaire_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
  	FROM questionnaire
 	WHERE enabled = 1";
-display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id");
+display_chooser($db->GetAll($sql),"questionnaire","questionnaire_id", true,false,true,true,false,true,"form-inline form-group");
 
 
 if ($questionnaire_id != false)
 {
-	print "<h1>" . T_("Current pre fills (click to delete)") . "</h1>";
+	print "<h2>" . T_("Current pre fills") . "</h2>";
 	
 	$sql = "SELECT questionnaire_prefill_id,lime_sgqa,value
 		FROM questionnaire_prefill
@@ -117,19 +118,18 @@ if ($questionnaire_id != false)
 
 	if (empty($r))
 	{
-		print "<p>" . T_("Currently no pre fills") . "</p>";
+		print "<p class='well text-info'>" . T_("Currently no pre fills") . "</p>";
 	}
 	else
 	{
 		foreach($r as $v)
 		{
-			print "<div><a href='?questionnaire_id=$questionnaire_id&amp;questionnaire_prefill_id={$v['questionnaire_prefill_id']}'>{$v['lime_sgqa']}: {$v['value']}</a></div>";
-
+			print "<ul class='form-group clearfix'><p class='col-sm-2'>" . T_("SGQA code") . ":&emsp;<b class='text-primary'>{$v['lime_sgqa']}</b></p><p class='col-sm-4'>" . T_("Sample variable") . ":&emsp;<b class='text-primary'>{$v['value']}</b></p><a  href='?questionnaire_id=$questionnaire_id&amp;questionnaire_prefill_id={$v['questionnaire_prefill_id']}'><i class='fa fa-lg text-danger'>" . T_("Delete") . "</i></a></ul>";
 		}
 	}
+	print "";
 
-
-	print "<h1>" . T_("Select a question to pre fill") . "</h1>";
+	print "<h3 class='pull-left'>" . T_("Select a question to pre fill") . "&emsp;</h3>";
 	
 	$sql = "SELECT lime_sid
 		FROM questionnaire
@@ -143,7 +143,7 @@ if ($questionnaire_id != false)
 	if (isset($_GET['sgqa'])) 	$sgqa = $_GET['sgqa'];
 
 	$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid) AS value,
-		CASE WHEN qo.question IS NULL THEN q.question ELSE CONCAT(qo.question,' : ',q.question) END as description,
+		CONCAT( q.sid, 'X', q.gid, 'X', q.qid, '&ensp;->&ensp;' , CASE WHEN qo.question IS NULL THEN q.question ELSE CONCAT(qo.question,' : ',q.question) END) as description,
 		CASE WHEN CONCAT(q.sid, 'X', q.gid, 'X', q.qid) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM `" . LIME_PREFIX . "questions` AS q
 		LEFT JOIN `" . LIME_PREFIX . "questions` as qo ON (qo.qid = q.parent_qid)
@@ -154,45 +154,43 @@ if ($questionnaire_id != false)
 
 	for ($i=0; $i<count($rs); $i++)
 	{
-		$rs[$i]['description'] = substr(strip_tags($rs[$i]['description']),0,100);
+		$rs[$i]['description'] = substr(strip_tags($rs[$i]['description']),0,400);
 	}
 
-	display_chooser($rs,"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id");
-
+	display_chooser($rs,"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"pull-left");
+	print "<div class='clearfix'></div>";
+	
 	if ($sgqa != false)
 	{
-		print "<h1>" . T_("Enter a value to pre fill this question with:") . "</h1>";
-		print "<p>";
+		print "<h2 >" . T_("Enter a value to pre fill this question with:") . "</h2>";
+		print "<div class='well'><p>";
 		print T_("Possible uses:");
 		print "</p><ul>";
 		print "<li>" . T_("{Respondent:firstName} First name of the respondent") . "</li>";
 		print "<li>" . T_("{Respondent:lastName} Last name of the respondent") . "</li>";
 		print "<li>" . T_("{Sample:var} A record from the sample where the column name is 'var'") . "</li>";	
+		print "</ul></div>";
 		
-		$sql = "SELECT sv.var as description, CONCAT('{Sample:', sv.var, '}') as value
-			FROM `sample` AS s, sample_var AS sv, questionnaire_sample as qs
+		$sql = "SELECT sivr.var as description, CONCAT('{Sample:', sivr.var, '}') as value
+			FROM `sample_import_var_restrict` as sivr, questionnaire_sample as qs
 			WHERE qs.questionnaire_id = '$questionnaire_id' 
-			AND s.import_id = qs.sample_import_id
-			AND s.sample_id = sv.sample_id
-			GROUP BY sv.var";
-
-				print "</ul>";
+			AND sivr.sample_import_id = qs.sample_import_id";
 		?>
-		<form action="" method="get">
-		<p>
-		<label for="value"><?php  echo T_("The value to pre fill"); ?> </label><input type="text" name="value" id="value"/>		<br/>
-		<label for="svar"><?php  echo T_("or: Select pre fill from sample list"); ?> </label>
+		<form action="" method="get" class="form-inline form-group">
+		<label for="value"><?php  echo T_("The value to pre fill"); ?>:&emsp;</label><input type="text" name="value" id="value" size="50" class="form-control"/>
+		<label for="svar">&emsp;<?php  echo T_("or: Select pre fill from sample list"); ?>&emsp;</label>
 <?php 	//display a list of possible sample variables for this questionnaire
-		display_chooser($db->GetAll($sql),"svar","svar",true,false,false,false,false);
-?>		<br/>
-	<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
+		display_chooser($db->GetAll($sql),"svar","svar",true,false,false,true,false,true,"form-group");
+?>
+		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
-		<input type="submit" name="add_prefill" value="<?php  print(T_("Add pre fill")); ?>"/></p>
+		<input type="submit" name="add_prefill" class="btn btn-primary fa" value="<?php  print(T_("Add pre fill")); ?>"/>
 		</form>
 		<?php 
 	}
 }
-xhtml_foot();
 
+
+xhtml_foot();
 
 ?>

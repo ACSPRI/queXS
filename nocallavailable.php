@@ -70,7 +70,7 @@ if (isset($_GET['contact_phone']))
 
 $js = array();
 if (AUTO_LOGOUT_MINUTES !== false)
-        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
+        $js = array("include/jquery/jquery-1.4.2.min.js","js/childnap.js");
 
 $jsw = "js/window.js";
 if (browser_ie()) $jsw = "js/window_ie6.js";

@@ -65,9 +65,19 @@ include("../functions/functions.operator.php");
  */
 include("../functions/functions.input.php");
 
+$css = array(
+"../include/bootstrap/css/bootstrap.min.css", 
+"../css/custom.css"
+			);
+$js_head = array(
+				);
+$js_foot = array(
+"../js/window.js",
+"../js/custom.js"
+				);
 global $db;
 
-xhtml_head(T_("Time slots"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Time slots"),true,$css,$js_head);//array("../css/table.css"),array("../js/window.js")
 
 if (isset($_POST['subdel']))
 {
@@ -103,33 +113,29 @@ else if (isset($_POST['availability_group']))
 }
 	
 //view groups
-$sql = "SELECT description,
+$sql = "SELECT availability_group_id,description,
 	CONCAT('<a href=\'availability.php?availability_group=', availability_group_id, '\'>". TQ_("Modify") . "</a>') as link 
 	FROM availability_group";
 	
 	$rs = $db->GetAll($sql);
 
-print "<h3>" . T_("Time slots")."</h3>";
-
-print "<p>" . T_("Time slots define periods of time during particular days of the week. These are used for the availability function and also the call attempt time slot function.") . "</p>";
+print "<div class='well'>" . T_("Time slots define periods of time during particular days of the week. These are used for the availability function and also the call attempt time slot function.") . "</div>";
 
 if (empty($rs))
-	print "<p>" . T_("No time slots") . "</p>";
-else
-	xhtml_table($rs,array("description","link"),array(T_("Time slot"),T_("Modify")));
+	print "<div class='alert alert-danger'>" . T_("No time slots") . "</div>";
+else{
+	print "<div class='panel-body col-sm-6'>";
+		xhtml_table($rs,array("availability_group_id","description","link"),array(T_("ID"),T_("Time slot name"),T_("Modify")),"table table-hover");
+	print "</div>";
+}
 
-
-//add an availablity group
-print "<h3>" . T_("Add time slot") . "</h3>";
+//add a time slot (ex- availablity group)  
 ?>
-<form method="post" action="?">
-	<p><label for="availability_group"><?php echo T_("Time slot name"); ?>: </label><input type="text" class="textclass" name="availability_group" id="availability_group"/></p>
-	<p><input class="submitclass" type="submit" name="submit" value="<?php  echo T_("Add time slot"); ?>"/>
-	</p>
-</form>
+<div class=" panel-body col-sm-4"><form method="post" action="?">
+	<h3><?php echo T_("Add new time slot")," :";?></h3>
+	<p><input type="text" class="textclass form-control" name="availability_group" id="availability_group" placeholder="<?php echo T_("Enter"),"&ensp;",T_("new"),"&ensp;",T_("Time slot name"); ?>"/></p>
+	<p><input class="submitclass btn btn-default" type="submit" name="submit" value="<?php  echo T_("Add time slot"); ?>"/></p>
+</form></div>
 <?php 
-
-xhtml_foot();
-
-
+xhtml_foot($js_foot);
 ?>

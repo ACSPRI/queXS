@@ -49,7 +49,9 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.operator.php");
 
-xhtml_head(T_("Cases by outcome"),true,array("../css/table.css"));
+xhtml_head(T_("Cases by outcome"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"));
+
+print "<div class='col-sm-3'><a onclick='history.back();return false;' href='' class='btn btn-default'>&emsp;" . T_("Go back") . "&emsp;</a></div>";
 
 //List the cases by outcome
 $operator_id = get_operator_id();
@@ -59,27 +61,48 @@ if ($operator_id)
 	//get the outcome and the questionnaire
 	$outcome_id = intval($_GET['outcome_id']);
 	$questionnaire_id = intval($_GET['questionnaire_id']);
-
-        $sql = "SELECT o.description, q.description as qd
+	    $sql = "SELECT o.description, q.description as qd
                 FROM `outcome` as o, questionnaire as q
                 WHERE o.outcome_id = '$outcome_id'
                 AND q.questionnaire_id = '$questionnaire_id'";
 
         $rs = $db->GetRow($sql);
 
-        if (!empty($rs))
-        {
-                print "<h1>" . T_("Project") . ": {$rs['qd']}</h1>";
-                print "<h2>". T_("Current outcome:") ." " . T_($rs['description']) . "</h2>";
+        if (!empty($rs)){
+            print "<h2 class=' '>" . T_("Project") . ":&emsp;<span class='text-primary'>{$rs['qd']}</span></h2>";
+			if($sample_import_id=intval($_GET['sample_import_id'])){
+				$sql = "SELECT si.description as sd
+				FROM `sample_import` as si
+				WHERE si.sample_import_id = '$sample_import_id' ;";
+				$sd = $db->GetRow($sql);
+			print "<h3>". T_("Sample:") ."&emsp;<span class='text-primary'>" . T_($sd['sd']) . "</span></h3>";
+					$sid = "AND s.import_id= '$sample_import_id'";			
+				}
+				else{$sid = " ";};
+				
+			if($oper_id= intval($_GET['oper_id'])){
+					$sql = "SELECT CONCAT(op.firstname, op.lastname) as opname
+					FROM `operator` as op
+					WHERE op.operator_id = '$oper_id' ;";
+					$on = $db->GetRow($sql);
+			print "<h3>". T_("Operator") ." : " . T_($on['opname']) . "</h3> oper_id = $oper_id ";
+					$opn = "AND c.current_operator_id= '$oper_id'";
+				}
+				else{$opn = " ";};
+			
+			print "<h3 class=' '>". T_("Current outcome:") ."&emsp;<span class='text-primary'>" . T_($rs['description']) . "</span></h3>";
 
 		$sql = "SELECT CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id
 			FROM `case` as c
+			LEFT JOIN `sample` as s  ON ( s.sample_id  = c.sample_id )
 			WHERE c.questionnaire_id = '$questionnaire_id'
 			AND c.current_outcome_id = '$outcome_id'
+			$sid
+			$opn
 			LIMIT 500";
 			
 		$rs = $db->GetAll($sql);
-		
+		print "<div class='panel-body col-sm-4' style='max-height:750px; overflow:auto;'>";
 		if (empty($rs))
 			print "<p>" . T_("No cases with this outcome") . "</p>";
 		else
@@ -92,8 +115,7 @@ if ($operator_id)
 }
 else
 	print "<p>" . T_("No operator") . "</p>";
+print "</div>";
 
 xhtml_foot();
-
-
 ?>

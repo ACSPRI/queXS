@@ -49,7 +49,7 @@ global $db;
 
 $a = false;
 
-if (isset($_POST['operator']))
+if (isset($_POST['operator']) && isset($_POST['adduser']))
 {
 	$operator = $db->qstr($_POST['operator'],get_magic_quotes_gpc());
 	$firstname = $db->qstr($_POST['firstname'],get_magic_quotes_gpc());
@@ -68,8 +68,8 @@ if (isset($_POST['operator']))
 		
 		$laste = $db->GetRow($sql);
 
-		$extensionn = "1000";
-		$extension = "'IAX2/1000'";		
+		$extensionn = "2000";
+		$extension = "'IAX2/2000'";		
 
 		//increment if exists
 		if (!empty($laste))
@@ -80,10 +80,10 @@ if (isset($_POST['operator']))
 
 		//generate random 8 length password
 		$extensionnp = "";
-		$length = 12;
+		$length = 25;
 		$chars = "abcdefghijklmnopqrstuvwxyz0123456789";
 		for ($i = 0; $i < $length; $i++) 
-			$extensionnp .= $chars[(rand() % strlen($chars))];
+			$extensionnp .= $chars[(mt_rand() % strlen($chars))];
 
 		//quote for SQL
 		$extensionp = "'$extensionnp'";
@@ -144,11 +144,12 @@ if (isset($_POST['operator']))
 					$htg->addUserGroup(HTGROUP_ADMIN);
 			}
 	
-			$a = T_("Added:") . " " .  $operator;	
+			$a = "<div class='alert alert-info'><h3>" . T_("Added operator :") . " " .  $operator . "</h3>";	
 
 			if (FREEPBX_PATH !== false)
 				$a .= "<br/>" . T_("FreePBX has been reloaded for the new VoIP extension to take effect");
-	
+			
+			print "</div>";	
 
 			if ($temporary)
 			{
@@ -165,27 +166,26 @@ if (isset($_POST['operator']))
 			if ($refusal)
 				$db->Execute("  INSERT INTO operator_skill (operator_id,outcome_type_id)
 						VALUES ('$oid','3')");
-
-
-
 		}
 		else
 		{
 			$a = T_("Could not add operator. There may already be an operator of this name:") . " $operator ";
 		}
-
-
 	}
 }
 
 
-xhtml_head(T_("Add an operator"));
+xhtml_head(T_("Add an operator"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css", "../css/custom.css"), array("../include/jquery/jquery.min.js", "../include/bootstrap/js/bootstrap.min.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js"));
 
-if ($a)
-{
-?>
-	<h3><?php  echo $a; ?></h3>
-<?php 
+if ($a) {
+  echo $a; 
+} 
+else {
+	echo "<div class='well'>";
+		//echo "<p>" . T_("Adding an operator here will give the user the ability to call cases") . "<a href='operatorquestionnaire.php'>" . T_("Assign Operator to Questionnaire") . "</a>" . T_("tool") . ".</p>"; 
+		echo "<p>" . T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here.") . "</p>"; 
+		echo "<p>" . T_("The username and extension must be unique for each operator.") . "</p>";
+	echo "</div>";
 }
 
 $sql = "SELECT Time_zone_name as value, Time_zone_name as description
@@ -198,35 +198,119 @@ $sql = "SELECT extension_id as value, extension as description
         WHERE current_operator_id IS NULL";
 
 $ers = $db->GetAll($sql);
-
 ?>
-<h1><?php  echo T_("Add an operator"); ?></h1>
-<p><?php  echo T_("Adding an operator here will give the user the ability to call cases"); ?> <a href="operatorquestionnaire.php"><?php  echo T_("Assign Operator to Questionnaire"); ?></a> <?php  echo T_("tool"); ?>.</p>
-<p><?php  echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p>
-<p><?php echo T_("The username and extension must be unique for each operator.")?></p>
-<form enctype="multipart/form-data" action="" method="post">
-	<p><?php  echo T_("Enter the username of an operator to add:"); ?> <input name="operator" type="text"/></p>
+
+<script type="text/javascript">	
+//Password generator
+upp = new Array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+low = new Array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+dig = new Array('0','1','2','3','4','5','6','7','8','9');
+sym = new Array('~','!','@','#','$','%','^','&','*','(',')','_','+','=','|',';','.','/','?','<','>','{','}','[',']');
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------
+function rnd(x,y,z) { 
+	var num;
+	do {
+		num = parseInt(Math.random()*z);
+		if (num >= x && num <= y) break;
+	} while (true);
+return(num);
+}
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------
+function generate() {																
+	var pwd = '';
+	var res, s;
+	var k = 0;
+	var n = document.operform.number.value;
+	var pass = new Array();
+	var w = rnd(30,80,100);
+	for (var r = 0; r < w; r++) {
+		res = rnd(1,25,100); pass[k] = upp[res]; k++; 
+		res = rnd(1,25,100); pass[k] = low[res]; k++;
+		res = rnd(1,9,100); pass[k] = dig[res]; k++;
+		res = rnd(1,24,100); pass[k] = sym[res]; k++;		
+	}
+	for (var i = 0; i < n; i++) {
+		s = rnd(1,k-1,100);
+		pwd+= pass[s];
+	}
+	document.operform.password.value = pwd;
+}
+</script>
+
+<form enctype="multipart/form-data" action="" method="post" class="form-horizontal panel-body" name="operform">
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Username") . ": ";?></label>
+		<div class="col-sm-3"><input name="operator" type="text" class="form-control" required /></div>
+	</div>
 <?php  if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
-	<p><?php  echo T_("Enter the password of an operator to add:"); ?> <input name="password" type="text"/></p>
-<?php  } ?>
-	<p><?php  echo T_("Enter the first name of an operator to add:"); ?> <input name="firstname" type="text"/></p>
-	<p><?php  echo T_("Enter the surname of an operator to add:"); ?> <input name="lastname" type="text"/></p>
-	<p><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of an operator to add:"); echo "</a>"; display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",get_setting("DEFAULT_TIME_ZONE"))); ?> </p>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Password") . ": ";?></label>
+		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" /></div>
+		<div class="col-sm-6 form-inline">&emsp;
+			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("Password with");?>&ensp;
+			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters");?>
+		</div>
+	</div>
+<?php  } ?> 
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("First name") . ": ";?></label>
+		<div class="col-sm-3"><input name="firstname" type="text" class="form-control" required/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Last name") . ": ";?></label>
+		<div class="col-sm-3"><input name="lastname" type="text" class="form-control"/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
+		<div class="col-sm-3"><?php display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,true,array("value",get_setting("DEFAULT_TIME_ZONE")),true,"form-inline");?></div>
+		<div class="col-sm-6 form-inline">
+			<?php echo T_("Edit") . "&emsp;";?>
+			<a  href='timezonetemplate.php' class="btn btn-default fa"><?php echo T_("TimeZones list");?></a>
+		</div>
+	</div>
 <?php  if (FREEPBX_PATH == false) { ?>
-	<p><a href='extensionstatus.php'><?php  echo T_("Select an extension for this operator:"); echo "</a>"; display_chooser($ers,"extension_id","extension_id",true,false,false,false); ?> </p>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Extension") . ": ";?></label>
+		<div class="col-sm-3"><?php display_chooser($ers,"extension_id","extension_id",true,false,false,true,false,true,"form-inline");?></div>
+		<div class="col-sm-6 form-inline">
+			<?php echo T_("Edit") . "&emsp;";?>
+			<a  href='extensionstatus.php' class="btn btn-default fa"><?php echo T_("Extensions");?></a>
+		</div>
+	</div>
 <?php  } ?>
-	<p><?php  echo T_("Will this operator be using VoIP?"); ?> <input name="voip" type="checkbox" checked="checked"/></p>
-	<p><?php  echo T_("Jabber/XMPP chat user"); ?>: <input name="chat_user" type="text"/></p>
-	<p><?php  echo T_("Jabber/XMPP chat password"); ?>: <input name="chat_password" type="text"/></p>
-	<p><?php  echo T_("Will this operator be using chat?"); ?> <input name="chat_enable" type="checkbox"/></p>
-	<p><?php  echo T_("Is the operator a normal interviewer?"); ?> <input name="temporary" type="checkbox" checked="checked"/></p>
-	<p><?php  echo T_("Is the operator a supervisor?"); ?> <input name="supervisor" type="checkbox"/></p>
-	<p><?php  echo T_("Is the operator a refusal converter?"); ?> <input name="refusal" type="checkbox"/></p>
-	<p><input type="submit" value="<?php  echo T_("Add user"); ?>" /></p>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Uses VoIP") . "? ";?></label>
+		<div class="col-sm-3"><input name="voip" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" checked="checked"/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat user") . ": ";?></label>
+		<div class="col-sm-3"><input name="chat_user" type="text" class="form-control"/></div>
+	</div>
+	<div class="form-group">
+	<label class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat password") . ": ";?></label>
+		<div class="col-sm-3"><input name="chat_password" type="text" class="form-control"/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>
+		<div class="col-sm-3"><input name="chat_enable" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" /></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a normal interviewer?");?></label>
+		<div class="col-sm-3"><input name="temporary" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="danger" checked="checked"/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a supervisor?");?></label>
+		<div class="col-sm-3"><input name="supervisor" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-onstyle="danger" data-offstyle="primary"/></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a refusal converter?");?></label>
+		<div class="col-sm-3"><input name="refusal" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-onstyle="danger" data-offstyle="primary"/></div>
+	</div>
+	
+	<div class="form-group"><div class="col-sm-3 col-sm-offset-3"><input type="submit" name="adduser" class="btn btn-primary btn-block" value="<?php  echo T_("Add an operator"); ?>" /></div></div>
 </form>
 
 <?php 
-
 xhtml_foot();
-
 ?>

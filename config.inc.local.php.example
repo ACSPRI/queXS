@@ -29,7 +29,6 @@
  * 
  */
 
-
 /**
  *
  * Only some of the configuration directives are here. See the file: config.default.php for them all
@@ -46,7 +45,7 @@ define('VOIP_ENABLED',false);
 /**
  * The Asterisk server address
  */
-define('VOIP_SERVER','asterisk.dcarf');
+define('VOIP_SERVER', 'localhost');
 
 /**
  * Whether to automatically pop up a coding window when the respondent hangs up
@@ -63,7 +62,7 @@ define('QUEXS_PATH', '/quexs/');
  */
 define('DB_USER', 'quexs');
 define('DB_PASS', 'quexs');
-define('DB_HOST', 'databasedev.dcarf');
+define('DB_HOST', 'localhost');
 define('DB_NAME', 'quexs');
 
 

@@ -63,11 +63,11 @@ else
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {
-	$js[] = "include/jquery-ui/js/jquery-1.4.2.min.js";
+	$js[] = "include/jquery/jquery-1.4.2.min.js";
 	$js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Status"),true,array("css/status_interface2.css"),$js);
+xhtml_head(T_("Status"),false,array("include/bootstrap/css/bootstrap.min.css","css/status_interface2.css"),$js);
 
 $ca = get_call_attempt($operator_id,false);
 if ($ca)
@@ -76,7 +76,7 @@ if ($ca)
 	$case_id = get_case_id($operator_id);
 	$fname = get_respondent_variable("firstName",$respondent_id);
 	$lname = get_respondent_variable("lastName",$respondent_id);
-	print "<p class='text'>" . T_("Name") . ": $fname $lname</p>";
+	print "<h4>" . T_("Name") . ": $fname $lname</h4>";
 
 	$appointment = is_on_appointment($ca);
 
@@ -215,9 +215,10 @@ if ($ca)
 				print "<form method='post' action='?'><div class='text'>";
 				print "<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>";
 				print "<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
+				if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}'>" . T_('Dial') . "</a>";
 				if (!empty($r['description'])) print " - " . $r['description'];
 				print "</label>";
-				print "</div></form><br />";
+				print "</div></form></br>";
 			}
 			print "</div>";
 		}

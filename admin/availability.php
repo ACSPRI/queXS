@@ -44,6 +44,22 @@ include ("../db.inc.php");
  */
 include ("../functions/functions.xhtml.php");
 
+$css = array(
+"../include/bootstrap/css/bootstrap.min.css", 
+//"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
+"../include/clockpicker/dist/bootstrap-clockpicker.min.css",
+"../css/custom.css"
+			);
+$js_head = array(
+"../include/jquery/jquery.min.js",
+"../include/bootstrap/js/bootstrap.min.js",
+"../js/addrow-v2.js",
+				);
+$js_foot = array(
+"../include/clockpicker/dist/bootstrap-clockpicker.js",
+"../js/custom.js"
+				);
+
 global $db;
 
 $year="2008";
@@ -63,7 +79,6 @@ if (isset($_POST['day']))
 	
 	$sql = "DELETE FROM availability
 		WHERE availability_group_id = $availability_group";
-
 	$db->Execute($sql);
 	
 	foreach($_POST['day'] as $key => $val)
@@ -78,7 +93,6 @@ if (isset($_POST['day']))
 
 			$sql = "INSERT INTO availability (day_of_week,start,end,availability_group_id)
 				VALUES ('$val',$start,$end,$availability_group)";
-
 			$db->Execute($sql);
 		}
 	}
@@ -86,27 +100,25 @@ if (isset($_POST['day']))
 	$sql = "UPDATE availability_group
 		SET description = " . $db->qstr($_POST['description']) .  "
 		WHERE availability_group_id=  $availability_group";
-
 	$db->Execute($sql);
-
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Modify time slots"),true,array("../css/shifts.css"),array("../js/addrow-v2.js"));
+xhtml_head(T_("Modify time slots"),true,$css,$js_head);//,true,array("../css/shifts.css"),array("../js/addrow-v2.js")
 
 /**
  * Display warning if timezone data not installed
  *
  */
 
-$sql = "SELECT CONVERT_TZ(NOW(),'Australia/Victoria','UTC') as t";
+$sql = "SELECT CONVERT_TZ(NOW(),'" . DEFAULT_TIME_ZONE . "','UTC') as t";//'Australia/Victoria'
 $rs = $db->GetRow($sql);
 
 if (empty($rs) || !$rs || empty($rs['t']))
-	print "<div class='warning'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
+	print "<div class='alert alert-danger'><a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'>" . T_("Your database does not have timezones installed, please see here for details") . "</a></div>";
 
 
-print "<div><a href='availabilitygroup.php'>" . T_("Go back") . "</a></div>";
+print "<div><a class='btn btn-default' href='availabilitygroup.php'>" . T_("Go back") . "</a></div><br/>";
 
 
 $sql = "SELECT description 
@@ -117,9 +129,8 @@ $rs = $db->GetRow($sql);
 
 $description = $rs['description'];
 
-print "<h2>" . $rs['description'] . "</h2>";
+print "<h3>" . T_("Time slot") . " :&emsp;<span class = 'text-primary '>" . $rs['description'] . "</span></h3>";
 
-print "<h3>" . T_("Enter the start and end times for each day of the week to restrict calls within") . "</h3>";
 /**
  * Begin displaying currently loaded restriction times
  */
@@ -138,36 +149,42 @@ $daysofweek = $db->GetAll($sql);
 translate_array($daysofweek,array("description"));	
 	
 ?>
-	<form method="post" action="">
-	<table>
+	<div class=" panel-body col-sm-4"><form method="post" action="">
+	<p><label class="control-label"for="description"><?php echo T_("Edit Time slot group name");  ?>: </label><input class="form-control" type="text" name="description" id="description" value="<?php echo $description;?>"/></p>
+	<table class="table-hover table-condensed "><thead class="highlight">
 <?php 
-	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr>";
+
+	print "<div class='well text-info'>" . T_("Enter the start and end times for each day of the week to restrict calls within") . "</div>";
+
+	print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th></tr></thead><tbody>";
 	$count = 0;
 	foreach($availabilitys as $availability)
 	{
-		print "<tr id='row-$count' class='row_to_clone'><td>";
+		print "<tr id='row-$count' ><td>";//class='row_to_clone'
 		display_chooser($daysofweek, "day[$count]", false, true, false, false, false, array("description",$availability['dt']));
-		print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$availability['start']}\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$availability['end']}\"/></td></tr>";
+		print "</td><td><input class=\"form-control clockpicker\" size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"{$availability['start']}\"/></td><td><input class=\"form-control clockpicker\" name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$availability['end']}\"/></td></tr>";
 		$count++;
 	}
 	print "<tr class='row_to_clone' id='row-$count'><td>"; 
 	display_chooser($daysofweek, "day[$count]", false, true, false, false, false, false);
-	print "</td><td><input size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"00:00:00\"/></td><td><input name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"00:00:00\"/></td></tr>";
+	print "</td><td><input class=\"form-control clockpicker\" size=\"8\" name=\"start[$count]\" maxlength=\"8\" type=\"text\" value=\"08:00:00\"/></td><td><input class=\"form-control clockpicker\" name=\"end[$count]\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"20:00:00\"/></td></tr>";
 
 
 ?>
-	</table>
-	<p><a onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a></p>
-	<p><label for="description"><?php echo T_("Time slot group name");  ?>: </label><input type="text" name="description" id="description" value="<?php echo $description;?>"/></p>
-	<p><input type="submit" name="submit" value="<?php  echo T_("Save changes to time slot group"); ?>"/></p>
+	</tbody></table>
+	<a class="btn btn-default btn-sm" onclick="addRow(); return false;" href="#"><?php  echo T_("Add row"); ?></a><br/><br/>
+	<input class="btn btn-primary" type="submit" name="submit" value="<?php  echo T_("Save changes to time slot group"); ?>"/>
 	<input type="hidden" name="availability_group" value="<?php  echo $availability_group;?>"/>
-	</form>
+	</form><br/><br/>
 	<form method="post" action="availabilitygroup.php">
-	<p><input type="submit" name="subdel" value="<?php  echo T_("Delete this time slot group"); ?>"/></p>
+	<input class="btn btn-danger pull-right" type="submit" name="subdel" value="<?php  echo T_("Delete this time slot group"); ?>"/>
 	<input type="hidden" name="availability_group" value="<?php  echo $availability_group;?>"/>
-	</form>
+	</form></div>
 <?php 
-	
-
-xhtml_foot();
+xhtml_foot($js_foot);
 ?>
+<script type="text/javascript">
+$('.clockpicker').clockpicker({
+    autoclose: true
+});
+</script>

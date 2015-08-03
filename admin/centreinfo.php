@@ -60,15 +60,13 @@ if (isset($_POST['information']))
 	set_setting("information",$_POST['information']);
 }
 
-xhtml_head(T_("Set centre information"),true,false,array("../js/window.js"));
-
-		?>
-		<form action="" method="post"><p>
-		<label for="information"><?php  echo T_("Set centre information: "); ?></label><?php  echo $CKEditor->editor("information",get_setting("information")); ?>
-		<input type="submit" name="update" value="<?php  echo T_("Update centre information"); ?>"/></p>
+xhtml_head(T_("Set centre information"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+?>
+		<form action="" method="post" class="panel-body">
+		<!-- <label for="information"><?php  //echo T_("Set centre information: "); ?></label> -->
+		<?php  echo $CKEditor->editor("information",get_setting("information")); ?>
+		<br/><input class="btn btn-primary" type="submit" name="update" value="<?php  echo T_("Update centre information"); ?>"/>
 		</form>
-		<?php 
+<?php 
 xhtml_foot();
-
-
 ?>

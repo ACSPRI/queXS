@@ -137,14 +137,14 @@ if (isset($_POST['submit']))
 }
 
 
-xhtml_head(T_("Add shifts"),true,array("../css/shifts.css"),array("../js/window.js"));
-
+xhtml_head(T_("Shift management"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/clockpicker/dist/bootstrap-clockpicker.min.css","../include/bootstrap-toggle/css/bootstrap-toggle.min.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../include/bootstrap/js/bootstrap.min.js","../include/clockpicker/dist/bootstrap-clockpicker.js","../include/bootstrap-toggle/js/bootstrap-toggle.min.js","../js/window.js"));
+//"../css/shifts.css",
 /**
  * Display warning if timezone data not installed
  *
  */
 
-$sql = "SELECT CONVERT_TZ(NOW(),'Australia/Victoria','UTC') as t";
+$sql = "SELECT CONVERT_TZ(NOW(),'SYSTEM','UTC') as t";
 $rs = $db->GetRow($sql);
 
 if (empty($rs) || !$rs || empty($rs['t']))
@@ -160,37 +160,37 @@ if (empty($rs) || !$rs || empty($rs['t']))
  * @todo Use javascript to add shifts if necessarry outside the template
  */
 
-print "<h2>" . T_("Add shifts in your Time Zone") . "</h2>";
+print "<h3 class='col-sm-4'>" . T_("Add shifts in your Time Zone") . "</h3>";
 
 
-print "<p>" . T_("Shifts allow you to restrict appointments being made, and interviewers to working on a particlar project at defined times.") . "</p>";
+print "<p class='well col-sm-8'>" . T_("Shifts allow you to restrict appointments being made, and interviewers to working on a particlar project at defined times.") . "</p>";
 
-print "<h3>" . T_("Select a questionnaire from the list below") . "</h3>";
-display_questionnaire_chooser($questionnaire_id);	
+print "<div class='clearfix form-group'><h3 class='col-sm-4 text-right'>" . T_("Select a questionnaire") . ":</h3>";
+display_questionnaire_chooser($questionnaire_id,false, "form-inline", "form-control");	
+print "</div><div class='panel-body'>";
 
 if ($questionnaire_id != false)
 {
-	print "<p>" . T_("Select year") . ": ";
+	print "<h4>" . T_("Select year") . ":&emsp;&ensp;";
 	for ($i = $year - 1; $i < $year + 4; $i++)
 	{
 		if ($i == $year)
-			print "$i ";
+			print "<span class='btn-lg btn btn-default'><b class='fa text-danger '>$i</b></span>";
 		else
-			print "<a href=\"?year=$i&amp;woy=$woy&amp;questionnaire_id=$questionnaire_id\">$i</a> ";
+			print "<a href=\"?year=$i&amp;woy=$woy&amp;questionnaire_id=$questionnaire_id\"> $i </a> ";
 	}
-	print "</p>";
+	print "</h4>";
 	
 	
-	print "<p>" . T_("Select week of year") . ": ";
+	print "<h4>" . T_("Select week") . ":&emsp;";
 	for ($i = 1; $i <= 53; $i++)
 	{
 		if ($i == $woy)
-			print "$i ";
+			print "<span class='btn-lg btn btn-default'><b class='fa text-danger '>$i</b></span>";
 		else
-			print "<a href=\"?woy=$i&amp;year=$year&amp;questionnaire_id=$questionnaire_id\">$i</a> ";
+			print "<a href=\"?woy=$i&amp;year=$year&amp;questionnaire_id=$questionnaire_id\"> $i </a> ";
 	}
-	print "</p>";
-	
+	print "</h4>";
 	
 	$sql = "SELECT shift_id, dt, dta,start,end
 		FROM (
@@ -232,10 +232,10 @@ if ($questionnaire_id != false)
 		$daysofweek[$key]['description'] = $val['dtd'] . " " . $val['dto'];
 	
 	?>
-		<form method="post" action="">
-		<table>
+		<form method="post" action="" class="panel-body">
+		<table class="table-bordered table-condensed table-hover">
 	<?php 
-		print "<tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th><th>" . T_("End") . "</th><th>" . T_("Use shift?") . "</th></tr>";
+		print "<thead><tr><th>" . T_("Day") . "</th><th>" . T_("Start") . "</th>&ensp;<th>" . T_("End") . "</th><th>" . T_("Use shift?") . "</th></tr></thead>";
 		$count = 1;
 		foreach($shifts as $shift)
 		{
@@ -253,21 +253,26 @@ if ($questionnaire_id != false)
 			}
 			print "<tr><td>";
 			display_chooser($daysofweek, $prefix . "dow_$shift_id", false, true, false, false, false, array("dt",$shift['dt']));
-			print "</td><td><input size=\"8\" name=\"" . $prefix ."start_$shift_id\" maxlength=\"8\" type=\"text\" value=\"{$shift['start']}\"/></td><td><input name=\"" . $prefix ."end_$shift_id\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\"/></td><td><input name=\"" . $prefix ."use_$shift_id\" type=\"checkbox\" $checked/></td></tr>";
+			print "</td><td><div class=\"input-group clockpicker\"><input readonly size=\"8\" name=\"" . $prefix ."start_$shift_id\" maxlength=\"8\" type=\"time\" value=\"{$shift['start']}\" class=\"form-control \"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td><td><div class=\"input-group clockpicker\"><input readonly name=\"" . $prefix ."end_$shift_id\" type=\"text\" size=\"8\" maxlength=\"8\" value=\"{$shift['end']}\" class=\"form-control\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time fa\"></span></span></div></td><td class=\"text-center\"><input name=\"" . $prefix ."use_$shift_id\" type=\"checkbox\" class=\"form-control fa\" data-toggle=\"toggle\" data-size=\"\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " $checked/></td></tr>";
 			$count++;
 		}
 	?>
 		<!--<tr><td/><td/><td/><td>Select all</td></tr>-->
-		</table>
+		</table></br>
 		<!--<p><input type="submit" name="addshift" value="Add Shift"/></p>-->
-		<p><input type="submit" name="submit" value="<?php  echo T_("Submit changes"); ?>"/></p>
-		<p><input type="hidden" name="year" value="<?php  echo $year; ?>"/></p>
-		<p><input type="hidden" name="woy" value="<?php  echo $woy; ?>"/></p>
-		<p><input type="hidden" name="qid" value="<?php  echo $questionnaire_id; ?>"/></p>
+		<input type="submit" name="submit" value="<?php  echo T_("Save changes"); ?>" class="btn btn-primary"/>
+		<input type="hidden" name="year" value="<?php  echo $year; ?>"/>
+		<input type="hidden" name="woy" value="<?php  echo $woy; ?>"/>
+		<input type="hidden" name="qid" value="<?php  echo $questionnaire_id; ?>"/>
 		</form>
 	<?php 
 }	
-	
+	print "</div>";
 xhtml_foot();
 	
 ?>
+<script type="text/javascript">
+$('.clockpicker').clockpicker({
+    autoclose: true
+});
+</script>

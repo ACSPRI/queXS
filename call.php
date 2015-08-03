@@ -255,7 +255,7 @@ if (isset($_GET['newstate']))
 $js = "js/window.js";
 if (browser_ie()) $js = "js/window_ie6.js";
 
-xhtml_head(T_("Call"),true,array("css/call.css"),array($js,"include/jquery-ui/js/jquery-1.4.2.min.js"));
+xhtml_head(T_("Call"),true,array("css/call.css"),array($js,"include/jquery/jquery-1.4.2.min.js"));
 
 $state = is_on_call($operator_id);
 switch($state)

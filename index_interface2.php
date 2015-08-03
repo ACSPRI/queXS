@@ -79,7 +79,8 @@ if (isset($_GET['endwork']))
 		//if ($db->HasFailedTrans()){ print "<p>FAILED AT ENDWORK</p>";  exit();}
 		$db->CompleteTrans();
 	
-		include("waitnextcase_interface2.php");
+		require("waitnextcase_interface2.php");
+		unset ($_GET['endwork']);
 		exit();
 	}
 }
@@ -152,13 +153,13 @@ if (isset($_GET['endcase']))
 	
 		$db->CompleteTrans(); //need to complete here otherwise getting the case later will fail
 	
-		include("waitnextcase_interface2.php");
+		require("waitnextcase_interface2.php");
 		exit();
 	}
 
 }
 
-$js = array("js/popup.js","js/tabber.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
+$js = array("js/popup.js","js/tabber.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 $body = true;
 $script = "";
 if (AUTO_LOGOUT_MINUTES !== false)
@@ -193,9 +194,7 @@ else if (HEADER_EXPANDER_MANUAL)
 }
 
 
-
-
-xhtml_head(T_("queXS"), $body, array("css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css") , $js);
+xhtml_head(T_("Case"), $body, array("include/bootstrap/css/bootstrap.min.css","css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/jquery-ui.min.css") , $js);
 print $script;
 
 $case_id = get_case_id($operator_id,true);
@@ -209,109 +208,29 @@ $scr = $db->GetRow($sql);
 $sc = $scr['self_complete'];
 $ref = $scr['referral'];
 
-?>
 
-<ul id="casefunctions" class="header">
-       <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><?php  echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
-    <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><?php  echo T_("Appointment"); ?> <img src="css/images/plius.jpg" /></a></li>
-	<?php if ($sc == 1) { ?><li id='item_4_e' class="item_2_full_height"><a href="javascript:poptastic('email.php?interface2=true');"><?php  echo T_("Email"); ?> <img src="css/images/plius.jpg" /></a></li><?php } ?>
-	<?php if ($ref == 1) { ?><li id='item_5_e' class="item_2_full_height"><a href="javascript:poptastic('referral.php?interface2=true');"><?php  echo T_("Referral"); ?> <img src="css/images/plius.jpg" /></a></li><?php } ?>
+?>
+<div id="casefunctions" class="col-sm-2">
+<ul id="casefunctions" class="header ">
+    <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><?php  echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
+    <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><?php  echo T_("Appointment"); ?><img src="css/images/plius.jpg" /></a></li>
+<?php if ($sc == 1) { ?>
+	<li id='item_4_e' class="item_2_full_height"><a href="javascript:poptastic('email.php?interface2=true');"><?php  echo T_("Email"); ?> <img src="css/images/plius.jpg" /></a></li>
+<?php } ?>
+<?php if ($ref == 1) { ?>
+	<li id='item_5_e' class="item_2_full_height"><a href="javascript:poptastic('referral.php?interface2=true');"><?php  echo T_("Referral"); ?> <img src="css/images/plius.jpg" /></a></li>
+<?php } ?>
     <li id="item_3_e" class="item_3_full_height"><a href="?endwork=endwork"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
 </ul>
-
-
-
-<div id="content" class="content">
-<?php  
-
-$ca = get_call_attempt($operator_id,true);
-$call_id = get_call($operator_id);
-$appointment = false;
-if ($ca)
-{
-	$appointment = is_on_appointment($ca);
-	$respondent_id  = get_respondent_id($ca);
-}
-
-if (!$call_id)
-{
-	if ($appointment)
-	{
-		//create a call on the appointment number
-		$sql = "SELECT cp.*, a.respondent_id
-			FROM contact_phone as cp, appointment as a
-			WHERE cp.case_id = '$case_id'
-			AND a.appointment_id = '$appointment'
-			AND a.contact_phone_id = cp.contact_phone_id";
-	}
-	else
-	{
-		//create a call on the first available number by priority
-		$sql = "SELECT c. *
-			FROM contact_phone AS c
-			LEFT JOIN (
-					SELECT contact_phone.contact_phone_id
-					FROM contact_phone
-					LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
-					LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
-					WHERE contact_phone.case_id = '$case_id'
-					AND outcome.tryagain =0
-				  ) AS l ON l.contact_phone_id = c.contact_phone_id
-			LEFT JOIN
-			(
-			 SELECT contact_phone_id
-			 FROM `call`
-			 WHERE call_attempt_id = '$ca'
-			 AND outcome_id != 18
-			) as ca on ca.contact_phone_id = c.contact_phone_id
-			WHERE c.case_id = '$case_id'
-			AND l.contact_phone_id IS NULL
-			AND ca.contact_phone_id IS NULL
-			order by c.priority ASC";
-
-
-	}
-	$rs = $db->GetRow($sql);
-
-	if (!empty($rs))
-	{
-		$contact_phone_id = $rs['contact_phone_id'];				
-
-		if (!isset($rs['respondent_id']))
-		{
-			$sql = "SELECT respondent_id
-				FROM respondent
-				WHERE case_id = $case_id";
-
-			$respondent_id = $db->GetOne($sql);
-		}
-		else
-		{
-			$respondent_id = $rs['respondent_id'];
-		}
-
-		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
-	}
-}
-	
-
-if (!is_respondent_selection($operator_id))
-	$data = get_limesurvey_url($operator_id);
-else 
-	$data = get_respondentselection_url($operator_id,true,true); //use second interface
-
-xhtml_object($data,"main-content"); 
-
-?>
 </div>
 
-<div id="qstatus" class="header">
+<div id="qstatus" class="header col-sm-4">
 <?php xhtml_object("status_interface2.php","main-qstatus");?>
 <?php  if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.jpg' alt='<?php  echo T_('Arrow for expanding or contracting'); ?>'/></div> <?php  } ?>
 </div>
 
 
-<div id="calllist" class="header">
+<div id="calllist" class="header col-sm-6">
 
 
 <div class="tabber" id="tab-main">
@@ -321,6 +240,14 @@ xhtml_object($data,"main-content");
 					print "tabbertabdefault"; ?>">
 	  <h2><?php  echo T_("Notes"); ?></h2>
 	  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("casenote.php","main-casenotes");?></div>
+   </div>
+<?php  }?>
+
+<?php  if ($availability) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'availability' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'availability' && $appointment)) 
+					print "tabbertabdefault"; ?>">
+	  <h2><?php  echo T_("Availability"); ?></h2>
+	  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("availability.php","main-casenotes");?></div>
    </div>
 <?php  }?>
 
@@ -397,6 +324,92 @@ xhtml_object($data,"main-content");
 </div>
 
 
+</div>
+
+
+
+<div id="content" class="content ">
+<?php  
+
+$ca = get_call_attempt($operator_id,true);
+$call_id = get_call($operator_id);
+$appointment = false;
+$availability = is_using_availability($case_id);
+if ($ca)
+{
+	$appointment = is_on_appointment($ca);
+	$respondent_id  = get_respondent_id($ca);
+}
+
+if (!$call_id)
+{
+	if ($appointment)
+	{
+		//create a call on the appointment number
+		$sql = "SELECT cp.*, a.respondent_id
+			FROM contact_phone as cp, appointment as a
+			WHERE cp.case_id = '$case_id'
+			AND a.appointment_id = '$appointment'
+			AND a.contact_phone_id = cp.contact_phone_id";
+	}
+	else
+	{
+		//create a call on the first available number by priority
+		$sql = "SELECT c. *
+			FROM contact_phone AS c
+			LEFT JOIN (
+					SELECT contact_phone.contact_phone_id
+					FROM contact_phone
+					LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+					LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+					WHERE contact_phone.case_id = '$case_id'
+					AND outcome.tryagain =0
+				  ) AS l ON l.contact_phone_id = c.contact_phone_id
+			LEFT JOIN
+			(
+			 SELECT contact_phone_id
+			 FROM `call`
+			 WHERE call_attempt_id = '$ca'
+			 AND outcome_id NOT IN (15,18)
+			) as ca on ca.contact_phone_id = c.contact_phone_id
+			WHERE c.case_id = '$case_id'
+			AND l.contact_phone_id IS NULL
+			AND ca.contact_phone_id IS NULL
+			order by c.priority ASC";
+
+
+	}
+	$rs = $db->GetRow($sql);
+
+	if (!empty($rs))
+	{
+		$contact_phone_id = $rs['contact_phone_id'];				
+
+		if (!isset($rs['respondent_id']))
+		{
+			$sql = "SELECT respondent_id
+				FROM respondent
+				WHERE case_id = $case_id";
+
+			$respondent_id = $db->GetOne($sql);
+		}
+		else
+		{
+			$respondent_id = $rs['respondent_id'];
+		}
+		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
+	}
+}
+	
+
+if (!is_respondent_selection($operator_id))
+	$data = get_limesurvey_url($operator_id);
+else 
+	$data = get_respondentselection_url($operator_id,true,true); //use second interface
+
+xhtml_object($data,"main-content"); 
+
+?>
 </div>
 
 <?php 

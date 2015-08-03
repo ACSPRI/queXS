@@ -58,7 +58,7 @@ include ("functions/functions.limesurvey.php");
 
 $js = false;
 if (AUTO_LOGOUT_MINUTES !== false)
-        $js = array("include/jquery-ui/js/jquery-1.4.2.min.js","js/childnap.js");
+        $js = array("include/jquery/jquery-1.4.2.min.js","js/childnap.js");
 
 xhtml_head(T_("No case available"),true,array("css/table.css"),$js);
 
@@ -80,7 +80,8 @@ $operator_id = get_operator_id();
 $sql = "SELECT oq.questionnaire_id, q.description, CASE WHEN q.enabled = 1 THEN '" . TQ_("Enabled") . "' ELSE '" . TQ_("Disabled") . "' END as enabled
 	FROM operator_questionnaire as oq, questionnaire as q
 	WHERE oq.operator_id = '$operator_id'
-	AND q.questionnaire_id = oq.questionnaire_id";
+	AND q.questionnaire_id = oq.questionnaire_id
+	AND q.enabled = 1";
 
 $rs = $db->GetAll($sql);
 
@@ -102,7 +103,9 @@ $sql = "SELECT oq.questionnaire_id, q.description, si.description as sdescriptio
 	WHERE oq.operator_id = '$operator_id'
 	AND q.questionnaire_id = oq.questionnaire_id
 	AND qs.questionnaire_id = q.questionnaire_id
-	AND si.sample_import_id = qs.sample_import_id";
+	AND si.sample_import_id = qs.sample_import_id
+	AND q.enabled = 1
+	AND si.enabled = 1";
 
 $rs = $db->GetAll($sql);
 
@@ -121,7 +124,7 @@ else
 //shift restrictions and no shift
 $sql = "SELECT q.description, CONVERT_TZ(sh.start, 'UTC', o.Time_zone_name) as st, CONVERT_TZ(sh.end, 'UTC', o.Time_zone_name) as en
 	FROM operator_questionnaire AS oq
-	JOIN (questionnaire AS q, operator as o) ON ( oq.questionnaire_id = q.questionnaire_id and o.operator_id = oq.operator_id)
+	JOIN (questionnaire AS q, operator as o) ON ( oq.questionnaire_id = q.questionnaire_id and o.operator_id = oq.operator_id AND q.enabled = 1)
 	LEFT JOIN shift AS sh ON (
 		sh.questionnaire_id = oq.questionnaire_id
 		AND (CONVERT_TZ( NOW( ) , 'System', 'UTC' ) >= sh.start )
@@ -141,47 +144,45 @@ else
 	?> <p class='error'><?php  echo T_("ERROR: No shifts at this time"); ?></p> <?php 
 }
 
-/* Disable as too time consuming
+/* Disable as too time consuming */
 
 //call restrictions and outside times
-$sql = "SELECT count(*) as c
+$sql = "SELECT count(s.sample_id) as count_samples
 	FROM operator_questionnaire as oq
-	JOIN (questionnaire_sample as qs, sample_import as si, sample as s) on (
-		qs.questionnaire_id = oq.questionnaire_id
-		and si.sample_import_id = qs.sample_import_id
-		and s.import_id = si.sample_import_id)
-	LEFT JOIN call_restrict as cr on (
-		cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name))
-		and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start
-		and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
+	JOIN (questionnaire_sample as qs, sample_import as si, sample as s) on (qs.questionnaire_id = oq.questionnaire_id and si.sample_import_id = qs.sample_import_id and s.import_id = si.sample_import_id)
+        LEFT JOIN (`case` as c ,  `outcome` as ou) on (s.sample_id = c.sample_id and (ou.outcome_id = c.current_outcome_id  || c.case_id IS NULL))
+	LEFT JOIN call_restrict as cr on ( cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start 	and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
 	WHERE operator_id = '$operator_id'
-		AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)";
+	AND si.enabled = 1
+	AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
+    AND ou.outcome_type_id IN( SELECT outcome_type_id FROM operator_skill WHERE operator_id = '$operator_id')
+	AND ou.outcome_id NOT IN (10,25,28,34,35,40) ";
 
 $rs = $db->GetRow($sql);
 
 ?>
 <p><?php  echo T_("Call restrictions:"); ?></p>
 <?php 
-if ($rs['c'] == 0)
+if ($rs['count_samples'] == 0)
 {
 	?> <p class='error'><?php  echo T_("ERROR: There are no cases available that fall within call restrictions"); ?></p> <?php 
 }
 else
 {
-	print "<p>" . T_("There are ") . $rs['c'] . T_(" unassigned case(s) available within the specified call restrictions") . "</p>";
+	print "<p>" . T_("There are ") . $rs['count_samples'] . T_(" unassigned case(s) available within the specified call restrictions") . "</p>";
 }
 
- */
 
-?>
-<p><?php  echo T_("Limesurvey links:"); ?></p>
-<?php 
+
 
 //no link to limesurvey
+echo "<p>" . T_("Limesurvey links:") . "</p>";
+
 $sql = "SELECT q.lime_sid, q.description
 	FROM questionnaire as q, operator_questionnaire as oq
 	WHERE oq.operator_id = '$operator_id'
-	AND q.questionnaire_id = oq.questionnaire_id";
+	AND q.questionnaire_id = oq.questionnaire_id
+	AND q.enabled = 1";
 
 $rs = $db->GetAll($sql);
 
@@ -210,7 +211,8 @@ $sql = "SELECT questionnaire_sample_quota_id,q.questionnaire_id,sample_import_id
 	FROM questionnaire_sample_quota as qsq, questionnaire as q, operator_questionnaire as oq
 	WHERE oq.operator_id = '$operator_id'
 	AND qsq.questionnaire_id = oq.questionnaire_id
-	AND q.questionnaire_id = oq.questionnaire_id";
+	AND q.questionnaire_id = oq.questionnaire_id
+	AND q.enabled = 1";
 	
 $rs = $db->GetAll($sql);
 

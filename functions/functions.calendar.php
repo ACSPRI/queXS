@@ -2,9 +2,6 @@
 /**
  * Functions relating to appointment times and calendars
  *
- *
- *
- *
  *	This file is part of queXS
  *	
  *	queXS is free software; you can redistribute it and/or modify
@@ -31,7 +28,6 @@
  * 
  */
 
-
 /**
  * Configuration file
  */
@@ -41,7 +37,6 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  * Database file
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
-
 
 /**
  * Add a phone number to a case (via the contact_phone table)
@@ -131,7 +126,7 @@ function convert_time($time)
 
 	//Use the TIME_FORMAT string as defined in mysql http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
 	$from = array("%H","%h","%I","%i","%S","%s","%p");
-	$to = array(substr($time,0,2),$h,$h,$m,$s,$s,$p);
+	$to = array(substr($time,0,2),$h,$h,$m,$m,$s,$s,$p);
 	return str_replace($from,$to,TIME_FORMAT);
 }
 
@@ -193,31 +188,33 @@ function display_respondent_list($case_id,$respondent_id = false,$first = false)
 		WHERE case_id = '$case_id'";
 
 	$rs = $db->GetAll($sql);
-
-	print "<div><select id='respondent_id' name='respondent_id' onchange=\"LinkUp('respondent_id')\"><option>" . T_("None") . "</option>";
-	if (!empty($rs))
-	{
-		foreach($rs as $r)
+	
+	if (count($rs) >1 ){
+		print "<div><p>" . T_("Select a respondent") . ":
+		<select id='respondent_id' name='respondent_id' onchange=\"LinkUp('respondent_id')\"><option>" . T_("None") . "</option>";
+		if (!empty($rs))
 		{
-			$rid = $r['respondent_id'];
-			if ($respondent_id == false && $first == true)
+			foreach($rs as $r)
 			{
-				$first = false;
-				$selected = "selected='selected'";
-				$respondent_id = $rid;
+				$rid = $r['respondent_id'];
+				if ($respondent_id == false && $first == true)
+				{
+					$first = false;
+					$selected = "selected='selected'";
+					$respondent_id = $rid;
+				}
+				else $selected = "";
+				
+				if ($rid == $respondent_id) $selected="selected='selected'";
+				print "<option value='?respondent_id=$rid' $selected>{$r['firstName']} {$r['lastName']}</option>";
 			}
-			else
-				$selected = "";
-			if ($rid == $respondent_id) $selected="selected='selected'";
-			print "<option value='?respondent_id=$rid' $selected>{$r['firstName']} {$r['lastName']}</option>";
 		}
+		print "<option value='?respondent_id=0' class='addresp'>" . T_("Add respondent") . "</option></select></p></div>";	
 	}
-	print "<option value='?respondent_id=0' class='addresp'>" . T_("Add respondent") . "</option></select></div>";
+	else { echo "&emsp;<b>",$rs[0]['firstName'],"&ensp;",$rs[0]['lastName'],"</b>"; $respondent_id =$rs[0]['respondent_id'];}
 
 	return $respondent_id;
 }
-
-
 
 /**
  * Print an XHTML form for adding or modifying respondent details
@@ -256,13 +253,12 @@ function display_respondent_form($respondent_id = false,$case_id = false)
 		$rs = $db->GetRow($sql);
 	}
 
-
 	$sql = "SELECT Time_zone_name
 		FROM timezone_template";
 
 	$rs = $db->Execute($sql);
 
-	print "<div><label for='firstName'>" . T_("First name:") . " </label><input type=\"text\" id='firstName' name=\"firstName\" value=\"$fn\"/></div>
+	print "<div><label for='firstName'>" . T_("First name:") . "</label><input type=\"text\" id='firstName' name=\"firstName\" value=\"$fn\"/></div>
 	       <div><label for='lastName'>" . T_("Last  name:") . " </label><input type=\"text\" id='lastName' name=\"lastName\" value=\"$ln\"/></div>";
 
 	/**
@@ -271,7 +267,6 @@ function display_respondent_form($respondent_id = false,$case_id = false)
 	print "<div><label>" . T_("Time Zone:") . " ".$rs->GetMenu('Time_zone_name',$rzone,false)."</label></div>";
 
 }
-
 
 /**
  * Print shift details in XHTML based on the given day
@@ -294,16 +289,14 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 {
 	global $db;
 
-	
 	$restricted = is_shift_restricted($questionnaire_id);
-
 
 	if ($restricted)
 	{
 		/**
 		 * Select shift start and end times for this day
 		 */
-		$sql = "     SELECT s.shift_id, HOUR(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sh, MINUTE(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( TIME( CONVERT_TZ( s.end, 'UTC', r.Time_zone_name ) ) , TIME( CONVERT_TZ( s.start, 'UTC', r.Time_zone_name ) ) ) ) /300) as intervals, TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) as start, TIME(CONVERT_TZ(s.end,'UTC',r.Time_zone_name)) as  end
+		$sql = "SELECT s.shift_id, HOUR(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sh, MINUTE(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( s.end, s.start)) / 900) as intervals, TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) as start, TIME(CONVERT_TZ(s.end,'UTC',r.Time_zone_name)) as  end
 					FROM shift as s, respondent as r, `case` as c
 					WHERE r.respondent_id = '$respondent_id'
 					AND r.case_id = c.case_id
@@ -312,27 +305,21 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 					AND MONTH(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$month'
 					AND YEAR(CONVERT_TZ(s.start,'UTC', r.Time_zone_name)) = '$year'
 					ORDER BY s.start ASC";
-	
 	}
 	else
-		$sql = "SELECT  0 as sh, 0 as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ('$year-$month-$day 00:00:00','UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( TIME( CONVERT_TZ(DATE_ADD( CURDATE( ) , INTERVAL '23:59:59' HOUR_SECOND ) , 'System', r.Time_zone_name ) ) , TIME( CONVERT_TZ( CURDATE(), 'System', r.Time_zone_name ) ) ) ) /300) as intervals, TIME(CONVERT_TZ(CURDATE(),'System',r.Time_zone_name)) as start, TIME(CONVERT_TZ(DATE_ADD( CURDATE( ) , INTERVAL '23:59:59' HOUR_SECOND ),'System',r.Time_zone_name)) as  end
+		$sql = "SELECT  0 as sh, 0 as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ('$year-$month-$day 08:00:00','UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( TIME( CONVERT_TZ(DATE_ADD( CURDATE( ) , INTERVAL '23:59:59' HOUR_SECOND ) , 'System', r.Time_zone_name ) ) , TIME( CONVERT_TZ( CURDATE(), 'System', r.Time_zone_name ) ) ) ) /900) as intervals, TIME(CONVERT_TZ(CURDATE(),'System',r.Time_zone_name)) as start, TIME(CONVERT_TZ(DATE_ADD( CURDATE( ) , INTERVAL '23:59:59' HOUR_SECOND ),'System',r.Time_zone_name)) as  end
 			FROM respondent as r
 			WHERE r.respondent_id = '$respondent_id'";
 
-	
 	$rs = $db->GetAll($sql);
-
-	print "<div class=\"shifts\">";
+	
 	foreach($rs as $r)
 	{
-		print "<p>" . T_("Shift from:") . " ".convert_time($r['start']).T_(" till ")." ".convert_time($r['end'])."</p>";
+		print "<p>" . T_("Shift from:") . " <b>".$r['start']."</b>&ensp;" . T_(" till ")." <b>".$r['end']."</b></p>";
 	}
-	print "</div>";
+	
 
-
-
-	print "<p>";
-	print "<select name=\"start\" id=\"start\" onchange=\"LinkUp('start')\"><option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id\">" . T_("Start Time") . "</option>";
+	print "<div class=\"form-group clearfix\"><label class=\"control-label pull-left\" style=\"padding-top: 5px;\">" . T_("Start Time") . ": &ensp;</label><div class=\"form-inline pull-left\"><select class=\"form-control\"  name=\"start\" id=\"start\" onchange=\"LinkUp('start')\"><option ></option>"; 
 	foreach ($rs as $r)
 	{
 		$sh = $r['sh'];
@@ -345,12 +332,9 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 
 		//today = 0 if the shift is today otherwise 1
 		$today = $r['today'];
-
-		/**
-		 * Display only times in the future and within the shift in 5 minute intervals
-		 *
-		 */
-		for ($i = 0; $i <= $intervals; $i++)
+		
+		// * Display only times in the future and within the shift in 5 minute intervals
+		for ($i = 0; $i <= $intervals-1; $i++)
 		{
 			$t = str_pad($sh,2,"0",STR_PAD_LEFT).":".str_pad($sm,2,"0",STR_PAD_LEFT).":00";
 
@@ -359,42 +343,34 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 				$selected = "";
 				if ($t == $time) $selected = "selected=\"selected\"";
 			
-				print "<option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id&amp;start=$t\" $selected>".convert_time($t)."</option>";
+				print "<option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id&amp;start=$t\" $selected>".$t."</option>";
 			}
 
-		
-
-			$sm += 5;
+			$sm += 15;
 			if ($sm >= 60) 
 			{
 				$sh++;
 				if ($sh >= 24) $sh -= 24;
 				$sm -= 60;
 			}
-
 		}
-
 	}
-	print "</select>";
+	print "</select></div>";
 
 	if ($time)
 	{
 		$eh = substr($time,0,2);
 		$em = substr($time,3,2);
 
-		print "<select name=\"end\" id=\"end\" onchange=\"LinkUp('end')\"><option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id&amp;start=$time\">" . T_("End Time") . "</option>";
+		print "<label class=\"control-label pull-left \" style=\"padding-top: 5px; margin-left: 15px;\">" . T_("End Time") . ": &emsp;</label><div class=\"form-inline pull-left\"><select class=\"form-control\" name=\"end\" id=\"end\" onchange=\"LinkUp('end')\"><option></option>"; 
 		foreach ($rs as $r)
 		{
 			$sh = $r['sh'];
 			$sm = $r['sm'];
 			$intervals = $r['intervals'];
 	
-
-			/**
-			 * Display only times after the start time and within the shift in 5 minute intervals
-			 *
-			 */
-			for ($i = 0; $i <= $intervals; $i++)
+			// * Display only times after the start time and within the shift in 15 minute intervals
+			for ($i = 0; $i <= $intervals-1; $i++)
 			{
 				$t = str_pad($sh,2,"0",STR_PAD_LEFT).":".str_pad($sm,2,"0",STR_PAD_LEFT).":00";
 
@@ -403,28 +379,26 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 					$selected = "";
 					if ($t == $timeend) $selected = "selected=\"selected\"";
 		
-					print "<option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id&amp;start=$time&amp;end=$t\" $selected>".convert_time($t)."</option>";
+					print "<option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id&amp;start=$time&amp;end=$t\" $selected>".$t."</option>";
 				}	
 				
-				$sm += 5;
+				$sm += 15;
 				if ($sm >= 60) 
 				{
 					$sh++;
 					if ($sh >= 24) $sh -= 24;
 					$sm -= 60;
+					
 				}
-				
 			}
-	
 		}
-		print "</select>";
+		print "</select></div></div>";
 	}
 
 	print "<input type=\"hidden\" name=\"respondent_id\" value=\"$respondent_id\"/>";
 	print "<input type=\"hidden\" name=\"y\" value=\"$year\"/>";
 	print "<input type=\"hidden\" name=\"m\" value=\"$month\"/>";
 	print "<input type=\"hidden\" name=\"d\" value=\"$day\"/>";
-	print "</p>";
 }
 
 /**
@@ -485,21 +459,19 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 
 	// Build the days in the month
 	$Month->build();
-	?>
-	<table class="calendar">
-	<caption>
-	<?php echo ( date('F Y',$Month->getTimeStamp())); ?>
-	</caption>
-	<tr>
-	<th>M</th>
-	<th>T</th>
-	<th>W</th>
-	<th>T</th>
-	<th>F</th>
-	<th>S</th>
-	<th>S</th>
-	</tr>
-<?php 
+
+	print "<table class=\"calendar table-hover table-condensed text-center\">";
+		print  "<caption class=\"text-center text-primary\"><b>" . T_( date('F Y',$Month->getTimeStamp())) .  "</b></caption>
+				<thead style=\"font-weight: bolder;\">
+				<tr>
+					<td style=\"width: 50px;\">" . T_("Mon") . "</td>
+					<td style=\"width: 50px;\">" . T_("Tue") . "</td>
+					<td style=\"width: 50px;\">" . T_("Wed") . "</td>
+					<td style=\"width: 50px;\">" . T_("Thu") . "</td>
+					<td style=\"width: 50px;\">" . T_("Fri") . "</td>
+					<td style=\"width: 50px;\">" . T_("Sat") . "</td>
+					<td style=\"width: 50px;\">" . T_("Sun") . "</td>
+				</tr></thead>";
 
 	while ( $Day = $Month->fetch() ) {
 
@@ -511,7 +483,6 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 
 	    $today = "";
 	    if ($year == $Day->thisYear() && $month == $Day->thisMonth() && $day == $Day->thisDay()) $today = "today";
-
 
 	    // isFirst() to find start of week
 	    if ( $Day->isFirst() )
@@ -525,7 +496,7 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 		//if it is in the past -> unavailable
 		if ($Day->getTimeStamp() < $ttoday->getTimeStamp())
 		{
-			echo ( "<td class=\"notavailable\">".$Day->thisDay()."</td>\n" );
+			echo ( "<td style=\"color:grey;\" class=\"notavailable\">".$Day->thisDay()."</td>\n" );
 		}
 		//if there are shift restrictions, restrict
 		else if ($restricted)
@@ -540,16 +511,16 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 
 			if (!empty($rs) && $rs->RecordCount() == 0)
 			{
-			       echo ( "<td class=\"notavailable $today\">".$Day->thisDay()."</td>\n" );
+			       echo ( "<td style=\"color:grey;\" class=\"notavailable $today\">".$Day->thisDay()."</td>\n" );
 			}
 			else
 			{
-				echo ( "<td class=\"$today\"><a href=\"".$link."\">".$Day->thisDay()."</a></td>\n" );
+				echo ( "<td class=\"$today\"><a class=\"btn-primary btn-block \" href=\"".$link."\"><b>".$Day->thisDay()."</b></a></td>\n" );
 			}
 
 		}
 		else
-		    echo ( "<td class=\"$today\"><a href=\"".$link."\">".$Day->thisDay()."</a></td>\n" );
+		    echo ( "<td class=\"$today\"><a class=\"btn-primary btn-block \" href=\"".$link."\"><b>".$Day->thisDay()."</b></a></td>\n" );
 	    }
 
 	    // isLast() to find end of week
@@ -559,18 +530,15 @@ function display_calendar($respondent_id, $questionnaire_id, $year = false, $mon
 	?>
 	<tr>
 	<td>
-	<a href="<?php echo ($prev);?>" class="prevMonth">&lt;&lt; </a>
+	<a href="<?php echo ($prev);?>" class="prevMonth btn btn-default">&lt;&lt; </a>
 	</td>
-	<td colspan="5">&nbsp;</td>
+	<td colspan="5"><?php print "<b class=\"text-primary\">" . date('l j F Y',mktime(0,0,0,$month,$day,$year)) . "</b>";?></td>
 	<td>
-	<a href="<?php echo ($next);?>" class="nextMonth"> &gt;&gt;</a>
+	<a href="<?php echo ($next);?>" class="nextMonth btn btn-default"> &gt;&gt;</a>
 	</td>
 	</tr>
 	</table>
 	<?php 
-	print "<div>" . date('l j F Y',mktime(0,0,0,$month,$day,$year)) . "</div>";
 }
-
-
 
 ?>

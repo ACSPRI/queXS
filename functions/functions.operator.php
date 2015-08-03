@@ -184,8 +184,9 @@ function get_sample_variable($variable,$case_id)
 
 	$sql = "SELECT s.val as r
 		FROM sample_var as s
-		JOIN `case` as c on (c.case_id = '$case_id' and s.sample_id = c.sample_id)
-		WHERE s.var = '$variable'";
+		JOIN `case` as c on (c.case_id = '$case_id' and s.sample_id = c.sample_id), `sample_import_var_restrict` as sivr
+		WHERE sivr.var = '$variable'
+		AND s.var_id = sivr.var_id";
 
 	$rs = $db->GetRow($sql);
 
@@ -237,7 +238,6 @@ function get_respondent_variable($variable,$respondent_id)
 		WHERE respondent_id = '$respondent_id'";
 
 	$rs = $db->GetRow($sql);
-
 
 	if (empty($rs)) return "";
 
@@ -380,13 +380,15 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		//$db->Execute("SET @row := 0");
 
-		$sql = "SELECT val as phone
-			FROM sample_var
-			WHERE sample_id = '$sample_id'
-			AND val is NOT NULL
-			AND val != \"\"
-			AND (`type` = 2 or `type` = 3)
-			ORDER BY `type` DESC";
+		$sql = "SELECT sv.val as phone
+			FROM sample_var as sv, sample_import_var_restrict as sivr
+			WHERE sv.sample_id = '$sample_id'
+			AND sv.var_id = sivr.var_id
+			AND sv.val > 0
+			AND sv.val is NOT NULL
+			AND sv.val != \"\"
+			AND sivr.`type` IN (2,3)
+			ORDER BY sivr.`type` DESC";
 
 		$r5 = $db->GetAll($sql);
 
@@ -396,7 +398,7 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 			foreach ($r5 as $r5v)
 			{
 				$tnum =  preg_replace("/[^0-9]/", "",$r5v['phone']); 
-				if (empty($tnum)) $tnum = "312345678"; //handle error condition
+				if (empty($tnum)) $tnum = "88888888"; //handle error condition
 				$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
 					VALUES ($case_id,$i,$tnum,'')";
 				$db->Execute($sql);
@@ -406,7 +408,7 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 		else
 		{
 			$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-				VALUES ($case_id,1,312345678,'test only')";
+				VALUES ($case_id,1,88888888,'test only')";
 			$db->Execute($sql);
 		}
 
@@ -417,8 +419,8 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 	$sql = "INSERT INTO respondent (case_id,firstName,lastName,Time_zone_name) 
 		SELECT $case_id as case_id, IFNULL(s1.val,'') as firstName, IFNULL(s2.val,'') as lastName, s3.Time_zone_name as Time_zone_name  
 		FROM sample as s3
-		LEFT JOIN sample_var as s2 on (s2.sample_id = '$sample_id' and s2.type = 7) 
-		LEFT JOIN sample_var as s1 on (s1.sample_id = '$sample_id' and s1.type = 6) 
+		LEFT JOIN (sample_var as s2 , sample_import_var_restrict as sivr2) on (s2.sample_id = '$sample_id' and s2.var_id = sivr2.var_id and sivr2.type = 7)  
+		LEFT JOIN (sample_var as s1 , sample_import_var_restrict as sivr1) on (s1.sample_id = '$sample_id' and s1.var_id = sivr1.var_id and sivr1.type = 6) 
 		WHERE s3.sample_id = '$sample_id'";
 
 	$db->Execute($sql);
@@ -1515,7 +1517,7 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
 
 	if (isset($coun['c']) && $coun['c'] == 0)
   {
-      $sql2 = "SELECT exclude_val,exclude_var,comparison
+      $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
                FROM qsqr_sample
                WHERE questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id";
 
@@ -1530,7 +1532,7 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
       $x = 1;
       foreach($rev as $ev)
       {
-          $sql .= " JOIN sample_var as sv$x ON (sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+          $sql .= " JOIN sample_var as sv$x ON (sv$x.sample_id = s.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
           $x++;
       }
 
@@ -1538,6 +1540,8 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
         WHERE s.import_id = qs.sample_import_id";
 
 		$db->Execute($sql);
+		
+		if ($db->HasFailedTrans()) die ($sql);		
 
 		if ($update) 
 		{
@@ -1582,8 +1586,8 @@ function copy_row_quota($questionnaire_id,$sample_import_id,$copy_sample_import_
 
   $nqsqr = $db->Insert_ID();
 
-  $sql = "INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var,exclude_val,comparison,description)
-    SELECT $nqsqr, qs.exclude_var, qs.exclude_val, qs.comparison, qs.description
+  $sql = "INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var_id,exclude_var,exclude_val,comparison,description)
+    SELECT $nqsqr, qs.exclude_var_id, qs.exclude_var, qs.exclude_val, qs.comparison, qs.description
     FROM qsqr_sample as qs, questionnaire_sample_quota_row as q
     WHERE qs.questionnaire_sample_quota_row_id = q.questionnaire_sample_quota_row_id
     AND q.questionnaire_id = '$questionnaire_id'
@@ -1627,7 +1631,7 @@ function copy_row_quota_with_adjusting($questionnaire_id,$sample_import_id,$copy
 	$db->StartTrans();
 
     // Select quotas from the old sample rows and calculate
-	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var,qsq.exclude_val
+	$sql = "SELECT questionnaire_sample_quota_row_id,q.questionnaire_id,sample_import_id,lime_sgqa,value,comparison,completions,quota_reached,q.lime_sid,qsq.exclude_var_id,qsq.exclude_var,qsq.exclude_val
 		FROM questionnaire_sample_quota_row as qsq, questionnaire as q
 		WHERE qsq.questionnaire_id = '$questionnaire_id'
 		AND q.questionnaire_id = '$questionnaire_id'
@@ -1693,7 +1697,7 @@ function update_single_row_quota($qsqri,$case_id = false)
   $autoprioritise = $rs['autoprioritise'];
 
   //all variables to exclude for this row quota
-  $sql2 = "SELECT exclude_val,exclude_var,comparison
+  $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
            FROM qsqr_sample
            WHERE questionnaire_sample_quota_row_id = $qsqri";
 
@@ -1728,7 +1732,7 @@ function update_single_row_quota($qsqri,$case_id = false)
       $x = 1;
       foreach($rev as $ev)
       {
-        $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+        $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
         $x++;
       }
 
@@ -1779,7 +1783,7 @@ function update_single_row_quota($qsqri,$case_id = false)
       $x = 1;
       foreach($rev as $ev)
       {
-        $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
+        $sql2 .= " JOIN sample_var as sv$x ON (sv$x.sample_id = sam.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}') ";
         $x++;
       }
 
@@ -1919,7 +1923,7 @@ function update_quota_priorities($questionnaire_id)
 
 	$sql = "INSERT INTO questionnaire_sample_exclude_priority (questionnaire_id,sample_id,exclude,priority)
 		SELECT '$questionnaire_id', s.sample_id, 0, 50
-		FROM sample AS s, questionnaire_sample as qs
+		FROM `sample` as s, questionnaire_sample as qs
 		WHERE qs.questionnaire_id = '$questionnaire_id'
 		AND s.import_id = qs.sample_import_id
 		ON DUPLICATE KEY UPDATE exclude = 0, priority = 50";
@@ -1947,41 +1951,37 @@ function update_quota_priorities($questionnaire_id)
 		$qsqri = $r['questionnaire_sample_quota_row_id'];
 		$priority = $r['priority'];
 
-    $sql2 = "SELECT exclude_val,exclude_var,comparison
+		$sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
              FROM qsqr_sample
              WHERE questionnaire_sample_quota_row_id = $qsqri";
 
-    $rev = $db->GetAll($sql2);
-      
+		$rev = $db->GetAll($sql2);
 
 		//find all cases that match this quota, and update it to the new priority
-    $sql = "UPDATE sample as s, questionnaire_sample_quota_row as qs, questionnaire_sample_exclude_priority as qsep ";
+		$sql = "UPDATE sample as s, questionnaire_sample_quota_row as qs, questionnaire_sample_exclude_priority as qsep ";
 
-    //reduce sample by every item in the qsqr_sample table
-    $x = 1;
-    foreach ($rev as $ev)
-    {
-      $sql .= ", sample_var as sv$x";
-      $x++;
-    }
+		//reduce sample by every item in the qsqr_sample table
+		$x = 1;
+		foreach ($rev as $ev)
+		{
+			$sql .= ", sample_var as sv$x";
+			$x++;
+		}
 
-    $sql .= "
-			SET qsep.priority = '$priority'
+		$sql .= " SET qsep.priority = '$priority'
 			WHERE s.import_id = qs.sample_import_id
 			AND qs.questionnaire_sample_quota_row_id = '$qsqri'
 			AND qsep.questionnaire_id = qs.questionnaire_id
-      AND qsep.sample_id = s.sample_id ";
-
-    $x = 1;
-    foreach ($rev as $ev)
-    {
-      $sql .= " AND sv$x.sample_id = s.sample_id AND sv$x.var LIKE '{$ev['exclude_var']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}' ";
-      $x++;
-    }
-
+			AND qsep.sample_id = s.sample_id ";
+			
+		$x = 1;
+		foreach ($rev as $ev)
+		{
+		$sql .= " AND sv$x.sample_id = s.sample_id AND sv$x.var_id = '{$ev['exclude_var_id']}' AND sv$x.val {$ev['comparison']} '{$ev['exclude_val']}' ";
+		$x++;
+		}
 
 		$db->Execute($sql);
-		
 
 		if ($db->HasFailedTrans()) die ($sql);			
 	}

@@ -130,40 +130,96 @@ if (isset($_GET['unassign']))
   $db->CompleteTrans();
 }
 
-xhtml_head(T_("Display extension status"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Extensions & status"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+?>
+<script type="text/javascript">	
+//Password generator
+upp = new Array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+low = new Array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+dig = new Array('0','1','2','3','4','5','6','7','8','9');
+//sym = new Array('~','!','@','#','$','%','^','&','*','(',')','_','+','=','|',';','.','/','?','<','>','{','}','[',']');
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------
+function rnd(x,y,z) { 
+	var num;
+	do {
+		num = parseInt(Math.random()*z);
+		if (num >= x && num <= y) break;
+	} while (true);
+return(num);
+}
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------
+function generate() {																
+	var pwd = '';
+	var res, s;
+	var k = 0;
+	var n = document.editext.number.value;
+	var pass = new Array();
+	var w = rnd(30,80,100);
+	for (var r = 0; r < w; r++) {
+		res = rnd(1,25,100); pass[k] = upp[res]; k++; 
+		res = rnd(1,25,100); pass[k] = low[res]; k++;
+		res = rnd(1,9,100); pass[k] = dig[res]; k++;
+		//res = rnd(1,24,100); pass[k] = sym[res]; k++;		
+	}
+	for (var i = 0; i < n; i++) {
+		s = rnd(1,k-1,100);
+		pwd+= pass[s];
+	}
+	document.editext.password.value = pwd;
+}
+</script>
 
-if (isset($_GET['edit']))
+<?php
+
+if (isset($_GET['edit']) || isset($_GET['addext']))
 {
-  $sql = "SELECT extension,password,current_operator_id
+	if (isset($_GET['edit'])){	
+
+	$sql = "SELECT extension,password,current_operator_id
           FROM extension
           WHERE extension_id = " . intval($_GET['edit']);
 
-  $rs = $db->GetRow($sql);
-
-  print "<p><a href='?'>" . T_("Go back") . "</a></p>";
+	$rs = $db->GetRow($sql);
+	}
+	
+  print "<a href='?' class='btn btn-default pull-left'>" . T_("Go back") . "</a>";
 ?>
-  <form enctype="multipart/form-data" action="?" method="post">
-  <p><?php  echo T_("Extension name (such as SIP/1000):"); ?> <input name="extension" type="text" value="<?php echo $rs['extension'];?>"/></p>
-  <p><?php  echo T_("Extension password:"); ?> <input name="password" type="text" value="<?php echo $rs['password'];?>"/></p>
-  <input name="extensionid" type="hidden" value="<?php echo intval($_GET['edit']);?>"/></p>
-  <p><input type="submit" value="<?php  echo T_("Edit extension"); ?>" /></p>
-<?php
-  if (empty($rs['current_operator_id']))
-  {
-?>
-  <br/>
-  <p><input type="submit" name="delete" value="<?php  echo T_("Delete extension"); ?>" /></p>
-  </form>
-<?php
-  }
-  else
-    print "<p>" . T_("Unassign the operator from this extension to be able to delete it") . "</p>";
+	<div class="panel-body ">
+	<h3 class="col-sm-offset-3"><?php if (isset($_GET['edit']))echo T_("Edit extension"); else echo T_("Add an extension");?></h3>
+	<form enctype="multipart/form-data" action="?" method="post" name="editext" class="form-horizontal">
+	<div class="form-group form-inline">
+		<label class="control-label col-sm-3"><?php  echo T_("Extension name: ");?></label>
+		<input name="extension" type="text" placeholder="<?php echo T_("such as SIP/1000");?>" maxlength="12" required value="<?php echo $rs['extension'];?>" class="form-control"/>
+	</div>
+	<div class="form-group form-inline">
+		<label class="control-label col-sm-3"><?php  echo T_("Extension password: ");?></label>
+		<input name="password" type="text" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" style="width:20em;" maxlength="50" value="<?php echo $rs['password'];?>" class="form-control pull-left" placeholder="<?php echo T_("Enter New Password");?>"/>&emsp;&emsp;<?php echo T_(" or ");?>&ensp;
+		<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("New password");?>&ensp;
+		<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters long");?>
+	</div>
 
+	<div class=" col-sm-offset-3 ">
+	<input type="submit" class="btn btn-primary " value="<?php if (isset($_GET['edit'])) echo T_("Save changes"); else echo T_("Add extension"); ?>" />
+	</div>
+	
+<?php if (isset($_GET['edit'])){?>	
+	
+	<input name="extensionid" type="hidden" value="<?php echo intval($_GET['edit']);?>"/>
+	
+<?php if (empty($rs['current_operator_id'])) { ?>
+
+		<input type="submit" name="delete" class="btn btn-danger " data-toggle="confirmation" value="<?php  echo T_("Delete extension"); ?>" />
+		
+<?php 	} else 
+		print "</br></br><b class='well text-danger'>" . T_("Unassign the operator from this extension to be able to delete it") . "</b>";
+	} 
+
+	print "</form></div>";
 }
 else
 {
-  $sql=  "SELECT CONCAT('<a href=\'operatorlist.php?edit=',o.operator_id,'\'>',o.firstName,'</a>') as firstName,
-                 CONCAT('<a href=\'?edit=',e.extension_id,'\'>',e.extension,'</a>') as extension,
+  $sql=  "SELECT CONCAT('<a href=\'operatorlist.php?edit=',o.operator_id,'\'>',o.firstName,'  ', o.lastname,'</a>') as firstName,
+                 CONCAT('<a href=\'?edit=',e.extension_id,'\' class=\'\'>',e.extension,'</a>') as extension,
                  IF(c.case_id IS NULL,IF(e.current_operator_id IS NULL,'list'
                  ,CONCAT('<a href=\'?unassign=',e.extension_id,'\'>". TQ_("Unassign")  ."</a>')),'". TQ_("End case to change assignment")."') as assignment, 
                  CASE e.status WHEN 0 THEN '" . TQ_("VoIP Offline") . "' ELSE '" . TQ_("VoIP Online") . "' END as status, 
@@ -197,21 +253,15 @@ else
       if ($rs[$i]['assignment'] == "list")
         $rs[$i]['assignment'] = display_chooser($ers,"operator_id_" . $rs[$i]["extension_id"],"operator_id_" . $rs[$i]["extension_id"],true,"extension_id=".$rs[$i]["extension_id"],true,false,false,false);
     }
+	print "<div class='panel-body'>";
   	xhtml_table($rs,array("extension","firstName","assignment","status","case_id","state","calltime"),array(T_("Extension"),T_("Operator"),T_("Assignment"),T_("VoIP Status"),T_("Case ID"),T_("Call state"),T_("Time on call")),"tclass",array("vs" => "1"));
+	print "</div>";
   }
   else
   	print "<p>" . T_("No extensions") . "</p>";
   
-  print "<h2>" . T_("Add an extension") . "</h2>";
-  ?>
-  
-  <form enctype="multipart/form-data" action="" method="post">
-  	<p><?php  echo T_("Extension name (such as SIP/1000):"); ?> <input name="extension" type="text"/></p>
-  	<p><?php  echo T_("Extension password:"); ?> <input name="password" type="text"/></p>
-  	<p><input type="submit" value="<?php  echo T_("Add extension"); ?>" /></p>
-  </form>
-  
-  <?php
+  print "<div class='col-sm-3'><a href='?addext=addext' class='btn btn-default '>" . T_("Add extension") . "</a></div>";
+
 }
 
 xhtml_foot();

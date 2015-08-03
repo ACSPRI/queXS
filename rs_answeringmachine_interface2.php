@@ -54,14 +54,14 @@ $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);
 $leavemessage = leave_message($case_id);
 
-$js = array("js/popup.js","include/jquery-ui/js/jquery-1.4.2.min.js","include/jquery-ui/js/jquery-ui-1.8.2.custom.min.js");
+$js = array("js/popup.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {
 	$js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Respondent Selection - Answering machine"),true,array("css/rs.css","include/jquery-ui/css/smoothness/jquery-ui-1.8.2.custom.css"),$js);
+xhtml_head(T_("Respondent Selection - Answering machine"),true,array("css/rs.css","include/jquery-ui/jquery-ui.min.css"),$js);
 
 if ($leavemessage)
 {

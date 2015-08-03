@@ -1,33 +1,5 @@
 <?php 
-/**
- * Create a queXS questionnaire and link it to a LimeSurvey questionnaire
- *
- *
- *	This file is part of queXS
- *	
- *	queXS is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *	
- *	queXS is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *	
- *	You should have received a copy of the GNU General Public License
- *	along with queXS; if not, write to the Free Software
- *	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
- *
- * @author Adam Zammit <adam.zammit@deakin.edu.au>
- * @copyright Deakin University 2007,2008
- * @package queXS
- * @subpackage admin
- * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
- * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
- *
- */
+
 
 /**
  * Configuration file
@@ -49,20 +21,29 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.input.php");
 
-/**
- * CKEditor
- */
-include("../include/ckeditor/ckeditor.php");
+$css = array(
+"../include/bootstrap/css/bootstrap.min.css", 
+"../include/bootstrap/css/bootstrap-theme.min.css",
+"../include/font-awesome/css/font-awesome.css",
+"../include/bootstrap-toggle/css/bootstrap-toggle.min.css",
+"../css/custom.css"
+			);
+$js_head = array(
+"../include/jquery/jquery.min.js",
+"../include/bootstrap/js/bootstrap.min.js",
+"../include/bootstrap-toggle/js/bootstrap-toggle.min.js",
+				);
+$js_foot = array(
+"../js/new.js",
+"../js/custom.js"
+				);
+global $db;	
 
-global $db;
-
-xhtml_head(T_("New: Create new questionnaire"),true,false,array("../js/new.js"));
+xhtml_head(T_("Create a new questionnaire"),true,$css,$js_head); 
 
 if (isset($_POST['import_file']))
 {
-	//file has been submitted
-	global $db;	
-
+	//file has been submitted         
 	$ras =0;
 	$rws = 0;
 	$testing = 0;
@@ -115,61 +96,189 @@ if (isset($_POST['import_file']))
 
 			$db->Execute($sql);
 		}
-		print "<p>" . T_("Successfully inserted") . " $name " . T_("as questionnaire") . " $qid, " . T_("linked to") . " $lime_sid</p>";
-	}else
-	{
-		print "<p>" . T_("Error: Failed to insert questionnaire") . "</p>";
+		$cl = info;
+		$message =  T_("Successfully inserted") . "&ensp;" . T_("with ID") . "&ensp; $qid, </h4><h4>" . T_("linked to survey") . "&ensp; $lime_sid ";
+				
 	}
+	else{
+		$cl = danger;
+		$message = T_("Error: Failed to insert questionnaire");
+	}
+	
+	
+?>
+<script type="text/javascript" >
+$(function() {
+    $('#modal-confirm').modal('show');
+});
+</script>
+
+<?php
+$_POST['import_file'] = false;
+}
+?>
+
+<!-- Modal window confirmation start  -->
+<div class="modal fade " id="modal-confirm">
+  <div class="modal-dialog ">
+    <div class="modal-content ">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-header"><?php echo  T_("Questionnaire");?>&emsp; <strong class="text-<?php echo $cl;?>"> <?php echo $name; ?></strong></h4>
+      </div>
+      <div class="modal-body ">
+		<div class="alert alert-<?php echo $cl;?> text-center" role="alert">
+			<h4> <?php print $message ;?></h4>
+		</div>
+      </div>
+      <div class="modal-footer" style="borfer-top:none">
+        <button  class="btn btn-default pull-left" data-dismiss="modal" style="width: 250px;" ><i class="fa fa-check fa-2x pull-right text-<?php echo $cl;?>"></i>&emsp;<?php echo T_("Create another ?");?><br><?php echo T_("Questionnaire");?></button> &emsp;
+		<a href="questionnairelist.php" class="btn btn-default pull-right" style="width: 250px;" ><i class="fa fa-list text-<?php echo $cl;?> fa-2x pull-left"></i><?php echo T_("No, Thank you, go to");?>&ensp;<br><?php echo T_("Questionnaire management");?></a>
+      </div>
+    </div>
+  </div>
+</div><!-- /modal end -->
+
+<!-- create new questionnaire  -->
+<body>
+
+
+<a href="questionnairelist.php" class="btn btn-default pull-left" ><i class="fa fa-list text-primary"></i>&emsp;<?php echo T_("Go to");?>&ensp;<?php echo T_("Questionnaire management");?> </a>
 
 	
-}
 
+<form enctype="multipart/form-data" action="" method="post" class="form-horizontal col-lg-12" >
 
-//create new questionnaire
-?>
-	<form enctype="multipart/form-data" action="" method="post">
-	<p><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /></p>
-	<p><?php  echo T_("Name for questionnaire:"); ?> <input type="text" name="description"/></p>
-	<p><?php  echo T_("Select limesurvey instrument:"); 
+	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+	<div class="form-group">
+		<label class="col-lg-4 control-label" ><?php  echo T_("Name for questionnaire:"); ?> </label>
+		<div class="col-lg-4">
+			<input type="text" name="description" class="form-control" required placeholder="<?php echo T_("Enter New questionnaire name..");?>" title="<?php echo T_("Name for questionnaire:") ; ?>" />
+		</div>
+	</div>
+	
+<?php	
 $sql = "SELECT s.sid as sid, sl.surveyls_title AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
 	WHERE s.active = 'Y'
 	GROUP BY s.sid";
-
 $surveys = $db->GetAll($sql);
+?>
+	<div class="form-group row">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Select limesurvey instrument:");?> </label>
+		<div class='col-sm-4'>
+		<?php if (!empty($surveys)){?>
+			<select name="select" class="form-control">
+			<?php foreach($surveys as $s){?>  
+				<option value="<?php echo $s['sid'];?>"><?php echo T_("Existing instrument:"), "&ensp;", $s['title'] ;?></option><?php } ?>
+			</select>
+		<?php } else { ?>
+			<a class="btn btn-lime" href="<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Create an instrument in Limesurvey") ;?></a> <?php } ?>
+		</div>		
+		<div class='col-sm-4'>
+			<strong><?php echo T_("or") ;?>&emsp;</strong>
+			<a class="btn btn-lime" href="<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Create an instrument in Limesurvey") ;?></a>
+		</div>
+	</div>
+		
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Respondent selection type:"); ?> </label>
+		<div class="col-sm-4">
+			<select class="form-control" name="selectrs" id="selectrs" onchange="if(this.value == 'old') show(this,'rstext');  else hide(this,'rstext')">
+				<option value="none"><?php  echo T_("No respondent selection (go straight to questionnaire)"); ?></option>
+				<option value="old" ><?php echo T_("Use basic respondent selection text (below)"); ?></option>
+			<?php 
+			$sql = "SELECT s.sid as sid, sl.surveyls_title AS title
+					FROM " . LIME_PREFIX . "surveys AS s
+					LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
+					WHERE s.active = 'Y'";
+			$surveys = $db->GetAll($sql);
+				
+			if (!empty($surveys)){ foreach($surveys as $s){ ?> 
+				<option value="<?php echo $s['sid'];?>"><?php echo T_("Existing instrument:") ,"&ensp;", $s['title'] ;?></option>
+			<?php } } ?>
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Restrict appointments to shifts?"); ?></label>
+		<div class="col-sm-4" style="height: 30px;">
+			<input name="ras" type="checkbox" checked="checked" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Restrict work to shifts?"); ?></label>
+		<div class="col-sm-4"style="height: 30px;">
+			<input name="rws" type="checkbox" checked="checked" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Questionnaire for testing only?"); ?></label>
+		<div class="col-sm-4"style="height: 30px;">
+			<input name="testing" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-onstyle="danger" data-width="80" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Allow operators to generate referrals?"); ?></label>
+		<div class="col-sm-4"style="height: 30px;">
+			<input name="referral" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> </label>
+		<div class="col-sm-4"style="height: 30px;">
+			<input name="respsc" type="checkbox"  onchange="if(this.checked==true) {show(this,'limesc'); $('#url').attr('required','required');} else{ hide(this,'limesc'); $('#url').removeAttr('required');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/>
+		</div>
+	</div>
+	
+	<div id="limesc" style="display:none" >
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php echo T_("Questionnaire display mode for respondent");?>: </label>
+		<div class="col-sm-4">
+			<select class="form-control"  name="lime_mode">
+				<option value="survey"><?php echo T_("All in one"); ?></option>
+				<option value="question"><?php echo T_("Question by question"); ?></option>
+				<option value="group"><?php echo T_("Group at a time"); ?></option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php echo T_("Limesurvey template for respondent");?>: </label>
+		<div class="col-sm-4">
+			<select class="form-control"  name="lime_template">
+			<?php 
+			if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
+				while (false !== ($entry = readdir($handle))) {
+					if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
+						echo "<option value=\"$entry\">$entry</option>";
+					}
+				}
+				closedir($handle);
+			}
+			?>
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
+		<div class="col-sm-4">
+			<input class="form-control"  name="lime_endurl" id="url" type="url" />
+		</div>
+	</div>
+</div>
 
-if (!empty($surveys))
-{
-	print "<select name='select'>";
-	foreach($surveys as $s)
-	{
-		print "<option value=\"{$s['sid']}\">" . T_("Existing instrument:") . " {$s['title']}</option>";
-	}
-	print "</select>";
-}
-else
-{
-	print "<a href='" . LIME_URL ."admin/admin.php?action=newsurvey'>" . T_("Create an instrument in Limesurvey") ."</a>";
-}
-?></p>
-<p><?php  echo T_("Respondent selection type:"); ?>
-<select name="selectrs" onchange="if(this.value=='old') show(this,'rstext'); else hide(this,'rstext');"><option value="none"><?php  echo T_("No respondent selection (go straight to questionnaire)"); ?></option><option value="old"><?php  echo T_("Use basic respondent selection text (below)"); ?></option>
-<?php 
-$sql = "SELECT s.sid as sid, sl.surveyls_title AS title
-	FROM " . LIME_PREFIX . "surveys AS s
-	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
-	WHERE s.active = 'Y'";
 
-$surveys = $db->GetAll($sql);
-
-if (!empty($surveys))
-{
-	foreach($surveys as $s)
-	{
-		print "<option value=\"{$s['sid']}\">" . T_("Existing instrument:") . " {$s['title']}</option>";
-	}
-}
+<?php
+/*   CKEditor  */
+ 
+include("../include/ckeditor/ckeditor.php");
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = "../include/ckeditor/";
@@ -177,55 +286,93 @@ $CKEditor->basePath = "../include/ckeditor/";
 $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 	array("Cut","Copy","Paste","PasteText","PasteFromWord","-","Print","SpellChecker"),
 	array("Undo","Redo","-","Find","Replace","-","SelectAll","RemoveFormat"),
+	array('Link','Unlink','Anchor'),
+	array('Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'),
+	array('About'),
 	"/",
 	array("Bold","Italic","Underline","Strike","-","Subscript","Superscript"),
 	array("NumberedList","BulletedList","-","Outdent","Indent","Blockquote"),
 	array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
 	array('BidiLtr', 'BidiRtl'),
-	array('Link','Unlink','Anchor'),
-	array('Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'),
-	"/",
 	array('Styles','Format','Font','FontSize'),
-	array('TextColor','BGColor'),
-	array('About')),
+	array('TextColor','BGColor')),
 	"extraPlugins" => "tokens");
-	
-
-?></select></p>
-<p><?php  echo T_("Restrict appointments to shifts?"); ?> <input name="ras" type="checkbox" checked="checked"/></p>
-<p><?php  echo T_("Restrict work to shifts?"); ?> <input name="rws" type="checkbox" checked="checked"/></p>
-<p><?php  echo T_("Questionnaire for testing only?"); ?> <input name="testing" type="checkbox"/></p>
-<p><?php  echo T_("Allow operators to generate referrals?"); ?> <input name="referral" type="checkbox"/></p>
-<p><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> <input name="respsc" type="checkbox"  onchange="if(this.checked==true) show(this,'limesc'); else hide(this,'limesc');" /></p>
-<div id='limesc' style='display:none;'>
-<p><?php echo T_("Questionnaire display mode for respondent");?>: <select name="lime_mode"><option value="survey"><?php echo T_("All in one"); ?></option><option value="question"><?php echo T_("Question by question"); ?></option><option value="group"><?php echo T_("Group at a time"); ?></option></select></p>
-<p><?php echo T_("Limesurvey template for respondent");?>: <select name="lime_template">
-<?php 
-if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
-    while (false !== ($entry = readdir($handle))) {
-        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
-            echo "<option value=\"$entry\">$entry</option>";
-        }
-    }
-    closedir($handle);
-}
 ?>
-</select></p>
-<p><?php echo T_("URL to forward respondents on self completion (required)");?>: <input name="lime_endurl" type="text" value="http://www.acspri.org.au/"/></p>
+
+<div id="rstext"   class=" " style="display:none ">
+
+	<div class="panel  panel-default" >
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title text-primary "><?php  echo T_("Respondent selection introduction:");?></h3>
+		</div>
+		<div class="content">
+			<?php echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?>
+		</div>
+	</div>
+
+	<div class="panel  panel-default" >
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title text-primary "><?php echo T_("Respondent selection project introduction:");?></h3>
+		</div>
+		<div class="content">
+			<?php echo $CKEditor->editor("rs_project_intro","",$ckeditorConfig);?>
+		</div>
+	</div>
+
+	<div class="panel  panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title text-primary"><?php echo T_("Respondent selection callback (already started questionnaire):");?></h3>
+		</div>
+		<div class="content">
+			<?php  echo $CKEditor->editor("rs_callback","",$ckeditorConfig);?>
+		</div>
+	</div>
+
+	<div class="panel  panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+			<h3 class="panel-title "><?php echo T_("Message to leave on an answering machine:");?></h3>
+		</div>
+		<div class="content">
+			<?php  echo $CKEditor->editor("rs_answeringmachine","",$ckeditorConfig);?>
+		</div>
+	</div>
 </div>
-<div id='rstext' style='display:none;'>
-<p><?php  echo T_("Respondent selection introduction:"); echo $CKEditor->editor("rs_intro","",$ckeditorConfig);?></p>
-<p><?php  echo T_("Respondent selection project introduction:"); echo $CKEditor->editor("rs_project_intro","",$ckeditorConfig);?></p>
-<p><?php  echo T_("Respondent selection callback (already started questionnaire):"); echo $CKEditor->editor("rs_callback","",$ckeditorConfig);?> </p>
-<p><?php  echo T_("Message to leave on an answering machine:"); echo $CKEditor->editor("rs_answeringmachine","",$ckeditorConfig);?> </p>
+
+
+<div class="panel  panel-default">
+  <div class="panel-heading">
+	<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+    <h3 class="panel-title "><?php  echo T_("Project end text (thank you screen):");?></h3>
+  </div>
+  <div class="content" >
+    <?php  echo $CKEditor->editor("rs_project_end","",$ckeditorConfig); ?>
+  </div>
 </div>
-<p><?php  echo T_("Project end text (thank you screen):");echo $CKEditor->editor("rs_project_end","",$ckeditorConfig); ?></p>
-<p><?php  echo T_("Project information for interviewers/operators:");echo $CKEditor->editor("info","",$ckeditorConfig);?></p>
-<p><input type="submit" name="import_file" value="<?php  echo T_("Create Questionnaire"); ?>"/></p>
+
+<div class="panel panel-default ">
+  <div class="panel-heading">
+	<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
+    <h3 class="panel-title"><?php echo T_("Project information for interviewers/operators:");?></h3>
+  </div>
+  <div class="content">
+    <?php  echo $CKEditor->editor("info","",$ckeditorConfig);?>
+  </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-sm-4 ">
+		<a href="questionnairelist.php"  class="btn btn-default pull-right" ><i class="fa fa-list text-primary"></i>&emsp;<?php echo T_("Go to");?>&ensp;<?php echo T_("Questionnaire management");?></a>
+	</div>
+	<div class="col-sm-4 ">
+		<button type="submit" class="btn btn-default pull-right" name="import_file" ><i class="fa fa-check-square-o fa-lg text-primary"></i>&emsp;<?php  echo T_("Create Questionnaire"); ?></button>
+	</div>
+</div>
 </form>
+
 <?php 
-xhtml_foot();
-
-
-
+xhtml_foot($js_foot);//
 ?>

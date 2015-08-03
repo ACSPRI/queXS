@@ -58,14 +58,14 @@ include("../functions/functions.operator.php");
  */
 include("../functions/functions.input.php");
 
-xhtml_head(T_("Shift reports"),true,array("../css/table.css"),array("../js/window.js"));
+xhtml_head(T_("Shift reports"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
 
 $operator_id = get_operator_id();
 
 print "<h3>" . T_("Please select a questionnaire") . "</h3>";
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id);
+display_questionnaire_chooser($questionnaire_id ,false,"form-inline clearfix", "form-control");
 
 if ($questionnaire_id)
 {
@@ -85,7 +85,7 @@ if ($questionnaire_id)
 	$r = $db->GetAll($sql);
 
 	if (!empty($r))
-		display_chooser($r,"shift","shift_id",true,"questionnaire_id=$questionnaire_id");
+		display_chooser($r,"shift","shift_id",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"form-inline form-group");
 
 	if ($shift_id)
 	{

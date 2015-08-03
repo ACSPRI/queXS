@@ -106,8 +106,6 @@ function vqd($client_id,$questionnaire_id)
 }
 
 
-
-
 if (isset($_POST['submit']))
 {
 	$db->StartTrans();
@@ -132,7 +130,6 @@ if (isset($_POST['submit']))
 }
 
 
-
 $sql = "SELECT questionnaire_id,description
 	FROM questionnaire
 	WHERE enabled = 1
@@ -140,14 +137,14 @@ $sql = "SELECT questionnaire_id,description
 
 $questionnaires = $db->GetAll($sql);
 
-$sql = "SELECT client_id,firstname as description
+$sql = "SELECT client_id, CONCAT(firstName,' ', lastName ) as description, username
 	FROM client
 	ORDER by client_id ASC";
 
 $clients = $db->GetAll($sql);
 
 
-xhtml_head(T_("Assign clients to questionnaires"),false,array("../css/table.css"));
+xhtml_head(T_("Assign clients to questionnaires"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../include/iCheck/icheck.min.js"));
 
 ?>
 
@@ -206,7 +203,6 @@ function checkQid(q)
 }
 
 
-
 function checkVid(v)
 {
 	
@@ -229,51 +225,50 @@ function checkVid(v)
 		VidOn = 0;
 }
 
-
-
 </script>
+
 </head>
 <body>
 
 
 <?php 
 
+print "<form action=\"\" method=\"post\" class=''><table class='table-bordered table-hover table-condensed form-group'><thead>";
 
-
-print "<form action=\"\" method=\"post\"><table>";
-
-print "<tr><th></th>";
+print "<tr><th>&emsp;" . T_("Username") . "&emsp;</th><th>&emsp;" . T_("Client") . "&emsp;</th>";
 foreach($questionnaires as $q)
 {
 	print "<th><a href=\"javascript:checkQid({$q['questionnaire_id']})\">{$q['description']}</a></th>";
 }
-print "</tr>";
+print "</tr></thead>";
 
-$class = 0;
 
 foreach($clients as $v)
 {
-	print "<tr class='";
-	if ($class == 0) {$class = 1; print "even";} else {$class = 0; print "odd";}
-	print "'>";
-	print "<th><a href=\"javascript:checkVid({$v['client_id']})\">{$v['description']}</a></th>";
+	print "<tr class=''>
+			<th>&emsp;{$v['username']}&emsp;</th>
+			<th>&emsp;<a href=\"javascript:checkVid({$v['client_id']})\">{$v['description']}</a>&emsp;</th>";
 	foreach($questionnaires as $q)
 	{
 		$checked = "";
 		if (vq($v['client_id'],$q['questionnaire_id'])) $checked="checked=\"checked\"";
-		print "<td><input type=\"checkbox\" name=\"cb_{$q['questionnaire_id']}_{$v['client_id']}\" id=\"cb_{$q['questionnaire_id']}_{$v['client_id']}\" $checked></input></td>";
+		print "<td class='text-center'><input type=\"checkbox\" name=\"cb_{$q['questionnaire_id']}_{$v['client_id']}\" id=\"cb_{$q['questionnaire_id']}_{$v['client_id']}\" $checked></input></td>";
 	}
 
 	print "</tr>";
 }
 
 
-print "</table><p><input type=\"submit\" name=\"submit\" value=\"" . T_("Assign clients to questionnaires") . "\"/></p></form>";
+print "</table><input type=\"submit\" class='btn btn-default fa' name=\"submit\" value=\"" . T_("Assign clients to questionnaires") . "\"/></form>";
 
 
 xhtml_foot();
 
 ?>
 
-
-
+<script type="text/javascript">
+$('input').iCheck({
+	checkboxClass: 'icheckbox_square-blue',
+	increaseArea: '30%'
+});
+</script>

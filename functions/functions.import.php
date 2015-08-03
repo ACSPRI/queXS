@@ -86,7 +86,7 @@ function verify_fields($fields)
 	{
 		if (array_key_exists($fields["n_$val"], $names))
 		{
-			return T_("Duplicate name");
+			return T_("Duplicate column name") . ":&emsp;<b>" . $fields["n_$val"] . "</b>";
 		}
 		else
 		{
@@ -123,14 +123,14 @@ function verify_fields($fields)
  */
 function display_table($data)
 {
-	print "<table>";
-	print "<tr><th></th><th>" . T_("Import?") . "</th><th>" . T_("Name") . "</th><th>" . T_("Type") . "</th><th>" . T_("Allow operator to see?") . "</th></tr>";
+	print "<table class='table-hover table-bordered table-condensed tclass'><thead class='highlight'>";
+	print "<tr><th>" . T_("Selected file column name") . "</th><th>" . T_("Import ?") . "</th><th class='col-sm-4'>" . T_("New Sample Variable Name") . "</th><th>" . T_("Variable Type") . "</th><th>" . T_("Show to operator?") . "</th></tr></thead><tbody>";
 	$row = 1;
 
 	global $db;
 
 	$sql = "SELECT description,type
-		FROM sample_var_type";
+		FROM sample_var_type ORDER BY type ASC";
 
 	$rs = $db->GetAll($sql);
 
@@ -140,21 +140,24 @@ function display_table($data)
 		$checked = "checked";
 		if (empty($val)) $val = "samp_$row";
 
-		print "<tr><td>$value</td><td><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\"/></td><td><input type=\"text\" value=\"$val\" name=\"n_$row\"/></td><td>";
-		print "<select name=\"t_$row\">";
-		$selected = "selected=\"selected\"";
-		foreach($rs as $r)
-		{
-			print "<option value=\"{$r['type']}\" $selected>" . T_($r['description']) . "</option>";
-			$selected = "";
-		}
-		print "</select></td>";
-		print "<td><input type=\"checkbox\" name=\"a_$row\"/></td>";
+		print "<tr><td>$value</td>
+					<td class='text-center'><input type=\"checkbox\" name=\"i_$row\" checked=\"$checked\" data-toggle=\"toggle\" data-size=\"small\" data-on=\"" . TQ_("Yes") . "\" data-off=" . TQ_("No") . " /></td>
+					<td><input type=\"text\" value=\"$val\" name=\"n_$row\" class=\"form-control\" /></td>
+					<td>";
+					print "<select name=\"t_$row\" class=\"form-control\">";
+					//print "<option value=\"\" $selected></option>";
+					$selected = "selected=\"selected\"";
+					foreach($rs as $r)
+					{
+						print "<option value=\"{$r['type']}\" $selected>" . T_($r['description']) . "</option>";
+						$selected = "";
+					}
+					print "</select></td>";
+			print "<td class=\"text-center\"><input type=\"checkbox\" name=\"a_$row\" data-toggle=\"toggle\" data-size=\"small\" data-on=\"" . TQ_("Yes") . "\" data-off=" . TQ_("No") . " /></td>";
 		print "</tr>";
 		$row++;
-
 	}	
-	print "</table>";
+	print "</tbody></table>";
 
 }
 
@@ -209,6 +212,7 @@ function import_file($file, $description, $fields, $firstrow = 2)
 
 	$selected_type = array();
 	$selected_name = array();
+	$sirv_id = array();
 
 	foreach($fields as $key => $val)
 	{
@@ -226,10 +230,12 @@ function import_file($file, $description, $fields, $firstrow = 2)
 			}
 			
 			$sql = "INSERT INTO sample_import_var_restrict
-				(`sample_import_id`,`var`,`restrict`)
-				VALUES ($id,'" . $fields["n_" . substr($key,2)] . "',$restrict)";
+				(`sample_import_id`,`var`,`type`,`restrict`)
+				VALUES ($id,'" . $fields["n_" . substr($key,2)] . "','" . $fields["t_" . substr($key,2)] . "',$restrict)";
 
-			$db->Execute($sql);			
+			$db->Execute($sql);
+			
+			$sirv_id[substr($key,2)] = $db->Insert_ID(); // 
 		}
 	}
 
@@ -309,8 +315,8 @@ function import_file($file, $description, $fields, $firstrow = 2)
 				{
 					$dkey = $db->Quote($data[$key - 1]);			
 		
-					$sql = "INSERT INTO sample_var (sample_id,var,val,type)
-						VALUES ('$sid','$val',{$dkey},'{$selected_type[$key]}')";
+					$sql = "INSERT INTO sample_var (sample_id,var_id,var,val,type)
+						VALUES ('$sid','{$sirv_id[$key]}','$val',{$dkey},'{$selected_type[$key]}')";
 		
 					$db->Execute($sql);
 				

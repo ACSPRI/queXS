@@ -49,42 +49,70 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.operator.php");
 
+$css = array(
+"../include/bootstrap/css/bootstrap.min.css", 
+"../include/bootstrap/css/bootstrap-theme.min.css",
+"../include/font-awesome/css/font-awesome.css",
+"../include/bs-data-table/css/jquery.bdt.css",
+"../css/custom.css"
+			);
+$js_head = array(
+"../include/jquery/jquery.min.js",
+"../include/bootstrap/js/bootstrap.min.js"
+				);
+$js_foot = array(
+"../include/bs-data-table/js/vendor/jquery.sortelements.js",
+"../include/bs-data-table/js/jquery.bdt.js",
+"../js/custom.js"
+				);
 
 //List the case call history
 $operator_id = get_operator_id();
+/* 
+	Modified Call history list to have more information more suitable way with filtering, soring, paging and submenu for Cse history with asterisk records....
+	Need to be linked with cdr records from asterisk!! for monitoring (requires addtional field for call_attempt table to request and store asterisk UniqueID  as a reference to CDR .wav file list  at /var/spool/asterisk/monitor/ )
+*/
 
 if ($operator_id)
 {
-	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as start,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as des, (CONCAT(r.firstName,' ',r.lastName)) as firstName, opp.firstName as opname, ";
+	if (isset($_GET['questionnaire_id'])) $qid = $_GET['questionnaire_id'];
+	if (isset($_GET['sample_import_id'])) $sid = $_GET['sample_import_id']; 
+	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_FORMAT."') as start_date, DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as start_time, DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as descr, (CONCAT(r.firstName,' ',r.lastName)) as firstName, opp.firstName as opname,
+		(SELECT GROUP_CONCAT(cn1.note SEPARATOR '</br>&para;&emsp;' ) FROM `case_note`  as cn1 WHERE c.case_id = cn1.case_id GROUP BY cn1.case_id)as casenotes,";
 
-	if (isset($_GET['csv']))
-		$sql .= " c.case_id ";
-	else
-		$sql .= " CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') ";
+	if (isset($_GET['csv'])) $sql .= " c.case_id ";
+	else $sql .= " CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') ";
 
-	$sql .=	" as case_id, q.description as qd
+	$sql .=	" as case_id, q.description as qd , contact_phone.phone as cpi, sample_import.description as spl 
 		FROM `call` as c
-		JOIN (operator as op, respondent as r) on (op.operator_id = '$operator_id' and r.respondent_id = c.respondent_id)
-		JOIN (`case` as ca, questionnaire as q) ON (ca.case_id = c.case_id AND q.questionnaire_id = ca.questionnaire_id)
+		JOIN (operator as op, respondent as r) on (op.operator_id = '$operator_id' and r.respondent_id = c.respondent_id)";
+	if ($qid) $quest = "$qid and q.questionnaire_id= $qid"; else $quest = "q.questionnaire_id";
+	if ($sid) $samimpid = "$sid and sample_import.sample_import_id=$sid"; else $samimpid = "sample_import.sample_import_id";
+	
+	$sql .=	" 
+		JOIN (`case` as ca, questionnaire as q) ON (ca.case_id = c.case_id AND ca.questionnaire_id = $quest)
 		LEFT JOIN (outcome as o) on (c.outcome_id = o.outcome_id)
-		LEFT JOIN (operator as opp) on (opp.operator_id = c.operator_id)
+		LEFT JOIN (operator as opp) on (opp.operator_id = c.operator_id),
+		contact_phone, sample_import, sample
+		WHERE c.contact_phone_id = contact_phone.contact_phone_id AND sample.import_id = $samimpid 
+		AND sample.sample_id = ca.sample_id
 		ORDER BY c.start DESC";
 
 	if (!isset($_GET['csv'])) 
 		$sql .= " LIMIT 500";
-		
-	$rs = $db->Execute($sql);
+	else $sql .= " LIMIT 5000";
 	
+	$rs = $db->Execute($sql);
 	if (empty($rs))
 	{
-		xhtml_head(T_("Call History List"),true,array("../css/table.css"));
-		print "<p>" . T_("No calls ever made") . "</p>";
+		print "<div class='alert alert-warning col-sm-6'><p>" . T_("No calls ever made") . "</p></div>";
 	}
 	else
 	{
 		if (isset($_GET['csv']))
-		{
-			$fn = "callhistory.csv";
+		{ 
+			$qds = str_replace(' ','_',$_GET['dq']); $smpds = str_replace(' ','_',$_GET['ds']);
+			$fn = "callhistory-" . $qds . $smpds . date("_d-M-Y_H-i") . ".csv";
 
 			header("Content-Type: text/csv");
 			header("Content-Disposition: attachment; filename=$fn");
@@ -92,33 +120,62 @@ if ($operator_id)
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 			Header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Pragma: no-cache");                          // HTTP/1.0
-
-			echo(T_("Date/Time call start") . "," . T_("Time end") . "," . T_("Case ID") . "," . T_("Questionnaire") . "," . T_("Operator") . "," . T_("Outcome") . "," . T_("Respondent") . "\n");
+			
+			echo(T_("Date") . ",".T_("Start time") . "," . T_("End time") . "," . T_("Case ID") . "," . T_("Questionnaire") . "," . T_("Sample") . "," . T_("Phone number") . "," . T_("Operator") . "," . T_("Outcome") . ",".T_("Case notes")."," . T_("Respondent") . "\n");
 
 			while ($r = $rs->FetchRow())
 			{
 				translate_array($r,array("des"));
-				echo $r['start'] . "," . $r['end'] . "," . $r['case_id'] . "," . $r['qd'] . "," . $r['opname'] . ",\"" . $r['des'] . "\"," . $r['firstName'] . "\n";
+				echo $r['start_date'] . "," .$r['start_time'] . "," . $r['end'] . "," . $r['case_id'] . "," . $r['qd'] . "," . $r['spl'] . "," . $r['cpi'] . "," . $r['opname'] . "," . $r['descr'] . "," . $r['casenotes'] . "," . $r['firstName'] . "\n";
 			}
+
 			exit;
-		}			
+		}
 		else
 		{
+			xhtml_head(T_("Call History List"),true,$css,$js_head);
+			echo "<div class='form-group col-sm-2'><a href='' onclick='history.back();return false;' class='btn btn-default'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a></div>";
+
 			$rs = $rs->GetArray();
-			translate_array($rs,array("des"));
-			xhtml_head(T_("Call History List"),true,array("../css/table.css"));
-			print "<p><a href='?csv=csv'>" . T_("Download Call History List") . "</a></p>";
-			xhtml_table($rs,array("start","end","case_id","qd","opname","des","firstName"),array(T_("Date/Time call start"),T_("Time end"),T_("Case ID"),T_("Questionnaire"),T_("Operator"),T_("Outcome"),T_("Respondent")));
+			if (count($rs) ==0)
+			{
+				print "<div class='alert alert-info col-sm-6'><h3>" . T_("NO Call history records for Your query") . "</h3></div>";
+			}
+			else
+			{
+				translate_array($rs,array("des"));
+				
+				$datacol = array("start_date", "start_time","end","case_id","qd","spl","cpi","opname","descr","casenotes","firstName");
+				$headers = array(T_("Date"), T_("Start time"), T_("End time"),T_("Case ID"),T_("Questionnaire"),T_("Sample"),T_("Phone number"),T_("Operator"),T_("Outcome"),T_("Case notes"),T_("Respondent"));
+
+			if (isset($_GET['questionnaire_id'])){
+				$sql = "SELECT description FROM `questionnaire` WHERE `questionnaire_id` = $qid ";
+				$dq = $db->GetOne($sql);
+				print "<h3><small>" . T_("Questionnaire") . "&emsp;ID: $qid</small>&emsp;" . $dq . "</h3>";
+				unset($datacol[4]); unset($headers[4]); }
+				
+			if (isset($_GET['sample_import_id'])){
+				$sql = "SELECT description FROM `sample_import` WHERE `sample_import_id` = $sid ";
+				$ds = $db->GetOne($sql);
+				print "<h3><small>" . T_("Sample") . "&emsp;ID: $sid</small>&emsp;" . $ds . "</h3>";
+				unset($datacol[5]);  unset($headers[5]); }
+				
+				print "&nbsp;<a href='?csv=csv&amp;questionnaire_id=$qid&amp;dq=" . $dq . "&amp;sample_import_id=$sid&amp;ds=" . $ds . "' class='btn btn-default  pull-right'><i class='fa fa-download fa-lg text-primary'></i>&emsp;" . T_("Download Call History List") . "</a>
+				"; //<a href='../../admin/config.php' target='_blank' class='btn btn-default  col-sm-offset-6 '><i class='fa fa-link fa-lg text-primary'></i>&emsp;" . T_("Go to Call History Report") . "</a>&nbsp;
+				
+				xhtml_table($rs,$datacol,$headers,"tclass",false,false,"bs-table");
+			
+			}
 		}
 	}
 }
 else
 {
-	xhtml_head(T_("Call History List"),true,array("../css/table.css"));
-	print "<p>" . T_("No operator") . "</p>";
+	print "<div class='alert alert-warning col-sm-6'>" . T_("No operator") . "</div>";
 }
 
-xhtml_foot();
-
-
+xhtml_foot($js_foot);
 ?>
+<script type="text/javascript">
+$('#bs-table').bdt();
+</script>

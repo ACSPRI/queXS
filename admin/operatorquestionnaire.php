@@ -106,8 +106,6 @@ function vqd($operator_id,$questionnaire_id)
 }
 
 
-
-
 if (isset($_POST['submit']))
 {
 	$db->StartTrans();
@@ -136,7 +134,6 @@ if (isset($_POST['submit']))
 }
 
 
-
 $sql = "SELECT questionnaire_id,description
 	FROM questionnaire
 	WHERE enabled = 1
@@ -144,7 +141,7 @@ $sql = "SELECT questionnaire_id,description
 
 $questionnaires = $db->GetAll($sql);
 
-$sql = "SELECT operator_id,firstname as description
+$sql = "SELECT operator_id, CONCAT(firstName,' ', lastName ) as opname, username 
 	FROM operator
 	WHERE enabled = 1
 	ORDER by operator_id ASC";
@@ -152,7 +149,7 @@ $sql = "SELECT operator_id,firstname as description
 $operators = $db->GetAll($sql);
 
 
-xhtml_head(T_("Assign operators to questionnaires"),false,array("../css/table.css"));
+xhtml_head(T_("Assign operators to questionnaires"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/iCheck/skins/square/blue.css","../css/custom.css"),array("../include/jquery/jquery.min.js","../include/iCheck/icheck.min.js"));
 
 ?>
 
@@ -210,8 +207,6 @@ function checkQid(q)
 		QidOn = 0;
 }
 
-
-
 function checkVid(v)
 {
 	
@@ -234,51 +229,51 @@ function checkVid(v)
 		VidOn = 0;
 }
 
-
-
 </script>
+
 </head>
 <body>
 
 
 <?php 
 
+print "<form action=\"\" method=\"post\" class=''><table class='table-bordered table-hover table-condensed form-group'><thead>";
 
-
-print "<form action=\"\" method=\"post\"><table>";
-
-print "<tr><th></th>";
+print "<tr><th>&emsp;" . T_("Username") . "&emsp;</th><th>&emsp;" . T_("Operator") . "&emsp;</th>";
 foreach($questionnaires as $q)
 {
 	print "<th><a href=\"javascript:checkQid({$q['questionnaire_id']})\">{$q['description']}</a></th>";
 }
-print "</tr>";
+print "</tr></thead>";
 
-$class = 0;
 
 foreach($operators as $v)
 {
-	print "<tr class='";
-	if ($class == 0) {$class = 1; print "even";} else {$class = 0; print "odd";}
-	print "'>";
-	print "<th><a href=\"javascript:checkVid({$v['operator_id']})\">{$v['description']}</a></th>";
+
+	print "<tr class=''>
+		<th>&emsp;{$v['username']}&emsp;</th>
+		<th style=\"text-align: left;\";>&emsp;<a href=\"javascript:checkVid({$v['operator_id']})\" >{$v['opname']}</a>&emsp;</th>";
 	foreach($questionnaires as $q)
 	{
 		$checked = "";
 		if (vq($v['operator_id'],$q['questionnaire_id'])) $checked="checked=\"checked\"";
-		print "<td><input type=\"checkbox\" name=\"cb_{$q['questionnaire_id']}_{$v['operator_id']}\" id=\"cb_{$q['questionnaire_id']}_{$v['operator_id']}\" $checked></input></td>";
+		print "<td class='text-center'><input type=\"checkbox\" name=\"cb_{$q['questionnaire_id']}_{$v['operator_id']}\" id=\"cb_{$q['questionnaire_id']}_{$v['operator_id']}\" $checked style=\"width: 16px; height: 16px; margin-top: 5px;\"></input></td>";
 	}
 
 	print "</tr>";
 }
 
 
-print "</table><p><input type=\"submit\" name=\"submit\" value=\"" . T_("Assign operators to questionnaires") . "\"/></p></form>";
+print "</table><input class='btn btn-default fa' type='submit' name='submit' value='" . T_("Assign operators to questionnaires") . "'/></form>";
 
 
 xhtml_foot();
 
 ?>
 
-
-
+<script type="text/javascript">
+$('input').iCheck({
+	checkboxClass: 'icheckbox_square-blue',
+	increaseArea: '30%'
+});
+</script>

@@ -419,10 +419,11 @@ function quexs_update_sample($lime_sid,$id,$postedfieldnames)
 				$sgqa = $r['sid'] . 'X' . $r['gid'] . 'X' . $r['qid'] . $r['title'];
 				$var = $r['answer'];
 		
-				$sql = "UPDATE sample_var as sv, ".LIME_PREFIX."survey_$lime_sid as ld
+				$sql = "UPDATE sample_var as sv, ".LIME_PREFIX."survey_$lime_sid as ld, `sample_import_var_restrict` as sivr
 					SET sv.val = ld.$sgqa
-					WHERE sv.var LIKE '$var'
+					WHERE sivr.var LIKE '$var'
 					AND sv.sample_id = '$sample_id'
+					AND sivr.var_id = sv.var_id
 					AND ld.id = '$id'";
 
 				$db->Execute($sql);
@@ -477,8 +478,9 @@ function get_sample_variable($variable,$case_id)
 
 	$sql = "SELECT s.val as r
 		FROM sample_var as s
-		JOIN `case` as c on (c.case_id = '$case_id' and s.sample_id = c.sample_id)
-		WHERE s.var = '$variable'";
+		JOIN `case` as c on (c.case_id = '$case_id' and s.sample_id = c.sample_id), `sample_import_var_restrict` as sivr
+		WHERE sivr.var = '$variable'
+		AND s.var_id = sivr.var_id";
 
 	$rs = $db->GetRow($sql);
 

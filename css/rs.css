@@ -1,6 +1,15 @@
-body {background-color: #eeeeee;}
+body {background-color: #eeeff2;}
 p.rstext {  
 	font-weight: bold;
 	font-size: 16pt;
 	font-family: Arial, sans-serif;
+}
+.rs{
+	border-radius: 8px;
+    border: 1px solid #e9e9eb;
+    font-size: 110%;
+    z-index: 500;
+	background: none repeat scroll 0 0 #fff;
+	font-family: Arial, sans-serif;
+	box-shadow: 3px 8px 18px;
 }
