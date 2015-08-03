@@ -321,8 +321,9 @@ if (isset($_GET['modify']))
 {
 	$questionnaire_id = intval($_GET['modify']);
 
-	$sql = "SELECT *
+	$sql = "SELECT `questionnaire`.*, sl.surveyls_title as title
 		FROM questionnaire
+		LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( questionnaire.lime_sid = sl.surveyls_survey_id)
 		WHERE questionnaire_id = $questionnaire_id";
 	$rs = $db->GetRow($sql);
 
@@ -365,9 +366,13 @@ if (isset($_GET['modify']))
 	"extraPlugins" => "tokens");
 ?>
 	<div class="form-group">
-		<div class="col-sm-2"><a href='questionnairelist.php' class='btn btn-default pull-left' ><i class='fa fa-chevron-left fa-lg' style='color:blue;'></i>&emsp;<?php  echo T_("Go back"); ?></a></div>
-		<div class="col-sm-8"><?php // ?> </div>
-		<div class="col-sm-2"><?php echo "<a class='btn btn-default btn-lime pull-right' href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> </div>
+		<div class="col-sm-4">
+			<a href='questionnairelist.php' class='btn btn-default pull-left' ><i class='fa fa-chevron-left fa-lg' style='color:blue;'></i>&emsp;<?php  echo T_("Go back"); ?></a><h3 class="pull-right"><?php echo T_("Assigned survey"); ?>:</h3>
+		</div>
+		<div class="col-sm-8">
+			<h3 class="pull-left" ><?php echo $rs['lime_sid'],"&emsp;",$rs['title']; ?></h3>
+			<?php echo "<a class='btn btn-default btn-lime pull-right' href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> 
+		</div>
 	</div>
 
 <form action="?modify=<?php  echo $questionnaire_id; ?>" method="post" class="form-horizontal col-sm-12 form-group ">
