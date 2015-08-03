@@ -88,7 +88,7 @@ include ("../lang.inc.php");
 	<!-- Sidebar menu -->
 	<div class="sidebar" >
 	    <ul class="panel-group nav"    id="nav">
-		  <li><a class="" href="?page=dashboard.php"><i class="fa fa-tachometer fa-lg"></i><span><?php print T_("Dashboard") ;?></span></a></li>
+		  <li><a class="" href="?"><i class="fa fa-tachometer fa-lg"></i><span><?php print T_("Dashboard") ;?></span></a></li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-list-alt fa-lg"></i><span class="arrow"><?php print T_("Questionnairies") ;?></span></a>
               <ul style="">
 				<li><a href="?page=<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-file-text-o lime fa-fw"></i><?php print T_("Create an instrument in Limesurvey") ;?></a></li>
