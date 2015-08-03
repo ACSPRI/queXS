@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.7
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 10, 2015 at 08:47
--- Server version: 5.1.73
--- PHP Version: 5.3.28
+-- Generation Time: Aug 03, 2015 at 12:47 PM
+-- Server version: 5.5.44
+-- PHP Version: 5.3.10-1ubuntu3.19
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `quexs_alex`
+-- Database: `quexs`
 --
 
 -- --------------------------------------------------------
@@ -39,11 +39,8 @@ CREATE TABLE `appointment` (
   PRIMARY KEY (`appointment_id`),
   KEY `completed_call_id` (`completed_call_id`),
   KEY `call_attempt_id` (`call_attempt_id`),
-  KEY `case_id` (`case_id`),
-  KEY `contact_phone_id` (`contact_phone_id`),
-  KEY `respondent_id` (`respondent_id`),
-  KEY `require_operator_id` (`require_operator_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `case_id` (`case_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -58,8 +55,7 @@ CREATE TABLE `availability` (
   `end` time NOT NULL,
   `day_of_week` tinyint(1) NOT NULL,
   PRIMARY KEY (`availability_id`),
-  KEY `availability_group_id` (`availability_group_id`),
-  KEY `day_of_week` (`day_of_week`)
+  KEY `availability_group_id` (`availability_group_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -126,13 +122,8 @@ CREATE TABLE `call` (
   KEY `case_id` (`case_id`),
   KEY `call_attempt_id` (`call_attempt_id`),
   KEY `contact_phone_id` (`contact_phone_id`),
-  KEY `start` (`start`),
-  KEY `respondent_id` (`respondent_id`),
-  KEY `outcome_id` (`outcome_id`),
-  KEY `state` (`state`),
-  KEY `end` (`end`),
-  KEY `call_id` (`call_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `start` (`start`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -150,10 +141,8 @@ CREATE TABLE `call_attempt` (
   PRIMARY KEY (`call_attempt_id`),
   KEY `case_id` (`case_id`),
   KEY `end` (`end`),
-  KEY `respondent_id` (`respondent_id`),
-  KEY `operator_id` (`operator_id`),
-  KEY `start` (`start`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `respondent_id` (`respondent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -168,8 +157,7 @@ CREATE TABLE `call_note` (
   `note` text COLLATE utf8_unicode_ci NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`call_note_id`),
-  KEY `call_id` (`call_id`),
-  KEY `operator_id` (`operator_id`)
+  KEY `call_id` (`call_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -238,16 +226,14 @@ CREATE TABLE `case` (
   `token` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`case_id`),
   UNIQUE KEY `onecasepersample` (`sample_id`,`questionnaire_id`),
-  UNIQUE KEY `case_id` (`case_id`),
   UNIQUE KEY `token` (`token`),
   UNIQUE KEY `current_operator_id` (`current_operator_id`),
   UNIQUE KEY `current_call_id` (`current_call_id`),
   KEY `sample_id` (`sample_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
-  KEY `current_outcome_id` (`current_outcome_id`),
   KEY `sortorder` (`sortorder`),
   KEY `last_call_id` (`last_call_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -276,7 +262,7 @@ CREATE TABLE `case_note` (
   PRIMARY KEY (`case_note_id`),
   KEY `case_id` (`case_id`),
   KEY `operator_id` (`operator_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -292,7 +278,7 @@ CREATE TABLE `case_queue` (
   PRIMARY KEY (`case_queue_id`),
   UNIQUE KEY `case_id` (`case_id`),
   KEY `operator_id` (`operator_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -308,7 +294,7 @@ CREATE TABLE `client` (
   `Time_zone_name` char(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`client_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -335,9 +321,8 @@ CREATE TABLE `contact_phone` (
   `phone` char(30) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`contact_phone_id`),
-  KEY `case_id` (`case_id`),
-  KEY `contact_phone_id` (`contact_phone_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `case_id` (`case_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -377,7 +362,7 @@ CREATE TABLE `extension` (
   PRIMARY KEY (`extension_id`),
   UNIQUE KEY `extension` (`extension`),
   UNIQUE KEY `current_operator_id` (`current_operator_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -435,7 +420,7 @@ CREATE TABLE `lime_conditions` (
   PRIMARY KEY (`cid`),
   KEY `conditions_idx2` (`qid`),
   KEY `conditions_idx3` (`cqid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -504,7 +489,7 @@ CREATE TABLE `lime_groups` (
   `grelevance` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`gid`,`language`),
   KEY `groups_idx2` (`sid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -647,7 +632,7 @@ CREATE TABLE `lime_questions` (
   KEY `questions_idx3` (`gid`),
   KEY `questions_idx4` (`type`),
   KEY `parent_qid_idx` (`parent_qid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -664,7 +649,7 @@ CREATE TABLE `lime_question_attributes` (
   PRIMARY KEY (`qaid`),
   KEY `question_attributes_idx2` (`qid`),
   KEY `question_attributes_idx3` (`attribute`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -739,7 +724,7 @@ CREATE TABLE `lime_saved_control` (
   KEY `saved_control_idx2` (`sid`),
   KEY `identifier` (`identifier`),
   KEY `srid` (`srid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -787,63 +772,63 @@ INSERT INTO `lime_settings_global` (`stg_name`, `stg_value`) VALUES('SessionName
 CREATE TABLE `lime_surveys` (
   `sid` int(11) NOT NULL,
   `owner_id` int(11) NOT NULL,
-  `admin` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `active` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `admin` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` char(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
   `expires` datetime DEFAULT NULL,
   `startdate` datetime DEFAULT NULL,
-  `adminemail` varchar(320) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `anonymized` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `faxto` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `format` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `savetimings` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `template` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'default',
-  `language` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `additional_languages` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `datestamp` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `usecookie` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `allowregister` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `allowsave` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'Y',
+  `adminemail` varchar(320) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `anonymized` char(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `faxto` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `format` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `savetimings` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `template` varchar(100) COLLATE utf8_unicode_ci DEFAULT 'default',
+  `language` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `additional_languages` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `datestamp` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `usecookie` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `allowregister` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `allowsave` char(1) COLLATE utf8_unicode_ci DEFAULT 'Y',
   `autonumber_start` bigint(11) DEFAULT '0',
-  `autoredirect` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `allowprev` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'Y',
-  `printanswers` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `ipaddr` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `refurl` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
+  `autoredirect` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `allowprev` char(1) COLLATE utf8_unicode_ci DEFAULT 'Y',
+  `printanswers` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `ipaddr` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `refurl` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
   `datecreated` date DEFAULT NULL,
-  `publicstatistics` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `publicgraphs` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `listpublic` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `htmlemail` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `tokenanswerspersistence` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `assessments` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `usecaptcha` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `usetokens` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `bounce_email` varchar(320) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `attributedescriptions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `emailresponseto` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `emailnotificationto` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `publicstatistics` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `publicgraphs` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `listpublic` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `htmlemail` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `tokenanswerspersistence` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `assessments` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `usecaptcha` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `usetokens` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `bounce_email` varchar(320) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `attributedescriptions` text COLLATE utf8_unicode_ci,
+  `emailresponseto` text COLLATE utf8_unicode_ci,
+  `emailnotificationto` text COLLATE utf8_unicode_ci,
   `tokenlength` tinyint(2) DEFAULT '15',
-  `showxquestions` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'Y',
-  `showgroupinfo` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'B',
-  `shownoanswer` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'Y',
-  `showqnumcode` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'X',
+  `showxquestions` char(1) COLLATE utf8_unicode_ci DEFAULT 'Y',
+  `showgroupinfo` char(1) COLLATE utf8_unicode_ci DEFAULT 'B',
+  `shownoanswer` char(1) COLLATE utf8_unicode_ci DEFAULT 'Y',
+  `showqnumcode` char(1) COLLATE utf8_unicode_ci DEFAULT 'X',
   `bouncetime` bigint(20) DEFAULT NULL,
-  `bounceprocessing` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `bounceaccounttype` varchar(4) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bounceaccounthost` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bounceaccountpass` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bounceaccountencryption` varchar(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bounceaccountuser` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `showwelcome` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'Y',
-  `showprogress` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'Y',
-  `allowjumps` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
+  `bounceprocessing` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `bounceaccounttype` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bounceaccounthost` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bounceaccountpass` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bounceaccountencryption` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bounceaccountuser` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `showwelcome` char(1) COLLATE utf8_unicode_ci DEFAULT 'Y',
+  `showprogress` char(1) COLLATE utf8_unicode_ci DEFAULT 'Y',
+  `allowjumps` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
   `navigationdelay` tinyint(2) DEFAULT '0',
-  `nokeyboard` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `alloweditaftercompletion` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT 'N',
-  `googleanalyticsstyle` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `googleanalyticsapikey` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nokeyboard` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `alloweditaftercompletion` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `googleanalyticsstyle` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `googleanalyticsapikey` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`sid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -853,29 +838,29 @@ CREATE TABLE `lime_surveys` (
 
 CREATE TABLE `lime_surveys_languagesettings` (
   `surveyls_survey_id` int(11) NOT NULL DEFAULT '0',
-  `surveyls_language` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en',
-  `surveyls_title` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `surveyls_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `surveyls_welcometext` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `surveyls_endtext` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `surveyls_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surveyls_urldescription` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surveyls_email_invite_subj` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surveyls_email_invite` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `surveyls_email_remind_subj` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surveyls_email_remind` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `surveyls_email_register_subj` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surveyls_email_register` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `surveyls_email_confirm_subj` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `surveyls_email_confirm` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `surveyls_language` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en',
+  `surveyls_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `surveyls_description` text COLLATE utf8_unicode_ci,
+  `surveyls_welcometext` text COLLATE utf8_unicode_ci,
+  `surveyls_endtext` text COLLATE utf8_unicode_ci,
+  `surveyls_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surveyls_urldescription` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surveyls_email_invite_subj` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surveyls_email_invite` text COLLATE utf8_unicode_ci,
+  `surveyls_email_remind_subj` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surveyls_email_remind` text COLLATE utf8_unicode_ci,
+  `surveyls_email_register_subj` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surveyls_email_register` text COLLATE utf8_unicode_ci,
+  `surveyls_email_confirm_subj` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surveyls_email_confirm` text COLLATE utf8_unicode_ci,
   `surveyls_dateformat` int(10) unsigned NOT NULL DEFAULT '1',
-  `email_admin_notification_subj` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_admin_notification` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `email_admin_responses_subj` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_admin_responses` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `email_admin_notification_subj` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email_admin_notification` text COLLATE utf8_unicode_ci,
+  `email_admin_responses_subj` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email_admin_responses` text COLLATE utf8_unicode_ci,
   `surveyls_numberformat` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`surveyls_survey_id`,`surveyls_language`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1019,7 +1004,7 @@ CREATE TABLE `operator` (
   `chat_password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`operator_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1064,8 +1049,7 @@ CREATE TABLE `outcome` (
   `require_note` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether to require a note to be entered',
   `calc` char(2) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`outcome_id`),
-  KEY `calc` (`calc`),
-  KEY `outcome_type_id` (`outcome_type_id`)
+  KEY `calc` (`calc`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1075,24 +1059,24 @@ CREATE TABLE `outcome` (
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(1, '3.11', 'Not attempted or worked', 0, 1, 1, 0, 1, 0, 0, 'UH');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(2, '3.13', 'No answer', 180, 1, 1, 0, 1, 1, 0, 'UH');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(3, '3.16', 'Technical phone problems', 180, 1, 1, 0, 1, 0, 0, 'UH');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(4, '2.34', 'Other, Referred to Supervisor (Eligible)', 0, 2, 0, 1, 0, 1, 1, 'O');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(4, '2.34', 'Other, Referred to Supervisor (Eligible)', 0, 2, 0, 1, 1, 1, 1, 'O');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(5, '3.91', 'Other, Referred to Supervisor (Unknown eligibility)', 0, 2, 0, 0, 1, 0, 1, 'UO');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(6, '2.111a', 'Soft Refusal, Other', 10080, 3, 1, 1, 1, 1, 1, 'R');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(6, '2.111a', 'Soft Refusal, Other', 10080, 3, 0, 1, 1, 1, 1, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(7, '2.111b', 'Hard Refusal, Other', 10080, 3, 0, 1, 1, 1, 1, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(8, '2.112a', 'Soft Refusal, Respondent', 10080, 3, 0, 1, 1, 1, 1, 'R');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(9, '2.112b', 'Hard Refusal, Respondent', 0, 3, 0, 1, 0, 1, 1, 'R');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(9, '2.112b', 'Hard Refusal, Respondent', 10080, 3, 0, 1, 1, 1, 1, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(10, '1.1', 'Complete', 0, 4, 0, 1, 1, 1, 0, 'I');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(11, '2.112', 'Known respondent refusal', 0, 4, 0, 1, 1, 1, 0, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(12, '2.111', 'Household-level refusal', 0, 4, 0, 1, 1, 1, 0, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(13, '2.112c', 'Broken appointment (Implicit refusal)', 10080, 3, 1, 0, 1, 1, 0, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(14, '4.32', 'Disconnected number', 0, 4, 1, 0, 0, 0, 0, '');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(15, '4.20', 'Fax/data line', 0, 4, 1, 1, 0, 0, 0, 'NC');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(16, '4.51', 'Business, government office, other organization', 0, 4, 1, 1, 0, 0, 0, 'O');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(17, '4.70', 'No eligible respondent', 0, 4, 1, 1, 0, 0, 0, 'O');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(15, '4.20', 'Fax/data line', 0, 4, 1, 1, 0, 0, 0, '');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(16, '4.51', 'Business, government office, other organization', 0, 4, 1, 1, 0, 0, 0, '');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(17, '4.70', 'No eligible respondent', 0, 4, 1, 1, 0, 0, 0, '');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(18, '2.35a', 'Accidental hang up or temporary phone problem', 0, 1, 1, 1, 1, 1, 0, 'O');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(19, '2.12a', 'Definite Appointment - Respondent', 0, 5, 0, 1, 1, 1, 0, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(20, '2.12b', 'Definite Appointment - Other', 0, 5, 0, 1, 1, 1, 0, 'R');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(21, '2.13a', 'Unspecified Appointment - Respondent', 0, 5, 0, 1, 1, 1, 1, 'R');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(21, '2.13a', 'Unspecified Appointment - Respondent', 0, 5, 0, 1, 1, 1, 0, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(22, '2.13b', 'Unspecified Appointment - Other', 0, 5, 0, 1, 1, 1, 0, 'R');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(23, '2.221', 'Household answering machine - Message left', 180, 1, 1, 1, 1, 1, 0, 'NC');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(24, '2.222', 'Household answering machine - No message left', 180, 1, 1, 1, 1, 1, 0, 'NC');
@@ -1101,12 +1085,10 @@ INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_m
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(27, '2.331', 'Household level language problem', 0, 4, 1, 1, 0, 1, 0, 'O');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(28, '2.332', 'Respondent language problem', 0, 4, 0, 1, 0, 1, 0, 'O');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(29, '3.14', 'Answering machine - Not a household', 0, 4, 1, 1, 0, 0, 0, 'UH');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(30, '4.10', 'Out of sample', 0, 4, 0, 1, 0, 0, 0, 'O');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(30, '4.10', 'Out of sample', 0, 4, 0, 1, 0, 0, 0, '');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(31, '2.20', 'Non contact', 180, 1, 1, 1, 1, 1, 0, 'NC');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(32, '4.80', 'Quota filled', 0, 4, 0, 1, 0, 0, 0, 'O');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(32, '4.80', 'Quota filled', 0, 4, 0, 1, 0, 0, 0, '');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(33, '2.36', 'Miscellaneous - Unavailable for a week', 10080, 1, 0, 1, 1, 1, 0, 'O');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(34, '3.13', 'Max call attempts reached', 0, 4, 0, 1, 0, 1, 0, 'UH');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(35, '3.13', 'Max calls reached', 0, 4, 0, 1, 0, 1, 0, 'UH');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(40, '1.1', 'Self completed online', 0, 4, 0, 1, 1, 1, 0, 'I');
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(41, '2.36', 'Self completion email invitation sent', 10080, 1, 0, 1, 1, 1, 0, 'O');
 
@@ -1146,7 +1128,7 @@ CREATE TABLE `process` (
   `kill` tinyint(1) NOT NULL DEFAULT '0',
   `data` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`process_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1161,7 +1143,7 @@ CREATE TABLE `process_log` (
   `data` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`process_log_id`),
   KEY `process_id` (`process_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1178,7 +1160,7 @@ CREATE TABLE `qsqr_question` (
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`qsqr_question_id`),
   KEY `questionnaire_sample_quota_row_id` (`questionnaire_sample_quota_row_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1196,9 +1178,8 @@ CREATE TABLE `qsqr_sample` (
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`qsqr_sample_id`),
   KEY `questionnaire_sample_quota_row_id` (`questionnaire_sample_quota_row_id`),
-  KEY `exclude_var` (`exclude_var`),
-  KEY `exclude_var_id` (`exclude_var_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  KEY `exclude_var` (`exclude_var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1228,7 +1209,7 @@ CREATE TABLE `questionnaire` (
   `lime_endurl` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Forwarding end URL for respondent self completion',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`questionnaire_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1255,7 +1236,7 @@ CREATE TABLE `questionnaire_prefill` (
   `value` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`questionnaire_prefill_id`),
   KEY `questionnaire_id` (`questionnaire_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1309,7 +1290,7 @@ CREATE TABLE `questionnaire_sample_quota` (
   `completions` int(11) NOT NULL,
   `quota_reached` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`questionnaire_sample_quota_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1330,7 +1311,7 @@ CREATE TABLE `questionnaire_sample_quota_row` (
   PRIMARY KEY (`questionnaire_sample_quota_row_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
   KEY `sample_import_id` (`sample_import_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1386,7 +1367,7 @@ CREATE TABLE `respondent` (
   `Time_zone_name` char(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`respondent_id`),
   KEY `case_id` (`case_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1415,10 +1396,8 @@ CREATE TABLE `sample` (
   `Time_zone_name` char(64) COLLATE utf8_unicode_ci NOT NULL,
   `phone` char(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`sample_id`),
-  KEY `import_id` (`import_id`),
-  KEY `sample_id` (`sample_id`),
-  KEY `Time_zone_name` (`Time_zone_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `import_id` (`import_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1433,7 +1412,7 @@ CREATE TABLE `sample_import` (
   `refusal_conversion` tinyint(1) NOT NULL DEFAULT '1',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`sample_import_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1444,14 +1423,11 @@ CREATE TABLE `sample_import` (
 CREATE TABLE `sample_import_var_restrict` (
   `sample_import_id` bigint(20) NOT NULL,
   `var_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `var` char(128) COLLATE utf8_unicode_ci NOT NULL,
+  `var` char(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` smallint(10) unsigned NOT NULL,
   `restrict` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`var_id`),
-  UNIQUE KEY `var_id` (`var_id`),
-  KEY `type` (`type`),
-  KEY `sample_import_id` (`sample_import_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`var_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1499,10 +1475,8 @@ CREATE TABLE `sample_var` (
   `sample_id` bigint(20) NOT NULL,
   `var_id` bigint(20) unsigned NOT NULL,
   `val` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL,
-  KEY `sample_id` (`sample_id`),
-  KEY `var_id` (`var_id`),
-  KEY `type` (`type`)
+  PRIMARY KEY (`sample_id`,`var_id`),
+  KEY `sample_id` (`sample_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1515,9 +1489,7 @@ CREATE TABLE `sample_var_type` (
   `type` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `table` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`type`),
-  KEY `type` (`type`,`description`),
-  KEY `description` (`description`)
+  PRIMARY KEY (`type`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1549,7 +1521,7 @@ CREATE TABLE `sessions2` (
   PRIMARY KEY (`sesskey`),
   KEY `sess2_expiry` (`expiry`),
   KEY `sess2_expireref` (`expireref`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1562,20 +1534,15 @@ CREATE TABLE `setting` (
   `field` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `value` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`setting_id`),
-  UNIQUE KEY `field` (`field`),
-  KEY `setting_id` (`setting_id`)
+  UNIQUE KEY `field` (`field`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Serialised table of settings';
 
 --
 -- Dumping data for table `setting`
 --
 
-INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES(1, 'information', 's:120:"<p>\r\n	CATI center name&info</p>\r\n<p>\r\n	</p>\r\n";');
+INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES(1, 'DEFAULT_TIME_ZONE', 's:18:"Australia/Victoria";');
 INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES(2, 'systemsort', 'b:0;');
-INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES(3, 'bosh_service', 's:44:"https://some_jabber_server:port";');
-INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES(4, 'supervisor_xmpp', 's:12:"jabber_login";');
-INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES(5, 'chat_enabled', 'b:0;');
-INSERT INTO `setting` (`setting_id`, `field`, `value`) VALUES(6, 'DEFAULT_TIME_ZONE', 's:13:"Europe/Moscow";');
 
 -- --------------------------------------------------------
 
@@ -1590,7 +1557,7 @@ CREATE TABLE `shift` (
   `end` datetime NOT NULL,
   PRIMARY KEY (`shift_id`),
   KEY `questionnaire_id` (`questionnaire_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1606,7 +1573,7 @@ CREATE TABLE `shift_report` (
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`shift_report_id`),
   KEY `shift_id` (`shift_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1644,3 +1611,6 @@ CREATE TABLE `timezone_template` (
   PRIMARY KEY (`Time_zone_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,3 +1,45 @@
+queXS 1.13.0 - Changes since 1.12.0
+
+
+
+Database updates:
+
+/* New outcomes */
+
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(42, '3.13', 'Max call attempts reached', 0, 4, 0, 1, 0, 1, 0, 'UH');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(43, '3.13', 'Max calls reached', 0, 4, 0, 1, 0, 1, 0, 'UH');
+
+
+/* Add var_id sample var identifier */
+ALTER TABLE  `sample_import_var_restrict` DROP PRIMARY KEY, CHANGE var var CHAR(128);
+ALTER TABLE `sample_import_var_restrict` ADD  `var_id` BIGINT( 20 ) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT AFTER  `sample_import_id`;
+ALTER TABLE  `sample_import_var_restrict` ADD  `type` SMALLINT( 10 ) UNSIGNED NOT NULL AFTER  `var`;
+
+ALTER TABLE  `sample_var` ADD  `var_id` BIGINT( 20 ) UNSIGNED NOT NULL AFTER  `sample_id`;
+
+UPDATE `sample_var` as sv ,`sample`as s, `sample_import_var_restrict` as sivr  SET sv.`var_id`=sivr.`var_id`  WHERE sv.`var` LIKE sivr.`var`  AND sv.`sample_id`=s.`sample_id` AND   s.`import_id`=sivr.`sample_import_id`;
+
+UPDATE  `sample_import_var_restrict` ,
+`sample_var` SET  `sample_import_var_restrict`.`type` =  `sample_var`.`type` WHERE  `sample_import_var_restrict`.`var_id` =  `sample_var`.`var_id`;
+
+ALTER TABLE  `qsqr_sample` ADD  `exclude_var_id` BIGINT( 20 ) NOT NULL AFTER  `questionnaire_sample_quota_row_id`;
+
+UPDATE  `qsqr_sample` as qsqr, `sample_import_var_restrict` as sivr, questionnaire_sample_quota_row as qq SET  qsqr.exclude_var_id =  sivr.var_id WHERE  qq.questionnaire_sample_quota_row_id = qsqr.questionnaire_sample_quota_row_id AND qq.sample_import_id =  sivr.sample_import_id and qsqr.exclude_var = sivr.var;
+
+ALTER TABLE `sample_var` DROP PRIMARY KEY;
+ALTER TABLE `sample_var` DROP `var`;
+ALTER TABLE `sample_var` DROP `type`;
+ALTER TABLE `sample_var` ADD PRIMARY KEY (`sample_id`,`var_id`);
+
+/* OPTIONAL */
+
+/* De-identify sample table completely where attempted previously */
+UPDATE `sample`  LEFT JOIN `sample_var` ON (`sample`.sample_id = `sample_var`.sample_id) SET `Time_zone_name`= '',`phone`= '' WHERE `sample_var`.sample_id IS NULL;
+
+/* Delete de-identified sample columns */
+DELETE FROM  `sample_import_var_restrict` WHERE  `type` =0;
+
+
 queXS 1.12.0 - Changes since 1.11.1
 
 New Feature: Complex row quotas (see: https://blueprints.launchpad.net/quexs/+spec/complexquota) - Thank you Marco for sponsoring this feature
