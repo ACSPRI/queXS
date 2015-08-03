@@ -1,8 +1,68 @@
-queXS 1.13.0 - Changes since 1.12.0
+queXS 1.13.0 - Changes since 1.12.1
+
+Overall changes:
+
+*Very big changes to the Administrative interface - thank you to Alex for your hard work.
+*Sample variables are now stored in a more efficient way in the database.
+
+Specific changes (see this branch for details: https://bazaar.launchpad.net/~ddrmoscow/quexs/Features/changes):
+
+522: Alex 2015-07-16 DB syncronization and  related files update
+521: Alex 2015-07-16 styling and lauout syncronization
+520: Alex 2015-07-16 Show only "not completed" missed appointments
+519: Alex 2015-07-16 updated lime and  gettext translations files
+518: Alex 2015-07-15 speed Up (enabled) check for available cases by applying questionnaire.enabled = 1 and samlpe_import.enabled =1 filters  (refered  to main branch rev.443)
+517: Alex 2015-07-10 Fixes lp:1472581 add SGQ code to questions selector
+515: Alex 2015-07-10 updated file links for easier Bootstrap, Jquery, Jquery-UI and Font-awesome updates
+514: Alex 2015-07-10 updated Bootstrap to 3.3.5 -> placed in /bootstrap/ 
+513: Alex 2015-07-09 reverted "Go back" href, added button to switch to quota report page (#1472568)
+511: Alex 2015-07-08 added  "missed appointments" table
+510: Alex 2015-07-08 added icons + buttons 
+509: Alex 2015-07-08 fix  differences between working installation and tree
+508: Alex 2015-07-08 fixed issues after merging with rev.448 to operate with var_id and exclude_var_id instead of sample_var
+507: Alex 2015-07-08 fixed issues after merging with rev.448 to operate with var_id and exclude_var_id instead of sample_var
+506: Alex 2015-07-08 added filter for "completed"  appoinments in display list
+505: Alex 2015-07-08 fix small differences between  working installation and tree
+504: Alex 2015-07-06 revert to prev version in questionnairelist.php with changed merged from rev.448
+503: Alex 2015-07-02 [merge] merged rev450
+502: Alex 2015-06-26 [merge] merge with rev.449 / release 1.12.0
+501: Alex 2015-06-26 [merge] merged  rev.448
+500: Alex 2015-06-24 Corrected   function get_case_id
+499: Alex 2015-06-23 [merge] update to rev.447
+498: Alex 2015-05-20 rev443 http://bazaar.launchpad.net/~adamzammit/quexs/main/revision/443 gave an idea of another way to select operator cases,
+497: Alex 2015-05-20 3 columns layout for rs_intro_interface2.php with buttons instaed of links, easy and convinient
+496: Alex 2015-05-20 new "Set outcome" popud dialog, split by "contaced" choice,
+495: Alex 2015-05-20 reorder divs in order of appearance
+494: Alex 2015-05-20 cosmetic and equalization with working branch
+493: Alex 2015-05-20 new Appointment window popup - simple, clean and nice
+492: Alex 2015-05-20 hide  displaying page headers in tabs  as too space consuming
+491: Alex 2015-05-17 [merge] merged rev446
+490: Alex 2015-05-17 [merge] Here it is
+489: Alex 2015-04-29 missing final tag
+488: Alex 2015-04-01 some css modifications to Lime export results page layout and view. was too small text and  overlapping
+487: Alex 2015-04-01 lol   wrong way updated...
+486: Alex 2015-04-01 fixed  'required' attribute for input to apply only when field is visible
+485: Alex 2015-04-01 merged changes from main rev 445
+484: Alex 2015-04-01 [merge] merged rev.445
+483: Alex 2015-03-24 added attribute 'required' to input fields
+482: Alex 2015-03-24 added <tfoot> for $total   to table function
+481: Alex 2015-03-23 removed bootstrap-switch addon application from branch, as all pages switched to bs-toogle application
+480: Alex 2015-03-23 New page layout
+479: Alex 2015-03-23 New page look and layout, 
+478: Alex 2015-03-23 New look, 
+477: Alex 2015-03-23 file update,  switch to bs-toggle
+476: Alex 2015-03-23 New look, 
+475: Alex 2015-03-23 3 in 1 page for better usage and simulaneous view,
+474: Alex 2015-03-23 updates, small improvemnts
+473: Alex 2015-03-23 NEW look, new Feature: respondent Timezone and Local time displayappointments.php
+472: Alex 2015-03-23 updated questionnairelist.php  and   new.php
+471: Alex 2015-03-23 pages new look
+470: Alex 2015-03-23 new "Operators" menu pages
+469: Alex 2015-03-23 new  look  for pages
+468: Alex 2015-03-23 new "client" pages
 
 
-
-Database updates:
+Database updates required:
 
 /* New outcomes */
 
@@ -38,6 +98,13 @@ UPDATE `sample`  LEFT JOIN `sample_var` ON (`sample`.sample_id = `sample_var`.sa
 
 /* Delete de-identified sample columns */
 DELETE FROM  `sample_import_var_restrict` WHERE  `type` =0;
+
+
+queXS 1.12.1 - Changes since 1.12.0
+
+Fixed Bug: lp:1472581 add SGQ code to questions selector, proper questions list order (thanks Alex)
+Fixed Bug: lp:1472563 typo in sql querry after rev.448 (thanks Alex)
+Fixed Bug: lp:1468417  operators fail to get next case ID
 
 
 queXS 1.12.0 - Changes since 1.11.1

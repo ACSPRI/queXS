@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-02-09 12:43+1100\n"
+"POT-Creation-Date: 2015-06-02 16:10+1000\n"
 "PO-Revision-Date: 2013-12-24 14:41+0000\n"
 "Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-06-02 06:08+0000\n"
-"X-Generator: Launchpad (build 17532)\n"
+"X-Launchpad-Export-Date: 2015-08-03 04:24+0000\n"
+"X-Generator: Launchpad (build 17656)\n"
 
 #: appointment.php:69
 msgid "Appointment error"
@@ -366,7 +366,8 @@ msgid "Choose extension"
 msgstr ""
 
 #: status.php:58 status.php:77 status_interface2.php:70
-#: admin/quotareport.php:284 admin/outcomes.php:97 admin/outcomes.php:241
+#: admin/quotareport.php:291 admin/outcomes.php:97 admin/outcomes.php:241
+#: admin/quotarow.php:532
 msgid "Status"
 msgstr "Stav"
 
@@ -468,9 +469,9 @@ msgstr "Tato směna"
 msgid "Operator"
 msgstr "Operátor"
 
-#: performance.php:78 performance.php:85 admin/quotareport.php:284
-#: admin/outcomes.php:297 admin/operatorperformance.php:81
-#: admin/operatorperformance.php:104
+#: performance.php:78 performance.php:85 admin/quotareport.php:291
+#: admin/outcomes.php:297 admin/quotarow.php:532
+#: admin/operatorperformance.php:81 admin/operatorperformance.php:104
 msgid "Completions"
 msgstr "Dokončení"
 
@@ -491,10 +492,11 @@ msgid "Add note"
 msgstr "Přidat poznámku"
 
 #: casenote.php:69 admin/samplelist.php:128 admin/samplelist.php:180
-#: admin/samplelist.php:217 admin/questionnairelist.php:329
-#: admin/questionnairelist.php:383 admin/availability.php:109
+#: admin/samplelist.php:217 admin/questionnairelist.php:345
+#: admin/questionnairelist.php:399 admin/availability.php:109
 #: admin/operatorlist.php:145 admin/assignsample.php:141
-#: admin/extensionstatus.php:143 respondent.php:96 contactdetails.php:92
+#: admin/quotarow.php:374 admin/extensionstatus.php:143 respondent.php:96
+#: contactdetails.php:92
 msgid "Go back"
 msgstr "Jít zpět"
 
@@ -970,7 +972,7 @@ msgid "ID"
 msgstr "ID"
 
 #: nocaseavailable.php:91 nocaseavailable.php:113 admin/samplelist.php:132
-#: admin/quota.php:207 admin/quotarow.php:294
+#: admin/quota.php:207 admin/quotarow.php:532
 msgid "Description"
 msgstr "Popis"
 
@@ -986,7 +988,7 @@ msgstr "CHYBA: Nemáte přiděleny žádné dotazníky"
 msgid "Assigned samples:"
 msgstr "Přidělené vzorky:"
 
-#: nocaseavailable.php:113 admin/samplelist.php:279 admin/quotareport.php:284
+#: nocaseavailable.php:113 admin/samplelist.php:279 admin/quotareport.php:291
 #: admin/outcomes.php:135 admin/outcomes.php:224 admin/assignsample.php:139
 #: admin/assignsample.php:203 admin/supervisor.php:274
 #: admin/casestatus.php:112 admin/casestatus.php:210
@@ -1001,7 +1003,7 @@ msgstr "CHYBA: K dotazníkům nejsou přiděleny žádné vzorky"
 msgid "Current shifts available:"
 msgstr "Současné dostupné směny:"
 
-#: nocaseavailable.php:138 admin/questionnairelist.php:397
+#: nocaseavailable.php:138 admin/questionnairelist.php:413
 #: admin/callhistory.php:96 admin/callhistory.php:111
 #: admin/assignsample.php:138 admin/supervisor.php:297
 #: admin/casestatus.php:208 admin/displayappointments.php:243 shifts.php:103
@@ -1020,50 +1022,33 @@ msgstr "Konec směny"
 msgid "ERROR: No shifts at this time"
 msgstr "CHYBA: Nyní nejsou dostupné žádné směny"
 
-#: nocaseavailable.php:161
-msgid "Call restrictions:"
-msgstr "Omezení volání:"
-
-#: nocaseavailable.php:165
-msgid ""
-"ERROR: There are no cases available that fall within call restrictions"
-msgstr "CHYBA: Nejsou dostupné žádné případy, které spadají pod tyto omezení"
-
-#: nocaseavailable.php:169
-msgid "There are "
-msgstr "Existuje "
-
-#: nocaseavailable.php:169
-msgid " unassigned case(s) available within the specified call restrictions"
-msgstr " dostupných nepřidělených případů patřící do zadaných omezení"
-
-#: nocaseavailable.php:175
+#: nocaseavailable.php:177
 msgid "Limesurvey links:"
 msgstr "Odkazy Limesurvey:"
 
-#: nocaseavailable.php:195
+#: nocaseavailable.php:197
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
 msgstr "CHYBA: Pro dotazník LimeSurvey není určena žádná tabulka příznaků"
 
-#: nocaseavailable.php:195
+#: nocaseavailable.php:197
 msgid "from questionnaire:"
 msgstr "z dotazníku:"
 
-#: nocaseavailable.php:197
+#: nocaseavailable.php:199
 msgid "Tokens table exists for Limesurvey questionnaire:"
 msgstr "Tabulka příznaků existuje pro dotazník Limesurvey:"
 
-#: nocaseavailable.php:202
+#: nocaseavailable.php:204
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
 msgstr "CHYBA: Nelze najít dotazníky s ID LimeSurvey"
 
-#: nocaseavailable.php:221
+#: nocaseavailable.php:223
 msgid "ERROR: Quota reached for this question"
 msgstr "CHYBA: Dosažena kvóta pro tuto otázku"
 
-#: nocaseavailable.php:241
-msgid "POSSIBLE ERROR: Row quota reached for this question"
-msgstr "MOŽNÁ CHYBA: Dosažena kvóta řádku pro tuto otázku"
+#: nocaseavailable.php:242
+msgid "POSSIBLE ERROR: Row quota reached for this quota"
+msgstr ""
 
 #: admin/timezonetemplate.php:92
 msgid "Add/Remove Timezones"
@@ -1120,7 +1105,7 @@ msgstr ""
 #: admin/questionnaireprefill.php:100 admin/outcomes.php:80
 #: admin/questionnairecatimeslotssample.php:101 admin/addshift.php:168
 #: admin/questionnaireavailability.php:97 admin/quota.php:110
-#: admin/assignsample.php:180 admin/quotarow.php:127
+#: admin/assignsample.php:180 admin/quotarow.php:283
 msgid "Select a questionnaire from the list below"
 msgstr "Vyberte dotazník ze seznamu níže"
 
@@ -1194,7 +1179,7 @@ msgstr "Smazat vybraná pole"
 msgid "Sample list"
 msgstr "Seznam vzorků"
 
-#: admin/samplelist.php:279 admin/questionnairelist.php:397
+#: admin/samplelist.php:279 admin/questionnairelist.php:413
 #: admin/operatorlist.php:293
 msgid "Enable/Disable"
 msgstr "Povolit/Zakázat"
@@ -1431,7 +1416,7 @@ msgstr "Hlášení kvóty"
 
 #: admin/quotareport.php:118 admin/samplesearch.php:84
 #: admin/questionnairecatimeslotssample.php:107 admin/quota.php:123
-#: admin/quotarow.php:140
+#: admin/quotarow.php:296
 msgid "Select a sample from the list below"
 msgstr "Vyberte vzorek ze seznamu níže"
 
@@ -1439,39 +1424,40 @@ msgstr "Vyberte vzorek ze seznamu níže"
 msgid "Total sample"
 msgstr "Celkový vzorek"
 
-#: admin/quotareport.php:233 admin/quotareport.php:240
+#: admin/quotareport.php:240 admin/quotareport.php:247
 msgid "closed"
 msgstr "uzavřeno"
 
-#: admin/quotareport.php:235 admin/quotareport.php:242
+#: admin/quotareport.php:242 admin/quotareport.php:249
 msgid "open"
 msgstr "otevřeno"
 
-#: admin/quotareport.php:284
+#: admin/quotareport.php:291
 msgid "Strata"
 msgstr "Vrstvy"
 
-#: admin/quotareport.php:284
+#: admin/quotareport.php:291 admin/quotarow.php:129 admin/quotarow.php:373
+#: admin/quotarow.php:532
 msgid "Quota"
 msgstr "Kvóta"
 
-#: admin/quotareport.php:284
+#: admin/quotareport.php:291
 msgid "Sample Used"
 msgstr "Použitý vzorek"
 
-#: admin/quotareport.php:284
+#: admin/quotareport.php:291
 msgid "Sample Remaining"
 msgstr "Zbývajících vzorků"
 
-#: admin/quotareport.php:284
+#: admin/quotareport.php:291
 msgid "% Complete"
 msgstr "% hotovo"
 
-#: admin/quotareport.php:284
+#: admin/quotareport.php:291
 msgid "Set priority"
 msgstr "Nastavit prioritu"
 
-#: admin/quotareport.php:284
+#: admin/quotareport.php:291 admin/quotarow.php:532
 msgid "Auto prioritise"
 msgstr "Autopriorita"
 
@@ -1542,7 +1528,7 @@ msgstr ""
 msgid "Time slot"
 msgstr ""
 
-#: admin/availabilitygroup.php:119 admin/questionnairelist.php:397
+#: admin/availabilitygroup.php:119 admin/questionnairelist.php:413
 msgid "Modify"
 msgstr "Změnit"
 
@@ -1837,99 +1823,99 @@ msgstr "XMPP/Jabber ID vedoucího"
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: admin/questionnairelist.php:277
+#: admin/questionnairelist.php:293
 msgid "Questionnaire list"
 msgstr "Seznam dotazníků"
 
-#: admin/questionnairelist.php:330
+#: admin/questionnairelist.php:346
 msgid "Edit instrument in Limesurvey"
 msgstr "Upravit nástroj v Limesurvey"
 
-#: admin/questionnairelist.php:333 admin/new.php:132
+#: admin/questionnairelist.php:349 admin/new.php:132
 msgid "Name for questionnaire:"
 msgstr "Název dotazníku:"
 
-#: admin/questionnairelist.php:334 admin/new.php:195
+#: admin/questionnairelist.php:350 admin/new.php:195
 msgid "Restrict appointments to shifts?"
 msgstr "Omezit schůzky na směny?"
 
-#: admin/questionnairelist.php:335 admin/new.php:196
+#: admin/questionnairelist.php:351 admin/new.php:196
 msgid "Restrict work to shifts?"
 msgstr "Omezit práci na směny?"
 
-#: admin/questionnairelist.php:336 admin/new.php:197
+#: admin/questionnairelist.php:352 admin/new.php:197
 msgid "Questionnaire for testing only?"
 msgstr "Dotazník pouze pro zkoušku?"
 
-#: admin/questionnairelist.php:337 admin/new.php:198
+#: admin/questionnairelist.php:353 admin/new.php:198
 msgid "Allow operators to generate referrals?"
 msgstr ""
 
-#: admin/questionnairelist.php:338 admin/new.php:199
+#: admin/questionnairelist.php:354 admin/new.php:199
 msgid "Allow for respondent self completion via email invitation?"
 msgstr "Umožnit respondentům dotazník vyplnit pomocí e-mailové pozvánky?"
 
-#: admin/questionnairelist.php:340 admin/new.php:201
+#: admin/questionnairelist.php:356 admin/new.php:201
 msgid "Questionnaire display mode for respondent"
 msgstr "Režim zobrazení dotazníku pro respondenta"
 
-#: admin/questionnairelist.php:340 admin/new.php:201
+#: admin/questionnairelist.php:356 admin/new.php:201
 msgid "All in one"
 msgstr "Vše v jednom"
 
-#: admin/questionnairelist.php:340 admin/new.php:201
+#: admin/questionnairelist.php:356 admin/new.php:201
 msgid "Question by question"
 msgstr "Otázka za otázkou"
 
-#: admin/questionnairelist.php:340 admin/new.php:201
+#: admin/questionnairelist.php:356 admin/new.php:201
 msgid "Group at a time"
 msgstr "Skupina najednou"
 
-#: admin/questionnairelist.php:341 admin/new.php:202
+#: admin/questionnairelist.php:357 admin/new.php:202
 msgid "Limesurvey template for respondent"
 msgstr "Šablona Limesurvey pro respondenta"
 
-#: admin/questionnairelist.php:356 admin/new.php:214
+#: admin/questionnairelist.php:372 admin/new.php:214
 msgid "URL to forward respondents on self completion (required)"
 msgstr "URL pro přesměrování respondentů při samo-dokončení (vyžadováno)"
 
-#: admin/questionnairelist.php:359 admin/new.php:217
+#: admin/questionnairelist.php:375 admin/new.php:217
 msgid "Respondent selection introduction:"
 msgstr "Úvod výběru respondenta:"
 
-#: admin/questionnairelist.php:360 admin/new.php:218
+#: admin/questionnairelist.php:376 admin/new.php:218
 msgid "Respondent selection project introduction:"
 msgstr "Úvod projektu výběru respondenta:"
 
-#: admin/questionnairelist.php:361 admin/new.php:219
+#: admin/questionnairelist.php:377 admin/new.php:219
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr "Zpětné vrácení výběru respondenta (dotazník již zahájen):"
 
-#: admin/questionnairelist.php:362 admin/new.php:220
+#: admin/questionnairelist.php:378 admin/new.php:220
 msgid "Message to leave on an answering machine:"
 msgstr "Zprávu, kterou zanechat na záznamníku:"
 
-#: admin/questionnairelist.php:363
+#: admin/questionnairelist.php:379
 msgid "Edit respondent selection instrument in Limesurvey"
 msgstr "Upravit nástroj výběru respondenta v Limesurvey"
 
-#: admin/questionnairelist.php:364 admin/new.php:222
+#: admin/questionnairelist.php:380 admin/new.php:222
 msgid "Project end text (thank you screen):"
 msgstr "Text na konci projektu (obrazovka poděkování):"
 
-#: admin/questionnairelist.php:365 admin/new.php:223
+#: admin/questionnairelist.php:381 admin/new.php:223
 msgid "Project information for interviewers/operators:"
 msgstr "Informace o projektu pro tazatele/operátory:"
 
-#: admin/questionnairelist.php:366
+#: admin/questionnairelist.php:382
 msgid "Update Questionnaire"
 msgstr "Aktualizovat dotazník"
 
-#: admin/questionnairelist.php:385
+#: admin/questionnairelist.php:401
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
 msgstr "Veškerá nashromážděná data a nástroj limesurvey NEBUDOU smazány"
 
-#: admin/questionnairelist.php:386
+#: admin/questionnairelist.php:402
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
@@ -1939,16 +1925,17 @@ msgstr ""
 "údajů o respondentech, schůzkách a propojení mezi operátory, klienty a "
 "dotazníkem."
 
-#: admin/questionnairelist.php:387
+#: admin/questionnairelist.php:403
 msgid "Please confirm you wish to delete the questionnaire"
 msgstr "Prosím potvrďte smazání dotazníku."
 
-#: admin/questionnairelist.php:390
+#: admin/questionnairelist.php:406
 msgid "Delete this questionnaire"
 msgstr "Smazat tento dotazník"
 
-#: admin/questionnairelist.php:397 admin/supervisor.php:297
-#: admin/supervisor.php:361 admin/displayappointments.php:243
+#: admin/questionnairelist.php:413 admin/supervisor.php:297
+#: admin/supervisor.php:361 admin/quotarow.php:404 admin/quotarow.php:459
+#: admin/displayappointments.php:243
 msgid "Delete"
 msgstr "Smazat"
 
@@ -2247,7 +2234,7 @@ msgstr "Nastavit hodnoty v dotazníku pro předvyplnění"
 msgid "Quota management"
 msgstr "Správa kvóty"
 
-#: admin/index.php:64 admin/quotarow.php:126
+#: admin/index.php:64 admin/quotarow.php:282
 msgid "Quota row management"
 msgstr "Správa řady kvóty"
 
@@ -2368,44 +2355,44 @@ msgstr "Spustit a sledovat VoIP"
 msgid "Extension status"
 msgstr "Stav rozšíření"
 
-#: admin/samplecallattempts.php:107
+#: admin/samplecallattempts.php:121
 msgid "Number of cases"
 msgstr "Počet případů"
 
-#: admin/samplecallattempts.php:107
+#: admin/samplecallattempts.php:121
 msgid "Call attempts made"
 msgstr "Počet pokusů o volání"
 
-#: admin/samplecallattempts.php:170
+#: admin/samplecallattempts.php:184
 msgid "Sample call attempt"
 msgstr "Vzorový pokus o volání"
 
-#: admin/samplecallattempts.php:172 admin/dataoutput.php:188
+#: admin/samplecallattempts.php:186 admin/dataoutput.php:188
 #: admin/operatorperformance.php:73 admin/shiftreport.php:65
 msgid "Please select a questionnaire"
 msgstr "Prosím zvolte dotazník"
 
-#: admin/samplecallattempts.php:175
+#: admin/samplecallattempts.php:189
 msgid "Overall"
 msgstr "Celkem"
 
-#: admin/samplecallattempts.php:184 admin/dataoutput.php:204
+#: admin/samplecallattempts.php:198 admin/dataoutput.php:204
 msgid "Please select a sample"
 msgstr "Prosím vyberte vzorek"
 
-#: admin/samplecallattempts.php:195
+#: admin/samplecallattempts.php:209
 msgid "Please select a quota"
 msgstr "Prosím vyberte kvótu"
 
-#: admin/samplecallattempts.php:201
+#: admin/samplecallattempts.php:215
 msgid "No calls for this quota"
 msgstr "Žádná volání pro tuto kvótu"
 
-#: admin/samplecallattempts.php:205
+#: admin/samplecallattempts.php:219
 msgid "No calls for this sample"
 msgstr "Žádná volání pro tento vzorek"
 
-#: admin/samplecallattempts.php:210
+#: admin/samplecallattempts.php:224
 msgid "No calls for this questionnaire"
 msgstr "Žádná volání pro tento dotazník"
 
@@ -2441,11 +2428,11 @@ msgstr "V současnosti žádné kvóty"
 msgid "Stop calling this sample when:"
 msgstr "Přestat volat tomuto vzorku když:"
 
-#: admin/quota.php:152 admin/quotarow.php:187
+#: admin/quota.php:152
 msgid "for"
 msgstr "po"
 
-#: admin/quota.php:152 admin/quotarow.php:184 admin/quotarow.php:187
+#: admin/quota.php:152
 msgid "completions"
 msgstr "dokončeních"
 
@@ -2457,7 +2444,7 @@ msgstr "Kvóta dosažena"
 msgid "Quota not yet reached"
 msgstr "Kvóta není dosažena"
 
-#: admin/quota.php:159 admin/quotarow.php:195
+#: admin/quota.php:159
 msgid "Current completions: "
 msgstr "Současných dokončení: "
 
@@ -2469,27 +2456,27 @@ msgstr "Vyberte otázku pro kvótu"
 msgid "Enter the details for creating the quota:"
 msgstr "Zadejte podrobnosti pro vytvoření kvóty:"
 
-#: admin/quota.php:193 admin/quotarow.php:275
+#: admin/quota.php:193
 msgid "Pre defined values for this question:"
 msgstr "Předurčené hodnoty pro tuto otázku:"
 
-#: admin/quota.php:205 admin/quotarow.php:292
+#: admin/quota.php:205
 msgid "No labels defined for this question"
 msgstr "Neurčeny žádné štítky pro tuto otázku"
 
-#: admin/quota.php:207 admin/quotarow.php:294
+#: admin/quota.php:207
 msgid "Code value"
 msgstr "Hodnota kódu"
 
-#: admin/quota.php:213 admin/quotarow.php:304
+#: admin/quota.php:213 admin/quotarow.php:437
 msgid "The code value to compare"
 msgstr "Hodnota kódu pro porovnání"
 
-#: admin/quota.php:214 admin/quotarow.php:305
+#: admin/quota.php:214 admin/quotarow.php:436 admin/quotarow.php:486
 msgid "The type of comparison"
 msgstr "Typ porovnání"
 
-#: admin/quota.php:215 admin/quotarow.php:310
+#: admin/quota.php:215 admin/quotarow.php:382 admin/quotarow.php:547
 msgid "The number of completions to stop calling at"
 msgstr "Počet dokončení po kterých přestat volat"
 
@@ -2677,94 +2664,15 @@ msgstr ""
 msgid "Case does not exist"
 msgstr "Případ neexistuje"
 
-#: admin/quotarow.php:154 admin/quotarow.php:160
-msgid "Copied quotas"
-msgstr "Kopírované kvóty"
-
-#: admin/quotarow.php:163
-msgid "Current row quotas (click to delete)"
-msgstr "Současné kvóty řádku (klikněte pro smazání)"
-
-#: admin/quotarow.php:175
-msgid "Currently no row quotas"
-msgstr "Nyní nejsou žádné kvóty"
-
-#: admin/quotarow.php:182
-msgid "Replicate: Where"
-msgstr "Replikace: Kde"
-
-#: admin/quotarow.php:182 admin/quotarow.php:184 admin/quotarow.php:187
-msgid "like"
-msgstr "jako"
-
-#: admin/quotarow.php:184
-msgid "Sample only. Stop calling where"
-msgstr "Pouze vzorek. Přestat volat tam kde"
-
-#: admin/quotarow.php:184 admin/quotarow.php:187
-msgid "rows from this sample when:"
-msgstr "řádků z tohoto vzorku když:"
-
-#: admin/quotarow.php:187
-msgid "Stop calling"
-msgstr "Přestat volat"
-
-#: admin/quotarow.php:190
-msgid "Row quota reached (Closed)"
-msgstr "Kvóta řádku dosažena (Uzavřeno)"
-
-#: admin/quotarow.php:192
-msgid "Row quota not yet reached (Open)"
-msgstr "Kvóta řádku zatím nedosažena (Otevřeno)"
-
-#: admin/quotarow.php:212
-msgid "Copy quotas for this sample to (No error/duplicate checking): "
-msgstr "Kopírovat kvóty z tohoto vzorku do (Žádná kontrola chyb/duplicity): "
-
-#: admin/quotarow.php:214
-msgid "Copy"
-msgstr "Kopírovat"
-
-#: admin/quotarow.php:216
-msgid ""
-"Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
-msgstr ""
-"Kopírovat kvóty z tohoto vzorku do (Žádná kontrola chyb/duplicity) s "
-"úpravou: "
-
-#: admin/quotarow.php:218
-msgid "Copy adjustments"
-msgstr "Kopírovat úpravy"
-
-#: admin/quotarow.php:224
-msgid "Select a question for the row quota"
-msgstr "Vyberte otázku pro kvótu řádku"
-
-#: admin/quotarow.php:248
-msgid "No question (Replicate)"
-msgstr "Žádná otázka (Replikovat)"
-
-#: admin/quotarow.php:252
-msgid "Sample only quota"
-msgstr "Kvóta pouze pro vzorek"
-
-#: admin/quotarow.php:262
-msgid "Select the sample variable to exclude"
-msgstr "Vyberte proměnnou vzorku pro vynechání"
-
-#: admin/quotarow.php:274
-msgid "Enter the details for creating the row quota:"
-msgstr "Zadejte údaje pro vytvoření kvóty řádku:"
-
-#: admin/quotarow.php:300
+#: admin/quotarow.php:379 admin/quotarow.php:544
 msgid "Describe this quota"
 msgstr "Popište kvótu"
 
-#: admin/quotarow.php:301
+#: admin/quotarow.php:380 admin/quotarow.php:545
 msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
 msgstr "Priorita kvóty (50 je výchozí, 100 nejvyšší, 0 nejnižší)"
 
-#: admin/quotarow.php:302
+#: admin/quotarow.php:381 admin/quotarow.php:546
 msgid ""
 "Should the priority be automatically updated based on the number of "
 "completions in this quota?"
@@ -2772,13 +2680,83 @@ msgstr ""
 "Měla by priorita bý automaticky aktualizována na základě počtu dokončení v "
 "této kvótě?"
 
-#: admin/quotarow.php:316
-msgid "Exclude from the sample where the value is like"
-msgstr "Vynechat ze vzorku kde hodnota se podobá"
+#: admin/quotarow.php:384
+msgid "Edit row quota"
+msgstr ""
 
-#: admin/quotarow.php:334
+#: admin/quotarow.php:399
+msgid ""
+"All completed responses that match the sample criteria below will be counted "
+"towards the quota"
+msgstr ""
+
+#: admin/quotarow.php:403
+msgid ""
+"Only completed responses that have answered the following will be counted"
+msgstr ""
+
+#: admin/quotarow.php:404 admin/quotarow.php:433
+msgid "Question"
+msgstr ""
+
+#: admin/quotarow.php:404 admin/quotarow.php:459
+msgid "Comparison"
+msgstr ""
+
+#: admin/quotarow.php:404 admin/quotarow.php:459 admin/quotarow.php:487
+#: respondent.php:171 contactdetails.php:163
+msgid "Value"
+msgstr "Hodnota"
+
+#: admin/quotarow.php:432
+msgid "Add restriction based on answered questions"
+msgstr ""
+
+#: admin/quotarow.php:454
+msgid "All sample records will be excluded"
+msgstr ""
+
+#: admin/quotarow.php:458
+msgid ""
+"Completed responses that have the following sample details will be counted "
+"towards the quota and excluded when the quota is reached"
+msgstr ""
+
+#: admin/quotarow.php:459 admin/quotarow.php:483
+msgid "Sample record"
+msgstr ""
+
+#: admin/quotarow.php:481
+msgid "Add restriction based on sample records"
+msgstr ""
+
+#: admin/quotarow.php:509
+msgid "Current row quotas (click to edit)"
+msgstr ""
+
+#: admin/quotarow.php:528
+msgid "Currently no row quotas"
+msgstr "Nyní nejsou žádné kvóty"
+
+#: admin/quotarow.php:532
+msgid "Priority"
+msgstr ""
+
+#: admin/quotarow.php:532
+msgid "Select"
+msgstr ""
+
+#: admin/quotarow.php:540 admin/quotarow.php:548
 msgid "Add row quota"
 msgstr "Přidat kvótu řádku"
+
+#: admin/quotarow.php:552 admin/quotarow.php:557
+msgid "Import row quota"
+msgstr ""
+
+#: admin/quotarow.php:556
+msgid "Choose the CSV row quota file to import:"
+msgstr ""
 
 #: admin/operatorskill.php:149
 msgid "Assign operators to Skills"
@@ -3448,10 +3426,6 @@ msgstr "Zobrazit podrobnosti"
 msgid "Var"
 msgstr "Prom"
 
-#: respondent.php:171 contactdetails.php:163
-msgid "Value"
-msgstr "Hodnota"
-
 #: shifts.php:57
 msgid "Shift List"
 msgstr "Seznam směn"
@@ -3557,6 +3531,22 @@ msgstr "Výběr respondenta - Konec kvóty projektu"
 msgid "End call with outcome: Quota filled"
 msgstr "Ukončit hovor s výsledkem: Kvóta naplněna"
 
+#~ msgid " unassigned case(s) available within the specified call restrictions"
+#~ msgstr " dostupných nepřidělených případů patřící do zadaných omezení"
+
+#~ msgid "There are "
+#~ msgstr "Existuje "
+
+#~ msgid ""
+#~ "ERROR: There are no cases available that fall within call restrictions"
+#~ msgstr "CHYBA: Nejsou dostupné žádné případy, které spadají pod tyto omezení"
+
+#~ msgid "Call restrictions:"
+#~ msgstr "Omezení volání:"
+
+#~ msgid "POSSIBLE ERROR: Row quota reached for this question"
+#~ msgstr "MOŽNÁ CHYBA: Dosažena kvóta řádku pro tuto otázku"
+
 #~ msgid "Sorting cases"
 #~ msgstr "Řazení případů"
 
@@ -3619,6 +3609,66 @@ msgstr "Ukončit hovor s výsledkem: Kvóta naplněna"
 
 #~ msgid "Enable"
 #~ msgstr "Povolit"
+
+#~ msgid "like"
+#~ msgstr "jako"
+
+#~ msgid "Copied quotas"
+#~ msgstr "Kopírované kvóty"
+
+#~ msgid "Replicate: Where"
+#~ msgstr "Replikace: Kde"
+
+#~ msgid "Sample only. Stop calling where"
+#~ msgstr "Pouze vzorek. Přestat volat tam kde"
+
+#~ msgid "Current row quotas (click to delete)"
+#~ msgstr "Současné kvóty řádku (klikněte pro smazání)"
+
+#~ msgid "No question (Replicate)"
+#~ msgstr "Žádná otázka (Replikovat)"
+
+#~ msgid "Copy adjustments"
+#~ msgstr "Kopírovat úpravy"
+
+#~ msgid ""
+#~ "Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
+#~ msgstr ""
+#~ "Kopírovat kvóty z tohoto vzorku do (Žádná kontrola chyb/duplicity) s "
+#~ "úpravou: "
+
+#~ msgid "Stop calling"
+#~ msgstr "Přestat volat"
+
+#~ msgid "rows from this sample when:"
+#~ msgstr "řádků z tohoto vzorku když:"
+
+#~ msgid "Select a question for the row quota"
+#~ msgstr "Vyberte otázku pro kvótu řádku"
+
+#~ msgid "Copy quotas for this sample to (No error/duplicate checking): "
+#~ msgstr "Kopírovat kvóty z tohoto vzorku do (Žádná kontrola chyb/duplicity): "
+
+#~ msgid "Copy"
+#~ msgstr "Kopírovat"
+
+#~ msgid "Row quota reached (Closed)"
+#~ msgstr "Kvóta řádku dosažena (Uzavřeno)"
+
+#~ msgid "Row quota not yet reached (Open)"
+#~ msgstr "Kvóta řádku zatím nedosažena (Otevřeno)"
+
+#~ msgid "Sample only quota"
+#~ msgstr "Kvóta pouze pro vzorek"
+
+#~ msgid "Exclude from the sample where the value is like"
+#~ msgstr "Vynechat ze vzorku kde hodnota se podobá"
+
+#~ msgid "Select the sample variable to exclude"
+#~ msgstr "Vyberte proměnnou vzorku pro vynechání"
+
+#~ msgid "Enter the details for creating the row quota:"
+#~ msgstr "Zadejte údaje pro vytvoření kvóty řádku:"
 
 #~ msgid "No operators"
 #~ msgstr "Žádní operátoři"
