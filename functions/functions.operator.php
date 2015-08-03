@@ -1519,7 +1519,8 @@ function close_row_quota($questionnaire_sample_quota_row_id,$update = true)
   {
       $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
                FROM qsqr_sample
-               WHERE questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id";
+               WHERE questionnaire_sample_quota_row_id = $questionnaire_sample_quota_row_id
+               AND exclude_var_id > 0";
 
       $rev = $db->GetAll($sql2);
       
@@ -1699,7 +1700,8 @@ function update_single_row_quota($qsqri,$case_id = false)
   //all variables to exclude for this row quota
   $sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
            FROM qsqr_sample
-           WHERE questionnaire_sample_quota_row_id = $qsqri";
+           WHERE questionnaire_sample_quota_row_id = $qsqri
+           AND exclude_var_id > 0";
 
   $rev = $db->GetAll($sql2);
 
@@ -1953,7 +1955,8 @@ function update_quota_priorities($questionnaire_id)
 
 		$sql2 = "SELECT exclude_val,exclude_var,exclude_var_id,comparison
              FROM qsqr_sample
-             WHERE questionnaire_sample_quota_row_id = $qsqri";
+             WHERE questionnaire_sample_quota_row_id = $qsqri
+             AND exclude_var_id > 0";
 
 		$rev = $db->GetAll($sql2);
 

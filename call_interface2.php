@@ -478,8 +478,7 @@ switch($state)
 	//	print "<div class='status'>" . T_("Requires coding") . "</div>";
 		print "<form action='?' method='post'><div class=\"form-group\">";
 		display_outcomes(false,$call_attempt_id,$case_id);
-		print_r($rs);
-		if ($_POST['confirm']){
+		if (isset($_POST['confirm'])){
 			print "</div><input type='submit' class=\"btn btn-primary\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
 		}
 		break;

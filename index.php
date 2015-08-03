@@ -112,7 +112,7 @@ if (isset($_GET['endcase']))
 	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
 }
 
-$js = array("js/popup.js","js/tabber.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
+$js = array("js/popup.js","js/tabber.js","include/jquery/jquery.min.js","include/jquery-ui/jquery-ui.min.js");
 $body = true;
 $script = "";
 if (AUTO_LOGOUT_MINUTES !== false)

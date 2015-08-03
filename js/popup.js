@@ -3,14 +3,7 @@ function poptastic(url, title)
   var elem = jQuery("#inpage");
   if (elem.length > 0) {
     elem = jQuery(elem[0]);
-    if (elem.dialog("option", "title") == title) {
-      if (! elem.dialog("isOpen")) {
-	elem.dialog("open");
-      }
-      return;
-    } else {
-      elem.dialog("close").dialog("destroy").remove();
-    }
+    elem.dialog("close").dialog("destroy").remove();
   }
   jQuery('<iframe id="inpage" src="'+ url +'" />').dialog({
     autoOpen: true,

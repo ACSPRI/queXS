@@ -159,7 +159,7 @@ if (isset($_GET['endcase']))
 
 }
 
-$js = array("js/popup.js","js/tabber.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
+$js = array("js/popup.js","js/tabber.js","include/jquery/jquery.min.js","include/jquery-ui/jquery-ui.min.js");
 $body = true;
 $script = "";
 if (AUTO_LOGOUT_MINUTES !== false)
@@ -209,6 +209,7 @@ $sc = $scr['self_complete'];
 $ref = $scr['referral'];
 
 
+$availability = is_using_availability($case_id);
 ?>
 <div id="casefunctions" class="col-sm-2">
 <ul id="casefunctions" class="header ">
@@ -334,7 +335,6 @@ $ref = $scr['referral'];
 $ca = get_call_attempt($operator_id,true);
 $call_id = get_call($operator_id);
 $appointment = false;
-$availability = is_using_availability($case_id);
 if ($ca)
 {
 	$appointment = is_on_appointment($ca);
