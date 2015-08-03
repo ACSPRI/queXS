@@ -496,7 +496,7 @@ if ($questionnaire_id != false)
 	print "<div class='panel-body'>";
       if (empty($rs))
       {
-        print "<h4 class='well text-info'>" . T_("Currently NO Restrictions based on sample records") . " </p>" . T_("This sample will be limited to number of competions set in quota") . " </p>" . T_("Caling cases for this sample will be stopped when the quota is reached") . "</h4>";
+        print "<h4 class='well text-info'>" . T_("Currently NO Restrictions based on sample records") . " </p>" . T_("This sample will be limited to number of completions set in quota") . " </p>" . T_("Caling cases for this sample will be stopped when the quota is reached") . "</h4>";
       }
       else
       {
