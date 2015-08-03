@@ -62,7 +62,7 @@ include ("../lang.inc.php");
     <div class="container" style=" width: auto; padding-left: 1px;">
       <div class="navbar-header">
 		<a class="pull-left menubutton " href="#"  style="width: 50px; padding-left: 10px;" data-toggle="tooltip" data-placement="right" title="<?php echo T_("Click to Collapse / Expand Sidebar MENU ");?>">
-		<i class="fa fa-globe fa-2x fa-spin"></i></a>		
+		<i class="fa fa-globe fa-2x"></i></a>		
 		<a class="navbar-brand" href="index.php"><?php echo COMPANY_NAME ;?> <span class="bold"><?php echo ADMIN_PANEL_NAME ;?></span></a>
 	  </div >
 
