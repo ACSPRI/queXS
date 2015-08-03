@@ -28,7 +28,7 @@
 	*/
 	var Timepicker = function () {
 		this.regional = []; // Available regional settings, indexed by language code
-		this.regional[''] = { // Default regional settings
+		this.regional['en'] = { // Default regional settings
 			currentText: 'Now',
 			closeText: 'Done',
 			amNames: ['AM', 'A'],
@@ -104,7 +104,7 @@
 			defaultValue: null,
 			parse: 'strict'
 		};
-		$.extend(this._defaults, this.regional['']);
+		$.extend(this._defaults, this.regional['en']);
 	};
 
 	$.extend(Timepicker.prototype, {

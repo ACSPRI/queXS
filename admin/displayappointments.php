@@ -47,7 +47,7 @@ $js_head = array(
 "../include/timepicker/jquery-ui.min.js",
 //"../include/jquery-ui/jquery-ui.min.js",
 "../include/timepicker/jquery-ui-timepicker-addon.js",
-"../include/timepicker/jquery-ui-timepicker-ru.js",
+//"../include/timepicker/jquery-ui-timepicker-ru.js",
 				);
 $js_foot = array(
 "../js/bootstrap-confirmation.js",
@@ -103,7 +103,7 @@ if (isset($_GET['start']) && isset($_GET['end']) && isset($_GET['update']))
 }
 	
 
-if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(($_GET['new'] == 'new') && isset($_GET['case_id'])))
+if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET['new']) && isset($_GET['case_id'])))
 {
 	$appointment_id = bigintval($_GET['appointment_id']);
 	$case_id = bigintval($_GET['case_id']);
