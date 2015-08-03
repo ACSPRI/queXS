@@ -72,11 +72,11 @@ include ("../lang.inc.php");
               <i class="fa fa-user fa fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
             </a>
 			<!--- User menu // not connected to pages so not working yet //  could be hidden -->
-            <ul class="dropdown-menu" role="menu">
+<!---       <ul class="dropdown-menu" role="menu">
               <li><a href="?page=settings.php"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
 			  <li><a href="../screenloc.php"><i class="fa fa-lock fa-fw "></i>&ensp;<?php print T_("Lock Screen"); ?></a></li>
               <li><a href="../logout.php"><i class="fa fa-sign-out fa-fw "></i>&ensp;<?php print T_("Logout"); ?> </a></li>
-            </ul>
+            </ul> -->
           </li>
         </ul>
 	  
