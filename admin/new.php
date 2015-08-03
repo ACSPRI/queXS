@@ -269,7 +269,7 @@ $surveys = $db->GetAll($sql);
 	<div class="form-group">
 		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
 		<div class="col-sm-4">
-			<input class="form-control"  name="lime_endurl" id="url" type="url" placeholder="<?php print SITE_URL ;?>" />
+			<input class="form-control"  name="lime_endurl" id="url" type="url" />
 		</div>
 	</div>
 </div>

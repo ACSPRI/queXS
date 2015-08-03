@@ -302,6 +302,11 @@ if (!defined('LDB_HOST')) define('LDB_HOST', DB_HOST);
 if (!defined('LDB_NAME')) define('LDB_NAME', DB_NAME);
 if (!defined('LDB_TYPE')) define('LDB_TYPE', DB_TYPE);
 
+
+if (!defined('COMPANY_NAME')) define ('COMPANY_NAME', 'queXS ');
+if (!defined('ADMIN_PANEL_NAME')) define ('ADMIN_PANEL_NAME',' Administration Panel');
+
+
 /**
  * Debugging
  */
