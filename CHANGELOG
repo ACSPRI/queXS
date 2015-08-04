@@ -2,7 +2,7 @@ queXS 1.13.0 - Changes since 1.12.1
 
 Overall changes:
 
-*Very big changes to the Administrative interface - thank you to Alex for your hard work.
+*Very big changes to the Administrative interface - thank you to Alex (https://launchpad.net/~ddrmoscow) for your hard work.
 *Sample variables are now stored in a more efficient way in the database.
 
 Specific changes (see this branch for details: https://bazaar.launchpad.net/~ddrmoscow/quexs/Features/changes):
