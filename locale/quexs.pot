@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-03 13:49+1000\n"
+"POT-Creation-Date: 2015-08-04 10:03+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -476,7 +476,7 @@ msgstr ""
 msgid "You must supply a primary phone number"
 msgstr ""
 
-#: referral.php:214 index.php:167 index_interface2.php:221
+#: referral.php:214 index.php:167 index_interface2.php:222
 msgid "Referral"
 msgstr ""
 
@@ -492,7 +492,7 @@ msgstr ""
 msgid "Referrals not available for this questionnaire"
 msgstr ""
 
-#: performance.php:61 index.php:277 index_interface2.php:293
+#: performance.php:61 index.php:277 index_interface2.php:294
 msgid "Performance"
 msgstr ""
 
@@ -623,7 +623,7 @@ msgstr ""
 #: call_interface2.php:326 call_interface2.php:442 call_interface2.php:447
 #: call_interface2.php:463 call_interface2.php:469 call.php:276 call.php:278
 #: call.php:394 call.php:399 call.php:415 call.php:421
-#: index_interface2.php:223
+#: index_interface2.php:224
 msgid "End work"
 msgstr ""
 
@@ -841,7 +841,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: status_interface2.php:176 index.php:163 index_interface2.php:216
+#: status_interface2.php:176 index.php:163 index_interface2.php:217
 msgid "Appointment"
 msgstr ""
 
@@ -889,7 +889,7 @@ msgstr ""
 #: callhistory.php:83 calllist.php:84 admin/outcomes.php:141
 #: admin/outcomes.php:163 admin/outcomes.php:214 admin/outcomes.php:256
 #: admin/callhistory.php:124 admin/callhistory.php:149
-#: admin/supervisor.php:399 admin/casestatus.php:116 index_interface2.php:215
+#: admin/supervisor.php:399 admin/casestatus.php:116 index_interface2.php:216
 msgid "Outcome"
 msgstr ""
 
@@ -978,7 +978,7 @@ msgid "Supervisor chat is not enabled"
 msgstr ""
 
 #: email.php:279 email.php:283 email.php:289 email.php:310 email.php:340
-#: index.php:166 index_interface2.php:218
+#: index.php:166 index_interface2.php:219
 msgid "Email"
 msgstr ""
 
@@ -1022,7 +1022,7 @@ msgstr ""
 msgid "No calls ever made"
 msgstr ""
 
-#: availability.php:56 index.php:231 index_interface2.php:249
+#: availability.php:56 index.php:231 index_interface2.php:250
 msgid "Availability"
 msgstr ""
 
@@ -1781,7 +1781,7 @@ msgstr ""
 msgid "Operator call outcomes"
 msgstr ""
 
-#: admin/outcomes.php:268 index.php:259 index_interface2.php:275
+#: admin/outcomes.php:268 index.php:259 index_interface2.php:276
 msgid "Shifts"
 msgstr ""
 
@@ -2470,7 +2470,7 @@ msgstr ""
 msgid "Sample call attempts report"
 msgstr ""
 
-#: admin/index.php:138 index.php:250 index_interface2.php:266
+#: admin/index.php:138 index.php:250 index_interface2.php:267
 msgid "Call history"
 msgstr ""
 
@@ -2796,7 +2796,7 @@ msgid "No sample data for this case"
 msgstr ""
 
 #: admin/supervisor.php:348 admin/displayappointments.php:233
-#: admin/databasestrings.php:68 index.php:268 index_interface2.php:284
+#: admin/databasestrings.php:68 index.php:268 index_interface2.php:285
 msgid "Appointments"
 msgstr ""
 
@@ -2943,7 +2943,7 @@ msgid "Currently NO Restrictions based on sample records"
 msgstr ""
 
 #: admin/quotarow.php:499
-msgid "This sample will be limited to number of competions set in quota"
+msgid "This sample will be limited to number of completions set in quota"
 msgstr ""
 
 #: admin/quotarow.php:499
@@ -3656,11 +3656,11 @@ msgstr ""
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr ""
 
-#: call_interface2.php:483 call.php:451
+#: call_interface2.php:482 call.php:451
 msgid "Assign outcome"
 msgstr ""
 
-#: call_interface2.php:488 call.php:455
+#: call_interface2.php:487 call.php:455
 msgid "Error: Close window"
 msgstr ""
 
@@ -3720,7 +3720,7 @@ msgstr ""
 msgid "Supervisor"
 msgstr ""
 
-#: index.php:169 index_interface2.php:229
+#: index.php:169 index_interface2.php:230
 msgid "Arrow for expanding or contracting"
 msgstr ""
 
@@ -3728,23 +3728,23 @@ msgstr ""
 msgid "Restart"
 msgstr ""
 
-#: index.php:223 index_interface2.php:241
+#: index.php:223 index_interface2.php:242
 msgid "Notes"
 msgstr ""
 
-#: index.php:241 index_interface2.php:257 contactdetails.php:70
+#: index.php:241 index_interface2.php:258 contactdetails.php:70
 msgid "Contact details"
 msgstr ""
 
-#: index.php:285 index_interface2.php:301
+#: index.php:285 index_interface2.php:302
 msgid "Work history"
 msgstr ""
 
-#: index.php:293 index_interface2.php:309 project_info.php:61
+#: index.php:293 index_interface2.php:310 project_info.php:61
 msgid "Project information"
 msgstr ""
 
-#: index.php:309 index_interface2.php:318
+#: index.php:309 index_interface2.php:319
 msgid "Info"
 msgstr ""
 
