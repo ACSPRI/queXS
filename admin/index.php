@@ -142,7 +142,7 @@ include ("../lang.inc.php");
                 <li><a href="?g=6&amp;page=callhistory.php" class=""><i class="fa fa-history fa-fw"></i><?php print T_("Call history") ;?></a></li>
                 <li><a href="?g=6&amp;page=shiftreport.php"><i class="fa fa-th-large fa-fw"></i><?php print T_("Shift reports") ;?></a></li>
                 <li><a href="?g=6&amp;page=quotareport.php" ><i class="fa fa-filter fa-fw"></i><?php print T_("Quota report") ;?></a></li>
-                <li><a href="?g=6&amp;page=outcomes.php"><i class="fa fa-bar-chart fa-fw"></i><?php print T_("Queistionnaire outcomes") ;?></a></li>
+                <li><a href="?g=6&amp;page=outcomes.php"><i class="fa fa-bar-chart fa-fw"></i><?php print T_("Questionnaire outcomes") ;?></a></li>
                 <li><a href="?g=6&amp;page=dataoutput.php"><i class="fa fa-download fa-fw"></i><?php print T_("Data output") ;?></a></li>
               </ul>
           </li>
