@@ -67,8 +67,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
 	$js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Respondent Selector"),true,array("css/table.css","css/respondent.css"),$js);
-
+xhtml_head(T_("Respondent Selector"),true,array("css/table.css","css/respondent.css"),$js,false,false,false,false,false);
 
 //display the respondents as a drop down list for this call attempt
 // display in the operators time

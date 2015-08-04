@@ -142,7 +142,7 @@ else if (HEADER_EXPANDER_MANUAL)
 	$js[] = "js/headerexpandmanual.js";
 }
 
-xhtml_head(T_("queXS"), $body, array("css/index.css","css/tabber.css","include/jquery-ui/jquery-ui.min.css") , $js);
+xhtml_head(T_("queXS"), $body, array("css/index.css","css/tabber.css","include/jquery-ui/jquery-ui.min.css") , $js,false,false,false,false,false);
 print $script;
 
 $case_id = get_case_id($operator_id,true);
