@@ -126,10 +126,17 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 		if ($_GET['new'] == 'new'){$title = T_("Create NEW appointment");} else{$title = T_("Edit appointment"); $subtitle = "ID&ensp;" . $appointment_id;} 
 		
 		xhtml_head($title,true,$css,$js_head,false,false,false,$subtitle);
-		$lang = DEFAULT_LOCALE;
-		$sql = "SELECT CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, CONVERT_TZ(s.end,'UTC',r.Time_zone_name) as enddate FROM `shift` as s, `case` as c, `respondent` as r WHERE s.questionnaire_id = c.questionnaire_id AND c.case_id = $case_id AND r.case_id = c.case_id ORDER BY  s.end DESC LIMIT 1";
-			$rs = $db->GetRow($sql); $startdate = $rs['startdate'];$enddate = $rs['enddate'];
-			
+
+    $lang = DEFAULT_LOCALE;
+
+    $sql = "SELECT  CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 10 YEAR),'SYSTEM',r.Time_zone_name) as enddate
+                    FROM `case` as c, `respondent` as r 
+                    WHERE c.case_id = '$case_id' AND r.case_id = c.case_id";
+
+    $rs = $db->GetRow($sql); 
+    $startdate = $rs['startdate'];
+    $enddate = $rs['enddate'];
+
 		print "<script type='text/javascript'> 
 		$(document).ready(function() { var startDateTextBox = $('#start'); var endDateTextBox = $('#end');
 			$.timepicker.datetimeRange( 
@@ -140,13 +147,13 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 				timeFormat: 'HH:mm:ss',
 				showSecond: false,
 				regional: '$lang',
-				hourMin: 9,
-				hourMax: 21,
+				hourMin: 0,
+				hourMax: 23,
 				stepMinute: 5,
 				hourGrid: 2,
 				minuteGrid: 10,
-				minDate: '$startdate',
-				maxDate: '$enddate',
+        minDate: '$startdate',
+        maxDate: '$enddate'
 				});});</script>";
 
 		if ($_GET['new'] =='new'){
