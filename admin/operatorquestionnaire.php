@@ -205,6 +205,8 @@ function checkQid(q)
 		QidOn = 1;
 	else
 		QidOn = 0;
+  
+  $('input').iCheck('update');
 }
 
 function checkVid(v)
@@ -226,14 +228,12 @@ function checkVid(v)
 	if (VidOn == 0)
 		VidOn = 1;
 	else
-		VidOn = 0;
+    VidOn = 0;
+
+  $('input').iCheck('update');
 }
 
 </script>
-
-</head>
-<body>
-
 
 <?php 
 
@@ -266,9 +266,6 @@ foreach($operators as $v)
 
 print "</table><input class='btn btn-default fa' type='submit' name='submit' value='" . T_("Assign operators to questionnaires") . "'/></form>";
 
-
-xhtml_foot();
-
 ?>
 
 <script type="text/javascript">
@@ -277,3 +274,6 @@ $('input').iCheck({
 	increaseArea: '30%'
 });
 </script>
+
+<?php
+xhtml_foot();
