@@ -93,7 +93,7 @@ if (isset($_POST['day']))
 
 xhtml_head(T_("Set default shift times"),true,$css,$js_head);//T_("Modify shift template"),array("../css/shifts.css"),array("../js/addrow-v2.js")
 
-$sql = "SELECT CONVERT_TZ(NOW(),'" . DEFAULT_TIME_ZONE . "','UTC') as t";//'Australia/Victoria'
+$sql = "SELECT CONVERT_TZ(NOW(),'" . get_setting("DEFAULT_TIME_ZONE") . "','UTC') as t";//'Australia/Victoria'
 
 $rs = $db->GetRow($sql);
 
