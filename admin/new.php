@@ -144,8 +144,16 @@ $_POST['import_file'] = false;
 
 
 <a href="questionnairelist.php" class="btn btn-default pull-left" ><i class="fa fa-list text-primary"></i>&emsp;<?php echo T_("Go to");?>&ensp;<?php echo T_("Questionnaire management");?> </a>
-
 	
+<?php	
+$sql = "SELECT s.sid as sid, CONCAT(s.sid,' -> ',sl.surveyls_title) AS title
+	FROM " . LIME_PREFIX . "surveys AS s
+	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
+	WHERE s.active = 'Y'
+	GROUP BY s.sid";
+$surveys = $db->GetAll($sql);
+
+if (!empty($surveys)){?>
 
 <form enctype="multipart/form-data" action="" method="post" class="form-horizontal col-lg-12" >
 
@@ -157,25 +165,14 @@ $_POST['import_file'] = false;
 		</div>
 	</div>
 	
-<?php	
-$sql = "SELECT s.sid as sid, sl.surveyls_title AS title
-	FROM " . LIME_PREFIX . "surveys AS s
-	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
-	WHERE s.active = 'Y'
-	GROUP BY s.sid";
-$surveys = $db->GetAll($sql);
-?>
 	<div class="form-group row">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Select limesurvey instrument:");?> </label>
 		<div class='col-sm-4'>
-		<?php if (!empty($surveys)){?>
 			<select name="select" class="form-control">
 			<?php foreach($surveys as $s){?>  
-				<option value="<?php echo $s['sid'];?>"><?php echo T_("Existing instrument:"), "&ensp;", $s['title'] ;?></option><?php } ?>
+				<option value="<?php echo $s['sid'];?>"><?php echo T_("Survey"), ":&ensp;", $s['title'] ;?></option><?php } ?>
 			</select>
-		<?php } else { ?>
-			<a class="btn btn-lime" href="<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Create an instrument in Limesurvey") ;?></a> <?php } ?>
-		</div>		
+		</div>
 		<div class='col-sm-4'>
 			<strong><?php echo T_("or") ;?>&emsp;</strong>
 			<a class="btn btn-lime" href="<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Create an instrument in Limesurvey") ;?></a>
@@ -189,15 +186,9 @@ $surveys = $db->GetAll($sql);
 				<option value="none"><?php  echo T_("No respondent selection (go straight to questionnaire)"); ?></option>
 				<option value="old" ><?php echo T_("Use basic respondent selection text (below)"); ?></option>
 			<?php 
-			$sql = "SELECT s.sid as sid, sl.surveyls_title AS title
-					FROM " . LIME_PREFIX . "surveys AS s
-					LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
-					WHERE s.active = 'Y'";
-			$surveys = $db->GetAll($sql);
-				
-			if (!empty($surveys)){ foreach($surveys as $s){ ?> 
-				<option value="<?php echo $s['sid'];?>"><?php echo T_("Existing instrument:") ,"&ensp;", $s['title'] ;?></option>
-			<?php } } ?>
+			foreach($surveys as $s){ ?> 
+				<option value="<?php echo $s['sid'];?>"><?php echo T_("Survey") ,":&ensp;", $s['title'] ;?></option>
+			<?php }?>
 			</select>
 		</div>
 	</div>
@@ -343,7 +334,7 @@ $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 </div>
 
 
-<div class="panel  panel-default">
+<div class="panel panel-default">
   <div class="panel-heading">
 	<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
     <h3 class="panel-title "><?php  echo T_("Project end text (thank you screen):");?></h3>
@@ -353,7 +344,7 @@ $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
   </div>
 </div>
 
-<div class="panel panel-default ">
+<div class="panel panel-default">
   <div class="panel-heading">
 	<i class="fa fa-fw fa-2x wminimize fa-chevron-circle-up text-primary pull-left" data-toggle="tooltip" title="<?php echo T_("Expand/Collapse");?>" style="margin-top: -5px;"></i>
     <h3 class="panel-title"><?php echo T_("Project information for interviewers/operators:");?></h3>
@@ -365,13 +356,25 @@ $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 
 <div class="row form-group">
 	<div class="col-sm-4 ">
-		<a href="questionnairelist.php"  class="btn btn-default pull-right" ><i class="fa fa-list text-primary"></i>&emsp;<?php echo T_("Go to");?>&ensp;<?php echo T_("Questionnaire management");?></a>
+		<a href="questionnairelist.php"  class="btn btn-default pull-right" ><i class="fa fa-list text-primary"></i>&emsp;<?php echo T_("Cancel");?></a>
 	</div>
 	<div class="col-sm-4 ">
-		<button type="submit" class="btn btn-default pull-right" name="import_file" ><i class="fa fa-check-square-o fa-lg text-primary"></i>&emsp;<?php  echo T_("Create Questionnaire"); ?></button>
+		<button type="submit" class="btn btn-primary pull-right btn-lg" name="import_file" ><i class="fa fa-check-square-o fa-lg"></i>&emsp;<?php  echo T_("Create Questionnaire"); ?></button>
 	</div>
 </div>
+
 </form>
+
+<?php }
+else { ?>
+		<div class='col-sm-6 col-sm-offset-1'>
+		<h3 class="alert alert-warning"> <?php echo T_("NO active Lime surveys available");?> </h3>
+			<a class="btn btn-lime btn-lg btn-block" href="<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Create an instrument in Limesurvey");?>  </a>
+			<h4 class="text-center"><?php echo T_("or"); ?></h4>
+			<a class="btn btn-lime btn-lg btn-block" href="<?php echo LIME_URL ;?>admin/admin.php?action=listsurveys"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Administer instruments with Limesurvey");?>  </a> 
+		</div>
+<?php } ?>
+
 
 <?php 
 xhtml_foot($js_foot);//

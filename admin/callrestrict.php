@@ -46,7 +46,7 @@ include ("../functions/functions.xhtml.php");
 
 $css = array(
 "../include/bootstrap/css/bootstrap.min.css", 
-//"../include/bootstrap-3.3.2/css/bootstrap-theme.min.css",
+//"../include/bootstrap/css/bootstrap-theme.min.css",
 //"../include/font-awesome/css/font-awesome.css",
 "../include/clockpicker/dist/bootstrap-clockpicker.min.css",
 "../css/custom.css"

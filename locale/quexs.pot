@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-04 13:57+1000\n"
+"POT-Creation-Date: 2015-08-05 10:48+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -535,9 +535,9 @@ msgid "Add note"
 msgstr ""
 
 #: casenote.php:69 admin/samplelist.php:284 admin/samplelist.php:495
-#: admin/samplesearch.php:102 admin/questionnairelist.php:368
-#: admin/questionnairelist.php:503 admin/questionnairelist.php:525
-#: admin/questionnairelist.php:533 admin/callhistory.php:137
+#: admin/samplesearch.php:102 admin/questionnairelist.php:370
+#: admin/questionnairelist.php:508 admin/questionnairelist.php:530
+#: admin/questionnairelist.php:538 admin/callhistory.php:137
 #: admin/availability.php:121 admin/operatorlist.php:182 admin/import.php:43
 #: admin/import.php:81 admin/import.php:112 admin/casesbyoutcome.php:54
 #: admin/assignsample.php:150 admin/assignsample.php:203
@@ -594,15 +594,15 @@ msgstr ""
 #: waitnextcase_interface2.php:136 admin/operators.php:284
 #: admin/operators.php:296 admin/operators.php:300 admin/operators.php:304
 #: admin/operators.php:308 admin/samplesearch.php:96
-#: admin/supervisorchat.php:74 admin/questionnairelist.php:380
-#: admin/questionnairelist.php:383 admin/questionnairelist.php:387
-#: admin/questionnairelist.php:391 admin/questionnairelist.php:395
+#: admin/supervisorchat.php:74 admin/questionnairelist.php:385
+#: admin/questionnairelist.php:388 admin/questionnairelist.php:392
+#: admin/questionnairelist.php:396 admin/questionnairelist.php:400
 #: admin/operatorlist.php:239 admin/operatorlist.php:251
 #: admin/operatorlist.php:255 admin/assignsample.php:173
 #: admin/assignsample.php:176 admin/assignsample.php:264
 #: admin/assignsample.php:268 admin/supervisor.php:185 admin/quotarow.php:392
-#: admin/quotarow.php:596 admin/new.php:208 admin/new.php:215
-#: admin/new.php:222 admin/new.php:229 admin/new.php:236
+#: admin/quotarow.php:596 admin/new.php:199 admin/new.php:206
+#: admin/new.php:213 admin/new.php:220 admin/new.php:227
 msgid "Yes"
 msgstr ""
 
@@ -1452,7 +1452,7 @@ msgid "characters"
 msgstr ""
 
 #: admin/operators.php:267 admin/operators.php:276
-#: admin/questionnairelist.php:375 admin/operatorlist.php:225
+#: admin/questionnairelist.php:380 admin/operatorlist.php:225
 #: admin/operatorlist.php:233 admin/assignsample.php:228
 #: admin/quotarow.php:582 admin/shiftreport.php:104
 #: admin/displayappointments.php:258 admin/displayappointments.php:277
@@ -1474,15 +1474,15 @@ msgstr ""
 
 #: admin/operators.php:284 admin/operators.php:296 admin/operators.php:300
 #: admin/operators.php:304 admin/operators.php:308 admin/supervisorchat.php:74
-#: admin/questionnairelist.php:380 admin/questionnairelist.php:383
-#: admin/questionnairelist.php:387 admin/questionnairelist.php:391
-#: admin/questionnairelist.php:395 admin/operatorlist.php:239
+#: admin/questionnairelist.php:385 admin/questionnairelist.php:388
+#: admin/questionnairelist.php:392 admin/questionnairelist.php:396
+#: admin/questionnairelist.php:400 admin/operatorlist.php:239
 #: admin/operatorlist.php:251 admin/operatorlist.php:255
 #: admin/assignsample.php:173 admin/assignsample.php:174
 #: admin/assignsample.php:176 admin/assignsample.php:264
 #: admin/assignsample.php:265 admin/assignsample.php:268
-#: admin/quotarow.php:392 admin/quotarow.php:596 admin/new.php:208
-#: admin/new.php:215 admin/new.php:222 admin/new.php:229 admin/new.php:236
+#: admin/quotarow.php:392 admin/quotarow.php:596 admin/new.php:199
+#: admin/new.php:206 admin/new.php:213 admin/new.php:220 admin/new.php:227
 msgid "No"
 msgstr ""
 
@@ -2004,136 +2004,140 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: admin/questionnairelist.php:347
+#: admin/questionnairelist.php:348
 msgid "Modify Questionnaire "
 msgstr ""
 
 #: admin/questionnairelist.php:370
+msgid "Assigned survey"
+msgstr ""
+
+#: admin/questionnairelist.php:374
 msgid "Edit instrument in Limesurvey"
 msgstr ""
 
-#: admin/questionnairelist.php:375 admin/questionnairelist.php:376
-#: admin/new.php:154 admin/new.php:156
+#: admin/questionnairelist.php:380 admin/questionnairelist.php:381
+#: admin/new.php:162 admin/new.php:164
 msgid "Name for questionnaire:"
 msgstr ""
 
-#: admin/questionnairelist.php:379 admin/new.php:206
+#: admin/questionnairelist.php:384 admin/new.php:197
 msgid "Restrict appointments to shifts?"
 msgstr ""
 
-#: admin/questionnairelist.php:382 admin/new.php:213
+#: admin/questionnairelist.php:387 admin/new.php:204
 msgid "Restrict work to shifts?"
 msgstr ""
 
-#: admin/questionnairelist.php:386 admin/new.php:220
+#: admin/questionnairelist.php:391 admin/new.php:211
 msgid "Questionnaire for testing only?"
 msgstr ""
 
-#: admin/questionnairelist.php:390 admin/new.php:227
+#: admin/questionnairelist.php:395 admin/new.php:218
 msgid "Allow operators to generate referrals?"
 msgstr ""
 
-#: admin/questionnairelist.php:394 admin/new.php:234
+#: admin/questionnairelist.php:399 admin/new.php:225
 msgid "Allow for respondent self completion via email invitation?"
 msgstr ""
 
-#: admin/questionnairelist.php:399 admin/new.php:242
+#: admin/questionnairelist.php:404 admin/new.php:233
 msgid "Questionnaire display mode for respondent"
 msgstr ""
 
-#: admin/questionnairelist.php:402 admin/new.php:245
+#: admin/questionnairelist.php:407 admin/new.php:236
 msgid "All in one"
 msgstr ""
 
-#: admin/questionnairelist.php:403 admin/new.php:246
+#: admin/questionnairelist.php:408 admin/new.php:237
 msgid "Question by question"
 msgstr ""
 
-#: admin/questionnairelist.php:404 admin/new.php:247
+#: admin/questionnairelist.php:409 admin/new.php:238
 msgid "Group at a time"
 msgstr ""
 
-#: admin/questionnairelist.php:409 admin/new.php:252
+#: admin/questionnairelist.php:414 admin/new.php:243
 msgid "Limesurvey template for respondent"
 msgstr ""
 
-#: admin/questionnairelist.php:428 admin/new.php:270
+#: admin/questionnairelist.php:433 admin/new.php:261
 msgid "URL to forward respondents on self completion (required)"
 msgstr ""
 
-#: admin/questionnairelist.php:439 admin/questionnairelist.php:449
-#: admin/questionnairelist.php:459 admin/questionnairelist.php:469
-#: admin/questionnairelist.php:485 admin/questionnairelist.php:495
-#: admin/new.php:306 admin/new.php:316 admin/new.php:326 admin/new.php:336
-#: admin/new.php:348 admin/new.php:358
+#: admin/questionnairelist.php:444 admin/questionnairelist.php:454
+#: admin/questionnairelist.php:464 admin/questionnairelist.php:474
+#: admin/questionnairelist.php:490 admin/questionnairelist.php:500
+#: admin/new.php:297 admin/new.php:307 admin/new.php:317 admin/new.php:327
+#: admin/new.php:339 admin/new.php:349
 msgid "Expand/Collapse"
 msgstr ""
 
-#: admin/questionnairelist.php:440 admin/new.php:307
+#: admin/questionnairelist.php:445 admin/new.php:298
 msgid "Respondent selection introduction:"
 msgstr ""
 
-#: admin/questionnairelist.php:450 admin/new.php:317
+#: admin/questionnairelist.php:455 admin/new.php:308
 msgid "Respondent selection project introduction:"
 msgstr ""
 
-#: admin/questionnairelist.php:460 admin/new.php:327
+#: admin/questionnairelist.php:465 admin/new.php:318
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr ""
 
-#: admin/questionnairelist.php:470 admin/new.php:337
+#: admin/questionnairelist.php:475 admin/new.php:328
 msgid "Message to leave on an answering machine:"
 msgstr ""
 
-#: admin/questionnairelist.php:480
+#: admin/questionnairelist.php:485
 msgid "Edit respondent selection instrument in Limesurvey"
 msgstr ""
 
-#: admin/questionnairelist.php:486 admin/new.php:349
+#: admin/questionnairelist.php:491 admin/new.php:340
 msgid "Project end text (thank you screen):"
 msgstr ""
 
-#: admin/questionnairelist.php:496 admin/new.php:359
+#: admin/questionnairelist.php:501 admin/new.php:350
 msgid "Project information for interviewers/operators:"
 msgstr ""
 
-#: admin/questionnairelist.php:504
+#: admin/questionnairelist.php:509
 msgid "Update Questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:518
+#: admin/questionnairelist.php:523
 msgid "Delete Questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:520
+#: admin/questionnairelist.php:525
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
 msgstr ""
 
-#: admin/questionnairelist.php:521
+#: admin/questionnairelist.php:526
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
 "operators, clients and the questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:522
+#: admin/questionnairelist.php:527
 msgid "Please confirm you wish to delete the questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:525
+#: admin/questionnairelist.php:530
 msgid "Delete this questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:531 admin/index.php:100 admin/new.php:136
-#: admin/new.php:146 admin/new.php:368
+#: admin/questionnairelist.php:536 admin/index.php:100 admin/new.php:136
+#: admin/new.php:146
 msgid "Questionnaire management"
 msgstr ""
 
-#: admin/questionnairelist.php:534 admin/index.php:99 admin/new.php:42
+#: admin/questionnairelist.php:539 admin/index.php:99 admin/new.php:42
 msgid "Create a new questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:552
+#: admin/questionnairelist.php:557
 msgid "Edit Lime survey"
 msgstr ""
 
@@ -2366,7 +2370,7 @@ msgid "Enter new sample name..."
 msgstr ""
 
 #: admin/index.php:50
-msgid "Administrative Tools"
+msgid "queXS Administration"
 msgstr ""
 
 #: admin/index.php:67
@@ -2397,11 +2401,11 @@ msgstr ""
 msgid "Questionnairies"
 msgstr ""
 
-#: admin/index.php:98 admin/new.php:177 admin/new.php:181
+#: admin/index.php:98 admin/new.php:178 admin/new.php:372
 msgid "Create an instrument in Limesurvey"
 msgstr ""
 
-#: admin/index.php:101
+#: admin/index.php:101 admin/new.php:374
 msgid "Administer instruments with Limesurvey"
 msgstr ""
 
@@ -2763,7 +2767,7 @@ msgstr ""
 msgid "Select case"
 msgstr ""
 
-#: admin/supervisor.php:142 admin/new.php:180
+#: admin/supervisor.php:142 admin/new.php:177 admin/new.php:373
 msgid "or"
 msgstr ""
 
@@ -2775,7 +2779,7 @@ msgstr ""
 msgid "Set an outcome for this call"
 msgstr ""
 
-#: admin/supervisor.php:166
+#: admin/supervisor.php:166 admin/new.php:359
 msgid "Cancel"
 msgstr ""
 
@@ -3337,11 +3341,11 @@ msgstr ""
 msgid "No, Thank you, go to"
 msgstr ""
 
-#: admin/new.php:146 admin/new.php:368
+#: admin/new.php:146
 msgid "Go to"
 msgstr ""
 
-#: admin/new.php:156
+#: admin/new.php:164
 msgid "Enter New questionnaire name.."
 msgstr ""
 
@@ -3349,24 +3353,28 @@ msgstr ""
 msgid "Select limesurvey instrument:"
 msgstr ""
 
-#: admin/new.php:174 admin/new.php:199
-msgid "Existing instrument:"
+#: admin/new.php:173 admin/new.php:190
+msgid "Survey"
 msgstr ""
 
-#: admin/new.php:186
+#: admin/new.php:183
 msgid "Respondent selection type:"
 msgstr ""
 
-#: admin/new.php:189
+#: admin/new.php:186
 msgid "No respondent selection (go straight to questionnaire)"
 msgstr ""
 
-#: admin/new.php:190
+#: admin/new.php:187
 msgid "Use basic respondent selection text (below)"
 msgstr ""
 
-#: admin/new.php:371
+#: admin/new.php:362
 msgid "Create Questionnaire"
+msgstr ""
+
+#: admin/new.php:371
+msgid "NO active Lime surveys available"
 msgstr ""
 
 #: admin/databasestrings.php:32 rs_intro_interface2.php:76

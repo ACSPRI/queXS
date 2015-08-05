@@ -326,7 +326,7 @@ if ($questionnaire_id != false)
         {
           if (count($data) > 2)
           {
-            //one quota record per row
+            //one quota record per row,  placed in order of records sequence
           	$description = $db->quote($data[0]);
 			$completions = intval($data[1]);
           	$autoprioritise = 0;
@@ -431,7 +431,7 @@ if ($questionnaire_id != false)
       if (isset($_GET['sgqa']))
         $ssgqa = $db->qstr($_GET['sgqa']);
 
-      //select question
+      //select question + corrected question order as in questionnaire with subquestions 
   		$sql = "SELECT CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) as value, CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END, '&ensp;->&ensp;' , CASE WHEN lq.parent_qid = 0 THEN lq.question ELSE CONCAT(lq2.question, ' : ', lq.question) END) as description, CASE WHEN $ssgqa LIKE CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) THEN 'selected=\'selected\'' ELSE '' END AS selected
 	  		FROM `" . LIME_PREFIX . "questions` AS lq
   			LEFT JOIN `" . LIME_PREFIX . "questions` AS lq2 ON ( lq2.qid = lq.parent_qid )
