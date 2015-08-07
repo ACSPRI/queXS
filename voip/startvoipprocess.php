@@ -45,6 +45,14 @@ include (realpath(dirname(__FILE__) . "/../db.inc.php"));
 include (realpath(dirname(__FILE__) . "/../functions/functions.process.php"));
 
 //end any other process
+$p = is_process_running(2);
+if ($p)
+{
+	kill_process($p);
+	end_process($p);
+}
+start_process(realpath(dirname(__FILE__) . "/../admin/systemsortprocess.php"),2);
+
 
 $p = is_process_running();
 if ($p)
@@ -53,5 +61,6 @@ if ($p)
 	end_process($p);
 }
 start_process(realpath(dirname(__FILE__) . "/../admin/process.php"));
+
 
 ?>
