@@ -92,6 +92,57 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 		VALUES('$questionnaire_id','$sid','$cm','$cam','$selecttype','$am', '$an')";
 
 	$db->Execute($sql);
+
+	if (isset($_GET['generatecases']))
+	{
+		include_once("../functions/functions.operator.php");
+
+		$db->StartTrans();
+
+		$lime_sid = $db->GetOne("SELECT lime_sid FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
+		$testing = $db->GetOne("SELECT testing FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
+	
+		//add limesurvey attribute for each sample var record
+		$sql = "SELECT var,type
+			FROM sample_import_var_restrict
+			WHERE sample_import_id = '$sid'";
+
+		$rs = $db->GetAll($sql);
+
+		$i = 1;
+
+		$fields = array();
+		$fieldcontents='';
+		foreach($rs as $r)
+		{
+		    $fields[]=array('attribute_'.$i,'C','255');
+		    $fieldcontents.='attribute_'.$i.'='.$r['var']."\n";
+		    $i++;
+		}
+		$dict = NewDataDictionary($db);
+		$sqlarray = $dict->ChangeTableSQL(LIME_PREFIX ."tokens_$lime_sid", $fields);
+		$execresult=$dict->ExecuteSQLArray($sqlarray, false);
+
+		$sql = "UPDATE " . LIME_PREFIX . "surveys
+			SET attributedescriptions = " . $db->qstr($fieldcontents) . "
+			WHERE sid='$lime_sid'";
+
+		$db->Execute($sql);
+
+		//generate one case for each sample record and set outcome to 41
+		$sql = "SELECT sample_id
+			FROM sample
+			WHERE import_id = '$sid'";
+
+		$rs = $db->GetAll($sql);
+
+		foreach($rs as $r)
+		{
+			add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
+		}
+
+		$db->CompleteTrans();
+	}
 }
 
 if (isset($_POST['edit']))
@@ -266,7 +317,14 @@ if ($questionnaire_id != false)
 		
 		<label for="allownew" class="control-label col-sm-4"><?php echo T_("Allow new numbers to be drawn?");?></label>
 		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" checked="checked" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/><br/>
+	
 		
+		<?php $self_complete = $db->GetOne("SELECT self_complete FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
+		if ($self_complete) {?>
+		<label for="generatecases" class="control-label col-sm-4"><?php echo T_("Generate cases for all sample records and set outcome to 'Self completion email invitation sent'? (Ideal if you intend to send an email invitation to sample members before attempting to call using queXS)");?></label>
+		<div class="col-sm-1"><input type="checkbox" id = "generatecases" name="generatecases" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div><br/><br/><br/>
+		<?php }?>
+
 		<input type="hidden" name="questionnaire_id" value="<?php print($questionnaire_id);?>"/>
 		
 		<div class="col-sm-offset-4 col-sm-3"><button type="submit" name="add_sample" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i>&emsp;<?php echo T_("Add sample");?></button></div>
