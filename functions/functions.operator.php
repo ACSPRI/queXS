@@ -345,17 +345,19 @@ function is_respondent_selection($operator_id)
  * @param int $questionnaire_id The questionnaire id
  * @param int $operator_id The operator id (Default NULL)
  * @param int $testing 0 if a live case otherwise 1 for a testing case
+ * @param int $current_outcome_id The current outcome id (defaults to 1 - not attempted)
+ * @param bool $addlimeattributes If true, add sample values as lime attributes
  * 
  * @return int The case id
  */
-function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 0)
+function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 0, $current_outcome_id = 1, $addlimeattributes = false)
 {
 	global $db;
 
 	$token = sRandomChars();
 
 	$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
-		VALUES (NULL, $sample_id, $questionnaire_id, NULL, $operator_id, NULL, 1, '$token')";
+		VALUES (NULL, $sample_id, $questionnaire_id, NULL, $operator_id, NULL, '$current_outcome_id','$token')";
 
 	$db->Execute($sql);
 
@@ -440,10 +442,75 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		if ($lime_sid)
 		{
+			$lfirstname = '';
+			$llastname = '';
+			$lemail = '';
+	
+			if ($addlimeattributes)
+			{
+				$lfirstname = $db->GetOne("SELECT sv.val 
+								FROM sample_var as sv, sample_import_var_restrict as s 
+								WHERE sv.var_id = s.var_id
+								AND sv.sample_id = '$sample_id'
+								AND s.type = '6'");
+
+				$llastname = $db->GetOne("SELECT sv.val 
+								FROM sample_var as sv, sample_import_var_restrict as s 
+								WHERE sv.var_id = s.var_id
+								AND sv.sample_id = '$sample_id'
+								AND s.type = '7'");
+
+				$lemail = $db->GetOne("SELECT sv.val 
+								FROM sample_var as sv, sample_import_var_restrict as s 
+								WHERE sv.var_id = s.var_id
+								AND sv.sample_id = '$sample_id'
+								AND s.type = '8'");
+
+			}
+	
 			$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
-			VALUES (NULL,'','','','$token','".DEFAULT_LOCALE."','N','N',NULL)";
+			VALUES (NULL,'$lfirstname','$llastname','$lemail','$token','".DEFAULT_LOCALE."','N','N',NULL)";
 
 			$db->Execute($sql);
+
+			$tid = $db->Insert_Id();
+
+			if ($addlimeattributes)
+			{			
+				//also add sample values as attributes
+				//match by name
+
+				$sql = "SELECT attributedescriptions
+					FROM " . LIME_PREFIX . "surveys
+					WHERE sid = '$lime_sid'";
+
+				$names = $db->GetOne($sql);
+
+    				$attdescriptiondata=explode("\n",$names);
+    				$atts=array();
+
+  			        foreach ($attdescriptiondata as $attdescription)
+				{				
+					if (!empty($attdescription))
+					        $atts['attribute_'.substr($attdescription,10,strpos($attdescription,'=')-10)] = substr($attdescription,strpos($attdescription,'=')+1);
+				}
+
+				foreach($atts as $key => $val)
+				{
+					$lval = $db->GetOne("SELECT sv.val 
+								FROM sample_var as sv, sample_import_var_restrict as s 
+								WHERE sv.var_id = s.var_id
+								AND sv.sample_id = '$sample_id'
+								AND s.var LIKE '$val'");
+
+					$sql = "UPDATE " . LIME_PREFIX . "tokens_$lime_sid
+						SET $key = '$lval'
+						WHERE tid = '$tid'";
+
+					$db->Execute($sql);
+				}
+
+			}
 		}
 	}
 
