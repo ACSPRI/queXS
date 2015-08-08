@@ -49,4 +49,5 @@ $(".sidebar #nav").slideUp(350);
 
 $('[data-toggle="tooltip"]').tooltip();
 
+$("a[href*='" + location.search + "']").addClass("active");
 

@@ -86,8 +86,8 @@ if ($operator_id)
 	$sql .=	" as case_id, q.description as qd , contact_phone.phone as cpi, sample_import.description as spl 
 		FROM `call` as c
 		JOIN (operator as op, respondent as r) on (op.operator_id = '$operator_id' and r.respondent_id = c.respondent_id)";
-	if ($qid) $quest = "$qid and q.questionnaire_id= $qid"; else $quest = "q.questionnaire_id";
-	if ($sid) $samimpid = "$sid and sample_import.sample_import_id=$sid"; else $samimpid = "sample_import.sample_import_id";
+	if (isset($qid)) $quest = "$qid and q.questionnaire_id= $qid"; else $quest = "q.questionnaire_id";
+	if (isset($sid)) $samimpid = "$sid and sample_import.sample_import_id=$sid"; else $samimpid = "sample_import.sample_import_id";
 	
 	$sql .=	" 
 		JOIN (`case` as ca, questionnaire as q) ON (ca.case_id = c.case_id AND ca.questionnaire_id = $quest)

@@ -224,6 +224,6 @@ if ($questionnaire_id || $questionnaire_id == -1)
 		print "<p class='well text-danger'>" . T_("No calls for this questionnaire") . "</p>";
 }
 
-xhtml_foot("../js/custom.js");
+xhtml_foot(array("../js/custom.js"));
 
 ?>

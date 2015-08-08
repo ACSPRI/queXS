@@ -40,17 +40,19 @@
  * @param string $bodytext Space in the body element: good for onload='top.close()' to close validly
  * @param bool|int $refresh False or 0 for no refresh otherwise the number of seconds to refresh
  * @param bool $clearrefresh False if we want to pass on any GET request in header, True to clear
+ * @param bool|string $subtitle False if we want no subtitle otherwise display a subtitle
+ * @param bool $displayinnertitle Whether to display the inner title or not
  * 
  * @see xhtml_foot()
  */
-function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false,$clearrefresh=false,$subtitle=false)
+function xhtml_head($title="",$body=true,$css=false,$javascript=false,$bodytext=false,$refresh=false,$clearrefresh=false,$subtitle=false,$displayinnertitle=true)
 {
 print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 ?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
 	   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-	<head><title><?php  if (empty($title)) print "CATI"; else print "CATI: $title"; ?></title>
+	<head><title><?php  if (empty($title)) print "queXS"; else print "queXS: $title"; ?></title>
 <?php 
 	if ($css)
 		foreach ($css as $c) print "<link rel='stylesheet' href='$c' type='text/css'></link>";
@@ -69,8 +71,11 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
   <meta charset="utf-8"/>
 	</head>
 <?php 
-	if ($bodytext) print "<body $bodytext>"; else print "<body>";
-	print "<h1 class='header text-primary'>" . "$title" . "&emsp;&emsp;<small class='text-capitalize'>" . "$subtitle" . "</small></h1>"; 
+  if ($bodytext) print "<body $bodytext>"; else print "<body>";
+  if ($displayinnertitle)
+  {
+    print "<h1 class='header text-primary'>" . "$title" . "&emsp;&emsp;<small class='text-capitalize'>" . "$subtitle" . "</small></h1>"; 
+  }
 	/* Let's print header that equals to menu item and page title !!!, move previous headers to "subtitles"*/
 }
 

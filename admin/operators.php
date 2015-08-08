@@ -68,8 +68,8 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 		
 		$laste = $db->GetRow($sql);
 
-		$extensionn = "2000";
-		$extension = "'IAX2/2000'";		
+		$extensionn = "1000";
+		$extension = "'IAX2/1000'";		
 
 		//increment if exists
 		if (!empty($laste))
@@ -147,7 +147,7 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 			$a = "<div class='alert alert-info'><h3>" . T_("Added operator :") . " " .  $operator . "</h3>";	
 
 			if (FREEPBX_PATH !== false)
-				$a .= "<br/>" . T_("FreePBX has been reloaded for the new VoIP extension to take effect");
+				$a .= "<br/><a href='/voip/admin/'>" . T_("FreePBX needs to be reloaded for the new VoIP extension to take effect") . "</a>";
 			
 			print "</div>";	
 
@@ -245,7 +245,7 @@ function generate() {
 <?php  if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("Password") . ": ";?></label>
-		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" /></div>
+		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" /></div>
 		<div class="col-sm-6 form-inline">&emsp;
 			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("Password with");?>&ensp;
 			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters");?>

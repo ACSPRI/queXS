@@ -40,11 +40,14 @@ include ("../lang.inc.php");
  include ("../config.inc.php");
  include ("../functions/functions.xhtml.php");
  $username = $_SERVER['PHP_AUTH_USER'];
+ $g = 0;
+ if (isset($_GET['g'])) 
+   $g = intval($_GET['g']);
  ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" style="" class=" " >  
   <head>
     <meta charset="utf-8" >
-	<title><?php echo T_("Administrative Tools") ;?> </title> 
+	<title><?php echo T_("queXS Administration") ;?> </title> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,85 +88,86 @@ include ("../lang.inc.php");
 
 	<div class="content ">	
 
+
 	<!-- Sidebar menu -->
 	<div class="sidebar" >
 	    <ul class="panel-group nav"    id="nav">
 		  <li><a class="" href="?"><i class="fa fa-tachometer fa-lg"></i><span><?php print T_("Dashboard") ;?></span></a></li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-list-alt fa-lg"></i><span class="arrow"><?php print T_("Questionnairies") ;?></span></a>
-              <ul style="">
-				<li><a href="?page=<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-file-text-o lime fa-fw"></i><?php print T_("Create an instrument in Limesurvey") ;?></a></li>
-                <li><a href="?page=new.php"><i class="fa fa-plus-circle fa-fw"></i><?php print T_("Create a new questionnaire") ;?></a></li>
-                <li><a href="?page=questionnairelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Questionnaire management") ;?></a></li>
-                <li><a href="?page=<?php echo LIME_URL ;?>admin/admin.php"><i class="fa fa-lemon-o lime fa-fw"></i><?php print T_("Administer instruments with Limesurvey") ;?></a></li>
-                <li><a href="?page=questionnaireprefill.php"><i class="fa fa-thumb-tack fa-fw"></i><?php print T_("Pre-fill questionnaire") ;?></a></li>
+          <ul style="<?php if ($g == 1) echo "display:block";?>">
+				<li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-file-text-o lime fa-fw"></i><?php print T_("Create an instrument in Limesurvey") ;?></a></li>
+                <li><a href="?g=1&amp;page=new.php"><i class="fa fa-plus-circle fa-fw"></i><?php print T_("Create a new questionnaire") ;?></a></li>
+                <li><a href="?g=1&amp;page=questionnairelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Questionnaire management") ;?></a></li>
+                <li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php"><i class="fa fa-lemon-o lime fa-fw"></i><?php print T_("Administer instruments with Limesurvey") ;?></a></li>
+                <li><a href="?g=1&amp;page=questionnaireprefill.php"><i class="fa fa-thumb-tack fa-fw"></i><?php print T_("Pre-fill questionnaire") ;?></a></li>
               </ul>
 		  </li>
 		  <li class="has_sub"><a href="" class=""><i class="fa fa-book fa-lg"></i><span><?php print T_("Samples") ;?></span></a>
-              <ul style="">
-                <li><a href="?page=import.php"><i class="fa fa-upload fa-fw"></i><?php print T_("Import a sample file") ;?></a></li>
-                <li><a href="?page=samplelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Sample management") ;?></a></li>
-                <li><a href="?page=samplesearch.php"><i class="fa fa-search fa-fw"></i><?php print T_("Search the sample") ;?></a></li>
-                <li><a href="?page=assignsample.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign samples to questionnaires") ;?></a></li>
+              <ul style="<?php if ($g == 2) echo "display:block";?>">
+                <li><a href="?g=2&amp;page=import.php"><i class="fa fa-upload fa-fw"></i><?php print T_("Import a sample file") ;?></a></li>
+                <li><a href="?g=2&amp;page=samplelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Sample management") ;?></a></li>
+                <li><a href="?g=2&amp;page=samplesearch.php"><i class="fa fa-search fa-fw"></i><?php print T_("Search the sample") ;?></a></li>
+                <li><a href="?g=2&amp;page=assignsample.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign samples to questionnaires") ;?></a></li>
               </ul>
           </li>
 		  <li class="has_sub"><a href="" class=""><i class="fa fa-calendar fa-lg"></i><span><?php print T_("Time slots and shifts") ;?></span></a>
-              <ul class="" style="">
-                <li><a href="?page=assigntimeslots.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign Time slots") ;?></a></li>
+              <ul style="<?php if ($g == 3) echo "display:block";?>">
+                <li><a href="?g=3&amp;page=assigntimeslots.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign Time slots") ;?></a></li>
            <!--     <li><a href="?page=questionnaireavailability.php"><i class="fa fa-thumb-tack fa-fw"></i><?php // print T_("Assign Time slots to questionnaires") ;?></a></li>
 				<li><a href="?page=questionnairecatimeslots.php"><i class="fa fa-link fa-fw"></i><?php // print T_("Assign call attempt time slots to questionnaire") ; ?></a></li>
 				<li><a href="?page=questionnairecatimeslotssample.php"><i class="fa fa-link fa-fw"></i><?php // print T_("Assign call attempt time slots to questionnaire sample") ; ?></a></li> -->
-                <li><a href="?page=addshift.php"><i class="fa fa-calendar-o fa-fw"></i><?php print T_("Shift management") ;?></a></li>
+                <li><a href="?g=3&amp;page=addshift.php"><i class="fa fa-calendar-o fa-fw"></i><?php print T_("Shift management") ;?></a></li>
               </ul>
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-filter fa-lg"></i><span><?php print T_("Quotas") ;?></span></a>
-              <ul style="">
-                <li><a href="?page=quota.php"><i class="fa fa-list-ol fa-fw"></i><?php print T_("Quota management") ;?></a></li>
-                <li><a href="?page=quotarow.php"><i class="fa fa-list-ul fa-fw "></i><?php print T_("Quota row management") ;?></a></li>
+              <ul style="<?php if ($g == 4) echo "display:block";?>">
+                <li><a href="?g=4&amp;page=quota.php"><i class="fa fa-list-ol fa-fw"></i><?php print T_("Quota management") ;?></a></li>
+                <li><a href="?g=4&amp;page=quotarow.php"><i class="fa fa-list-ul fa-fw "></i><?php print T_("Quota row management") ;?></a></li>
               </ul>
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-users"></i><span><?php print T_("Operators") ;?></span></a> 
-              <ul class="" style="">
-                <li><a href="?page=operators.php"><i class="fa fa-user-plus fa-fw"></i><?php print T_("Add operators to the system") ;?></a></li>
-                <li><a href="?page=operatorlist.php"><i class="fa fa-user fa-fw"></i><?php print T_("Operator management") ;?></a></li>
-                <li><a href="?page=extensionstatus.php "><i class="fa fa-phone fa-fw"></i><?php print T_("Extension status") ;?></a></li>
-                <li><a href="?page=operatorquestionnaire.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign operators to questionnaires") ;?></a></li>
-                <li><a href="?page=operatorskill.php"><i class="fa fa-user-md fa-fw"></i><?php print T_("Modify operator skills") ;?></a></li>
-                <li><a href="?page=operatorperformance.php"><i class="fa fa-signal fa-fw"></i><?php print T_("Operator performance") ;?></a></li>
+              <ul style="<?php if ($g == 5) echo "display:block";?>">
+                <li><a href="?g=5&amp;page=operators.php"><i class="fa fa-user-plus fa-fw"></i><?php print T_("Add operators to the system") ;?></a></li>
+                <li><a href="?g=5&amp;page=operatorlist.php"><i class="fa fa-user fa-fw"></i><?php print T_("Operator management") ;?></a></li>
+                <li><a href="?g=5&amp;page=extensionstatus.php "><i class="fa fa-phone fa-fw"></i><?php print T_("Extension status") ;?></a></li>
+                <li><a href="?g=5&amp;page=operatorquestionnaire.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign operators to questionnaires") ;?></a></li>
+                <li><a href="?g=5&amp;page=operatorskill.php"><i class="fa fa-user-md fa-fw"></i><?php print T_("Modify operator skills") ;?></a></li>
+                <li><a href="?g=5&amp;page=operatorperformance.php"><i class="fa fa-signal fa-fw"></i><?php print T_("Operator performance") ;?></a></li>
               </ul>
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-line-chart"></i><span><?php print T_("Results") ;?></span></a>
-              <ul class="" style="">
-                <li><a href="?page=displayappointments.php"><i class="fa fa-clock-o fa-fw"></i><span><?php print T_("Display all future appointments") ;?></span></a></li>
-                <li><a href="?page=samplecallattempts.php"><i class="fa fa-table fa-fw"></i><?php print T_("Sample call attempts report") ;?></a></li>
-                <li><a href="?page=callhistory.php" class=""><i class="fa fa-history fa-fw"></i><?php print T_("Call history") ;?></a></li>
-                <li><a href="?page=shiftreport.php"><i class="fa fa-th-large fa-fw"></i><?php print T_("Shift reports") ;?></a></li>
-                <li><a href="?page=quotareport.php" ><i class="fa fa-filter fa-fw"></i><?php print T_("Quota report") ;?></a></li>
-                <li><a href="?page=outcomes.php"><i class="fa fa-bar-chart fa-fw"></i><?php print T_("Questionnaire outcomes") ;?></a></li>
-                <li><a href="?page=dataoutput.php"><i class="fa fa-download fa-fw"></i><?php print T_("Data output") ;?></a></li>
+              <ul style="<?php if ($g == 6) echo "display:block";?>">
+                <li><a href="?g=6&amp;page=displayappointments.php"><i class="fa fa-clock-o fa-fw"></i><span><?php print T_("Display all future appointments") ;?></span></a></li>
+                <li><a href="?g=6&amp;page=samplecallattempts.php"><i class="fa fa-table fa-fw"></i><?php print T_("Sample call attempts report") ;?></a></li>
+                <li><a href="?g=6&amp;page=callhistory.php" class=""><i class="fa fa-history fa-fw"></i><?php print T_("Call history") ;?></a></li>
+                <li><a href="?g=6&amp;page=shiftreport.php"><i class="fa fa-th-large fa-fw"></i><?php print T_("Shift reports") ;?></a></li>
+                <li><a href="?g=6&amp;page=quotareport.php" ><i class="fa fa-filter fa-fw"></i><?php print T_("Quota report") ;?></a></li>
+                <li><a href="?g=6&amp;page=outcomes.php"><i class="fa fa-bar-chart fa-fw"></i><?php print T_("Questionnaire outcomes") ;?></a></li>
+                <li><a href="?g=6&amp;page=dataoutput.php"><i class="fa fa-download fa-fw"></i><?php print T_("Data output") ;?></a></li>
               </ul>
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-user-secret fa-fw"></i><span><?php print T_("Clients") ;?></span></a>
-              <ul class="" style="">
-                <li><a href="?page=clients.php"><i class="fa fa-lg fa-user-plus fa-fw"></i><?php print T_("Add clients to the system") ;?></a></li>
-                <li><a href="?page=clientquestionnaire.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign clients to questionnaires") ;?></a></li>
+              <ul style="<?php if ($g == 7) echo "display:block";?>">
+                <li><a href="?g=7&amp;page=clients.php"><i class="fa fa-lg fa-user-plus fa-fw"></i><?php print T_("Add clients to the system") ;?></a></li>
+                <li><a href="?g=7&amp;page=clientquestionnaire.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign clients to questionnaires") ;?></a></li>
               </ul>
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-briefcase"></i><span><?php print T_("Supervisor functions") ;?></span></a>
-              <ul class="" style="">
-                <li><a href="?page=supervisor.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign outcomes to cases") ;?></a></li>
-                <li><a href="?page=casestatus.php"><i class="fa fa-question-circle fa-fw"></i><?php print T_("Case status and assignment") ;?></a></li>
-                <li><a href="?page=bulkappointment.php"><i class="fa fa-th-list fa-fw"></i><?php print T_("Bulk appointment generator") ;?></a></li>
+              <ul style="<?php if ($g == 8) echo "display:block";?>">
+                <li><a href="?g=8&amp;page=supervisor.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign outcomes to cases") ;?></a></li>
+                <li><a href="?g=8&amp;page=casestatus.php"><i class="fa fa-question-circle fa-fw"></i><?php print T_("Case status and assignment") ;?></a></li>
+                <li><a href="?g=8&amp;page=bulkappointment.php"><i class="fa fa-th-list fa-fw"></i><?php print T_("Bulk appointment generator") ;?></a></li>
               </ul>
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-gear"></i><span><?php print T_("System settings") ;?></span></a>
-              <ul class="" style="">
-                <li><a href="?page=timezonetemplate.php"><i class="fa fa-globe fa-fw"></i><?php print T_("Set default timezone list") ;?></a></li>
-				<li><a href="?page=availabilitygroup.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Manage Time slots") ;?></a></li>
-                <li><a href="?page=shifttemplate.php"><i class="fa fa-calendar fa-fw"></i><?php print T_("Set default shift times") ;?></a></li>
-                <li><a href="?page=callrestrict.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Set call restriction times") ;?></a></li>
-                <li><a href="?page=centreinfo.php"><i class="fa fa-university fa-fw"></i><?php print T_("Set centre information") ;?></a></li>
-                <li><a href="?page=supervisorchat.php"><i class="fa fa-comments-o fa-fw"></i><?php print T_("Supervisor chat") ;?></a></li>
-                <li><a href="?page=systemsort.php"><i class="fa fa-sort fa-fw"></i><?php print T_("System wide case sorting") ;?></a></li>
+              <ul style="<?php if ($g == 9) echo "display:block";?>">
+                <li><a href="?g=9&amp;page=timezonetemplate.php"><i class="fa fa-globe fa-fw"></i><?php print T_("Set default timezone list") ;?></a></li>
+				        <li><a href="?g=9&amp;page=availabilitygroup.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Manage Time slots") ;?></a></li>
+                <li><a href="?g=9&amp;page=shifttemplate.php"><i class="fa fa-calendar fa-fw"></i><?php print T_("Set default shift times") ;?></a></li>
+                <li><a href="?g=9&amp;page=callrestrict.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Set call restriction times") ;?></a></li>
+                <li><a href="?g=9&amp;page=centreinfo.php"><i class="fa fa-university fa-fw"></i><?php print T_("Set centre information") ;?></a></li>
+                <li><a href="?g=9&amp;page=supervisorchat.php"><i class="fa fa-comments-o fa-fw"></i><?php print T_("Supervisor chat") ;?></a></li>
+                <li><a href="?g=9&amp;page=systemsort.php"><i class="fa fa-sort fa-fw"></i><?php print T_("System wide case sorting") ;?></a></li>
               </ul>
           </li>
 
@@ -171,8 +175,8 @@ include ("../lang.inc.php");
  	if (VOIP_ENABLED == true )
 	{ ;	?>
 		  <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-tty"></i><span><?php print T_("VoIP");?><i class="fa fa-toggle-on pull-right" style="font-size:1.5em !important; margin-right:20px;"></i></span></a>
-             <ul class="" style="">
-               <li><a href="?page=voipmonitor.php"><i class="fa fa-power-off v"></i><?php print T_("Start and monitor VoIP") ;?></a></li>
+             <ul style="<?php if ($g == 10) echo "display:block";?>">
+               <li><a href="?g=10&amp;page=voipmonitor.php"><i class="fa fa-power-off v"></i><?php print T_("Start and monitor VoIP") ;?></a></li>
               <!-- <li><a href="?page=extensionstatus.php"><i class="fa fa-asterisk fa-fw"></i><?php //print T_("Extension status") ;?></a></li> -->
              </ul>
 		  </li>
@@ -184,7 +188,7 @@ include ("../lang.inc.php");
     </div>
 
 	<!-- Main page container -->
-	<?php $page = "questionnairelist.php"; if (isset($_GET['page'])) $page = $_GET['page']; ?>
+  <?php $page = "questionnairelist.php"; if (isset($_GET['page'])) $page = $_GET['page']; ?>
 	<div class="mainbar" id=" "><?php xhtml_object($page,' '); ?></div>
 
 		<div class="clearfix"></div>

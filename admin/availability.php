@@ -111,7 +111,7 @@ xhtml_head(T_("Modify time slots"),true,$css,$js_head);//,true,array("../css/shi
  *
  */
 
-$sql = "SELECT CONVERT_TZ(NOW(),'" . DEFAULT_TIME_ZONE . "','UTC') as t";//'Australia/Victoria'
+$sql = "SELECT CONVERT_TZ(NOW(),'" . get_setting("DEFAULT_TIME_ZONE") . "','UTC') as t";//'Australia/Victoria'
 $rs = $db->GetRow($sql);
 
 if (empty($rs) || !$rs || empty($rs['t']))

@@ -61,7 +61,7 @@ if (isset($_POST['import_form']))
 		}
 		else
 		{
-			print -"<div class='alert alert-danger col-md-offset-2'><p>" . T_("Error importing file. Please try again") . "</p></div>";
+			print "<div class='alert alert-danger col-md-offset-2'><p>" . T_("Error importing file. Please try again") . "</p></div>";
 		}
 	}
 	else

@@ -58,7 +58,7 @@ $js = false;
 if (AUTO_LOGOUT_MINUTES !== false)
         $js = array("include/jquery/jquery-1.4.2.min.js","js/childnap.js");
 
-xhtml_head(T_("Project information"),true,false,$js);
+xhtml_head(T_("Project information"),true,false,$js,false,false,false,false,false);
 
 $operator_id = get_operator_id();
 

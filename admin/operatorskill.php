@@ -203,6 +203,8 @@ function checkQid(q)
 		QidOn = 1;
 	else
 		QidOn = 0;
+  
+  $('input').iCheck('update');
 }
 
 
@@ -225,12 +227,12 @@ function checkVid(v)
 	if (VidOn == 0)
 		VidOn = 1;
 	else
-		VidOn = 0;
+    VidOn = 0;
+  
+  $('input').iCheck('update');
 }
 
 </script>
-</head>
-<body>
 
 <?php
 
@@ -267,8 +269,6 @@ foreach($operators as $v)
 
 print "</table><input type=\"submit\" class='btn btn-default fa' name=\"submit\" value=\"" . T_("Modify operator skills") ."\"/></form>";
 
-xhtml_foot();
-
 ?>
 
 <script type="text/javascript">
@@ -277,3 +277,6 @@ $('input').iCheck({
 	increaseArea: '30%'
 });
 </script>
+
+<?php
+xhtml_foot();

@@ -199,7 +199,9 @@ function checkQid(q)
 	if (QidOn == 0)
 		QidOn = 1;
 	else
-		QidOn = 0;
+    QidOn = 0;
+
+  $('input').iCheck('update');
 }
 
 
@@ -222,14 +224,12 @@ function checkVid(v)
 	if (VidOn == 0)
 		VidOn = 1;
 	else
-		VidOn = 0;
+    VidOn = 0;
+
+  $('input').iCheck('update');
 }
 
 </script>
-
-</head>
-<body>
-
 
 <?php 
 
@@ -261,14 +261,13 @@ foreach($clients as $v)
 
 print "</table><input type=\"submit\" class='btn btn-default fa' name=\"submit\" value=\"" . T_("Assign clients to questionnaires") . "\"/></form>";
 
-
-xhtml_foot();
-
 ?>
-
 <script type="text/javascript">
 $('input').iCheck({
 	checkboxClass: 'icheckbox_square-blue',
 	increaseArea: '30%'
 });
 </script>
+<?php
+
+xhtml_foot();
