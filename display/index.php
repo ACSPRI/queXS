@@ -108,7 +108,7 @@ if ($shift_id == 0)
 }
 
 $dt1 = $display_type + 1;
-xhtml_head(T_("Display"),true,array("../css/display.css"),false,false,"6;url=?shift_id=$shift_id&amp;questionnaire_id=$questionnaire_id&amp;display_type=$dt1");
+xhtml_head(T_("Display"),true,array("../include/bootstrap/css/bootstrap.min.css","../include/bootstrap/css/bootstrap-theme.min.css","../css/custom.css"),false,false,"6;url=?shift_id=$shift_id&amp;questionnaire_id=$questionnaire_id&amp;display_type=$dt1");
 
 if ($shift_id == 0 || $questionnaire_id == 0)
 	display_none();
