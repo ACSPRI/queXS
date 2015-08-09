@@ -29,6 +29,16 @@
  * 
  */
 
+
+// This Site name will appear as Limesurvey {ENDURL} 
+define ('SITE_URL', 'http://Your site name.com/'); 
+
+//  Specify Your Local namings 
+define ('COMPANY_NAME', 'MY Company');
+define ('ADMIN_PANEL_NAME','Admin Panel');
+define ('OPERATOR_PANEL_NAME','Operator Panel');
+ 
+ 
 /**
  *
  * Only some of the configuration directives are here. See the file: config.default.php for them all

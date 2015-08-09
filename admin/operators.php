@@ -245,7 +245,7 @@ function generate() {
 <?php  if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("Password") . ": ";?></label>
-		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" /></div>
+		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" /></div>
 		<div class="col-sm-6 form-inline">&emsp;
 			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("Password with");?>&ensp;
 			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters");?>
