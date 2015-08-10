@@ -2171,9 +2171,9 @@ function end_case($operator_id)
 			$lastcall = 0;
 			if (!empty($l))
 				$lastcall = $l['call_id'];
-		
-	
-			if ($count == 0) //no numbers to be tried again, get last outcome or 1
+
+
+      if ($count == 0) //no numbers to be tried again, get last outcome or 1
 			{
 				//last call
 				$sql = "SELECT c.outcome_id as outcome_id
@@ -2191,23 +2191,70 @@ function end_case($operator_id)
 					$outcome = $t['outcome_id'];
 				}
 			}
-			else if ($count >= 1) //one or more numbers to be tried again - first code as eligible if ever eligible...
-			{
-				//$r[0]['contact_phone_id'];
-				//code as eligible if ever eligible, or if referred to the supervisor, code as that if last call
-				$sql = "SELECT c.outcome_id as outcome_id
-					FROM `call` as c
-					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id AND (o.eligible = 1 OR o.outcome_type_id = 2 OR o.outcome_type_id = 1) )
-					WHERE c.case_id = '$case_id'
-					ORDER BY c.call_id DESC";
-			
-				$t = $db->GetRow($sql);
+			else if ($count >= 1) //one or more numbers to be tried again - see if max calls reached, then code as eligible if ever eligible...
+      {
+        $sql = "SELECT call_attempt_max,call_max
+                FROM questionnaire_sample as qs, `case` as c
+                WHERE c.case_id = '$case_id'
+                AND qs.sample_id = c.sample_id
+                AND qs.questionnaire_id = c.questionnaire_id";
+    
+        $cm = $db->GetRow($sql);
+    
 
-				if (!empty($t))
-					$outcome = $t['outcome_id'];
-			}
-		}
-		else
+        $sql = "SELECT COUNT(*) as c
+              FROM call_attempt
+              WHERE case_id = '$case_id'";
+
+        $callattempts = $db->GetOne($sql);
+  
+        $sql = "SELECT COUNT(*) as c
+                FROM `call`
+                WHERE case_id = '$case_id'";
+
+        $calls = $db->GetOne($sql);
+
+        $eligsql = "SELECT count(*)
+                  FROM `call` as c, `outcome` as o
+                  WHERE c.outcome_id = o.outcome_id
+                  AND o.eligible = 1
+                  AND c.case_id = '$case_id'";
+ 
+        if ($cm['call_attempt_max'] > 0 && $callattempts >= $cm['call_attempt_max']) //max call attempts reached
+        {
+          //if ever eligible, code as eligible
+          if ($db->GetOne($eligsql) > 0)
+            $outcome = 44;
+          else
+            $outcome = 42;
+        }
+        else if ($cm['call_max'] > 0 && $calls >= $cm['call_max']) //max calls reached
+        {
+          //if ever eligible, code as eligible
+          if ($db->GetOne($eligsql) > 0)
+            $outcome = 45;
+          else
+            $outcome = 43;
+        }
+        else 
+        {  
+
+				  //$r[0]['contact_phone_id'];
+  				//code as eligible if ever eligible, or if referred to the supervisor, code as that if last call
+  				$sql = "SELECT c.outcome_id as outcome_id
+  					FROM `call` as c
+  					JOIN outcome AS o ON ( c.outcome_id = o.outcome_id AND (o.eligible = 1 OR o.outcome_type_id = 2 OR o.outcome_type_id = 1) )
+  					WHERE c.case_id = '$case_id'
+  					ORDER BY c.call_id DESC";
+  			
+  				$t = $db->GetRow($sql);
+  
+  				if (!empty($t))
+            $outcome = $t['outcome_id'];
+        }
+ 			}
+ 		}
+ 		else
 		{
 			//the last call is the call with the final otucome
 			$outcome = $a['outcome_id'];
