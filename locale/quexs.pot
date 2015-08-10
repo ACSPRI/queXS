@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-07 15:48+1000\n"
+"POT-Creation-Date: 2015-08-10 16:24+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -3589,11 +3589,19 @@ msgid "Self completed online"
 msgstr ""
 
 #: admin/databasestrings.php:91
-msgid "Max call attempts reached"
+msgid "Max call attempts reached (Eligible)"
 msgstr ""
 
 #: admin/databasestrings.php:92
-msgid "Max calls reached"
+msgid "Max calls reached (Eligible)"
+msgstr ""
+
+#: admin/databasestrings.php:93
+msgid "Max call attempts reached (Unknown eligibility)"
+msgstr ""
+
+#: admin/databasestrings.php:94
+msgid "Max calls reached (Unknown eligibility)"
 msgstr ""
 
 #: call_interface2.php:116
