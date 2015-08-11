@@ -2194,14 +2194,14 @@ function end_case($operator_id)
 			else if ($count >= 1) //one or more numbers to be tried again - see if max calls reached, then code as eligible if ever eligible...
       {
         $sql = "SELECT call_attempt_max,call_max
-                FROM questionnaire_sample as qs, `case` as c
+                FROM questionnaire_sample as qs, `case` as c, sample as s
                 WHERE c.case_id = '$case_id'
-                AND qs.sample_id = c.sample_id
+                AND c.sample_id = s.sample_id
+                AND qs.sample_import_id = s.import_id
                 AND qs.questionnaire_id = c.questionnaire_id";
     
         $cm = $db->GetRow($sql);
     
-
         $sql = "SELECT COUNT(*) as c
               FROM call_attempt
               WHERE case_id = '$case_id'";
@@ -2219,7 +2219,7 @@ function end_case($operator_id)
                   WHERE c.outcome_id = o.outcome_id
                   AND o.eligible = 1
                   AND c.case_id = '$case_id'";
- 
+
         if ($cm['call_attempt_max'] > 0 && $callattempts >= $cm['call_attempt_max']) //max call attempts reached
         {
           //if ever eligible, code as eligible
