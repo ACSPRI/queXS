@@ -112,7 +112,8 @@ if ($operator_id)
 	{
 		if (isset($_GET['csv']))
 		{ 
-			$qds = str_replace(' ','_',$_GET['dq']); $smpds = str_replace(' ','_',$_GET['ds']);
+			if (isset($_GET['dq'])){$qds = str_replace(' ','_',$_GET['dq']);} else{$qds = false;}
+			if (isset($_GET['ds'])){$smpds = str_replace(' ','_',$_GET['ds']);} else {$smpds = false;}
 			$fn = "callhistory-" . $qds . $smpds . date("_d-M-Y_H-i") . ".csv";
 
 			header("Content-Type: text/csv");
@@ -161,8 +162,13 @@ if ($operator_id)
 				print "<h3><small>" . T_("Sample") . "&emsp;ID: $sid</small>&emsp;" . $ds . "</h3>";
 				unset($datacol[5]);  unset($headers[5]); }
 				
-				print "&nbsp;<a href='?csv=csv&amp;questionnaire_id=$qid&amp;dq=" . $dq . "&amp;sample_import_id=$sid&amp;ds=" . $ds . "' class='btn btn-default  pull-right'><i class='fa fa-download fa-lg text-primary'></i>&emsp;" . T_("Download Call History List") . "</a>
-				"; //<a href='../../admin/config.php' target='_blank' class='btn btn-default  col-sm-offset-6 '><i class='fa fa-link fa-lg text-primary'></i>&emsp;" . T_("Go to Call History Report") . "</a>&nbsp;
+			if (isset($qid)){ $pq = "&amp;questionnaire_id=$qid";} else {$pq = false;}
+			if (isset($dq)){ $pdq = "&amp;dq={$dq}";} else {$pdq = false;}
+			if (isset($sid)){$ps = "&amp;sample_import_id=$sid";} else {$ps = false;}
+			if (isset($ds)){$pds = "&amp;ds={$ds}";} else {$pds = false;}
+				
+				print "&nbsp;<a href='?csv=csv$pq$pdq$ps$pds' class='btn btn-default  pull-right'><i class='fa fa-download fa-lg text-primary'></i>&emsp;" . T_("Download Call History List") . "</a>
+				"; 
 				
 				xhtml_table($rs,$datacol,$headers,"tclass",false,false,"bs-table");
 			
