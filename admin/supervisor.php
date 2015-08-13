@@ -131,9 +131,14 @@ xhtml_head(T_("Assign outcomes to cases"),true,$css,$js_head);//array("../css/ta
 
 <?php 
 $sql = "SELECT c.case_id as value, c.case_id as description, CASE WHEN c.case_id = '$case_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-	FROM `case` as c, `outcome` as o
+	FROM  `case` AS c,  `outcome` AS o,  `questionnaire` AS q,  `sample` AS s,  `sample_import` AS si
 	WHERE c.current_outcome_id = o.outcome_id
-	AND o.outcome_type_id = 2";
+	AND q.questionnaire_id = c.questionnaire_id
+	AND s.sample_id = c.sample_id
+	AND s.import_id = si.sample_import_id
+	AND q.enabled = 1
+	AND si.enabled =1
+	AND o.outcome_type_id =2";
 
 $rs = $db->GetAll($sql);
 
