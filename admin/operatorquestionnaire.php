@@ -159,7 +159,7 @@ xhtml_head(T_("Assign operators to questionnaires"),true,array("../include/boots
 print "questionnaire_id = new Array(";
 
 $s = "";
-
+$q = array();
 foreach($questionnaires as $q)
 {
 	$s .= "'{$q['questionnaire_id']}',";
@@ -246,7 +246,7 @@ foreach($questionnaires as $q)
 }
 print "</tr></thead>";
 
-
+$v = array();
 foreach($operators as $v)
 {
 

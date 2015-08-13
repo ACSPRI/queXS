@@ -114,7 +114,7 @@ function xhtml_foot($javascript = false){		//added javascript files array to the
  */
 function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight=false,$total=false,$id=false,$name=false)
 {
-	$tot = array();
+	$tot = array(); $row = array();
 	if ($class == "tclass") $class = "table-hover table-bordered table-condensed tclass";
 	print "<table class=\"$class\" id=\"$id\" name=\"$name\" data-toggle=\"table\" data-toolbar=\"filter-bar\" data-show-filter=\"true\" >";
 	if ($head)
