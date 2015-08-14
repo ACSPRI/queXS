@@ -78,7 +78,7 @@ $sql = "SELECT oq.questionnaire_id, q.description
 	AND q.questionnaire_id = oq.questionnaire_id";
 
 $rs = $db->GetAll($sql);
-
+$cases_count = array(); $new_samples = array();
 if (empty($rs))
 	
 	print "<div class='error well' style='margin:2%; color:red; font-size:1.5em;'><b>" . T_("ERROR: No questionnaires assigned to you") . "</b></div>";
@@ -187,7 +187,7 @@ else
 ?>
 			<div id="">
 				<ul class="wait_wrapper">
-<?php if ($cases_count['count_samples'] != 0 or $new_samples['count_samples'] != 0){  ?>
+<?php if ($cases_count['count_samples'] > 0 or $new_samples['count_samples'] > 0){  ?>
 					<li class="wait_li_1"><a href="index_interface2.php"><?php  echo T_("Get a new case"); ?> <img src="css/images/play.jpg" /></a></li>
 <?php } ?>
 					<li class="wait_li_2"><a href="endwork.php"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>

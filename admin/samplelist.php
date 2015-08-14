@@ -111,7 +111,7 @@ if (isset($_POST['ed']))
 	if (isset($_POST['type'])){ 
 	
 	//check that we have correct var types  and quantity
-		$prph = 0; $pcd = 0; $st = 0; $fn = 0; $eml =0;
+		$prph = 0; $pcd = 0; $st = 0; $fn = 0; $eml =0; $ln =0;
 		foreach($_POST['type'] as $key => $val) {
 				 if ($val == 3) $prph++;
 			else if ($val == 5) $pcd++;

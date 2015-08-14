@@ -158,14 +158,14 @@ if (!empty($rs))
 				</div><form method="get" action="?" class="form-inline ">
 				<div class="modal-body">
 			<?php 	
-			$call_id = bigintval($_GET['call_id']);
+			if (isset($_GET['call_id'])){ $call_id = bigintval($_GET['call_id']); 
 			$sql = "SELECT o.outcome_id as value,description, CASE WHEN o.outcome_id = c.outcome_id THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM outcome as o, `call` as c
 				WHERE c.call_id = '$call_id'";
 			$rs2 = $db->GetAll($sql);
 			translate_array($rs2,array("description"));
 			display_chooser($rs2, "set_outcome_id", "set_outcome_id",true,false,false,false);	?>
-					<input type="hidden" name="call_id" value="<?php  echo $call_id;?>"/><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/>
+					<input type="hidden" name="call_id" value="<?php  echo $call_id;?>"/><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/> <?php } ?>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal"><?php  echo T_("Cancel"); ?></button>
@@ -506,15 +506,15 @@ if ($case_id != false)
 			//Display all availability groups as checkboxes
 			print "<form action='?' method='get' class='form-horizontal '>";
 			print "<h5 class=''>" . T_("Select groups to limit availability (Selecting none means always available)") .  "</h5><div class='col-sm-6'>";
-			foreach ($rs as $r)
+			foreach ($rs as $g)
 			{
 				$checked = "";
 
-				//if ($allselected || $r['availability_group_id'] == $r['selected_group_id'])
-				if ($r['availability_group_id'] == $r['selected_group_id'])
+				//if ($allselected || $g['availability_group_id'] == $g['selected_group_id'])
+				if ($g['availability_group_id'] == $g['selected_group_id'])
 					$checked = "checked='checked'";
 				
-				print "&ensp;<input type='checkbox' name='ag{$r['availability_group_id']}' id='ag{$r['availability_group_id']}'	value='{$r['availability_group_id']}' $checked />&ensp; <label class='control-label' for='ag{$r['availability_group_id']}'>{$r['description']}</label></br>";
+				print "&ensp;<input type='checkbox' name='ag{$g['availability_group_id']}' id='ag{$g['availability_group_id']}'	value='{$g['availability_group_id']}' $checked />&ensp; <label class='control-label' for='ag{$g['availability_group_id']}'>{$g['description']}</label></br>";
 			}
 		?>	</div>
 			<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>

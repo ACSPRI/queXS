@@ -180,7 +180,7 @@ if (isset($_GET['edit']) || isset($_GET['addext']))
           WHERE extension_id = " . intval($_GET['edit']);
 
 	$rs = $db->GetRow($sql);
-	}
+	} else $rs = array();
 	
   print "<a href='?' class='btn btn-default pull-left'>" . T_("Go back") . "</a>";
 ?>
