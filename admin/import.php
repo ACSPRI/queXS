@@ -9,6 +9,11 @@
 include ("../config.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include ("../functions/functions.xhtml.php");

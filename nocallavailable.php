@@ -40,6 +40,11 @@ include ("config.inc.php");
 include ("functions/functions.xhtml.php");
 
 /** 
+ * Authentication
+ */
+include ("auth-interviewer.php");
+
+/** 
  * Language functions
  */
 include ("lang.inc.php");

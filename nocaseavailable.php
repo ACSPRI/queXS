@@ -41,6 +41,12 @@ include ("config.inc.php");
  */
 include ("db.inc.php");
 
+/** 
+ * Authentication
+ */
+include ("auth-interviewer.php");
+
+
 /**
  * XHTML functions
  */

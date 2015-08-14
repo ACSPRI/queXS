@@ -1,6 +1,5 @@
  <?php
- /*
-
+ /**
  * Display an index of Admin tools
  *
  *
@@ -37,9 +36,15 @@ include ("../lang.inc.php");
 /**
  * Config file
  */
- include ("../config.inc.php");
+include ("../config.inc.php");
+ 
+/**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
  include ("../functions/functions.xhtml.php");
- $username = $_SERVER['PHP_AUTH_USER'];
+ $username = $_SESSION['loginID'];
  $g = 0;
  if (isset($_GET['g'])) 
    $g = intval($_GET['g']);
@@ -75,11 +80,11 @@ include ("../lang.inc.php");
               <i class="fa fa-user fa fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
             </a>
 			<!--- User menu // not connected to pages so not working yet //  could be hidden -->
-<!---       <ul class="dropdown-menu" role="menu">
-              <li><a href="?page=settings.php"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
-			  <li><a href="../screenloc.php"><i class="fa fa-lock fa-fw "></i>&ensp;<?php print T_("Lock Screen"); ?></a></li>
-              <li><a href="../logout.php"><i class="fa fa-sign-out fa-fw "></i>&ensp;<?php print T_("Logout"); ?> </a></li>
-            </ul> -->
+       <ul class="dropdown-menu" role="menu">
+              <li><a href="../include/limesurvey/admin/admin.php?action=editusers"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
+<!---			  <li><a href="../screenloc.php"><i class="fa fa-lock fa-fw "></i>&ensp;<?php print T_("Lock Screen"); ?></a></li> -->
+              <li><a href="../include/limesurvey/admin/admin.php?action=logout"><i class="fa fa-sign-out fa-fw "></i>&ensp;<?php print T_("Logout"); ?> </a></li>
+            </ul> 
           </li>
         </ul>
 	  

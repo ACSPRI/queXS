@@ -35,6 +35,12 @@
  */
 include_once("lang.inc.php");
 
+/** 
+ * Authentication
+ */
+include ("auth-interviewer.php");
+
+
 /**
  * XHTML functions
  */

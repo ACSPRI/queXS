@@ -49,6 +49,12 @@ include ("lang.inc.php");
  */
 include ("db.inc.php");
 
+/** 
+ * Authentication
+ */
+include ("auth-interviewer.php");
+
+
 $js = false;
 if (AUTO_LOGOUT_MINUTES !== false)
         $js = array("include/jquery/jquery-1.4.2.min.js","js/childnap.js");

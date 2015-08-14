@@ -1,4 +1,5 @@
-<?php /**
+<?php 
+/**
  * List and edit reports on shifts
  *
  *
@@ -37,6 +38,11 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  * Database file
  */
 include ("../db.inc.php");
+
+/**
+ * Authentication file
+ */
+include ("auth-admin.php");
 
 /**
  * XHTML functions

@@ -1,4 +1,5 @@
-<?php /**
+<?php 
+/**
  * Output data as a fixed width ASCII file
  *
  *
@@ -42,6 +43,11 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  * Database file
  */
 include ("../db.inc.php");
+
+/**
+ * Authentication file
+ */
+include ("auth-admin.php");
 
 /**
  * XHTML functions

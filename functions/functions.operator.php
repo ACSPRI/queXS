@@ -893,24 +893,24 @@ function get_extension($operator_id)
 
 
 /**
- * Return the current operator id based on PHP_AUTH_USER
+ * Return the current operator id based on SESSION loginID
  *
  * @return bool|int False if none otherwise the operator id
  *
  */
 function get_operator_id()
 {
-	if (!isset($_SERVER['PHP_AUTH_USER']))
+	if (!isset($_SESSION['loginID']))
 	{
-		print "<p>" . T_("ERROR: You do not have server side authentication enabled therefore queXS cannot determine which user is accessing the system.") . "</p>";
-		return false;
+    print "<p>" . T_("ERROR: You are not logged in.") . "</p>";
+		die();
 	}
 
 	global $db;
 
 	$sql = "SELECT operator_id
 		FROM operator
-		WHERE username = " . $db->qstr($_SERVER['PHP_AUTH_USER']) . "
+		WHERE username = " . $db->qstr($_SESSION['loginID']) . "
 		AND enabled = 1";
 
 	$o = $db->GetRow($sql);

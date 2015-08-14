@@ -13,6 +13,11 @@ include_once(dirname(__FILE__).'/../config.inc.php');
 include ("../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include ("../functions/functions.xhtml.php");

@@ -236,6 +236,13 @@ if (!isset($_SESSION['loginID']))
                         }
                         $loginsummary .= "<br /><br />\n";
                         GetSessionUserRights($_SESSION['loginID']);
+
+                        //go to queXS
+                        $loc = "";
+                        if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1) 
+                          $loc = "/admin";
+                        header('Location: ' . QUEXS_URL . $loc);
+                        die();
                     }
                     else
                     {
