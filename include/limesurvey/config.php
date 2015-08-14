@@ -67,22 +67,25 @@ $debug              =   0;                 // Set this to 1 if you are looking f
                                            // LimeSurvey developers: Set this to 3 to circumvent the restriction to remove the installation directory and full access to standard templates
                                            // or to change the password. If you set it to 3 then PHP STRICT warnings will be shown additionally.
 
-$defaultlang = DEFAULT_LOCALE;
+$defaultlang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+if (empty($defaultlang)) $defaultlang = DEFAULT_LOCALE;
+
 $defaulttemplate = "quexs";
-$useWebserverAuth = true;
-$WebserverAuth_autocreateUser = true;
-$WebserverAuth_autouserprofile = Array(
-				'full_name' => 'autouser',
-				'email' => $siteadminemail,
-				'htmledtirmode' => $defaulthtmleditormode,
-				'templatelist' => 'default,basic',
-				'create_survey' => 1,
-				'lang' => DEFAULT_LOCALE,
-				'create_user' => 1,
-				'delete_user' => 1,
-				'superadmin' => 1,
-				'configurator' => 1,
-				'manage_template' => 1,
-				'manage_label' => 1);
+//$useWebserverAuth = true;
+//$WebserverAuth_autocreateUser = true;
+//$WebserverAuth_autouserprofile = Array(
+//				'full_name' => 'autouser',
+//				'email' => $siteadminemail,
+//				'htmledtirmode' => $defaulthtmleditormode,
+//				'templatelist' => 'default,basic',
+//				'create_survey' => 1,
+//				'lang' => DEFAULT_LOCALE,
+//				'create_user' => 1,
+//				'delete_user' => 1,
+//				'superadmin' => 1,
+//				'configurator' => 1,
+//				'manage_template' => 1,
+//				'manage_label' => 1);
+//
 
-
+$sessionhandler     =  'db';

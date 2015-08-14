@@ -1,3 +1,5 @@
+DROP TABLE `sessions2`;
+
 queXS 1.13.0 - Changes since 1.12.1
 
 Overall changes:
