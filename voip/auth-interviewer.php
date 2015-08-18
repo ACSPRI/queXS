@@ -48,6 +48,8 @@ $sql = "SELECT stg_value
 
 session_name($db->GetOne($sql));
 
+session_start();
+
 //check if the session exists or loginID not set
 if (session_id() == "" || !isset($_SESSION['loginID']))
 {
