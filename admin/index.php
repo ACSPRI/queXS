@@ -44,7 +44,7 @@ include ("../config.inc.php");
 include ("auth-admin.php");
 
  include ("../functions/functions.xhtml.php");
- $username = $_SESSION['loginID'];
+ $username = $_SESSION['user'];
  $g = 0;
  if (isset($_GET['g'])) 
    $g = intval($_GET['g']);

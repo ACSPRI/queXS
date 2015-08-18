@@ -50,12 +50,12 @@ function get_client_id()
 {
 	global $db;
 
-  if (!isset($_SESSION['loginID']))
+  if (!isset($_SESSION['user']))
     return false;
 
 	$sql = "SELECT client_id
 		FROM client
-		WHERE username = '{$_SESSION['loginID']}'";
+		WHERE username = '{$_SESSION['user']}'";
 
 	$o = $db->GetRow($sql);
 

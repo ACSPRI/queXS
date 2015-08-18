@@ -900,7 +900,7 @@ function get_extension($operator_id)
  */
 function get_operator_id()
 {
-	if (!isset($_SESSION['loginID']))
+	if (!isset($_SESSION['user']))
 	{
     print "<p>" . T_("ERROR: You are not logged in.") . "</p>";
 		die();
@@ -910,7 +910,7 @@ function get_operator_id()
 
 	$sql = "SELECT operator_id
 		FROM operator
-		WHERE username = " . $db->qstr($_SESSION['loginID']) . "
+		WHERE username = " . $db->qstr($_SESSION['user']) . "
 		AND enabled = 1";
 
 	$o = $db->GetRow($sql);
