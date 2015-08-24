@@ -66,4 +66,5 @@ if ($_SESSION['USER_RIGHT_SUPERADMIN'] != 1)
   print "<p>" . T_("You do not have permission to access this area") . "</p>";
   print "<p><a href='../include/limesurvey/admin/admin.php?action=logout'>" . T_("Logout") . "</a></p>";
   xhtml_foot();
+  die();
 }
