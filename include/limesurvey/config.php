@@ -71,6 +71,7 @@ $defaultlang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 if (empty($defaultlang)) $defaultlang = DEFAULT_LOCALE;
 
 $defaulttemplate = "quexs";
+$siteadminemail = "quexs@acspri.org.au";
 //$useWebserverAuth = true;
 //$WebserverAuth_autocreateUser = true;
 //$WebserverAuth_autouserprofile = Array(
