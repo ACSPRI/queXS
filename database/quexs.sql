@@ -955,7 +955,7 @@ CREATE TABLE `lime_users` (
 -- Dumping data for table `lime_users`
 --
 
-INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_id`, `lang`, `email`, `create_survey`, `create_user`, `participant_panel`, `delete_user`, `superadmin`, `configurator`, `manage_template`, `manage_label`, `htmleditormode`, `templateeditormode`, `questionselectormode`, `one_time_pw`, `dateformat`) VALUES(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 0, 'en', 'your-email@example.net', 1, 1, 0, 1, 1, 1, 1, 1, 'default', 'default', 'default', NULL, 1);
+INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_id`, `lang`, `email`, `create_survey`, `create_user`, `participant_panel`, `delete_user`, `superadmin`, `configurator`, `manage_template`, `manage_label`, `htmleditormode`, `templateeditormode`, `questionselectormode`, `one_time_pw`, `dateformat`) VALUES(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 0, 'auto', 'your-email@example.net', 1, 1, 0, 1, 1, 1, 1, 1, 'default', 'default', 'default', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1007,6 +1007,9 @@ CREATE TABLE `operator` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
+INSERT INTO `operator` (`operator_id`, `username`, `firstName`, `lastName`, `Time_zone_name`, `enabled`, `voip`, `next_case_id`, `chat_enable`, `chat_user`, `chat_password`) VALUES
+(1, 'admin', 'CATI', 'Admin', 'Australia/Victoria', 1, 0, NULL, 0, '', '');
+
 
 --
 -- Table structure for table `operator_questionnaire`
@@ -1031,6 +1034,10 @@ CREATE TABLE `operator_skill` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
+
+INSERT INTO `operator_skill` (`operator_id`, `outcome_type_id`) VALUES
+(1, 1),
+(1, 5);
 
 --
 -- Table structure for table `outcome`

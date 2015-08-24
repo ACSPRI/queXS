@@ -1,3 +1,25 @@
+Database changes for session authentication:
+
+
+/* Make the first user the admin user - with default password of: password */
+INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
+SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 1, 'auto', 1
+FROM operators
+WHERE operator_id = 1;
+
+/* Make all other users operators - with default password of: password */
+INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
+SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 1, 'auto', 0
+FROM operators
+WHERE operator_id != 1;
+
+/* Make all clients - with default password of: password */
+INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
+SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 1, 'auto', 0
+FROM clients
+WHERE 1;
+
+/* Remove redundant table */
 DROP TABLE `sessions2`;
 
 queXS 1.13.0 - Changes since 1.12.1
