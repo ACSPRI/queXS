@@ -35,14 +35,14 @@
 include ("../config.inc.php");
 
 /**
- * Authentication file
- */
-include ("auth-admin.php");
-
-/**
  * Database file
  */
 include ("../db.inc.php");
+
+/**
+ * Authentication file
+ */
+include ("auth-admin.php");
 
 /**
  * XHTML functions
