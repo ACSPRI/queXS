@@ -100,7 +100,7 @@ if ($operator_id)
 
 	if (!isset($_GET['csv'])) 
 		$sql .= " LIMIT 500";
-	else $sql .= " LIMIT 5000";
+//	else $sql .= " LIMIT 5000"; no limit when using CSV
 	
 	$rs = $db->Execute($sql);
 	if (empty($rs))
@@ -111,9 +111,10 @@ if ($operator_id)
 	else
 	{
 		if (isset($_GET['csv']))
-		{ 
-			if (isset($_GET['dq'])){$qds = str_replace(' ','_',$_GET['dq']);} else{$qds = false;}
-			if (isset($_GET['ds'])){$smpds = str_replace(' ','_',$_GET['ds']);} else {$smpds = false;}
+    { 
+      $qds = $smpds = "";
+      if (isset($_GET['dq'])) $qds = str_replace(' ','_',$_GET['dq']); 
+      if (isset($_GET['ds'])) $smpds = str_replace(' ','_',$_GET['ds']);
 			$fn = "callhistory-" . $qds . $smpds . date("_d-M-Y_H-i") . ".csv";
 
 			header("Content-Type: text/csv");
@@ -162,13 +163,18 @@ if ($operator_id)
 				print "<h3><small>" . T_("Sample") . "&emsp;ID: $sid</small>&emsp;" . $ds . "</h3>";
 				unset($datacol[5]);  unset($headers[5]); }
 				
-			if (isset($qid)){ $pq = "&amp;questionnaire_id=$qid";} else {$pq = false;}
-			if (isset($dq)){ $pdq = "&amp;dq={$dq}";} else {$pdq = false;}
-			if (isset($sid)){$ps = "&amp;sample_import_id=$sid";} else {$ps = false;}
-			if (isset($ds)){$pds = "&amp;ds={$ds}";} else {$pds = false;}
-				
-				print "&nbsp;<a href='?csv=csv$pq$pdq$ps$pds' class='btn btn-default  pull-right'><i class='fa fa-download fa-lg text-primary'></i>&emsp;" . T_("Download Call History List") . "</a>
-				"; 
+          print "&nbsp;<a href='?csv=csv";
+        if (isset($qid))
+          print "&amp;questionnaire_id=$qid";
+        if (isset($dq))
+          print "&amp;dq=" . $dq;
+        if (isset($sid))
+          print  "&amp;sample_import_id=$sid";
+        if (isset($ds))
+          print "&amp;ds=" . $ds;
+        
+        print "' class='btn btn-default  pull-right'><i class='fa fa-download fa-lg text-primary'></i>&emsp;" . T_("Download Call History List") . "</a>
+				"; //<a href='../../admin/config.php' target='_blank' class='btn btn-default  col-sm-offset-6 '><i class='fa fa-link fa-lg text-primary'></i>&emsp;" . T_("Go to Call History Report") . "</a>&nbsp;
 				
 				xhtml_table($rs,$datacol,$headers,"tclass",false,false,"bs-table");
 			

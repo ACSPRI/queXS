@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-10 16:24+1000\n"
+"POT-Creation-Date: 2015-08-31 12:57+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -34,7 +34,7 @@ msgid "Create appointment"
 msgstr ""
 
 #: appointment.php:124 appointmentlist.php:90 callhistory.php:83
-#: admin/callhistory.php:124 admin/callhistory.php:149
+#: admin/callhistory.php:126 admin/callhistory.php:151
 #: admin/supervisor.php:372 admin/displayappointments.php:184
 #: admin/displayappointments.php:258 admin/displayappointments.php:277
 msgid "Respondent"
@@ -388,7 +388,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: status.php:59 callhistory.php:87 admin/callhistory.php:174
+#: status.php:59 callhistory.php:87 admin/callhistory.php:186
 #: admin/casesbyoutcome.php:117
 msgid "No operator"
 msgstr ""
@@ -476,7 +476,7 @@ msgstr ""
 
 #: performance.php:78 performance.php:85 casenote.php:110
 #: appointmentlist.php:90 calllist.php:84 admin/outcomes.php:234
-#: admin/callhistory.php:124 admin/callhistory.php:149
+#: admin/callhistory.php:126 admin/callhistory.php:151
 #: admin/operatorlist.php:184 admin/operatorlist.php:372
 #: admin/casesbyoutcome.php:88 admin/supervisor.php:372
 #: admin/supervisor.php:399 admin/supervisor.php:416
@@ -511,7 +511,7 @@ msgstr ""
 #: casenote.php:69 admin/samplelist.php:284 admin/samplelist.php:495
 #: admin/samplesearch.php:102 admin/questionnairelist.php:370
 #: admin/questionnairelist.php:508 admin/questionnairelist.php:530
-#: admin/questionnairelist.php:538 admin/callhistory.php:137
+#: admin/questionnairelist.php:538 admin/callhistory.php:139
 #: admin/availability.php:121 admin/operatorlist.php:182 admin/import.php:43
 #: admin/import.php:81 admin/import.php:112 admin/casesbyoutcome.php:54
 #: admin/assignsample.php:201 admin/assignsample.php:254
@@ -736,8 +736,8 @@ msgstr ""
 #: include/limesurvey/admin/exportresults.php:644
 #: include/limesurvey/admin/exportresults.php:645
 #: include/limesurvey/admin/exportresults.php:967 callhistory.php:83
-#: admin/samplesearch.php:157 admin/callhistory.php:124
-#: admin/callhistory.php:149 admin/casesbyoutcome.php:110
+#: admin/samplesearch.php:157 admin/callhistory.php:126
+#: admin/callhistory.php:151 admin/casesbyoutcome.php:110
 #: admin/dataoutput.php:79 admin/extensionstatus.php:257
 #: admin/displayappointments.php:258 admin/displayappointments.php:277
 msgid "Case ID"
@@ -767,8 +767,8 @@ msgstr ""
 #: include/limesurvey/admin/exportresults.php:262
 #: include/limesurvey/admin/exportresults.php:614
 #: include/limesurvey/admin/exportresults.php:615
-#: include/limesurvey/admin/exportresults.php:979 admin/callhistory.php:124
-#: admin/callhistory.php:149 admin/supervisor.php:411 admin/dataoutput.php:87
+#: include/limesurvey/admin/exportresults.php:979 admin/callhistory.php:126
+#: admin/callhistory.php:151 admin/supervisor.php:411 admin/dataoutput.php:87
 msgid "Case notes"
 msgstr ""
 
@@ -863,7 +863,7 @@ msgstr ""
 #: appointmentlist.php:90 client/index.php:91 client/index.php:110
 #: callhistory.php:83 calllist.php:84 admin/outcomes.php:141
 #: admin/outcomes.php:163 admin/outcomes.php:214 admin/outcomes.php:256
-#: admin/callhistory.php:124 admin/callhistory.php:149
+#: admin/callhistory.php:126 admin/callhistory.php:151
 #: admin/supervisor.php:399 admin/casestatus.php:116 index_interface2.php:216
 msgid "Outcome"
 msgstr ""
@@ -1052,15 +1052,15 @@ msgstr ""
 
 #: nocaseavailable.php:116 admin/samplelist.php:320 admin/quotareport.php:294
 #: admin/assigntimeslots.php:260 admin/outcomes.php:122 admin/outcomes.php:178
-#: admin/callhistory.php:124 admin/callhistory.php:149
-#: admin/callhistory.php:160 admin/quota.php:131 admin/assignsample.php:203
+#: admin/callhistory.php:126 admin/callhistory.php:151
+#: admin/callhistory.php:162 admin/quota.php:131 admin/assignsample.php:203
 #: admin/assignsample.php:279 admin/supervisor.php:298 admin/quotarow.php:306
 #: admin/casestatus.php:116 admin/casestatus.php:234
 msgid "Sample"
 msgstr ""
 
-#: nocaseavailable.php:141 admin/callhistory.php:124 admin/callhistory.php:149
-#: admin/callhistory.php:154 admin/quota.php:110 admin/assignsample.php:202
+#: nocaseavailable.php:141 admin/callhistory.php:126 admin/callhistory.php:151
+#: admin/callhistory.php:156 admin/quota.php:110 admin/assignsample.php:202
 #: admin/quotarow.php:288 admin/casestatus.php:231
 #: admin/displayappointments.php:258 admin/displayappointments.php:277
 #: admin/new.php:127 admin/new.php:135 shifts.php:103
@@ -1288,8 +1288,8 @@ msgid "Log id"
 msgstr ""
 
 #: admin/voipmonitor.php:90 admin/voipmonitor.php:102 admin/systemsort.php:92
-#: admin/systemsort.php:105 admin/outcomes.php:299 admin/callhistory.php:124
-#: admin/callhistory.php:149 admin/shiftreport.php:104
+#: admin/systemsort.php:105 admin/outcomes.php:299 admin/callhistory.php:126
+#: admin/callhistory.php:151 admin/shiftreport.php:104
 msgid "Date"
 msgstr ""
 
@@ -1843,13 +1843,13 @@ msgid ""
 "correct before accepting below"
 msgstr ""
 
-#: admin/bulkappointment.php:232 admin/callhistory.php:124
-#: admin/callhistory.php:149 admin/displayappointments.php:204
+#: admin/bulkappointment.php:232 admin/callhistory.php:126
+#: admin/callhistory.php:151 admin/displayappointments.php:204
 msgid "Start time"
 msgstr ""
 
-#: admin/bulkappointment.php:232 admin/callhistory.php:124
-#: admin/callhistory.php:149 admin/displayappointments.php:206
+#: admin/bulkappointment.php:232 admin/callhistory.php:126
+#: admin/callhistory.php:151 admin/displayappointments.php:206
 msgid "End time"
 msgstr ""
 
@@ -2117,20 +2117,20 @@ msgstr ""
 msgid "Edit Lime survey"
 msgstr ""
 
-#: admin/callhistory.php:124 admin/callhistory.php:149
+#: admin/callhistory.php:126 admin/callhistory.php:151
 #: admin/supervisor.php:399 admin/databasestrings.php:82
 msgid "Phone number"
 msgstr ""
 
-#: admin/callhistory.php:136
+#: admin/callhistory.php:138
 msgid "Call History List"
 msgstr ""
 
-#: admin/callhistory.php:142
+#: admin/callhistory.php:144
 msgid "NO Call history records for Your query"
 msgstr ""
 
-#: admin/callhistory.php:163
+#: admin/callhistory.php:175
 msgid "Download Call History List"
 msgstr ""
 
