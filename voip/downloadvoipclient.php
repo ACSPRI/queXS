@@ -1,4 +1,5 @@
-<?php /**
+<?php 
+/**
  * Download VoIP client on an operator by operator basis
  *
  *
@@ -31,6 +32,12 @@
 
 include_once("../config.inc.php");
 include_once("../db.inc.php");
+
+/** 
+ * Authentication
+ */
+include ("../auth-interviewer.php");
+
 include_once("../functions/functions.operator.php");
 
 //---------------------

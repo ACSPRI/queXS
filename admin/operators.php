@@ -40,6 +40,11 @@ include ("../config.inc.php");
 include ("../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include ("../functions/functions.xhtml.php");
@@ -52,6 +57,8 @@ $a = false;
 if (isset($_POST['operator']) && isset($_POST['adduser']))
 {
 	$operator = $db->qstr($_POST['operator'],get_magic_quotes_gpc());
+	$email= $db->qstr($_POST['email'],get_magic_quotes_gpc());
+	$password = $db->qstr($_POST['password'],get_magic_quotes_gpc());
 	$firstname = $db->qstr($_POST['firstname'],get_magic_quotes_gpc());
 	$lastname = $db->qstr($_POST['lastname'],get_magic_quotes_gpc());
 	$chat_user = $db->qstr($_POST['chat_user'],get_magic_quotes_gpc());
@@ -91,12 +98,14 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 	}
 	$supervisor = 0;
 	$temporary = 0;
+	$admin = 0;
 	$refusal = 0;
 	$voip = 0;
 	$chat = 0;
 	if (isset($_POST['supervisor']) && $_POST['supervisor'] == "on") $supervisor = 1;
 	if (isset($_POST['refusal']) && $_POST['refusal'] == "on") $refusal = 1;
 	if (isset($_POST['temporary']) && $_POST['temporary'] == "on") $temporary = 1;	
+	if (isset($_POST['admin']) && $_POST['admin'] == "on") $admin = 1;	
 	if (isset($_POST['voip']) && $_POST['voip'] == "on") $voip = 1;	
 	if (isset($_POST['chat_enable']) && $_POST['chat_enable'] == "on") $chat = 1;	
 
@@ -108,7 +117,15 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 	
 		if ($db->Execute($sql))
     {
-			$oid = $db->Insert_ID();
+      $oid = $db->Insert_ID();
+
+      include_once("../include/limesurvey/admin/classes/core/sha256.php");
+
+      //Insert into lime_users
+      $sql = "INSERT INTO " . LIME_PREFIX . "users (`users_name`,`password`,`full_name`,`parent_id`,`superadmin`,`email`,`lang`)
+              VALUES ($operator, '" . SHA256::hashing($_POST['password']) . "',$firstname,1,$admin,$email,'auto')";
+
+      $db->Execute($sql);
 
 			if (FREEPBX_PATH !== false)
       {
@@ -130,20 +147,6 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
         $db->Execute($sql);
       }
 
-			if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false)
-			{
-				//Get password and add it to the configured htpassword
-				include_once("../functions/functions.htpasswd.php");
-				$htp = New Htpasswd(HTPASSWD_PATH);
-				$htg = New Htgroup(HTGROUP_PATH);
-				
-				$htp->addUser($_POST['operator'],$_POST['password']);
-				$htg->addUserToGroup($_POST['operator'],HTGROUP_INTERVIEWER);
-
-				if ($supervisor)
-					$htg->addUserGroup(HTGROUP_ADMIN);
-			}
-	
 			$a = "<div class='alert alert-info'><h3>" . T_("Added operator :") . " " .  $operator . "</h3>";	
 
 			if (FREEPBX_PATH !== false)
@@ -183,7 +186,7 @@ if ($a) {
 else {
 	echo "<div class='well'>";
 		//echo "<p>" . T_("Adding an operator here will give the user the ability to call cases") . "<a href='operatorquestionnaire.php'>" . T_("Assign Operator to Questionnaire") . "</a>" . T_("tool") . ".</p>"; 
-		echo "<p>" . T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here.") . "</p>"; 
+		//echo "<p>" . T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here.") . "</p>"; 
 		echo "<p>" . T_("The username and extension must be unique for each operator.") . "</p>";
 	echo "</div>";
 }
@@ -242,16 +245,14 @@ function generate() {
 		<label class="col-sm-3 control-label"><?php echo T_("Username") . ": ";?></label>
 		<div class="col-sm-3"><input name="operator" type="text" class="form-control" required /></div>
 	</div>
-<?php  if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("Password") . ": ";?></label>
-		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" /></div>
+		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" required /></div>
 		<div class="col-sm-6 form-inline">&emsp;
 			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("Password with");?>&ensp;
 			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters");?>
 		</div>
 	</div>
-<?php  } ?> 
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("First name") . ": ";?></label>
 		<div class="col-sm-3"><input name="firstname" type="text" class="form-control" required/></div>
@@ -259,6 +260,10 @@ function generate() {
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("Last name") . ": ";?></label>
 		<div class="col-sm-3"><input name="lastname" type="text" class="form-control"/></div>
+	</div>
+  <div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Email") . ": ";?></label>
+		<div class="col-sm-3"><input name="email" type="text" class="form-control"/></div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
@@ -294,6 +299,10 @@ function generate() {
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>
 		<div class="col-sm-3"><input name="chat_enable" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" /></div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
+		<div class="col-sm-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger"/></div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a normal interviewer?");?></label>

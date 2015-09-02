@@ -40,6 +40,11 @@ include (dirname(__FILE__) . "/../config.inc.php");
 include (dirname(__FILE__) . "/../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * Process
  */
 include (dirname(__FILE__) . "/../functions/functions.process.php");

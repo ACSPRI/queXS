@@ -40,6 +40,11 @@ include_once(dirname(__FILE__).'/../config.inc.php');
 include_once(dirname(__FILE__).'/../db.inc.php');
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include_once(dirname(__FILE__).'/../functions/functions.xhtml.php');
@@ -50,30 +55,50 @@ $msg = "";
 if (isset($_POST['submit']))
 {
 	$operator_id = intval($_POST['operator_id']);
-	$chat_enable = $voip = $enabled = 0;
+  $superadmin = $chat_enable = $voip = $enabled = 0;
 	if (isset($_POST['voip'])) $voip = 1;
 	if (isset($_POST['chat_enable'])) $chat_enable = 1;
 	if (isset($_POST['enabled'])) $enabled = 1;
+	if (isset($_POST['admin'])) $superadmin = 1;
 
-	if (HTPASSWD_PATH !== false && $_POST['existing_username'] != $_POST['username'] && empty($_POST['password']))
-	{
-		$msg = "<div class='alert alert-danger'><h3>" . T_("If changing usernames, you must specify a new password") . "</h3></div>";
-	}
-	else
-	{
-		$sql = "UPDATE operator
-			SET username = " . $db->qstr($_POST['username']) . ",
-			lastName = " . $db->qstr($_POST['lastName']) . ",
-			firstName = " . $db->qstr($_POST['firstName']) . ",
-			chat_user = " . $db->qstr($_POST['chat_user']) . ",
-			chat_password = " . $db->qstr($_POST['chat_password']) . ",
-			Time_zone_name = " . $db->qstr($_POST['timezone']) . ",
-			voip = $voip, enabled = $enabled, chat_enable = $chat_enable
-			WHERE operator_id = $operator_id";
+  //get username
+  $sql = "SELECT username
+          FROM operator
+          WHERE operator_id = $operator_id";
 
-		$rs = $db->Execute($sql);
+  $uname = $db->GetOne($sql);
 
-		if (!empty($rs))
+  $sql = "UPDATE " . LIME_PREFIX . "users 
+          SET users_name = " . $db->qstr($_POST['username']) . ",
+          email = " . $db->qstr($_POST['email']) . ",
+          full_name = " . $db->qstr($_POST['firstName']) . ",
+          superadmin = $superadmin";
+
+  if (!empty($_POST['password']))
+  {
+    include_once("../include/limesurvey/admin/classes/core/sha256.php");
+    $sql .= ", password = '" . SHA256::hashing($_POST['password']) . "' ";
+  }
+
+  $sql .= " WHERE users_name = '$uname'";
+
+  $rs = $db->Execute($sql);
+
+  if (!empty($rs))
+  {
+    $sql = "UPDATE operator
+      SET username = " . $db->qstr($_POST['username']) . ",
+      lastName = " . $db->qstr($_POST['lastName']) . ",
+      firstName = " . $db->qstr($_POST['firstName']) . ",
+      chat_user = " . $db->qstr($_POST['chat_user']) . ",
+      chat_password = " . $db->qstr($_POST['chat_password']) . ",
+      Time_zone_name = " . $db->qstr($_POST['timezone']) . ",
+      voip = $voip, enabled = $enabled, chat_enable = $chat_enable
+      WHERE operator_id = $operator_id";
+
+    $rs = $db->Execute($sql);
+
+    if (!empty($rs))
     {
       //only update extension if we aren't on a case
       $sql = "SELECT case_id
@@ -89,38 +114,28 @@ if (isset($_POST['submit']))
                 WHERE current_operator_id= $operator_id";
 
         $db->Execute($sql);
-  
+
         if (!empty($_POST['extension_id']))
         {
           $sql = "UPDATE extension
                   SET current_operator_id = $operator_id
                   WHERE extension_id = " . intval($_POST['extension_id']);
-  
+
           $db->Execute($sql);
         }
       }
-
-			if (HTPASSWD_PATH !== false && !empty($_POST['password']))
-			{
-				//update password in htaccess
-				include_once(dirname(__FILE__).'/../functions/functions.htpasswd.php');
-				$htp = New Htpasswd(HTPASSWD_PATH);
-				$htp->deleteUser($_POST["existing_username"]);
-				$htp->deleteUser($_POST["username"]);
-				$htp->addUser($_POST["username"],$_POST["password"]);
-				$htg = New Htgroup(HTGROUP_PATH);
-				$htg->deleteUserFromGroup($_POST["existing_username"],HTGROUP_INTERVIEWER);
-				$htg->addUserToGroup($_POST["username"],HTGROUP_INTERVIEWER);
-			}
-
-			$msg = "<div class='alert alert-info'><h3>" . T_("Successfully updated user") . ": " . $_POST['username'] . "</h3></div>";
-		}
-		else
-		{
-			$msg = "<div class='alert alert-danger'><h3>" . T_("Failed to update user") . ": " . $_POST['username'] . " " . T_("Please make sure the username is unique") . "</h3></div>";
-		}
-	}
-	$_GET['edit'] = $operator_id;
+      $msg = "<div class='alert alert-info'><h3>" . T_("Successfully updated user") . ": " . $_POST['username'] . "</h3></div>";
+    }
+    else
+    {
+      $msg = "<div class='alert alert-danger'><h3>" . T_("Failed to update user") . ": " . $_POST['username'] . " " . T_("Please make sure the username is unique") . "</h3></div>";
+    }
+  }
+  else
+  {
+      $msg = "<div class='alert alert-danger'><h3>" . T_("Failed to update user") . ": " . $_POST['username'] . " " . T_("Please make sure the username is unique") . "</h3></div>";
+  }
+  $_GET['edit'] = $operator_id;
 }
 
 
@@ -130,9 +145,10 @@ if (isset($_GET['edit']))
 
 	$operator_id = intval($_GET['edit']);
 
-	$sql = "SELECT *
-		FROM operator
-		WHERE operator_id = $operator_id";
+	$sql = "SELECT o.*,l.superadmin,l.email,l.parent_id
+		FROM operator as o, " . LIME_PREFIX ."users as l
+    WHERE o.operator_id = $operator_id
+    AND l.users_name = o.username";
 
 	$rs = $db->GetRow($sql);
 
@@ -200,7 +216,6 @@ function generate() {
 		<label for="username" class="col-sm-3 control-label"><?php echo T_("Username") . ": "; ?></label>
 		<div class="col-sm-3"><input type='text' name='username' class="form-control" value="<?php echo $rs['username'];?>"/></div>
 	</div>
-<?php if (HTPASSWD_PATH !== false) { ?>
 	<div class="form-group">
 		<label for="password" class="col-sm-3 control-label"><?php echo T_("Password") . ": "; ?></label>
 		<div class="col-sm-3"><input type='text' name='password' class="form-control" placeholder="<?php echo T_("leave blank to keep existing password");?>"/></div>
@@ -209,7 +224,6 @@ function generate() {
 			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;" class="form-control" />&ensp;<?php echo T_("characters");?>
 		</div>
 	</div>
-<?php } ?>
 	<div class="form-group">
 		<label for="firstName" class="col-sm-3 control-label"><?php echo T_("First name") . ": "; ?></label>
 		<div class="col-sm-3"><input type='text' name='firstName' class="form-control" value="<?php echo $rs['firstName'];?>"/></div>
@@ -217,6 +231,10 @@ function generate() {
 	<div class="form-group">
 		<label for="lastName" class="col-sm-3 control-label"><?php echo T_("Last name") . ": "; ?></label>
 		<div class="col-sm-3"><input type='text' name='lastName'  class="form-control" value="<?php echo $rs['lastName'];?>"/></div>
+	</div>
+	<div class="form-group">
+		<label for="email" class="col-sm-3 control-label"><?php echo T_("Email") . ": "; ?></label>
+		<div class="col-sm-3"><input type='text' name='email'  class="form-control" value="<?php echo $rs['email'];?>"/></div>
 	</div>
 	<div class="form-group">
 		<label for="timezone" class="col-sm-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
@@ -245,6 +263,10 @@ function generate() {
 	<div class="form-group">
 		<label for="chat_password" class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat password") . ": "; ?></label>
 		<div class="col-sm-3"><input type='text' name='chat_password' class="form-control" value="<?php echo $rs['chat_password'];?>"/></div>
+  </div>
+	<div class="form-group">
+		<label for="admin" class="col-sm-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
+    <div class="col-sm-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger" <?php if ($rs['superadmin'] || ($rs['parent_id'] == 0)) echo " checked=\"checked\" "; if ($rs['parent_id'] == 0) echo " disabled=\"disabled\" "; ?> value="1"/></div>
 	</div>
 	<div class="form-group">
 		<label for="chat_enable" class="col-sm-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>

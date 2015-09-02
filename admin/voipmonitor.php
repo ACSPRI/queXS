@@ -40,6 +40,11 @@ include ("../config.inc.php");
 include ("../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * Process
  */
 include ("../functions/functions.process.php");

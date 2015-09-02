@@ -29,6 +29,11 @@
  * 
  */
 
+if (php_sapi_name() !== "cli")
+{
+  die();
+}
+
 /**
  * Configuration file
  */
