@@ -146,7 +146,6 @@ function generate() {
 
 <div class="well">
 	<p><?php  echo T_("Adding a client here will allow them to access project information in the client subdirectory. You can assign a client to a particular project using the"); ?> <a href="clientquestionnaire.php"><?php  echo T_("Assign client to Questionnaire"); ?></a> <?php  echo T_("tool."); ?></p>
-	<p><?php  echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p></div>
 	
 <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" name="addclient" >
 	<div class="form-group form-inline">
