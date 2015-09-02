@@ -55,10 +55,11 @@ $msg = "";
 if (isset($_POST['submit']))
 {
 	$operator_id = intval($_POST['operator_id']);
-	$chat_enable = $voip = $enabled = 0;
+  $superadmin = $chat_enable = $voip = $enabled = 0;
 	if (isset($_POST['voip'])) $voip = 1;
 	if (isset($_POST['chat_enable'])) $chat_enable = 1;
 	if (isset($_POST['enabled'])) $enabled = 1;
+	if (isset($_POST['admin'])) $superadmin = 1;
 
   //get username
   $sql = "SELECT username
@@ -70,7 +71,8 @@ if (isset($_POST['submit']))
   $sql = "UPDATE " . LIME_PREFIX . "users 
           SET users_name = " . $db->qstr($_POST['username']) . ",
           email = " . $db->qstr($_POST['email']) . ",
-          full_name = " . $db->qstr($_POST['firstName']);
+          full_name = " . $db->qstr($_POST['firstName']) . ",
+          superadmin = $superadmin";
 
   if (!empty($_POST['password']))
   {
@@ -143,7 +145,7 @@ if (isset($_GET['edit']))
 
 	$operator_id = intval($_GET['edit']);
 
-	$sql = "SELECT o.*,l.superadmin,l.email
+	$sql = "SELECT o.*,l.superadmin,l.email,l.parent_id
 		FROM operator as o, " . LIME_PREFIX ."users as l
     WHERE o.operator_id = $operator_id
     AND l.users_name = o.username";
@@ -264,7 +266,7 @@ function generate() {
   </div>
 	<div class="form-group">
 		<label for="admin" class="col-sm-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
-    <div class="col-sm-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger" <?php if ($rs['superadmin']) echo "checked=\"checked\""; ?> value="1"/></div>
+    <div class="col-sm-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger" <?php if ($rs['superadmin'] || ($rs['parent_id'] == 0)) echo " checked=\"checked\" "; if ($rs['parent_id'] == 0) echo " disabled=\"disabled\" "; ?> value="1"/></div>
 	</div>
 	<div class="form-group">
 		<label for="chat_enable" class="col-sm-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>

@@ -43,7 +43,16 @@ include ("../config.inc.php");
  */
 include ("auth-admin.php");
 
- include ("../functions/functions.xhtml.php");
+/*
+ * XHTML file
+ */
+include ("../functions/functions.xhtml.php");
+
+/*
+ * Operator functions
+ */
+include ("../functions/functions.operator.php");
+
  $username = $_SESSION['user'];
  $g = 0;
  if (isset($_GET['g'])) 
@@ -81,7 +90,7 @@ include ("auth-admin.php");
             </a>
 			<!--- User menu // not connected to pages so not working yet //  could be hidden -->
        <ul class="dropdown-menu" role="menu">
-              <li><a href="../include/limesurvey/admin/admin.php?action=editusers"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
+              <li><a href="?g=5&amp;page=operatorlist.php?edit=<?php print get_operator_id(); ?>"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
 <!---			  <li><a href="../screenloc.php"><i class="fa fa-lock fa-fw "></i>&ensp;<?php print T_("Lock Screen"); ?></a></li> -->
               <li><a href="../include/limesurvey/admin/admin.php?action=logout"><i class="fa fa-sign-out fa-fw "></i>&ensp;<?php print T_("Logout"); ?> </a></li>
             </ul> 
