@@ -75,8 +75,8 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 		
 		$laste = $db->GetRow($sql);
 
-		$extensionn = "2000";
-		$extension = "'IAX2/2000'";		
+		$extensionn = "1000";
+		$extension = "'IAX2/1000'";		
 
 		//increment if exists
 		if (!empty($laste))
@@ -150,7 +150,7 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 			$a = "<div class='alert alert-info'><h3>" . T_("Added operator :") . " " .  $operator . "</h3>";	
 
 			if (FREEPBX_PATH !== false)
-				$a .= "<br/>" . T_("FreePBX has been reloaded for the new VoIP extension to take effect");
+				$a .= "<br/><a href='/voip/admin/'>" . T_("FreePBX needs to be reloaded for the new VoIP extension to take effect") . "</a>";
 			
 			print "</div>";	
 

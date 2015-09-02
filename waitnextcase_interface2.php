@@ -155,7 +155,7 @@ else
             AND s.import_id IN ($siid)
 			AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
 			AND ou.outcome_type_id IN( SELECT outcome_type_id FROM operator_skill WHERE operator_id = '$operator_id')
-			AND ou.outcome_id NOT IN (10,25,28,42,43,40)";
+			AND ou.outcome_id NOT IN (10,25,28,42,43,44,45,40)";
 			$cases_count = $db->GetRow($sql);
 
 			if ($cases_count['count_samples'] == 0){

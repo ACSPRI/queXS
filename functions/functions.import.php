@@ -204,8 +204,8 @@ function import_file($file, $description, $fields, $firstrow = 2)
 		(sample_import_id, description)
 		VALUES (NULL, '$description')";
 
-	//print("$sql<br/>");
-	//if ($db->HasFailedTrans()) { print "FAILED"; exit(); }
+//	print("$sql<br/>");
+//	if ($db->HasFailedTrans()) { print "FAILED"; exit(); }
 
 	$rs = $db->Execute($sql);
 	$id = $db->Insert_ID();
@@ -234,7 +234,7 @@ function import_file($file, $description, $fields, $firstrow = 2)
 				VALUES ($id,'" . $fields["n_" . substr($key,2)] . "','" . $fields["t_" . substr($key,2)] . "',$restrict)";
 
 			$db->Execute($sql);
-			
+		
 			$sirv_id[substr($key,2)] = $db->Insert_ID(); // 
 		}
 	}
@@ -305,6 +305,7 @@ function import_file($file, $description, $fields, $firstrow = 2)
 					VALUES (NULL,'$id','$tzone','$dppid')";
 		
 				$db->Execute($sql);
+
 				$sid = $db->Insert_Id();
 			
 		
@@ -315,11 +316,11 @@ function import_file($file, $description, $fields, $firstrow = 2)
 				{
 					$dkey = $db->Quote($data[$key - 1]);			
 		
-					$sql = "INSERT INTO sample_var (sample_id,var_id,var,val,type)
-						VALUES ('$sid','{$sirv_id[$key]}','$val',{$dkey},'{$selected_type[$key]}')";
+					$sql = "INSERT INTO sample_var (sample_id,var_id,val)
+						VALUES ('$sid','{$sirv_id[$key]}',{$dkey})";
 		
 					$db->Execute($sql);
-				
+					
 				}
 
 				$imported++;

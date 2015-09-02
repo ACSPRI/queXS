@@ -88,7 +88,8 @@ T_("Respondent last name");
 T_("Email address");
 T_("Self completion email invitation sent");
 T_("Self completed online");
-T_("Max call attempts reached");
-T_("Max calls reached");
-
+T_("Max call attempts reached (Eligible)");
+T_("Max calls reached (Eligible)");
+T_("Max call attempts reached (Unknown eligibility)");
+T_("Max calls reached (Unknown eligibility)");
 ?>

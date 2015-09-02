@@ -1,5 +1,6 @@
-Database changes for session authentication:
+queXS 1.14.0 - Changes since 1.13.1
 
+Database changes for session authentication:
 
 /* Make the first user the admin user - with default password of: password */
 INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
@@ -21,6 +22,32 @@ WHERE 1;
 
 /* Remove redundant table */
 DROP TABLE `sessions2`;
+
+
+queXS 1.13.1 - Changes since 1.13.0
+
+Fixed Bug: Remove references to old DEFAULT_TIME_ZONE config constant (use get_settings instead)
+Fixed Bug: lp:1480880 - disable create new questionnaire if no active Limesurvey available
+Fixed Bug: Update FreePBX compatability to 2.11 /  Make IAX extensions start from 1000
+Fixed Bug: Checkbox group selection and HTML errors in operator / skills / assignment pages
+Fixed Bug: Max call attempts should be temporary outcome as value can change
+Fixed Bug: Fix sample import given new database structure (sample_var table)
+Fixed Bug: lp:1408870 Add "Maximum attempts reached" as an outcome
+Fixed Bug: PHP notices when using call history
+
+New Feature: Pre-generation of cases and copying of sample variables to Limesurvey attributes for "Web First" then CATI methodology
+
+Updated translations from Launchpad - Thank you!
+
+Database updates required:
+
+/* Fix max attempt outcomes */
+
+DELETE FROM `outcome` WHERE outcome_id IN (42,43,44,45);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(42, '3.90', 'Max call attempts reached (Unknown eligibility)', 0, 1, 0, 1, 1, 0, 0, 'UH');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(43, '3.90', 'Max calls reached (Unknown eligibility)', 0, 1, 0, 1, 1, 0, 0, 'UH');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(44, '2.30', 'Max call attempts reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(45, '2.30', 'Max calls reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O');
 
 queXS 1.13.0 - Changes since 1.12.1
 
@@ -90,8 +117,11 @@ Database updates required:
 
 /* New outcomes */
 
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(42, '3.13', 'Max call attempts reached', 0, 4, 0, 1, 0, 1, 0, 'UH');
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(43, '3.13', 'Max calls reached', 0, 4, 0, 1, 0, 1, 0, 'UH');
+DELETE FROM `outcome` WHERE outcome_id IN (42,43,44,45);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(42, '3.90', 'Max call attempts reached (Unknown eligibility)', 0, 1, 0, 1, 1, 0, 0, 'UH');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(43, '3.90', 'Max calls reached (Unknown eligibility)', 0, 1, 0, 1, 1, 0, 0, 'UH');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(44, '2.30', 'Max call attempts reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O');
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`) VALUES(45, '2.30', 'Max calls reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O');
 
 
 /* Add var_id sample var identifier */

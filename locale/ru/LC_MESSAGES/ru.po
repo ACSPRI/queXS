@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs DDR\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-08-04 12:27+1000\n"
-"PO-Revision-Date: 2015-08-03 22:02+0000\n"
+"POT-Creation-Date: 2015-08-10 16:24+1000\n"
+"PO-Revision-Date: 2015-08-12 22:29+0000\n"
 "Last-Translator: Alex <ddrmoscow@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-04 03:56+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-08-31 02:56+0000\n"
+"X-Generator: Launchpad (build 17690)\n"
 "Language: ru\n"
 
 #: appointment.php:69
@@ -66,11 +66,11 @@ msgstr "Выбрать номер телефона:"
 
 #: appointment.php:177
 msgid "Add new phone number"
-msgstr "Добавить новый телефонный номер"
+msgstr "Добавить новый номер телефона"
 
 #: appointment.php:190
 msgid "Add new phone number (with area code, eg 0398761234):"
-msgstr "Добавить новый телефонный номер (включая код, пример: 74951234567):"
+msgstr "Добавить новый номер телефона  (включая код, пример: 74951234567):"
 
 #: appointment.php:193
 msgid "Add this phone number"
@@ -103,7 +103,7 @@ msgstr "Запланировать  повторный звонок"
 
 #: info.php:56
 msgid "Information"
-msgstr "Сведения"
+msgstr "Информация"
 
 #: rs_project_end.php:71 rs_project_end_interface2.php:62
 msgid "Respondent Selection - Project end"
@@ -149,40 +149,6 @@ msgstr "Тип переменной"
 msgid "Show to operator?"
 msgstr "Показать операторам ?"
 
-#: functions/functions.freepbx.php:138
-#, php-format
-msgid "Reload failed because retrieve_conf encountered an error: %s"
-msgstr ""
-"Перезагрузка не удалась, т.к. выполнение файла  retrieve_conf привело к "
-"ошибке : %s"
-
-#: functions/functions.freepbx.php:140
-msgid "retrieve_conf failed, config not applied"
-msgstr ""
-"Выпонение файла retrieve_conf не удалось, изменения конфигурации НЕ применены"
-
-#: functions/functions.freepbx.php:146
-msgid ""
-"Reload failed because FreePBX could not connect to the asterisk manager "
-"interface."
-msgstr ""
-"Перезагрузка НЕ произведена, т.к. FreePBX не может подключиться к панели "
-"управления Asterisk ."
-
-#: functions/functions.freepbx.php:165
-msgid ""
-"Could not reload the FOP operator panel server using the bounce_op.sh "
-"script. Configuration changes may not be reflected in the panel display."
-msgstr ""
-"Невозможно перегрузить сервер панелей  оператоов используя скрипт "
-"bounce_op.sh .  Изменения в конфигурации могли не отразиться на экране "
-"панели."
-
-#: functions/functions.freepbx.php:174
-#, php-format
-msgid "Exit code was %s and output was: %s"
-msgstr "Код выхода был %s с результатом : %s"
-
 #: functions/functions.operator.php:167 include/limesurvey/quexs.php:362
 msgid "morning"
 msgstr "утро"
@@ -195,7 +161,7 @@ msgstr "день"
 msgid "evening"
 msgstr "вечер"
 
-#: functions/functions.operator.php:905
+#: functions/functions.operator.php:972
 msgid ""
 "ERROR: You do not have server side authentication enabled therefore queXS "
 "cannot determine which user is accessing the system."
@@ -347,7 +313,7 @@ msgstr " Внутренний тел.номер "
 #: admin/systemsortprocess.php:185 admin/bulkappointment.php:210
 #: admin/bulkappointment.php:232 admin/casestatus.php:116
 msgid "Case id"
-msgstr "№ задания"
+msgstr "ID задания"
 
 #: functions/functions.voip.php:565 status.php:122 call.php:441
 msgid "Answered"
@@ -465,7 +431,7 @@ msgstr "Повт. вызов"
 
 #: status.php:131
 msgid "MISSED"
-msgstr "НЕ попали по адресу"
+msgstr "ПРОПУЩЕННЫЙ"
 
 #: status.php:134 casenote.php:113 status_interface2.php:232 calllist.php:88
 #: project_info.php:82
@@ -524,7 +490,7 @@ msgstr "Эта смена"
 #: admin/operatorlist.php:184 admin/operatorlist.php:372
 #: admin/casesbyoutcome.php:88 admin/supervisor.php:372
 #: admin/supervisor.php:399 admin/supervisor.php:416
-#: admin/operatorskill.php:244 admin/operatorperformance.php:81
+#: admin/operatorskill.php:246 admin/operatorperformance.php:81
 #: admin/operatorperformance.php:104 admin/shiftreport.php:104
 #: admin/extensionstatus.php:257 admin/operatorquestionnaire.php:242
 msgid "Operator"
@@ -553,12 +519,12 @@ msgid "Add note"
 msgstr "Добавить примечание"
 
 #: casenote.php:69 admin/samplelist.php:284 admin/samplelist.php:495
-#: admin/samplesearch.php:102 admin/questionnairelist.php:368
-#: admin/questionnairelist.php:503 admin/questionnairelist.php:525
-#: admin/questionnairelist.php:533 admin/callhistory.php:137
+#: admin/samplesearch.php:102 admin/questionnairelist.php:370
+#: admin/questionnairelist.php:508 admin/questionnairelist.php:530
+#: admin/questionnairelist.php:538 admin/callhistory.php:137
 #: admin/availability.php:121 admin/operatorlist.php:182 admin/import.php:43
 #: admin/import.php:81 admin/import.php:112 admin/casesbyoutcome.php:54
-#: admin/assignsample.php:150 admin/assignsample.php:203
+#: admin/assignsample.php:201 admin/assignsample.php:254
 #: admin/casestatus.php:205 admin/extensionstatus.php:185 respondent.php:95
 #: contactdetails.php:92
 msgid "Go back"
@@ -612,15 +578,16 @@ msgstr "Доступные смены:"
 #: waitnextcase_interface2.php:136 admin/operators.php:284
 #: admin/operators.php:296 admin/operators.php:300 admin/operators.php:304
 #: admin/operators.php:308 admin/samplesearch.php:96
-#: admin/supervisorchat.php:74 admin/questionnairelist.php:380
-#: admin/questionnairelist.php:383 admin/questionnairelist.php:387
-#: admin/questionnairelist.php:391 admin/questionnairelist.php:395
+#: admin/supervisorchat.php:74 admin/questionnairelist.php:385
+#: admin/questionnairelist.php:388 admin/questionnairelist.php:392
+#: admin/questionnairelist.php:396 admin/questionnairelist.php:400
 #: admin/operatorlist.php:239 admin/operatorlist.php:251
-#: admin/operatorlist.php:255 admin/assignsample.php:173
-#: admin/assignsample.php:176 admin/assignsample.php:264
-#: admin/assignsample.php:268 admin/supervisor.php:185 admin/quotarow.php:392
-#: admin/quotarow.php:596 admin/new.php:208 admin/new.php:215
-#: admin/new.php:222 admin/new.php:229 admin/new.php:236
+#: admin/operatorlist.php:255 admin/assignsample.php:224
+#: admin/assignsample.php:227 admin/assignsample.php:315
+#: admin/assignsample.php:319 admin/assignsample.php:325
+#: admin/supervisor.php:185 admin/quotarow.php:392 admin/quotarow.php:596
+#: admin/new.php:199 admin/new.php:206 admin/new.php:213 admin/new.php:220
+#: admin/new.php:227
 msgid "Yes"
 msgstr "Да"
 
@@ -756,7 +723,7 @@ msgstr "CATI: Количество попыток звонков"
 
 #: include/limesurvey/common_functions.php:6299
 msgid "queXS: On appointment?"
-msgstr "CATI :  Повторный звонок назначен?"
+msgstr "CATI :  Повторный звонок ?"
 
 #: include/limesurvey/common_functions.php:6300
 msgid "queXS: Percentage complete"
@@ -778,7 +745,7 @@ msgstr "Выбор Опроса  и Списка контактов:"
 #: include/limesurvey/admin/browse.php:792
 #: include/limesurvey/admin/vvexport.php:70
 msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr "Все Опросы  и Списки контактов для  этой Анкете"
+msgstr "Все Опросы и Списки контактов для этой Анкеты"
 
 #: include/limesurvey/admin/exportresults.php:257
 msgid "Token"
@@ -1112,14 +1079,14 @@ msgstr "Включено"
 #: nocaseavailable.php:116 admin/samplelist.php:320 admin/quotareport.php:294
 #: admin/assigntimeslots.php:260 admin/outcomes.php:122 admin/outcomes.php:178
 #: admin/callhistory.php:124 admin/callhistory.php:149
-#: admin/callhistory.php:160 admin/quota.php:131 admin/assignsample.php:152
-#: admin/assignsample.php:228 admin/supervisor.php:298 admin/quotarow.php:306
+#: admin/callhistory.php:160 admin/quota.php:131 admin/assignsample.php:203
+#: admin/assignsample.php:279 admin/supervisor.php:298 admin/quotarow.php:306
 #: admin/casestatus.php:116 admin/casestatus.php:234
 msgid "Sample"
 msgstr "Список контактов"
 
 #: nocaseavailable.php:141 admin/callhistory.php:124 admin/callhistory.php:149
-#: admin/callhistory.php:154 admin/quota.php:110 admin/assignsample.php:151
+#: admin/callhistory.php:154 admin/quota.php:110 admin/assignsample.php:202
 #: admin/quotarow.php:288 admin/casestatus.php:231
 #: admin/displayappointments.php:258 admin/displayappointments.php:277
 #: admin/new.php:127 admin/new.php:135 shifts.php:103
@@ -1201,7 +1168,7 @@ msgstr "Временная зона по умолчанию: "
 
 #: admin/timezonetemplate.php:111
 msgid "Set default timezone"
-msgstr "Задать Временную зону по умолчанию:"
+msgstr "Установиьт Временную зону по умолчанию"
 
 #: admin/timezonetemplate.php:116
 msgid "Timezone list"
@@ -1287,7 +1254,7 @@ msgstr "Пример данных"
 msgid "Delete ?"
 msgstr "Удалить ?"
 
-#: admin/samplelist.php:346 admin/addshift.php:263 admin/assignsample.php:179
+#: admin/samplelist.php:346 admin/addshift.php:263 admin/assignsample.php:230
 #: admin/quotarow.php:394 admin/extensionstatus.php:202
 #: admin/displayappointments.php:231
 msgid "Save changes"
@@ -1465,9 +1432,10 @@ msgid "Added operator :"
 msgstr "Добавлен оператор :"
 
 #: admin/operators.php:150
-msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
+msgid ""
+"FreePBX needs to be reloaded for the new VoIP extension to take effect"
 msgstr ""
-"АТС FreePBX была перезагружена чтобы новый внутреннй номер был подключен"
+"Необходимо перезагрузить FreePBX, чтобы новый внутр. номер IP тел. заработал"
 
 #: admin/operators.php:172
 msgid ""
@@ -1488,7 +1456,7 @@ msgid ""
 "here."
 msgstr ""
 "Используйте эту форму, чтобы ввести имя пользователя  на основании вашей "
-"системы безопасности каталогов. Например если вы защитили каталог queXS с "
+"системы безопасности каталогов. Например, если вы защитили каталог queXS с "
 "использованием системы безопасности Apache на основе файла, введите сюда "
 "имена пользователей."
 
@@ -1498,7 +1466,7 @@ msgstr "Логин и внутр. номер должны быть уникал�
 
 #: admin/operators.php:242 admin/clientquestionnaire.php:238
 #: admin/operatorlist.php:200 admin/operatorlist.php:372
-#: admin/operatorskill.php:244 admin/operatorquestionnaire.php:242
+#: admin/operatorskill.php:246 admin/operatorquestionnaire.php:242
 msgid "Username"
 msgstr "Логин (Имя пользователя)"
 
@@ -1520,8 +1488,8 @@ msgid "characters"
 msgstr "символов"
 
 #: admin/operators.php:267 admin/operators.php:276
-#: admin/questionnairelist.php:375 admin/operatorlist.php:225
-#: admin/operatorlist.php:233 admin/assignsample.php:228
+#: admin/questionnairelist.php:380 admin/operatorlist.php:225
+#: admin/operatorlist.php:233 admin/assignsample.php:279
 #: admin/quotarow.php:582 admin/shiftreport.php:104
 #: admin/displayappointments.php:258 admin/displayappointments.php:277
 msgid "Edit"
@@ -1542,15 +1510,16 @@ msgstr "Использует  IP Телефонию  (VOIP)"
 
 #: admin/operators.php:284 admin/operators.php:296 admin/operators.php:300
 #: admin/operators.php:304 admin/operators.php:308 admin/supervisorchat.php:74
-#: admin/questionnairelist.php:380 admin/questionnairelist.php:383
-#: admin/questionnairelist.php:387 admin/questionnairelist.php:391
-#: admin/questionnairelist.php:395 admin/operatorlist.php:239
+#: admin/questionnairelist.php:385 admin/questionnairelist.php:388
+#: admin/questionnairelist.php:392 admin/questionnairelist.php:396
+#: admin/questionnairelist.php:400 admin/operatorlist.php:239
 #: admin/operatorlist.php:251 admin/operatorlist.php:255
-#: admin/assignsample.php:173 admin/assignsample.php:174
-#: admin/assignsample.php:176 admin/assignsample.php:264
-#: admin/assignsample.php:265 admin/assignsample.php:268
-#: admin/quotarow.php:392 admin/quotarow.php:596 admin/new.php:208
-#: admin/new.php:215 admin/new.php:222 admin/new.php:229 admin/new.php:236
+#: admin/assignsample.php:224 admin/assignsample.php:225
+#: admin/assignsample.php:227 admin/assignsample.php:315
+#: admin/assignsample.php:316 admin/assignsample.php:319
+#: admin/assignsample.php:325 admin/quotarow.php:392 admin/quotarow.php:596
+#: admin/new.php:199 admin/new.php:206 admin/new.php:213 admin/new.php:220
+#: admin/new.php:227
 msgid "No"
 msgstr "Нет"
 
@@ -1584,7 +1553,7 @@ msgstr "Отчет по Квоте"
 
 #: admin/quotareport.php:111 admin/assigntimeslots.php:156
 #: admin/questionnaireprefill.php:100 admin/outcomes.php:68
-#: admin/addshift.php:168 admin/assignsample.php:204
+#: admin/addshift.php:168 admin/assignsample.php:255
 msgid "Select a questionnaire"
 msgstr "Выберите опрос"
 
@@ -1632,7 +1601,7 @@ msgstr "% Завершено"
 
 #: admin/quotareport.php:294
 msgid "Set priority"
-msgstr "Задать приоритет"
+msgstr "Установить приоритет"
 
 #: admin/quotareport.php:294 admin/quotarow.php:582
 msgid "Auto prioritise"
@@ -2017,7 +1986,7 @@ msgstr "Загрузить файл"
 
 #: admin/callrestrict.php:99 admin/index.php:167
 msgid "Set call restriction times"
-msgstr "Задать  ограничение времени звонков"
+msgstr "Ограничение времени звонков"
 
 #: admin/callrestrict.php:113 admin/availability.php:157
 msgid ""
@@ -2111,116 +2080,120 @@ msgstr "IP супервайзера для сервера XMPP/Jabber"
 msgid "Update"
 msgstr "Обновить"
 
-#: admin/questionnairelist.php:347
+#: admin/questionnairelist.php:348
 msgid "Modify Questionnaire "
 msgstr "Редактировать Опрос "
 
 #: admin/questionnairelist.php:370
+msgid "Assigned survey"
+msgstr "Подключена Анкета"
+
+#: admin/questionnairelist.php:374
 msgid "Edit instrument in Limesurvey"
 msgstr "Редактировать Анкету  в Lime"
 
-#: admin/questionnairelist.php:375 admin/questionnairelist.php:376
-#: admin/new.php:154 admin/new.php:156
+#: admin/questionnairelist.php:380 admin/questionnairelist.php:381
+#: admin/new.php:162 admin/new.php:164
 msgid "Name for questionnaire:"
 msgstr "Название Опроса :"
 
-#: admin/questionnairelist.php:379 admin/new.php:206
+#: admin/questionnairelist.php:384 admin/new.php:197
 msgid "Restrict appointments to shifts?"
 msgstr "Привязать повторные звонки к сменам?"
 
-#: admin/questionnairelist.php:382 admin/new.php:213
+#: admin/questionnairelist.php:387 admin/new.php:204
 msgid "Restrict work to shifts?"
 msgstr "Ограничить временем смен?"
 
-#: admin/questionnairelist.php:386 admin/new.php:220
+#: admin/questionnairelist.php:391 admin/new.php:211
 msgid "Questionnaire for testing only?"
 msgstr "Опрос  только для тестирования?"
 
-#: admin/questionnairelist.php:390 admin/new.php:227
+#: admin/questionnairelist.php:395 admin/new.php:218
 msgid "Allow operators to generate referrals?"
 msgstr "Разрешить операторам создавать ссылки для доступа к анкете?"
 
-#: admin/questionnairelist.php:394 admin/new.php:234
+#: admin/questionnairelist.php:399 admin/new.php:225
 msgid "Allow for respondent self completion via email invitation?"
 msgstr ""
 "Разрешить респондентам самостоятельно отвечать на анкету ? (после отправки "
 "приглашения по эл. почте)"
 
-#: admin/questionnairelist.php:399 admin/new.php:242
+#: admin/questionnairelist.php:404 admin/new.php:233
 msgid "Questionnaire display mode for respondent"
 msgstr "Режим отображения Анкеты   для Респондента"
 
-#: admin/questionnairelist.php:402 admin/new.php:245
+#: admin/questionnairelist.php:407 admin/new.php:236
 msgid "All in one"
 msgstr "Все сразу на одной странице"
 
-#: admin/questionnairelist.php:403 admin/new.php:246
+#: admin/questionnairelist.php:408 admin/new.php:237
 msgid "Question by question"
 msgstr "Вопрос за вопросом"
 
-#: admin/questionnairelist.php:404 admin/new.php:247
+#: admin/questionnairelist.php:409 admin/new.php:238
 msgid "Group at a time"
 msgstr "Группа за группой"
 
-#: admin/questionnairelist.php:409 admin/new.php:252
+#: admin/questionnairelist.php:414 admin/new.php:243
 msgid "Limesurvey template for respondent"
 msgstr "Шаблон Анкеты для показа Респонденту"
 
-#: admin/questionnairelist.php:428 admin/new.php:270
+#: admin/questionnairelist.php:433 admin/new.php:261
 msgid "URL to forward respondents on self completion (required)"
 msgstr ""
 "Ссылка переадресации респондентов для самостоятельного запонения Анкеты "
 "(обязательна)"
 
-#: admin/questionnairelist.php:439 admin/questionnairelist.php:449
-#: admin/questionnairelist.php:459 admin/questionnairelist.php:469
-#: admin/questionnairelist.php:485 admin/questionnairelist.php:495
-#: admin/new.php:306 admin/new.php:316 admin/new.php:326 admin/new.php:336
-#: admin/new.php:348 admin/new.php:358
+#: admin/questionnairelist.php:444 admin/questionnairelist.php:454
+#: admin/questionnairelist.php:464 admin/questionnairelist.php:474
+#: admin/questionnairelist.php:490 admin/questionnairelist.php:500
+#: admin/new.php:297 admin/new.php:307 admin/new.php:317 admin/new.php:327
+#: admin/new.php:339 admin/new.php:349
 msgid "Expand/Collapse"
 msgstr "Развернуть/Свернуть"
 
-#: admin/questionnairelist.php:440 admin/new.php:307
+#: admin/questionnairelist.php:445 admin/new.php:298
 msgid "Respondent selection introduction:"
 msgstr "Отбор респондентов    Вступление:"
 
-#: admin/questionnairelist.php:450 admin/new.php:317
+#: admin/questionnairelist.php:455 admin/new.php:308
 msgid "Respondent selection project introduction:"
 msgstr "Отбор респондентов     Вступительная часть проекта:"
 
-#: admin/questionnairelist.php:460 admin/new.php:327
+#: admin/questionnairelist.php:465 admin/new.php:318
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr "Отбор респондентов      обратный звонок (опрос  уже начат) :"
 
-#: admin/questionnairelist.php:470 admin/new.php:337
+#: admin/questionnairelist.php:475 admin/new.php:328
 msgid "Message to leave on an answering machine:"
 msgstr "Текст сообщения для автоответчика:"
 
-#: admin/questionnairelist.php:480
+#: admin/questionnairelist.php:485
 msgid "Edit respondent selection instrument in Limesurvey"
 msgstr "Редактировать отбор респондентов   в Lime"
 
-#: admin/questionnairelist.php:486 admin/new.php:349
+#: admin/questionnairelist.php:491 admin/new.php:340
 msgid "Project end text (thank you screen):"
 msgstr "Сообщение по окончании опроса (страница СПАСИБО):"
 
-#: admin/questionnairelist.php:496 admin/new.php:359
+#: admin/questionnairelist.php:501 admin/new.php:350
 msgid "Project information for interviewers/operators:"
 msgstr "Информация о проекте для интервьюеров / операторов:"
 
-#: admin/questionnairelist.php:504
+#: admin/questionnairelist.php:509
 msgid "Update Questionnaire"
 msgstr "Обновить Опрос"
 
-#: admin/questionnairelist.php:518
+#: admin/questionnairelist.php:523
 msgid "Delete Questionnaire"
 msgstr "Удалить Опрос"
 
-#: admin/questionnairelist.php:520
+#: admin/questionnairelist.php:525
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
 msgstr "Все полученные данные и Анкета в Limesurvey НЕ будут удалены"
 
-#: admin/questionnairelist.php:521
+#: admin/questionnairelist.php:526
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
@@ -2230,24 +2203,24 @@ msgstr ""
 "примечаний, деталей респондентов, повторных звонков их связми между "
 "операторами, клиентами и опросом"
 
-#: admin/questionnairelist.php:522
+#: admin/questionnairelist.php:527
 msgid "Please confirm you wish to delete the questionnaire"
 msgstr "Подтвердите намерение  удалить этот Опрос"
 
-#: admin/questionnairelist.php:525
+#: admin/questionnairelist.php:530
 msgid "Delete this questionnaire"
 msgstr "Удалить этот Опрос"
 
-#: admin/questionnairelist.php:531 admin/index.php:100 admin/new.php:136
-#: admin/new.php:146 admin/new.php:368
+#: admin/questionnairelist.php:536 admin/index.php:100 admin/new.php:136
+#: admin/new.php:146
 msgid "Questionnaire management"
 msgstr "Управление опросами"
 
-#: admin/questionnairelist.php:534 admin/index.php:99 admin/new.php:42
+#: admin/questionnairelist.php:539 admin/index.php:99 admin/new.php:42
 msgid "Create a new questionnaire"
 msgstr "Создать новый опрос"
 
-#: admin/questionnairelist.php:552
+#: admin/questionnairelist.php:557
 msgid "Edit Lime survey"
 msgstr "Редактировать анкету в Lime"
 
@@ -2469,7 +2442,7 @@ msgstr ""
 msgid "Select columns to import"
 msgstr "Выберите импортируемые столбцы"
 
-#: admin/import.php:97 admin/import.php:145 admin/assignsample.php:272
+#: admin/import.php:97 admin/import.php:145 admin/assignsample.php:330
 msgid "Add sample"
 msgstr "Добавить список контактов"
 
@@ -2490,8 +2463,8 @@ msgid "Enter new sample name..."
 msgstr "Введите новое название списка контактов..."
 
 #: admin/index.php:50
-msgid "Administrative Tools"
-msgstr "Административные инструменты"
+msgid "queXS Administration"
+msgstr "Панель Администратора"
 
 #: admin/index.php:67
 msgid "Click to Collapse / Expand Sidebar MENU "
@@ -2521,11 +2494,11 @@ msgstr "Панель"
 msgid "Questionnairies"
 msgstr "Опросы"
 
-#: admin/index.php:98 admin/new.php:177 admin/new.php:181
+#: admin/index.php:98 admin/new.php:178 admin/new.php:372
 msgid "Create an instrument in Limesurvey"
 msgstr "Создать анекту в Limesurvey:"
 
-#: admin/index.php:101
+#: admin/index.php:101 admin/new.php:374
 msgid "Administer instruments with Limesurvey"
 msgstr "Администрировать анкеты в Lime"
 
@@ -2578,9 +2551,9 @@ msgstr "Статус внутр. тел.номера"
 msgid "Assign operators to questionnaires"
 msgstr "Привязать операторов к опросам"
 
-#: admin/index.php:134 admin/operatorskill.php:268
+#: admin/index.php:134 admin/operatorskill.php:270
 msgid "Modify operator skills"
-msgstr "Изменить навыки и возможности операторов"
+msgstr "Навыки операторов"
 
 #: admin/index.php:138
 msgid "Results"
@@ -2588,11 +2561,11 @@ msgstr "Результаты"
 
 #: admin/index.php:140
 msgid "Display all future appointments"
-msgstr "Показать все будущие повторные звонки"
+msgstr "Повторные звонки"
 
 #: admin/index.php:141
 msgid "Sample call attempts report"
-msgstr "Отчет по звонкам по Списку контактов"
+msgstr "Попытки звонков"
 
 #: admin/index.php:142 index.php:250 index_interface2.php:267
 msgid "Call history"
@@ -2600,7 +2573,7 @@ msgstr "История звонков"
 
 #: admin/index.php:143 admin/shiftreport.php:61
 msgid "Shift reports"
-msgstr "отчеты по сменам"
+msgstr "Отчеты по сменам"
 
 #: admin/index.php:145
 msgid "Questionnaire outcomes"
@@ -2636,7 +2609,7 @@ msgstr "Установки системы"
 
 #: admin/index.php:164
 msgid "Set default timezone list"
-msgstr "Задать список временных зон по умолчанию"
+msgstr "Временные зоны"
 
 #: admin/index.php:165
 msgid "Manage Time slots"
@@ -2644,7 +2617,7 @@ msgstr "Управление Временными интервалами"
 
 #: admin/index.php:166 admin/shifttemplate.php:94
 msgid "Set default shift times"
-msgstr "Задать времена для смен по умолчанию"
+msgstr "Времена смен по умолчанию"
 
 #: admin/index.php:170
 msgid "System wide case sorting"
@@ -2799,81 +2772,92 @@ msgstr "Для этого вопроса не заданы эрлыки"
 msgid "Code value"
 msgstr "Значение кода"
 
-#: admin/assignsample.php:131
+#: admin/assignsample.php:182
 msgid "Edit assignment parameters"
 msgstr "Редактировать параметры"
 
-#: admin/assignsample.php:132 admin/assignsample.php:201
+#: admin/assignsample.php:183 admin/assignsample.php:252
 msgid "Assign samples to questionnaire: "
 msgstr "Привязать списки контактов к опросу: "
 
-#: admin/assignsample.php:163 admin/assignsample.php:228
-#: admin/assignsample.php:251
+#: admin/assignsample.php:214 admin/assignsample.php:279
+#: admin/assignsample.php:302
 msgid "Max calls"
 msgstr "Макс. количество звонков"
 
-#: admin/assignsample.php:165 admin/assignsample.php:168
-#: admin/assignsample.php:253 admin/assignsample.php:257
+#: admin/assignsample.php:216 admin/assignsample.php:219
+#: admin/assignsample.php:304 admin/assignsample.php:308
 msgid "Unlimited"
 msgstr "Без ограничений"
 
-#: admin/assignsample.php:166 admin/assignsample.php:228
-#: admin/assignsample.php:255
+#: admin/assignsample.php:217 admin/assignsample.php:279
+#: admin/assignsample.php:306
 msgid "Max call attempts"
 msgstr "Макс. число попыток  звонков"
 
-#: admin/assignsample.php:169 admin/assignsample.php:259
+#: admin/assignsample.php:220 admin/assignsample.php:310
 msgid "Number of answering machine messages to leave per case"
 msgstr "Допустимое количество сообщений на автоответчике для задания"
 
-#: admin/assignsample.php:171 admin/assignsample.php:261
+#: admin/assignsample.php:222 admin/assignsample.php:312
 msgid "Never"
 msgstr "Не оставлять"
 
-#: admin/assignsample.php:172 admin/assignsample.php:263
+#: admin/assignsample.php:223 admin/assignsample.php:314
 msgid "Select from sample randomly?"
 msgstr "Случайный Выбор респондента из Списка контактов ?"
 
-#: admin/assignsample.php:174 admin/assignsample.php:265
+#: admin/assignsample.php:225 admin/assignsample.php:316
 msgid "Sequentially"
 msgstr "Последовательно"
 
-#: admin/assignsample.php:175 admin/assignsample.php:228
-#: admin/assignsample.php:267
+#: admin/assignsample.php:226 admin/assignsample.php:279
+#: admin/assignsample.php:318
 msgid "Allow new numbers to be drawn?"
 msgstr "Разрешить использовать новые номера из списка контактов?"
 
-#: admin/assignsample.php:200
+#: admin/assignsample.php:251
 msgid "List & Add Sample"
 msgstr "Перечень и добавление списков контактов"
 
-#: admin/assignsample.php:211
+#: admin/assignsample.php:262
 msgid "Samples selected for this questionnaire"
 msgstr "Списки контактов  выбранные для этого опроса"
 
-#: admin/assignsample.php:228
+#: admin/assignsample.php:279
 msgid "Answering machine messages"
 msgstr "Кол-во Сообщений  для Автоответчика"
 
-#: admin/assignsample.php:228
+#: admin/assignsample.php:279
 msgid "Selection type"
 msgstr "Порядок  выбора  респондентов из списка"
 
-#: admin/assignsample.php:228
+#: admin/assignsample.php:279
 msgid "Unassign sample"
 msgstr "Отсоединиить Список контактов"
 
-#: admin/assignsample.php:230
+#: admin/assignsample.php:281
 msgid "No samples selected for this questionnaire"
 msgstr "Для этого опроса не выбраны Списки контактов"
 
-#: admin/assignsample.php:244
+#: admin/assignsample.php:295
 msgid "Add a sample to this questionnaire:"
 msgstr "Добавить Список контактов  к опросу :"
 
-#: admin/assignsample.php:247
+#: admin/assignsample.php:298
 msgid "Select sample:"
 msgstr "Выбрать список контактов:"
+
+#: admin/assignsample.php:324
+msgid ""
+"Generate cases for all sample records and set outcome to 'Self completion "
+"email invitation sent'? (Ideal if you intend to send an email invitation to "
+"sample members before attempting to call using queXS)"
+msgstr ""
+"Генерировать задания для всех записей списка контактов и установить "
+"результат 'Письмо с приглашением для самостоятельного заполнения отправлено' "
+"? (Если Вы собираетесь отправить e-mail с приглашением к участию в опросе "
+"респондентам из списка контактов перед началом обзвона)"
 
 #: admin/supervisor.php:126 respondent.php:101 contactdetails.php:98
 msgid "Case id:"
@@ -2887,7 +2871,7 @@ msgstr "ID задания"
 msgid "Select case"
 msgstr "Выберите  задание"
 
-#: admin/supervisor.php:142 admin/new.php:180
+#: admin/supervisor.php:142 admin/new.php:177 admin/new.php:373
 msgid "or"
 msgstr "или"
 
@@ -2899,7 +2883,7 @@ msgstr "Выберите задание из списка направленны
 msgid "Set an outcome for this call"
 msgstr "Установить результат для этого звонка"
 
-#: admin/supervisor.php:166
+#: admin/supervisor.php:166 admin/new.php:359
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -3077,6 +3061,8 @@ msgstr "В данный момент НЕТ ограничений на осно
 #: admin/quotarow.php:499
 msgid "This sample will be limited to number of completions set in quota"
 msgstr ""
+"Звонки по этому списку будут остановлены после достижении квоты по "
+"количеству завершенных заданий"
 
 #: admin/quotarow.php:499
 msgid ""
@@ -3133,7 +3119,7 @@ msgstr "Выберите CSV файл  для импорта квоты"
 
 #: admin/operatorskill.php:147
 msgid "Assign operators to Skills"
-msgstr "Редактировать возможности и обязанности операторов"
+msgstr "Установить навыки и возможности операторов"
 
 #: admin/operatorskill.php:149
 msgid ""
@@ -3366,8 +3352,7 @@ msgstr "Удалить внутр. номер"
 #: admin/extensionstatus.php:214
 msgid "Unassign the operator from this extension to be able to delete it"
 msgstr ""
-"Отсоедините оператора от этого внутр. номера для возможности удалить внутр. "
-"номер"
+"Чтобы удалить внутр. номер, отсоедините оператора от этого внутр. номера"
 
 #: admin/extensionstatus.php:257
 msgid "Assignment"
@@ -3494,11 +3479,11 @@ msgstr "Создать следующий ?"
 msgid "No, Thank you, go to"
 msgstr "Нет, перейти к"
 
-#: admin/new.php:146 admin/new.php:368
+#: admin/new.php:146
 msgid "Go to"
 msgstr "Перейти  к"
 
-#: admin/new.php:156
+#: admin/new.php:164
 msgid "Enter New questionnaire name.."
 msgstr "Введите название Нового опроса..."
 
@@ -3506,25 +3491,29 @@ msgstr "Введите название Нового опроса..."
 msgid "Select limesurvey instrument:"
 msgstr "Выбрать Анкету из списка:"
 
-#: admin/new.php:174 admin/new.php:199
-msgid "Existing instrument:"
-msgstr "Существующая анкета:"
+#: admin/new.php:173 admin/new.php:190
+msgid "Survey"
+msgstr "Анкета"
 
-#: admin/new.php:186
+#: admin/new.php:183
 msgid "Respondent selection type:"
 msgstr "Способ отбора респондента :"
 
-#: admin/new.php:189
+#: admin/new.php:186
 msgid "No respondent selection (go straight to questionnaire)"
 msgstr "Без отбора  респондента ( переход прямо к анкете )"
 
-#: admin/new.php:190
+#: admin/new.php:187
 msgid "Use basic respondent selection text (below)"
 msgstr "Использовать базовый текст для отбора респондентов (ниже)"
 
-#: admin/new.php:371
+#: admin/new.php:362
 msgid "Create Questionnaire"
 msgstr "Создать Опрос"
+
+#: admin/new.php:371
+msgid "NO active Lime surveys available"
+msgstr "НЕТ активных Анкет в LimeSurvey"
 
 #: admin/databasestrings.php:32 rs_intro_interface2.php:76
 msgid "Not attempted or worked"
@@ -3764,12 +3753,21 @@ msgid "Self completed online"
 msgstr "Заполнено  самостоятельно онлайн"
 
 #: admin/databasestrings.php:91
-msgid "Max call attempts reached"
-msgstr "Превышено количество попыток звонков"
+msgid "Max call attempts reached (Eligible)"
+msgstr "Макс. количество попыток звонков (Подходящий респондент)"
 
 #: admin/databasestrings.php:92
-msgid "Max calls reached"
-msgstr "Превышено количество звонков"
+msgid "Max calls reached (Eligible)"
+msgstr "Макс. количество звонков (Подходящий респондент)"
+
+#: admin/databasestrings.php:93
+msgid "Max call attempts reached (Unknown eligibility)"
+msgstr ""
+"Макс. количество попыток звонков (Неизвестно, подходящий респондент или нет)"
+
+#: admin/databasestrings.php:94
+msgid "Max calls reached (Unknown eligibility)"
+msgstr "Макс. количество звонков (Неизвестно, подходящий респондент или нет)"
 
 #: call_interface2.php:116
 msgid "CONTACTED"
@@ -3993,7 +3991,7 @@ msgstr "Будущих смен не запланировано"
 
 #: display/index.php:111
 msgid "Display"
-msgstr "Показать"
+msgstr "Монитор"
 
 #: supervisor.php:61
 msgid "Please wait till you have ended this call to call the supervisor"
@@ -4075,7 +4073,7 @@ msgstr "Задание"
 
 #: rs_quota_end.php:61
 msgid "Respondent Selection - Project Quota End"
-msgstr "Отбор Респондентов - В случае  закрытия квоты по  проекту"
+msgstr "Отбор Респондентов - Сообщение если квота заполнена"
 
 #: rs_quota_end.php:72 rs_quota_end.php:78
 msgid "End call with outcome: Quota filled"
@@ -4149,6 +4147,9 @@ msgstr "Закончить звонок с результатом:  Квота �
 
 #~ msgid "Add availability group"
 #~ msgstr "Добавить группу доступности"
+
+#~ msgid "Administrative Tools"
+#~ msgstr "Административные инструменты"
 
 #~ msgid "Questionnaire creation and management"
 #~ msgstr "Создание и управление опросами"
@@ -4339,6 +4340,10 @@ msgstr "Закончить звонок с результатом:  Квота �
 #~ msgid "Added:"
 #~ msgstr "Добавлено:"
 
+#~ msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
+#~ msgstr ""
+#~ "АТС FreePBX была перезагружена чтобы новый внутреннй номер был подключен"
+
 #~ msgid "Adding an operator here will give the user the ability to call cases"
 #~ msgstr "Добавление оператора"
 
@@ -4374,6 +4379,9 @@ msgstr "Закончить звонок с результатом:  Квота �
 
 #~ msgid "linked to"
 #~ msgstr "связан с"
+
+#~ msgid "Existing instrument:"
+#~ msgstr "Существующая анкета:"
 
 #~ msgid "Display extension status"
 #~ msgstr "Показать статус  внутр. номера"
@@ -4468,8 +4476,33 @@ msgstr "Закончить звонок с результатом:  Квота �
 #~ msgid "Enter the details for creating the row quota:"
 #~ msgstr "Введите описание для создания коты по строке"
 
+#~ msgid ""
+#~ "Reload failed because FreePBX could not connect to the asterisk manager "
+#~ "interface."
+#~ msgstr ""
+#~ "Перезагрузка НЕ произведена, т.к. FreePBX не может подключиться к панели "
+#~ "управления Asterisk ."
+
+#~ msgid "retrieve_conf failed, config not applied"
+#~ msgstr ""
+#~ "Выпонение файла retrieve_conf не удалось, изменения конфигурации НЕ применены"
+
 #~ msgid "Start and monitor system wide case sorting"
 #~ msgstr "Запуск и монитор сортировки заданий"
+
+#~ msgid ""
+#~ "Could not reload the FOP operator panel server using the bounce_op.sh "
+#~ "script. Configuration changes may not be reflected in the panel display."
+#~ msgstr ""
+#~ "Невозможно перегрузить сервер панелей  оператоов используя скрипт "
+#~ "bounce_op.sh .  Изменения в конфигурации могли не отразиться на экране "
+#~ "панели."
+
+#, php-format
+#~ msgid "Reload failed because retrieve_conf encountered an error: %s"
+#~ msgstr ""
+#~ "Перезагрузка не удалась, т.к. выполнение файла  retrieve_conf привело к "
+#~ "ошибке : %s"
 
 #~ msgid "tool"
 #~ msgstr "инструмент"
@@ -4500,6 +4533,10 @@ msgstr "Закончить звонок с результатом:  Квота �
 #, php-format
 #~ msgid "Use the % character as a wildcard"
 #~ msgstr "Используйте символ  %  для подстановки любого значения"
+
+#, php-format
+#~ msgid "Exit code was %s and output was: %s"
+#~ msgstr "Код выхода был %s с результатом : %s"
 
 #~ msgid "Pre defined values for this question:"
 #~ msgstr "Предопределенные значения для этого вопроса:"
