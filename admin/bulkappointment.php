@@ -45,6 +45,11 @@ include ("../functions/functions.xhtml.php");
 include ("../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * Operator functions
  */
 include("../functions/functions.operator.php");

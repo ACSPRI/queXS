@@ -39,6 +39,12 @@ include_once ("config.inc.php");
  */
 include_once ("db.inc.php");
 
+/** 
+ * Authentication
+ */
+include ("auth-interviewer.php");
+
+
 /**
  * XHTML functions
  */

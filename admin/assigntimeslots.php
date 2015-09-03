@@ -40,6 +40,11 @@ include("../config.inc.php");
  */
 include ("../db.inc.php");
 
+/** 
+ * Authentication
+ */
+include ("auth-admin.php");
+
 /**
  * XHTML functions
  */

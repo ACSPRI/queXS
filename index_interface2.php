@@ -45,6 +45,12 @@ include ("functions/functions.xhtml.php");
  */
 include("functions/functions.operator.php");
 
+/** 
+ * Authentication
+ */
+include ("auth-interviewer.php");
+
+
 
 
 $popupcall = false;
