@@ -155,14 +155,13 @@ if(!isset($_SESSION['loginID']) && $action != "forgotpass" && ($action != "logou
         $loginsummary = '
 
 			<form class="form-signin" name="forgotpassword" id="forgotpassword" method="post" action="'.$homeurl.'/admin.php" >
-				<h2>'.$clang->gT('You have to enter user name and email.').'</h2>
+				<h2>'.$clang->gT('You have to enter user name and email.').'</h2><p><br />	<br />
 						<label for="user">'.$clang->gT('Username').'</label><input name="user" id="user" class="form-control" placeholder="User name" required autofocus type="text" size="60" maxlength="60" value="" />
-						<label for="email">'.$clang->gT('Email').'</label><input name="email" id="email" class="form-control" placeholder="Email" required type="text" size="60" maxlength="60" value="" />
+						<label for="email">'.$clang->gT('Email').'</label><input name="email" id="email" class="form-control" placeholder="Email" required type="text" size="60" maxlength="60" value="" /></p>
 						<input type="hidden" name="action" value="forgotpass" />
-						<button class="action btn btn-lg btn-primary btn-block" type="submit">'.$clang->gT('Check Data').'</button>
+						<p><button class="action btn btn-lg btn-primary btn-block" type="submit">'.$clang->gT('Check Data').'</button></p>
 						<p><a href="'.$scriptname.'">'.$clang->gT('Main Admin Screen').'</a></p>
 			</form>
-            <p>&nbsp;</p>
 ';
     }
     elseif (!isset($loginsummary))
@@ -217,11 +216,11 @@ if(!isset($_SESSION['loginID']) && $action != "forgotpass" && ($action != "logou
             }
 
             $loginsummary .= "<label for='user'>".$clang->gT("Username")."</label>
-                                                                            <input class='form-control' placeholder='User name' required autofocus name='user' id='user' type='text' size='40' maxlength='40' value='' />
-                                                                            <label for='password'>".$clang->gT("Password")."</label>
-                                                                            <input name='password' id='password' class='form-control' placeholder='Password' required type='password' size='40' maxlength='40' />
-                                        <label for='loginlang'>".$clang->gT("Language")."</label>
-                                        <select id='loginlang' class='form-control' name='loginlang'>\n";
+                              <input class='form-control' placeholder='User name' required autofocus name='user' id='user' type='text' size='40' maxlength='40' value='' />
+							  <label for='password'>".$clang->gT("Password")."</label>
+                              <input name='password' id='password' class='form-control' placeholder='Password' required type='password' size='40' maxlength='40' />
+                              <label for='loginlang'>".$clang->gT("Language")."</label>
+                              <select id='loginlang' class='form-control' name='loginlang'>\n";
             $loginsummary .='<option value="default" selected="selected">'.$clang->gT('Default').'</option>';
             $lan=array();
             foreach (getlanguagedata(true) as $langkey=>$languagekind)

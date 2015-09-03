@@ -101,13 +101,14 @@ else
 {
 	xhtml_head(T_("Monitor system wide case sorting"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"));
 	//print "<h2>" . T_("Monitor system wide case sorting") . "</h2>";
-	print "<p><a href='?watch=watch'>" . T_("Click here to enable and begin system wide case sorting") . "</a></p>";
-	print "<div class='well pull-right col-sm-4'><p>"  . T_("System wide case sorting is periodically (via SYSTEM_SORT_MINUTES configuration directive) sorting cases on a system wide basis instead of finding the most appropriate case each time an operator requests a new case. This may increase performance where there are a large number of cases or complex quotas in place. If you are not experiencing any performance problems, it is not recommended to use this feature.") . "</p></div>";
-	print "<h2>" . T_("Outcome of last process run (if any)") . "</h2>";
+	print "<div class='col-sm-6'></br></br><a href='?watch=watch' class = 'btn btn-danger btn-lg'>" . T_("Click here to enable and begin system wide case sorting") . "</a></div>";
+	print "<div class='well pull-right col-sm-6'><p>"  . T_("System wide case sorting is periodically (via SYSTEM_SORT_MINUTES configuration directive) sorting cases on a system wide basis instead of finding the most appropriate case each time an operator requests a new case. This may increase performance where there are a large number of cases or complex quotas in place. If you are not experiencing any performance problems, it is not recommended to use this feature.") . "</p></div>";
+
 	$d = process_get_last_data(2);
         if ($d !== false)
         {
-                xhtml_table($d,array('process_log_id','datetime','data'),array(T_("Log id"), T_("Date"), T_("Log entry")));
+                	print "<h2>" . T_("Outcome of last process run (if any)") . "</h2>";
+					xhtml_table($d,array('process_log_id','datetime','data'),array(T_("Log id"), T_("Date"), T_("Log entry")));
         }
 }
 xhtml_foot();
