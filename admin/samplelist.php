@@ -473,7 +473,7 @@ $sql = "SELECT
 	CASE WHEN enabled = 0 THEN
 		CONCAT('<a href=\'?sampleenable=',sample_import_id,'\' class=\'btn btn-default col-sm-12\'>" . TQ_("Enable") . "&emsp;<i class=\'fa fa-play fa-lg\' style=\'color:blue;\'></i></a>') 
 	ELSE
-		CONCAT('<a href=\'\' class=\'btn btn-default col-sm-12\' data-toggle=\'confirmation\' data-href=\'?sampledisable=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SHURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\'><i class=\'fa fa-ban fa-lg\' style=\'color:red;\'></i>&ensp;&nbsp;" . TQ_("Disable") . "</a> ') 
+		CONCAT('<a href=\'\' class=\'btn btn-default col-sm-12\' data-toggle=\'confirmation\' data-href=\'?sampledisable=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\'><i class=\'fa fa-ban fa-lg\' style=\'color:red;\'></i>&ensp;&nbsp;" . TQ_("Disable") . "</a> ') 
 	END
 	as enabledisable,
 	CASE WHEN enabled = 1 THEN
@@ -484,7 +484,7 @@ $sql = "SELECT
 	CASE WHEN enabled = 1 THEN
 		CONCAT('<a href=\'\' class=\'btn btn-default disabled\'><i class=\'fa fa-trash fa-lg fa-fw\' style=\'color:grey;\'></i></a>')
 	ELSE
-		CONCAT('<a href=\'\' class=\'btn btn-default \' data-toggle=\'confirmation\' data-href=\'?delete_sample=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SHURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\' ><i class=\'fa fa-trash fa-lg fa-fw text-danger \' data-toggle=\'tooltip\' title=\'" . TQ_("DELETE SAMPLE") . "\'></i></a>')
+		CONCAT('<a href=\'\' class=\'btn btn-default \' data-toggle=\'confirmation\' data-href=\'?delete_sample=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\' ><i class=\'fa fa-trash fa-lg fa-fw text-danger \' data-toggle=\'tooltip\' title=\'" . TQ_("DELETE SAMPLE") . "\'></i></a>')
 	END as delsample,
 	CONCAT('<a href=\'samplesearch.php?sample_import_id=',sample_import_id,'\' class=\'btn btn-default\' data-toggle=\'tooltip\' title=\'" . TQ_("Search the sample") . "',sample_import_id,'\'><i class=\'fa fa-search fa-lg fa-fw text-primary\'></i></a>')  as ssearch,
 	CONCAT('<a href=\'callhistory.php?sample_import_id=',sample_import_id,'\' class=\'btn btn-default\' data-toggle=\'tooltip\' title=\'" . TQ_("Call history"). "&ensp;\n" . TQ_("sample"). "&ensp;',sample_import_id,'\'><i class=\'fa fa-phone fa-lg text-primary\'></i></a>') as calls,

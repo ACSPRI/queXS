@@ -188,7 +188,7 @@ if (!empty($rs))
           <h4 class="modal-title text-danger " ><?php echo T_("WARNING !");?></h4>
         </div>
 		<div class="modal-body">
-			<p><?php echo T_("Are you shure you want to delete") . "&ensp;" . T_("Sample ID") . "&ensp;<b class='text-danger'>" . "</b>?";?></p>		
+			<p><?php echo T_("Are you sure you want to delete") . "&ensp;" . T_("Sample ID") . "&ensp;<b class='text-danger'>" . "</b>?";?></p>		
 		</div>
 	  <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><?php echo T_("NOOOO...");?></button>
@@ -385,7 +385,7 @@ if ($case_id != false)
 			print "<div class='alert text-danger col-sm-6' role='alert'><b>" . T_("No appointments for this case") . "</b></div>";
 		
 // * disable appointment creation if no sample_id
-		if ($r[0]['sample_id']){
+		if (isset($r[0]['sample_id'])){
 			$rtz= $r[0]['Time_zone_name'];
 			print "&emsp;<a href='displayappointments.php?case_id=$case_id&rtz=$rtz&new=new' class='btn btn-default'><i class='fa fa-clock-o fa-lg'></i>&emsp;" . T_("Create appointment") . "</a>"; }
 
@@ -464,7 +464,7 @@ if ($case_id != false)
 	
 		print "<div class='clearfix '></div><div class='col-sm-6'>";
 		
-		if ($r[0]['sample_id']){  //if sample data exists assign this to an operator for their next case
+		if (isset($r[0]['sample_id'])){  //if sample data exists assign this to an operator for their next case
 		
 		print "<div class='panel-body'><h4><i class='fa fa-link'></i>&emsp;" . T_("Assign this case to operator (will appear as next case for them)") . "</h4>";
 		?>
@@ -493,7 +493,7 @@ if ($case_id != false)
 			print "<div class='alert text-danger' role='alert'>" . T_("Case not yet started in Limesurvey") .  "</div>";
 		print "</div></div>";
 		
-		if ($r[0]['sample_id']){   // if sample data exists  view availability
+		if (isset($r[0]['sample_id'])){   // if sample data exists  view availability
 		
 		print "<div class='panel-body col-sm-6'><h4 class=''><i class='fa fa-calendar'></i>&emsp;" . T_("Availability groups") . "</h4>";
 		if (is_using_availability($case_id))
@@ -551,7 +551,7 @@ if ($case_id != false)
 		<?php 
 		print "</div>";	
 		
-		if ($r[0]['sample_id']){   // if sample data exists  deidentify record
+		if (isset($r[0]['sample_id'])){   // if sample data exists  deidentify record
 		print "<div class='panel-body col-sm-6 pull-right'><h4 class ='text-danger'><i class='fa fa-trash-o fa-lg'></i>&emsp;" . T_("Deidentify") . "</h4>";
 		print "<div class='well'>" . T_("Remove all sample details and contact numbers from this case") . "</div>";
 		?>

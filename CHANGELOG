@@ -1,23 +1,52 @@
 queXS 1.14.0 - Changes since 1.13.1
 
+
+Changes for session authentication:
+
+queXS now uses the Limesurvey session based authentication system to authenticate all users.
+Sessions are stored in the lime_sessions table and are managed by adodb. 
+
+If this is a fresh install - you can ignore the notes below. Otherwise - please read through 
+the following for converting from directory based authentication to session based authentication.
+
+File changes for session authentication:
+
+If you have used the example .htaccess files or created your own, and you want to move to purely
+session based authentication, you can remove these files. They are typcially at these locations:
+
+.htaccess
+client/.htaccess
+admin/.htaccess
+include/limesurvey/.htaccess
+include/limesurvey/admin/.htaccess
+
+This will remove restrictions for access via directory based authentication and rely solely on session authentication.
+
 Database changes for session authentication:
+
+These queries will:
+1. Make the first queXS user an admin user, and assign them the password "password"
+2. Make all other users regular users, and assign them the password "password"
+3. Make all clients regular clients, and assign them the password "password"
+
+Once you have run these - please go to the operator management page and update passwords for all users.
 
 /* Make the first user the admin user - with default password of: password */
 INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
 SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 0, 'auto', 1
-FROM operators
+FROM operator
 WHERE operator_id = 1;
 
 /* Make all other users operators - with default password of: password */
 INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
 SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 1, 'auto', 0
-FROM operators
+FROM operator
 WHERE operator_id != 1;
 
 /* Make all clients - with default password of: password */
 INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
 SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 1, 'auto', 0
-FROM clients
+FROM client
 WHERE 1;
 
 /* Remove redundant table */

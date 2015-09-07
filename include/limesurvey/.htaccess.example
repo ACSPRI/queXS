@@ -1,4 +1,0 @@
-AuthType None
-Satisfy Any
-Order Deny,Allow
-Allow from All

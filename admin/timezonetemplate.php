@@ -100,8 +100,7 @@ $dtz = get_setting("DEFAULT_TIME_ZONE");
 
 $sql = "SELECT name as value, name as description, 
 		CASE WHEN name LIKE '$dtz' THEN 'selected=\'selected\'' ELSE '' END AS selected
-		FROM mysql.time_zone_name
-		WHERE `Name` LIKE 'Europe%' OR `Name` LIKE 'Asia%' ";
+		FROM mysql.time_zone_name";
 
 $tzl = $db->GetAll($sql);
 
