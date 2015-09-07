@@ -215,18 +215,20 @@ if ($ca)
 			//Display all available numbers for this case as a list of radio buttons
 			//By default, the selected radio button should have a "call" started for it
 		 	//When then next one clicked, it should bring up call screen if no outcome otherwise start new call
-			print "<div>";
+			//print "<div>";print "</div>";
 			foreach($rs as $r)
 			{
-				print "<form method='post' action='?'><div class='text'>";
-				print "<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>";
-				print "<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
-				if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}'>" . T_('Dial') . "</a>";
-				if (!empty($r['description'])) print " - " . $r['description'];
-				print "</label>";
-				print "</div></form></br>";
+				print "<form method='post' action='?'>
+						<p>
+						<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>&ensp;
+						<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
+						if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}'><i class='fa fa-phone fa-fw'></i> " . T_('Dial') . "</a>";
+						if (!empty($r['description'])) print " - " . $r['description'];
+						print "</label>
+						</p>
+					  </form>";
 			}
-			print "</div>";
+			
 		}
 		else
 			print "<div class='text'>" . T_("No more numbers to call") . "</div>";

@@ -46,7 +46,7 @@ include ("auth-interviewer.php");
  */
 include_once("functions/functions.xhtml.php");
 
-xhtml_head(T_("Standby"),false,array("include/bootstrap/css/bootstrap.min.css","css/index_interface2.css"), array(), false, 300);
+xhtml_head(T_("Standby"),false,array("include/bootstrap/css/bootstrap.min.css","include/bootstrap/css/bootstrap-theme.min.css","include/font-awesome/css/font-awesome.css","css/index_interface2.css"), array(), false, 300);
 
 if (isset($_GET['auto']))
 {
@@ -91,7 +91,7 @@ if (empty($rs))
 	
 else
 {
-	print "<div class='col-sm-3'>";
+	print "<div class='col-sm-4'>";
 	print "<div class=' well' style='padding:2%;'><p>" . T_("Assigned questionnaires:") . "";
 			
 	/* if (isset($_GET['auto'])) {
@@ -191,13 +191,14 @@ else
 }
 
 ?>
-			<div id="">
-				<ul class="wait_wrapper">
-<?php if ($cases_count['count_samples'] > 0 or $new_samples['count_samples'] > 0){  ?>
-					<li class="wait_li_1"><a href="index_interface2.php"><?php  echo T_("Get a new case"); ?> <img src="css/images/play.jpg" /></a></li>
+			<div class="col-sm-3 col-sm-offset-1" style="top: 150px;">
+				
+<?php if ((isset($cases_count['count_samples']) && $cases_count['count_samples'] > 0) or (isset($new_samples['count_samples']) && $new_samples['count_samples'] > 0)){  ?>
+				<a href="index_interface2.php" class="btn btn-default btn-lg btn-block" style="border-radius:25px; color:blue"><?php  echo T_("Get a new case"); ?>  <i class="fa fa-lg fa-play fa-fw"></i></a>
+				</br>
 <?php } ?>
-					<li class="wait_li_2"><a href="endwork.php"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
-				</ul>
+				<a href="endwork.php" class="btn btn-default btn-lg btn-block" style="border-radius:25px; color:red;"><?php  echo T_("End work"); ?>  <i class="fa fa-lg fa-ban fa-fw "></i></a>
+
 			</div>
 <?php 
 			

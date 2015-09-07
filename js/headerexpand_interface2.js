@@ -1,20 +1,17 @@
 function headerexpand()
 {
-	$(".header").css("height","38%");
-	$(".content").css("height","60%");
-	$(".content").css("top","40%");
+	$(".headerexpand").css("top","35%");
+	$(".content").css("height","63%");
+	$(".content").css("top","37%");
 	$(".box:not(.important)").css("display","");
-//	$(".item_2_half_height").removeClass("item_2_half_height").addClass("item_2_full_height");
-	$(".item_3_half_height").removeClass("item_3_half_height").addClass("item_3_full_height");
+
 }
 
 function headercontract()
 {
-	$(".header").css("height","13%");
-	$(".content").css("height","85%");
-	$(".content").css("top","15%");
+	$(".headerexpand").css("top","18%");
+	$(".content").css("height","80%");
+	$(".content").css("top","20%");
 	$(".box:not(.important)").css("display","none");
-//	$(".item_2_full_height").removeClass("item_2_full_height").addClass("item_2_half_height");
-	$(".item_3_full_height").removeClass("item_3_full_height").addClass("item_3_half_height");
-	
+
 }
