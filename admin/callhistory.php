@@ -110,6 +110,7 @@ if ($operator_id)
 	$rs = $db->Execute($sql);
 	if (empty($rs))
 	{
+		xhtml_head(T_("Call History List"),true,$css,$js_head);
 		print "<div class='alert alert-warning col-sm-6'><p>" . T_("No calls ever made") . "</p></div>";
 	}
 	else

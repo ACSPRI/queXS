@@ -402,11 +402,11 @@ if ($display)
 		$titles[] = T_("Win file");//Windows VoIP
 		$titles[] = T_("*nix flle");//*nix VoIP
 	}
-	echo "<div class=' col-sm-10'><div class=' panel-body'>";
+	echo "<div class='col-sm-9'><div class='panel-body'>";
 	xhtml_table($rs,$columns,$titles);
 	echo "</div></div>";
 	
-	echo "<div class='form-group col-sm-2'>
+	echo "<div class='form-group col-sm-3'>
 			<div class='panel-body'><a href='operators.php?add=add' class='btn btn-default btn-block'><i class='fa fa-lg fa-user-plus'></i>&emsp;" . T_("Add an operator") . "</a></div>
 			<div class='panel-body'><a href='extensionstatus.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-whatsapp'></i>&emsp;" . T_("Extensions") . "</a></div>
 			<div class='panel-body'><a href='operatorquestionnaire.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-link'></i>  " . T_("Assign to questionnaire") . "</a></div>

@@ -106,7 +106,7 @@ $tzl = $db->GetAll($sql);
 
 if (empty($tzl) || !$tzl)
 {
-        print "<div class='alert alert-danger'>" . T_("Your database does not have timezones installed, please see here for details") . "<a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'> ... </a></div>";
+        print "<div class='alert alert-danger'>" . T_("Your database does not have timezones installed, please see here for details") . "<a href='http://dev.mysql.com/doc/mysql/en/time-zone-support.html'> ... </a></br>" .T_("or") . "</br>" . T_("Check that you have granted relevant permissions on 'time_zone_...' tables in database named 'mysql'.") . "</div>";
 }
 
 print "<div class='col-sm-4 '><h3 class=''>" . T_("Default Timezone: ") . "&emsp;<b class='text-primary'>$dtz</b></h3>";//<div class='panel-body'>

@@ -116,7 +116,7 @@ if (isset($_POST['ed']))
 	if (isset($_POST['type'])){ 
 	
 	//check that we have correct var types  and quantity
-		$prph = 0; $pcd = 0; $st = 0; $fn = 0; $eml =0;
+		$prph = 0; $pcd = 0; $st = 0; $fn = 0; $eml =0; $ln =0;
 		foreach($_POST['type'] as $key => $val) {
 				 if ($val == 3) $prph++;
 			else if ($val == 5) $pcd++;
@@ -293,17 +293,17 @@ if (isset($_GET['edit']) )
 	$sql = "SELECT * FROM sample_import WHERE sample_import_id = $sample_import_id";
 	$sd = $db->GetRow($sql);
 	
-	if($sd['enabled'] == 1) $dis = disabled; // -> disable edit and delete if sample is enabled
+	if($sd['enabled'] == 1) $dis = "disabled"; else $dis = false;// -> disable edit and delete if sample is enabled
 
 	$sql = "SELECT type, description
 		FROM sample_var_type";
 	$rd = $db->GetAll($sql);
-	
+		$selected = "selected=\"selected\"";	
 	$sql = "SELECT sir.var_id, 
 		CONCAT('<input type=\"text\" onInput=\"$(this).attr(\'name\',\'var[',sir.var_id,']\');\"  value=\"' ,sir.var, '\" required class=\"form-control\" style=\"min-width: 300px;\" $dis />') as var, 
 		CONCAT ('<select name=\"type[',sir.var_id,']\" class=\"form-control\" $dis >
 		<option value=\"' ,svt.type, '\" $selected>' ,svt.description, '</option>";
-		$selected = "selected=\"selected\"";
+
 			foreach($rd as $r)
 			{	
 					$sql .= "<option value=\"{$r['type']}\">" . T_($r['description']) . "</option>";
