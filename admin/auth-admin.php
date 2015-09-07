@@ -48,7 +48,9 @@ $sql = "SELECT stg_value
 
 session_name($db->GetOne($sql));
 
-session_start();
+if ((defined('PHP_SESSION_ACTIVE') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) { 
+ session_start();
+}
 
 //check if the session exists or loginID not set
 if (session_id() == "" || !isset($_SESSION['loginID']))
