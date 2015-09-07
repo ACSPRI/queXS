@@ -183,7 +183,7 @@ if (!empty($rs))
           <h4 class="modal-title text-danger " ><?php echo T_("WARNING !");?></h4>
         </div>
 		<div class="modal-body">
-			<p><?php echo T_("Are you shure you want to delete") . "&ensp;" . T_("Sample ID") . "&ensp;<b class='text-danger'>" . "</b>?";?></p>		
+			<p><?php echo T_("Are you sure you want to delete") . "&ensp;" . T_("Sample ID") . "&ensp;<b class='text-danger'>" . "</b>?";?></p>		
 		</div>
 	  <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><?php echo T_("NOOOO...");?></button>
