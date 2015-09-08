@@ -101,12 +101,12 @@ if (isset($_POST['import_file']))
 
 			$db->Execute($sql);
 		}
-		$cl = info;
+		$cl = "info";
 		$message =  T_("Successfully inserted") . "&ensp;" . T_("with ID") . "&ensp; $qid, </h4><h4>" . T_("linked to survey") . "&ensp; $lime_sid ";
 				
 	}
 	else{
-		$cl = danger;
+		$cl = "danger";
 		$message = T_("Error: Failed to insert questionnaire");
 	}
 	
