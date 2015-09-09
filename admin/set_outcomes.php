@@ -17,6 +17,11 @@ require(dirname(__FILE__).'/../config.inc.php');
 require(dirname(__FILE__).'/../db.inc.php');
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 require(dirname(__FILE__).'/../functions/functions.xhtml.php');
