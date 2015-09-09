@@ -101,7 +101,9 @@ function display_outcomes($contacted,$ca,$case_id)
 			AND call_attempt_id = '$ca'";
 	
 		$rs = $db->GetAll($sql);
-	
+		
+		$outcomes = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q LEFT JOIN `case` as c ON (c.questionnaire_id =q.questionnaire_id) WHERE c.case_id = $case_id");
+		
 		if (!empty($rs))
 		{
 			//we have an appointment made ... only select appointment ID's
@@ -123,6 +125,7 @@ function display_outcomes($contacted,$ca,$case_id)
 				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
 					WHERE contacted = '$contacted'
+					AND outcome_id IN ('$outcomes')
 					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)"; 
 				}
 			}
@@ -133,6 +136,7 @@ function display_outcomes($contacted,$ca,$case_id)
 				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
 					WHERE contacted = '$contacted'
+					AND outcome_id IN ('$outcomes')
 					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)";
 			}
 		}
