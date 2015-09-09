@@ -43,6 +43,11 @@ include ("../config.inc.php");
 include ("../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include ("../functions/functions.xhtml.php");
@@ -56,6 +61,7 @@ if (isset($_POST['client']))
 {
 	$client = $db->qstr($_POST['client'],get_magic_quotes_gpc());
 	$firstname = $db->qstr($_POST['firstname'],get_magic_quotes_gpc());
+	$email = $db->qstr($_POST['email'],get_magic_quotes_gpc());
 	$lastname = $db->qstr($_POST['lastname'],get_magic_quotes_gpc());
 	$time_zone_name = $db->qstr($_POST['Time_zone_name'],get_magic_quotes_gpc());
 	
@@ -67,17 +73,15 @@ if (isset($_POST['client']))
 	
 		if ($db->Execute($sql))
 		{
-			if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false)
-			{
-				//Get password and add it to the configured htpassword
-				include_once("../functions/functions.htpasswd.php");
-				$htp = New Htpasswd(HTPASSWD_PATH);
-				$htg = New Htgroup(HTGROUP_PATH);
-				
-				$htp->addUser($_POST['client'],$_POST['password']);
-				$htg->addUserToGroup($_POST['client'],HTGROUP_CLIENT);
-			}
+      include_once("../include/limesurvey/admin/classes/core/sha256.php");
 
+      //Insert into lime_users
+      $sql = "INSERT INTO " . LIME_PREFIX . "users (`users_name`,`password`,`full_name`,`parent_id`,`superadmin`,`email`,`lang`)
+              VALUES ($client, '" . SHA256::hashing($_POST['password']) . "',$firstname,1,0,$email,'auto')";
+
+      $db->Execute($sql);
+
+	
 			$a =  T_("Added: $client");	
 		}
 		else
@@ -142,23 +146,20 @@ function generate() {
 
 <div class="well">
 	<p><?php  echo T_("Adding a client here will allow them to access project information in the client subdirectory. You can assign a client to a particular project using the"); ?> <a href="clientquestionnaire.php"><?php  echo T_("Assign client to Questionnaire"); ?></a> <?php  echo T_("tool."); ?></p>
-	<p><?php  echo T_("Use this form to enter the username of a user based on your directory security system. For example, if you have secured the base directory of queXS using Apache file based security, enter the usernames of the users here."); ?></p></div>
 	
 <form enctype="multipart/form-data" action="" method="post" class="form-horizontal" name="addclient" >
 	<div class="form-group form-inline">
 		<label class="control-label col-sm-3"><?php  echo T_("Enter the username of a client to add:"); ?></label>
 		<input name="client" type="text" class="form-control pull-left" required size="40" />
 	</div>
-<?php  if (HTPASSWD_PATH !== false && HTGROUP_PATH !== false) { ?>
 	<div class="form-group form-inline">
 		<label class="control-label col-sm-3"><?php  echo T_("Enter the password of a client to add:"); ?></label>
-		<input name="password" type="text" class="form-control pull-left" size="40" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+		<input name="password" type="text" class="form-control pull-left" size="40" required />
 		<div class="form-inline">&emsp;&emsp;
 			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("Password with");?>&ensp;
 			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters");?>
 		</div>
 	</div>
-<?php  } ?>
 	<div class="form-group form-inline">
 		<label class="control-label col-sm-3"><?php  echo T_("Enter the first name of a client to add:"); ?></label>
 		<input name="firstname" type="text" class="form-control pull-left" size="40" />
@@ -166,7 +167,11 @@ function generate() {
 	<div class="form-group form-inline">
 		<label class="control-label col-sm-3"><?php  echo T_("Enter the surname of a client to add:"); ?></label>
 		<input name="lastname" type="text" class="form-control pull-left" size="40"/>
-	</div>
+  </div>
+  <div class="form-group form-inline">
+		<label class="col-sm-3 control-label"><?php echo T_("Email") . ": ";?></label>
+    <input name="email" type="text" class="form-control pull-left"/>
+  </div>
 	<div class="form-group form-inline">
 		<label class="control-label col-sm-3"><a href='timezonetemplate.php'><?php  echo T_("Enter the Time Zone of a client to add:"); echo "</a></label>";
 		display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,false,array("value",get_setting("DEFAULT_TIME_ZONE")),true,"pull-left"); ?>

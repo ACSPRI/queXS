@@ -960,24 +960,24 @@ function get_extension($operator_id)
 
 
 /**
- * Return the current operator id based on PHP_AUTH_USER
+ * Return the current operator id based on SESSION loginID
  *
  * @return bool|int False if none otherwise the operator id
  *
  */
 function get_operator_id()
 {
-	if (!isset($_SERVER['PHP_AUTH_USER']))
+	if (!isset($_SESSION['user']))
 	{
-		print "<p>" . T_("ERROR: You do not have server side authentication enabled therefore queXS cannot determine which user is accessing the system.") . "</p>";
-		return false;
+    print "<p>" . T_("ERROR: You are not logged in.") . "</p>";
+		die();
 	}
 
 	global $db;
 
 	$sql = "SELECT operator_id
 		FROM operator
-		WHERE username = " . $db->qstr($_SERVER['PHP_AUTH_USER']) . "
+		WHERE username = " . $db->qstr($_SESSION['user']) . "
 		AND enabled = 1";
 
 	$o = $db->GetRow($sql);
@@ -2194,14 +2194,14 @@ function end_case($operator_id)
 			else if ($count >= 1) //one or more numbers to be tried again - see if max calls reached, then code as eligible if ever eligible...
       {
         $sql = "SELECT call_attempt_max,call_max
-                FROM questionnaire_sample as qs, `case` as c
+                FROM questionnaire_sample as qs, `case` as c, sample as s
                 WHERE c.case_id = '$case_id'
-                AND qs.sample_id = c.sample_id
+                AND c.sample_id = s.sample_id
+                AND qs.sample_import_id = s.import_id
                 AND qs.questionnaire_id = c.questionnaire_id";
     
         $cm = $db->GetRow($sql);
     
-
         $sql = "SELECT COUNT(*) as c
               FROM call_attempt
               WHERE case_id = '$case_id'";
@@ -2219,7 +2219,7 @@ function end_case($operator_id)
                   WHERE c.outcome_id = o.outcome_id
                   AND o.eligible = 1
                   AND c.case_id = '$case_id'";
- 
+
         if ($cm['call_attempt_max'] > 0 && $callattempts >= $cm['call_attempt_max']) //max call attempts reached
         {
           //if ever eligible, code as eligible

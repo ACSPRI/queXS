@@ -36,6 +36,11 @@
 include ("config.inc.php");
 
 /**
+ * Authentication
+ */
+include ("auth-interviewer.php");
+
+/**
  * XHTML functions
  */
 include ("functions/functions.xhtml.php");

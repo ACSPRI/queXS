@@ -41,7 +41,7 @@ include_once(dirname(__FILE__).'/../config.inc.php');
 include_once(dirname(__FILE__).'/../db.inc.php');
 
 /**
- * Return the current client id based on PHP_AUTH_USER
+ * Return the current client id based on the SESSION loginID
  *
  * @return bool|int False if none otherwise the client id
  *
@@ -50,9 +50,12 @@ function get_client_id()
 {
 	global $db;
 
+  if (!isset($_SESSION['user']))
+    return false;
+
 	$sql = "SELECT client_id
 		FROM client
-		WHERE username = '{$_SERVER['PHP_AUTH_USER']}'";
+		WHERE username = '{$_SESSION['user']}'";
 
 	$o = $db->GetRow($sql);
 

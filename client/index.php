@@ -38,6 +38,12 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
 
+/** 
+ * Authentication
+ */
+include ("auth-client.php");
+
+
 /**
  * XHTML functions
  */

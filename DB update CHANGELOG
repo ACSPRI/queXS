@@ -1,0 +1,15 @@
+required DB updates:
+
+ALTER TABLE `outcome` ADD `deflt` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Used as default for questionnaire outcomes' AFTER `calc`, ADD `const` TINYINT(1) UNSIGNED NOT NULL COMMENT 'Permanent outcome, used for all questionnaires, not possible to de-select' AFTER `deflt`;
+
+UPDATE `outcome` SET `const` = '1' WHERE `outcome`.`outcome_id` IN (1,2,3,7,9,10,14,17,18,19,30,31) ;
+
+ALTER TABLE `questionnaire` ADD `outcomes` VARCHAR(256) NULL DEFAULT '1,2,3,7,10' COMMENT 'coma-separated string of outcomes defined for the questionnaire' AFTER `enabled`;
+
+
+
+queXS 1.13.0 - Changes since 1.12.1
+---
+
+
+

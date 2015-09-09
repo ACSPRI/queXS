@@ -30,6 +30,12 @@
  * 
  */
 
+if (php_sapi_name() !== "cli")
+{
+  die();
+}
+
+
 /**
  * VoIP functions
  */

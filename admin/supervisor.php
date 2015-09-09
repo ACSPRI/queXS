@@ -14,6 +14,11 @@ include("../config.inc.php");
 include ("../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include("../functions/functions.xhtml.php");
@@ -131,9 +136,14 @@ xhtml_head(T_("Assign outcomes to cases"),true,$css,$js_head);//array("../css/ta
 
 <?php 
 $sql = "SELECT c.case_id as value, c.case_id as description, CASE WHEN c.case_id = '$case_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-	FROM `case` as c, `outcome` as o
+	FROM  `case` AS c,  `outcome` AS o,  `questionnaire` AS q,  `sample` AS s,  `sample_import` AS si
 	WHERE c.current_outcome_id = o.outcome_id
-	AND o.outcome_type_id = 2";
+	AND q.questionnaire_id = c.questionnaire_id
+	AND s.sample_id = c.sample_id
+	AND s.import_id = si.sample_import_id
+	AND q.enabled = 1
+	AND si.enabled =1
+	AND o.outcome_type_id =2";
 
 $rs = $db->GetAll($sql);
 
@@ -153,14 +163,14 @@ if (!empty($rs))
 				</div><form method="get" action="?" class="form-inline ">
 				<div class="modal-body">
 			<?php 	
-			$call_id = bigintval($_GET['call_id']);
+			if (isset($_GET['call_id'])){ $call_id = bigintval($_GET['call_id']); 
 			$sql = "SELECT o.outcome_id as value,description, CASE WHEN o.outcome_id = c.outcome_id THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM outcome as o, `call` as c
 				WHERE c.call_id = '$call_id'";
 			$rs2 = $db->GetAll($sql);
 			translate_array($rs2,array("description"));
 			display_chooser($rs2, "set_outcome_id", "set_outcome_id",true,false,false,false);	?>
-					<input type="hidden" name="call_id" value="<?php  echo $call_id;?>"/><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/>
+					<input type="hidden" name="call_id" value="<?php  echo $call_id;?>"/><input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/> <?php } ?>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal"><?php  echo T_("Cancel"); ?></button>
@@ -178,7 +188,7 @@ if (!empty($rs))
           <h4 class="modal-title text-danger " ><?php echo T_("WARNING !");?></h4>
         </div>
 		<div class="modal-body">
-			<p><?php echo T_("Are you shure you want to delete") . "&ensp;" . T_("Sample ID") . "&ensp;<b class='text-danger'>" . "</b>?";?></p>		
+			<p><?php echo T_("Are you sure you want to delete") . "&ensp;" . T_("Sample ID") . "&ensp;<b class='text-danger'>" . "</b>?";?></p>		
 		</div>
 	  <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><?php echo T_("NOOOO...");?></button>
@@ -375,7 +385,7 @@ if ($case_id != false)
 			print "<div class='alert text-danger col-sm-6' role='alert'><b>" . T_("No appointments for this case") . "</b></div>";
 		
 // * disable appointment creation if no sample_id
-		if ($r[0]['sample_id']){
+		if (isset($r[0]['sample_id'])){
 			$rtz= $r[0]['Time_zone_name'];
 			print "&emsp;<a href='displayappointments.php?case_id=$case_id&rtz=$rtz&new=new' class='btn btn-default'><i class='fa fa-clock-o fa-lg'></i>&emsp;" . T_("Create appointment") . "</a>"; }
 
@@ -454,7 +464,7 @@ if ($case_id != false)
 	
 		print "<div class='clearfix '></div><div class='col-sm-6'>";
 		
-		if ($r[0]['sample_id']){  //if sample data exists assign this to an operator for their next case
+		if (isset($r[0]['sample_id'])){  //if sample data exists assign this to an operator for their next case
 		
 		print "<div class='panel-body'><h4><i class='fa fa-link'></i>&emsp;" . T_("Assign this case to operator (will appear as next case for them)") . "</h4>";
 		?>
@@ -483,7 +493,7 @@ if ($case_id != false)
 			print "<div class='alert text-danger' role='alert'>" . T_("Case not yet started in Limesurvey") .  "</div>";
 		print "</div></div>";
 		
-		if ($r[0]['sample_id']){   // if sample data exists  view availability
+		if (isset($r[0]['sample_id'])){   // if sample data exists  view availability
 		
 		print "<div class='panel-body col-sm-6'><h4 class=''><i class='fa fa-calendar'></i>&emsp;" . T_("Availability groups") . "</h4>";
 		if (is_using_availability($case_id))
@@ -501,15 +511,15 @@ if ($case_id != false)
 			//Display all availability groups as checkboxes
 			print "<form action='?' method='get' class='form-horizontal '>";
 			print "<h5 class=''>" . T_("Select groups to limit availability (Selecting none means always available)") .  "</h5><div class='col-sm-6'>";
-			foreach ($rs as $r)
+			foreach ($rs as $g)
 			{
 				$checked = "";
 
-				//if ($allselected || $r['availability_group_id'] == $r['selected_group_id'])
-				if ($r['availability_group_id'] == $r['selected_group_id'])
+				//if ($allselected || $g['availability_group_id'] == $g['selected_group_id'])
+				if ($g['availability_group_id'] == $g['selected_group_id'])
 					$checked = "checked='checked'";
 				
-				print "&ensp;<input type='checkbox' name='ag{$r['availability_group_id']}' id='ag{$r['availability_group_id']}'	value='{$r['availability_group_id']}' $checked />&ensp; <label class='control-label' for='ag{$r['availability_group_id']}'>{$r['description']}</label></br>";
+				print "&ensp;<input type='checkbox' name='ag{$g['availability_group_id']}' id='ag{$g['availability_group_id']}'	value='{$g['availability_group_id']}' $checked />&ensp; <label class='control-label' for='ag{$g['availability_group_id']}'>{$g['description']}</label></br>";
 			}
 		?>	</div>
 			<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>
@@ -541,7 +551,7 @@ if ($case_id != false)
 		<?php 
 		print "</div>";	
 		
-		if ($r[0]['sample_id']){   // if sample data exists  deidentify record
+		if (isset($r[0]['sample_id'])){   // if sample data exists  deidentify record
 		print "<div class='panel-body col-sm-6 pull-right'><h4 class ='text-danger'><i class='fa fa-trash-o fa-lg'></i>&emsp;" . T_("Deidentify") . "</h4>";
 		print "<div class='well'>" . T_("Remove all sample details and contact numbers from this case") . "</div>";
 		?>

@@ -40,6 +40,11 @@ include_once(dirname(__FILE__).'/../config.inc.php');
 include_once(dirname(__FILE__).'/../db.inc.php');
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include_once(dirname(__FILE__).'/../functions/functions.xhtml.php');
@@ -111,7 +116,7 @@ if (isset($_POST['ed']))
 	if (isset($_POST['type'])){ 
 	
 	//check that we have correct var types  and quantity
-		$prph = 0; $pcd = 0; $st = 0; $fn = 0; $eml =0;
+		$prph = 0; $pcd = 0; $st = 0; $fn = 0; $eml =0; $ln =0;
 		foreach($_POST['type'] as $key => $val) {
 				 if ($val == 3) $prph++;
 			else if ($val == 5) $pcd++;
@@ -288,17 +293,17 @@ if (isset($_GET['edit']) )
 	$sql = "SELECT * FROM sample_import WHERE sample_import_id = $sample_import_id";
 	$sd = $db->GetRow($sql);
 	
-	if($sd['enabled'] == 1) $dis = disabled; // -> disable edit and delete if sample is enabled
+	if($sd['enabled'] == 1) $dis = "disabled"; else $dis = false;// -> disable edit and delete if sample is enabled
 
 	$sql = "SELECT type, description
 		FROM sample_var_type";
 	$rd = $db->GetAll($sql);
-	
+		$selected = "selected=\"selected\"";	
 	$sql = "SELECT sir.var_id, 
 		CONCAT('<input type=\"text\" onInput=\"$(this).attr(\'name\',\'var[',sir.var_id,']\');\"  value=\"' ,sir.var, '\" required class=\"form-control\" style=\"min-width: 300px;\" $dis />') as var, 
 		CONCAT ('<select name=\"type[',sir.var_id,']\" class=\"form-control\" $dis >
 		<option value=\"' ,svt.type, '\" $selected>' ,svt.description, '</option>";
-		$selected = "selected=\"selected\"";
+
 			foreach($rd as $r)
 			{	
 					$sql .= "<option value=\"{$r['type']}\">" . T_($r['description']) . "</option>";
@@ -468,7 +473,7 @@ $sql = "SELECT
 	CASE WHEN enabled = 0 THEN
 		CONCAT('<a href=\'?sampleenable=',sample_import_id,'\' class=\'btn btn-default col-sm-12\'>" . TQ_("Enable") . "&emsp;<i class=\'fa fa-play fa-lg\' style=\'color:blue;\'></i></a>') 
 	ELSE
-		CONCAT('<a href=\'\' class=\'btn btn-default col-sm-12\' data-toggle=\'confirmation\' data-href=\'?sampledisable=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SHURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\'><i class=\'fa fa-ban fa-lg\' style=\'color:red;\'></i>&ensp;&nbsp;" . TQ_("Disable") . "</a> ') 
+		CONCAT('<a href=\'\' class=\'btn btn-default col-sm-12\' data-toggle=\'confirmation\' data-href=\'?sampledisable=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\'><i class=\'fa fa-ban fa-lg\' style=\'color:red;\'></i>&ensp;&nbsp;" . TQ_("Disable") . "</a> ') 
 	END
 	as enabledisable,
 	CASE WHEN enabled = 1 THEN
@@ -479,7 +484,7 @@ $sql = "SELECT
 	CASE WHEN enabled = 1 THEN
 		CONCAT('<a href=\'\' class=\'btn btn-default disabled\'><i class=\'fa fa-trash fa-lg fa-fw\' style=\'color:grey;\'></i></a>')
 	ELSE
-		CONCAT('<a href=\'\' class=\'btn btn-default \' data-toggle=\'confirmation\' data-href=\'?delete_sample=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SHURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\' ><i class=\'fa fa-trash fa-lg fa-fw text-danger \' data-toggle=\'tooltip\' title=\'" . TQ_("DELETE SAMPLE") . "\'></i></a>')
+		CONCAT('<a href=\'\' class=\'btn btn-default \' data-toggle=\'confirmation\' data-href=\'?delete_sample=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\' ><i class=\'fa fa-trash fa-lg fa-fw text-danger \' data-toggle=\'tooltip\' title=\'" . TQ_("DELETE SAMPLE") . "\'></i></a>')
 	END as delsample,
 	CONCAT('<a href=\'samplesearch.php?sample_import_id=',sample_import_id,'\' class=\'btn btn-default\' data-toggle=\'tooltip\' title=\'" . TQ_("Search the sample") . "',sample_import_id,'\'><i class=\'fa fa-search fa-lg fa-fw text-primary\'></i></a>')  as ssearch,
 	CONCAT('<a href=\'callhistory.php?sample_import_id=',sample_import_id,'\' class=\'btn btn-default\' data-toggle=\'tooltip\' title=\'" . TQ_("Call history"). "&ensp;\n" . TQ_("sample"). "&ensp;',sample_import_id,'\'><i class=\'fa fa-phone fa-lg text-primary\'></i></a>') as calls,

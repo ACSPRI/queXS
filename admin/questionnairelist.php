@@ -40,6 +40,11 @@ include("../config.inc.php");
 include("../db.inc.php");
 
 /**
+ * Authentication file
+ */
+include ("auth-admin.php");
+
+/**
  * XHTML functions
  */
 include("../functions/functions.xhtml.php");
@@ -533,7 +538,7 @@ else if (isset($_GET['delete']))
 }
 else
 {
-	xhtml_head(T_("Questionnaire management"),true,$css,$js_head, false, false, false, "Questionnaire list");
+	xhtml_head(T_("Questionnaire management"),true,$css,$js_head, false, false, false,T_("Questionnaire list"));
 	echo "<div class='form-group'>
 		<a href='' onclick='history.back();return false;' class='btn btn-default'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a>
 		<a href='new.php' class='btn btn-default col-sm-offset-6' ><i class='fa fa-file-text-o fa-lg'></i>&emsp;" . T_("Create a new questionnaire") . "</a>
