@@ -88,7 +88,12 @@ include ("../functions/functions.operator.php");
             <a href="../index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
               <i class="fa fa-sign-in fa-lg fa-fw "></i><?php print T_("Operator panel");?>           
             </a>
-          </li>			
+          </li>	
+          <li class=" ">
+            <a href="../client/index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
+              <i class="fa fa-sign-in fa-lg fa-fw "></i><?php print T_("Client panel");?>           
+            </a>
+          </li>			  
 		  <li class="dropdown pull-right user-data">            
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" min-width: 160px;">
               <i class="fa fa-user fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           

@@ -101,7 +101,9 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['questionnaire_prefill_id'])
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 
-xhtml_head(T_("Pre fill questionnaire: Set values for questionnaire to prefill"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"));
+$subtitle = T_("Set values for questionnaire to prefill");
+
+xhtml_head(T_("Prefill questionnaire:"),true,array("../include/bootstrap/css/bootstrap.min.css","../css/custom.css"),array("../js/window.js"), false, false, false, $subtitle);
 print "<h3 class='form-inline pull-left'>" . T_("Select a questionnaire") . ":&emsp;</h3>";
 
 $sql = "SELECT questionnaire_id as value,description, 
@@ -182,14 +184,16 @@ if ($questionnaire_id != false)
 			AND sivr.sample_import_id = qs.sample_import_id";
 		?>
 		<form action="" method="get" class="form-inline form-group">
-		<label for="value"><?php  echo T_("The value to pre fill"); ?>:&emsp;</label><input type="text" name="value" id="value" size="50" class="form-control"/>
-		<label for="svar">&emsp;<?php  echo T_("or: Select pre fill from sample list"); ?>&emsp;</label>
+		<p><label for="value"><?php  echo T_("The value to pre fill"); ?>:&emsp;</label><input type="text" name="value" id="value" size="50" class="form-control"/></p>
+		<p><label for="svar"><?php  echo T_("or: Select pre fill from sample list"); ?>&emsp;</label>
 <?php 	//display a list of possible sample variables for this questionnaire
-		display_chooser($db->GetAll($sql),"svar","svar",true,false,false,true,false,true,"form-group");
+		display_chooser($db->GetAll($sql),"svar","svar",true,false,false,false,false,true,"form-group");
 ?>
+		</p>
 		<input type="hidden" name="questionnaire_id" value="<?php  print($questionnaire_id); ?>"/>
 		<input type="hidden" name="sgqa" value="<?php  print($sgqa); ?>"/>
-		<input type="submit" name="add_prefill" class="btn btn-primary fa" value="<?php  print(T_("Add pre fill")); ?>"/>
+		</br>
+		<p><input type="submit" name="add_prefill" class="btn btn-primary fa" value="<?php  print(T_("Add pre fill")); ?>"/></p>
 		</form>
 		<?php 
 	}
