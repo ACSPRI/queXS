@@ -81,22 +81,19 @@ if (isset($_POST['qid']) && isset($_POST['save'])){
 	$def = $db->GetAll($sql);
 			
 	for ($i=0; $i < count($def); $i++){
-			foreach($def[$i] as $key => $val){
-				$sel[] = $val;
-			}
+		foreach($def[$i] as $key => $val){
+			$sel[] = $val;
+		}
 	}
 	
 	if(!empty($_POST['select']) ){		
 		//add selected outcomes
-		foreach($_POST['select'] as $n => $val)
-			{
-				$sel[] = $val;
-			}
+		foreach($_POST['select'] as $n => $val){
+			$sel[] = $val;
+		}
 	}
 	
 	$sel=implode($sel,",");
-		
-	print $sel . "</br>";
 	
 	$qid = intval($_POST['qid']);
 	$sql = "UPDATE questionnaire
@@ -104,7 +101,6 @@ if (isset($_POST['qid']) && isset($_POST['save'])){
 			WHERE questionnaire_id = $qid";
 
 	$db->Execute($sql);	 
-	
 	
 	$_GET['qid'] = $_POST['qid'];
 	
@@ -116,8 +112,8 @@ if (isset($_POST['qid']) && isset($_POST['save'])){
 
 /*select outcomes list*/
 
-if (isset($_GET['default'])) { $title = T_("Default outcomes"); } 
-else if (isset($_GET['qid'])){ $title = T_("Questionnaire outcomes"); $qid = intval($_GET['qid']); }
+if (isset($_GET['default'])) { $title = T_("Set default outcomes"); } 
+else if (isset($_GET['qid'])){ $title = T_("Set questionnaire outcomes"); $qid = intval($_GET['qid']); }
 else die();
 
 xhtml_head($title,true,$css,$js_head); 
@@ -211,7 +207,6 @@ if (isset($rs) && !empty($rs)){
 			}			
 		}
 	}
-
 
 ?>
 
