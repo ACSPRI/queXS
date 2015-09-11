@@ -267,7 +267,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
   		AND ((apn.appointment_id IS NOT NULL) or qs.call_max = 0 or ((SELECT count(*) FROM `call` WHERE `call`.case_id = c.case_id) < qs.call_max))
     	AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
   		GROUP BY c.case_id
-			ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, qsep.priority DESC, CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) DESC , a.start ASC";
+			ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, qsep.priority DESC, CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) DESC , a.start ASC, qs.sort_order ASC";
     
   	$rs = $db->GetAll($sql);
 
@@ -308,7 +308,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
       AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
       AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
       GROUP BY s.sample_id,qs.questionnaire_id
-      ORDER BY qsep.priority DESC, rand() * qs.random_select, s.sample_id";
+      ORDER BY qsep.priority DESC, rand() * qs.random_select, qs.sort_order ASC";
           
     $rs = $db->GetAll($sql);
 
