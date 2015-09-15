@@ -42,7 +42,7 @@ include ("functions/functions.xhtml.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 /** 
  * Language functions

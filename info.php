@@ -52,7 +52,7 @@ include ("db.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 $js = false;

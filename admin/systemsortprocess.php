@@ -42,7 +42,7 @@ include (dirname(__FILE__) . "/../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * Process

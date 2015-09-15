@@ -38,7 +38,7 @@ include_once("lang.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 /**

@@ -41,7 +41,7 @@ include_once(dirname(__FILE__).'/../db.inc.php');
 /** 
  * Authentication
  */
-include ("auth-client.php");
+require ("auth-client.php");
 
 
 /**

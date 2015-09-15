@@ -41,7 +41,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions

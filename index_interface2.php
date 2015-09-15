@@ -48,7 +48,7 @@ include("functions/functions.operator.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 
