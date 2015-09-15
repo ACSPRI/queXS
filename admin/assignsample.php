@@ -93,8 +93,14 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 	$an = 0;
 	if (isset($_GET['allownew'])) $an = 1;
 
-	$sql = "INSERT INTO questionnaire_sample(questionnaire_id,sample_import_id,call_max,call_attempt_max,random_select,answering_machine_messages,allow_new)
-		VALUES('$questionnaire_id','$sid','$cm','$cam','$selecttype','$am', '$an')";
+  $sql = "SELECT MAX(sort_order) + 1
+        FROM questionnaire_sample
+        WHERE questionnaire_id = '$questionnaire_id'";
+
+  $so = $db->GetOne($sql);
+
+	$sql = "INSERT INTO questionnaire_sample(questionnaire_id,sample_import_id,call_max,call_attempt_max,random_select,answering_machine_messages,allow_new,sort_order)
+		VALUES('$questionnaire_id','$sid','$cm','$cam','$selecttype','$am', '$an', '$so')";
 
 	$db->Execute($sql);
 
@@ -176,7 +182,6 @@ if (isset($_POST['edit']))
 }
 
 
-
 if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 {
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
@@ -239,7 +244,67 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 		<?php 
 		xhtml_foot($js_foot);
 		die();
-	}
+  }
+  else if (isset($_GET['sort']))   
+  {
+    if ($_GET['sort'] == "up")
+    {
+      //find previous in sort order and do a swap
+      $sql = "SELECT sample_import_id,sort_order
+              FROM questionnaire_sample
+              WHERE questionnaire_id = $questionnaire_id
+              AND sort_order < (SELECT sort_order FROM questionnaire_sample WHERE questionnaire_id = $questionnaire_id AND sample_import_id = $sid)
+              ORDER BY sort_order DESC LIMIT 1";
+
+      $rs = $db->GetRow($sql);
+
+      $ssid = $rs['sample_import_id'];
+      $sso = $rs['sort_order'];
+
+      $sql = "UPDATE questionnaire_sample
+              SET sort_order = $sso
+              WHERE sample_import_id = $sid
+              AND questionnaire_id = $questionnaire_id";
+
+      $db->Execute($sql);
+
+      $sql = "UPDATE questionnaire_sample
+              SET sort_order = ($sso + 1)
+              WHERE sample_import_id = $ssid
+              AND questionnaire_id = $questionnaire_id";
+
+      $db->Execute($sql);
+    }
+    else
+    {
+      //find next in sort order and do a swap
+      $sql = "SELECT sample_import_id,sort_order
+              FROM questionnaire_sample
+              WHERE questionnaire_id = $questionnaire_id
+              AND sort_order > (SELECT sort_order FROM questionnaire_sample WHERE questionnaire_id = $questionnaire_id AND sample_import_id = $sid)
+              ORDER BY sort_order ASC LIMIT 1";
+
+      $rs = $db->GetRow($sql);
+
+      $ssid = $rs['sample_import_id'];
+      $sso = $rs['sort_order'];
+
+      $sql = "UPDATE questionnaire_sample
+              SET sort_order = $sso
+              WHERE sample_import_id = $sid
+              AND questionnaire_id = $questionnaire_id";
+
+      $db->Execute($sql);
+
+      $sql = "UPDATE questionnaire_sample
+              SET sort_order = ($sso - 1)
+              WHERE sample_import_id = $ssid
+              AND questionnaire_id = $questionnaire_id";
+
+      $db->Execute($sql);
+    
+    }
+  }
 	else
 	{
 		//need to remove rsid from questionnaire
@@ -266,7 +331,7 @@ if ($questionnaire_id != false)
 	print "<div class='clearfix '></div><div class='panel-body'>
 			<h3 class='text-primary'>". T_("Samples selected for this questionnaire") .":</h3>";
 
-	$sql = "SELECT si.description as description, 
+	$sql = "SELECT q.sort_order as sort_order, si.description as description,si.sample_import_id, 
 			CASE WHEN q.call_max = 0 THEN '". TQ_("Unlimited") ."' ELSE q.call_max END as call_max,
 			CASE WHEN q.call_attempt_max = 0 THEN '". TQ_("Unlimited") . "' ELSE q.call_attempt_max END AS call_attempt_max,
 			CASE WHEN q.random_select = 0 THEN '". TQ_("Sequential") ."' ELSE '". TQ_("Random") . "' END as random_select,
@@ -276,12 +341,39 @@ if ($questionnaire_id != false)
 			CONCAT('<a href=\'\' data-toggle=\'confirmation\' data-placement=\'top\' data-href=\"?questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\" class=\'btn center-block\'><i class=\'fa fa-chain-broken fa-lg\' data-toggle=\'tooltip\' title=\'". TQ_("Click to unassign") ."\'></i></a>') as unassign
 		FROM questionnaire_sample as q, sample_import as si
 		WHERE q.sample_import_id = si.sample_import_id
-		AND q.questionnaire_id = '$questionnaire_id'";
+    AND q.questionnaire_id = '$questionnaire_id'
+    ORDER BY q.sort_order ASC";
 
 	$qs = $db->GetAll($sql);
 
-	if (!empty($qs))
-		xhtml_table($qs,array("description","call_max","call_attempt_max","answering_machine_messages","random_select","allow_new","edit","unassign"),array(T_("Sample"), T_("Max calls"), T_("Max call attempts"), T_("Answering machine messages"), T_("Selection type"), T_("Allow new numbers to be drawn?"), T_("Edit"), T_("Unassign sample")));
+  if (!empty($qs))
+  {
+    $co = count($qs);
+    if ($co > 1)
+    {
+      for($i = 0; $i < $co; $i++)
+      {
+        $down = "<a href='?questionnaire_id=$questionnaire_id&amp;sort=down&amp;rsid={$qs[$i]['sample_import_id']}'><i class=\"fa fa-arrow-down\"></i></a>";
+        $up = "<a href='?questionnaire_id=$questionnaire_id&amp;sort=up&amp;rsid={$qs[$i]['sample_import_id']}'><i class=\"fa fa-arrow-up\"></i></a>";
+        if ($i == 0) //down only
+        {
+          $qs[$i]['sort_order'] = $down;
+        }
+        else if ($i == ($co - 1)) //up only
+        {
+          $qs[$i]['sort_order'] = $up; 
+        }
+        else
+        {
+          $qs[$i]['sort_order'] = "$up $down";
+        }
+      }
+    }
+    else
+      $qs[0]['sort_order'] = "<i class=\"fa fa-minus\"></i>";
+
+    xhtml_table($qs,array("sort_order","description","call_max","call_attempt_max","answering_machine_messages","random_select","allow_new","edit","unassign"),array(T_("Sort order"),T_("Sample"), T_("Max calls"), T_("Max call attempts"), T_("Answering machine messages"), T_("Selection type"), T_("Allow new numbers to be drawn?"), T_("Edit"), T_("Unassign sample")));
+  }
 	else
 		print "<div class='alert text-danger'><h4>". T_("No samples selected for this questionnaire") ."</h4></div>";
 

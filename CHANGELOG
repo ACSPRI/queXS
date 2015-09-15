@@ -52,6 +52,8 @@ WHERE 1;
 /* Remove redundant table */
 DROP TABLE `sessions2`;
 
+/* Add sort order feature to questionnaire sample table */
+ALTER TABLE `questionnaire_sample` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0';
 
 queXS 1.13.1 - Changes since 1.13.0
 
