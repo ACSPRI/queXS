@@ -302,6 +302,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
               AND questionnaire_id = $questionnaire_id";
 
       $db->Execute($sql);
+	  
+	  unset($_GET['sort']);
     
     }
   }
@@ -353,24 +355,24 @@ if ($questionnaire_id != false)
     {
       for($i = 0; $i < $co; $i++)
       {
-        $down = "<a href='?questionnaire_id=$questionnaire_id&amp;sort=down&amp;rsid={$qs[$i]['sample_import_id']}'><i class=\"fa fa-arrow-down\"></i></a>";
-        $up = "<a href='?questionnaire_id=$questionnaire_id&amp;sort=up&amp;rsid={$qs[$i]['sample_import_id']}'><i class=\"fa fa-arrow-up\"></i></a>";
+        $down = "<a href='?questionnaire_id=$questionnaire_id&amp;sort=down&amp;rsid={$qs[$i]['sample_import_id']}' data-toggle=\"tooltip\" title=\"". T_("Pull step Down") ."\"><i class=\"fa fa-arrow-down fa-lg\"></i></a>";
+        $up = "<a href='?questionnaire_id=$questionnaire_id&amp;sort=up&amp;rsid={$qs[$i]['sample_import_id']}' data-toggle=\"tooltip\" title=\"". T_("Push step Up") ."\"><i class=\"fa fa-arrow-up fa-lg\"></i></a>";
         if ($i == 0) //down only
         {
-          $qs[$i]['sort_order'] = $down;
+          $qs[$i]['sort_order'] = "<div style=\"min-width:70px;\">&ensp;<span class=\"badge\">" . $qs[$i]['sort_order'] . "</span>&ensp;&emsp;" . $down . "</div>";
         }
         else if ($i == ($co - 1)) //up only
         {
-          $qs[$i]['sort_order'] = $up; 
+          $qs[$i]['sort_order'] = "&ensp;<span class=\"badge\">" . $qs[$i]['sort_order'] . "</span>&ensp;" . $up; 
         }
         else
         {
-          $qs[$i]['sort_order'] = "$up $down";
+          $qs[$i]['sort_order'] = "<div style=\"min-width:70px;\">&ensp;<span class=\"badge\">" . $qs[$i]['sort_order'] . "</span>&ensp;" . $up . $down . "</div>";
         }
       }
     }
     else
-      $qs[0]['sort_order'] = "<i class=\"fa fa-minus\"></i>";
+      $qs[0]['sort_order'] = "&emsp;<i class=\"fa fa-minus fa-lg\"></i>&emsp;";
 
     xhtml_table($qs,array("sort_order","description","call_max","call_attempt_max","answering_machine_messages","random_select","allow_new","edit","unassign"),array(T_("Sort order"),T_("Sample"), T_("Max calls"), T_("Max call attempts"), T_("Answering machine messages"), T_("Selection type"), T_("Allow new numbers to be drawn?"), T_("Edit"), T_("Unassign sample")));
   }
