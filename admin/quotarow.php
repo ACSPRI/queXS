@@ -305,7 +305,8 @@ if ($questionnaire_id != false)
 	$sql = "SELECT s.sample_import_id as value,s.description, CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 	 	FROM sample_import as s, questionnaire_sample as q
 		WHERE q.questionnaire_id = $questionnaire_id
-		AND q.sample_import_id = s.sample_import_id";
+		AND q.sample_import_id = s.sample_import_id
+		AND s.enabled = 1";
 	$s = $db->GetAll($sql);
 	if (!empty($s)){
 		print "<h3 class='form-inline pull-left'>&emsp;&emsp;&emsp;" . T_("Sample") . ":&emsp;</h3>";
