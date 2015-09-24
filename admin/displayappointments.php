@@ -58,19 +58,27 @@ $js_foot = array(
 "../js/bootstrap-confirmation.js",
 "../js/custom.js"
 				);
- 
+
 //create new or update appointment
 if (isset($_GET['start']) && isset($_GET['end']) && isset($_GET['update']))
 {	
 	$start = $db->qstr($_GET['start']);
 	$end = $db->qstr($_GET['end']);
-	$contact_phone_id = bigintval($_GET['contact_phone_id']);
+	$case_id = bigintval($_GET['case_id']);
 	$respondent_id = bigintval($_GET['respondent_id']);
 	$require_operator_id = "NULL";
 	if ($_GET['require_operator_id'] > 1) $require_operator_id = bigintval($_GET['require_operator_id']);
 	
-	if ($_GET['new'] == 'create'){
-		$case_id = bigintval($_GET['case_id']);
+	//* add new number to db
+	if ( isset($_GET['addphonenumber']) && !empty($_GET['addphonenumber'])){
+		add_contact_phone($case_id,$_GET['addphonenumber']);
+		$contact_phone_id = $db->Insert_ID();
+	}
+	else {
+		$contact_phone_id = bigintval($_GET['contact_phone_id']);
+	}
+	
+	if (isset($_GET['new']) && $_GET['new'] == 'create'){
 		$operator_id = get_operator_id();
 		if ($operator_id == false) die();
 		$sql = "SELECT Time_zone_name FROM respondent WHERE respondent_id = '$respondent_id'";
@@ -104,14 +112,15 @@ if (isset($_GET['start']) && isset($_GET['end']) && isset($_GET['update']))
 
 		$db->Execute($sql);
 	}	
-	unset ($_GET['start'],$_GET['end'],$_GET['appointment_id'],$_GET['case_id'],$_GET['new'],$_GET['update']); 
+	unset ($_GET['start'],$_GET['end'],$_GET['new'],$_GET['update'],$_GET['appointment_id'],$_GET['case_id'],$_GET['addphonenumber']); //
 }
 	
 
 if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET['new']) && isset($_GET['case_id'])))
 {
-	$appointment_id = bigintval($_GET['appointment_id']);
-	$case_id = bigintval($_GET['case_id']);
+	if (isset($_GET['appointment_id'])) $appointment_id = bigintval($_GET['appointment_id']); else $appointment_id = "";
+	if (isset($_GET['case_id'])) $case_id = bigintval($_GET['case_id']);
+	$require_operator_id = "NULL";
 
 	if (isset($_GET['delete']))
 	{
@@ -121,26 +130,60 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 	
 		xhtml_head(T_("Now modify case outcome"),true,$css,$js_head);
 	
-		print "<div class='col-sm-6'><p class='well'>" . T_("The appointment has been deleted. Now you must modify the case outcome") . "</p>
+		print "<div class='col-lg-6'><p class='well'>" . T_("The appointment has been deleted. Now you must modify the case outcome") . "</p>
 				<a href='supervisor.php?case_id=$case_id' class='btn btn-default'>" . T_("Modify case outcome") . "</a></div>";
 	}
 	else
 	{
-		//Display an edit form
+		$lang = DEFAULT_LOCALE ;
+
+		$sql = "SELECT  CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, 
+						CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 10 YEAR),'SYSTEM',r.Time_zone_name) as enddate,
+						r.respondent_id, ca.contact_phone_id
+						FROM `case` as c, `respondent` as r, `call` as ca
+						WHERE c.case_id = '$case_id'
+                        AND r.case_id = c.case_id
+                        AND c.last_call_id = ca.call_id";
+		$rs = $db->GetRow($sql); 
 		
-		if ($_GET['new'] == 'new'){$title = T_("Create NEW appointment");} else{$title = T_("Edit appointment"); $subtitle = "ID&ensp;" . $appointment_id;} 
+		$startdate = $rs['startdate'];
+		$enddate = $rs['enddate'];
+		$respondent_id = $rs['respondent_id'];
+		if (!isset($contact_phone_id)) $contact_phone_id = $rs['contact_phone_id'];
+
+		if (isset($_GET['new']) &&  $_GET['new'] == 'new'){
+			$title = T_("Create NEW appointment"); 
+			$subtitle ="";
+ 			$start = $startdate;
+			$end = $enddate;
+			$rtz = $_GET['rtz'];
+		} 
 		
+		if  (isset($_GET['appointment_id'])) {
+			$title = T_("Edit appointment");
+			$subtitle = "ID&ensp;" . $appointment_id;
+			
+			$sql = "SELECT a.contact_phone_id,a.call_attempt_id, CONVERT_TZ(a.start,'UTC',r.Time_zone_name) as `start`, CONVERT_TZ(a.end,'UTC',r.Time_zone_name) as `end`, a.respondent_id, a.require_operator_id, r.Time_zone_name as rtz
+			FROM `appointment` as a, respondent as r
+			WHERE a.appointment_id = '$appointment_id'
+			AND a.case_id = '$case_id'
+			AND r.respondent_id = a.respondent_id";
+
+			$rs = $db->GetRow($sql);
+
+			if (!empty($rs)){ 
+				$respondent_id = $rs['respondent_id'];
+				$contact_phone_id = $rs['contact_phone_id'];
+				$require_operator_id = $rs['require_operator_id'];
+				$start = $rs['start'];
+				$end = $rs['end'];
+				$rtz = $rs['rtz'];
+			}
+			else die(T_("ERROR in DB records, Check tables 'appointment' and 'respondent' and Time zone settings"));
+		}
+
+		//Display an edit form	
 		xhtml_head($title,true,$css,$js_head,false,false,false,$subtitle);
-
-    $lang = DEFAULT_LOCALE;
-
-    $sql = "SELECT  CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 10 YEAR),'SYSTEM',r.Time_zone_name) as enddate
-                    FROM `case` as c, `respondent` as r 
-                    WHERE c.case_id = '$case_id' AND r.case_id = c.case_id";
-
-    $rs = $db->GetRow($sql); 
-    $startdate = $rs['startdate'];
-    $enddate = $rs['enddate'];
 
 		print "<script type='text/javascript'> 
 		$(document).ready(function() { var startDateTextBox = $('#start'); var endDateTextBox = $('#end');
@@ -157,60 +200,55 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 				stepMinute: 5,
 				hourGrid: 2,
 				minuteGrid: 10,
-        minDate: '$startdate',
-        maxDate: '$enddate'
+				minDate: '$startdate',
+				maxDate: '$enddate'
 				});});</script>";
 
-		if ($_GET['new'] =='new'){
-			$start = $startdate;
-			$end = $enddate;
-			$rtz = $_GET['rtz'];
-		} 
-		if  (isset($_GET['appointment_id'])) {
+			print "<form action='?' method='get' class='form-horizontal form-group'>";
+			print "<label class='pull-left text-right control-label col-lg-2' for='respondent_id'>" . T_("Respondent") . "</label>";
+
+			display_chooser($db->GetAll("SELECT respondent_id as value, CONCAT(firstName,' ',lastName) as description, 
+										CASE when respondent_id = '$respondent_id' THEN 'selected=\'selected\'' ELSE '' END as selected 
+										FROM respondent
+										WHERE case_id = '$case_id'"),"respondent_id","respondent_id",false,false,false,true,false,true,"pull-left");
 				
-			$sql = "SELECT a.contact_phone_id,a.call_attempt_id, CONVERT_TZ(a.start,'UTC',r.Time_zone_name) as `start`, CONVERT_TZ(a.end,'UTC',r.Time_zone_name) as `end`, a.respondent_id, a.require_operator_id, r.Time_zone_name as rtz
-			FROM `appointment` as a, respondent as r
-			WHERE a.appointment_id = '$appointment_id'
-			AND a.case_id = '$case_id'
-			AND r.respondent_id = a.respondent_id";
-
-			$rs = $db->GetRow($sql);
-
-			if (!empty($rs)){ 
-				$respondent_id = $rs['respondent_id'];
-				$contact_phone_id = $rs['contact_phone_id'];
-				$require_operator_id = $rs['require_operator_id'];
-				$start = $rs['start'];
-				$end = $rs['end'];
-				$rtz = $rs['rtz'];
-			}	
-		}
-			print "<form action='?' method='get' class='form-horizontal'>";
-			print "<label class='pull-left text-right control-label col-sm-2' for='respondent_id'>" . T_("Respondent") . "</label>";
+			print "<br/><br/><label for='contact_phone_id' class='pull-left text-right control-label col-lg-2'>" . T_("Contact phone") . "</label>";
 			
-			display_chooser($db->GetAll("SELECT respondent_id as value,	CONCAT(firstName,' ',lastName) as description, 
-							CASE when respondent_id = '$respondent_id' THEN 'selected=\'selected\'' ELSE '' END as selected
-							FROM respondent
-							WHERE case_id = '$case_id'"),"respondent_id","respondent_id",false,false,false,true,false,true,"pull-left");
+			$sql = "SELECT contact_phone_id as value, phone as description,
+					CASE when contact_phone_id = '$contact_phone_id' THEN 'selected=\'selected\'' ELSE '' END as selected
+					FROM contact_phone
+					WHERE case_id = '$case_id'";
+			$rs = $db->GetAll($sql);
+			
+//* added option to add new number		
+			print "<div class=\"pull-left\"><select class=\"form-control\" id='contact_phone_id' name='contact_phone_id' 
+					onchange=\"if($(this).val()=='add'){ $('#addPhone').show(); } else{ $('#addPhone').hide(); } \">";
+			foreach($rs as $l)
+				{
+					print "<option value='{$l['value']}' {$l['selected']} >{$l['description']}</option>";
+				}
+			print "<option value='add'>" . T_("Add new phone number") . "</option></select></div>";
 
-			print "<br/><br/><label for='contact_phone_id' class='pull-left text-right control-label col-sm-2'>" . T_("Contact phone") . "</label>";
-			display_chooser($db->GetAll("SELECT contact_phone_id as value, phone as description,
-							CASE when contact_phone_id = '$contact_phone_id' THEN 'selected=\'selected\'' ELSE '' END as selected
-							FROM contact_phone
-							WHERE case_id = '$case_id'"),
-							"contact_phone_id","contact_phone_id",false,false,false,true,false,true,"pull-left");
-							
-		 	print "<div class='clearfix'></div></br><div class='alert alert-info col-sm-6 '>". T_("ATTENTION!    Keep in mind that you're setting 'Start' & 'End' appoinment times in RESPONDENT LOCAL TIME !!!") . "</div><div class='clearfix'></div>";
+			print "<div class='col-lg-4' id='addPhone' style='display:none'>
+						<div class='col-lg-6' id=''>
+							<input type=\"tel\" maxlength=\"10\" pattern=\"[0-9]{10}\" class='form-control col-lg-2 ' name='addphonenumber'  />
+						</div>
+					</div>";
+//*end option
+			
+		 	print "<div class='clearfix'></div></br><div class='alert alert-info col-lg-6 '>". T_("ATTENTION!    Keep in mind that you're setting 'Start' & 'End' appoinment times in RESPONDENT LOCAL TIME !!!") . "</div><div class='clearfix'></div>";
+			
 			date_default_timezone_set($rtz);
-			print "<label class='text-right col-sm-2 control-label'>" . T_("Respondent TimeZone") . ":</label>
-					<h4 class='col-sm-2  text-danger text-uppercase  fa-lg'>" . $rtz . "</h4>
+			
+			print "<label class='text-right col-lg-2 control-label'>" . T_("Respondent TimeZone") . ":</label>
+					<h4 class='col-lg-2  text-danger text-uppercase  fa-lg'>" . $rtz . "</h4>
 					<label class=''>" . T_("Respondent Time") . ":&emsp;<b class='fa fa-2x '>" . date("H:i:s") . "</b></label>";
 
-			print "<br/><br/><label class='pull-left text-right control-label col-sm-2' for='start'>" . T_("Start time") . "</label>
+			print "<br/><br/><label class='pull-left text-right control-label col-lg-2' for='start'>" . T_("Start time") . "</label>
 					<div class='pull-left'><input class='form-control' type='text' value='$start' id='start' name='start'/></div>";
-			print "<br/><br/><label class='pull-left text-right control-label col-sm-2' for='end'>" . T_("End time") . "</label>
+			print "<br/><br/><label class='pull-left text-right control-label col-lg-2' for='end'>" . T_("End time") . "</label>
 					<div class='pull-left'><input class='form-control' type='text' value='$end' id='end' name='end'/></div>";
-			print "<br/><br/><label class='pull-left text-right control-label col-sm-2' for='require_operator_id'>" . T_("Appointment with") . "</label>";
+			print "<br/><br/><label class='pull-left text-right control-label col-lg-2' for='require_operator_id'>" . T_("Appointment with") . "</label>";
 			$ops = $db->GetAll("SELECT o.operator_id as value,
 						CONCAT(o.firstName, ' ', o.lastName) as description,
 						CASE WHEN o.operator_id = '$require_operator_id' THEN 'selected=\'selected\'' ELSE '' END as selected
@@ -225,17 +263,25 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 				}
 			}
 			array_unshift($ops,array('value'=>0,'description'=>T_("Any operator"),'selected'=>$selected));
-			display_chooser($ops,"require_operator_id","require_operator_id",false,false,false,true,false,true,"pull-left");
-			print "<input type='hidden' value='$appointment_id' id='appointment_id' name='appointment_id'/><input type='hidden' value='update' id='update' name='update'/>";
 			
-			if ($_GET['new'] == 'new') { print "<input type='hidden' value='create' id='new' name='new'/><input type='hidden' value='$case_id' id='case_id' name='case_id'/>";}
+			display_chooser($ops,"require_operator_id","require_operator_id",false,false,false,true,false,true,"pull-left");
+			 
+			print "	<input type='hidden' value='$appointment_id' id='appointment_id' name='appointment_id'/>
+					<input type='hidden' value='update' id='update' name='update'/>
+					<input type='hidden' value='$case_id' id='case_id' name='case_id'/>";
+			
+			if (isset($_GET['new']) && $_GET['new'] == 'new') { 
+				print "<input type='hidden' value='create' id='new' name='new'/>";
+				}
 
 			print "<div class='clearfix'></div><br/><br/>
-				<div class='col-sm-2'><a href='' onclick='history.back();return false;' class='btn btn-default pull-left'><i class='fa fa-ban fa-lg'></i>&emsp;" . T_("Cancel edit") . "</a></div>";
+				<div class='col-lg-2'><a href='?'  class='btn btn-default pull-left'><i class='fa fa-ban fa-lg'></i>&emsp;" . T_("Cancel edit") . "</a></div>";
 			
-			print "<div class='col-sm-2'><button type='submit' class='btn btn-primary btn-block'><i class='fa fa-floppy-o fa-lg'></i>&emsp;" . T_("Save changes") . "</button></div>";
+			print "<div class='col-lg-2'>
+					<button type='submit' class='btn btn-primary btn-block'><i class='fa fa-floppy-o fa-lg'></i>&emsp;" . T_("Save changes") . "</button>
+					</div>";
 
-			print "<div class='col-sm-2'><a href='' class='btn btn-default pull-right'  toggle='confirmation' data-placement='left' data-href='?delete=delete&amp;appointment_id=$appointment_id&amp;case_id=$case_id' ><i class='fa fa-trash fa-lg text-danger'></i>&emsp;" . T_("Delete this appointment") . "</a></div>";
+			print "<div class='col-lg-2'><a href='' class='btn btn-default pull-right'  toggle='confirmation' data-placement='left' data-href='?delete=delete&amp;appointment_id=$appointment_id&amp;case_id=$case_id' ><i class='fa fa-trash fa-lg text-danger'></i>&emsp;" . T_("Delete this appointment") . "</a></div>";
 
 			print "</form>";
 	}
