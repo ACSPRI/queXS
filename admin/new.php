@@ -265,7 +265,7 @@ if (!empty($surveys)){?>
 	<div class="form-group">
 		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
 		<div class="col-sm-4">
-			<input class="form-control"  name="lime_endurl" id="url" type="url" />
+			<input class="form-control"  name="lime_endurl" id="url" type="url" value="<?php echo SITE_URL; ?>"/>
 		</div>
 	</div>
 </div>
