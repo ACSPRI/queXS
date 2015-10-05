@@ -121,25 +121,14 @@ function display_outcomes($contacted,$ca,$case_id)
 				print "<div class=\"form-group\" ><a href=\"?contacted=1\" class=\"btn btn-info\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\">".T_("CONTACTED")."</a>";
 				print "<a href=\"?contacted=0\" class=\"btn btn-default\" style=\"margin-left: 30px; margin-right: 15px; min-width: 150px;\">".T_("NOT CONTACTED")."</a></div>";
 
-				if (isset ($_GET['contacted'])){
-					
-				$contacted = bigintval($_GET['contacted']);
-
-				$sql = "SELECT outcome_id,description,contacted
-					FROM outcome
-					WHERE contacted = '$contacted'
-					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)"; 
-				}
+				if (isset ($_GET['contacted'])) $contacted = bigintval($_GET['contacted']); 
 			}
-			else
-			{
-				$contacted = bigintval($contacted);
+			else $contacted = bigintval($contacted);
 		
-				$sql = "SELECT outcome_id,description,contacted
-					FROM outcome
-					WHERE contacted = '$contacted'
-					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)";
-			}
+			$sql = "SELECT outcome_id,description,contacted
+				FROM outcome
+				WHERE contacted = '$contacted'
+				AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)";
 		}
 	}
 	$rs = $db->GetAll($sql);
@@ -153,15 +142,13 @@ function display_outcomes($contacted,$ca,$case_id)
 		foreach($rs as $r)
 		{
 			if ($do == $r['outcome_id']) $selected = "checked='checked'"; else $selected = "";
-			if (isset($r['contacted']) && $r['contacted'] == 1) $highlight = "text-primary"; else $highlight = "text-default";
-			print "<li><label class='$highlight'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>&emsp;" . T_($r['description']) . "</label></li>";
+			if (isset($r['contacted']) && $r['contacted'] == 1) $highlight = ""; else $highlight = "style='color:black;'";
+			print "<a><label $highlight class='btn-link'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>&emsp;" . T_($r['description']) . "</label></a><br/>";
 		}
 		
 		$_POST['confirm'] = true;
 	}
 	print "</div>";
-
-
 }
 
 
@@ -308,7 +295,7 @@ if (isset($_GET['newstate']))
 
 if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js";
 
-xhtml_head(T_("Set outcome"),true,array("include/bootstrap/css/bootstrap.min.css"/* ,"css/call.css" */),array($js,"include/jquery/jquery-1.4.2.min.js"));
+xhtml_head(T_("Set outcome"),true,array("include/bootstrap/css/bootstrap.min.css"),array($js,"include/jquery/jquery-1.4.2.min.js"));
 
 $state = is_on_call($operator_id);
 switch($state)
@@ -327,8 +314,8 @@ switch($state)
 			{
 				//end the case
 				if (!isset($_GET['end'])) print "<div>" . T_("End work") . "</div>";
-				print "<p><a href='javascript:openParent(\"endcase=endcase\")'>" . T_("End case") . "</a></p>";
-				print "<p><a href='javascript:openParent(\"endwork=endwork\")'>" . T_("End work") . "</a></p>";
+				print "<p><a href='javascript:openParent(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p>";
+				print "<p><a href='javascript:openParent(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
 			}
 			else
 			{
@@ -354,9 +341,11 @@ switch($state)
 					
 					print "<div>" . T_("Press the call button to dial the number for this appointment:") . "</div>";
 		
-					print "<form action='?' method='post'><div>";
-					print "<p>" . T_("Number to call:") . " {$r['phone']} - {$r['description']}</p>";
-					print "</div><div><input type='hidden' id='contact_phone' name='contact_phone' value='{$r['contact_phone_id']}'/><input type='submit' value=\"" . T_("Call") . "\" name='submit' id='submit'/></div></form>";
+					print "<form action='?' method='post'>
+							<div><p>" . T_("Number to call:") . " {$r['phone']} - {$r['description']}</p></div>
+							<input type='hidden' id='contact_phone' name='contact_phone' value='{$r['contact_phone_id']}'/>
+							<div><input type='submit' value=\"" . T_("Call") . "\" name='submit' id='submit' class='btn btn-primary'/></div>
+						   </form>";
 				}
 				else
 					print "<div>" . T_("Your VoIP extension is not enabled. Please close this window and enable VoIP by clicking once on the red button that says 'VoIP Off'") . "</div>";
@@ -427,7 +416,7 @@ switch($state)
 						{
 							print "<option value='{$r['contact_phone_id']}'>{$r['phone']} - {$r['description']}</option>";
 						}
-						print "</select></div><div><input type='submit' value=\"" . T_("Call") . "\" name='submit' id='submit'/></div></form>";
+						print "</select></div><div><input type='submit' value=\"" . T_("Call") . "\" name='submit' id='submit' class='btn btn-primary'/></div></form>";
 					}
 					else
 						print "<div>" . T_("Your VoIP extension is not enabled. Please close this window and enable VoIP by clicking once on the red button that says 'VoIP Off'") . "</div>";
@@ -443,13 +432,13 @@ switch($state)
 						//give focus on load
 						print '<script type="text/javascript">$(document).ready(function(){$("#note").focus();});</script>';
 						//put these lower on the screen so they don't get "automatically" clicked
-						print "<p><a href='javascript:openParentNote(\"endcase=endcase\")'>" . T_("End case") . "</a></p>";
-						print "<p><a href='javascript:openParentNote(\"endwork=endwork\")'>" . T_("End work") . "</a></p>";
+						print "<p><a href='javascript:openParentNote(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p>";
+						print "<p><a href='javascript:openParentNote(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
 					}
 					else
 					{
-						print "<p><a href='javascript:openParent(\"endcase=endcase\")'>" . T_("End case") . "</a></p>";
-						print "<p><a href='javascript:openParent(\"endwork=endwork\")'>" . T_("End work") . "</a></p";
+						print "<p><a href='javascript:openParent(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p>";
+						print "<p><a href='javascript:openParent(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p";
 					}
 				}
 			}
@@ -462,16 +451,16 @@ switch($state)
 
 				if ($rn) // a note is required to be entered
 				{
-					print "<div><label for='note'>" . T_("Enter a reason for this outcome before completing this case:") . "</label><input type='text' id='note' name='note' size='48'/><br/><br/><br/><br/></div>";
+					print "<div><label for='note' class='control-label'>" . T_("Enter a reason for this outcome before completing this case:") . "</label><textarea type='text' id='note' name='note' class='form-control' rows='3'></textarea><br/></div>";
 					print '<script type="text/javascript">$(document).ready(function(){$("#note").focus();});</script>';
-					print "<p><a href='javascript:openParentNote(\"endcase=endcase\")'>" . T_("End case") . "</a></p>";
-					print "<p><a href='javascript:openParentNote(\"endwork=endwork\")'>" . T_("End work") . "</a></p>";
+					print "<p><a href='javascript:openParentNote(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p></p>";
+					print "<p><a href='javascript:openParentNote(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
 				}
 				else
 				{
-					if (!isset($_GET['end'])) print "<div>" . T_("The last call completed this call attempt") . "</div>";
-					print "<p><a href='javascript:openParent(\"endcase=endcase\")'>" . T_("End case") . "</a></p>";
-					print "<p><a href='javascript:openParent(\"endwork=endwork\")'>" . T_("End work") . "</a></p>";
+					if (!isset($_GET['end'])) print "<div class='alert alert-info'>" . T_("The last call completed this call attempt") . "</div>";
+					print "<p><a href='javascript:openParent(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p></p>";
+					print "<p><a href='javascript:openParent(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
 				}
 			}
 		}
@@ -489,7 +478,7 @@ switch($state)
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done
 	default:
-		print "<div class='status'>" . T_("Error: Close window") . "</div>";
+		print "<div class='alert alert-danger'>" . T_("Error: Close window") . "</div>";
 		break;
 
 }
