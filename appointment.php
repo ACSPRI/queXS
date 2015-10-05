@@ -72,7 +72,7 @@ $case_id = get_case_id($operator_id);
 
 if (!$case_id){
 	xhtml_head(T_("Appointment error"));
-	print("<div>" . T_("You have not been assigned a case therefore cannot create an appointment") . "</div>");
+	print("<div class='alert alert-danger'>" . T_("You have not been assigned a case therefore cannot create an appointment") . "</div>");
 	xhtml_foot();
 	$db->CompleteTrans();
 	exit();
@@ -123,7 +123,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
     $js[] = "include/jquery/jquery-1.4.2.min.js";
 	$js[] = "js/childnap.js";
 }
-xhtml_head(T_("Create appointment"),false,array("include/bootstrap/css/bootstrap.min.css", "css/respondent.css"),$js);//"include/clockpicker/dist/bootstrap-clockpicker.min.css",
+xhtml_head(T_("Create appointment"),false,array("include/bootstrap/css/bootstrap.min.css"),$js);
 
 //select a respondent from a list or create a new one
 print "<h4>" . T_("Respondent") . ":";
@@ -160,6 +160,8 @@ else if(isset($_GET['respondent_id']))
 		display_calendar($respondent_id,$questionnaire_id,$year,$month,$day);
 
 		display_time($questionnaire_id,$respondent_id,$day,$month,$year,isset($_GET['start'])?$_GET['start']:false,isset($_GET['end'])?$_GET['end']:false);
+		
+		print "</div>";
 
 		if (isset($_GET['end']) && isset($_GET['start']))
 		{
@@ -242,7 +244,7 @@ else if(isset($_GET['respondent_id']))
 	}
 }
 
-
+	print "<div class='col-md-12'><a class='btn btn-warning pull-left' href='?'>".T_("Clear")."</a><a class='btn btn-default pull-right' href='javascript:parent.closePopup();'>".T_("Cancel")."</a></div><div class='clearfix'></div>";
 
 xhtml_foot();
 
