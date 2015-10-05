@@ -72,7 +72,7 @@ $operator_id = get_operator_id();
 
 $msg = "";
 
-if (isset($_POST['firstname']))
+if (isset($_POST['email']) && ((isset($_POST['firstname']) && !empty($_POST['firstname'])) || (isset($_POST['lastname']) && !empty($_POST['lastname']))))
 {
 	//validate email address
 	if (validate_email($_POST['email']))
@@ -278,8 +278,10 @@ if (isset($_POST['firstname']))
 				}
 				//disable recording
 				$newtext = T_("Start REC");
-					$js = "js/window.js";
-				if (browser_ie()) $js = "js/window_ie6.js";
+				
+				if (isset($_GET['interface2'])) { if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js";} 
+				else { if (browser_ie()) $js = "js/window_ie6.js"; else $js = "js/window.js"; }
+				
 				if (isset($_GET['interface2']))
 				{
 					xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='openParent(\"endcase=endcase\");'");
@@ -310,10 +312,10 @@ if (isset($_POST['firstname']))
 
 $case_id = get_case_id($operator_id);
 
-$js = "js/window.js";
-if (browser_ie()) $js = "js/window_ie6.js";
+if (isset($_GET['interface2'])) { if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js"; } 
+else { if (browser_ie()) $js = "js/window_ie6.js"; else $js = "js/window.js"; }
 
-xhtml_head(T_("Email"),true,array("css/call.css"),array($js));
+xhtml_head(T_("Email"),true,array("include/bootstrap/css/bootstrap.min.css"),array($js));
 
 $sql = "SELECT q.self_complete
 	FROM questionnaire as q, `case` as c
@@ -333,22 +335,30 @@ if ($sc == 1)
 	
 	$rs = $db->GetRow($sql);
 	
-	print "<div class='status'>" . T_("Email respondent for self completion") . "</div>";
-	if (!empty($msg)) print "<p>$msg</p>";
+	print "<h4>" . T_("Email respondent for self completion") . "</h4>";
+	if (!empty($msg)) print "<p class='alert alert-warning'>$msg</p>";
 	print "<form action='?";
 	if (isset($_GET['interface2']))
 	{
 		print "interface2=true";
 	}
-	print "' method='post'>";
-	print "<div><label for='firstname'>" . T_("First name") . "</label><input type='text' value='{$rs['firstname']}' name='firstname' id='firstname'/></div>";
-	print "<div><label for='lastname'>" . T_("Last name") . "</label><input type='text' value='{$rs['lastname']}' name='lastname' id='lastname'/></div>";
-	print "<div><label for='email'>" . T_("Email") . "</label><input type='text' value='{$rs['email']}' name='email' id='email'/></div>";
-	if (!isset($_GET['interface2']))
-	{
-		print "<div><input type='submit' value=\"" . T_("Send invitation") . "\" name='submit' id='submit'/></div>";
+	print "' method='post' class='form-horizontal col-md-12'>";
+
+	print "<div class='form-group '><label for='firstname' class='control-label'>" . T_("First name") . "</label>
+			<input type='text' value='{$rs['firstname']}' name='firstname' id='firstname' class='form-control'/>
+			</div>";
+	print "<div class='form-group '><label for='lastname' class='control-label'>" . T_("Last name") . "</label> 
+			<input type='text' value='{$rs['lastname']}' name='lastname' id='lastname' class='form-control'/>
+			</div>";
+	print "<div class='form-group '><label for='email' class='control-label'>" . T_("Email") . "</label>
+			<input type='email' value='{$rs['email']}' name='email' id='email' class='form-control' required />
+			</div>";
+	if (!isset($_GET['interface2'])) {
+		print "<div class='form-group '><input type='submit' class='btn btn-primary' value=\"" . T_("Send invitation") . "\" name='submit' id='submit'/></div>";
 	}
-	print "<div><input type='submit' value=\"" . T_("Send invitation and Hang up") . "\" name='submith' id='submith'/></div></form>";
+	print "<div class='form-group '><input type='submit' class='btn btn-primary' value=\"" . T_("Send invitation and Hang up") . "\" name='submith' id='submith'/>
+			<div class='col-md-6 pull-right'><a class='btn btn-default pull-right' href='javascript:parent.closePopup();'>".T_("Cancel")."</a></div><div class='clearfix'></div>
+			</div></form>";
 }
 else
 {
