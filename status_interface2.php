@@ -63,9 +63,9 @@ $state = is_on_call($operator_id);
 $js = array("js/popup.js");
 
 if (browser_ie())
-	$js[] = "js/window_ie6.js";
+	$js[] = "js/window_ie6_interface2.js";
 else
-	$js[] = "js/window.js";
+	$js[] = "js/window_interface2.js";
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {
@@ -178,9 +178,8 @@ if ($ca)
 
 			$apdate = $rs['time'];
 
-
-			print "<div class='tobecoded statusbox'>" . T_("Appointment") . ": " . $apdate .  "</div><div style='clear: both;'/>";
-			//if (missed_appointment($ca)) print "<div class='tobecoded statusbutton'>" . T_("MISSED") . "</div>";
+			if (missed_appointment($ca)) 	print "<div class='alert alert-warning'>" . T_("MISSED") .  ": " . $apdate .  "</div>";
+			else 							print "<div class='alert alert-info'>" . T_("Appointment") . ": " . $apdate .  "</div>";
 		}
 
 		if ($call_id)
@@ -222,7 +221,7 @@ if ($ca)
 						<p>
 						<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>&ensp;
 						<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
-						if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}'><i class='fa fa-phone fa-fw'></i> " . T_('Dial') . "</a>";
+						if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}' class='btn btn-primary btn-xs'><i class='fa fa-phone fa-fw'></i>&ensp;" . T_('Dial') . "</a>";
 						if (!empty($r['description'])) print " - " . $r['description'];
 						print "</label>
 						</p>
