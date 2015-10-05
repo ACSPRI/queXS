@@ -298,16 +298,14 @@ if (isset($_GET['edit']) )
 	$sql = "SELECT type, description
 		FROM sample_var_type";
 	$rd = $db->GetAll($sql);
-		$selected = "selected=\"selected\"";	
+
 	$sql = "SELECT sir.var_id, 
 		CONCAT('<input type=\"text\" onInput=\"$(this).attr(\'name\',\'var[',sir.var_id,']\');\"  value=\"' ,sir.var, '\" required class=\"form-control\" style=\"min-width: 300px;\" $dis />') as var, 
-		CONCAT ('<select name=\"type[',sir.var_id,']\" class=\"form-control\" $dis >
-		<option value=\"' ,svt.type, '\" $selected>' ,svt.description, '</option>";
-
+		CONCAT ('<select name=\"type[',sir.var_id,']\" class=\"form-control\" $dis >";
 			foreach($rd as $r)
-			{	
-					$sql .= "<option value=\"{$r['type']}\">" . T_($r['description']) . "</option>";
-			}	
+			{
+				$sql .= "<option value=\"{$r['type']}\"', CASE WHEN ( svt.type = {$r['type']}) THEN 'selected=\"selected\"' ELSE '' END , ' >" . T_($r['description']) . "</option>";
+			}
 	$sql .= "</select>') as type, sv.val,
 		CONCAT('<input type=\'checkbox\' ', CASE WHEN (sir.restrict IS NULL || sir.restrict = 0) THEN 'checked=\"checked\"' ELSE '' END   ,'  name=\"see[]\" value=\'',sir.var_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\"/>') as see,
 		CONCAT('<input type=\'checkbox\' name=\"del[',sir.var_id,']\" value=\'',sir.var_id,'\' $dis data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\" data-onstyle=\'danger \'/>') as del,
