@@ -225,7 +225,7 @@ $availability = is_using_availability($case_id);
 			<a href="javascript:poptastic('call_interface2.php');" class="btn btn-default btn-block" style="border-radius:15px; color:blue"><strong><?php  echo T_("Outcome"); ?>  <i class="fa fa-lg fa-check-square-o fa-fw"></i></strong></a></br>
 			<a href="javascript:poptastic('appointment.php');" class="btn btn-default btn-block " style="border-radius:15px; color:green"><strong><?php  echo T_("Appointment"); ?> <i class="fa fa-lg fa-clock-o fa-fw"></i></strong></a></br>
 			<?php if ($sc == 1) { ?>
-			<a href="javascript:poptastic('email.php?interface2=true');" class="btn btn-default btn-block" style="border-radius:15px; color:blue"><strong><?php  echo T_("Email"); ?>  <i class="fa fa-lg fa-envelope-o fa-fw"></i></strong></a></br>
+			<a href="javascript:poptastic('email.php?interface2=true');" class="btn btn-default btn-block" style="border-radius:15px; color:blue"><strong><?php  echo T_("Invitation Email"); ?>  <i class="fa fa-lg fa-envelope-o fa-fw"></i></strong></a></br>
 			<?php } ?>
 			<?php if ($ref == 1) { ?>
 			<a href="javascript:poptastic('referral.php?interface2=true');" class="btn btn-default btn-block" style="border-radius:15px; color:blue"><strong><?php  echo T_("Referral"); ?>  <i class="fa fa-lg fa-link fa-fw"></i></strong></a></br>

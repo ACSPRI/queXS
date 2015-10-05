@@ -284,17 +284,17 @@ if (isset($_POST['email']) && ((isset($_POST['firstname']) && !empty($_POST['fir
 				
 				if (isset($_GET['interface2']))
 				{
-					xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='openParent(\"endcase=endcase\");'");
+					xhtml_head(T_("Invitation Email"),true,array("css/call.css"),array($js),"onload='openParent(\"endcase=endcase\");'");
 				}
 				else
 				{
-					xhtml_head(T_("Email"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
+					xhtml_head(T_("Invitation Email"),true,array("css/call.css"),array($js),"onload='toggleRec(\"$newtext\",\"record.php?start=start\",\"offline\"); openParentObject(\"main-content\",\"" . get_respondentselection_url($operator_id) . "\"); parent.closePopup();'");
 				}
 	
 			}
 			else if (isset($_POST['submit']))
 			{
-				xhtml_head(T_("Email"),true,array("css/call.css"),false,"onload='parent.closePopup();'");
+				xhtml_head(T_("Invitation Email"),true,array("css/call.css"),false,"onload='parent.closePopup();'");
 			}
 			xhtml_foot();
 			die();
@@ -315,7 +315,7 @@ $case_id = get_case_id($operator_id);
 if (isset($_GET['interface2'])) { if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js"; } 
 else { if (browser_ie()) $js = "js/window_ie6.js"; else $js = "js/window.js"; }
 
-xhtml_head(T_("Email"),true,array("include/bootstrap/css/bootstrap.min.css"),array($js));
+xhtml_head(T_("Invitation Email"),true,array("include/bootstrap/css/bootstrap.min.css"),array($js));
 
 $sql = "SELECT q.self_complete
 	FROM questionnaire as q, `case` as c
