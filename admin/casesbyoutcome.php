@@ -75,7 +75,8 @@ if ($operator_id)
 
         if (!empty($rs)){
             print "<h2 class=' '>" . T_("Project") . ":&emsp;<span class='text-primary'>{$rs['qd']}</span></h2>";
-			if($sample_import_id=intval($_GET['sample_import_id'])){
+			if( isset($_GET['sample_import_id'])){
+				$sample_import_id=intval($_GET['sample_import_id']);
 				$sql = "SELECT si.description as sd
 				FROM `sample_import` as si
 				WHERE si.sample_import_id = '$sample_import_id' ;";
@@ -85,7 +86,8 @@ if ($operator_id)
 				}
 				else{$sid = " ";};
 				
-			if($oper_id= intval($_GET['oper_id'])){
+			if( isset($_GET['oper_id'])){
+					$oper_id= intval($_GET['oper_id']);
 					$sql = "SELECT CONCAT(op.firstname, op.lastname) as opname
 					FROM `operator` as op
 					WHERE op.operator_id = '$oper_id' ;";
