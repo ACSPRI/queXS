@@ -122,7 +122,7 @@ if (isset($_GET['case_note_id']))
 	$db->Execute($sql);
 }
 
-xhtml_head(T_("Assign outcomes to cases"),true,$css,$js_head);//array("../css/table.css"),array("../js/window.js")
+xhtml_head(T_("Assign outcomes to cases"),true,$css,$js_head);
 
 ?>
 
@@ -137,13 +137,18 @@ xhtml_head(T_("Assign outcomes to cases"),true,$css,$js_head);//array("../css/ta
 <?php 
 $sql = "SELECT c.case_id as value, c.case_id as description, CASE WHEN c.case_id = '$case_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 	FROM  `case` AS c,  `outcome` AS o,  `questionnaire` AS q,  `sample` AS s,  `sample_import` AS si
+	LEFT JOIN (questionnaire_sample_quota as qsq) on (si.sample_import_id  = qsq.sample_import_id)
+	LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (si.sample_import_id = qsqr.sample_import_id)
 	WHERE c.current_outcome_id = o.outcome_id
 	AND q.questionnaire_id = c.questionnaire_id
 	AND s.sample_id = c.sample_id
 	AND s.import_id = si.sample_import_id
 	AND q.enabled = 1
 	AND si.enabled =1
-	AND o.outcome_type_id =2";
+	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
+	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
+	AND o.outcome_type_id =2
+	ORDER BY c.case_id ASC";
 
 $rs = $db->GetAll($sql);
 
