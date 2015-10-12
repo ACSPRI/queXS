@@ -110,7 +110,11 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 		LEFT JOIN outcome as co ON (co.outcome_id = ca.outcome_id)
 		LEFT JOIN case_queue as cq ON (cq.case_id = c.case_id)
 		LEFT JOIN operator as oq ON (cq.operator_id = oq.operator_id)
+		LEFT JOIN (questionnaire_sample_quota as qsq) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id)
+		LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
 		WHERE c.current_operator_id IS NULL $q $o
+		AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
+		AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
 		ORDER BY c.case_id ASC";
 
 //	print $sql;
@@ -206,7 +210,7 @@ if (isset($_GET['unassign']))
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Case status and assignment"),true,$css,$js_head);//array("../css/table.css"),array("../js/window.js")
+xhtml_head(T_("Case status and assignment"),true,$css,$js_head);
 echo "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left' ><i class='fa fa-chevron-left text-primary'></i>&emsp;" . T_("Go back") . "</a>
 		<i class='fa fa-question-circle fa-3x text-primary pull-right btn' data-toggle='modal' data-target='.inform'></i>";
  ?>
@@ -237,7 +241,7 @@ print "<div class='form-group '><h3 class=' col-sm-2 text-right'>" . T_("Questio
 display_questionnaire_chooser($questionnaire_id, false, "pull-left", "form-control");
 if ($questionnaire_id){
 	print "<h3 class=' col-sm-2 text-right'>" . T_("Sample") . ":</h3>";
-	display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control");
+	display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control", true);
 	print "</div>
 	 <div class='clearfix'></div>";
 	
