@@ -69,6 +69,8 @@ $db->StartTrans();
 $operator_id = get_operator_id(); 
 $questionnaire_id = get_questionnaire_id($operator_id);
 $case_id = get_case_id($operator_id);
+$call_attempt_id = get_call_attempt($operator_id, false);
+if (isset($_GET['respondent_id']))$respondent_id = bigintval($_GET['respondent_id']); else $respondent_id = get_respondent_id($call_attempt_id);
 
 if (!$case_id){
 	xhtml_head(T_("Appointment error"));
@@ -127,24 +129,23 @@ xhtml_head(T_("Create appointment"),false,array("include/bootstrap/css/bootstrap
 
 //select a respondent from a list or create a new one
 print "<h4>" . T_("Respondent") . ":";
-$sr = display_respondent_list($case_id,isset($_GET['respondent_id'])?bigintval($_GET['respondent_id']):false,true);
+if (isset($_GET['respondent_id'])) $respondent_id = bigintval($_GET['respondent_id']);
+display_respondent_list($case_id,isset($respondent_id)?$respondent_id:false,true);
 print "</h4>";
-if ($sr != false) $_GET['respondent_id'] = $sr;
 
 if(isset($_GET['respondent_id']) && $_GET['respondent_id'] == 0) 
 {
 	//ability to create a new one
 	?>
-	<p><?php  echo T_("Create new respondent:"); ?></p>
+	<h4><?php  echo T_("Create new respondent:"); ?></h4>
 	<form id="addRespondent" method="post" action="">
 	<?php  display_respondent_form(); ?>
-	<p><input type="submit" value="<?php  echo T_("Add this respondent"); ?>"/></p>
+	<p><input type="submit" class="btn btn-primary" value="<?php  echo T_("Add this respondent"); ?>"/></p>
 	</form>
 	<?php 
 }
-else if(isset($_GET['respondent_id']))
+else if($respondent_id)
 {
-	$respondent_id = bigintval($_GET['respondent_id']);
 	
 	$sql = "SELECT TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) as tme, r.Time_zone_name as tzn FROM `respondent` as r WHERE r.respondent_id = $respondent_id";
 	$ct = $db->GetRow($sql);
@@ -244,7 +245,7 @@ else if(isset($_GET['respondent_id']))
 	}
 }
 
-	print "<div class='col-md-12'><a class='btn btn-warning pull-left' href='?'>".T_("Clear")."</a><a class='btn btn-default pull-right' href='javascript:parent.closePopup();'>".T_("Cancel")."</a></div><div class='clearfix'></div>";
+	print "<br/><div class='col-md-12'><a class='btn btn-warning pull-left' href='?'>".T_("Clear")."</a><a class='btn btn-default pull-right' href='javascript:parent.closePopup();'>".T_("Cancel")."</a></div><div class='clearfix'></div>";
 
 xhtml_foot();
 
