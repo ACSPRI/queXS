@@ -133,7 +133,7 @@ if ($operator_id)
 
 			while ($r = $rs->FetchRow())
 			{
-				translate_array($r,array("des"));
+				translate_array($r,array("descr"));
 				echo $r['start_date'] . "," .$r['start_time'] . "," . $r['end'] . "," . $r['case_id'] . "," . $r['qd'] . "," . $r['spl'] . "," . $r['cpi'] . "," . $r['opname'] . "," . $r['descr'] . "," . $r['casenotes'] . "," . $r['firstName'] . "\n";
 			}
 
@@ -151,7 +151,7 @@ if ($operator_id)
 			}
 			else
 			{
-				translate_array($rs,array("des"));
+				translate_array($rs,array("descr"));
 				
 				$datacol = array("start_date", "start_time","end","case_id","qd","spl","cpi","opname","descr","casenotes","firstName");
 				$headers = array(T_("Date"), T_("Start time"), T_("End time"),T_("Case ID"),T_("Questionnaire"),T_("Sample"),T_("Phone number"),T_("Operator"),T_("Outcome"),T_("Case notes"),T_("Respondent"));

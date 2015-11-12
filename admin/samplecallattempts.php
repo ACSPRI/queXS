@@ -121,8 +121,6 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 
 	$outcomes = $db->GetAssoc($sql);
 
-	translate_array($outcomes,array("description"));
-
 	$rep = array("callattempts","sample");
 	$rept = array(T_("Call attempts made"),T_("Number of cases"));
 	$totals = array("sample");
@@ -132,7 +130,7 @@ function sample_call_attempt_report($questionnaire_id = false, $sample_id = fals
 	foreach($outcomes as $key => $val)
 	{
 		$rep[] = $key;
-		$rept[] = $val;
+		$rept[] = T_($val);
 		$outcomesfilled[$key] = 0;
 	}
 
