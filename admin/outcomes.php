@@ -85,7 +85,7 @@ if ($questionnaire_id != false)
 		JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
 		LEFT JOIN `case` as c ON (c.questionnaire_id = qs.questionnaire_id and c.sample_id = s.sample_id)
 		GROUP BY (c.sample_id is not null)";
-	if ($db->GetAll($sql)) xhtml_table($db->GetAll($sql),array("drawn","count"),array(T_("Status"),T_("Number")), "table-hover table table-condensed", false, array("count"));
+	if ($db->GetAll($sql)) xhtml_table($db->GetAll($sql),array("drawn","count"),array(T_("Status"),T_("Number")), "tclass", false, array("count"));
 	else print "<div class='alert text-danger'>" . T_("No samples assigned") . ".&emsp;</div>";
 	print "</div>";
 	
@@ -154,7 +154,7 @@ group by s.import_id";
 	$sql = "SELECT count(case_id) FROM `case` WHERE `case`.questionnaire_id = '$questionnaire_id'";
 	$cases = $db->GetOne($sql);
 	
-	$sql = "SELECT CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;')as link, o.description as des, o.outcome_id, count( c.case_id ) as count, ROUND((count( c.case_id ) / $cases) * 100,2) as perc
+	$sql = "SELECT CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;')as link, o.description as des, o.outcome_id, count(c.case_id) as count, ROUND((count( c.case_id ) / $cases) * 100,2) as perc
 		FROM `case` AS c, `outcome` AS o
 		WHERE c.questionnaire_id = '$questionnaire_id'
 		AND c.current_outcome_id = o.outcome_id
@@ -166,7 +166,7 @@ group by s.import_id";
 	{	print "<div class='col-sm-8'><div class='panel panel-body'>";
 		//print "<h4>" . T_("Total cases for questionnaire") . " = <b>$cases</b></h4>";
 		translate_array($rs,array("des"));
-		xhtml_table($rs,array("link","des","count","perc"),array("",T_("Outcome"),T_("Count"),"&emsp;" . T_("%")),"tclass",false,array("count","perc"));//array("des" => "Complete")
+		xhtml_table($rs,array("outcome_id","des","link","count","perc"),array(T_("ID"),T_("Outcome"),"",T_("Count"),"&emsp;" . T_("%")),"tclass",false,array("count","perc"));//array("des" => "Complete")
 		print "</div></div>";
 		
 		$sample_import_id = false;
@@ -203,7 +203,7 @@ group by s.import_id";
 			print "<div class='col-sm-8'><div class='panel panel-body'>"; //<p>" . T_("Outcomes") . "</p>";
 
 
-			$sql = "SELECT CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;')as link, o.description as des, o.outcome_id, count( c.case_id ) as count,ROUND(count(c.case_id) / (SELECT count(case_id) FROM `case` JOIN sample ON (`case`.sample_id = sample.sample_id AND sample.import_id = '$sample_import_id') WHERE questionnaire_id = '$questionnaire_id' ) * 100,2) as perc
+			$sql = "SELECT CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;')as link, o.description as des, o.outcome_id, count( c.case_id ) as count, ROUND(count(c.case_id) / (SELECT count(case_id) FROM `case` JOIN sample ON (`case`.sample_id = sample.sample_id AND sample.import_id = '$sample_import_id') WHERE questionnaire_id = '$questionnaire_id' ) * 100,2) as perc
 
 				FROM `case` AS c, `outcome` AS o, sample as s
 				WHERE c.questionnaire_id = '$questionnaire_id'
@@ -217,7 +217,7 @@ group by s.import_id";
 			if (!empty($rs))
 			{
 				translate_array($rs,array("des"));
-				xhtml_table($rs,array("link","des","count","perc"),array("",T_("Outcome"),T_("Count"),T_("%")),"tclass",array("des" => "Complete"),array("count","perc"));
+				xhtml_table($rs,array("outcome_id","des","link","count","perc"),array(T_("ID"),T_("Outcome"),"",T_("Count"),"&emsp;" . T_("%")),"tclass",array("des" => "Complete"),array("count","perc"));
 			}
 			else
 				print "<p>" . T_("No outcomes recorded for this sample") . "</p>";
