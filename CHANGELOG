@@ -55,6 +55,14 @@ DROP TABLE `sessions2`;
 /* Add sort order feature to questionnaire sample table */
 ALTER TABLE `questionnaire_sample` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0';
 
+!!-- IMPORTANT --!! 
+If you had more than 1 sample assigned to a questionaire before "samplesort" update, you'll need to have different sort_order values (llike 0,1,2 e.t.c.)for each sample per questionnaire to make "samplesort" feature work.
+
+Easy way: unassign samples from quesionnaires (no more than 1 could be left per questionnaire)  and reassign them back.
+
+Check that you have different "Sort order" values for each sample per questionnaire, test order change with up/down arrows.
+!!
+
 queXS 1.13.1 - Changes since 1.13.0
 
 Fixed Bug: Remove references to old DEFAULT_TIME_ZONE config constant (use get_settings instead)
