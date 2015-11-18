@@ -69,6 +69,14 @@ if (isset($_POST['default']) && isset($_POST['save'])){
 
 		$db->Execute($sql);	 
 	}
+	if(!empty($_POST['delay']) && $_SESSION['user'] === "admin" ){
+
+		foreach($_POST['delay'] as $n => $val)
+			{
+				$sql = "UPDATE `outcome`SET default_delay_minutes = $val WHERE outcome_id = $n";
+				$db->Execute($sql);	 
+			}
+	}
 	
 	$_GET['default'] = $_POST['default'];
 	
@@ -138,7 +146,11 @@ if (isset($_GET['qid'])) {
 	
 	if ($qid != false)
 	{
-		$qoutc = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q WHERE q.questionnaire_id = $qid");
+		$qd = $db->GetRow("SELECT outcomes, self_complete, referral FROM `questionnaire` WHERE questionnaire_id = $qid");
+
+		$qoutc = $qd['outcomes'];
+		$sc = $qd['self_complete'];
+		$ref = $qd['referral'];
 		
 		if (empty($qoutc)) {  //  update q.outcomes with default list
 			
@@ -163,7 +175,12 @@ if (isset($_GET['qid'])) {
 		}
 	
 		$sql = "SELECT o.*, ot.description as type, 
-			CONCAT('<input type=\'checkbox\' ', CASE WHEN o.outcome_id IN ($qoutc) THEN 'checked=\"checked\"' ELSE '' END ,' ', CASE WHEN o.const = 1 THEN 'disabled=\"disabled\" data-onstyle=\"success\"' ELSE '' END ,' name=\"select[]\" value=\'',o.outcome_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\"/>') as `select`
+			CONCAT('<input type=\'checkbox\'', 
+			CASE WHEN ((o.outcome_id = 40 AND $sc = 1) OR (o.outcome_id = 41 AND $ref = 1)) THEN 'checked=\"checked\" data-onstyle=\"success\"' ELSE '' END ,'',
+			CASE WHEN ((o.outcome_id = 40 AND $sc != 1) OR (o.outcome_id = 41 AND $ref != 1)) THEN 'disabled=\"disabled\"' ELSE '' END ,'', 
+			CASE WHEN o.outcome_id NOT IN (40,41) AND o.outcome_id IN ($qoutc) THEN 'checked=\"checked\"' ELSE '' END ,'', 
+			CASE WHEN o.outcome_id NOT IN (40,41) AND o.const = 1 THEN 'disabled=\"disabled\" data-onstyle=\"success\"' ELSE '' END ,' 
+			name=\"select[]\" value=\'',o.outcome_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\"/>') as `select`
 			from `outcome`  as o, `outcome_type` as ot
 			WHERE o.outcome_type_id = ot.outcome_type_id
 			ORDER BY `o`.`outcome_id` ASC";
@@ -181,6 +198,7 @@ if (isset($_GET['qid'])) {
 if (isset($_GET['default'])) {
 	
 	$sql = "SELECT o.*, ot.description as type, 
+			CONCAT('<input type=\'number\' name=\"delay[', o.outcome_id ,']\" class=\'form-control text-right\' style=\'width:7em;\' max=50000 min=0 required value=\'', o.default_delay_minutes ,'\' />') as `delay`,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.tryanother = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as tryanother,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.tryagain = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as tryagain,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.contacted = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as contacted,
@@ -193,8 +211,12 @@ if (isset($_GET['default'])) {
 	
 	$rs = $db->GetAll($sql);
 
-	$row = array("outcome_id","description","select","type","default_delay_minutes","contacted","tryanother","tryagain","eligible","require_note");
+	$row = array("outcome_id","description","select","type","delay","contacted","tryanother","tryagain","eligible","require_note");
 	$hdr = array(T_("Outcome ID"),T_("Description"),T_("Default"),T_("Outcome type"),T_("Delay, min"),T_("Contacted"),T_("Try another"),T_("Try again"),T_("Eligible"),T_("Require note"));
+	
+	/* allow delay edit only to superadmins (currenlty admin) */
+	if ( $_SESSION['user'] != "admin"){ unset($row[4]); unset($hdr[4]); } 
+	
 	$hid  = "default";
 	$value = "";
 
