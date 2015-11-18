@@ -114,35 +114,25 @@ function display_outcomes($contacted,$ca,$case_id)
 			//we have an appointment made ... only select appointment ID's
 			$sql = "SELECT outcome_id,description,contacted
 				FROM outcome
-				WHERE outcome_id = '19'";	//outcome_type_id = '5'	
+				WHERE outcome_type_id = '5'
+				AND outcome_id IN ($outcomes)";	
 		}
 		else
 		{
-			if ($contacted === false)
-			{
-				print "<div class=\"form-group\" ><a href=\"?contacted=1\" class=\"btn btn-info\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\">".T_("CONTACTED")."</a>";
-				print "<a href=\"?contacted=0\" class=\"btn btn-default\" style=\"margin-left: 30px; margin-right: 15px; min-width: 150px;\">".T_("NOT CONTACTED")."</a></div>";
-
-				if (isset ($_GET['contacted'])){
-					
-				$contacted = bigintval($_GET['contacted']);
-
+			print "<div class=\"form-group\" ><a href=\"?contacted=1\" class=\"btn btn-info\" style=\"margin-left: 15px; margin-right: 30px; min-width: 200px;\">".T_("CONTACTED")."</a>";
+			print "<a href=\"?contacted=0\" class=\"btn btn-default\" style=\"margin-left: 30px; margin-right: 15px; min-width: 200px;\">".T_("NOT CONTACTED")."</a></div>";
+			
+			if (isset ($_GET['contacted'])) $contacted = bigintval($_GET['contacted']);
+			else if ($contacted) $contacted = bigintval($contacted);
+			
+			if ($contacted || $contacted === 0 ){
+				
 				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
 					WHERE contacted = '$contacted'
+					AND outcome_type_id != '5'
 					AND outcome_id IN ($outcomes)
-					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)"; 
-				}
-			}
-			else
-			{
-				$contacted = bigintval($contacted);
-		
-				$sql = "SELECT outcome_id,description,contacted
-					FROM outcome
-					WHERE contacted = '$contacted'
-					AND outcome_id IN ($outcomes)
-					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)";
+					AND outcome_id NOT IN(10,42,43,44,45)"; //don't show completed if not, hide max calls as the supposed to be automatic or admin
 			}
 		}
 	}
@@ -164,8 +154,6 @@ function display_outcomes($contacted,$ca,$case_id)
 		$_POST['confirm'] = true;
 	}
 	print "</div>";
-
-
 }
 
 

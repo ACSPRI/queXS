@@ -120,24 +120,19 @@ function display_outcomes($contacted,$ca,$case_id)
 		}
 		else
 		{
-			if ($contacted === false)
-			{
-				$sql = "SELECT outcome_id,description
-					FROM outcome
-					WHERE outcome_id != 10
-					AND outcome_id IN ($outcomes)"; //don't show completed if not
-			}
+			if ($contacted === false) $ctd = "";
 			else
 			{
 				$contacted = bigintval($contacted);
-		
-				$sql = "SELECT outcome_id,description
-					FROM outcome
-					WHERE contacted = '$contacted'
-					AND outcome_id != 10
-					AND outcome_id IN ($outcomes)"; //don't show completed if not
+				$ctd = "AND contacted = '$contacted'";
 			}
-
+		
+			$sql = "SELECT outcome_id,description
+					FROM outcome
+					WHERE outcome_type_id != '5'
+					$ctd
+					AND outcome_id IN ($outcomes)
+					AND outcome_id NOT IN(10,42,43,44,45)"; //don't show completed if not, hide max calls as the supposed to be automatic or admin
 		}
 	}
 	$rs = $db->GetAll($sql);
