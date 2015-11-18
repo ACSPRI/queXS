@@ -318,9 +318,6 @@ if ($questionnaire_id != false)
 
 	print "<div class='col-sm-2 pull-right'><a href='quotareport.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-info btn-block'><i class='fa fa-filter fa-lg'></i>&emsp;" . T_("To quota report") . "</a></div>";
 	
-	print "<div class='clearfix'></div>";
-	
-
 	if ($sample_import_id != false)
   {
     if (isset($_POST['import_quota']))
@@ -388,8 +385,9 @@ if ($questionnaire_id != false)
 
     if ($qsqri != false)
     {
-      print "<h2 class='col-sm-2'><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default'><i class='fa fa-arrow-up fa-lg text-primary'></i>&emsp;" . T_("To Row quotas") . "</a></h2>";
-      print "<h2>" . T_("Quota") . ": $qsqrid</h2>";
+      print "<div class='col-lg-3 pull-right'><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default'><i class='fa fa-arrow-up fa-lg text-primary'></i>&emsp;" . T_("To Row quotas") . "</a></div>";
+	  print "<div class='clearfix form-group'></div>";
+      print "<h2 class='col-lg-offset-4'>" . T_("Quota") . ": $qsqrid</h2>";
 	  
       ?>
 	  <div class='panel-body' >
