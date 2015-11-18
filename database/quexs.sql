@@ -1263,6 +1263,7 @@ CREATE TABLE `questionnaire_sample` (
   `random_select` tinyint(1) NOT NULL DEFAULT '0',
   `answering_machine_messages` int(11) NOT NULL DEFAULT '1',
   `allow_new` tinyint(1) NOT NULL DEFAULT '1',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`questionnaire_id`,`sample_import_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
