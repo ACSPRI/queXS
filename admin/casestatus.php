@@ -117,16 +117,17 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 		AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
 		ORDER BY c.case_id ASC";
 
-//	print $sql;
-
 	print ("<form method=\"post\" action=\"?questionnaire_id=$questionnaire_id&sample_import_id=$sample_id\">");
 
+	$rs2 = $db->GetAll($sql);
+	translate_array($rs2,array("outcomes"));
+	
 	$datacol = array('case_id','samples','timezone','time','nrattempts','nrcalls','outcomes','availableinmin','assignedoperator','ordr','flag');
 	$headers = array(T_("Case id"),T_("Sample"),T_("Timezone"),T_("Time NOW"),T_("Call attempts"),T_("Calls"),T_("Outcome"),T_("Available in"),T_("Assigned to"),T_("Order"),"<i class='fa fa-check-square-o fa-lg'></i>");
 	
 	if (isset($_GET['sample_import_id'])){ 	unset($datacol[1]);  unset($headers[1]); }
 
-	xhtml_table($db->GetAll($sql),$datacol,$headers,"tclass",false,false,"bs-table");
+	xhtml_table($rs2,$datacol,$headers,"tclass",false,false,"bs-table");
 	
 	$sql = "SELECT operator_id as value,CONCAT(firstName,' ', lastName) as description, '' selected
 		FROM operator
