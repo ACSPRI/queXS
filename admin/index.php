@@ -84,6 +84,11 @@ include ("../functions/functions.operator.php");
 	  </div >
 
 	    <ul class="nav navbar-nav pull-right">
+		  <li class=" ">
+            <a href="../client/index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
+              <i class="fa fa-user-secret fa-lg fa-fw "></i><?php print T_("Client panel");?>           
+            </a>
+          </li>
           <li class="dropdown pull-right user-data">            
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" min-width: 160px;">
               <i class="fa fa-user fa fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
@@ -163,7 +168,7 @@ include ("../functions/functions.operator.php");
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-user-secret fa-fw"></i><span><?php print T_("Clients") ;?></span></a>
               <ul style="<?php if ($g == 7) echo "display:block";?>">
                 <li><a href="?g=7&amp;page=clients.php"><i class="fa fa-lg fa-user-plus fa-fw"></i><?php print T_("Add clients to the system") ;?></a></li>
-                <li><a href="?g=7&amp;page=clientquestionnaire.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign clients to questionnaires") ;?></a></li>
+                <li><a href="?g=7&amp;page=clientquestionnaire.php"><i class="fa fa-link fa-fw"></i><?php print T_("Manage clients") ;?></a></li>
               </ul>
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-briefcase"></i><span><?php print T_("Supervisor functions") ;?></span></a>
