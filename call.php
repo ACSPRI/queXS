@@ -42,7 +42,7 @@ include ("db.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 /**
@@ -108,7 +108,7 @@ function display_outcomes($contacted,$ca,$case_id)
 	
 		$rs = $db->GetAll($sql);
 		
-		$outcomes = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q LEFT JOIN `case` as c ON (c.questionnaire_id =q.questionnaire_id) WHERE c.case_id = $case_id");
+		$outcomes = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q JOIN `case` as c ON (c.questionnaire_id =q.questionnaire_id) WHERE c.case_id = $case_id");
 	
 		if (!empty($rs))
 		{

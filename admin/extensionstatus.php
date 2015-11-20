@@ -41,7 +41,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -185,41 +185,43 @@ if (isset($_GET['edit']) || isset($_GET['addext']))
           WHERE extension_id = " . intval($_GET['edit']);
 
 	$rs = $db->GetRow($sql);
-	} else $rs = array();
-	
-  print "<a href='?' class='btn btn-default pull-left'>" . T_("Go back") . "</a>";
+	}
+
 ?>
 	<div class="panel-body ">
-	<h3 class="col-sm-offset-3"><?php if (isset($_GET['edit']))echo T_("Edit extension"); else echo T_("Add an extension");?></h3>
+	<h3 class="col-lg-offset-3"><?php if (isset($_GET['edit']))echo T_("Edit extension"); else echo T_("Add an extension");?></h3>
 	<form enctype="multipart/form-data" action="?" method="post" name="editext" class="form-horizontal">
 	<div class="form-group form-inline">
-		<label class="control-label col-sm-3"><?php  echo T_("Extension name: ");?></label>
-		<input name="extension" type="text" placeholder="<?php echo T_("such as SIP/1000");?>" maxlength="12" required value="<?php echo $rs['extension'];?>" class="form-control"/>
+		<label class="control-label col-lg-3"><?php  echo T_("Extension name: ");?></label>
+		<input name="extension" type="text" placeholder="<?php echo T_("such as SIP/1000");?>" maxlength="12" required value="<?php if (isset($_GET['edit']))echo $rs['extension'];?>" class="form-control"/>
 	</div>
 	<div class="form-group form-inline">
-		<label class="control-label col-sm-3"><?php  echo T_("Extension password: ");?></label>
-		<input name="password" type="text" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" style="width:20em;" maxlength="50" value="<?php echo $rs['password'];?>" class="form-control pull-left" placeholder="<?php echo T_("Enter New Password");?>"/>&emsp;&emsp;<?php echo T_(" or ");?>&ensp;
+		<label class="control-label col-lg-3"><?php  echo T_("Extension password: ");?></label>
+		<input name="password" type="text" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" style="width:20em;" maxlength="50" value="<?php if (isset($_GET['edit'])) echo $rs['password'];?>" class="form-control pull-left" placeholder="<?php echo T_("Enter New Password");?>"/>&emsp;&emsp;<?php echo T_(" or ");?>&ensp;
 		<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("New password");?>&ensp;
 		<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters long");?>
 	</div>
 
-	<div class=" col-sm-offset-3 ">
-	<input type="submit" class="btn btn-primary " value="<?php if (isset($_GET['edit'])) echo T_("Save changes"); else echo T_("Add extension"); ?>" />
-	</div>
+	<div class="form-group form-inline">
+		<div class='col-lg-3'>
+			<a href='?' class='btn btn-default'><?php echo T_("Cancel") ;?></a>
+		</div>
+
+		<input type="submit" class="btn btn-primary pull-left" value="<?php if (isset($_GET['edit'])) echo T_("Save changes"); else echo T_("Add extension"); ?>" />
 	
 <?php if (isset($_GET['edit'])){?>	
 	
 	<input name="extensionid" type="hidden" value="<?php echo intval($_GET['edit']);?>"/>
 	
 <?php if (empty($rs['current_operator_id'])) { ?>
-
-		<input type="submit" name="delete" class="btn btn-danger " data-toggle="confirmation" value="<?php  echo T_("Delete extension"); ?>" />
+		
+	<input type="submit" name="delete" class="btn btn-danger col-lg-offset-2 pull-left" data-toggle="confirmation" value="<?php  echo T_("Delete extension"); ?>" />
 		
 <?php 	} else 
 		print "</br></br><b class='well text-danger'>" . T_("Unassign the operator from this extension to be able to delete it") . "</b>";
 	} 
 
-	print "</form></div>";
+	print "</div></form></div>";
 }
 else
 {
@@ -241,8 +243,10 @@ else
 
   $rs = $db->GetAll($sql);
   
+    print "<div class='panel-body'>";
+  
   if ($msg != "")
-    print "<p>$msg</p>";
+    print "<p class='alert alert-warning'>$msg</p></br>";
   
   if (!empty($rs))
   {
@@ -258,14 +262,15 @@ else
       if ($rs[$i]['assignment'] == "list")
         $rs[$i]['assignment'] = display_chooser($ers,"operator_id_" . $rs[$i]["extension_id"],"operator_id_" . $rs[$i]["extension_id"],true,"extension_id=".$rs[$i]["extension_id"],true,false,false,false);
     }
-	print "<div class='panel-body'>";
+
   	xhtml_table($rs,array("extension","firstName","assignment","status","case_id","state","calltime"),array(T_("Extension"),T_("Operator"),T_("Assignment"),T_("VoIP Status"),T_("Case ID"),T_("Call state"),T_("Time on call")),"tclass",array("vs" => "1"));
-	print "</div>";
+	print "</br>";
   }
   else
-  	print "<p>" . T_("No extensions") . "</p>";
+  	print "<p class='alert alert-warning'>" . T_("No extensions") . "</p>";
   
-  print "<div class='col-sm-3'><a href='?addext=addext' class='btn btn-default '>" . T_("Add extension") . "</a></div>";
+  print "<a href='?addext=addext' class='btn btn-primary '>" . T_("Add extension") . "</a>
+		</div>";
 
 }
 

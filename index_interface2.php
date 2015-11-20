@@ -48,7 +48,7 @@ include("functions/functions.operator.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 
@@ -200,7 +200,7 @@ else if (HEADER_EXPANDER_MANUAL)
 }
 
 
-xhtml_head(T_("Case"), $body, array("include/bootstrap/css/bootstrap.min.css","css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/jquery-ui.min.css") , $js);
+xhtml_head(T_("Case"), $body, array("include/bootstrap/css/bootstrap.min.css","include/bootstrap/css/bootstrap-theme.min.css","include/font-awesome/css/font-awesome.css","css/index_interface2.css","css/tabber_interface2.css","include/jquery-ui/jquery-ui.min.css"),$js,false,false, false,false,false);
 print $script;
 
 $case_id = get_case_id($operator_id,true);
@@ -217,211 +217,214 @@ $ref = $scr['referral'];
 
 $availability = is_using_availability($case_id);
 ?>
-<div id="casefunctions" class="col-sm-2">
-<ul id="casefunctions" class="header ">
-    <li id="item_1"><a href="javascript:poptastic('call_interface2.php');"><?php  echo T_("Outcome"); ?> <img src="css/images/play.jpg" /></a></li>
-    <li id="item_2_e" class="item_2_full_height"><a href="javascript:poptastic('appointment.php');"><?php  echo T_("Appointment"); ?><img src="css/images/plius.jpg" /></a></li>
-<?php if ($sc == 1) { ?>
-	<li id='item_4_e' class="item_2_full_height"><a href="javascript:poptastic('email.php?interface2=true');"><?php  echo T_("Email"); ?> <img src="css/images/plius.jpg" /></a></li>
-<?php } ?>
-<?php if ($ref == 1) { ?>
-	<li id='item_5_e' class="item_2_full_height"><a href="javascript:poptastic('referral.php?interface2=true');"><?php  echo T_("Referral"); ?> <img src="css/images/plius.jpg" /></a></li>
-<?php } ?>
-    <li id="item_3_e" class="item_3_full_height"><a href="?endwork=endwork"><?php  echo T_("End work"); ?> <img src="css/images/end.jpg" /></a></li>
-</ul>
-</div>
+<div class="container-fluid "> 
+	<div class="row ">
 
-<div id="qstatus" class="header col-sm-4">
-<?php xhtml_object("status_interface2.php","main-qstatus");?>
-<?php  if (HEADER_EXPANDER_MANUAL){ ?> <div class='headerexpand'><img id='headerexpandimage' src='./images/arrow-up-2.jpg' alt='<?php  echo T_('Arrow for expanding or contracting'); ?>'/></div> <?php  } ?>
-</div>
+		<div id="casefunctions" class="col-sm-2 panel-body">
 
+			<a href="javascript:poptastic('call_interface2.php');" class="btn btn-default btn-block" style="border-radius:15px; color:blue"><strong><?php  echo T_("Outcome"); ?>  <i class="fa fa-lg fa-check-square-o fa-fw"></i></strong></a></br>
+			<a href="javascript:poptastic('appointment.php');" class="btn btn-default btn-block " style="border-radius:15px; color:green"><strong><?php  echo T_("Appointment"); ?> <i class="fa fa-lg fa-clock-o fa-fw"></i></strong></a></br>
+			<?php if ($sc == 1) { ?>
+			<a href="javascript:poptastic('email.php?interface2=true');" class="btn btn-default btn-block" style="border-radius:15px; color:blue"><strong><?php  echo T_("Invitation Email"); ?>  <i class="fa fa-lg fa-envelope-o fa-fw"></i></strong></a></br>
+			<?php } ?>
+			<?php if ($ref == 1) { ?>
+			<a href="javascript:poptastic('referral.php?interface2=true');" class="btn btn-default btn-block" style="border-radius:15px; color:blue"><strong><?php  echo T_("Referral"); ?>  <i class="fa fa-lg fa-link fa-fw"></i></strong></a></br>
+			<?php } ?>
+			<a href="?endwork=endwork"; class="btn btn-default btn-block" style="border-radius:15px; color:red"><strong><?php  echo T_("End work"); ?>  <i class="fa fa-lg fa-ban fa-fw"></i></strong></a>
 
-<div id="calllist" class="header col-sm-6">
+		</div>
 
+		<div id="qstatus" class="col-sm-3 panel-body">
+			<?php xhtml_object("status_interface2.php","main-qstatus", "col-sm-12" );?>
+		</div>
+		
+			<?php  if (HEADER_EXPANDER_MANUAL){ ?><div class="headerexpand"><i id='headerexpandimage' class="fa fa-lg fa-toggle-down fa-fw" title='<?php  echo T_('Arrow for expanding or contracting'); ?>'></i></div> <?php  } ?>
+		
+		<div id="calllist" class="col-sm-7">
+		
+			<div class="tabber" id="tab-main">
+			
+			<?php  
+			 if (isset($appointment)) {} else {$appointment = "";}
 
-<div class="tabber" id="tab-main">
+				   if (TAB_CASENOTES) { ?>
+				<div class="tabbertab <?php  if ((DEFAULT_TAB == 'casenotes' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'casenotes' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Notes"); ?></h2>
+				  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("casenote.php","main-casenotes","col-sm-12");?></div>
+			   </div>
+			<?php  }?>
 
-<?php  if (TAB_CASENOTES) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'casenotes' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'casenotes' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Notes"); ?></h2>
-	  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("casenote.php","main-casenotes");?></div>
-   </div>
-<?php  }?>
+			<?php  if ($availability) { ?>
+				<div class="tabbertab <?php  if ((DEFAULT_TAB == 'availability' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'availability' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Availability"); ?></h2>
+				  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("availability.php","main-availability","col-sm-12");?></div>
+			   </div>
+			<?php  }?>
 
-<?php  if ($availability) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'availability' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'availability' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Availability"); ?></h2>
-	  <div id="div-casenotes" class="tabberdiv"><?php xhtml_object("availability.php","main-casenotes");?></div>
-   </div>
-<?php  }?>
+			<?php  if (TAB_CONTACTDETAILS) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'contactdetails' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'contactdetails' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Contact details"); ?></h2>
+				  <div id="div-contactdetails" class="tabberdiv"><?php xhtml_object("contactdetails.php","main-contactdetails","col-sm-12");?></div>
+			   </div>
+			<?php  }?>
 
-<?php  if (TAB_CONTACTDETAILS) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'contactdetails' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'contactdetails' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Contact details"); ?></h2>
-	  <div id="div-contactdetails" class="tabberdiv"><?php xhtml_object("contactdetails.php","main-contactdetails");?></div>
-   </div>
-<?php  }?>
+			<?php  if (TAB_CALLLIST) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'calllist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'calllist' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Call history"); ?></h2>
+				  <div id="div-calllist" class="tabberdiv"><?php xhtml_object("calllist.php","main-calllist","col-sm-12");?></div>
+				 </div>
+			<?php  }?>
 
+			<?php  if (TAB_SHIFTS) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'shifts' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'shifts' && $appointment)) 
+								print "tabbertabdefault"; ?>" id="tab-shifts">
+				  <h2><?php  echo T_("Shifts"); ?></h2>
+				  <div id="div-shifts" class="tabberdiv"><?php xhtml_object("shifts.php","main-shifts","col-sm-12");?></div>
+				 </div>
+			<?php  }?>
 
-<?php  if (TAB_CALLLIST) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'calllist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'calllist' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Call history"); ?></h2>
-	  <div id="div-calllist" class="tabberdiv"><?php xhtml_object("calllist.php","main-calllist");?></div>
-     </div>
-<?php  }?>
+			<?php  if (TAB_APPOINTMENTLIST) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'appointmentlist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'appointmentlist' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Appointments"); ?></h2>
+				  <div id="div-appointmentlist" class="tabberdiv"><?php xhtml_object("appointmentlist.php","main-appointmentlist","col-sm-12");?></div>
+				 </div>
+			<?php  }?>
 
+			<?php  if (TAB_PERFORMANCE) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'performance' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'performance' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Performance"); ?></h2>
+				  <div id="div-performance" class="tabberdiv"><?php xhtml_object("performance.php","main-performance","col-sm-12");?></div>
+				 </div>
+			<?php  }?>
 
-<?php  if (TAB_SHIFTS) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'shifts' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'shifts' && $appointment)) 
-					print "tabbertabdefault"; ?>" id="tab-shifts">
-	  <h2><?php  echo T_("Shifts"); ?></h2>
-	  <div id="div-shifts" class="tabberdiv"><?php xhtml_object("shifts.php","main-shifts");?></div>
-     </div>
-<?php  }?>
+			<?php  if (TAB_CALLHISTORY) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'callhistory' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'callhistory' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Work history"); ?></h2>
+				  <div id="div-callhistory" class="tabberdiv"><?php xhtml_object("callhistory.php","main-callhistory","col-sm-12");?></div>
+				 </div>
+			<?php  }?>
 
-
-<?php  if (TAB_APPOINTMENTLIST) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'appointmentlist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'appointmentlist' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Appointments"); ?></h2>
-	  <div id="div-appointmentlist" class="tabberdiv"><?php xhtml_object("appointmentlist.php","main-appointmentlist");?></div>
-     </div>
-<?php  }?>
-
-
-<?php  if (TAB_PERFORMANCE) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'performance' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'performance' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Performance"); ?></h2>
-	  <div id="div-performance" class="tabberdiv"><?php xhtml_object("performance.php","main-performance");?></div>
-     </div>
-<?php  }?>
-
-<?php  if (TAB_CALLHISTORY) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'callhistory' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'callhistory' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Work history"); ?></h2>
-	  <div id="div-callhistory" class="tabberdiv"><?php xhtml_object("callhistory.php","main-callhistory");?></div>
-     </div>
-<?php  }?>
-
-<?php  if (TAB_PROJECTINFO) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'projectinfo' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'projectinfo' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Project information"); ?></h2>
-	  <div id="div-projectinfo" class="tabberdiv"><?php xhtml_object("project_info.php","main-projectinfo");?></div>
-     </div>
-<?php  }?>
-
-
-<?php  if (TAB_INFO) { ?>
-     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'info' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'info' && $appointment)) 
-					print "tabbertabdefault"; ?>">
-	  <h2><?php  echo T_("Info"); ?></h2>
-	  <div id="div-info" class="tabberdiv"><?php xhtml_object("info.php","main-info");?></div>
-     </div>
-<?php  }?>
+			<?php  if (TAB_PROJECTINFO) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'projectinfo' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'projectinfo' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Project information"); ?></h2>
+				  <div id="div-projectinfo" class="tabberdiv"><?php xhtml_object("project_info.php","main-projectinfo","col-sm-12");?></div>
+				 </div>
+			<?php  }?>
 
 
-</div>
+			<?php  if (TAB_INFO) { ?>
+				 <div class="tabbertab <?php  if ((DEFAULT_TAB == 'info' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'info' && $appointment)) 
+								print "tabbertabdefault"; ?>">
+				  <h2><?php  echo T_("Info"); ?></h2>
+				  <div id="div-info" class="tabberdiv"><?php xhtml_object("info.php","main-info","col-sm-12");?></div>
+				 </div>
+			<?php  }?>
+
+			</div>
+			
+		</div>	
+
+	</div>
 
 
-</div>
-
-
-
-<div id="content" class="content ">
-<?php  
-
-$ca = get_call_attempt($operator_id,true);
-$call_id = get_call($operator_id);
-$appointment = false;
-if ($ca)
-{
-	$appointment = is_on_appointment($ca);
-	$respondent_id  = get_respondent_id($ca);
-}
-
-if (!$call_id)
-{
-	if ($appointment)
-	{
-		//create a call on the appointment number
-		$sql = "SELECT cp.*, a.respondent_id
-			FROM contact_phone as cp, appointment as a
-			WHERE cp.case_id = '$case_id'
-			AND a.appointment_id = '$appointment'
-			AND a.contact_phone_id = cp.contact_phone_id";
-	}
-	else
-	{
-		//create a call on the first available number by priority
-		$sql = "SELECT c. *
-			FROM contact_phone AS c
-			LEFT JOIN (
-					SELECT contact_phone.contact_phone_id
-					FROM contact_phone
-					LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
-					LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
-					WHERE contact_phone.case_id = '$case_id'
-					AND outcome.tryagain =0
-				  ) AS l ON l.contact_phone_id = c.contact_phone_id
-			LEFT JOIN
-			(
-			 SELECT contact_phone_id
-			 FROM `call`
-			 WHERE call_attempt_id = '$ca'
-			 AND outcome_id NOT IN (15,18)
-			) as ca on ca.contact_phone_id = c.contact_phone_id
-			WHERE c.case_id = '$case_id'
-			AND l.contact_phone_id IS NULL
-			AND ca.contact_phone_id IS NULL
-			order by c.priority ASC";
-
-
-	}
-	$rs = $db->GetRow($sql);
-
-	if (!empty($rs))
-	{
-		$contact_phone_id = $rs['contact_phone_id'];				
-
-		if (!isset($rs['respondent_id']))
-		{
-			$sql = "SELECT respondent_id
-				FROM respondent
-				WHERE case_id = $case_id";
-
-			$respondent_id = $db->GetOne($sql);
-		}
-		else
-		{
-			$respondent_id = $rs['respondent_id'];
-		}
-		$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
-	}
-}
 	
+	<div class="row"> 
 
-if (!is_respondent_selection($operator_id))
-	$data = get_limesurvey_url($operator_id);
-else 
-	$data = get_respondentselection_url($operator_id,true,true); //use second interface
+		<?php  
 
-xhtml_object($data,"main-content"); 
+			$ca = get_call_attempt($operator_id,true);
+			$call_id = get_call($operator_id);
+			$appointment = false;
+			if ($ca)
+			{
+				$appointment = is_on_appointment($ca);
+				$respondent_id  = get_respondent_id($ca);
+			}
 
-?>
+			if (!$call_id)
+			{
+				if ($appointment)
+				{
+					//create a call on the appointment number
+					$sql = "SELECT cp.*, a.respondent_id
+						FROM contact_phone as cp, appointment as a
+						WHERE cp.case_id = '$case_id'
+						AND a.appointment_id = '$appointment'
+						AND a.contact_phone_id = cp.contact_phone_id";
+				}
+				else
+				{
+					//create a call on the first available number by priority
+					$sql = "SELECT c. *
+						FROM contact_phone AS c
+						LEFT JOIN (
+								SELECT contact_phone.contact_phone_id
+								FROM contact_phone
+								LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+								LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+								WHERE contact_phone.case_id = '$case_id'
+								AND outcome.tryagain =0
+							  ) AS l ON l.contact_phone_id = c.contact_phone_id
+						LEFT JOIN
+						(
+						 SELECT contact_phone_id
+						 FROM `call`
+						 WHERE call_attempt_id = '$ca'
+						 AND outcome_id NOT IN (15,18)
+						) as ca on ca.contact_phone_id = c.contact_phone_id
+						WHERE c.case_id = '$case_id'
+						AND l.contact_phone_id IS NULL
+						AND ca.contact_phone_id IS NULL
+						order by c.priority ASC";
+
+
+				}
+				$rs = $db->GetRow($sql);
+
+				if (!empty($rs))
+				{
+					$contact_phone_id = $rs['contact_phone_id'];				
+
+					if (!isset($rs['respondent_id']))
+					{
+						$sql = "SELECT respondent_id
+							FROM respondent
+							WHERE case_id = $case_id";
+
+						$respondent_id = $db->GetOne($sql);
+					}
+					else
+					{
+						$respondent_id = $rs['respondent_id'];
+					}
+					$call_id = get_call($operator_id,$respondent_id,$contact_phone_id,true);
+				}
+			}
+				
+			if (!is_respondent_selection($operator_id))
+				$data = get_limesurvey_url($operator_id);
+			else 
+				$data = get_respondentselection_url($operator_id,true,true); //use second interface
+
+			xhtml_object($data,"main-content", "embeddedobject content"); 
+
+		?>
+		
+
+	</div>
 </div>
 
 <?php 
 
 xhtml_foot();
-
 
 	//if ($db->HasFailedTrans()){ print "<p>FAILED AT END of index</p>"; exit();}
 $db->CompleteTrans();

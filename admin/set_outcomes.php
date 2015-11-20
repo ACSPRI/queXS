@@ -51,8 +51,8 @@ global $db;
 if (isset($_POST['default']) && isset($_POST['save'])){
 	
 	$sql = "UPDATE `outcome` as o
-			SET `deflt` = 0
-			WHERE o.const != 1";
+			SET `default` = 0
+			WHERE o.permanent != 1";
 	$db->Execute($sql);	
 
 	if(!empty($_POST['select']) ){
@@ -63,8 +63,8 @@ if (isset($_POST['default']) && isset($_POST['save'])){
 		$sel=implode($sel,",");
 
 		$sql = "UPDATE `outcome` as o
-				SET `deflt` = 1
-				WHERE o.const != 1
+				SET `default` = 1
+				WHERE o.permanent != 1
 				AND o.outcome_id IN ($sel)";
 
 		$db->Execute($sql);	 
@@ -86,11 +86,11 @@ if (isset($_POST['default']) && isset($_POST['save'])){
 				
 if (isset($_POST['qid']) && isset($_POST['save'])){
 
-	//get id's for 'constant' outcomes
+	//get id's for 'permanent' outcomes
 	$sql = "SELECT o.outcome_id
 			FROM `outcome` as o
-			WHERE o.const = 1
-			AND o.deflt = 1;";
+			WHERE o.permanent = 1
+			AND o.default = 1;";
 	$def = $db->GetAll($sql);
 			
 	for ($i=0; $i < count($def); $i++){
@@ -156,7 +156,7 @@ if (isset($_GET['qid'])) {
 			
 			$sql = "SELECT o.outcome_id
 					FROM `outcome` as o
-					WHERE o.deflt = 1;";
+					WHERE o.default = 1;";
 			$def = $db->GetAll($sql);
 			
 			for ($i=0; $i < count($def); $i++){
@@ -179,7 +179,7 @@ if (isset($_GET['qid'])) {
 			CASE WHEN ((o.outcome_id = 40 AND $sc = 1) OR (o.outcome_id = 41 AND $ref = 1)) THEN 'checked=\"checked\" data-onstyle=\"success\"' ELSE '' END ,'',
 			CASE WHEN ((o.outcome_id = 40 AND $sc != 1) OR (o.outcome_id = 41 AND $ref != 1)) THEN 'disabled=\"disabled\"' ELSE '' END ,'', 
 			CASE WHEN o.outcome_id NOT IN (40,41) AND o.outcome_id IN ($qoutc) THEN 'checked=\"checked\"' ELSE '' END ,'', 
-			CASE WHEN o.outcome_id NOT IN (40,41) AND o.const = 1 THEN 'disabled=\"disabled\" data-onstyle=\"success\"' ELSE '' END ,' 
+			CASE WHEN o.outcome_id NOT IN (40,41) AND o.permanent = 1 THEN 'disabled=\"disabled\" data-onstyle=\"success\"' ELSE '' END ,' 
 			name=\"select[]\" value=\'',o.outcome_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\"/>') as `select`
 			from `outcome`  as o, `outcome_type` as ot
 			WHERE o.outcome_type_id = ot.outcome_type_id
@@ -204,7 +204,7 @@ if (isset($_GET['default'])) {
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.contacted = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as contacted,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.eligible = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as eligible,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.require_note = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as require_note,			
-			CONCAT('<input type=\'checkbox\' ', CASE WHEN o.deflt = 1 THEN 'checked=\"checked\"' ELSE '' END ,' ', CASE WHEN o.const = 1 THEN 'disabled=\"disabled\" data-onstyle=\"success\"' ELSE '' END ,' name=\"select[]\" value=\'',o.outcome_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\" />') as `select`
+			CONCAT('<input type=\'checkbox\' ', CASE WHEN o.default = 1 THEN 'checked=\"checked\"' ELSE '' END ,' ', CASE WHEN o.permanent = 1 THEN 'disabled=\"disabled\" data-onstyle=\"success\"' ELSE '' END ,' name=\"select[]\" value=\'',o.outcome_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\" />') as `select`
 			from `outcome`  as o, `outcome_type` as ot
 			WHERE o.outcome_type_id = ot.outcome_type_id
 			ORDER BY `o`.`outcome_id` ASC";

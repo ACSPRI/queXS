@@ -14,7 +14,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -84,7 +84,7 @@ if (isset($_POST['import_file']))
 //**  get default coma-separated outcomes list and use it for new questionnaire as initial set
 	$sql = "SELECT o.outcome_id
 			FROM `outcome` as o
-			WHERE o.deflt = 1;";
+			WHERE o.default = 1;";
 	$def = $db->GetAll($sql);
 
 	for ($i=0; $i < count($def); $i++){

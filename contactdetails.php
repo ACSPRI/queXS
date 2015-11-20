@@ -42,7 +42,7 @@ include ("db.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 /**
@@ -65,7 +65,9 @@ include("functions/functions.operator.php");
  */
 include("functions/functions.input.php");
 
-$js = array("js/window.js");
+if (isset($_GET['interface2'])) { if (browser_ie()) $jsw = "js/window_ie6_interface2.js"; else $jsw = "js/window_interface2.js"; } 
+else { if (browser_ie()) $jsw = "js/window_ie6.js"; else $jsw = "js/window.js"; }
+$js = array($jsw);
 
 if (AUTO_LOGOUT_MINUTES !== false)
 {
