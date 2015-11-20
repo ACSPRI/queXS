@@ -441,57 +441,74 @@ function get_limesurvey_quota_info($lime_quota_id)
 
 	$ret = array();
 
-	$sql = "SELECT q.*,s.language
+	$sql = "SELECT q.qid
 		FROM ".LIME_PREFIX."quota_members as q, ".LIME_PREFIX."surveys as s
     WHERE q.quota_id='$lime_quota_id'
-    AND s.sid = q.sid";
+    AND s.sid = q.sid
+	GROUP BY q.qid";
 	
-	$rs = $db->GetAll($sql);
+	$rsq = $db->GetAll($sql);
 
-	foreach($rs as $quota_entry)
+	foreach ($rsq as $q)
 	{
-		$lime_qid = $quota_entry['qid'];
-		$surveyid = $quota_entry['sid'];
-		$language = $quota_entry['language'];
+		$qid = $q['qid'];
 
-		$sql = "SELECT type, title,gid
-			FROM ".LIME_PREFIX."questions
-			WHERE qid='$lime_qid' 
-			AND language='$language'";
-
-		$qtype = $db->GetRow($sql);
+		$sql = "SELECT q.*,s.language
+			FROM ".LIME_PREFIX."quota_members as q, ".LIME_PREFIX."surveys as s
+			WHERE q.quota_id='$lime_quota_id'
+			AND s.sid = q.sid
+			AND q.qid = $qid";
 	
-		$fieldnames = "0";
-		
-		if ($qtype['type'] == "I" || $qtype['type'] == "G" || $qtype['type'] == "Y")
-		{
-			$fieldnames= ($surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
-			$value = $quota_entry['code'];
-		}
-		
-		if($qtype['type'] == "L" || $qtype['type'] == "O" || $qtype['type'] =="!") 
-		{
-		    $fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
-		    $value = $quota_entry['code'];
-		}
+		$rs = $db->GetAll($sql);
 
-		if($qtype['type'] == "M")
-		{
-			$fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$quota_entry['code']);
-			$value = "Y";
-		}
-		
-		if($qtype['type'] == "A" || $qtype['type'] == "B")
-		{
-			$temp = explode('-',$quota_entry['code']);
-			$fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$temp[0]);
-			$value = $temp[1];
-		}
-		
+		$r2 = array();
 
-		$ret[] = array('code' => $quota_entry['code'], 'value' => $value, 'qid' => $quota_entry['qid'], 'fieldname' => $fieldnames);
+		foreach($rs as $quota_entry)
+		{
+			$lime_qid = $quota_entry['qid'];
+			$surveyid = $quota_entry['sid'];
+			$language = $quota_entry['language'];
+
+			$sql = "SELECT type, title,gid
+				FROM ".LIME_PREFIX."questions
+				WHERE qid='$lime_qid' 
+				AND language='$language'";
+
+			$qtype = $db->GetRow($sql);
+		
+			$fieldnames = "0";
+			
+			if ($qtype['type'] == "I" || $qtype['type'] == "G" || $qtype['type'] == "Y")
+			{
+				$fieldnames= ($surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
+				$value = $quota_entry['code'];
+			}
+			
+			if($qtype['type'] == "L" || $qtype['type'] == "O" || $qtype['type'] =="!") 
+			{
+			    $fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid']);
+			    $value = $quota_entry['code'];
+			}
+
+			if($qtype['type'] == "M")
+			{
+				$fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$quota_entry['code']);
+				$value = "Y";
+			}
+			
+			if($qtype['type'] == "A" || $qtype['type'] == "B")
+			{
+				$temp = explode('-',$quota_entry['code']);
+				$fieldnames=( $surveyid.'X'.$qtype['gid'].'X'.$quota_entry['qid'].$temp[0]);
+				$value = $temp[1];
+			}
+			
+
+			$r2[] = array('code' => $quota_entry['code'], 'value' => $value, 'qid' => $quota_entry['qid'], 'fieldname' => $fieldnames);
+		}
+	
+		$ret[$qid] = $r2;
 	}
-
 	return $ret;
 }
 
