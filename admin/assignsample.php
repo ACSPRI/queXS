@@ -43,7 +43,7 @@ include ("../db.inc.php");
 /** 
  * Authentication
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions

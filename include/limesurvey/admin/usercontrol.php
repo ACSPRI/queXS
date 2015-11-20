@@ -139,7 +139,7 @@ if (!isset($_SESSION['loginID']))
                     if ($result)
                     {
                         // wrong or unknown username
-                        $loginsummary .= "<p>".$clang->gT("Incorrect username and/or password!")."<br />";
+                        $loginsummary .= "<p>".$clang->gT("Incorrect username and/or password!")."</p><br />";
                         if ($intNthAttempt+1>=$maxLoginAttempt)
                             $loginsummary .= sprintf($clang->gT("You have exceeded you maximum login attempts. Please wait %d minutes before trying again"),($timeOutTime/60))."<br />";
                         $loginsummary .= "<br /><a href='$scriptname'>".$clang->gT("Continue")."</a><br />&nbsp;\n";

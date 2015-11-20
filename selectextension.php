@@ -38,7 +38,7 @@ include_once("config.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 /**

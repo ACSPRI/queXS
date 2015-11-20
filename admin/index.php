@@ -41,7 +41,7 @@ include ("../config.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /*
  * XHTML file
@@ -85,21 +85,21 @@ include ("../functions/functions.operator.php");
 
 	    <ul class="nav navbar-nav pull-right">
 		  <li class=" ">
-            <a href="../" class=" "  target="_blanc" style="padding-top: 20px; ">
-              <i class="fa fa-lg fa-users"></i><?php print T_("Operator panel");?>           
+            <a href="../index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
+              <i class="fa fa-sign-in fa-lg fa-fw "></i><?php print T_("Operator panel");?>
             </a>
-          </li>
- 	  <li class=" ">
+          </li>	
+		  <li class=" ">
             <a href="../client/index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
-              <i class="fa fa-user-secret fa-lg fa-fw "></i><?php print T_("Client panel");?>           
+              <i class="fa fa-user-secret fa-lg fa-fw "></i><?php print T_("Client panel");?>
             </a>
           </li>
-          <li class="dropdown pull-right user-data">            
+		  <li class="dropdown pull-right user-data">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" min-width: 160px;">
-              <i class="fa fa-user fa fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
+              <i class="fa fa-user fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
             </a>
 			<!--- User menu // not connected to pages so not working yet //  could be hidden -->
-       <ul class="dropdown-menu" role="menu">
+			<ul class="dropdown-menu" role="menu">
               <li><a href="?g=5&amp;page=operatorlist.php?edit=<?php print get_operator_id(); ?>"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
 <!---			  <li><a href="../screenloc.php"><i class="fa fa-lock fa-fw "></i>&ensp;<?php print T_("Lock Screen"); ?></a></li> -->
               <li><a href="../include/limesurvey/admin/admin.php?action=logout"><i class="fa fa-sign-out fa-fw "></i>&ensp;<?php print T_("Logout"); ?> </a></li>

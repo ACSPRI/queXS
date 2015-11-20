@@ -47,7 +47,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * Operator functions

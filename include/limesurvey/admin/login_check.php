@@ -155,9 +155,9 @@ if(!isset($_SESSION['loginID']) && $action != "forgotpass" && ($action != "logou
         $loginsummary = '
 
 			<form class="form-signin" name="forgotpassword" id="forgotpassword" method="post" action="'.$homeurl.'/admin.php" >
-				<h2>'.$clang->gT('You have to enter user name and email.').'</h2><p><br />	<br />
-						<label for="user">'.$clang->gT('Username').'</label><input name="user" id="user" class="form-control" placeholder="User name" required autofocus type="text" size="60" maxlength="60" value="" />
-						<label for="email">'.$clang->gT('Email').'</label><input name="email" id="email" class="form-control" placeholder="Email" required type="text" size="60" maxlength="60" value="" /></p>
+				<h2>'.$clang->gT('You have to enter user name and email.').'</h2><br/>
+						<p><label for="user">'.$clang->gT('Username').'</label><input name="user" id="user" class="form-control" placeholder="'.$clang->gT('Username').'" required autofocus type="text" size="60" maxlength="60" value="" /></p>
+						<p><label for="email">'.$clang->gT('Email').'</label><input name="email" id="email" class="form-control" placeholder="'.$clang->gT('Email').'" required type="text" size="60" maxlength="60" value="" /></p>
 						<input type="hidden" name="action" value="forgotpass" />
 						<p><button class="action btn btn-lg btn-primary btn-block" type="submit">'.$clang->gT('Check Data').'</button></p>
 						<p><a href="'.$scriptname.'">'.$clang->gT('Main Admin Screen').'</a></p>
@@ -208,18 +208,18 @@ if(!isset($_SESSION['loginID']) && $action != "forgotpass" && ($action != "logou
         {
             if (!isset($logoutsummary))
             {
-                $loginsummary = "<form name='loginform' id='loginform' class='form-signin' method='post' action='$homeurl/admin.php' ><h2>".$clang->gT("You have to login first.")."</h2><p><br />	<br />";
+                $loginsummary = "<form name='loginform' id='loginform' class='form-signin' method='post' action='$homeurl/admin.php' ><h2>".$clang->gT("You have to login first.")."</h2><br />";
             }
             else
             {
-                $loginsummary = "<form name='loginform' id='loginform' class='form-signin' method='post' action='$homeurl/admin.php' ><br /><strong>".$logoutsummary."</strong><br />	<br />";
+                $loginsummary = "<form name='loginform' id='loginform' class='form-signin' method='post' action='$homeurl/admin.php' ><br /><strong>".$logoutsummary."</strong><br /><br />";
             }
 
-            $loginsummary .= "<label for='user'>".$clang->gT("Username")."</label>
-                              <input class='form-control' placeholder='User name' required autofocus name='user' id='user' type='text' size='40' maxlength='40' value='' />
-							  <label for='password'>".$clang->gT("Password")."</label>
-                              <input name='password' id='password' class='form-control' placeholder='Password' required type='password' size='40' maxlength='40' />
-                              <label for='loginlang'>".$clang->gT("Language")."</label>
+            $loginsummary .= "<p><label for='user'>".$clang->gT("Username")."</label>
+                              <input class='form-control' placeholder='".$clang->gT("Username")."' required autofocus name='user' id='user' type='text' size='40' maxlength='40' value='' /></p>
+							  <p><label for='password'>".$clang->gT("Password")."</label>
+                              <input name='password' id='password' class='form-control' placeholder='".$clang->gT("Password")."' required type='password' size='40' maxlength='40' /></p>
+                              <p><label for='loginlang'>".$clang->gT("Language")."</label>
                               <select id='loginlang' class='form-control' name='loginlang'>\n";
             $loginsummary .='<option value="default" selected="selected">'.$clang->gT('Default').'</option>';
             $lan=array();
@@ -233,10 +233,10 @@ if(!isset($_SESSION['loginID']) && $action != "forgotpass" && ($action != "logou
 				//The following conditional statements select the browser language in the language drop down box and echoes the other options.
                 $loginsummary .= "\t\t\t\t<option value='$langkey'>".$languagekind['nativedescription']." - ".$languagekind['description']."</option>\n";
             }
-            $loginsummary .= "\t\t\t</select>\n
-                                                                            <p><input type='hidden' name='action' value='login' />
+            $loginsummary .= "\t\t\t</select></p>\n
+                                                                            <input type='hidden' name='action' value='login' />
                                                                             <input type='hidden' name='refererargs' value='".$refererargs."' />
-                                                                            <button class='action btn btn-lg btn-primary btn-block' type='submit'>".$clang->gT("Login")."</button>";
+                                                                            <p><button class='action btn btn-lg btn-primary btn-block' type='submit'>".$clang->gT("Login")."</button></p>";
         }
         else{
             $loginsummary .= "<p>".sprintf($clang->gT("You have exceeded you maximum login attempts. Please wait %d minutes before trying again"),($timeOutTime/60))."<br /></p>";
@@ -244,9 +244,9 @@ if(!isset($_SESSION['loginID']) && $action != "forgotpass" && ($action != "logou
 
         if ($display_user_password_in_email === true)
         {
-            $loginsummary .= "<p><a href='$scriptname?action=forgotpassword'>".$clang->gT("Forgot Your Password?")."</a><br />&nbsp;\n";
+            $loginsummary .= "<a href='$scriptname?action=forgotpassword'>".$clang->gT("Forgot Your Password?")."</a><br />&nbsp;\n";
         }
-        $loginsummary .= "                                                </form><br /><p>";
+        $loginsummary .= "                                                </form><br />";
         $loginsummary .= "                                                <script type='text/javascript'>\n";
         $loginsummary .= "                                                  document.getElementById('user').focus();\n";
         $loginsummary .= "                                                </script>\n";

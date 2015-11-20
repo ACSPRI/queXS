@@ -42,7 +42,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -96,15 +96,11 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 		$extensionp = "'$extensionnp'";
 
 	}
-	$supervisor = 0;
-	$temporary = 0;
+
 	$admin = 0;
-	$refusal = 0;
 	$voip = 0;
 	$chat = 0;
-	if (isset($_POST['supervisor']) && $_POST['supervisor'] == "on") $supervisor = 1;
-	if (isset($_POST['refusal']) && $_POST['refusal'] == "on") $refusal = 1;
-	if (isset($_POST['temporary']) && $_POST['temporary'] == "on") $temporary = 1;	
+	
 	if (isset($_POST['admin']) && $_POST['admin'] == "on") $admin = 1;	
 	if (isset($_POST['voip']) && $_POST['voip'] == "on") $voip = 1;	
 	if (isset($_POST['chat_enable']) && $_POST['chat_enable'] == "on") $chat = 1;	
@@ -149,26 +145,18 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 
 			$a = "<div class='alert alert-info'><h3>" . T_("Added operator :") . " " .  $operator . "</h3>";	
 
-			if (FREEPBX_PATH !== false)
+			if (FREEPBX_PATH !== false) 
 				$a .= "<br/><a href='/voip/admin/'>" . T_("FreePBX needs to be reloaded for the new VoIP extension to take effect") . "</a>";
 			
-			print "</div>";	
+			$a .= "</div>";	
 
-			if ($temporary)
-			{
+			// set default skills = 1 and 5 for all new operators
+
 				$db->Execute("  INSERT INTO operator_skill (operator_id,outcome_type_id)
 					VALUES ('$oid','1')");
 				$db->Execute("  INSERT INTO operator_skill (operator_id,outcome_type_id)
 					VALUES ('$oid','5')"); //and appointment
-			}
 
-			if ($supervisor)
-				$db->Execute("  INSERT INTO operator_skill (operator_id,outcome_type_id)
-						VALUES ('$oid','2')");
-
-			if ($refusal)
-				$db->Execute("  INSERT INTO operator_skill (operator_id,outcome_type_id)
-						VALUES ('$oid','3')");
 		}
 		else
 		{
@@ -242,84 +230,87 @@ function generate() {
 
 <form enctype="multipart/form-data" action="" method="post" class="form-horizontal panel-body" name="operform">
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Username") . ": ";?></label>
-		<div class="col-sm-3"><input name="operator" type="text" class="form-control" required /></div>
+		<label class="col-lg-3 control-label"><?php echo T_("Username") . ": ";?></label>
+		<div class="col-lg-3"><input name="operator" type="text" class="form-control" required /></div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Password") . ": ";?></label>
-		<div class="col-sm-3"><input name="password" id="password" type="text" class="form-control" required /></div>
-		<div class="col-sm-6 form-inline">&emsp;
+		<label class="col-lg-3 control-label"><?php echo T_("Password") . ": ";?></label>
+		<div class="col-lg-3"><input name="password" id="password" type="text" class="form-control" required /></div>
+		<div class="col-lg-6 form-inline">&emsp;
 			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("Password with");?>&ensp;
 			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters");?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("First name") . ": ";?></label>
-		<div class="col-sm-3"><input name="firstname" type="text" class="form-control" required/></div>
+		<label class="col-lg-3 control-label"><?php echo T_("First name") . ": ";?></label>
+		<div class="col-lg-3"><input name="firstname" type="text" class="form-control" required/></div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Last name") . ": ";?></label>
-		<div class="col-sm-3"><input name="lastname" type="text" class="form-control"/></div>
+		<label class="col-lg-3 control-label"><?php echo T_("Last name") . ": ";?></label>
+		<div class="col-lg-3"><input name="lastname" type="text" class="form-control"/></div>
 	</div>
   <div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Email") . ": ";?></label>
-		<div class="col-sm-3"><input name="email" type="text" class="form-control"/></div>
+		<label class="col-lg-3 control-label"><?php echo T_("Email") . ": ";?></label>
+		<div class="col-lg-3"><input name="email" type="text" class="form-control"/></div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
-		<div class="col-sm-3"><?php display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,true,array("value",get_setting("DEFAULT_TIME_ZONE")),true,"form-inline");?></div>
-		<div class="col-sm-6 form-inline">
+		<label class="col-lg-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
+		<div class="col-lg-3"><?php display_chooser($rs,"Time_zone_name","Time_zone_name",false,false,false,true,array("value",get_setting("DEFAULT_TIME_ZONE")),true,"form-inline");?></div>
+		<div class="col-lg-6 form-inline">
 			<?php echo T_("Edit") . "&emsp;";?>
 			<a  href='timezonetemplate.php' class="btn btn-default fa"><?php echo T_("TimeZones list");?></a>
 		</div>
 	</div>
-<?php  if (FREEPBX_PATH == false) { ?>
+<?php  if (VOIP_ENABLED != false) { ?>
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Extension") . ": ";?></label>
-		<div class="col-sm-3"><?php display_chooser($ers,"extension_id","extension_id",true,false,false,true,false,true,"form-inline");?></div>
-		<div class="col-sm-6 form-inline">
+		<label class="col-lg-3 control-label"><?php echo T_("Uses VoIP") . "? ";?></label>
+		<div class="col-lg-3"><input name="voip" type="checkbox" onchange="if(this.checked==true){show(this,'usesvoip');} else{ hide(this,'usesvoip');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" /></div><!-- checked="checked" -->
+	</div>
+	<div id="usesvoip" style="display:none" >
+	<div class="form-group">
+		<label class="col-lg-3 control-label"><?php echo T_("Extension") . ": ";?></label>
+		<div class="col-lg-3"><?php display_chooser($ers,"extension_id","extension_id",true,false,false,true,false,true,"form-inline");?></div>
+		<div class="col-lg-6 form-inline">
 			<?php echo T_("Edit") . "&emsp;";?>
 			<a  href='extensionstatus.php' class="btn btn-default fa"><?php echo T_("Extensions");?></a>
 		</div>
 	</div>
+	</div>
 <?php  } ?>
 
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Uses VoIP") . "? ";?></label>
-		<div class="col-sm-3"><input name="voip" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" checked="checked"/></div>
+		<label class="col-lg-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>
+		<div class="col-lg-3"><input name="chat_enable" type="checkbox" onchange="if(this.checked==true){show(this,'jabdata');} else{ hide(this,'jabdata');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" /></div>
 	</div>
+
+	<div id="jabdata" style="display:none" >
+		<div class="form-group">
+			<label class="col-lg-3 control-label"><?php echo T_("Jabber/XMPP chat user") . ": ";?></label>
+			<div class="col-lg-3"><input name="chat_user" type="text" class="form-control"/></div>
+		</div>
+		<div class="form-group">
+		<label class="col-lg-3 control-label"><?php echo T_("Jabber/XMPP chat password") . ": ";?></label>
+			<div class="col-lg-3"><input name="chat_password" type="text" class="form-control"/></div>
+		</div>
+	</div>
+
 	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat user") . ": ";?></label>
-		<div class="col-sm-3"><input name="chat_user" type="text" class="form-control"/></div>
+		<label class="col-lg-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
+		<div class="col-lg-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-onstyle="danger"/></div>
 	</div>
-	<div class="form-group">
-	<label class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat password") . ": ";?></label>
-		<div class="col-sm-3"><input name="chat_password" type="text" class="form-control"/></div>
+
+	<br/>
+	<div class="form-group form-inline">
+		<div class='col-lg-3'>
+			<a href='operatorlist.php' class='btn btn-default col-lg-6'><?php echo T_("Cancel") ;?></a>
+		</div>
+		
+		<div class="col-lg-3">
+			<input type="submit" name="adduser" class="btn btn-primary btn-block" value="<?php  echo T_("Add an operator"); ?>" />
+		</div>
 	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>
-		<div class="col-sm-3"><input name="chat_enable" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" /></div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
-		<div class="col-sm-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger"/></div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a normal interviewer?");?></label>
-		<div class="col-sm-3"><input name="temporary" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="danger" checked="checked"/></div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a supervisor?");?></label>
-		<div class="col-sm-3"><input name="supervisor" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-onstyle="danger" data-offstyle="primary"/></div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label"><?php echo T_("Is the operator a refusal converter?");?></label>
-		<div class="col-sm-3"><input name="refusal" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-onstyle="danger" data-offstyle="primary"/></div>
-	</div>
-	
-	<div class="form-group"><div class="col-sm-3 col-sm-offset-3"><input type="submit" name="adduser" class="btn btn-primary btn-block" value="<?php  echo T_("Add an operator"); ?>" /></div></div>
 </form>
 
 <?php 
-xhtml_foot();
+xhtml_foot(array("../js/new.js"));
 ?>
