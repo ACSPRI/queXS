@@ -295,7 +295,7 @@ if ($questionnaire_id)
 
 		$sql = "SELECT count(*) as count
 			FROM `case` as c, sample as s
-			WHERE c.current_outcome_id = 10
+			WHERE c.current_outcome_id IN (10,40)
 			AND s.import_id = '$sample_import_id'
 			AND s.sample_id = c.sample_id
 			AND c.questionnaire_id = '$questionnaire_id'";
