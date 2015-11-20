@@ -581,6 +581,7 @@ else
 			CONCAT('<a href=\'outcomes.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Outcomes for questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-bar-chart fa-2x\'></i></a>')
 		END as outcomes,
 		CONCAT('<a href=\'callhistory.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Call history"). " " . TQ_("questionnaire"). " ',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-phone fa-2x\'></i></a>') as calls,
+		CONCAT('<a href=\'set_outcomes.php?qid=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Set outcomes"). "&ensp;\n" . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-list-ol fa-2x\'></i></a>') as setoutcomes,
 		CASE WHEN enabled = 0 THEN
 			CONCAT('<i class=\'btn fa fa-download fa-2x\' style=\'color:lightgrey;\'></i>')
 		ELSE
@@ -604,7 +605,7 @@ else
 		FROM questionnaire";
 	$rs = $db->GetAll($sql);
 
-	$columns = array("qid","description","status","enabledisable","outcomes","calls","casestatus","shifts","assample","quotareport","dataout","modify","inlime","prefill","deletee");
+	$columns = array("qid","description","status","enabledisable","outcomes","calls","casestatus","shifts","assample","quotareport","dataout","modify","setoutcomes","inlime","prefill","deletee");
 	xhtml_table($rs,$columns,false,"table-hover table-condensed "); 
 	
 print "</div>";
