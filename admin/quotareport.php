@@ -238,25 +238,36 @@ if ($questionnaire_id)
 		{
 			//limesurvey quotas for this question
 			$quotas = (get_limesurvey_quota_info($r['id']));
-			$sqlq = array();
+			$cob = array();
 
-			foreach ($quotas as $q)
-				$sqlq[] = "s." . $q['fieldname'] . " = '" . $q['value'] . "'";
+			foreach ($quotas as $qr)
+			{
+				$sqlq = array();
+				foreach($qr as $qid => $q)
+				{
+					$sqlq[] = "s." . $q['fieldname'] . " = '" . $q['value'] . "'";
+				}
+				$cob[] = "( " . implode(' OR ', $sqlq) . " )";
+			}
+		
+			if (!empty($cob))
+			{	
 			
-			$sql = "SELECT COUNT(id) as count
-				FROM ".LIME_PREFIX."survey_{$r['sid']} as s
-				JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
-				JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
-				WHERE ".implode(' AND ',$sqlq)." "." 
-				AND submitdate IS NOT NULL
-				AND s.token = c.token";
+				$sql = "SELECT COUNT(id) as count
+					FROM ".LIME_PREFIX."survey_{$r['sid']} as s
+					JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
+					JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
+					WHERE ".implode(' AND ',$cob)." "." 
+					AND submitdate IS NOT NULL
+					AND s.token = c.token";
 
-			$rs = $db->GetRow($sql);
+				$rs = $db->GetRow($sql);
 
-			$completions = $rs['count'];
-			$perc = ROUND(($completions / $r['qlimit']) * 100,2);
-			
-			$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
+				$completions = $rs['count'];
+				$perc = ROUND(($completions / $r['qlimit']) * 100,2);
+				
+				$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
+			}
 		}
 
 		
@@ -284,7 +295,7 @@ if ($questionnaire_id)
 
 		$sql = "SELECT count(*) as count
 			FROM `case` as c, sample as s
-			WHERE c.current_outcome_id = 10
+			WHERE c.current_outcome_id IN (10,40)
 			AND s.import_id = '$sample_import_id'
 			AND s.sample_id = c.sample_id
 			AND c.questionnaire_id = '$questionnaire_id'";

@@ -81,8 +81,24 @@ if (isset($_POST['import_file']))
 		$lime_rs_sid = bigintval($_POST['selectrs']);
 	}
 
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete,referral)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc,$referral)";
+//**  get default coma-separated outcomes list and use it for new questionnaire as initial set
+	$sql = "SELECT o.outcome_id
+			FROM `outcome` as o
+			WHERE o.default = 1;";
+	$def = $db->GetAll($sql);
+
+	for ($i=0; $i < count($def); $i++){
+		foreach($def[$i] as $key => $val){
+			$do[] = $val;
+		}	
+	}
+
+	$do = implode($do,",");
+	
+//** - end 
+	
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete,referral,outcomes)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc,$referral,'$do')";
 
 	$rs = $db->Execute($sql);
 
@@ -265,7 +281,7 @@ if (!empty($surveys)){?>
 	<div class="form-group">
 		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
 		<div class="col-sm-4">
-			<input class="form-control"  name="lime_endurl" id="url" type="url" value="<?php echo SITE_URL; ?>"/>
+			<input class="form-control"  name="lime_endurl" id="url" type="url" />
 		</div>
 	</div>
 </div>

@@ -106,13 +106,16 @@ function display_outcomes($contacted,$ca,$case_id)
 			AND call_attempt_id = '$ca'";
 	
 		$rs = $db->GetAll($sql);
-	
+		
+		$outcomes = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q JOIN `case` as c ON (c.questionnaire_id =q.questionnaire_id) WHERE c.case_id = $case_id");
+		
 		if (!empty($rs))
 		{
 			//we have an appointment made ... only select appointment ID's
 			$sql = "SELECT outcome_id,description,contacted
 				FROM outcome
-				WHERE outcome_id = '19'";	//outcome_type_id = '5'	
+				WHERE outcome_type_id = '5'
+				AND outcome_id IN ($outcomes)";	
 		}
 		else
 		{
@@ -133,7 +136,7 @@ function display_outcomes($contacted,$ca,$case_id)
 	}
 	$rs = $db->GetAll($sql);
 
-	print "<div>";
+	print "<div class=\"panel-body\">";
 	if (!empty($rs))
 	{
 		$do = false;
@@ -473,7 +476,7 @@ switch($state)
 		print "<form action='?' method='post'><div class=\"form-group\">";
 		display_outcomes(false,$call_attempt_id,$case_id);
 		if (isset($_POST['confirm'])){
-			print "</div><input type='submit' class=\"btn btn-primary\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
+			print "</div><input type='submit' class=\"btn btn-primary btn-lg\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
 		}
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done

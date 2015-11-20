@@ -261,7 +261,7 @@ function generate() {
 			<a  href='timezonetemplate.php' class="btn btn-default fa"><?php echo T_("TimeZones list");?></a>
 		</div>
 	</div>
-<?php  if (FREEPBX_PATH != false) { ?>
+<?php  if (VOIP_ENABLED != false) { ?>
 	<div class="form-group">
 		<label class="col-lg-3 control-label"><?php echo T_("Uses VoIP") . "? ";?></label>
 		<div class="col-lg-3"><input name="voip" type="checkbox" onchange="if(this.checked==true){show(this,'usesvoip');} else{ hide(this,'usesvoip');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" /></div><!-- checked="checked" -->
