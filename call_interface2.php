@@ -106,45 +106,39 @@ function display_outcomes($contacted,$ca,$case_id)
 			AND call_attempt_id = '$ca'";
 	
 		$rs = $db->GetAll($sql);
-	
+		
+		$outcomes = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q JOIN `case` as c ON (c.questionnaire_id =q.questionnaire_id) WHERE c.case_id = $case_id");
+		
 		if (!empty($rs))
 		{
 			//we have an appointment made ... only select appointment ID's
 			$sql = "SELECT outcome_id,description,contacted
 				FROM outcome
-				WHERE outcome_id = '19'";	//outcome_type_id = '5'	
+				WHERE outcome_type_id = '5'
+				AND outcome_id IN ($outcomes)";	
 		}
 		else
 		{
-			if ($contacted === false)
-			{
-				print "<div class=\"form-group\" ><a href=\"?contacted=1\" class=\"btn btn-info\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\">".T_("CONTACTED")."</a>";
-				print "<a href=\"?contacted=0\" class=\"btn btn-default\" style=\"margin-left: 30px; margin-right: 15px; min-width: 150px;\">".T_("NOT CONTACTED")."</a></div>";
-
-				if (isset ($_GET['contacted'])){
-					
-				$contacted = bigintval($_GET['contacted']);
-
+			print "<div class=\"form-group\" ><a href=\"?contacted=1\" class=\"btn btn-info\" style=\"margin-left: 15px; margin-right: 30px; min-width: 200px;\">".T_("CONTACTED")."</a>";
+			print "<a href=\"?contacted=0\" class=\"btn btn-default\" style=\"margin-left: 30px; margin-right: 15px; min-width: 200px;\">".T_("NOT CONTACTED")."</a></div>";
+			
+			if (isset ($_GET['contacted'])) $contacted = bigintval($_GET['contacted']);
+			else if ($contacted) $contacted = bigintval($contacted);
+			
+			if ($contacted || $contacted === 0 ){
+				
 				$sql = "SELECT outcome_id,description,contacted
 					FROM outcome
 					WHERE contacted = '$contacted'
-					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)"; 
-				}
-			}
-			else
-			{
-				$contacted = bigintval($contacted);
-		
-				$sql = "SELECT outcome_id,description,contacted
-					FROM outcome
-					WHERE contacted = '$contacted'
-					AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)";
+					AND outcome_type_id != '5'
+					AND outcome_id IN ($outcomes)
+					AND outcome_id NOT IN(10,42,43,44,45)"; //don't show completed if not, hide max calls as the supposed to be automatic or admin
 			}
 		}
 	}
 	$rs = $db->GetAll($sql);
 
-	print "<div>";
+	print "<div class=\"panel-body\">";
 	if (!empty($rs))
 	{
 		$do = false;
@@ -154,14 +148,12 @@ function display_outcomes($contacted,$ca,$case_id)
 		{
 			if ($do == $r['outcome_id']) $selected = "checked='checked'"; else $selected = "";
 			if (isset($r['contacted']) && $r['contacted'] == 1) $highlight = "text-primary"; else $highlight = "text-default";
-			print "<li><label class='$highlight'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>&emsp;" . T_($r['description']) . "</label></li>";
+			print "<p><label class='$highlight'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>&emsp;" . T_($r['description']) . "</label></p>";
 		}
 		
 		$_POST['confirm'] = true;
 	}
 	print "</div>";
-
-
 }
 
 
@@ -308,7 +300,7 @@ if (isset($_GET['newstate']))
 
 if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js";
 
-xhtml_head(T_("Set outcome"),true,array("include/bootstrap/css/bootstrap.min.css"/* ,"css/call.css" */),array($js,"include/jquery/jquery-1.4.2.min.js"));
+xhtml_head(T_("Set outcome"),true,array("include/bootstrap/css/bootstrap.min.css"/* ,"css/call.css" */),array($js,"include/jquery/jquery.min.js"));
 
 $state = is_on_call($operator_id);
 switch($state)
@@ -484,7 +476,7 @@ switch($state)
 		print "<form action='?' method='post'><div class=\"form-group\">";
 		display_outcomes(false,$call_attempt_id,$case_id);
 		if (isset($_POST['confirm'])){
-			print "</div><input type='submit' class=\"btn btn-primary\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
+			print "</div><input type='submit' class=\"btn btn-primary btn-lg\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
 		}
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done
