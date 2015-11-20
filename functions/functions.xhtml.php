@@ -135,14 +135,15 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 		foreach ($fields as $e)
 		{
 			print "<td>";
-			if (isset($row[$e])) print $row[$e];
-			print "</td>";
-			if ($total && in_array($e,$total))
-			{
-				if (!isset($tot[$e])) 
-					$tot[$e] = 0;
-				$tot[$e] += $row[$e];
+			if (isset($row[$e])) {
+				if ($total && in_array($e,$total)) {
+					if (!isset($tot[$e]))  $tot[$e] = 0;
+					$tot[$e] += $row[$e];
+					print "<span class=\"pull-right\">" . $row[$e] . "</span>";
+				}
+				else print $row[$e];
 			}
+			print "</td>";
 		}
 		print "</tr>";
 	}
@@ -151,7 +152,7 @@ function xhtml_table($content,$fields,$head = false,$class = "tclass",$highlight
 		print "</tbody><tfoot><tr>";
 		foreach ($fields as $e)
 		{
-			print "<td><b>";
+			print "<td><b class=\"pull-right\">";
 			if (in_array($e,$total))
 				print $tot[$e];
 			print "</b></td>";

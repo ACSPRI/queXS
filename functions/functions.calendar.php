@@ -190,26 +190,20 @@ function display_respondent_list($case_id,$respondent_id = false,$first = false)
 	$rs = $db->GetAll($sql);
 	
 	if (count($rs) >1 ){
-		print "<div><p>" . T_("Select a respondent") . ":
-		<select id='respondent_id' name='respondent_id' onchange=\"LinkUp('respondent_id')\"><option>" . T_("None") . "</option>";
+		print "<div><p><b>" . T_("Select a respondent") . "</b>:
+		<select id='respondent_id' name='respondent_id' onchange=\"LinkUp('respondent_id')\">";//<option>" . T_("None") . "</option>
 		if (!empty($rs))
 		{
 			foreach($rs as $r)
 			{
-				$rid = $r['respondent_id'];
-				if ($respondent_id == false && $first == true)
-				{
-					$first = false;
-					$selected = "selected='selected'";
-					$respondent_id = $rid;
-				}
-				else $selected = "";
-				
-				if ($rid == $respondent_id) $selected="selected='selected'";
-				print "<option value='?respondent_id=$rid' $selected>{$r['firstName']} {$r['lastName']}</option>";
+				if ($respondent_id == $r['respondent_id']) $selected="selected='selected'"; else $selected = "";
+				print "<option value='?respondent_id={$r['respondent_id']}' $selected>{$r['firstName']} {$r['lastName']}</option>";
 			}
+			if($respondent_id ==0) print "<option value='?respondent_id=0' selected='selected' class='addresp'>" . T_("Add respondent") . "</option>";
 		}
-		print "<option value='?respondent_id=0' class='addresp'>" . T_("Add respondent") . "</option></select></p></div>";	
+		if($respondent_id !=0) print "<option value='?respondent_id=0' class='addresp'>" . T_("Add respondent") . "</option>";
+		
+		print "</select></p></div>";	
 	}
 	else { echo "&emsp;<b>",$rs[0]['firstName'],"&ensp;",$rs[0]['lastName'],"</b>"; $respondent_id =$rs[0]['respondent_id'];}
 
@@ -258,13 +252,14 @@ function display_respondent_form($respondent_id = false,$case_id = false)
 
 	$rs = $db->Execute($sql);
 
-	print "<div><label for='firstName'>" . T_("First name:") . "</label><input type=\"text\" id='firstName' name=\"firstName\" value=\"$fn\"/></div>
-	       <div><label for='lastName'>" . T_("Last  name:") . " </label><input type=\"text\" id='lastName' name=\"lastName\" value=\"$ln\"/></div>";
+
+	print "<p><label for='firstName'>" . T_("First name:") . "</label><input type=\"text\" class=\"form-control\" id='firstName' name=\"firstName\" value=\"$fn\"/></p>
+	       <p><label for='lastName'>" . T_("Last  name:") . " </label><input type=\"text\" class=\"form-control\" id='lastName' name=\"lastName\" value=\"$ln\"/></p>";
 
 	/**
 	 * Display the current respondent zone in a drop down box with other zones from timezone_template
 	 */
-	print "<div><label>" . T_("Time Zone:") . " ".$rs->GetMenu('Time_zone_name',$rzone,false)."</label></div>";
+	print "<p><label>" . T_("Time Zone:") . "</label> ". $rs->GetMenu('Time_zone_name',$rzone,false,false,0,'class="form-control"'). "</p>";
 
 }
 

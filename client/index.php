@@ -120,10 +120,11 @@ if ($client_id)
 			}
 			else print "<p class='alert alert-info'>" . T_("No outcomes recorded for this questionnaire") . "</p>";
 
-			print "</br><a href=\"?page=".LIME_URL."admin/admin.php\" class=\"btn btn-default btn-block btn-lime\">" . T_("Lime results") . "</a></div>";
+			print "</br><a href=\"?qsid=$qsid\" class=\"btn btn-default btn-block btn-lime\">" . T_("View summary results") . "</a></div>";
 		}
 		
-		$page =''; if (isset($_GET['page'])) $page = $_GET['page'] . "?action=browse&amp;sid=$qsid"; 
+		if (isset($_GET['qsid'])) $qsid = intval($_GET['qsid']); 
+		$page = LIME_URL . "admin/admin.php?action=browse&amp;sid=$qsid"; 
 ?>		
 		</div>
 		

@@ -1,6 +1,5 @@
 queXS 1.14.0 - Changes since 1.13.1
 
-
 Changes for session authentication:
 
 queXS now uses the Limesurvey session based authentication system to authenticate all users.
@@ -29,28 +28,46 @@ These queries will:
 2. Make all other users regular users, and assign them the password "password"
 3. Make all clients regular clients, and assign them the password "password"
 
-Once you have run these - please go to the operator management page and update passwords for all users.
+Once you have run these - please go to the operator management page and update passwords for all users AND reassign any extensions.
 
 /* Make the first user the admin user - with default password of: password */
 INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
-SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 0, 'auto', 1
+SELECT username, 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, firstName, 0, 'auto', 1
 FROM operator
 WHERE operator_id = 1;
 
 /* Make all other users operators - with default password of: password */
 INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
-SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 1, 'auto', 0
+SELECT username, 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, firstName, 1, 'auto', 0
 FROM operator
 WHERE operator_id != 1;
 
 /* Make all clients - with default password of: password */
 INSERT INTO `lime_users` (`users_name`, `password`, `full_name`, `parent_id`, `lang`, `superadmin`) 
-SELECT username, '0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438', firstName, 1, 'auto', 0
+SELECT username, 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, firstName, 1, 'auto', 0
 FROM client
 WHERE 1;
 
 /* Remove redundant table */
 DROP TABLE `sessions2`;
+
+/* Add sort order feature to questionnaire sample table */
+ALTER TABLE `questionnaire_sample` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0';
+UPDATE `questionnaire_sample` SET sort_order = sample_import_id;
+
+/* Add default outcomes feature */
+
+/* -- add `default` and `permanent` parameters for outcomes -- */
+ALTER TABLE `outcome` ADD `default` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Used as default for questionnaire outcomes' AFTER `calc`, ADD `permanent` TINYINT(1) UNSIGNED NOT NULL COMMENT 'Permanent outcome, used for all questionnaires, not possible to de-select' AFTER `default`;
+
+/* -- define and set mandatory(constant) outcome_id's --*/
+UPDATE `outcome` SET `permanent` = '1' WHERE `outcome`.`outcome_id` IN (1,2,3,7,9,10,14,17,18,19) ;
+
+/* -- add `outcomes` parameter ,  define default list of outcome_ID's to be enabled for new questionnaries --*/
+ALTER TABLE `questionnaire` ADD `outcomes` VARCHAR(256) NULL DEFAULT '1,2,3,7,9,10,14,17,18,19' COMMENT 'Comma-separated string of outcomes defined for the questionnaire' AFTER `enabled`;
+
+/* -- enable all outcomes for existing questionnaires -- */
+UPDATE `questionnaire` SET `outcomes` = '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,40,41,42,43,44,45' ;
 
 
 queXS 1.13.1 - Changes since 1.13.0

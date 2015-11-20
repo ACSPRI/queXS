@@ -99,8 +99,6 @@ if (isset($_POST['client']) && !empty($_POST['client']))
 				
 				$sql .= "WHERE `uid` = $uid";
 
-				$db->Execute($sql);
-
 				if ($db->Execute($sql)) $a =  T_("Updated") . ": " . $client; else $a =  T_("Update error");
 			}
 			else 
@@ -118,8 +116,6 @@ if (isset($_POST['client']) && !empty($_POST['client']))
 				//Insert into lime_users 
 				$sql = "INSERT INTO " . LIME_PREFIX . "users (`users_name`,`password`,`full_name`,`parent_id`,`superadmin`,`email`,`lang`) 
 						VALUES ($client, '" . SHA256::hashing($_POST['password']) . "', $firstname ,1,0,$email,'auto')";
-
-				$db->Execute($sql);
 
 				if ($db->Execute($sql)) $a = T_("Added") . ": " . $client; else $a =  T_("Error adding client");	
 			}

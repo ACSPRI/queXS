@@ -42,7 +42,7 @@ include ("functions/functions.xhtml.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 /** 
  * Language functions
@@ -77,8 +77,8 @@ $js = array();
 if (AUTO_LOGOUT_MINUTES !== false)
         $js = array("include/jquery/jquery-1.4.2.min.js","js/childnap.js");
 
-$jsw = "js/window.js";
-if (browser_ie()) $jsw = "js/window_ie6.js";
+if (isset($_GET['interface2'])) { if (browser_ie()) $jsw = "js/window_ie6_interface2.js"; else $jsw = "js/window_interface2.js"; } 
+else { if (browser_ie()) $jsw = "js/window_ie6.js"; else $jsw = "js/window.js"; }
 
 $js[] = $jsw;
 

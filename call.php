@@ -42,7 +42,7 @@ include ("db.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 /**
@@ -107,32 +107,32 @@ function display_outcomes($contacted,$ca,$case_id)
 			AND call_attempt_id = '$ca'";
 	
 		$rs = $db->GetAll($sql);
+		
+		$outcomes = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q JOIN `case` as c ON (c.questionnaire_id =q.questionnaire_id) WHERE c.case_id = $case_id");
 	
 		if (!empty($rs))
 		{
 			//we have an appointment made ... only select appointment ID's
 			$sql = "SELECT outcome_id,description
 				FROM outcome
-				WHERE outcome_type_id = '5'";		
+				WHERE outcome_type_id = '5'
+				AND outcome_id IN ($outcomes)";		
 		}
 		else
 		{
-			if ($contacted === false)
-			{
-				$sql = "SELECT outcome_id,description
-					FROM outcome
-					WHERE outcome_id != 10"; //don't show completed if not
-			}
+			if ($contacted === false) $ctd = "";
 			else
 			{
 				$contacted = bigintval($contacted);
-		
-				$sql = "SELECT outcome_id,description
-					FROM outcome
-					WHERE contacted = '$contacted'
-					AND outcome_id != 10"; //don't show completed if not
+				$ctd = "AND contacted = '$contacted'";
 			}
-
+		
+			$sql = "SELECT outcome_id,description
+					FROM outcome
+					WHERE outcome_type_id != '5'
+					$ctd
+					AND outcome_id IN ($outcomes)
+					AND outcome_id NOT IN(10,42,43,44,45)"; //don't show completed if not, hide max calls as the supposed to be automatic or admin
 		}
 	}
 	$rs = $db->GetAll($sql);

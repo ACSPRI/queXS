@@ -1,16 +1,16 @@
-# Greek translation for quexs
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Croatian translation for quexs
+# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
 # This file is distributed under the same license as the quexs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-09-07 12:24+1000\n"
-"PO-Revision-Date: 2013-03-08 01:20+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Greek <el@li.org>\n"
+"PO-Revision-Date: 2015-11-11 19:47+0000\n"
+"Last-Translator: Alen <alen@webstanica.net>\n"
+"Language-Team: Croatian <hr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,79 +19,76 @@ msgstr ""
 
 #: appointment.php:74
 msgid "Appointment error"
-msgstr "Σφάλμα συνάντησης"
+msgstr ""
 
 #: appointment.php:75
 msgid ""
 "You have not been assigned a case therefore cannot create an appointment"
 msgstr ""
-"Δεν σας έχει ανατεθεί κάποια περίπτωση και επομένως δεν μπορείτε να "
-"δημιουργήσετε μία συνάντηση"
 
 #: appointment.php:114
 msgid "Appointment made"
-msgstr "Συνάντηση πραγματοποιήθηκε"
+msgstr "Poziv je zakazan"
 
 #: appointment.php:126 admin/supervisor.php:390
 msgid "Create appointment"
-msgstr ""
+msgstr "Zakaži poziv"
 
 #: appointment.php:129 appointmentlist.php:95 callhistory.php:88
 #: admin/callhistory.php:132 admin/callhistory.php:157
 #: admin/supervisor.php:382 admin/displayappointments.php:189
 #: admin/displayappointments.php:263 admin/displayappointments.php:282
 msgid "Respondent"
-msgstr "Αποκρινόμενος"
+msgstr "Ispitanik"
 
 #: appointment.php:138
 msgid "Create new respondent:"
-msgstr "Δημιουργία νέου παραλήπτη"
+msgstr "Dodaj novog ispitanika"
 
 #: appointment.php:141
 msgid "Add this respondent"
-msgstr "Προσθήκη αυτού του παραλήπτη"
+msgstr "Dodaj ovog ispitanika"
 
 #: appointment.php:152 admin/operators.php:269 admin/operatorlist.php:240
 #: admin/supervisor.php:325 admin/casestatus.php:121
 msgid "Timezone"
-msgstr ""
+msgstr "Vremenska zona"
 
 #: appointment.php:152
 msgid "Current Time"
-msgstr ""
+msgstr "Trenutno vrijeme"
 
 #: appointment.php:168
 msgid "Select phone number:"
-msgstr "Επέλεξε τηλεφωνικό αριθμό"
+msgstr "Oadberi telefonski broj"
 
 #: appointment.php:182
 msgid "Add new phone number"
-msgstr "Προσθήκη νέου τηλεφωνικού αριθμού"
+msgstr "Dodaj novi telefonski broj"
 
 #: appointment.php:195
 msgid "Add new phone number (with area code, eg 0398761234):"
-msgstr ""
-"Προσθήκη νέου τηλεφωνικού αριθμού (με κωδικό περιοχής, π.χ. 0398761234):"
+msgstr "Dodaj novi telefonski broj (s predznakom npr 01 12345678)"
 
 #: appointment.php:198
 msgid "Add this phone number"
-msgstr "Προσθήκη αυτού του τηλεφωνικού αριθμού"
+msgstr "Dodaj ovaj telefonski broj"
 
 #: appointment.php:218
 msgid "Accept appointment from "
-msgstr "Αποδοχή συνάντησης από "
+msgstr "Prihvati zakazani poziv od "
 
 #: appointment.php:218 functions/functions.calendar.php:318
 msgid " till "
-msgstr " μέχρι "
+msgstr " do "
 
 #: appointment.php:218
 msgid " on "
-msgstr " στο-η/ν "
+msgstr ""
 
 #: appointment.php:218
 msgid "on"
-msgstr "σε"
+msgstr ""
 
 #: appointment.php:219
 msgid "Appointment with myself only?"
@@ -100,11 +97,11 @@ msgstr ""
 #: appointment.php:228 include/limesurvey/qanda.php:1701
 #: include/limesurvey/qanda.php:1921
 msgid "Schedule Appointment"
-msgstr ""
+msgstr "Zakaži poziv"
 
 #: info.php:62
 msgid "Information"
-msgstr "Πληροφορίες"
+msgstr "Informacija"
 
 #: rs_project_end.php:77 rs_project_end_interface2.php:68
 msgid "Respondent Selection - Project end"
@@ -120,7 +117,7 @@ msgstr ""
 
 #: functions/functions.xhtml.php:93
 msgid "UP"
-msgstr ""
+msgstr "GORE"
 
 #: functions/functions.import.php:89
 msgid "Duplicate column name"
@@ -136,7 +133,7 @@ msgstr ""
 
 #: functions/functions.import.php:127
 msgid "Import ?"
-msgstr ""
+msgstr "Uvoz?"
 
 #: functions/functions.import.php:127
 msgid "New Sample Variable Name"
@@ -144,11 +141,11 @@ msgstr ""
 
 #: functions/functions.import.php:127
 msgid "Variable Type"
-msgstr ""
+msgstr "Tip varijable"
 
 #: functions/functions.import.php:127
 msgid "Show to operator?"
-msgstr ""
+msgstr "Prikaži operateru"
 
 #: functions/functions.import.php:144 functions/functions.import.php:156
 #: waitnextcase_interface2.php:142 admin/samplelist.php:312
@@ -168,7 +165,7 @@ msgstr ""
 #: admin/quotarow.php:601 admin/new.php:204 admin/new.php:211
 #: admin/new.php:218 admin/new.php:225 admin/new.php:232
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: functions/functions.import.php:144 functions/functions.import.php:156
 #: admin/samplelist.php:312 admin/samplelist.php:313 admin/operators.php:289
@@ -187,27 +184,27 @@ msgstr ""
 #: admin/new.php:204 admin/new.php:211 admin/new.php:218 admin/new.php:225
 #: admin/new.php:232
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: functions/functions.operator.php:167 include/limesurvey/quexs.php:362
 msgid "morning"
-msgstr ""
+msgstr "prijepodne"
 
 #: functions/functions.operator.php:168 include/limesurvey/quexs.php:363
 msgid "afternoon"
-msgstr ""
+msgstr "poslijepodne"
 
 #: functions/functions.operator.php:169 include/limesurvey/quexs.php:364
 msgid "evening"
-msgstr ""
+msgstr "večer"
 
 #: functions/functions.operator.php:972
 msgid "ERROR: You are not logged in."
-msgstr ""
+msgstr "GREŠKA: Niste prijavljeni"
 
 #: functions/functions.performance.php:469
 msgid "No shift"
-msgstr ""
+msgstr "Nema smjene"
 
 #: functions/functions.performance.php:492
 msgid "Total completions"
@@ -248,11 +245,11 @@ msgstr ""
 
 #: functions/functions.calendar.php:193
 msgid "Select a respondent"
-msgstr "Επέλεξε έναν παραλήπτη"
+msgstr ""
 
 #: functions/functions.calendar.php:194
 msgid "None"
-msgstr "Κανένα"
+msgstr ""
 
 #: functions/functions.calendar.php:212 respondent.php:99 respondent.php:137
 #: contactdetails.php:96 contactdetails.php:134
@@ -261,15 +258,15 @@ msgstr ""
 
 #: functions/functions.calendar.php:261
 msgid "First name:"
-msgstr ""
+msgstr "Ime:"
 
 #: functions/functions.calendar.php:262
 msgid "Last  name:"
-msgstr ""
+msgstr "Prezime:"
 
 #: functions/functions.calendar.php:267
 msgid "Time Zone:"
-msgstr ""
+msgstr "Vremenska zona:"
 
 #: functions/functions.calendar.php:318
 msgid "Shift from:"
@@ -277,72 +274,72 @@ msgstr ""
 
 #: functions/functions.calendar.php:322
 msgid "Start Time"
-msgstr ""
+msgstr "Početno Vrijeme"
 
 #: functions/functions.calendar.php:365
 msgid "End Time"
-msgstr ""
+msgstr "Vrijeme završetka"
 
 #: functions/functions.calendar.php:467
 msgid "Mon"
-msgstr ""
+msgstr "Pon"
 
 #: functions/functions.calendar.php:468
 msgid "Tue"
-msgstr ""
+msgstr "Uto"
 
 #: functions/functions.calendar.php:469
 msgid "Wed"
-msgstr ""
+msgstr "Sri"
 
 #: functions/functions.calendar.php:470
 msgid "Thu"
-msgstr ""
+msgstr "Čet"
 
 #: functions/functions.calendar.php:471
 msgid "Fri"
-msgstr ""
+msgstr "Pet"
 
 #: functions/functions.calendar.php:472
 msgid "Sat"
-msgstr ""
+msgstr "Sub"
 
 #: functions/functions.calendar.php:473
 msgid "Sun"
-msgstr ""
+msgstr "Ned"
 
 #: functions/functions.voip.php:449 selectextension.php:114 status.php:105
 #: admin/operators.php:278 admin/operatorlist.php:248
 #: admin/operatorlist.php:394 admin/extensionstatus.php:262
 msgid "Extension"
-msgstr ""
+msgstr "Ekstenzija"
 
 #: functions/functions.voip.php:449
 msgid "online"
-msgstr ""
+msgstr "online"
 
 #: functions/functions.voip.php:449
 msgid "offline"
-msgstr ""
+msgstr "offline"
 
 #: functions/functions.voip.php:528
 msgid "Disconnected"
-msgstr ""
+msgstr "Odspojeno"
 
 #: functions/functions.voip.php:530
 msgid "Reconnected"
-msgstr ""
+msgstr "Ponovno spojeno"
 
 #: functions/functions.voip.php:553 status.php:124
 #: admin/extensionstatus.php:231 call.php:440
 msgid "Ringing"
-msgstr "Κουδουνίζει"
+msgstr "Zvoni"
 
 #: functions/functions.voip.php:553 functions/functions.voip.php:565
 #: functions/functions.voip.php:577 functions/functions.voip.php:587
 #: functions/functions.voip.php:596
 msgid " Extension "
-msgstr ""
+msgstr " Ekstenzija "
 
 #: functions/functions.voip.php:553 functions/functions.voip.php:565
 #: functions/functions.voip.php:577 supervisorchat.php:88
@@ -350,53 +347,53 @@ msgstr ""
 #: admin/bulkappointment.php:215 admin/bulkappointment.php:237
 #: admin/casestatus.php:121
 msgid "Case id"
-msgstr ""
+msgstr "ID slučaja"
 
 #: functions/functions.voip.php:565 status.php:128
 #: admin/extensionstatus.php:231 call.php:447
 msgid "Answered"
-msgstr "Απαντήθηκε"
+msgstr "Odgovoreno"
 
 #: functions/functions.voip.php:577 call.php:437 call.php:444 call.php:451
 msgid "Hangup"
-msgstr "Τερματισμός κλήσης"
+msgstr "Prekidanje veze"
 
 #: functions/functions.voip.php:587
 msgid "Unregistered"
-msgstr ""
+msgstr "Neregistriran"
 
 #: functions/functions.voip.php:596
 msgid "Registered"
-msgstr ""
+msgstr "Registriran"
 
 #: rs_callback.php:72 rs_callback_interface2.php:72
 msgid "Respondent Selection - Call back"
-msgstr "Επιλογή παραλήπτη - Κλήση"
+msgstr ""
 
 #: rs_callback.php:86 rs_callback_interface2.php:86
 msgid "You are: "
-msgstr "Είσαι ο/η: "
+msgstr "Ti si: "
 
 #: rs_callback.php:86 rs_callback_interface2.php:86
 #, php-format
 msgid "% complete"
-msgstr ""
+msgstr "% complete"
 
 #: rs_callback.php:93 rs_callback_interface2.php:93
 msgid "Yes - Continue where we left off"
-msgstr "Ναι - Συνέχεια από το σημείο που το αφήσαμε"
+msgstr ""
 
 #: rs_callback.php:94 rs_callback_interface2.php:94 rs_intro.php:128
 #: rs_project_intro_interface2.php:87 rs_project_intro.php:87
 msgid "End call with outcome: Refusal by respondent"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Άρνηση από τον αποκρινόμενο"
+msgstr ""
 
 #: rs_callback.php:95 rs_callback_interface2.php:95
 #: rs_project_intro_interface2.php:91 rs_answeringmachine.php:97
 #: rs_business.php:68 rs_answeringmachine_interface2.php:97
 #: rs_project_intro.php:91 rs_business_interface2.php:68
 msgid "Go Back"
-msgstr "Επιστροφή"
+msgstr ""
 
 #: selectextension.php:94 index.php:150
 msgid "queXS"
@@ -410,7 +407,7 @@ msgstr ""
 
 #: selectextension.php:106
 msgid "Try again"
-msgstr ""
+msgstr "Pokušaj ponovo"
 
 #: selectextension.php:110
 msgid "Select extension"
@@ -430,7 +427,7 @@ msgstr ""
 #: admin/quotareport.php:299 admin/outcomes.php:87 admin/outcomes.php:199
 #: admin/quotarow.php:587
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: status.php:65 callhistory.php:92 admin/callhistory.php:192
 #: admin/casesbyoutcome.php:122
@@ -439,7 +436,7 @@ msgstr ""
 
 #: status.php:101
 msgid "VoIP On"
-msgstr ""
+msgstr "VoIP uključen"
 
 #: status.php:103
 msgid "VoIP Off"
@@ -472,7 +469,7 @@ msgstr ""
 #: status.php:140 casenote.php:119 status_interface2.php:238 calllist.php:93
 #: project_info.php:88
 msgid "No case"
-msgstr "Καμία περίπτωση"
+msgstr ""
 
 #: referral.php:189
 msgid "Generated referral to case id"
@@ -513,7 +510,7 @@ msgstr ""
 
 #: performance.php:67 index.php:282 index_interface2.php:300
 msgid "Performance"
-msgstr "Απόδοση"
+msgstr ""
 
 #: performance.php:83 admin/operatorperformance.php:108
 msgid "This shift"
@@ -529,7 +526,7 @@ msgstr ""
 #: admin/operatorperformance.php:109 admin/shiftreport.php:110
 #: admin/extensionstatus.php:262 admin/operatorquestionnaire.php:247
 msgid "Operator"
-msgstr "Λειτουργός"
+msgstr ""
 
 #: performance.php:84 performance.php:91 admin/quotareport.php:299
 #: admin/outcomes.php:304 admin/quotarow.php:587
@@ -563,7 +560,7 @@ msgstr ""
 #: admin/casestatus.php:210 admin/extensionstatus.php:190 respondent.php:101
 #: contactdetails.php:98
 msgid "Go back"
-msgstr "Επιστροφή"
+msgstr ""
 
 #: casenote.php:114 admin/supervisor.php:424
 msgid "No notes"
@@ -572,11 +569,11 @@ msgstr ""
 #: casenote.php:116 callhistory.php:88 calllist.php:89
 #: admin/supervisor.php:409 admin/supervisor.php:426
 msgid "Date/Time"
-msgstr "Ημερομηνία/Ώρα"
+msgstr ""
 
 #: casenote.php:116 admin/bulkappointment.php:237 admin/supervisor.php:426
 msgid "Note"
-msgstr "Σημείωση"
+msgstr ""
 
 #: waitnextcase_interface2.php:49
 msgid "Standby"
@@ -637,7 +634,7 @@ msgstr ""
 #: call.php:400 call.php:405 call.php:421 call.php:427
 #: index_interface2.php:230
 msgid "End work"
-msgstr "Τέλος εργασίας"
+msgstr ""
 
 #: rs_intro.php:71 rs_intro_interface2.php:71
 msgid "Respondent Selection - Introduction"
@@ -648,7 +645,7 @@ msgstr ""
 #: rs_intro_interface2.php:121 rs_intro_interface2.php:129
 #: rs_intro_interface2.php:135 rs_project_intro.php:85
 msgid "Yes - Continue"
-msgstr "Ναι - Συνέχεια"
+msgstr ""
 
 #: rs_intro.php:123 rs_intro_interface2.php:93
 msgid "Business number"
@@ -656,7 +653,7 @@ msgstr ""
 
 #: rs_intro.php:124 rs_intro_interface2.php:94
 msgid "Answering machine"
-msgstr "Τηλεφωνητής"
+msgstr ""
 
 #: rs_intro.php:125
 msgid "End call with outcome: No answer (ring out or busy) "
@@ -686,40 +683,39 @@ msgstr ""
 msgid ""
 "End call with outcome: Out of sample (already completed in another mode)"
 msgstr ""
-"Τέλος κλήσης με αποτέλεσμα: Εκτός δείγματος (ήδη ολοκληρώθηκε σε άλλο τύπο)"
 
 #: record.php:61
 msgid "Stop REC"
-msgstr "Διακοπή εγγραφής"
+msgstr ""
 
 #: record.php:62 record.php:85 record.php:102
 msgid "Record"
-msgstr "Εγγραφή"
+msgstr ""
 
 #: record.php:72
 msgid "Beginning recording..."
-msgstr "Έναρξη εγγραφής"
+msgstr ""
 
 #: record.php:75 record.php:103
 msgid "Not on a call, so not beginning a recording"
-msgstr "Όχι σε κλήση, επομένως όχι έναρξη εγγραφής"
+msgstr ""
 
 #: record.php:79
 msgid "Begin the manual recording now..."
-msgstr "Εκκίνηση της χειροκίνητης εγγραφής τώρα"
+msgstr ""
 
 #: record.php:84 email.php:280 call_interface2.php:212 call_interface2.php:277
 #: call.php:212 call.php:230 index.php:173
 msgid "Start REC"
-msgstr "Έναρξη εγγραφής"
+msgstr ""
 
 #: record.php:92
 msgid "Stopping recording..."
-msgstr "Διακοπή εγγραφής"
+msgstr ""
 
 #: record.php:96
 msgid "Stop the manual recording now..."
-msgstr "Διακοπή της χειροκίνητης εγγραφής τώρα"
+msgstr ""
 
 #: include/php-gettext-1.0.11/examples/pigs_fallback.php:76
 #: include/php-gettext-1.0.11/examples/pigs_dropin.php:77
@@ -791,7 +787,7 @@ msgstr ""
 #: admin/dataoutput.php:85 admin/extensionstatus.php:262
 #: admin/displayappointments.php:263 admin/displayappointments.php:282
 msgid "Case ID"
-msgstr "Διακριτικό περίπτωσης"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:259
 #: include/limesurvey/admin/exportresults.php:649
@@ -868,7 +864,7 @@ msgstr ""
 
 #: status_interface2.php:182 index.php:168 index_interface2.php:223
 msgid "Appointment"
-msgstr "Ραντεβού"
+msgstr ""
 
 #: status_interface2.php:224
 msgid "Dial"
@@ -913,7 +909,7 @@ msgstr ""
 #: admin/displayappointments.php:282 index.php:167 shifts.php:88
 #: shifts.php:109
 msgid "End"
-msgstr "Λήξη"
+msgstr ""
 
 #: appointmentlist.php:95 admin/displayappointments.php:213
 #: admin/displayappointments.php:263
@@ -975,15 +971,13 @@ msgstr ""
 
 #: rs_project_intro_interface2.php:65 rs_project_intro.php:65
 msgid "Respondent Selection - Project Introduction"
-msgstr "Επιλογή αποκρινόμενου - Παρουσίαση εργασίας"
+msgstr ""
 
 #: rs_project_intro_interface2.php:88 rs_project_intro.php:88
 msgid ""
 "End call with outcome: No eligible respondent (person not available on this "
 "number)"
 msgstr ""
-"Τέλος κλήσης με αποτέλεσμα: Μη διαθέσιμος αποκρινόμενος (μη διαθέσιμο άτομο "
-"σε αυτό τον αριθμό)"
 
 #: supervisorchat.php:62 admin/supervisorchat.php:66 admin/index.php:183
 #: index.php:306
@@ -992,7 +986,7 @@ msgstr ""
 
 #: supervisorchat.php:85 index.php:170 supervisor.php:58
 msgid "Supervisor"
-msgstr "Επιβλέπων"
+msgstr ""
 
 #: supervisorchat.php:86
 msgid "Me"
@@ -1066,11 +1060,11 @@ msgstr ""
 
 #: callhistory.php:61
 msgid "Case History List"
-msgstr "Λίστα ιστορικού περιπτώσεων"
+msgstr ""
 
 #: callhistory.php:84 admin/callhistory.php:114
 msgid "No calls ever made"
-msgstr "Δεν έγιναν ποτέ κλήσεις"
+msgstr ""
 
 #: availability.php:61 index.php:236 index_interface2.php:256
 msgid "Availability"
@@ -1087,15 +1081,15 @@ msgstr ""
 
 #: calllist.php:61
 msgid "Call List"
-msgstr "Λίστα κλήσεων"
+msgstr ""
 
 #: calllist.php:85 admin/supervisor.php:405
 msgid "No calls made"
-msgstr "Δεν έγιναν κλήσεις"
+msgstr ""
 
 #: calllist.php:89
 msgid "Number called"
-msgstr "αριθμός κλήθηκε"
+msgstr ""
 
 #: nocaseavailable.php:69
 msgid "No case available"
@@ -1107,7 +1101,7 @@ msgstr ""
 
 #: nocaseavailable.php:75
 msgid "Reasons:"
-msgstr "Λόγοι:"
+msgstr ""
 
 #: nocaseavailable.php:86 nocaseavailable.php:98 admin/samplelist.php:471
 #: admin/questionnairelist.php:554 admin/operatorlist.php:276
@@ -1129,7 +1123,7 @@ msgstr ""
 #: admin/quotarow.php:483 admin/quotarow.php:509 admin/quotarow.php:556
 #: admin/quotarow.php:587
 msgid "Description"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: nocaseavailable.php:122 admin/samplelist.php:325 admin/quotareport.php:299
 #: admin/assigntimeslots.php:265 admin/outcomes.php:127 admin/outcomes.php:183
@@ -1146,7 +1140,7 @@ msgstr ""
 #: admin/displayappointments.php:263 admin/displayappointments.php:282
 #: admin/new.php:132 admin/new.php:140 shifts.php:109
 msgid "Questionnaire"
-msgstr "Ερωτηματολόγιο"
+msgstr ""
 
 #: nocaseavailable.php:147
 msgid "Shift start"
@@ -1167,7 +1161,7 @@ msgstr ""
 
 #: nocaseavailable.php:178
 msgid "There are "
-msgstr "Υπάρχουν "
+msgstr ""
 
 #: nocaseavailable.php:178
 msgid " unassigned case(s) available within the specified call restrictions"
@@ -1385,7 +1379,7 @@ msgstr ""
 #: admin/samplelist.php:490 admin/questionnairelist.php:583
 #: admin/index.php:156 index.php:255 index_interface2.php:273
 msgid "Call history"
-msgstr "Ιστορικό κλήσεων"
+msgstr ""
 
 #: admin/samplelist.php:490
 msgid "sample"
@@ -1910,7 +1904,7 @@ msgstr ""
 #: admin/outcomes.php:273 admin/questionnairelist.php:566 index.php:264
 #: index_interface2.php:282
 msgid "Shifts"
-msgstr "Βάρδιες"
+msgstr ""
 
 #: admin/outcomes.php:277
 msgid "No shift reports: Add report"
@@ -2982,7 +2976,7 @@ msgstr ""
 #: admin/supervisor.php:358 admin/displayappointments.php:245
 #: admin/databasestrings.php:68 index.php:273 index_interface2.php:291
 msgid "Appointments"
-msgstr "Ραντεβού"
+msgstr ""
 
 #: admin/supervisor.php:382 admin/displayappointments.php:263
 msgid "Current outcome"
@@ -3455,11 +3449,11 @@ msgstr ""
 
 #: admin/extensionstatus.php:231 call.php:433
 msgid "Requesting call"
-msgstr "Απαίτηση κλήσης"
+msgstr ""
 
 #: admin/extensionstatus.php:231 call.php:454
 msgid "Requires coding"
-msgstr "Απαίτηση κωδικοποίησης"
+msgstr ""
 
 #: admin/extensionstatus.php:231
 msgid "Done"
@@ -3869,75 +3863,71 @@ msgstr ""
 #: call_interface2.php:430 call.php:197 call.php:217 call.php:233 call.php:264
 #: call.php:312 call.php:383
 msgid "Call"
-msgstr "Κλήση"
+msgstr ""
 
 #: call_interface2.php:318 call.php:271
 msgid "Not on a call"
-msgstr "Όχι σε κλήση"
+msgstr ""
 
 #: call_interface2.php:330 call_interface2.php:446 call_interface2.php:451
 #: call_interface2.php:467 call_interface2.php:473 call.php:283 call.php:399
 #: call.php:404 call.php:420 call.php:426
 msgid "End case"
-msgstr "Τερματισμός περίπτωσης"
+msgstr ""
 
 #: call_interface2.php:355 call.php:308
 msgid "Press the call button to dial the number for this appointment:"
-msgstr "Πίεσε το πλήκτρο κλήσης για το σχηματισμό του αριθμού της περίπτωσης"
+msgstr ""
 
 #: call_interface2.php:358 call.php:311
 msgid "Number to call:"
-msgstr "Αριθμός για κλήση:"
+msgstr ""
 
 #: call_interface2.php:362 call_interface2.php:433 call.php:315 call.php:386
 msgid ""
 "Your VoIP extension is not enabled. Please close this window and enable VoIP "
 "by clicking once on the red button that says 'VoIP Off'"
 msgstr ""
-"Η VoIP extension δεν είναι ενεργοποιημένη. Παρακαλώ κλείστε το παράθυρο και "
-"ενεργοποιήστε κάνοντας άπαξ κλικ στο κόκκινο κουμπί που γράφει \"VoIP Off\""
 
 #: call_interface2.php:423 call.php:376
 msgid "Select phone number to dial:"
-msgstr "Επιλέξτε αριθμό τηλεφώνου για κλήση:"
+msgstr ""
 
 #: call_interface2.php:438 call_interface2.php:472 call.php:391 call.php:425
 msgid "The last call completed this call attempt"
-msgstr "Η προηγούμενη κλήση ολοκλήρωσε την προσπάθεια αυτής της κλήσης."
+msgstr ""
 
 #: call_interface2.php:442 call_interface2.php:465 call.php:395 call.php:418
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr ""
-"Πληκτρολογήστε έναν λόγο για αυτό το πόρισμα πριν την ολοκλήρωση της "
-"προσπάθειας"
 
 #: call_interface2.php:487 call.php:457
 msgid "Assign outcome"
-msgstr "Ανάθεση πορίσματος"
+msgstr ""
 
 #: call_interface2.php:492 call.php:461
 msgid "Error: Close window"
-msgstr "Σφάλμα: Κλείστε το παράθυρο."
+msgstr ""
 
 #: rs_answeringmachine.php:70 rs_answeringmachine_interface2.php:70
 msgid "Respondent Selection - Answering machine"
-msgstr "Επιλογή παραλήπτη - Αυτόματος τηλεφωνητής"
+msgstr ""
 
 #: rs_answeringmachine.php:84 rs_answeringmachine_interface2.php:84
 msgid "Do not leave a message, please hang up"
-msgstr "Μην αφήσετε μήνυμα, παρακαλώ κλείστε το τηλέφωνο"
+msgstr ""
 
 #: rs_answeringmachine.php:87 rs_answeringmachine_interface2.php:87
 msgid "End call with outcome: Business answering machine"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Επαγγελματικός αυτόματος τηλεφωνητής"
+msgstr ""
 
 #: rs_answeringmachine.php:92 rs_answeringmachine_interface2.php:92
 msgid "End call with outcome: Answering machine Message left"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Αυτόματος τηλεφωνητής Αφέθηκε μήνυμα"
+msgstr ""
 
 #: rs_answeringmachine.php:96 rs_answeringmachine_interface2.php:96
 msgid "End call with outcome: Answering machine No message left"
-msgstr "Τέλος κλήσης με αποτέλεσμα: Αυτόματος τηλεφωνητής Δεν αφέθηκε μήνυμα"
+msgstr ""
 
 #: rs_business.php:61 rs_business_interface2.php:61
 msgid "Respondent Selection - Business answers"
@@ -3953,15 +3943,15 @@ msgstr ""
 
 #: call.php:434 call.php:441
 msgid "Call Answered"
-msgstr "Η κλήση απαντήθηκε"
+msgstr ""
 
 #: call.php:448
 msgid "Not Answered"
-msgstr "Δεν απαντήθηκε"
+msgstr ""
 
 #: index.php:169 nocallavailable.php:88
 msgid "Call/Hangup"
-msgstr "Κλήση/Απόρριψη"
+msgstr ""
 
 #: index.php:174 index_interface2.php:236
 msgid "Arrow for expanding or contracting"
@@ -3973,7 +3963,7 @@ msgstr ""
 
 #: index.php:228 index_interface2.php:248
 msgid "Notes"
-msgstr "Σημειώσεις"
+msgstr ""
 
 #: index.php:246 index_interface2.php:264 contactdetails.php:76
 msgid "Contact details"
@@ -3981,7 +3971,7 @@ msgstr ""
 
 #: index.php:290 index_interface2.php:308
 msgid "Work history"
-msgstr "Ιστορικό εργασίας"
+msgstr ""
 
 #: index.php:298 index_interface2.php:316 project_info.php:67
 msgid "Project information"
@@ -3989,7 +3979,7 @@ msgstr ""
 
 #: index.php:314 index_interface2.php:325
 msgid "Info"
-msgstr "Πληροφορίες"
+msgstr ""
 
 #: rs_intro_interface2.php:80
 msgid "End call with outcome:"
@@ -4043,7 +4033,7 @@ msgstr ""
 
 #: respondent.php:171
 msgid "Show details"
-msgstr "Εμφάνιση λεπτομερειών"
+msgstr ""
 
 #: respondent.php:175 contactdetails.php:169
 msgid "Var"
@@ -4067,7 +4057,7 @@ msgstr ""
 
 #: supervisor.php:111
 msgid "You may now close this window"
-msgstr "Μπορείτε τώρα να κλείσετε αυτό το παράθυρο"
+msgstr ""
 
 #: supervisor.php:116
 msgid "Calling the supervisor, you may close this window"
@@ -4093,11 +4083,11 @@ msgstr ""
 
 #: endwork.php:51
 msgid "End of work"
-msgstr "Τέλος εργασίας"
+msgstr ""
 
 #: endwork.php:58
 msgid "Work has ended. That is it"
-msgstr "Η εργασία τελείωσε."
+msgstr ""
 
 #: endwork.php:76
 msgid "You have been unassigned from your extension"
@@ -4105,7 +4095,7 @@ msgstr ""
 
 #: endwork.php:81
 msgid "Go back to work"
-msgstr "Επιστροφή στην εργασία"
+msgstr ""
 
 #: nocallavailable.php:85
 msgid "No call available"
@@ -4160,6 +4150,3 @@ msgstr ""
 #: rs_quota_end.php:78 rs_quota_end.php:84
 msgid "End call with outcome: Quota filled"
 msgstr ""
-
-#~ msgid "Appointment:"
-#~ msgstr "Ραντεβού:"

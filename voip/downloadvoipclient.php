@@ -36,7 +36,7 @@ include_once("../db.inc.php");
 /** 
  * Authentication
  */
-include ("../auth-interviewer.php");
+require ("../auth-interviewer.php");
 
 include_once("../functions/functions.operator.php");
 

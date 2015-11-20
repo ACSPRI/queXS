@@ -41,7 +41,7 @@ include ("../config.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /*
  * XHTML file
@@ -85,16 +85,21 @@ include ("../functions/functions.operator.php");
 
 	    <ul class="nav navbar-nav pull-right">
 		  <li class=" ">
+            <a href="../index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
+              <i class="fa fa-sign-in fa-lg fa-fw "></i><?php print T_("Operator panel");?>
+            </a>
+          </li>	
+		  <li class=" ">
             <a href="../client/index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
-              <i class="fa fa-user-secret fa-lg fa-fw "></i><?php print T_("Client panel");?>           
+              <i class="fa fa-user-secret fa-lg fa-fw "></i><?php print T_("Client panel");?>
             </a>
           </li>
-          <li class="dropdown pull-right user-data">            
+		  <li class="dropdown pull-right user-data">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" min-width: 160px;">
-              <i class="fa fa-user fa fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
+              <i class="fa fa-user fa-fw "></i><?php print T_("Logged as:") . "&ensp;" . $username ;?>           
             </a>
 			<!--- User menu // not connected to pages so not working yet //  could be hidden -->
-       <ul class="dropdown-menu" role="menu">
+			<ul class="dropdown-menu" role="menu">
               <li><a href="?g=5&amp;page=operatorlist.php?edit=<?php print get_operator_id(); ?>"><i class="fa fa-cogs fa-fw "></i>&ensp;<?php print T_("Settings"); ?></a></li>
 <!---			  <li><a href="../screenloc.php"><i class="fa fa-lock fa-fw "></i>&ensp;<?php print T_("Lock Screen"); ?></a></li> -->
               <li><a href="../include/limesurvey/admin/admin.php?action=logout"><i class="fa fa-sign-out fa-fw "></i>&ensp;<?php print T_("Logout"); ?> </a></li>
@@ -117,6 +122,7 @@ include ("../functions/functions.operator.php");
 				<li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-file-text-o lime fa-fw"></i><?php print T_("Create an instrument in Limesurvey") ;?></a></li>
                 <li><a href="?g=1&amp;page=new.php"><i class="fa fa-plus-circle fa-fw"></i><?php print T_("Create a new questionnaire") ;?></a></li>
                 <li><a href="?g=1&amp;page=questionnairelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Questionnaire management") ;?></a></li>
+			    <li><a href="?g=1&amp;page=set_outcomes.php?qid=0"><i class="fa fa-list-ol fa-fw"></i><?php print T_("Set questionnaire outcomes") ;?></a></li>
                 <li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php"><i class="fa fa-lemon-o lime fa-fw"></i><?php print T_("Administer instruments with Limesurvey") ;?></a></li>
                 <li><a href="?g=1&amp;page=questionnaireprefill.php"><i class="fa fa-thumb-tack fa-fw"></i><?php print T_("Pre-fill questionnaire") ;?></a></li>
               </ul>
@@ -180,8 +186,9 @@ include ("../functions/functions.operator.php");
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-gear"></i><span><?php print T_("System settings") ;?></span></a>
               <ul style="<?php if ($g == 9) echo "display:block";?>">
+			    <li><a href="?g=9&amp;page=set_outcomes.php?default"><i class="fa fa-list-ol fa-fw"></i><?php print T_("Set default outcomes") ;?></a></li>
                 <li><a href="?g=9&amp;page=timezonetemplate.php"><i class="fa fa-globe fa-fw"></i><?php print T_("Set default timezone list") ;?></a></li>
-				        <li><a href="?g=9&amp;page=availabilitygroup.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Manage Time slots") ;?></a></li>
+				<li><a href="?g=9&amp;page=availabilitygroup.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Manage Time slots") ;?></a></li>
                 <li><a href="?g=9&amp;page=shifttemplate.php"><i class="fa fa-calendar fa-fw"></i><?php print T_("Set default shift times") ;?></a></li>
                 <li><a href="?g=9&amp;page=callrestrict.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Set call restriction times") ;?></a></li>
                 <li><a href="?g=9&amp;page=centreinfo.php"><i class="fa fa-university fa-fw"></i><?php print T_("Set centre information") ;?></a></li>

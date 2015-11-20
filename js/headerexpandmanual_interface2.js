@@ -6,20 +6,20 @@ $(document).ready(function(){
 
 function headerforcecontract()
 {
-	$("#headerexpandimage").attr('src',"./images/arrow-down-2.jpg");
+	$("#headerexpandimage").attr('class',"fa fa-lg fa-fw fa-toggle-down ");
 	headercontract();
 }
 
 function headertogglemanual()
 {
-	if ($("#headerexpandimage").attr('src') == './images/arrow-up-2.jpg')
+	if ($("#headerexpandimage").attr('class') == 'fa fa-lg fa-fw fa-toggle-up')
 	{
-		$("#headerexpandimage").attr('src',"./images/arrow-down-2.jpg");
+		$("#headerexpandimage").attr('class',"fa fa-lg fa-fw fa-toggle-down");
 		headercontract();
 	}
 	else
 	{
-		$("#headerexpandimage").attr('src',"./images/arrow-up-2.jpg");
+		$("#headerexpandimage").attr('class',"fa fa-lg fa-fw fa-toggle-up");
 		headerexpand();
 	}
 

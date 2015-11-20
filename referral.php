@@ -42,7 +42,7 @@ include ("db.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 /**
@@ -198,26 +198,26 @@ if (isset($_POST['submit']))
 
 		if ($db->CompleteTrans())
 		{
-			$msg = T_("Created referral case - you may now close this window");
+			$msg = "<p class='alert alert-info'>" . T_("Created referral case - you may now close this window") . "</p>";
 		}
 		else
 		{
-			$msg = T_("Failed to create referral case - please check your input and try again");
+			$msg = "<p class='alert alert-warning'>" . T_("Failed to create referral case - please check your input and try again") . "</p>";
 		}
 
 	}
 	else
 	{
-		$msg = T_("You must supply a primary phone number");
+		$msg = "<p class='alert alert-warning'>" . T_("You must supply a primary phone number") . "</p>";
 	}
 }
 
 $case_id = get_case_id($operator_id);
 
-$js = "js/window.js";
-if (browser_ie()) $js = "js/window_ie6.js";
+if (isset($_GET['interface2'])) { if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js"; } 
+else { if (browser_ie()) $js = "js/window_ie6.js"; else $js = "js/window.js"; }
 
-xhtml_head(T_("Referral"),true,array("css/call.css"),array($js));
+xhtml_head(T_("Referral"),false,array("include/bootstrap/css/bootstrap.min.css"),array($js));
 
 $sql = "SELECT q.referral
 	FROM questionnaire as q, `case` as c
@@ -228,13 +228,13 @@ $sc = $db->GetOne($sql);
 
 if ($sc == 1)
 {
-	print "<div class='status'>" . T_("Create referral") . "</div>";
-	if (!empty($msg)) print "<p>$msg</p>";
-	print "<form action='?' method='post'>";
+	print "<div class='col-md-12 '><h3>" . T_("Create referral") . "</h3>";
+	if (!empty($msg)) print $msg;
+	print "<form action='?' method='post' class='form-horizontal'>";
 
 	//Create a list of sample records matching this current case 
 
-	$sql = "SELECT sivr.var,t.description,sivr.type
+	$sql = "SELECT sivr.var,t.description,sivr.type, sv.val 
 		FROM `sample_import_var_restrict` as sivr,`sample_var` as sv, `case` as c, `sample_var_type` as t
 		WHERE c.case_id = '$case_id'
 		AND sv.sample_id = c.sample_id
@@ -246,25 +246,29 @@ if ($sc == 1)
 	foreach ($rs as $r)
 	{
 		$var = $r['var'];
-		print "<div><label for='v_$var'>";
+		print "<label for='v_$var' class='control-label'>";
 
 		if ($r['type'] != 1)
 				print T_($r['description']);		
 		else
 				print $var;
 
-		print "</label><input type='text' name='v_$var' id='v_$var' ";
+		print "</label><div><input type='text' name='v_$var' id='v_$var' class='form-control'";
 
 		if (isset($_POST['v_' . $var]))
 			print "value='" . $_POST['v_' .$var] . "' ";
 		
+		if ($r['type'] == 3) print "required";
+		
 		print " /></div>";
 	}
 
-	print "<div><label for='makecase'>" . T_("Call this new referral immediately after this case?") .  "</label><input type='checkbox' name='makecase' id='makecase' checked='checked'/></div>";
+	print "<br/><p><label for='makecase' class='control-label pull-left'>" . T_("Call this new referral immediately after this case?") .  "&emsp;</label> <input type='checkbox' name='makecase' id='makecase' checked='checked'/></p>";
 
-	print "<div><input type='submit' value='" . T_("Create referral") . "' name='submit' id='submit'/></div>";
-	print "</form>";
+	print "<input type='submit' value='" . T_("Create referral") . "' name='submit' id='submit' class='btn btn-primary'/>";
+		print "<div class='col-md-6 pull-right'><a class='btn btn-default pull-right' href='javascript:parent.closePopup();'>".T_("Cancel")."</a></div><div class='clearfix'></div>";
+
+	print "</form></div>";
 }
 else
 {
