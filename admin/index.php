@@ -85,6 +85,11 @@ include ("../functions/functions.operator.php");
 
 	    <ul class="nav navbar-nav pull-right">
 		  <li class=" ">
+            <a href="../" class=" "  target="_blanc" style="padding-top: 20px; ">
+              <i class="fa fa-lg fa-users"></i><?php print T_("Operator panel");?>           
+            </a>
+          </li>
+ 	  <li class=" ">
             <a href="../client/index.php" class=" "  target="_blanc" style="padding-top: 20px; ">
               <i class="fa fa-user-secret fa-lg fa-fw "></i><?php print T_("Client panel");?>           
             </a>
