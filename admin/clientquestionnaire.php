@@ -140,18 +140,18 @@ if (isset($_POST['submit']))
 }
 
 /* delete client from quexs and lime tables*/  //requires data-toggle-confirmation to finalize
-if (isset($_POST['delete']) && isset($_POST['uid']))
+if (isset($_GET['delete']) && isset($_GET['uid']) && isset($_GET['uname']))
 {
-	$client_id = intval($_POST['delete']);
-	$uid = intval($_POST['uid']);
-	$uname = $_POST['uname'];
-	
+	$client_id = intval($_GET['delete']);
+	$uid = intval($_GET['uid']);
+	$uname = $_GET['uname'];
+
 	global $db;
-	
-	$db->StartTrans();
-	
+
 	if ($uid !=1){ //double protect superadmin from being deleted
-	
+		
+		$db->StartTrans();
+		
 		$sql = "DELETE FROM " . LIME_PREFIX . "templates_rights WHERE `uid` = '$uid' AND `uid` != 1";
 		$db->Execute($sql);
 		
@@ -164,20 +164,19 @@ if (isset($_POST['delete']) && isset($_POST['uid']))
 		$sql = "DELETE FROM " . LIME_PREFIX . "users WHERE `uid` = '$uid' AND `uid` != 1";
 		$db->Execute($sql);
 		
+		$sql = "DELETE FROM `client_questionnaire` WHERE `client_id` = '$client_id' ";
+		$db->Execute($sql);
+		
+		$sql = "DELETE FROM `client` WHERE `client_id` = '$client_id'";
+		$db->Execute($sql);
+		
+		$db->CompleteTrans();
 	}
-
-	$sql = "DELETE FROM `client_questionnaire` WHERE `client_id` = '$client_id' ";
-	$db->Execute($sql);
-	
-	$sql = "DELETE FROM `client` WHERE `client_id` = '$client_id'";
-	$db->Execute($sql);
-	
-	$db->CompleteTrans();
 	
 	if ($db->CompleteTrans()) $msg = "<p class='alert alert-info'>". T_("Client with username $uname deleted") . "</p>";
-		else $msg = "<p class='alert alert-warning'>". T_("ERROR deleting client with username $uname") . "</p>";
+	else $msg = "<p class='alert alert-warning'>". T_("ERROR deleting client with username $uname") . "</p>";
 	
-	unset($_POST['delete'], $_POST['uid'], $_POST['uname'], $client_id, $username, $uid);
+	unset($_GET['delete'], $_GET['uid'], $_GET['uname'], $client_id, $username, $uid);
 }
 
 

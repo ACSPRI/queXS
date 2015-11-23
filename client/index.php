@@ -78,10 +78,9 @@ if ($client_id)
 		print "<p class='alert alert-info'>" . T_("There are no questionnaires assigned to you") . "</p>";
 	else
 	{
-		print "<div class='col-lg-2'>";
-		
 		foreach($qs as $q)
 		{
+			print "<div class='col-lg-2'>";
 			print "<div class=' '><h2>{$q['description']}</h2>";
 
 			$questionnaire_id = $q['questionnaire_id'];
@@ -116,22 +115,25 @@ if ($client_id)
 			if (!empty($rs))
 			{
 				translate_array($rs,array("des"));
-				xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"));
+				xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"),array("count"));
 			}
 			else print "<p class='alert alert-info'>" . T_("No outcomes recorded for this questionnaire") . "</p>";
 
-			print "</br><a href=\"?qsid=$qsid\" class=\"btn btn-default btn-block btn-lime\">" . T_("View summary results") . "</a></div>";
+			print "</br><a href=\"?qsid=$qsid\" class=\"btn btn-default btn-block btn-lime\">" . T_("View summary results") . "</a></div></div>";
 		}
 		
-		if (isset($_GET['qsid'])) $qsid = intval($_GET['qsid']); 
-		$page = LIME_URL . "admin/admin.php?action=browse&amp;sid=$qsid"; 
-?>		
-		</div>
+		if (isset($_GET['qsid'])) {
+			$qsid = intval($_GET['qsid']);
+			$page = LIME_URL . "admin/admin.php?action=browse&amp;sid=$qsid"; }
+		else $page ='';
 		
-		<div class="col-lg-10" id=" " style="height:820px;">
+		if ($page){
+?>				
+		<div class="col-lg-10 pull-right" id=" " style="height:820px;">
 			<?php xhtml_object($page,' ',"full"); ?>
 		</div>	
 <?php
+		}
 
 	}
 }
