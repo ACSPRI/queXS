@@ -124,6 +124,9 @@ if (isset($_POST['client']) && !empty($_POST['client']))
 		}
 	}
 	else $a = T_("Username") . " " . $client . ". " . T_("is already in use");
+	
+	$client =""; $firstname="";$lastname="";$email=""; $time_zone_name="";
+	unset($_POST['client'],$_POST['password'],$_POST['lastname'],$_POST['firstname'],$_POST['email'],$_POST['Time_zone_name']);
 }
 
 $header = T_("Add a client");
