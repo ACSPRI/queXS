@@ -149,7 +149,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
 		foreach($rs as $r)
 		{
-			add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
+		  set_time_limit(30);			
+		  add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
 		}
 
 		$db->CompleteTrans();

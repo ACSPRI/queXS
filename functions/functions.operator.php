@@ -448,28 +448,28 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 	
 			if ($addlimeattributes)
 			{
-				$lfirstname = $db->GetOne("SELECT sv.val 
+				$lfirstname = $db->qstr($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
-								AND s.type = '6'");
+								AND s.type = '6'"));
 
-				$llastname = $db->GetOne("SELECT sv.val 
+				$llastname = $db->qstr($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
-								AND s.type = '7'");
+								AND s.type = '7'"));
 
-				$lemail = $db->GetOne("SELECT sv.val 
+				$lemail = $db->qstr($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
-								AND s.type = '8'");
+								AND s.type = '8'"));
 
 			}
 	
 			$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
-			VALUES (NULL,'$lfirstname','$llastname','$lemail','$token','".DEFAULT_LOCALE."','N','N',NULL)";
+			VALUES (NULL,$lfirstname,$llastname,$lemail,'$token','".DEFAULT_LOCALE."','N','N',NULL)";
 
 			$db->Execute($sql);
 
@@ -485,7 +485,6 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 					WHERE sid = '$lime_sid'";
 
 				$names = $db->GetOne($sql);
-
     				$attdescriptiondata=explode("\n",$names);
     				$atts=array();
 
@@ -503,8 +502,10 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 								AND sv.sample_id = '$sample_id'
 								AND s.var LIKE '$val'");
 
+					$lval = $db->qstr($lval);
+		
 					$sql = "UPDATE " . LIME_PREFIX . "tokens_$lime_sid
-						SET $key = '$lval'
+						SET $key = $lval
 						WHERE tid = '$tid'";
 
 					$db->Execute($sql);
