@@ -21,7 +21,8 @@
 if (!isset($dbprefix) || isset($_REQUEST['dbprefix'])) {die("Cannot run this script directly");}
 
 // Read the session name from the settings table
-$usresult = getGlobalSetting('SessionName');
+//$usresult = getGlobalSetting('SessionName');
+$usresult = LS_SESSION_NAME; //queXS Addition
 if ($usresult)
 {
     @session_name($usresult);

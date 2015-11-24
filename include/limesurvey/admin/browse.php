@@ -81,6 +81,7 @@ else //SURVEY MATCHING $surveyid DOESN'T EXIST
 //OK. IF WE GOT THIS FAR, THEN THE SURVEY EXISTS AND IT IS ACTIVE, SO LETS GET TO WORK.
 
 $surveyinfo=getSurveyInfo($surveyid);
+include_once("../quexs.php");
 require_once(dirname(__FILE__).'/sessioncontrol.php');
 
 // Set language for questions and labels to base language of this survey
@@ -787,7 +788,6 @@ elseif ($subaction == "all")
 $quexsfilterstate = questionnaireSampleFilterstate();
 
     //queXS Addition
-    include_once("../quexs.php");
     $browseoutput .= "&nbsp;".T_("Questionnaire and Sample selection:")."<select id='quexsfilterinc' name='quexsfilterinc' onchange='javascript:document.getElementById(\"limit\").value=\"\";submit();'>\n"
     ."\t<option value='all' >".T_("All queXS questionnaires and samples associated with this instrument")."</option>\n"
     . get_questionnaire_sample_list($surveyid,$quexsfilterstate)

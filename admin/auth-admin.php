@@ -39,18 +39,13 @@ include_once(dirname(__FILE__) . "/../config.inc.php");
  */
 include_once(dirname(__FILE__) . "/../db.inc.php");
 
-
-//get session name from DB
-//
-$sql = "SELECT stg_value
-        FROM " . LIME_PREFIX . "settings_global
-        WHERE stg_name = 'SessionName'";
-
-session_name($db->GetOne($sql));
+session_name(LS_SESSION_NAME);
 
 session_set_cookie_params(0,QUEXS_PATH);
 
-session_start();
+if ((defined('PHP_SESSION_ACTIVE') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) { 
+ session_start();
+}
 
 //check if the session exists or loginID not set
 if (session_id() == "" || !isset($_SESSION['loginID']))

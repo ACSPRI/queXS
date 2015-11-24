@@ -483,6 +483,7 @@ else
 		}
 
 
+                killSession();
                 header("Location: {$url}");
             }
 

@@ -197,8 +197,14 @@ if (isset($_GET['qid'])) {
 /* for default outcomes  */
 if (isset($_GET['default'])) {
 	
-	$sql = "SELECT o.*, ot.description as type, 
-			CONCAT('<input type=\'number\' name=\"delay[', o.outcome_id ,']\" class=\'form-control text-right\' style=\'width:7em;\' max=50000 min=0 required value=\'', o.default_delay_minutes ,'\' />') as `delay`,
+	/* allow delay edit only to superadmins (currenlty admin) */
+	if ($_SESSION['user'] === "admin"){ 
+		$delay = "CONCAT('<input type=\'number\' name=\"delay[', o.outcome_id ,']\" class=\'form-control text-right\' style=\'width:7em;\' max=50000 min=0 required value=\'', o.default_delay_minutes ,'\' />') ";
+	}
+	else {
+		$delay = "CONCAT('<span class=\'pull-right\' >', o.default_delay_minutes ,'&emsp;</span>')";
+	}	
+	$sql = "SELECT o.*, ot.description as type, $delay as `delay`,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.tryanother = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as tryanother,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.tryagain = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as tryagain,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.contacted = 1 THEN  'primary\">" . T_("Yes") . "' ELSE 'default\">" . T_("No") . "' END , '</span></h4>') as contacted,
@@ -213,9 +219,6 @@ if (isset($_GET['default'])) {
 
 	$row = array("outcome_id","description","select","type","delay","contacted","tryanother","tryagain","eligible","require_note");
 	$hdr = array(T_("Outcome ID"),T_("Description"),T_("Default"),T_("Outcome type"),T_("Delay, min"),T_("Contacted"),T_("Try another"),T_("Try again"),T_("Eligible"),T_("Require note"));
-	
-	/* allow delay edit only to superadmins (currenlty admin) */
-	if ( $_SESSION['user'] != "admin"){ unset($row[4]); unset($hdr[4]); } 
 	
 	$hid  = "default";
 	$value = "";
