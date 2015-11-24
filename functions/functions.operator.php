@@ -442,9 +442,9 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		if ($lime_sid)
 		{
-			$lfirstname = '';
-			$llastname = '';
-			$lemail = '';
+			$lfirstname = "''";
+			$llastname = "''";
+			$lemail = "''";
 	
 			if ($addlimeattributes)
 			{
