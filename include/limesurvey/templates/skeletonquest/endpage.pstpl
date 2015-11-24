@@ -1,0 +1,16 @@
+</div><!--endcontent-->
+<div id="footer">
+	<ul id="credits">
+	<li class="first">
+		<a href="http://www.limesurvey.org/" title="LimeSurvey Website">Powered by LimeSurvey</a>
+	</li>
+	<li>
+	</li>
+	<li class="last">
+		Template &copy; 2012 <a href="http://www.sondages.pro" title="Vos enquêtes sur internet">Sondages Pro</a> distributed under <a href="http://www.gnu.org/licenses/gpl.txt">GPL licence</a> 
+	</li>
+	</ul>
+</div>
+</div><!-- end container-->
+<script type="text/javascript" src="{TEMPLATEURL}sortable-question.js"></script>
+<script type="text/javascript" src="{TEMPLATEURL}template.js"></script>

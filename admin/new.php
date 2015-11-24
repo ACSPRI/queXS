@@ -268,7 +268,19 @@ if (!empty($surveys)){?>
 			if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
 				while (false !== ($entry = readdir($handle))) {
 					if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
-						echo "<option value=\"$entry\">$entry</option>";
+						$default = "";
+						if ($entry == 'skeletonquest') $default = "selected=\"selected\"";
+						echo "<option value=\"$entry\" $default>$entry</option>";
+					}
+				}
+				closedir($handle);
+			}
+			if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/upload/templates")) {
+				while (false !== ($entry = readdir($handle))) {
+					if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/upload/templates/" . $entry)){
+						$default = "";
+						if ($entry == 'skeletonquest') $default = "selected=\"selected\"";
+						echo "<option value=\"$entry\" $default>$entry</option>";
 					}
 				}
 				closedir($handle);

@@ -1,0 +1,125 @@
+/* This file is part of Lime Survey Template :a free template
+    you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This template is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+body{direction:rtl;}
+ul ul, ul ol,
+ol ol, ol ul { margin: 4px 30px 5px 0; }
+/*.hide{right:-999999px}*/
+/*#progress-wrapper #progress-pre{float:right;text-align:left;margin:0 0 0 5px}*/
+/*#progress-wrapper .ui-widget-content{float:right;text-align:right;}*/
+/*#progress-wrapper #progress-post{float:right;text-align:right;}*/
+.tools input,.tools a,input.submit,.question button,input[type="submit"],input[type="reset"],input[type="button"],.navigator input,.navigator button
+{
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #ccc;
+}
+.tools input:hover,.tools a:hover,.navigator input:hover,input.submit:hover,.question button:hover,input[type="submit"]:hover,input[type="reset"]:hover,input[type="button"]:hover,.navigator input:hover,.navigator button:hover,.tools input:focus,.tools a:focus,.navigator input:focus,input.submit:focus,input[type="submit"]:focus,input[type="reset"]:focus,input[type="button"]:focus,.navigator input:focus,.navigator button:focus
+  {
+    border-left: 1px solid #888;
+    border-right: 1px solid #aaa;
+  }
+.tools input:active,.tools a:active,.navigator input:active,input.submit:active,.question button:active,input[type="submit"]:active,input[type="reset"]:active,input[type="button"]:active,.navigator input:active,.navigator button:active
+  {
+    border-left: 1px solid #888;
+    border-right: 1px solid #aaa;
+  }
+h2#surveytitle{text-align:right;}
+ul.tools li{margin-right:0;margin-left:1em;}
+#surveylist{text-align: right;}
+.question-help img{margin:1px 1px 5px 5px;}
+table.question tbody th.answertext,table.question tbody th.arraycaptionleft{text-align:left;}
+table.question tbody th.answertextright{text-align:right;}
+.list-with-comment .list, .list-with-comment p.select
+{
+    float: right;
+}
+.list-with-comment .list p
+{
+    text-align: right;
+}
+.list-with-comment .comment
+{
+	text-align: right;
+	float: right;
+}
+@media screen and (max-width: 440px) {
+    .list-with-comment .list
+    , .list-with-comment .select
+    , .list-with-comment .comment
+    {
+	    text-align:right;
+    }
+}
+.numeric-multi ul.computed
+{
+	float:right;
+	padding-left: 2em;padding-right: 0;
+}
+.numeric-multi ul li label
+,.multiple-short-txt ul li label
+{
+	text-align:left;
+	}
+@media screen and (max-width: 440px) {
+.numeric-multi ul li label
+,.multiple-short-txt ul li label
+{
+	text-align:right;
+	}
+}
+.numeric-multi ul li span.input
+,.multiple-opt-comments ul li span.comment
+,.multiple-short-txt ul li span
+{
+	text-align: right;
+}
+.ie6 .numeric-multi ul li label,.ie7 .numeric-multi ul li label
+,.ie6 .multiple-opt-comments ul li span.option,.ie7 .multiple-opt-comments ul li span.option
+,.ie6 .multiple-short-txt ul li label,.ie7 .multiple-short-txt ul li label
+{
+	clear:right;
+	float:right; 
+}
+.multiple-opt .answers-wrapper ul li.other input.text
+  {margin-left:0;margin-right:1em;}
+.multiple-opt-comments .answers-wrapper ul li label
+  {border-width:1px 1px 0 0;}
+.multiple-opt-comments  .answers-wrapper ul .comment
+    {border-width:1px 0 0 1px;}
+.list-radio .answers-wrapper ul li.other label{
+    padding-left:0;
+}
+.multiple-opt .answers-wrapper ul li input.checkbox
+, .list-radio .answers-wrapper ul li input.radio
+, .choice-5-pt-radio .answers-wrapper ul li input.radio
+, .yes-no .answers-wrapper ul li input.radio
+, .gender .answers-wrapper ul li input.radio
+, .list-radio-flexible .answers-wrapper ul li input.radio
+, .list-with-comment .answers-wrapper ul li input.radio
+  {
+    right: 5px;
+    }
+  .multiple-opt-comments .answers-wrapper ul li input.checkbox
+    {float:right;}
+.ie6 .multiple-opt .answers-wrapper ul li input.checkbox,.ie6.list-radio .answers-wrapper ul li input.radio,.ie6.choice-5-pt-radio .answers-wrapper ul li input.radio,.ie6.yes-no .answers-wrapper ul li input.radio,.ie6.gender .answers-wrapper ul li input.radio,.ie6.list-radio-flexible .answers-wrapper ul li input.radio,.ie6.list-with-comment .answers-wrapper ul li input.radio
+,.ie7 .multiple-opt .answers-wrapper ul li input.checkbox,.ie7.list-radio .answers-wrapper ul li input.radio,.ie7.choice-5-pt-radio .answers-wrapper ul li input.radio,.ie7.yes-no .answers-wrapper ul li input.radio,.ie7.gender .answers-wrapper ul li input.radio,.ie7.list-radio-flexible .answers-wrapper ul li input.radio,.ie7.list-with-comment .answers-wrapper ul li input.radio
+  {right:0;}
+ .text-short input
+,.text-short textarea
+,.text-long textarea
+,.text-huge textarea
+{
+/*    text-align:right;*/
+}

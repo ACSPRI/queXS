@@ -318,7 +318,7 @@ function getqtypelist($SelectedCode = "T", $ReturnType = "selector")
 */
 function isStandardTemplate($sTemplateName)
 {
-    return in_array($sTemplateName,array('quexs',
+    return in_array($sTemplateName,array('skeletonquest','quexs',
     'basic',
     'bluengrey',
     'business_grey',

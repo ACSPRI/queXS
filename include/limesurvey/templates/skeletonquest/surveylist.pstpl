@@ -1,0 +1,7 @@
+<div id="surveylist-container">
+    {LANGUAGECHANGER}
+	<h2 id="surveylistheading">{SURVEYLISTHEADING}</h2>
+	<ul id="surveylist">{SURVEYLIST}</ul>
+	<p id="surveycontact">{SURVEYCONTACT}</p>
+</div>
+
