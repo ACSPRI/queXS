@@ -42,7 +42,7 @@ $js_foot = array(
 "../js/new.js",
 "../js/custom.js"
 				);
-global $db;	
+global $db;	$cl=""; $name=""; $message="";
 
 xhtml_head(T_("Create a new questionnaire"),true,$css,$js_head); 
 
