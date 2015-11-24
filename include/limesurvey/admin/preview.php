@@ -18,6 +18,7 @@
 $LEMdebugLevel=0;
 
 include_once("login_check.php");
+include_once("../quexs.php");
 require_once(dirname(__FILE__).'/sessioncontrol.php');
 
 if (!isset($surveyid)) {$surveyid=returnglobal('sid');}

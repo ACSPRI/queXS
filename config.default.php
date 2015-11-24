@@ -281,6 +281,11 @@ if (!defined('LDB_TYPE')) define('LDB_TYPE', DB_TYPE);
 if (!defined('COMPANY_NAME')) define ('COMPANY_NAME', 'queXS ');
 if (!defined('ADMIN_PANEL_NAME')) define ('ADMIN_PANEL_NAME',' Administration Panel');
 
+/** 
+ * Session name
+ * - If changed must also be changed in the lime_settings_global table
+ */
+if (!defined('LS_SESSION_NAME')) define ('LS_SESSION_NAME', 'ls28629164789259281352');
 
 /**
  * Debugging

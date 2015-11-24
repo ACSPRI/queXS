@@ -40,13 +40,7 @@ include_once("config.inc.php");
 include_once("db.inc.php");
 
 
-//get session name from DB
-//
-$sql = "SELECT stg_value
-        FROM " . LIME_PREFIX . "settings_global
-        WHERE stg_name = 'SessionName'";
-
-session_name($db->GetOne($sql));
+session_name(LS_SESSION_NAME);
 
 session_set_cookie_params(0,QUEXS_PATH);
 

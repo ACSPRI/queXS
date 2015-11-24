@@ -430,6 +430,16 @@ if (isset($_GET['modify']))
 	    }
 	    closedir($handle);
 	}
+	if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/upload/templates")) {
+	    while (false !== ($entry = readdir($handle))) {
+	        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/upload/templates/" . $entry)){
+	            echo "<option value=\"$entry\" ";
+		    if ($rs['lime_template'] == $entry) echo " selected=\"selected\" ";
+		    echo ">$entry</option>";
+	        }
+	    }
+	    closedir($handle);
+	}		
 ?>
 		</select>
 	</div>

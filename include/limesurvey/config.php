@@ -89,4 +89,3 @@ $siteadminemail = "quexs@acspri.org.au";
 //				'manage_label' => 1);
 //
 
-$sessionhandler     =  'db';

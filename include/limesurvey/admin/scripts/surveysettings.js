@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 function templatechange()
 {
-    standardtemplates=['quexs','basic','bluengrey','business_grey','citronade','clear_logo','default','eirenicon','limespired','mint_idea','sherpa','vallendar'];
+    standardtemplates=['skeletonquest','quexs','basic','bluengrey','business_grey','citronade','clear_logo','default','eirenicon','limespired','mint_idea','sherpa','vallendar'];
     if (in_array(this.value,standardtemplates))
     {
         $("#preview").attr('src',standardtemplaterooturl+'/'+this.value+'/preview.png');

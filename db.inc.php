@@ -47,10 +47,10 @@ if (!(include_once(ADODB_PATH . 'adodb.inc.php')))
 /**
  * Include ADODB session handling functions
  */
-if (!(include_once(ADODB_PATH . 'session/adodb-session2.php')))
-{
-	print "<p>ERROR: Please modify config.inc.php for ADODB_PATH to point to your ADODb installation</p>";
-}
+//if (!(include_once(ADODB_PATH . 'session/adodb-session2.php')))
+//{
+//	print "<p>ERROR: Please modify config.inc.php for ADODB_PATH to point to your ADODb installation</p>";
+//}
 
 define('ADODB_OUTP',"outputDebug");
 
@@ -75,7 +75,7 @@ if (DEBUG == true) $db->debug = true;
 $db->Execute("set names 'utf8'");
 
 //store session in database (see sessions2 table)
-ADOdb_Session::config(DB_TYPE, DB_HOST, DB_USER, DB_PASS, DB_NAME, array('table' => LIME_PREFIX . 'sessions'));
+//ADOdb_Session::config(DB_TYPE, DB_HOST, DB_USER, DB_PASS, DB_NAME, array('table' => LIME_PREFIX . 'sessions'));
 
 
 /**

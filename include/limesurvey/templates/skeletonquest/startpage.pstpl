@@ -1,0 +1,28 @@
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>{SURVEYNAME} {GROUPNAME}</title>
+    <meta name="generator" content="LimeSurvey http://www.limesurvey.org" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" media="all" href="{TEMPLATEURL}jquery-custom.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="{TEMPLATEURL}sortable.css" />
+    {TEMPLATECSS}
+    <link rel="shortcut icon" href="{TEMPLATEURL}favicon.ico" />
+    {GOOGLE_ANALYTICS_JAVASCRIPT}
+</head>
+<!--[if lt IE 7 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie6 no-js"> <![endif]-->
+<!--[if IE 7 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie7 no-js"> <![endif]-->
+<!--[if IE 8 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie8 no-js"> <![endif]-->
+<!--[if IE 9 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie9 no-js"> <![endif]-->
+<!--[if gt IE 9]><!--><body id="body" class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} no-js"><!--<![endif]-->
+<script type='text/javascript'>/*<![CDATA[*/(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.getElementsByTagName('body')[0]);/*]]>*/</script>
+<div id="container">
+	<div id="head">
+		<div class="wrapper">
+		<!-- To add logo easily -->
+			<!--<a href="#" title=" " ><img src="{TEMPLATEURL}logo0.png" alt=" " class="logo"/></a>-->
+			<!--<a href="#" title=" " ><img src="{TEMPLATEURL}logo1.png" alt=" " class="logo"/></a>-->
+			<!--<a href="#" title=" " ><img src="{TEMPLATEURL}logo2.png" alt=" " class="logo"/></a>-->
+			<!--<a href="#" title=" " ><img src="{TEMPLATEURL}logo3.png" alt=" " class="logo"/></a>-->
+			<h1 id="sitename">{SURVEYNAME}</h1>
+		</div>
+	</div>
+	<div id="content" class="outerframe">
