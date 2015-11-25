@@ -385,7 +385,7 @@ if ($questionnaire_id != false)
 
     if ($qsqri != false)
     {
-      print "<div class='col-lg-3 pull-right'><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default'><i class='fa fa-arrow-up fa-lg text-primary'></i>&emsp;" . T_("To Row quotas") . "</a></div>";
+      print "<div class='col-lg-2 pull-right'><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default'><i class='fa fa-arrow-up fa-lg text-primary'></i>&emsp;" . T_("To Row quotas") . "</a></div>";
 	  print "<div class='clearfix form-group'></div>";
       print "<h2 class='col-lg-offset-4'>" . T_("Quota") . ": $qsqrid</h2>";
 	  
@@ -577,7 +577,7 @@ if ($questionnaire_id != false)
 
 		if (empty($r))
 		{
-			print "<p class='well text-info'>" . T_("Currently no row quotas") . "</p>";
+			print "<p class='well text-info col-lg-12'>" . T_("Currently no row quotas") . "</p>";
 		}
 		else
 		{
