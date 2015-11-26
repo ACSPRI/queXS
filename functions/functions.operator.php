@@ -57,9 +57,9 @@ function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
     for($i=0;$i<$length;$i++)
     {   
         if(isset($key))
-            $key .= $pattern{rand(0,$patternlength)};
+            $key .= $pattern{mt_rand(0,$patternlength)};
         else
-            $key = $pattern{rand(0,$patternlength)};
+            $key = $pattern{mt_rand(0,$patternlength)};
     }
     return $key;
 }
@@ -354,7 +354,18 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 {
 	global $db;
 
+	$ttries = 0;
+	
+	do {
 	$token = sRandomChars();
+
+		$sql = "SELECT count(*) as c
+			FROM `case`
+			WHERE token = '$token'";
+
+		$ttries++;
+	} while ($db->GetOne($sql) > 0 && $ttries < 10);
+	
 
 	$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
 		VALUES (NULL, $sample_id, $questionnaire_id, NULL, $operator_id, NULL, '$current_outcome_id','$token')";
@@ -715,6 +726,7 @@ function get_case_id($operator_id, $create = false)
  				//apn.appointment_id contains the id of an appointment if we are calling on an appointment
 			}
 			$r2 = $db->GetRow($sql);
+	
 	
 			if (empty($r2))
 			{
