@@ -67,8 +67,7 @@ $debug              =   0;                 // Set this to 1 if you are looking f
                                            // LimeSurvey developers: Set this to 3 to circumvent the restriction to remove the installation directory and full access to standard templates
                                            // or to change the password. If you set it to 3 then PHP STRICT warnings will be shown additionally.
 
-$defaultlang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-if (empty($defaultlang)) $defaultlang = DEFAULT_LOCALE;
+$defaultlang = isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) ? substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2) : DEFAULT_LOCALE;
 
 $defaulttemplate = "quexs";
 $siteadminemail = "quexs@acspri.org.au";
