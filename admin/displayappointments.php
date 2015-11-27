@@ -306,7 +306,7 @@ else {
 	WHERE q.enabled=1 AND si.enabled=1 AND a.end >= CONVERT_TZ(NOW(),'System','UTC') AND c.current_outcome_id !=10
 	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1)
 	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
-	ORDER BY a.start ASC";
+	GROUP BY c.case_id ORDER BY a.start ASC";
 	
 	$rs = $db->GetAll($sql);
 	if (!empty($rs)) {
