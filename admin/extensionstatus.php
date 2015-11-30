@@ -250,7 +250,7 @@ else
   
   if (!empty($rs))
   {
-    $sql = "SELECT o.operator_id as value, o.firstName as description
+    $sql = "SELECT o.operator_id as value, CONCAT(o.firstName,' ',o.lastname) as description
             FROM `operator` as o
             LEFT JOIN `extension` as e ON (e.current_operator_id = o.operator_id)
             WHERE e.extension_id IS NULL";
