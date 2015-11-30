@@ -149,6 +149,7 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 			}
 			if (isset($_GET['sample']))
 			{
+				$l['description'] = T_($l['description']);
 				echo "," . str_replace(","," ",$l['description']) . "," .$l['callattempts']."," .$l['calls']."," .$l['casenotes'].",".$l['interviewtimec'].",".$l['interviewtimel'].",".$l['lastnumber'].",".$l['lastcallstart'].",".$l['operatoru'].",".$l['shiftr'].",". $l['aapor_id'];
 			}
 			echo  "\n";
