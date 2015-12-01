@@ -309,7 +309,7 @@ if ($questionnaire_id != false)
 		AND s.enabled = 1";
 	$s = $db->GetAll($sql);
 	if (!empty($s)){
-		print "<h3 class='form-inline pull-left'>&emsp;&emsp;&emsp;" . T_("Sample") . ":&emsp;</h3>";
+		print "<h3 class='form-inline pull-left'>&emsp;" . T_("Sample") . ":&emsp;</h3>";
 
 	display_chooser($s,"sample","sample_import_id",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"pull-left");
 	} else {	
