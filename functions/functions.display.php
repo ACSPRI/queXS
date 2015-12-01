@@ -118,8 +118,7 @@ function display_sample_chooser($questionnaire_id, $sample_import_id = false, $d
 	if (!$disabled) $s = " AND si.enabled = 1 "; else $s = "";
 
 	if ($quota_reached){
-		$qr = " LEFT JOIN (questionnaire_sample_quota as qsq) on (si.sample_import_id  = qsq.sample_import_id)
-				LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (si.sample_import_id = qsqr.sample_import_id)";
+		$qr = " LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (si.sample_import_id  = qsq.sample_import_id and si.sample_import_id = qsqr.sample_import_id)";
 		$qrq = " AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
 				AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)";
 	}

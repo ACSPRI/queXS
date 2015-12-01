@@ -110,8 +110,7 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 		LEFT JOIN outcome as co ON (co.outcome_id = ca.outcome_id)
 		LEFT JOIN case_queue as cq ON (cq.case_id = c.case_id)
 		LEFT JOIN operator as oq ON (cq.operator_id = oq.operator_id)
-		LEFT JOIN (questionnaire_sample_quota as qsq) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id)
-		LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
+		LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id and s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
 		WHERE c.current_operator_id IS NULL $q $o
 		AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
 		AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
