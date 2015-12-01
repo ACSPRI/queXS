@@ -302,7 +302,7 @@ else {
 	LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id) 
 	LEFT JOIN operator AS ao ON ao.operator_id = a.require_operator_id 
 	LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id and s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
-	WHERE q.enabled=1 AND si.enabled=1 AND a.end >= CONVERT_TZ(NOW(),'System','UTC') AND ou.outcome_type IN (19,20,21,22)
+	WHERE q.enabled=1 AND si.enabled=1 AND a.end >= CONVERT_TZ(NOW(),'System','UTC') AND c.current_outcome_id IN (19,20,21,22)
 	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1)
 	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
 	GROUP BY c.case_id ORDER BY a.start ASC";
