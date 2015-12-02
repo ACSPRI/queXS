@@ -269,7 +269,7 @@ if (isset($_POST['submit']))
 		$newtext = T_("Start REC");
 		$js = "js/window_interface2.js";
 		if (browser_ie()) $js = "js/window_ie6_interface2.js";
-		xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"parent.closePopup();'");
+		xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
 
 	}
 
