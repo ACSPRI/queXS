@@ -133,7 +133,7 @@ function display_outcomes($contacted,$ca,$case_id)
 				WHERE contacted = '$contacted'
 				AND outcome_type_id != '5'
 				AND outcome_id IN ($outcomes)
-				AND outcome_id NOT IN(10,42,43,44,45)";
+				AND outcome_id NOT IN(10,32,42,43,44,45)"; //don't show completed if not, Lime_Quota_full if not, hide max calls as they supposed to be automatic or admin-privileged
 		}
 	}
 	$rs = $db->GetAll($sql);
