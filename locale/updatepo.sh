@@ -5,5 +5,6 @@ cd ..
 find . -type f -iname "*.php" | xgettext --keyword='T_' --keyword='TQ_' -o locale/messages.po -j -f -
 cd locale
 msgmerge -N quexs.pot messages.po > new.po
-mv new.po quexs.pot
+grep -v '#, php-format' new.po  > quexs.pot
+rm new.po 
 rm messages.po
