@@ -131,7 +131,9 @@ function display_outcomes($contacted,$ca,$case_id)
 			$sql = "SELECT outcome_id,description,contacted
 				FROM outcome
 				WHERE contacted = '$contacted'
-				AND outcome_id NOT IN(5,10,19,21,40,41,42,43,44,45)";
+				AND outcome_type_id != '5'
+				AND outcome_id IN ($outcomes)
+				AND outcome_id NOT IN(10,32,42,43,44,45)"; //don't show completed if not, Lime_Quota_full if not, hide max calls as they supposed to be automatic or admin-privileged
 		}
 	}
 	$rs = $db->GetAll($sql);
@@ -267,7 +269,7 @@ if (isset($_POST['submit']))
 		$newtext = T_("Start REC");
 		$js = "js/window_interface2.js";
 		if (browser_ie()) $js = "js/window_ie6_interface2.js";
-		xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"parent.closePopup();'");
+		xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
 
 	}
 

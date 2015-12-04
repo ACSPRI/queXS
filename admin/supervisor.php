@@ -137,8 +137,7 @@ xhtml_head(T_("Assign outcomes to cases"),true,$css,$js_head);
 <?php 
 $sql = "SELECT c.case_id as value, c.case_id as description, CASE WHEN c.case_id = '$case_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 	FROM  `case` AS c,  `outcome` AS o,  `questionnaire` AS q,  `sample` AS s,  `sample_import` AS si
-	LEFT JOIN (questionnaire_sample_quota as qsq) on (si.sample_import_id  = qsq.sample_import_id)
-	LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (si.sample_import_id = qsqr.sample_import_id)
+	LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (si.sample_import_id  = qsq.sample_import_id and si.sample_import_id = qsqr.sample_import_id)
 	WHERE c.current_outcome_id = o.outcome_id
 	AND q.questionnaire_id = c.questionnaire_id
 	AND s.sample_id = c.sample_id

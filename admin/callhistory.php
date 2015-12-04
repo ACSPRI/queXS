@@ -82,7 +82,7 @@ if ($operator_id)
 {
 	if (isset($_GET['questionnaire_id'])) $qid = $_GET['questionnaire_id'];
 	if (isset($_GET['sample_import_id'])) $sid = $_GET['sample_import_id']; 
-	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_FORMAT."') as start_date, DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as start_time, DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as descr, (CONCAT(r.firstName,' ',r.lastName)) as firstName, opp.firstName as opname,
+	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_FORMAT."') as start_date, DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as start_time, DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as descr, (CONCAT(r.firstName,' ',r.lastName)) as firstName, CONCAT(opp.firstName, ' ', opp.lastName) as opname,
 		(SELECT GROUP_CONCAT(cn1.note SEPARATOR '</br>&para;&emsp;' ) FROM `case_note`  as cn1 WHERE c.case_id = cn1.case_id GROUP BY cn1.case_id)as casenotes,";
 
 	if (isset($_GET['csv'])) $sql .= " c.case_id ";

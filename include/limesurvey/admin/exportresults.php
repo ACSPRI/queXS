@@ -671,7 +671,7 @@ for ($i=0; $i<$fieldcount; $i++)
     }
     elseif (substr($fieldinfo,0,10)=="attribute_")
     {
-        if ($type == "csv") {$firstline .= CSVEscape($fieldinfo)."$separator";}
+        if ($type == "csv") {$firstline .= "\"".$attributeFieldAndNames[$fieldinfo] ."\"$separator";}
         else {$firstline .= $attributeFieldAndNames[$fieldinfo]."$separator";}
     }
     elseif ($fieldinfo == "id")
@@ -838,7 +838,7 @@ if ($answers == "short") //Nice and easy. Just dump the data straight
     $rowcounter=0;
     while ($drow = $dresult->FetchRow())
     {
-        $drow=array_map('strip_tags_full',$drow);
+        $drow=array_map('strip_tags_full',$drow);		if (isset($drow['caseoutcome'])) $drow['caseoutcome'] = T_($drow['caseoutcome']);
         if($convertyto1 == "Y")
         //Converts "Y" to "1" in export
         {
