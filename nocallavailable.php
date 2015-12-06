@@ -47,7 +47,7 @@ require ("auth-interviewer.php");
 /** 
  * Language functions
  */
-include ("lang.inc.php");
+include_once ("lang.inc.php");
 
 if (isset($_GET['contact_phone']))
 {
