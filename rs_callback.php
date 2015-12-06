@@ -77,16 +77,12 @@ $sql = "SELECT rs_callback
 	WHERE questionnaire_id = '$questionnaire_id'";
 $r = $db->GetRow($sql);
 
-if (!empty($r['rs_callback'])) print "<p class='well'>" . template_replace($r['rs_callback'],$operator_id,$case_id) . "</p>";
+if (!empty($r['rs_callback'])) print "<div class='rstext well rs'>" . template_replace($r['rs_callback'],$operator_id,$case_id) . "</div>";
 
 print "<p class='rstext alert alert-info'>" . T_("Survey is") . "&emsp;" . round(limesurvey_percent_complete($case_id),1) . "&ensp;%&emsp;" . T_("complete") . "</p>";
 
 print "<div class=' '>
-		<div class='col-lg-2'><p class=''><a class='btn btn-default'";
-		
-	//to remove after rs_intro and rs_intro_interface2 merging //
-		if ( ALTERNATE_INTERFACE ) print "href=\"rs_intro_interface2.php\""; else print "href=\"rs_intro.php\"";
-	print ">" . T_("Go Back") . "</a></p></div>";
+		<div class='col-lg-2'><p><a class='btn btn-default' href=\"rs_intro.php\" >" . T_("Go Back") . "</a></p></div>";
 		
 	//filter displayed outcomes
 	if ($questionnaire_id){
@@ -96,7 +92,7 @@ print "<div class=' '>
 		if (in_array(8,$outcomes)){
 			$des = $db->GetAll("SELECT description FROM outcome WHERE outcome_id = 8");
 			print "<div class='col-lg-4'><p class=''><h4 class=' '>" . T_("End call with outcome:") . "</h4></p>
-					<p class=''><a class='btn btn-primary' ";
+					<p><a class='btn btn-primary' ";
 					if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=8&amp;endcase=endcase'\">";
 					else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=8');\">";
 			print  T_($des[0]['description']) . "</a></p></div>";
@@ -104,7 +100,7 @@ print "<div class=' '>
 	}
 		
 	print "<div class='col-lg-6'>
-			<p class=''><a href=\"" . (get_limesurvey_url($operator_id)) . "\" class='btn btn-primary' >" . T_("Yes - Continue where we left off") . "</a></p></div>";
+			<p><a href=\"" . (get_limesurvey_url($operator_id)) . "\" class='btn btn-primary' >" . T_("Yes - Continue where we left off") . "</a></p></div>";
 	
 print "</div>";
 

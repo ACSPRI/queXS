@@ -73,15 +73,10 @@ $sql = "SELECT rs_project_intro
 
 $r = $db->GetRow($sql);
 
-if (!empty($r['rs_project_intro'])) print "<p class='rstext well'>" . template_replace($r['rs_project_intro'],$operator_id,$case_id) . "</p>";
+if (!empty($r['rs_project_intro'])) print "<div class='rstext well rs'>" . template_replace($r['rs_project_intro'],$operator_id,$case_id) . "</div>";
 
 print "<div class=' '>
-		<div class='col-lg-2'><p class=''><a class='btn btn-default'";
-		
-		//to remove after rs_intro and rs_intro_interface2 merging //
-		if ( ALTERNATE_INTERFACE ) print "href=\"rs_intro_interface2.php\""; else print "href=\"rs_intro.php\"";
-		
-		print ">" . T_("Go Back") . "</a></p></div>";
+		<div class='col-lg-2'><p><a class='btn btn-default' href=\"rs_intro.php\" >" . T_("Go Back") . "</a></p></div>";
 			
 	if ($questionnaire_id){
 		//filter displayed outcomes
@@ -92,31 +87,31 @@ print "<div class=' '>
 		translate_array($des,array("description"));
 		
 		print "<div class='col-lg-6'>
-				<p class=''><h4 class=''>" . T_("End call with outcome:") . "</h4></p>";
+				<p><h4 class=''>" . T_("End call with outcome:") . "</h4></p>";
 			
 			if (in_array(8,$outcomes)){
-				print "<p class=''><a class='btn btn-primary' ";
+				print "<p><a class='btn btn-primary' ";
 					if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=8&amp;endcase=endcase'\">";
 					else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=29');\">";
 				print $des[0]['description'] . "</a></p>";
 			}
 
 			if (in_array(17,$outcomes)){
-				print "<p class=''><a class='btn btn-primary' ";
+				print "<p><a class='btn btn-primary' ";
 					if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=17&amp;endcase=endcase'\">";
 					else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=23');\">";
 				print $des[1]['description'] . "</a></p>";
 			}
 
 			if (in_array(30,$outcomes)){
-				print "<p class=''><a class='btn btn-primary' ";
+				print "<p><a class='btn btn-primary' ";
 					if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=30&amp;endcase=endcase'\">";
 					else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=24');\">";
 				print $des[2]['description'] . "</a></p>";
 			}
 		print "</div>";
 	}
-		print "<div class='col-lg-4'><p class=''><a class=\"btn btn-lg btn-primary\" href=\"" . (get_limesurvey_url($operator_id)) . "\">" . T_("Yes - Continue") . "</a></p></div>";
+		print "<div class='col-lg-4'><p><a class=\"btn btn-lg btn-primary\" href=\"" . (get_limesurvey_url($operator_id)) . "\">" . T_("Yes - Continue") . "</a></p></div>";
 print "</div>";
 
 

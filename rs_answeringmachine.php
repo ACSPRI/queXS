@@ -78,17 +78,13 @@ if ($leavemessage)
 	
 	$r = $db->GetRow($sql);
 	
-	if (!empty($r['rs_answeringmachine'])) print "<p class='rstext well'>" . template_replace($r['rs_answeringmachine'],$operator_id,$case_id) . "</p>";
+	if (!empty($r['rs_answeringmachine'])) print "<div class='rstext well rs'>" . template_replace($r['rs_answeringmachine'],$operator_id,$case_id) . "</div>";
 }
 else
 	print "<p class='rstext alert alert-warning'>" . T_("Do not leave a message, please hang up") . "</p>";
 
 print "<div class=' '>
-		<div class='col-lg-2'><p class=''><a class='btn btn-default'";
-		
-		//to remove after rs_intro and rs_intro_interface2 merging //
-			if ( ALTERNATE_INTERFACE ) print "href=\"rs_intro_interface2.php\""; else print "href=\"rs_intro.php\"";
-		print ">" . T_("Go Back") . "</a></p></div>";
+		<div class='col-lg-2'><p><a class='btn btn-default' href=\"rs_intro.php\" >" . T_("Go Back") . "</a></p></div>";
 		
 		if ($questionnaire_id){
 			$outcomes = $db->GetOne("SELECT q.outcomes FROM `questionnaire` as q WHERE q.questionnaire_id = $questionnaire_id");//
@@ -99,22 +95,22 @@ print "<div class=' '>
 			
 			print "<div class='col-lg-4'><p class=''><h4 class='text-right'>" . T_("End call with outcome:") . "</h4></p></div>
 					<div class='col-lg-6'>";
-				if (in_array(29,$outcomes)){ //preg_match('/29/',$outcomes)
-					print "<p class=''><a class='btn btn-primary' ";
+				if (in_array(29,$outcomes)){
+					print "<p><a class='btn btn-primary' ";
 						if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=29&amp;endcase=endcase'\">";
 						else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=29');\">";
 					print $des[2]['description'] . "</a></p>";
 				}
 
-				if (in_array(23,$outcomes) && $leavemessage){ //preg_match('/23/',$outcomes
-					print "<p class=''><a class='btn btn-primary' ";
+				if (in_array(23,$outcomes) && $leavemessage){
+					print "<p><a class='btn btn-primary' ";
 						if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=23&amp;endcase=endcase'\">";
 						else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=23');\">";
 					print $des[0]['description'] . "</a></p>";
 				}
 
-				if (in_array(24,$outcomes)){ //preg_match('/24/',$outcomes
-					print "<p class=''><a class='btn btn-primary' ";
+				if (in_array(24,$outcomes)){
+					print "<p><a class='btn btn-primary' ";
 						if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=24&amp;endcase=endcase'\">";
 						else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=24');\">";
 					print $des[1]['description'] . "</a></p>";

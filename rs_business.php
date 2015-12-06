@@ -57,19 +57,14 @@ if (AUTO_LOGOUT_MINUTES !== false) $js[] = "js/childnap.js";
 
 xhtml_head(T_("Respondent Selection") . " - " . T_("Business answers"),true,array("include/bootstrap/css/bootstrap.min.css","css/rs.css"), $js);
 
-
-print "<p class='rstext well '>" . T_("Sorry to bother you, I have called the wrong number") . "</p>";
+print "<p class='rstext well rs'>" . T_("Sorry to bother you, I have called the wrong number") . "</p>";
 
 print "<div class=' '>
-		<div class='col-lg-2'><p class=''><a class='btn btn-default'";
-		
-	//to remove after rs_intro and rs_intro_interface2 merging //
-	if ( ALTERNATE_INTERFACE ) print "href=\"rs_intro_interface2.php\""; else print "href=\"rs_intro.php\"";
-	print ">" . T_("Go Back") . "</a></p></div>";
+		<div class='col-lg-2'><p><a class='btn btn-default' href=\"rs_intro.php\" >" . T_("Go Back") . "</a></p></div>";
 		
 	$des = $db->GetAll("SELECT description FROM outcome WHERE outcome_id = 16");
-	print "<div class='col-lg-4'><p class=''><h4 class='text-right'>" . T_("End call with outcome:") . "</h4></p></div>
-			<div class='col-lg-6'><p class=''><a class='btn btn-primary' ";
+	print "<div class='col-lg-4'><p><h4 class='text-right'>" . T_("End call with outcome:") . "</h4></p></div>
+			<div class='col-lg-6'><p><a class='btn btn-primary' ";
 			if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=16&amp;endcase=endcase'\">";
 			else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=16');\">";
 	print  T_($des[0]['description']) . "</a></p></div>";

@@ -1307,20 +1307,12 @@ function get_respondentselection_url($operator_id,$escape = true,$interface2 = f
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
 			$url = LIME_URL . "index.php?interviewer=interviewer" . $amp . "loadall=reload" . $amp . "sid=$sid" . $amp . "token=$call_id" . $amp . "lang=" . DEFAULT_LOCALE;
 		else
-    {
-      if (is_respondent_selection($operator_id) === false)
-      {
-        $url = get_limesurvey_url($operator_id);
-        if (!$escape)
-          $url = str_replace("&amp;","&",$url);
-      }
-      else
-      {
-  			if ($interface2)
-  				$url = 'rs_intro_interface2.php';
-  			else
-          $url = 'rs_intro.php';
-      }
+		{
+			if (is_respondent_selection($operator_id) === false)
+			{
+				if (!$escape) $url = str_replace("&amp;","&",$url); else $url = get_limesurvey_url($operator_id);
+			}
+			else $url = 'rs_intro.php';
 		}
 	}
 
