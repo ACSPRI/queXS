@@ -57,33 +57,28 @@ include ("functions/functions.operator.php");
 
 $js = array("js/popup.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 
-if (AUTO_LOGOUT_MINUTES !== false)
-{  
-        $js[] = "js/childnap.js";
-}
+if (AUTO_LOGOUT_MINUTES !== false) $js[] = "js/childnap.js";
 
 
 
-xhtml_head(T_("Respondent Selection - Project Quota End"),true,array("css/rs.css","include/jquery-ui/jquery-ui.min.css"), $js);
+xhtml_head(T_("Respondent Selection") . " - " . T_("Project Quota End"),true,array("include/bootstrap/css/bootstrap.min.css","css/rs.css"), $js);
 
 $operator_id = get_operator_id();
 $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);
 
-print "<p class='rstext'>" . template_replace($_GET['message'],$operator_id,$case_id) . "</p>";
+if (isset($_GET['message']))  print "<p class='rstext well'>" . template_replace($_GET['message'],$operator_id,$case_id) . "</p>";
 
+$des = $db->GetOne("SELECT description FROM outcome WHERE outcome_id = 32");
+
+print "<p class=' '><h4 class=''>" . T_("End call with outcome:") . "<a class='btn btn-primary' "
 if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
-{
-?>
-<p class='rsoption'><a href="javascript:parent.location.href = 'index_interface2.php?outcome=32&endcase=endcase'"><?php  echo T_("End call with outcome: Quota filled"); ?></a></p>
-<?php 
-} 
+	print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=32&endcase=endcase'\">";
 else
-{
-?>
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=32');"><?php  echo T_("End call with outcome: Quota filled"); ?></a></p>
-<?php 
-}
+	print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=32');\">";
+
+print T_($des[0]['description']) . "</a></p>";
+
 
 xhtml_foot();
 

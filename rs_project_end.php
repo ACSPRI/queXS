@@ -20,11 +20,11 @@
  *	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *
- * @author Adam Zammit <adam.zammit@deakin.edu.au>
- * @copyright Deakin University 2007,2008
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @copyright Australian Consortium for Social and Political Research Inc 2007,2008
  * @package queXS
  * @subpackage user
- * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
+ * @link http://www.acspri.org.au/ queXS was writen for Australian Consortium for Social and Political Research Incorporated (ACSPRI)
  * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
  * 
  */
@@ -33,7 +33,6 @@
  * Configuration file
  */
 include ("config.inc.php");
-
 
 /**
  * Database file
@@ -58,23 +57,12 @@ include ("functions/functions.operator.php");
 
 $operator_id = get_operator_id();
 
-//check for alternate interface
-if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
-{
-	include_once("rs_project_end_interface2.php");
-	die();
-}
-
 $js = array("js/popup.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 
-if (AUTO_LOGOUT_MINUTES !== false)
-{  
-        $js[] = "js/childnap.js";
-}
+if (AUTO_LOGOUT_MINUTES !== false) $js[] = "js/childnap.js";
 
 
-
-xhtml_head(T_("Respondent Selection - Project end"),true,array("css/rs.css","include/jquery-ui/jquery-ui.min.css"), $js);
+xhtml_head(T_("Respondent Selection") . " - " . T_("Project end"),true,array("include/bootstrap/css/bootstrap.min.css","css/rs.css"), $js);
 
 $case_id = get_case_id($operator_id);
 $questionnaire_id = get_questionnaire_id($operator_id);
@@ -86,19 +74,33 @@ $sql = "SELECT rs_project_end
 
 $r = $db->GetRow($sql);
 
-print "<p class='rstext'>" . template_replace($r['rs_project_end'],$operator_id,$case_id) . "</p>";
+if (!empty($r['rs_project_end']))  print "<p class='rstext well'>" . template_replace($r['rs_project_end'],$operator_id,$case_id) . "</p>";
+
+print "<p class='well'>";
 
 if (!is_voip_enabled($operator_id) && AUTO_COMPLETE_OUTCOME)
 {
 	end_call($operator_id,10);
-	print "<p class='rsoption'>" . T_("Call automatically ended with outcome: Complete") . "</p>";
+
+	print T_("Call automatically ended with outcome:") . "&ensp;<b>" . T_("Complete") . "</b>"; 
+	//check for alternate interface
+	if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
+		print "&emsp;<a href=\"javascript:parent.location.href = 'index_interface2.php?endcase=endcase'\" class='btn btn-primary'>" . T_("End case") . "</a>";
 }
 else
-{
-	?>
-	<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=10');"><?php  echo T_("End call with outcome: Complete"); ?></a></p>
-	<?php 
+{	
+	print T_("End call with outcome:") . "&emsp;<a class='btn btn-primary' ";
+	//check for alternate interface
+	if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
+		print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=10&amp;endcase=endcase'\">"; 
+	else 
+		print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=10');\">";
+	
+	print T_("Complete") . "</a>";
 }
+
+print "</p>";
+
 xhtml_foot();
 
 ?>
