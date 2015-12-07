@@ -119,21 +119,22 @@ function display_outcomes($contacted,$ca,$case_id)
 		}
 		else
 		{
-			if ($contacted === false)
-			{
+			if ($contacted) $contacted = bigintval($contacted);
+			else{
 				print "<div class=\"form-group\" ><a href=\"?contacted=1\" class=\"btn btn-info\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\">".T_("CONTACTED")."</a>";
 				print "<a href=\"?contacted=0\" class=\"btn btn-default\" style=\"margin-left: 30px; margin-right: 15px; min-width: 150px;\">".T_("NOT CONTACTED")."</a></div>";
-
-				if (isset ($_GET['contacted'])) $contacted = bigintval($_GET['contacted']); 
-			}
-			else $contacted = bigintval($contacted);
+				
+				if (isset ($_GET['contacted'])) $contacted = bigintval($_GET['contacted']);
+			}	
+			if ($contacted == 1 || $contacted === 0){
 		
-			$sql = "SELECT outcome_id,description,contacted
-				FROM outcome
-				WHERE contacted = '$contacted'
-				AND outcome_type_id != '5'
-				AND outcome_id IN ($outcomes)
-				AND outcome_id NOT IN(10,32,42,43,44,45)"; //don't show completed if not, Lime_Quota_full if not, hide max calls as they supposed to be automatic or admin-privileged
+				$sql = "SELECT outcome_id,description,contacted
+					FROM outcome
+					WHERE outcome_type_id != '5'
+					AND contacted = '$contacted'
+					AND outcome_id IN ($outcomes)
+					AND outcome_id NOT IN(10,32,42,43,44,45)"; //don't show completed if not, Lime_Quota_full if not, hide max calls as they supposed to be automatic or admin-privileged
+			} 
 		}
 	}
 	$rs = $db->GetAll($sql);
@@ -142,20 +143,31 @@ function display_outcomes($contacted,$ca,$case_id)
 	if (!empty($rs))
 	{
 		$do = false;
-		if (isset($_GET['defaultoutcome'])) $do = bigintval($_GET['defaultoutcome']);
+		
+		$lime_sid = get_limesurvey_id(get_operator_id());
 
+		//Check to see if we have sent an email on this call and set the default outcome
+		$sql = "SELECT 41
+			FROM `case` as c, " . LIME_PREFIX . "tokens_$lime_sid as t
+			WHERE t.sent = '$ca'
+			AND c.case_id = $case_id
+			AND t.token = c.token";
+		$do = $db->GetOne($sql);
+		
+		if (isset($_GET['defaultoutcome'])) $do = bigintval($_GET['defaultoutcome']);
 		foreach($rs as $r)
 		{
 			if ($do == $r['outcome_id']) $selected = "checked='checked'"; else $selected = "";
 			if (isset($r['contacted']) && $r['contacted'] == 1) $highlight = ""; else $highlight = "style='color:black;'";
-			print "<a><label $highlight class='btn-link'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>&emsp;" . T_($r['description']) . "</label></a><br/>";
+			print "<div><a><label $highlight class='btn-link'><input type='radio' class='radio' name='outcome' id='outcome-{$r['outcome_id']}' value='{$r['outcome_id']}' $selected style='float:left'/>&emsp;" . T_($r['description']) . "</label></a></div>";
 		}
 		
-		$_POST['confirm'] = true;
+		$_POST['confirm'] = true; //check that outcome selected
 	}
 	print "</div>";
 }
 
+if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js";
 
 //display the respondents phone numbers as a drop down list for this call
 
@@ -167,6 +179,15 @@ $operator_id = get_operator_id();
 
 if (isset($_POST['submit']))
 {
+	if (is_voip_enabled($operator_id))
+	{ //prepare common voip  functions
+		include("functions/functions.voip.php");
+		$v = new voip();
+		$v->connect(VOIP_SERVER);
+	}
+	
+	$btext = "onload='parent.closePopup();'"; // set default, change on conditions
+	
 	if (isset($_POST['contact_phone']))
 	{
 		$contact_phone_id = bigintval($_POST['contact_phone']);
@@ -176,102 +197,70 @@ if (isset($_POST['submit']))
 		if ($call_id)
 		{
 			if (is_voip_enabled($operator_id))
-			{
-				include("functions/functions.voip.php");
-				$v = new voip();
-				$v->connect(VOIP_SERVER);
 				$v->dial(get_extension($operator_id),get_call_number($call_id));
-			}
-			$btext = "onload='parent.closePopup();'";
-
-			$js = "js/window_interface2.js";
-			if (browser_ie()) $js = "js/window_ie6_interface2.js";
-			xhtml_head(T_("Call"),true,array("css/call.css"),array($js),$btext);
 		}
+		else exit();
 	}
-	else if (isset($_POST['outcome']))
+	else 
 	{
-		$outcome_id = bigintval($_POST['outcome']);
-		end_call($operator_id,$outcome_id);
-		if (is_voip_enabled($operator_id))
-		{
-			include("functions/functions.voip.php");
-			$v = new voip();
-			$v->connect(VOIP_SERVER);
+		//hang up the call first
+		if (is_voip_enabled($operator_id)) 
 			$v->hangup(get_extension($operator_id));
-		}
-		//disable recording
+		
+		//disable recording --->  Not actual for call_interface2 ??
 		$newtext = T_("Start REC");
+		
+		if (isset($_POST['outcome'])){ //process with outcome
+			$outcome_id = bigintval($_POST['outcome']);
+			end_call($operator_id,$outcome_id);
+			
+			//If outcome is final, close the case 
+			$sql = "SELECT o.tryanother
+				FROM `outcome` as o
+				WHERE o.outcome_id = '$outcome_id'";
 
-		$js = "js/window_interface2.js";
-		if (browser_ie()) $js = "js/window_ie6_interface2.js";
+			$rs = $db->GetRow($sql);
 
-		//If outcome is final, close the case 
-		$sql = "SELECT o.tryanother
-			FROM `outcome` as o
-			WHERE o.outcome_id = '$outcome_id'";
-
-		$rs = $db->GetRow($sql);
-
-		if (!empty($rs) && $rs['tryanother'] == 0)
-		{
-			xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='openParent(\"endcase=endcase\");'");
-		}
-		else
-		{	
-			$call_attempt_id = get_call_attempt($operator_id,false);
-			$case_id = get_case_id($operator_id);
-			//see if we have exhausted the available numbers
-			$sql = "SELECT c. *
-				FROM contact_phone AS c
-				LEFT JOIN (
-						SELECT contact_phone.contact_phone_id
-						FROM contact_phone
-						LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
-						LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
-						WHERE contact_phone.case_id = '$case_id'
-						AND outcome.tryagain =0
-					  ) AS l ON l.contact_phone_id = c.contact_phone_id
-				LEFT JOIN
-				(
-				 SELECT contact_phone_id
-				 FROM `call`
-				 WHERE call_attempt_id = '$call_attempt_id'
-				 AND outcome_id != 18
-				) as ca on ca.contact_phone_id = c.contact_phone_id
-				WHERE c.case_id = '$case_id'
-				AND l.contact_phone_id IS NULL
-				AND ca.contact_phone_id IS NULL"; //only select numbers that should be tried again and have not been tried in this attempt which are not the accidental hang up outcome
-
-			$rs = $db->GetAll($sql);
-
-			if (empty($rs)) //no more numbers to call, end the case
+			if (!empty($rs) && $rs['tryanother'] == 0)
 			{
-				xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='openParent(\"endcase=endcase\");'");
-			}	
+				$btext = "onload='openParent(\"endcase=endcase\");'";
+			}
 			else
-			{
-				xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
+			{	
+				$call_attempt_id = get_call_attempt($operator_id,false);
+				$case_id = get_case_id($operator_id);
+				//see if we have exhausted the available numbers
+				$sql = "SELECT c. *
+					FROM contact_phone AS c
+					LEFT JOIN (
+							SELECT contact_phone.contact_phone_id
+							FROM contact_phone
+							LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+							LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+							WHERE contact_phone.case_id = '$case_id'
+							AND outcome.tryagain =0
+						) AS l ON l.contact_phone_id = c.contact_phone_id
+					LEFT JOIN (
+							SELECT contact_phone_id
+							FROM `call`
+							WHERE call_attempt_id = '$call_attempt_id'
+							AND outcome_id != 18
+						) as ca on ca.contact_phone_id = c.contact_phone_id
+					WHERE c.case_id = '$case_id'
+					AND l.contact_phone_id IS NULL
+					AND ca.contact_phone_id IS NULL"; //only select numbers that should be tried again and have not been tried in this attempt which are not the accidental hang up outcome
+
+				$rs = $db->GetAll($sql);
+
+				if (empty($rs)) //no more numbers to call, end the case
+				{
+					$btext = "onload='openParent(\"endcase=endcase\");'";
+				}
 			}
 		}
 	}
-	else
-	{
-		//if no outcome selected, just hang up the call
-		if (is_voip_enabled($operator_id))
-		{
-			include("functions/functions.voip.php");
-			$v = new voip();
-			$v->connect(VOIP_SERVER);
-			$v->hangup(get_extension($operator_id));
-		}
-		//disable recording
-		$newtext = T_("Start REC");
-		$js = "js/window_interface2.js";
-		if (browser_ie()) $js = "js/window_ie6_interface2.js";
-		xhtml_head(T_("Call"),true,array("css/call.css"),array($js),"onload='parent.closePopup();'");
-
-	}
+	
+	xhtml_head(T_("Call"),true,array("css/call.css"),array($js),$btext);
 
 	print "<p></p>"; //for XHTML
 	xhtml_foot();
@@ -298,11 +287,18 @@ if (isset($_GET['newstate']))
 }
 
 
-if (browser_ie()) $js = "js/window_ie6_interface2.js"; else $js = "js/window_interface2.js";
-
 xhtml_head(T_("Set outcome"),true,array("include/bootstrap/css/bootstrap.min.css"),array($js,"include/jquery/jquery-1.4.2.min.js"));
 
 $state = is_on_call($operator_id);
+
+function print_endcase($trigger = ""){
+	print "<p><a href='javascript:" . $trigger . "(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p>";
+}
+
+function print_endwork($trigger = ""){
+	print "<p><a href='javascript:" . $trigger . "(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
+}
+
 switch($state)
 {
 	case false: //no call made
@@ -319,8 +315,8 @@ switch($state)
 			{
 				//end the case
 				if (!isset($_GET['end'])) print "<div>" . T_("End work") . "</div>";
-				print "<p><a href='javascript:openParent(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p>";
-				print "<p><a href='javascript:openParent(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
+				print_endcase("openParent");
+				print_endwork("openParent");
 			}
 			else
 			{
@@ -368,12 +364,11 @@ switch($state)
 				LIMIT 1";
 	
 			$rs = $db->GetRow($sql);
+			
+			if (!empty($rs) && $rs['require_note'] == 1) $rn = 1; else $rn = 0;
 	
 			if (!isset($_GET['end']) && (empty($rs) || $rs['tryanother'] == 1)) //dial another number only when available and not ending
 			{
-				$rn = 0;
-				if (!empty($rs) && $rs['require_note'] == 1) $rn = 1;
-	
 				//an exclusion left join
 				$sql = "SELECT c. *
 					FROM contact_phone AS c
@@ -433,39 +428,36 @@ switch($state)
 
 					if ($rn) // a note is required to be entered
 					{
-						print "<div><label for='note'>" . T_("Enter a reason for this outcome before completing this case:") . "</label><input type='text' id='note' name='note' size='48'/><br/><br/><br/><br/></div>";
+						print "<div><label for='note' class='control-label'>" . T_("Enter a reason for this outcome before completing this case:") . "</label><textarea type='text' id='note' name='note' class='form-control' rows='3'></textarea><br/></div>";
 						//give focus on load
 						print '<script type="text/javascript">$(document).ready(function(){$("#note").focus();});</script>';
 						//put these lower on the screen so they don't get "automatically" clicked
-						print "<p><a href='javascript:openParentNote(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p>";
-						print "<p><a href='javascript:openParentNote(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
+						print_endcase("openParentNote");
+						print_endwork("openParentNote");
 					}
 					else
 					{
-						print "<p><a href='javascript:openParent(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p>";
-						print "<p><a href='javascript:openParent(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p";
+						print_endcase("openParent");
+						print_endwork("openParent");
 					}
 				}
 			}
 			else //don't try any more
 			{
-				$rn = 0;
-				if (!empty($rs) && $rs['require_note'] == 1) $rn = 1;
-
 				//end the case
 
 				if ($rn) // a note is required to be entered
 				{
 					print "<div><label for='note' class='control-label'>" . T_("Enter a reason for this outcome before completing this case:") . "</label><textarea type='text' id='note' name='note' class='form-control' rows='3'></textarea><br/></div>";
 					print '<script type="text/javascript">$(document).ready(function(){$("#note").focus();});</script>';
-					print "<p><a href='javascript:openParentNote(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p></p>";
-					print "<p><a href='javascript:openParentNote(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
+					print_endcase("openParentNote");
+					print_endwork("openParentNote");
 				}
 				else
 				{
 					if (!isset($_GET['end'])) print "<div class='alert alert-info'>" . T_("The last call completed this call attempt") . "</div>";
-					print "<p><a href='javascript:openParent(\"endcase=endcase\")' class='btn btn-primary'>" . T_("End case") . "</a></p></p>";
-					print "<p><a href='javascript:openParent(\"endwork=endwork\")' class='btn btn-info'>" . T_("End work") . "</a></p>";
+					print_endcase("openParent");
+					print_endwork("openParent");
 				}
 			}
 		}
@@ -475,10 +467,10 @@ switch($state)
 	case 3: //answered
 	case 4: //requires coding
 	//	print "<div class='status'>" . T_("Requires coding") . "</div>";
-		print "<form action='?' method='post'><div class=\"form-group\">";
+		print "<form action='?' method='post'><div class=\" \">";
 		display_outcomes(false,$call_attempt_id,$case_id);
 		if (isset($_POST['confirm'])){
-			print "</div><input type='submit' class=\"btn btn-primary btn-lg\" style=\"margin-left: 15px; margin-right: 30px; min-width: 150px;\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
+			print "</div><input type='submit' class=\"btn btn-primary btn-lg\" style=\"margin:0px 20px;\" value=\"" . T_("Assign outcome") . "\" name='submit' id='submit'/></form>";
 		}
 		break;
 	case 5: //done -- shouldn't come here as should be coded + done
