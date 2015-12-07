@@ -48,7 +48,7 @@ include ("functions/functions.xhtml.php");
 /**
  * Language
  */
-include ("lang.inc.php");
+include_once ("lang.inc.php");
 
 $js = array("js/popup.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 
