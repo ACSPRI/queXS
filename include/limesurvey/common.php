@@ -260,38 +260,39 @@ if ($sourcefrom == "admin")
 }
 
 // Check if the DB is up to date
-If (!$dbexistsbutempty && $sourcefrom=='admin')
-{
-    $usrow = getGlobalSetting('DBVersion');
-    if (floatval($usrow)<$dbversionnumber)
-    {
-        $action='';
-        require_once($rootdir.'/classes/core/language.php');
-        $clang = new limesurvey_lang($defaultlang);
-        include_once($homedir.'/update/updater.php');
-        if(isset($_GET['continue']) && $_GET['continue']==1)
-        {
-            echo getAdminHeader();
-            CheckForDBUpgrades();
-            echo "<br /><a href='$homeurl'>".$clang->gT("Back to main menu")."</a></div>";
-            //updatecheck();
-            echo getAdminFooter("http://docs.limesurvey.org", $clang->gT("LimeSurvey online manual"));
-        }
-        else
-        {
-            echo getAdminHeader(),
-                 '<div class="messagebox">',CheckForDBUpgrades(),'</div>',
-                 getAdminFooter("http://docs.limesurvey.org", $clang->gT("LimeSurvey online manual"))
-                 ;
-        }
-        die;
-    }
-
-      if (is_dir($homedir."/install") && $debug<2)
-       {
-        die ("<p style='text-align: center; margin-left: auto; margin-right: auto; width: 500px; margin-top: 50px;'><img src='../images/limecursor-handle.png' /><strong>Congratulations</strong><br /><br />Your installation is now complete. The final step is to remove or rename the LimeSurvey installation directory (admin/install) on your server since it may be a security risk.<br /><br />Once this directory has been removed or renamed you will be able to log in to your new LimeSurvey Installation.<br /><br /><a href='admin.php'>Try again</a></p>");
-       }
-}
+// not for queXS
+//if (!$dbexistsbutempty && $sourcefrom=='admin')
+//{
+//    $usrow = getGlobalSetting('DBVersion');
+//    if (floatval($usrow)<$dbversionnumber)
+//    {
+//        $action='';
+//        require_once($rootdir.'/classes/core/language.php');
+//        $clang = new limesurvey_lang($defaultlang);
+//        include_once($homedir.'/update/updater.php');
+//       if(isset($_GET['continue']) && $_GET['continue']==1)
+//        {
+//            echo getAdminHeader();
+//            CheckForDBUpgrades();
+//            echo "<br /><a href='$homeurl'>".$clang->gT("Back to main menu")."</a></div>";
+//            //updatecheck();
+//            echo getAdminFooter("http://docs.limesurvey.org", $clang->gT("LimeSurvey online manual"));
+//        }
+//        else
+//        {
+//            echo getAdminHeader(),
+//                 '<div class="messagebox">',CheckForDBUpgrades(),'</div>',
+//                 getAdminFooter("http://docs.limesurvey.org", $clang->gT("LimeSurvey online manual"))
+//                 ;
+//        }
+//        die;
+//    }
+//
+//      if (is_dir($homedir."/install") && $debug<2)
+//       {
+//        die ("<p style='text-align: center; margin-left: auto; margin-right: auto; width: 500px; margin-top: 50px;'><img src='../images/limecursor-handle.png' /><strong>Congratulations</strong><br /><br />Your installation is now complete. The final step is to remove or rename the LimeSurvey installation directory (admin/install) on your server since it may be a security risk.<br /><br />Once this directory has been removed or renamed you will be able to log in to your new LimeSurvey Installation.<br /><br /><a href='admin.php'>Try again</a></p>");
+//       }
+//}
 
 //Admin menus and standards
 //IF THIS IS AN ADMIN SCRIPT, RUN THE SESSIONCONTROL SCRIPT
