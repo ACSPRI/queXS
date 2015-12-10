@@ -43,18 +43,20 @@ $css = array(
 "../include/bootstrap/css/bootstrap-theme.min.css",
 "../include/font-awesome/css/font-awesome.css",
 "../include/jquery-ui/jquery-ui.min.css",
-"../include/timepicker/jquery-ui.min.css",
 "../include/timepicker/jquery-ui-timepicker-addon.css",
 "../css/custom.css"
 			);
 $js_head = array(
 "../include/jquery/jquery.min.js",
 "../include/bootstrap/js/bootstrap.min.js",
-"../include/timepicker/jquery-ui.min.js",
-//"../include/jquery-ui/jquery-ui.min.js",
+"../include/jquery-ui/jquery-ui.min.js",
 "../include/timepicker/jquery-ui-timepicker-addon.js",
-//"../include/timepicker/jquery-ui-timepicker-ru.js",
 				);
+$lang = $_SESSION['adminlang'];
+if($lang != "en"){
+	$js_head[] = "../include/jquery-ui/i18n/datepicker-" . $lang . ".js";
+	$js_head[] = "../include/timepicker/i18n/jquery-ui-timepicker-" . $lang . ".js";
+				}
 $js_foot = array(
 "../js/bootstrap-confirmation.js",
 "../js/custom.js"
@@ -136,8 +138,6 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 	}
 	else
 	{
-		$lang = DEFAULT_LOCALE ;
-
 		$sql = "SELECT  CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, 
 						CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 10 YEAR),'SYSTEM',r.Time_zone_name) as enddate,
 						r.respondent_id, ca.contact_phone_id
