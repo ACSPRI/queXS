@@ -15,7 +15,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -110,19 +110,23 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 		LEFT JOIN outcome as co ON (co.outcome_id = ca.outcome_id)
 		LEFT JOIN case_queue as cq ON (cq.case_id = c.case_id)
 		LEFT JOIN operator as oq ON (cq.operator_id = oq.operator_id)
+		LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id and s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
 		WHERE c.current_operator_id IS NULL $q $o
+		AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
+		AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
 		ORDER BY c.case_id ASC";
-
-//	print $sql;
 
 	print ("<form method=\"post\" action=\"?questionnaire_id=$questionnaire_id&sample_import_id=$sample_id\">");
 
+	$rs2 = $db->GetAll($sql);
+	translate_array($rs2,array("outcomes"));
+	
 	$datacol = array('case_id','samples','timezone','time','nrattempts','nrcalls','outcomes','availableinmin','assignedoperator','ordr','flag');
 	$headers = array(T_("Case id"),T_("Sample"),T_("Timezone"),T_("Time NOW"),T_("Call attempts"),T_("Calls"),T_("Outcome"),T_("Available in"),T_("Assigned to"),T_("Order"),"<i class='fa fa-check-square-o fa-lg'></i>");
 	
 	if (isset($_GET['sample_import_id'])){ 	unset($datacol[1]);  unset($headers[1]); }
 
-	xhtml_table($db->GetAll($sql),$datacol,$headers,"tclass",false,false,"bs-table");
+	xhtml_table($rs2,$datacol,$headers,"tclass",false,false,"bs-table");
 	
 	$sql = "SELECT operator_id as value,CONCAT(firstName,' ', lastName) as description, '' selected
 		FROM operator
@@ -206,7 +210,7 @@ if (isset($_GET['unassign']))
 	$db->CompleteTrans();
 }
 
-xhtml_head(T_("Case status and assignment"),true,$css,$js_head);//array("../css/table.css"),array("../js/window.js")
+xhtml_head(T_("Case status and assignment"),true,$css,$js_head);
 echo "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left' ><i class='fa fa-chevron-left text-primary'></i>&emsp;" . T_("Go back") . "</a>
 		<i class='fa fa-question-circle fa-3x text-primary pull-right btn' data-toggle='modal' data-target='.inform'></i>";
  ?>
@@ -237,7 +241,7 @@ print "<div class='form-group '><h3 class=' col-sm-2 text-right'>" . T_("Questio
 display_questionnaire_chooser($questionnaire_id, false, "pull-left", "form-control");
 if ($questionnaire_id){
 	print "<h3 class=' col-sm-2 text-right'>" . T_("Sample") . ":</h3>";
-	display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control");
+	display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control", true);
 	print "</div>
 	 <div class='clearfix'></div>";
 	

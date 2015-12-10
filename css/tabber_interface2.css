@@ -84,7 +84,7 @@ ul.tabbernav li.tabberactive a:hover
   Add style only after the tabber interface is set up (.tabberlive)
   --------------------------------------------------*/
 .tabberlive .tabbertab {
- position:absolute;
+ /*position:absolute;*/
  border: 2px solid #e9e9eb;
 border-bottom-left-radius: 15px;
 -moz-border-radius-bottomleft: 15px;

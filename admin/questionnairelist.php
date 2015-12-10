@@ -42,7 +42,7 @@ include("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -430,6 +430,16 @@ if (isset($_GET['modify']))
 	    }
 	    closedir($handle);
 	}
+	if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/upload/templates")) {
+	    while (false !== ($entry = readdir($handle))) {
+	        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/upload/templates/" . $entry)){
+	            echo "<option value=\"$entry\" ";
+		    if ($rs['lime_template'] == $entry) echo " selected=\"selected\" ";
+		    echo ">$entry</option>";
+	        }
+	    }
+	    closedir($handle);
+	}		
 ?>
 		</select>
 	</div>
@@ -563,7 +573,7 @@ else
 		CASE WHEN enabled = 0 THEN 
 			CONCAT('<i class=\'btn fa fa-calendar fa-2x\' style=\'color:lightgrey;\'></i>')
 		ELSE
-			CONCAT('<a href=\'addshift.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Shifts") . "&ensp;\n" . TQ_("questionnaire") . "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-calendar fa-2x\'></i></a>')
+			CONCAT('<a href=\'addshift.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Shifts") . " " . TQ_("questionnaire") . "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-calendar fa-2x\'></i></a>')
 		END as shifts,
 		CASE WHEN enabled = 0 THEN 
 			CONCAT('<i class=\'btn fa fa-square-o fa-2x\' style=\'color:lightgrey;\'></i>')
@@ -580,17 +590,23 @@ else
 		ELSE
 			CONCAT('<a href=\'outcomes.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Outcomes for questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-bar-chart fa-2x\'></i></a>')
 		END as outcomes,
-		CONCAT('<a href=\'callhistory.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Call history"). "&ensp;\n" . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-phone fa-2x\'></i></a>') as calls,
+		CONCAT('<a href=\'callhistory.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Call history"). " " . TQ_("questionnaire"). " ',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-phone fa-2x\'></i></a>') as calls,
+		CONCAT('<a href=\'set_outcomes.php?qid=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Set outcomes"). "&ensp;\n" . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-list-ol fa-2x\'></i></a>') as setoutcomes,
 		CASE WHEN enabled = 0 THEN
 			CONCAT('<i class=\'btn fa fa-download fa-2x\' style=\'color:lightgrey;\'></i>')
 		ELSE
-			CONCAT('<a href=\'dataoutput.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Data output"). "&ensp;\n" . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-download fa-2x\'></i></a>')
+			CONCAT('<a href=\'dataoutput.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Data output"). " " . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-download fa-2x\'></i></a>')
 		END as  dataout,
 		CASE WHEN enabled = 0 THEN 
 			CONCAT('<i class=\'btn fa fa-book fa-2x\' style=\'color:lightgrey;\'></i>')
 		ELSE
 			CONCAT('<a href=\'assignsample.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Assigned samples"). "\' data-toggle=\'tooltip\'><i class=\'fa fa-book fa-2x\'></i></a>')
 		END as assample,
+		CASE WHEN enabled = 0 THEN 
+			CONCAT('<i class=\'btn fa fa-filter fa-2x\' style=\'color:lightgrey;\'></i>')
+		ELSE
+			CONCAT('<a href=\'quotareport.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . T_("Quota report"). " " . TQ_("questionnaire"). "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-filter fa-2x\'></i></a>')
+		END as quotareport,
 		CASE WHEN enabled = 0 THEN 
 			CONCAT('<i class=\'btn fa fa-question-circle fa-2x\' style=\'color:lightgrey;\'></i>')
 		ELSE
@@ -599,7 +615,7 @@ else
 		FROM questionnaire";
 	$rs = $db->GetAll($sql);
 
-	$columns = array("qid","description","status","enabledisable","outcomes","calls","casestatus","shifts","assample","dataout","modify","inlime","prefill","deletee");
+	$columns = array("qid","description","status","enabledisable","outcomes","calls","casestatus","shifts","assample","quotareport","dataout","modify","setoutcomes","inlime","prefill","deletee");
 	xhtml_table($rs,$columns,false,"table-hover table-condensed "); 
 	
 print "</div>";

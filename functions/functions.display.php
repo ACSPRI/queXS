@@ -111,19 +111,23 @@ function display_shift_chooser($questionnaire_id, $shift_id = false, $divclass=f
  * @param int|bool $sample_import_id The sample import id or false if none selected
  * @param bool $disabled Display disabled samples? (default is true)
  */
-function display_sample_chooser($questionnaire_id, $sample_import_id = false, $disabled = true, $divclass=false, $selectclass=false)
+function display_sample_chooser($questionnaire_id, $sample_import_id = false, $disabled = true, $divclass=false, $selectclass=false, $quota_reached=false)
 {
 	global $db;
 
-	$s = "";
+	if (!$disabled) $s = " AND si.enabled = 1 "; else $s = "";
 
-	if (!$disabled)
-    $s = " AND si.enabled = 1 ";
+	if ($quota_reached){
+		$qr = " LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (si.sample_import_id  = qsq.sample_import_id and si.sample_import_id = qsqr.sample_import_id)";
+		$qrq = " AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
+				AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)";
+	}
+	else { $qr = ""; $qrq = "";	}
 
 	$sql = "SELECT s.sample_import_id,si.description,CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-		FROM questionnaire_sample as s, sample_import as si
+		FROM questionnaire_sample as s, sample_import as si $qr
 		WHERE s.questionnaire_id = '$questionnaire_id'
-		AND s.sample_import_id = si.sample_import_id $s";
+		AND s.sample_import_id = si.sample_import_id $s $qrq";
 		
 	$rs = $db->GetAll($sql);
 

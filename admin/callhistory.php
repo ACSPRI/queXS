@@ -42,7 +42,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -82,7 +82,7 @@ if ($operator_id)
 {
 	if (isset($_GET['questionnaire_id'])) $qid = $_GET['questionnaire_id'];
 	if (isset($_GET['sample_import_id'])) $sid = $_GET['sample_import_id']; 
-	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_FORMAT."') as start_date, DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as start_time, DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as descr, (CONCAT(r.firstName,' ',r.lastName)) as firstName, opp.firstName as opname,
+	$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_FORMAT."') as start_date, DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as start_time, DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end, o.description as descr, (CONCAT(r.firstName,' ',r.lastName)) as firstName, CONCAT(opp.firstName, ' ', opp.lastName) as opname,
 		(SELECT GROUP_CONCAT(cn1.note SEPARATOR '</br>&para;&emsp;' ) FROM `case_note`  as cn1 WHERE c.case_id = cn1.case_id GROUP BY cn1.case_id)as casenotes,";
 
 	if (isset($_GET['csv'])) $sql .= " c.case_id ";
@@ -133,7 +133,7 @@ if ($operator_id)
 
 			while ($r = $rs->FetchRow())
 			{
-				translate_array($r,array("des"));
+				translate_array($r,array("descr"));
 				echo $r['start_date'] . "," .$r['start_time'] . "," . $r['end'] . "," . $r['case_id'] . "," . $r['qd'] . "," . $r['spl'] . "," . $r['cpi'] . "," . $r['opname'] . "," . $r['descr'] . "," . $r['casenotes'] . "," . $r['firstName'] . "\n";
 			}
 
@@ -151,7 +151,7 @@ if ($operator_id)
 			}
 			else
 			{
-				translate_array($rs,array("des"));
+				translate_array($rs,array("descr"));
 				
 				$datacol = array("start_date", "start_time","end","case_id","qd","spl","cpi","opname","descr","casenotes","firstName");
 				$headers = array(T_("Date"), T_("Start time"), T_("End time"),T_("Case ID"),T_("Questionnaire"),T_("Sample"),T_("Phone number"),T_("Operator"),T_("Outcome"),T_("Case notes"),T_("Respondent"));

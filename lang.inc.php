@@ -63,8 +63,7 @@ function TQ_($msg)
 }
 
 
-$locale = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-if (empty($locale)) $locale = DEFAULT_LOCALE;
+$locale = isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) ? substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2) : DEFAULT_LOCALE;
 T_setlocale(LC_MESSAGES, $locale);
 T_bindtextdomain($locale,  dirname(__FILE__)."/locale");
 T_bind_textdomain_codeset($locale, 'UTF-8');

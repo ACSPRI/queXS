@@ -42,7 +42,7 @@ include_once(dirname(__FILE__).'/../db.inc.php');
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -195,7 +195,7 @@ function generate() {
 }
 </script>
 
-<div class="form-group clearfix"><div class="col-sm-3"><a href='?' class="btn btn-default"><?php echo T_("Go back") ;?></a></div><div class="col-sm-6">
+<div class="form-group clearfix"><div class="col-lg-3"><a href='?' class="btn btn-default"><?php echo T_("Go back") ;?></a></div><div class="col-lg-6">
 <?php
 	print "<h3>" . T_("Operator") . ": " . $rs['username'] . "</h3>";
 	echo "</div></div>";
@@ -213,78 +213,92 @@ function generate() {
 ?>
 	<form action="?" method="post" class="form-horizontal panel-body" name="operform">
 	<div class="form-group">
-		<label for="username" class="col-sm-3 control-label"><?php echo T_("Username") . ": "; ?></label>
-		<div class="col-sm-3"><input type='text' name='username' class="form-control" value="<?php echo $rs['username'];?>"/></div>
+		<label for="username" class="col-lg-3 control-label"><?php echo T_("Username") . ": "; ?></label>
+		<div class="col-lg-3"><input type='text' name='username' class="form-control" value="<?php echo $rs['username'];?>"/></div>
 	</div>
 	<div class="form-group">
-		<label for="password" class="col-sm-3 control-label"><?php echo T_("Password") . ": "; ?></label>
-		<div class="col-sm-3"><input type='text' name='password' class="form-control" placeholder="<?php echo T_("leave blank to keep existing password");?>"/></div>
-		<div class="col-sm-6 form-inline">&emsp;
+		<label for="password" class="col-lg-3 control-label"><?php echo T_("Password") . ": "; ?></label>
+		<div class="col-lg-3"><input type='text' name='password' class="form-control" placeholder="<?php echo T_("leave blank to keep existing password");?>"/></div>
+		<div class="col-lg-6 form-inline">&emsp;
 			<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default"/>&emsp;<?php echo T_("Password with");?>&ensp;
 			<input type="number" name="number" value="25" min="8" max="50" style="width:5em;" class="form-control" />&ensp;<?php echo T_("characters");?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="firstName" class="col-sm-3 control-label"><?php echo T_("First name") . ": "; ?></label>
-		<div class="col-sm-3"><input type='text' name='firstName' class="form-control" value="<?php echo $rs['firstName'];?>"/></div>
+		<label for="firstName" class="col-lg-3 control-label"><?php echo T_("First name") . ": "; ?></label>
+		<div class="col-lg-3"><input type='text' name='firstName' class="form-control" value="<?php echo $rs['firstName'];?>"/></div>
 	</div>
 	<div class="form-group">
-		<label for="lastName" class="col-sm-3 control-label"><?php echo T_("Last name") . ": "; ?></label>
-		<div class="col-sm-3"><input type='text' name='lastName'  class="form-control" value="<?php echo $rs['lastName'];?>"/></div>
+		<label for="lastName" class="col-lg-3 control-label"><?php echo T_("Last name") . ": "; ?></label>
+		<div class="col-lg-3"><input type='text' name='lastName'  class="form-control" value="<?php echo $rs['lastName'];?>"/></div>
 	</div>
 	<div class="form-group">
-		<label for="email" class="col-sm-3 control-label"><?php echo T_("Email") . ": "; ?></label>
-		<div class="col-sm-3"><input type='text' name='email'  class="form-control" value="<?php echo $rs['email'];?>"/></div>
+		<label for="email" class="col-lg-3 control-label"><?php echo T_("Email") . ": "; ?></label>
+		<div class="col-lg-3"><input type='text' name='email'  class="form-control" value="<?php echo $rs['email'];?>"/></div>
 	</div>
 	<div class="form-group">
-		<label for="timezone" class="col-sm-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
-		<div class="col-sm-3"><?php display_chooser($tz,"timezone","timezone",false,false,false,true,array("value",$rs['Time_zone_name']),true,"form-inline"); ?></div>
-		<div class="col-sm-6 form-inline">
+		<label for="timezone" class="col-lg-3 control-label"><?php echo T_("Timezone") . ": ";?></label>
+		<div class="col-lg-3"><?php display_chooser($tz,"timezone","timezone",false,false,false,true,array("value",$rs['Time_zone_name']),true,"form-inline"); ?></div>
+		<div class="col-lg-6 form-inline">
 			<?php echo T_("Edit") . "&emsp;";?>
 			<a  href='timezonetemplate.php' class="btn btn-default"><?php echo T_("TimeZones list");?></a>
 		</div>
 	</div>
- 	<div class="form-group">
-		<label for="extension_id" class="col-sm-3 control-label"><?php  echo T_("Extension") . ": "; ?></label> 
-		<div class="col-sm-3"><?php echo display_chooser($ers,"extension_id","extension_id",true,false,false,true,false,true,"form-inline"); ?> </div>
-		<div class="col-sm-6 form-inline">
-			<?php echo T_("Edit") . "&emsp;";?>
-			<a  href='extensionstatus.php' class="btn btn-default"><?php echo T_("Extensions");?></a>
+	
+	<?php  if (FREEPBX_PATH != false) { ?>
+	<div class="form-group">
+		<label for="voip" class="col-lg-3 control-label"><?php echo T_("Uses VoIP") . "? ";?></label>
+		<div class="col-lg-3"><input name="voip" type="checkbox" onchange="if(this.checked==true){show(this,'usesvoip');} else{ hide(this,'usesvoip');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['voip'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+	</div>
+	<div id="usesvoip" style="display:none" >
+	<div class="form-group">
+		<label class="col-lg-3 control-label"><?php echo T_("Extension") . ": ";?></label>
+		
+	<?php if (!empty($ers) ){ ?>
+				<div class="col-lg-3"><?php display_chooser($ers,"extension_id","extension_id",true,false,false,true,false,true,"form-inline");?></div>
+				<div class="col-lg-6 form-inline"> <?php echo T_("Edit") . "&emsp;"; }
+	else{ ?>  	<div class="col-lg-6 form-inline"> <?php echo T_("Add") . "&emsp;"; }?>
+					<a  href='extensionstatus.php' class="btn btn-default fa"><?php echo T_("Extensions");?></a>
+				</div>
 		</div>
 	</div>
+<?php  } ?>
+	
 	<div class="form-group">
-		<label for="voip" class="col-sm-3 control-label"><?php echo T_("Uses VoIP") . "? ";?></label>
-		<div class="col-sm-3"><input type="checkbox" name="voip" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['voip'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+		<label class="col-lg-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>
+		<div class="col-lg-3"><input name="chat_enable" type="checkbox" onchange="if(this.checked==true){show(this,'jabdata');} else{ hide(this,'jabdata');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['chat_enable'] == 1) echo "checked=\"checked\"";?> value="1"/></div>
 	</div>
-	<div class="form-group">
-		<label for="chat_user" class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat user") . ": "; ?></label>
-		<div class="col-sm-3"><input type='text' name='chat_user' class="form-control" value="<?php echo $rs['chat_user'];?>"/></div>
+
+	<div id="jabdata" style="display:none" >
+		<div class="form-group">
+			<label class="col-lg-3 control-label"><?php echo T_("Jabber/XMPP chat user") . ": ";?></label>
+			<div class="col-lg-3"><input name="chat_user" type="text" class="form-control" value="<?php echo $rs['chat_user'];?>"/></div>
+		</div>
+		<div class="form-group">
+		<label class="col-lg-3 control-label"><?php echo T_("Jabber/XMPP chat password") . ": ";?></label>
+			<div class="col-lg-3"><input name="chat_password" type="text" class="form-control" value="<?php echo $rs['chat_password'];?>"/></div>
+		</div>
 	</div>
+	
+	
 	<div class="form-group">
-		<label for="chat_password" class="col-sm-3 control-label"><?php echo T_("Jabber/XMPP chat password") . ": "; ?></label>
-		<div class="col-sm-3"><input type='text' name='chat_password' class="form-control" value="<?php echo $rs['chat_password'];?>"/></div>
-  </div>
-	<div class="form-group">
-		<label for="admin" class="col-sm-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
-    <div class="col-sm-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger" <?php if ($rs['superadmin'] || ($rs['parent_id'] == 0)) echo " checked=\"checked\" "; if ($rs['parent_id'] == 0) echo " disabled=\"disabled\" "; ?> value="1"/></div>
+		<label for="admin" class="col-lg-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
+    <div class="col-lg-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger" <?php if ($rs['superadmin'] || ($rs['parent_id'] == 0)) echo " checked=\"checked\" "; if ($rs['parent_id'] == 0) echo " disabled=\"disabled\" "; ?> value="1"/></div>
 	</div>
+
 	<div class="form-group">
-		<label for="chat_enable" class="col-sm-3 control-label"><?php echo T_("Uses chat") . "? ";?></label>
-		<div class="col-sm-3"><input type="checkbox" name="chat_enable" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['chat_enable'] == 1) echo "checked=\"checked\"";?> value="1"/></div>
-	</div>
-	<div class="form-group">
-		<label for="enabled" class="col-sm-3 control-label"><?php echo T_("Enabled") . "? ";?></label>
-		<div class="col-sm-3"><input type="checkbox" name="enabled" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['enabled'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
+		<label for="enabled" class="col-lg-3 control-label"><?php echo T_("Enabled") . "? ";?></label>
+		<div class="col-lg-3"><input type="checkbox" name="enabled" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" <?php if ($rs['enabled'] == 1) echo "checked=\"checked\"";?> value="1" /></div>
 	</div>
 	<div><input type='hidden' name='operator_id' value='<?php echo $operator_id;?>'/></div>
 	<div><input type='hidden' name='existing_username' value="<?php echo $rs['username'];?>"/></div>
 
-	<div class="form-group"><div class="col-sm-3 col-sm-offset-3"><input type="submit" name="submit" class="btn btn-primary btn-block" value="<?php echo T_("Update operator");?>"/></div></div>
+	<div class="form-group"><div class="col-lg-3 col-lg-offset-3"><input type="submit" name="submit" class="btn btn-primary btn-block" value="<?php echo T_("Update operator");?>"/></div></div>
 	</form>
 
 
 	<?php	
-	xhtml_foot();
+	xhtml_foot(array("../js/new.js"));
 	exit();
 }
 
@@ -402,11 +416,11 @@ if ($display)
 		$titles[] = T_("Win file");//Windows VoIP
 		$titles[] = T_("*nix flle");//*nix VoIP
 	}
-	echo "<div class='col-sm-9'><div class='panel-body'>";
+	echo "<div class='col-lg-9'><div class='panel-body'>";
 	xhtml_table($rs,$columns,$titles);
 	echo "</div></div>";
 	
-	echo "<div class='form-group col-sm-3'>
+	echo "<div class='form-group col-lg-3'>
 			<div class='panel-body'><a href='operators.php?add=add' class='btn btn-default btn-block'><i class='fa fa-lg fa-user-plus'></i>&emsp;" . T_("Add an operator") . "</a></div>
 			<div class='panel-body'><a href='extensionstatus.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-whatsapp'></i>&emsp;" . T_("Extensions") . "</a></div>
 			<div class='panel-body'><a href='operatorquestionnaire.php' class='btn btn-default btn-block'><i class='fa fa-lg fa-link'></i>  " . T_("Assign to questionnaire") . "</a></div>

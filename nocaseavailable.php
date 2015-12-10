@@ -44,7 +44,7 @@ include ("db.inc.php");
 /** 
  * Authentication
  */
-include ("auth-interviewer.php");
+require ("auth-interviewer.php");
 
 
 /**
@@ -150,7 +150,7 @@ else
 	?> <p class='error'><?php  echo T_("ERROR: No shifts at this time"); ?></p> <?php 
 }
 
-/* Disable as too time consuming */
+/* Disable as too time consuming 
 
 //call restrictions and outside times
 $sql = "SELECT count(s.sample_id) as count_samples
@@ -178,7 +178,7 @@ else
 	print "<p>" . T_("There are ") . $rs['count_samples'] . T_(" unassigned case(s) available within the specified call restrictions") . "</p>";
 }
 
-
+*/
 
 
 //no link to limesurvey

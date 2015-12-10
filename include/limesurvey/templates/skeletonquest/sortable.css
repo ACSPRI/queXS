@@ -1,0 +1,116 @@
+/* Drag-n-drop ranking styles */
+
+.dragDropTable {
+	border: 0 none;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.dragDropTable td {
+	vertical-align: top;
+	width: 50%;
+	padding-right: 20px;
+}
+
+.dragDropTable .dragDropHeader {
+	font-weight: bold;
+}
+
+.dragDropTable .dragDropChoices,
+.dragDropTable .dragDropRanks {
+	margin: 5px 0 0 0; 
+	background: transparent none;
+	border: 0 none;
+}
+
+.dragDropTable .dragDropChoiceList,
+.dragDropTable .dragDropRankList {
+	float: left;
+	width: 100%;
+	min-height: 2.4em;
+	_height: 2.4em; /* IE6 and below hack */
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+	background: #FBFBFB none;
+	border: 1px solid #CCCCCC;
+}
+
+.dragDropTable .dragDropChoiceList li,
+.dragDropTable .dragDropRankList li {
+    margin: 3px;
+    *margin-left: -13px; /* IE7 and below */
+    padding: 3px;
+	min-height: 1.3em;
+	_height: 1.3em; /* IE6 and below hack */
+	font-weight: normal;
+	cursor: move;
+	display: block; /* Force the li to full width */
+}
+.dragDropTable .dragDropChoiceList li,
+.dragDropTable .dragDropRankList li {
+    background: #FFF;
+    border: 1px solid #DDD;
+    color: #444;
+}
+.dragDropTable .dragDropChoiceList li:hover,
+.dragDropTable .dragDropRankList li:hover{
+    color: #222;
+    border: 1px solid #BBB;
+}
+
+/* Drag-n-drop for ranking images */
+
+.dragDropTableImg {
+    width: auto;
+}
+
+.dragDropTableImg .dragDropChoiceList, 
+.dragDropTableImg .dragDropRankList {
+    min-height: 60px;
+    _height: 60px; /* IE6 and below hack */
+	width: auto;
+    min-width: 60px;
+    _width: 60px; /* IE6 and below hack */
+}
+
+.dragDropTableImg li {
+	background: 0 none;
+	border: 0 none;
+    height: 50px;
+    width: 50px;
+}
+
+.dragDropTableImg li img {
+    margin: 0;
+    padding: 0;
+	border: 0 none;
+}
+/* Drag-n-drop for ranking images */
+
+.dragDropTableImg {
+    width: auto;
+}
+
+.dragDropTableImg .dragDropChoiceList, 
+.dragDropTableImg .dragDropRankList {
+    min-height: 60px;
+    _height: 60px; /* IE6 and below hack */
+	width: auto;
+    min-width: 60px;
+    _width: 60px; /* IE6 and below hack */
+}
+
+.dragDropTableImg li {
+	background: 0 none;
+	border: 0 none;
+    height: 50px;
+    width: 50px;
+}
+
+.dragDropTableImg li img {
+    margin: 0;
+    padding: 0;
+	border: 0 none;
+}
+

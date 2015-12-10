@@ -62,6 +62,7 @@ if (isset($_GET['loadall']) && $_GET['loadall'] == "reload" && isset($_GET['toke
 
 //end queXS Addition
 
+
 //LimeExpressionManager::SetSurveyId($surveyid);  // must be called early - it clears internal cache if a new survey is being used
 
 //DEFAULT SETTINGS FOR TEMPLATES
@@ -96,12 +97,12 @@ if ($surveyid)
 // Session name is based:
 // * on this specific limesurvey installation (Value SessionName in DB)
 // * on the surveyid (from Get or Post param). If no surveyid is given we are on the public surveys portal
-$usquery = "SELECT stg_value FROM ".db_table_name("settings_global")." where stg_name='SessionName'";
-$usresult = db_execute_assoc($usquery,'',true);          //Checked
+//$usquery = "SELECT stg_value FROM ".db_table_name("settings_global")." where stg_name='SessionName'";
+//$usresult = db_execute_assoc($usquery,'',true);          //Checked
+$usresult = LS_SESSION_NAME; //queXS Addition
 if ($usresult)
 {
-    $usrow = $usresult->FetchRow();
-    $stg_SessionName=$usrow['stg_value'];
+    $stg_SessionName=$usresult;
     if ($surveyid && $surveyexists)
     {
         @session_name($stg_SessionName.'-runtime-'.$surveyid);
@@ -116,6 +117,9 @@ else
     session_name("LimeSurveyRuntime-$surveyid");
 }
 session_set_cookie_params(0,$relativeurl.'/');
+
+
+
 if (!isset($_SESSION) || empty($_SESSION)) // the $_SESSION variable can be empty if register_globals is on
     @session_start();
 

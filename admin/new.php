@@ -14,7 +14,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -42,7 +42,7 @@ $js_foot = array(
 "../js/new.js",
 "../js/custom.js"
 				);
-global $db;	
+global $db;	$cl=""; $name=""; $message="";
 
 xhtml_head(T_("Create a new questionnaire"),true,$css,$js_head); 
 
@@ -81,8 +81,24 @@ if (isset($_POST['import_file']))
 		$lime_rs_sid = bigintval($_POST['selectrs']);
 	}
 
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete,referral)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc,$referral)";
+//**  get default coma-separated outcomes list and use it for new questionnaire as initial set
+	$sql = "SELECT o.outcome_id
+			FROM `outcome` as o
+			WHERE o.default = 1;";
+	$def = $db->GetAll($sql);
+
+	for ($i=0; $i < count($def); $i++){
+		foreach($def[$i] as $key => $val){
+			$do[] = $val;
+		}	
+	}
+
+	$do = implode($do,",");
+	
+//** - end 
+	
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete,referral,outcomes)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc,$referral,'$do')";
 
 	$rs = $db->Execute($sql);
 
@@ -101,12 +117,12 @@ if (isset($_POST['import_file']))
 
 			$db->Execute($sql);
 		}
-		$cl = info;
+		$cl = "info";
 		$message =  T_("Successfully inserted") . "&ensp;" . T_("with ID") . "&ensp; $qid, </h4><h4>" . T_("linked to survey") . "&ensp; $lime_sid ";
 				
 	}
 	else{
-		$cl = danger;
+		$cl = "danger";
 		$message = T_("Error: Failed to insert questionnaire");
 	}
 	
@@ -252,7 +268,19 @@ if (!empty($surveys)){?>
 			if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
 				while (false !== ($entry = readdir($handle))) {
 					if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
-						echo "<option value=\"$entry\">$entry</option>";
+						$default = "";
+						if ($entry == 'skeletonquest') $default = "selected=\"selected\"";
+						echo "<option value=\"$entry\" $default>$entry</option>";
+					}
+				}
+				closedir($handle);
+			}
+			if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/upload/templates")) {
+				while (false !== ($entry = readdir($handle))) {
+					if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/upload/templates/" . $entry)){
+						$default = "";
+						if ($entry == 'skeletonquest') $default = "selected=\"selected\"";
+						echo "<option value=\"$entry\" $default>$entry</option>";
 					}
 				}
 				closedir($handle);

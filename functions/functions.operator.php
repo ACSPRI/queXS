@@ -57,9 +57,9 @@ function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
     for($i=0;$i<$length;$i++)
     {   
         if(isset($key))
-            $key .= $pattern{rand(0,$patternlength)};
+            $key .= $pattern{mt_rand(0,$patternlength)};
         else
-            $key = $pattern{rand(0,$patternlength)};
+            $key = $pattern{mt_rand(0,$patternlength)};
     }
     return $key;
 }
@@ -354,7 +354,18 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 {
 	global $db;
 
+	$ttries = 0;
+	
+	do {
 	$token = sRandomChars();
+
+		$sql = "SELECT count(*) as c
+			FROM `case`
+			WHERE token = '$token'";
+
+		$ttries++;
+	} while ($db->GetOne($sql) > 0 && $ttries < 10);
+	
 
 	$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
 		VALUES (NULL, $sample_id, $questionnaire_id, NULL, $operator_id, NULL, '$current_outcome_id','$token')";
@@ -442,34 +453,34 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		if ($lime_sid)
 		{
-			$lfirstname = '';
-			$llastname = '';
-			$lemail = '';
+			$lfirstname = "''";
+			$llastname = "''";
+			$lemail = "''";
 	
 			if ($addlimeattributes)
 			{
-				$lfirstname = $db->GetOne("SELECT sv.val 
+				$lfirstname = $db->qstr($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
-								AND s.type = '6'");
+								AND s.type = '6'"));
 
-				$llastname = $db->GetOne("SELECT sv.val 
+				$llastname = $db->qstr($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
-								AND s.type = '7'");
+								AND s.type = '7'"));
 
-				$lemail = $db->GetOne("SELECT sv.val 
+				$lemail = $db->qstr($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
-								AND s.type = '8'");
+								AND s.type = '8'"));
 
 			}
 	
 			$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
-			VALUES (NULL,'$lfirstname','$llastname','$lemail','$token','".DEFAULT_LOCALE."','N','N',NULL)";
+			VALUES (NULL,$lfirstname,$llastname,$lemail,'$token','".DEFAULT_LOCALE."','N','N',NULL)";
 
 			$db->Execute($sql);
 
@@ -485,7 +496,6 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 					WHERE sid = '$lime_sid'";
 
 				$names = $db->GetOne($sql);
-
     				$attdescriptiondata=explode("\n",$names);
     				$atts=array();
 
@@ -503,8 +513,10 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 								AND sv.sample_id = '$sample_id'
 								AND s.var LIKE '$val'");
 
+					$lval = $db->qstr($lval);
+		
 					$sql = "UPDATE " . LIME_PREFIX . "tokens_$lime_sid
-						SET $key = '$lval'
+						SET $key = $lval
 						WHERE tid = '$tid'";
 
 					$db->Execute($sql);
@@ -714,6 +726,7 @@ function get_case_id($operator_id, $create = false)
  				//apn.appointment_id contains the id of an appointment if we are calling on an appointment
 			}
 			$r2 = $db->GetRow($sql);
+	
 	
 			if (empty($r2))
 			{

@@ -47,7 +47,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -149,6 +149,7 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 			}
 			if (isset($_GET['sample']))
 			{
+				$l['description'] = T_($l['description']);
 				echo "," . str_replace(","," ",$l['description']) . "," .$l['callattempts']."," .$l['calls']."," .$l['casenotes'].",".$l['interviewtimec'].",".$l['interviewtimel'].",".$l['lastnumber'].",".$l['lastcallstart'].",".$l['operatoru'].",".$l['shiftr'].",". $l['aapor_id'];
 			}
 			echo  "\n";
@@ -201,7 +202,7 @@ xhtml_head(T_("Data output"),true,array("../include/bootstrap/css/bootstrap.min.
 print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Please select a questionnaire") . ":&emsp;</h3>";
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) $questionnaire_id = bigintval($_GET['questionnaire_id']);
-display_questionnaire_chooser($questionnaire_id,false,"form-inline col-sm-3 pull-left", "form-control");
+display_questionnaire_chooser($questionnaire_id,false,"form-inline col-lg-4 pull-left", "form-control");
 
 if ($questionnaire_id)
 {
@@ -217,7 +218,7 @@ if ($questionnaire_id)
 	print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Please select a sample") . ":&emsp;</h3>";
 	$sample_import_id = false;
 	if (isset($_GET['sample_import_id'])) $sample_import_id = bigintval($_GET['sample_import_id']);
-	display_sample_chooser($questionnaire_id,$sample_import_id,false,"form-inline col-sm-3 pull-left", "form-control");
+	display_sample_chooser($questionnaire_id,$sample_import_id,false,"form-inline col-lg-4 pull-left", "form-control");
 
 	if ($sample_import_id)
 	{
@@ -231,7 +232,7 @@ if ($questionnaire_id)
 		//download a key file linking the caseid to the sample
 		print "<div class='form-group '><h3 class='col-sm-4 text-right'>" . T_("Download key file: select sample var") . ":&emsp;</h3>";
 
-		display_chooser($rs,"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id",true,true,false,true,"form-inline col-sm-3 pull-left");
+		display_chooser($rs,"sample_var","sample_var",true,"questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id",true,true,false,true,"form-inline col-lg-4 pull-left");
 		
 		print "</div><div class=' col-sm-4'>";
 		

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-07 12:24+1000\n"
+"POT-Creation-Date: 2015-12-04 15:01+1100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -16,86 +16,98 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: appointment.php:74
+#: appointment.php:76
 msgid "Appointment error"
 msgstr ""
 
-#: appointment.php:75
+#: appointment.php:77
 msgid ""
 "You have not been assigned a case therefore cannot create an appointment"
 msgstr ""
 
-#: appointment.php:114
+#: appointment.php:116
 msgid "Appointment made"
 msgstr ""
 
-#: appointment.php:126 admin/supervisor.php:390
+#: appointment.php:128 admin/supervisor.php:394
 msgid "Create appointment"
 msgstr ""
 
-#: appointment.php:129 appointmentlist.php:95 callhistory.php:88
+#: appointment.php:131 appointmentlist.php:95 callhistory.php:88
 #: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/supervisor.php:382 admin/displayappointments.php:189
-#: admin/displayappointments.php:263 admin/displayappointments.php:282
+#: admin/supervisor.php:386 admin/displayappointments.php:209
+#: admin/displayappointments.php:313 admin/displayappointments.php:335
 msgid "Respondent"
 msgstr ""
 
-#: appointment.php:138
+#: appointment.php:140
 msgid "Create new respondent:"
 msgstr ""
 
-#: appointment.php:141
+#: appointment.php:143
 msgid "Add this respondent"
 msgstr ""
 
-#: appointment.php:152 admin/operators.php:269 admin/operatorlist.php:240
-#: admin/supervisor.php:325 admin/casestatus.php:121
+#: appointment.php:153 admin/operators.php:257 admin/clients.php:245
+#: admin/operatorlist.php:240 admin/supervisor.php:329
+#: admin/casestatus.php:125
 msgid "Timezone"
 msgstr ""
 
-#: appointment.php:152
+#: appointment.php:153
 msgid "Current Time"
 msgstr ""
 
-#: appointment.php:168
+#: appointment.php:171
 msgid "Select phone number:"
 msgstr ""
 
-#: appointment.php:182
+#: appointment.php:185 admin/displayappointments.php:231
 msgid "Add new phone number"
 msgstr ""
 
-#: appointment.php:195
+#: appointment.php:198
 msgid "Add new phone number (with area code, eg 0398761234):"
 msgstr ""
 
-#: appointment.php:198
+#: appointment.php:201
 msgid "Add this phone number"
 msgstr ""
 
-#: appointment.php:218
+#: appointment.php:221
 msgid "Accept appointment from "
 msgstr ""
 
-#: appointment.php:218 functions/functions.calendar.php:318
+#: appointment.php:221 functions/functions.calendar.php:313
 msgid " till "
 msgstr ""
 
-#: appointment.php:218
+#: appointment.php:221
 msgid " on "
 msgstr ""
 
-#: appointment.php:218
+#: appointment.php:221
 msgid "on"
 msgstr ""
 
-#: appointment.php:219
+#: appointment.php:222
 msgid "Appointment with myself only?"
 msgstr ""
 
-#: appointment.php:228 include/limesurvey/qanda.php:1701
+#: appointment.php:231 include/limesurvey/qanda.php:1701
 #: include/limesurvey/qanda.php:1921
 msgid "Schedule Appointment"
+msgstr ""
+
+#: appointment.php:248
+msgid "Clear"
+msgstr ""
+
+#: appointment.php:248 referral.php:269 email.php:360 admin/samplelist.php:474
+#: admin/samplelist.php:485 admin/operators.php:305 admin/clients.php:254
+#: admin/set_outcomes.php:251 admin/supervisor.php:180
+#: admin/extensionstatus.php:207 admin/new.php:392
+msgid "Cancel"
 msgstr ""
 
 #: info.php:62
@@ -147,41 +159,45 @@ msgid "Show to operator?"
 msgstr ""
 
 #: functions/functions.import.php:144 functions/functions.import.php:156
-#: waitnextcase_interface2.php:142 admin/samplelist.php:312
-#: admin/samplelist.php:313 admin/samplelist.php:476 admin/samplelist.php:487
-#: admin/operators.php:289 admin/operators.php:301 admin/operators.php:305
-#: admin/operators.php:309 admin/operators.php:313 admin/operators.php:317
+#: waitnextcase_interface2.php:142 admin/samplelist.php:310
+#: admin/samplelist.php:311 admin/samplelist.php:474 admin/samplelist.php:485
+#: admin/operators.php:267 admin/operators.php:283 admin/operators.php:299
 #: admin/samplesearch.php:101 admin/addshift.php:261
 #: admin/supervisorchat.php:79 admin/questionnairelist.php:390
 #: admin/questionnairelist.php:393 admin/questionnairelist.php:397
 #: admin/questionnairelist.php:401 admin/questionnairelist.php:405
-#: admin/operatorlist.php:257 admin/operatorlist.php:269
-#: admin/operatorlist.php:273 admin/operatorlist.php:277
-#: admin/assignsample.php:229 admin/assignsample.php:232
-#: admin/assignsample.php:274 admin/assignsample.php:320
-#: admin/assignsample.php:324 admin/assignsample.php:330
-#: admin/supervisor.php:195 admin/quotarow.php:397 admin/quotarow.php:571
-#: admin/quotarow.php:601 admin/new.php:204 admin/new.php:211
-#: admin/new.php:218 admin/new.php:225 admin/new.php:232
+#: admin/operatorlist.php:251 admin/operatorlist.php:269
+#: admin/operatorlist.php:286 admin/operatorlist.php:291
+#: admin/set_outcomes.php:183 admin/set_outcomes.php:208
+#: admin/set_outcomes.php:209 admin/set_outcomes.php:210
+#: admin/set_outcomes.php:211 admin/set_outcomes.php:212
+#: admin/set_outcomes.php:213 admin/assignsample.php:235
+#: admin/assignsample.php:238 admin/assignsample.php:342
+#: admin/assignsample.php:415 admin/assignsample.php:419
+#: admin/assignsample.php:425 admin/supervisor.php:199 admin/quotarow.php:396
+#: admin/quotarow.php:570 admin/quotarow.php:600 admin/new.php:220
+#: admin/new.php:227 admin/new.php:234 admin/new.php:241 admin/new.php:248
 msgid "Yes"
 msgstr ""
 
 #: functions/functions.import.php:144 functions/functions.import.php:156
-#: admin/samplelist.php:312 admin/samplelist.php:313 admin/operators.php:289
-#: admin/operators.php:301 admin/operators.php:305 admin/operators.php:309
-#: admin/operators.php:313 admin/operators.php:317 admin/addshift.php:261
+#: admin/samplelist.php:310 admin/samplelist.php:311 admin/operators.php:267
+#: admin/operators.php:283 admin/operators.php:299 admin/addshift.php:261
 #: admin/supervisorchat.php:79 admin/questionnairelist.php:390
 #: admin/questionnairelist.php:393 admin/questionnairelist.php:397
 #: admin/questionnairelist.php:401 admin/questionnairelist.php:405
-#: admin/operatorlist.php:257 admin/operatorlist.php:269
-#: admin/operatorlist.php:273 admin/operatorlist.php:277
-#: admin/assignsample.php:229 admin/assignsample.php:230
-#: admin/assignsample.php:232 admin/assignsample.php:274
-#: admin/assignsample.php:320 admin/assignsample.php:321
-#: admin/assignsample.php:324 admin/assignsample.php:330
-#: admin/quotarow.php:397 admin/quotarow.php:571 admin/quotarow.php:601
-#: admin/new.php:204 admin/new.php:211 admin/new.php:218 admin/new.php:225
-#: admin/new.php:232
+#: admin/operatorlist.php:251 admin/operatorlist.php:269
+#: admin/operatorlist.php:286 admin/operatorlist.php:291
+#: admin/set_outcomes.php:183 admin/set_outcomes.php:208
+#: admin/set_outcomes.php:209 admin/set_outcomes.php:210
+#: admin/set_outcomes.php:211 admin/set_outcomes.php:212
+#: admin/set_outcomes.php:213 admin/assignsample.php:235
+#: admin/assignsample.php:236 admin/assignsample.php:238
+#: admin/assignsample.php:342 admin/assignsample.php:415
+#: admin/assignsample.php:416 admin/assignsample.php:419
+#: admin/assignsample.php:425 admin/quotarow.php:396 admin/quotarow.php:570
+#: admin/quotarow.php:600 admin/new.php:220 admin/new.php:227
+#: admin/new.php:234 admin/new.php:241 admin/new.php:248
 msgid "No"
 msgstr ""
 
@@ -197,7 +213,7 @@ msgstr ""
 msgid "evening"
 msgstr ""
 
-#: functions/functions.operator.php:972
+#: functions/functions.operator.php:985
 msgid "ERROR: You are not logged in."
 msgstr ""
 
@@ -246,70 +262,67 @@ msgstr ""
 msgid "Select a respondent"
 msgstr ""
 
-#: functions/functions.calendar.php:194
-msgid "None"
-msgstr ""
-
-#: functions/functions.calendar.php:212 respondent.php:99 respondent.php:137
-#: contactdetails.php:96 contactdetails.php:134
+#: functions/functions.calendar.php:202 functions/functions.calendar.php:204
+#: respondent.php:99 respondent.php:137 contactdetails.php:98
+#: contactdetails.php:136
 msgid "Add respondent"
 msgstr ""
 
-#: functions/functions.calendar.php:261
+#: functions/functions.calendar.php:256
 msgid "First name:"
 msgstr ""
 
-#: functions/functions.calendar.php:262
+#: functions/functions.calendar.php:257
 msgid "Last  name:"
 msgstr ""
 
-#: functions/functions.calendar.php:267
+#: functions/functions.calendar.php:262
 msgid "Time Zone:"
 msgstr ""
 
-#: functions/functions.calendar.php:318
+#: functions/functions.calendar.php:313
 msgid "Shift from:"
 msgstr ""
 
-#: functions/functions.calendar.php:322
+#: functions/functions.calendar.php:317
 msgid "Start Time"
 msgstr ""
 
-#: functions/functions.calendar.php:365
+#: functions/functions.calendar.php:360
 msgid "End Time"
 msgstr ""
 
-#: functions/functions.calendar.php:467
+#: functions/functions.calendar.php:462
 msgid "Mon"
 msgstr ""
 
-#: functions/functions.calendar.php:468
+#: functions/functions.calendar.php:463
 msgid "Tue"
 msgstr ""
 
-#: functions/functions.calendar.php:469
+#: functions/functions.calendar.php:464
 msgid "Wed"
 msgstr ""
 
-#: functions/functions.calendar.php:470
+#: functions/functions.calendar.php:465
 msgid "Thu"
 msgstr ""
 
-#: functions/functions.calendar.php:471
+#: functions/functions.calendar.php:466
 msgid "Fri"
 msgstr ""
 
-#: functions/functions.calendar.php:472
+#: functions/functions.calendar.php:467
 msgid "Sat"
 msgstr ""
 
-#: functions/functions.calendar.php:473
+#: functions/functions.calendar.php:468
 msgid "Sun"
 msgstr ""
 
 #: functions/functions.voip.php:449 selectextension.php:114 status.php:105
-#: admin/operators.php:278 admin/operatorlist.php:248
-#: admin/operatorlist.php:394 admin/extensionstatus.php:262
+#: admin/operators.php:271 admin/operatorlist.php:255
+#: admin/operatorlist.php:408 admin/extensionstatus.php:266
 msgid "Extension"
 msgstr ""
 
@@ -330,7 +343,7 @@ msgid "Reconnected"
 msgstr ""
 
 #: functions/functions.voip.php:553 status.php:124
-#: admin/extensionstatus.php:231 call.php:440
+#: admin/extensionstatus.php:233 call.php:440
 msgid "Ringing"
 msgstr ""
 
@@ -342,14 +355,14 @@ msgstr ""
 
 #: functions/functions.voip.php:553 functions/functions.voip.php:565
 #: functions/functions.voip.php:577 supervisorchat.php:88
-#: admin/systemsortprocess.php:152 admin/systemsortprocess.php:190
+#: admin/systemsortprocess.php:147 admin/systemsortprocess.php:185
 #: admin/bulkappointment.php:215 admin/bulkappointment.php:237
-#: admin/casestatus.php:121
+#: admin/casestatus.php:125
 msgid "Case id"
 msgstr ""
 
 #: functions/functions.voip.php:565 status.php:128
-#: admin/extensionstatus.php:231 call.php:447
+#: admin/extensionstatus.php:233 call.php:447
 msgid "Answered"
 msgstr ""
 
@@ -374,7 +387,6 @@ msgid "You are: "
 msgstr ""
 
 #: rs_callback.php:86 rs_callback_interface2.php:86
-#, php-format
 msgid "% complete"
 msgstr ""
 
@@ -404,7 +416,7 @@ msgid ""
 "below to try again for an available extension"
 msgstr ""
 
-#: selectextension.php:106
+#: selectextension.php:106 admin/set_outcomes.php:221
 msgid "Try again"
 msgstr ""
 
@@ -423,13 +435,13 @@ msgid "Choose extension"
 msgstr ""
 
 #: status.php:64 status.php:83 status_interface2.php:76
-#: admin/quotareport.php:299 admin/outcomes.php:87 admin/outcomes.php:199
-#: admin/quotarow.php:587
+#: admin/quotareport.php:310 admin/outcomes.php:88 admin/outcomes.php:200
+#: admin/quotarow.php:586
 msgid "Status"
 msgstr ""
 
 #: status.php:65 callhistory.php:92 admin/callhistory.php:192
-#: admin/casesbyoutcome.php:122
+#: admin/casesbyoutcome.php:124
 msgid "No operator"
 msgstr ""
 
@@ -461,11 +473,11 @@ msgstr ""
 msgid "APPT"
 msgstr ""
 
-#: status.php:137
+#: status.php:137 status_interface2.php:181
 msgid "MISSED"
 msgstr ""
 
-#: status.php:140 casenote.php:119 status_interface2.php:238 calllist.php:93
+#: status.php:140 casenote.php:119 status_interface2.php:239 calllist.php:93
 #: project_info.php:88
 msgid "No case"
 msgstr ""
@@ -490,23 +502,23 @@ msgstr ""
 msgid "You must supply a primary phone number"
 msgstr ""
 
-#: referral.php:220 index.php:172 index_interface2.php:228
+#: referral.php:220 index.php:172 index_interface2.php:231
 msgid "Referral"
 msgstr ""
 
-#: referral.php:231 referral.php:266
+#: referral.php:231 referral.php:268
 msgid "Create referral"
 msgstr ""
 
-#: referral.php:264
+#: referral.php:266
 msgid "Call this new referral immediately after this case?"
 msgstr ""
 
-#: referral.php:271
+#: referral.php:275
 msgid "Referrals not available for this questionnaire"
 msgstr ""
 
-#: performance.php:67 index.php:282 index_interface2.php:300
+#: performance.php:67 index.php:282 index_interface2.php:301
 msgid "Performance"
 msgstr ""
 
@@ -515,19 +527,19 @@ msgid "This shift"
 msgstr ""
 
 #: performance.php:84 performance.php:91 casenote.php:116
-#: appointmentlist.php:95 calllist.php:89 admin/outcomes.php:239
+#: appointmentlist.php:95 calllist.php:89 admin/outcomes.php:240
 #: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/operatorlist.php:200 admin/operatorlist.php:394
-#: admin/casesbyoutcome.php:93 admin/supervisor.php:382
-#: admin/supervisor.php:409 admin/supervisor.php:426
+#: admin/operatorlist.php:200 admin/operatorlist.php:408
+#: admin/casesbyoutcome.php:95 admin/supervisor.php:386
+#: admin/supervisor.php:413 admin/supervisor.php:430
 #: admin/operatorskill.php:251 admin/operatorperformance.php:86
 #: admin/operatorperformance.php:109 admin/shiftreport.php:110
-#: admin/extensionstatus.php:262 admin/operatorquestionnaire.php:247
+#: admin/extensionstatus.php:266 admin/operatorquestionnaire.php:247
 msgid "Operator"
 msgstr ""
 
-#: performance.php:84 performance.php:91 admin/quotareport.php:299
-#: admin/outcomes.php:304 admin/quotarow.php:587
+#: performance.php:84 performance.php:91 admin/quotareport.php:310
+#: admin/outcomes.php:305 admin/quotarow.php:586
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 msgid "Completions"
 msgstr ""
@@ -544,32 +556,31 @@ msgstr ""
 msgid "Case Notes"
 msgstr ""
 
-#: casenote.php:72 casenote.php:111 admin/supervisor.php:434
+#: casenote.php:72 casenote.php:111 admin/supervisor.php:438
 msgid "Add note"
 msgstr ""
 
-#: casenote.php:75 admin/samplelist.php:289 admin/samplelist.php:500
+#: casenote.php:75 admin/samplelist.php:289 admin/samplelist.php:498
 #: admin/samplesearch.php:107 admin/questionnairelist.php:375
-#: admin/questionnairelist.php:513 admin/questionnairelist.php:535
-#: admin/questionnairelist.php:543 admin/callhistory.php:145
+#: admin/questionnairelist.php:523 admin/questionnairelist.php:545
+#: admin/questionnairelist.php:553 admin/callhistory.php:145
 #: admin/availability.php:127 admin/operatorlist.php:198 admin/import.php:48
 #: admin/import.php:86 admin/import.php:117 admin/casesbyoutcome.php:59
-#: admin/assignsample.php:206 admin/assignsample.php:259
-#: admin/casestatus.php:210 admin/extensionstatus.php:190 respondent.php:101
-#: contactdetails.php:98
+#: admin/assignsample.php:212 admin/assignsample.php:327
+#: admin/casestatus.php:214 respondent.php:101 contactdetails.php:100
 msgid "Go back"
 msgstr ""
 
-#: casenote.php:114 admin/supervisor.php:424
+#: casenote.php:114 admin/supervisor.php:428
 msgid "No notes"
 msgstr ""
 
 #: casenote.php:116 callhistory.php:88 calllist.php:89
-#: admin/supervisor.php:409 admin/supervisor.php:426
+#: admin/supervisor.php:413 admin/supervisor.php:430
 msgid "Date/Time"
 msgstr ""
 
-#: casenote.php:116 admin/bulkappointment.php:237 admin/supervisor.php:426
+#: casenote.php:116 admin/bulkappointment.php:237 admin/supervisor.php:430
 msgid "Note"
 msgstr ""
 
@@ -614,7 +625,7 @@ msgid "Current shifts available:"
 msgstr ""
 
 #: waitnextcase_interface2.php:162 waitnextcase_interface2.php:165
-#: admin/outcomes.php:127
+#: admin/outcomes.php:128
 msgid "Cases currently available to call"
 msgstr ""
 
@@ -626,11 +637,11 @@ msgstr ""
 msgid "Get a new case"
 msgstr ""
 
-#: waitnextcase_interface2.php:199 call_interface2.php:329
-#: call_interface2.php:331 call_interface2.php:447 call_interface2.php:452
-#: call_interface2.php:468 call_interface2.php:474 call.php:282 call.php:284
+#: waitnextcase_interface2.php:200 call_interface2.php:321
+#: call_interface2.php:323 call_interface2.php:441 call_interface2.php:446
+#: call_interface2.php:462 call_interface2.php:468 call.php:282 call.php:284
 #: call.php:400 call.php:405 call.php:421 call.php:427
-#: index_interface2.php:230
+#: index_interface2.php:233
 msgid "End work"
 msgstr ""
 
@@ -702,7 +713,7 @@ msgstr ""
 msgid "Begin the manual recording now..."
 msgstr ""
 
-#: record.php:84 email.php:280 call_interface2.php:212 call_interface2.php:277
+#: record.php:84 email.php:280 call_interface2.php:204 call_interface2.php:269
 #: call.php:212 call.php:230 index.php:173
 msgid "Start REC"
 msgstr ""
@@ -781,9 +792,9 @@ msgstr ""
 #: include/limesurvey/admin/exportresults.php:645
 #: include/limesurvey/admin/exportresults.php:967 callhistory.php:88
 #: admin/samplesearch.php:162 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/casesbyoutcome.php:115
-#: admin/dataoutput.php:85 admin/extensionstatus.php:262
-#: admin/displayappointments.php:263 admin/displayappointments.php:282
+#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
+#: admin/dataoutput.php:85 admin/extensionstatus.php:266
+#: admin/displayappointments.php:313 admin/displayappointments.php:335
 msgid "Case ID"
 msgstr ""
 
@@ -812,7 +823,7 @@ msgstr ""
 #: include/limesurvey/admin/exportresults.php:614
 #: include/limesurvey/admin/exportresults.php:615
 #: include/limesurvey/admin/exportresults.php:979 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/supervisor.php:421 admin/dataoutput.php:93
+#: admin/callhistory.php:157 admin/supervisor.php:425 admin/dataoutput.php:93
 msgid "Case notes"
 msgstr ""
 
@@ -847,7 +858,7 @@ msgstr ""
 #: include/limesurvey/admin/exportresults.php:267
 #: include/limesurvey/admin/exportresults.php:639
 #: include/limesurvey/admin/exportresults.php:640
-#: include/limesurvey/admin/exportresults.php:994 admin/outcomes.php:304
+#: include/limesurvey/admin/exportresults.php:994 admin/outcomes.php:305
 #: admin/dataoutput.php:93
 msgid "Shift report"
 msgstr ""
@@ -860,7 +871,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: status_interface2.php:182 index.php:168 index_interface2.php:223
+#: status_interface2.php:182 index.php:168 index_interface2.php:226
 msgid "Appointment"
 msgstr ""
 
@@ -868,7 +879,7 @@ msgstr ""
 msgid "Dial"
 msgstr ""
 
-#: status_interface2.php:232 status_interface2.php:235
+#: status_interface2.php:233 status_interface2.php:236
 msgid "No more numbers to call"
 msgstr ""
 
@@ -876,13 +887,13 @@ msgstr ""
 msgid "Appointment List"
 msgstr ""
 
-#: appointmentlist.php:75 admin/supervisor.php:364
-#: admin/displayappointments.php:249
+#: appointmentlist.php:75 admin/supervisor.php:368
+#: admin/displayappointments.php:296
 msgid "Not yet called"
 msgstr ""
 
-#: appointmentlist.php:75 admin/displayappointments.php:227
-#: admin/displayappointments.php:252
+#: appointmentlist.php:75 admin/displayappointments.php:266
+#: admin/displayappointments.php:299
 msgid "Any operator"
 msgstr ""
 
@@ -895,30 +906,30 @@ msgid "No future appointments scheduled"
 msgstr ""
 
 #: appointmentlist.php:95 admin/callrestrict.php:140 admin/addshift.php:243
-#: admin/availability.php:165 admin/supervisor.php:382
-#: admin/shifttemplate.php:136 admin/displayappointments.php:263
-#: admin/displayappointments.php:282 shifts.php:88 shifts.php:109
+#: admin/availability.php:165 admin/supervisor.php:386
+#: admin/shifttemplate.php:136 admin/displayappointments.php:313
+#: admin/displayappointments.php:335 shifts.php:88 shifts.php:109
 msgid "Start"
 msgstr ""
 
 #: appointmentlist.php:95 admin/callrestrict.php:140 admin/addshift.php:243
-#: admin/availability.php:165 admin/supervisor.php:382
-#: admin/shifttemplate.php:136 admin/displayappointments.php:263
-#: admin/displayappointments.php:282 index.php:167 shifts.php:88
+#: admin/availability.php:165 admin/supervisor.php:386
+#: admin/shifttemplate.php:136 admin/displayappointments.php:313
+#: admin/displayappointments.php:335 index.php:167 shifts.php:88
 #: shifts.php:109
 msgid "End"
 msgstr ""
 
-#: appointmentlist.php:95 admin/displayappointments.php:213
-#: admin/displayappointments.php:263
+#: appointmentlist.php:95 admin/displayappointments.php:252
+#: admin/displayappointments.php:313
 msgid "Appointment with"
 msgstr ""
 
-#: appointmentlist.php:95 client/index.php:97 client/index.php:116
-#: callhistory.php:88 calllist.php:89 admin/outcomes.php:146
-#: admin/outcomes.php:168 admin/outcomes.php:219 admin/outcomes.php:261
+#: appointmentlist.php:95 client/index.php:99 client/index.php:118
+#: callhistory.php:88 calllist.php:89 admin/outcomes.php:147
+#: admin/outcomes.php:169 admin/outcomes.php:220 admin/outcomes.php:262
 #: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/supervisor.php:409 admin/casestatus.php:121 index_interface2.php:222
+#: admin/supervisor.php:413 admin/casestatus.php:125 index_interface2.php:225
 msgid "Outcome"
 msgstr ""
 
@@ -926,7 +937,7 @@ msgstr ""
 msgid "Call automatically ended with outcome: Complete - End case"
 msgstr ""
 
-#: client/index.php:65 admin/outcomes.php:70
+#: client/index.php:65 admin/outcomes.php:71
 msgid "Questionnaire Outcomes"
 msgstr ""
 
@@ -934,36 +945,40 @@ msgstr ""
 msgid "There are no questionnaires assigned to you"
 msgstr ""
 
-#: client/index.php:97 admin/outcomes.php:146
+#: client/index.php:99 admin/outcomes.php:147
 msgid "Rate"
 msgstr ""
 
-#: client/index.php:98 admin/outcomes.php:147
+#: client/index.php:100 admin/outcomes.php:148
 msgid "Response Rate 1"
 msgstr ""
 
-#: client/index.php:99 admin/outcomes.php:148
+#: client/index.php:101 admin/outcomes.php:149
 msgid "Refusal Rate 1"
 msgstr ""
 
-#: client/index.php:100 admin/outcomes.php:149
+#: client/index.php:102 admin/outcomes.php:150
 msgid "Cooperation Rate 1"
 msgstr ""
 
-#: client/index.php:101 admin/outcomes.php:150
+#: client/index.php:103 admin/outcomes.php:151
 msgid "Contact Rate 1"
 msgstr ""
 
-#: client/index.php:116 admin/outcomes.php:168 admin/outcomes.php:219
-#: admin/outcomes.php:261
+#: client/index.php:118 admin/outcomes.php:169 admin/outcomes.php:220
+#: admin/outcomes.php:262
 msgid "Count"
 msgstr ""
 
-#: client/index.php:119 admin/outcomes.php:268
+#: client/index.php:120 admin/outcomes.php:269
 msgid "No outcomes recorded for this questionnaire"
 msgstr ""
 
-#: client/index.php:129
+#: client/index.php:122
+msgid "View summary results"
+msgstr ""
+
+#: client/index.php:141
 msgid "You are not a valid client"
 msgstr ""
 
@@ -977,7 +992,7 @@ msgid ""
 "number)"
 msgstr ""
 
-#: supervisorchat.php:62 admin/supervisorchat.php:66 admin/index.php:183
+#: supervisorchat.php:62 admin/supervisorchat.php:66 admin/index.php:195
 #: index.php:306
 msgid "Supervisor chat"
 msgstr ""
@@ -1018,41 +1033,46 @@ msgstr ""
 msgid "Self completion invitation sent via email to"
 msgstr ""
 
-#: email.php:285 email.php:289 email.php:295 email.php:316 email.php:346
-#: admin/operators.php:265 admin/clients.php:172 admin/operatorlist.php:236
-#: index.php:171 index_interface2.php:225
-msgid "Email"
+#: email.php:287 email.php:291 email.php:297 email.php:318
+#: index_interface2.php:228
+msgid "Invitation Email"
 msgstr ""
 
-#: email.php:302
+#: email.php:304
 msgid "The email did not send"
 msgstr ""
 
-#: email.php:307
+#: email.php:309
 msgid "The email address is not valid"
 msgstr ""
 
-#: email.php:336
+#: email.php:338
 msgid "Email respondent for self completion"
 msgstr ""
 
-#: email.php:344 admin/operators.php:257 admin/operatorlist.php:228
+#: email.php:347 admin/operators.php:245 admin/clients.php:233
+#: admin/operatorlist.php:228
 msgid "First name"
 msgstr ""
 
-#: email.php:345 admin/operators.php:261 admin/operatorlist.php:232
+#: email.php:350 admin/operators.php:249 admin/operatorlist.php:232
 msgid "Last name"
 msgstr ""
 
-#: email.php:349
+#: email.php:353 admin/operators.php:253 admin/clients.php:241
+#: admin/operatorlist.php:236 index.php:171
+msgid "Email"
+msgstr ""
+
+#: email.php:357
 msgid "Send invitation"
 msgstr ""
 
-#: email.php:351
+#: email.php:359
 msgid "Send invitation and Hang up"
 msgstr ""
 
-#: email.php:355
+#: email.php:365
 msgid "Self completion email not available for this questionnaire"
 msgstr ""
 
@@ -1064,16 +1084,16 @@ msgstr ""
 msgid "No calls ever made"
 msgstr ""
 
-#: availability.php:61 index.php:236 index_interface2.php:256
+#: availability.php:61 index.php:236 index_interface2.php:261
 msgid "Availability"
 msgstr ""
 
-#: availability.php:128 admin/supervisor.php:513
+#: availability.php:128 admin/supervisor.php:517
 msgid ""
 "Select groups to limit availability (Selecting none means always available)"
 msgstr ""
 
-#: availability.php:148 admin/supervisor.php:532
+#: availability.php:148 admin/supervisor.php:536
 msgid "Availability groups not defined for this questionnaire"
 msgstr ""
 
@@ -1081,7 +1101,7 @@ msgstr ""
 msgid "Call List"
 msgstr ""
 
-#: calllist.php:85 admin/supervisor.php:405
+#: calllist.php:85 admin/supervisor.php:409
 msgid "No calls made"
 msgstr ""
 
@@ -1101,42 +1121,44 @@ msgstr ""
 msgid "Reasons:"
 msgstr ""
 
-#: nocaseavailable.php:86 nocaseavailable.php:98 admin/samplelist.php:471
-#: admin/questionnairelist.php:554 admin/operatorlist.php:276
+#: nocaseavailable.php:86 nocaseavailable.php:98 admin/samplelist.php:469
+#: admin/questionnairelist.php:564 admin/operatorlist.php:290
 msgid "Enabled"
 msgstr ""
 
-#: nocaseavailable.php:86 admin/samplelist.php:469
-#: admin/questionnairelist.php:552 admin/index.php:199
+#: nocaseavailable.php:86 admin/samplelist.php:467
+#: admin/questionnairelist.php:562 admin/index.php:211
 msgid "Disabled"
 msgstr ""
 
-#: nocaseavailable.php:98 nocaseavailable.php:122 admin/samplelist.php:347
-#: admin/availabilitygroup.php:133
+#: nocaseavailable.php:98 nocaseavailable.php:122 admin/samplelist.php:345
+#: admin/availabilitygroup.php:133 admin/outcomes.php:169
+#: admin/outcomes.php:220
 msgid "ID"
 msgstr ""
 
-#: nocaseavailable.php:98 nocaseavailable.php:122 admin/samplelist.php:334
-#: admin/quota.php:255 admin/quotarow.php:423 admin/quotarow.php:461
-#: admin/quotarow.php:483 admin/quotarow.php:509 admin/quotarow.php:556
-#: admin/quotarow.php:587
+#: nocaseavailable.php:98 nocaseavailable.php:122 admin/samplelist.php:332
+#: admin/set_outcomes.php:191 admin/set_outcomes.php:221 admin/quota.php:256
+#: admin/quotarow.php:422 admin/quotarow.php:460 admin/quotarow.php:482
+#: admin/quotarow.php:508 admin/quotarow.php:555 admin/quotarow.php:586
 msgid "Description"
 msgstr ""
 
-#: nocaseavailable.php:122 admin/samplelist.php:325 admin/quotareport.php:299
-#: admin/assigntimeslots.php:265 admin/outcomes.php:127 admin/outcomes.php:183
+#: nocaseavailable.php:122 admin/samplelist.php:323 admin/quotareport.php:310
+#: admin/assigntimeslots.php:265 admin/outcomes.php:128 admin/outcomes.php:184
 #: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/callhistory.php:168 admin/quota.php:136 admin/assignsample.php:208
-#: admin/assignsample.php:284 admin/supervisor.php:308 admin/quotarow.php:311
-#: admin/casestatus.php:121 admin/casestatus.php:239
+#: admin/callhistory.php:168 admin/quota.php:137 admin/assignsample.php:214
+#: admin/assignsample.php:378 admin/supervisor.php:312 admin/quotarow.php:312
+#: admin/casestatus.php:125 admin/casestatus.php:243
+#: admin/displayappointments.php:313 admin/displayappointments.php:335
 msgid "Sample"
 msgstr ""
 
 #: nocaseavailable.php:147 admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/callhistory.php:162 admin/quota.php:115 admin/assignsample.php:207
-#: admin/quotarow.php:293 admin/casestatus.php:236
-#: admin/displayappointments.php:263 admin/displayappointments.php:282
-#: admin/new.php:132 admin/new.php:140 shifts.php:109
+#: admin/callhistory.php:162 admin/set_outcomes.php:139 admin/quota.php:115
+#: admin/assignsample.php:213 admin/quotarow.php:293 admin/casestatus.php:240
+#: admin/displayappointments.php:313 admin/displayappointments.php:335
+#: admin/new.php:148 admin/new.php:156 shifts.php:109
 msgid "Questionnaire"
 msgstr ""
 
@@ -1146,22 +1168,6 @@ msgstr ""
 
 #: nocaseavailable.php:147
 msgid "Shift end"
-msgstr ""
-
-#: nocaseavailable.php:170
-msgid "Call restrictions:"
-msgstr ""
-
-#: nocaseavailable.php:174
-msgid "ERROR: There are no cases available that fall within call restrictions"
-msgstr ""
-
-#: nocaseavailable.php:178
-msgid "There are "
-msgstr ""
-
-#: nocaseavailable.php:178
-msgid " unassigned case(s) available within the specified call restrictions"
 msgstr ""
 
 #: nocaseavailable.php:185
@@ -1203,8 +1209,8 @@ msgid ""
 "Your database does not have timezones installed, please see here for details"
 msgstr ""
 
-#: admin/timezonetemplate.php:109 admin/supervisor.php:152 admin/new.php:182
-#: admin/new.php:378
+#: admin/timezonetemplate.php:109 admin/supervisor.php:156 admin/new.php:198
+#: admin/new.php:406
 msgid "or"
 msgstr ""
 
@@ -1264,129 +1270,124 @@ msgstr ""
 msgid "Rename, Set viewing permissions & Manage sample variables"
 msgstr ""
 
-#: admin/samplelist.php:287 admin/samplelist.php:498 admin/index.php:122
+#: admin/samplelist.php:287 admin/samplelist.php:496 admin/index.php:133
 msgid "Sample management"
 msgstr ""
 
-#: admin/samplelist.php:326
+#: admin/samplelist.php:324
 msgid "Search this sample"
 msgstr ""
 
-#: admin/samplelist.php:334 admin/availabilitygroup.php:141
+#: admin/samplelist.php:332 admin/availabilitygroup.php:141
 msgid "Enter"
 msgstr ""
 
-#: admin/samplelist.php:334 admin/availabilitygroup.php:141
+#: admin/samplelist.php:332 admin/availabilitygroup.php:141
 msgid "new"
 msgstr ""
 
-#: admin/samplelist.php:338
+#: admin/samplelist.php:336
 msgid "Rename"
 msgstr ""
 
-#: admin/samplelist.php:347
+#: admin/samplelist.php:345
 msgid "Sample variable (Column)"
 msgstr ""
 
-#: admin/samplelist.php:347
+#: admin/samplelist.php:345
 msgid "Visible?"
 msgstr ""
 
-#: admin/samplelist.php:347
+#: admin/samplelist.php:345
 msgid "Var type"
 msgstr ""
 
-#: admin/samplelist.php:347
+#: admin/samplelist.php:345
 msgid "Example data"
 msgstr ""
 
-#: admin/samplelist.php:347
+#: admin/samplelist.php:345
 msgid "Delete ?"
 msgstr ""
 
-#: admin/samplelist.php:351 admin/addshift.php:268 admin/assignsample.php:235
-#: admin/quotarow.php:399 admin/extensionstatus.php:207
-#: admin/displayappointments.php:236
+#: admin/samplelist.php:349 admin/addshift.php:268 admin/assignsample.php:241
+#: admin/quotarow.php:398 admin/extensionstatus.php:210
+#: admin/displayappointments.php:282
 msgid "Save changes"
 msgstr ""
 
-#: admin/samplelist.php:361
+#: admin/samplelist.php:359
 msgid ""
 "Select which fields from this sample to deidentify. </p> Deidentified fields "
 "will be permanently deleted from the sample."
 msgstr ""
 
-#: admin/samplelist.php:365
+#: admin/samplelist.php:363
 msgid "There's no data in this sample.  Probably was deidentified earlier."
 msgstr ""
 
-#: admin/samplelist.php:379
+#: admin/samplelist.php:377
 msgid "Clean it"
 msgstr ""
 
-#: admin/samplelist.php:397
+#: admin/samplelist.php:395
 msgid "Fix  this sample "
 msgstr ""
 
-#: admin/samplelist.php:474 admin/questionnairelist.php:557
-#: admin/operatorlist.php:376
+#: admin/samplelist.php:472 admin/questionnairelist.php:567
+#: admin/operatorlist.php:390
 msgid "Enable"
 msgstr ""
 
-#: admin/samplelist.php:476 admin/samplelist.php:487
+#: admin/samplelist.php:474 admin/samplelist.php:485
 msgid "ARE YOU SURE?"
 msgstr ""
 
-#: admin/samplelist.php:476 admin/samplelist.php:487 admin/supervisor.php:176
-#: admin/new.php:364
-msgid "Cancel"
-msgstr ""
-
-#: admin/samplelist.php:476 admin/questionnairelist.php:559
-#: admin/operatorlist.php:378
+#: admin/samplelist.php:474 admin/questionnairelist.php:569
+#: admin/operatorlist.php:392
 msgid "Disable"
 msgstr ""
 
-#: admin/samplelist.php:480 admin/operators.php:272 admin/operators.php:281
-#: admin/questionnairelist.php:385 admin/operatorlist.php:243
-#: admin/operatorlist.php:251 admin/operatorlist.php:385
-#: admin/assignsample.php:275 admin/assignsample.php:284
-#: admin/supervisor.php:369 admin/quotarow.php:587 admin/shiftreport.php:102
-#: admin/shiftreport.php:110 admin/displayappointments.php:263
-#: admin/displayappointments.php:282
+#: admin/samplelist.php:478 admin/operators.php:260 admin/operators.php:274
+#: admin/questionnairelist.php:385 admin/clientquestionnaire.php:306
+#: admin/operatorlist.php:243 admin/operatorlist.php:259
+#: admin/operatorlist.php:399 admin/assignsample.php:343
+#: admin/assignsample.php:378 admin/supervisor.php:373 admin/quotarow.php:586
+#: admin/shiftreport.php:102 admin/shiftreport.php:110
+#: admin/displayappointments.php:313 admin/displayappointments.php:335
 msgid "Edit"
 msgstr ""
 
-#: admin/samplelist.php:480
+#: admin/samplelist.php:478
 msgid "Viewing permissions"
 msgstr ""
 
-#: admin/samplelist.php:482
+#: admin/samplelist.php:480
 msgid "Edit sample parameters"
 msgstr ""
 
-#: admin/samplelist.php:487
+#: admin/samplelist.php:485
 msgid "DELETE SAMPLE"
 msgstr ""
 
-#: admin/samplelist.php:489 admin/samplesearch.php:86 admin/index.php:123
+#: admin/samplelist.php:487 admin/samplesearch.php:86 admin/index.php:134
 msgid "Search the sample"
 msgstr ""
 
-#: admin/samplelist.php:490 admin/questionnairelist.php:583
-#: admin/index.php:156 index.php:255 index_interface2.php:273
+#: admin/samplelist.php:488 admin/questionnairelist.php:593
+#: admin/index.php:167 index.php:255 index_interface2.php:277
 msgid "Call history"
 msgstr ""
 
-#: admin/samplelist.php:490
+#: admin/samplelist.php:488
 msgid "sample"
 msgstr ""
 
-#: admin/samplelist.php:497
+#: admin/samplelist.php:495
 msgid "Sample list"
 msgstr ""
 
-#: admin/samplelist.php:501 admin/index.php:121
+#: admin/samplelist.php:499 admin/index.php:132
 msgid "Import a sample file"
 msgstr ""
 
@@ -1426,7 +1427,7 @@ msgid "Log id"
 msgstr ""
 
 #: admin/voipmonitor.php:95 admin/voipmonitor.php:107 admin/systemsort.php:97
-#: admin/systemsort.php:111 admin/outcomes.php:304 admin/callhistory.php:132
+#: admin/systemsort.php:111 admin/outcomes.php:305 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/shiftreport.php:110
 msgid "Date"
 msgstr ""
@@ -1444,47 +1445,47 @@ msgstr ""
 msgid "Outcome of last process run (if any)"
 msgstr ""
 
-#: admin/systemsortprocess.php:98
+#: admin/systemsortprocess.php:93
 msgid "Sorting cases process starting"
 msgstr ""
 
-#: admin/systemsortprocess.php:111
+#: admin/systemsortprocess.php:106
 msgid "Checking for cases open for more than 24 hours"
 msgstr ""
 
-#: admin/systemsortprocess.php:140 admin/systemsortprocess.php:152
-#: admin/systemsortprocess.php:178 admin/systemsortprocess.php:190
+#: admin/systemsortprocess.php:135 admin/systemsortprocess.php:147
+#: admin/systemsortprocess.php:173 admin/systemsortprocess.php:185
 msgid "System automatically closed case as not closed for more than 24 hours"
 msgstr ""
 
-#: admin/systemsortprocess.php:199
+#: admin/systemsortprocess.php:194
 msgid "Completed case closing"
 msgstr ""
 
-#: admin/systemsortprocess.php:199 admin/systemsortprocess.php:201
-#: admin/systemsortprocess.php:333 admin/systemsortprocess.php:335
+#: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
+#: admin/systemsortprocess.php:328 admin/systemsortprocess.php:330
 msgid "This task took"
 msgstr ""
 
-#: admin/systemsortprocess.php:199 admin/systemsortprocess.php:201
-#: admin/systemsortprocess.php:333 admin/systemsortprocess.php:335
+#: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
+#: admin/systemsortprocess.php:328 admin/systemsortprocess.php:330
 #: nocallavailable.php:208
 msgid "seconds"
 msgstr ""
 
-#: admin/systemsortprocess.php:201
+#: admin/systemsortprocess.php:196
 msgid "Failed to complete case closing"
 msgstr ""
 
-#: admin/systemsortprocess.php:216
+#: admin/systemsortprocess.php:211
 msgid "Sorting cases for "
 msgstr ""
 
-#: admin/systemsortprocess.php:333
+#: admin/systemsortprocess.php:328
 msgid "Completed sort"
 msgstr ""
 
-#: admin/systemsortprocess.php:335
+#: admin/systemsortprocess.php:330
 msgid "Failed to complete sort"
 msgstr ""
 
@@ -1515,97 +1516,87 @@ msgid ""
 "problems, it is not recommended to use this feature."
 msgstr ""
 
-#: admin/operators.php:150
+#: admin/operators.php:146
 msgid "Added operator :"
 msgstr ""
 
-#: admin/operators.php:153
+#: admin/operators.php:149
 msgid "FreePBX needs to be reloaded for the new VoIP extension to take effect"
 msgstr ""
 
-#: admin/operators.php:175
+#: admin/operators.php:163
 msgid "Could not add operator. There may already be an operator of this name:"
 msgstr ""
 
-#: admin/operators.php:181 admin/operators.php:320 admin/operatorlist.php:410
+#: admin/operators.php:169 admin/operators.php:309 admin/operatorlist.php:424
 msgid "Add an operator"
 msgstr ""
 
-#: admin/operators.php:190
+#: admin/operators.php:178
 msgid "The username and extension must be unique for each operator."
 msgstr ""
 
-#: admin/operators.php:245 admin/clientquestionnaire.php:243
-#: admin/operatorlist.php:216 admin/operatorlist.php:394
-#: admin/operatorskill.php:251 admin/operatorquestionnaire.php:247
+#: admin/operators.php:233 admin/clients.php:126 admin/clients.php:221
+#: admin/clientquestionnaire.php:291 admin/operatorlist.php:216
+#: admin/operatorlist.php:408 admin/operatorskill.php:251
+#: admin/operatorquestionnaire.php:247
 msgid "Username"
 msgstr ""
 
-#: admin/operators.php:249 admin/operatorlist.php:220
+#: admin/operators.php:237 admin/clients.php:225 admin/operatorlist.php:220
 msgid "Password"
 msgstr ""
 
-#: admin/operators.php:252 admin/clients.php:159 admin/operatorlist.php:223
-#: admin/extensionstatus.php:202
+#: admin/operators.php:240 admin/clients.php:228 admin/operatorlist.php:223
+#: admin/extensionstatus.php:201
 msgid "Generate"
 msgstr ""
 
-#: admin/operators.php:252 admin/clients.php:159 admin/operatorlist.php:223
+#: admin/operators.php:240 admin/clients.php:228 admin/operatorlist.php:223
 msgid "Password with"
 msgstr ""
 
-#: admin/operators.php:253 admin/clients.php:160 admin/operatorlist.php:224
+#: admin/operators.php:241 admin/clients.php:229 admin/operatorlist.php:224
 msgid "characters"
 msgstr ""
 
-#: admin/operators.php:273 admin/operatorlist.php:244
+#: admin/operators.php:261 admin/operatorlist.php:244
 msgid "TimeZones list"
 msgstr ""
 
-#: admin/operators.php:282 admin/operatorlist.php:252
-#: admin/operatorlist.php:411
-msgid "Extensions"
-msgstr ""
-
-#: admin/operators.php:288 admin/operatorlist.php:256
+#: admin/operators.php:266 admin/operatorlist.php:250
 msgid "Uses VoIP"
 msgstr ""
 
-#: admin/operators.php:292 admin/operatorlist.php:260
-msgid "Jabber/XMPP chat user"
+#: admin/operators.php:275 admin/operatorlist.php:261
+#: admin/operatorlist.php:425
+msgid "Extensions"
 msgstr ""
 
-#: admin/operators.php:296 admin/operatorlist.php:264
-msgid "Jabber/XMPP chat password"
-msgstr ""
-
-#: admin/operators.php:300 admin/operatorlist.php:272
+#: admin/operators.php:282 admin/operatorlist.php:268
 msgid "Uses chat"
 msgstr ""
 
-#: admin/operators.php:304 admin/operatorlist.php:268
+#: admin/operators.php:288 admin/operatorlist.php:274
+msgid "Jabber/XMPP chat user"
+msgstr ""
+
+#: admin/operators.php:292 admin/operatorlist.php:278
+msgid "Jabber/XMPP chat password"
+msgstr ""
+
+#: admin/operators.php:298 admin/operatorlist.php:285
 msgid "Is the operator a system administrator?"
 msgstr ""
 
-#: admin/operators.php:308
-msgid "Is the operator a normal interviewer?"
-msgstr ""
-
-#: admin/operators.php:312
-msgid "Is the operator a supervisor?"
-msgstr ""
-
-#: admin/operators.php:316
-msgid "Is the operator a refusal converter?"
-msgstr ""
-
-#: admin/quotareport.php:114 admin/index.php:158
+#: admin/quotareport.php:114 admin/questionnairelist.php:608
+#: admin/index.php:169
 msgid "Quota report"
 msgstr ""
 
 #: admin/quotareport.php:116 admin/assigntimeslots.php:161
-#: admin/questionnaireprefill.php:105 admin/outcomes.php:73
-#: admin/addshift.php:173 admin/assignsample.php:260
+#: admin/questionnaireprefill.php:107 admin/outcomes.php:74
+#: admin/addshift.php:173 admin/assignsample.php:328
 msgid "Select a questionnaire"
 msgstr ""
 
@@ -1613,12 +1604,12 @@ msgstr ""
 msgid "Select a sample"
 msgstr ""
 
-#: admin/quotareport.php:212 admin/quotareport.php:219 admin/quotarow.php:572
+#: admin/quotareport.php:212 admin/quotareport.php:219 admin/quotarow.php:571
 msgid "closed"
 msgstr ""
 
 #: admin/quotareport.php:212 admin/quotareport.php:214
-#: admin/quotareport.php:221 admin/quotarow.php:572
+#: admin/quotareport.php:221 admin/quotarow.php:571
 msgid "open"
 msgstr ""
 
@@ -1626,44 +1617,44 @@ msgstr ""
 msgid "close"
 msgstr ""
 
-#: admin/quotareport.php:296
+#: admin/quotareport.php:307
 msgid "Total sample"
 msgstr ""
 
-#: admin/quotareport.php:299
+#: admin/quotareport.php:310
 msgid "Strata"
 msgstr ""
 
-#: admin/quotareport.php:299 admin/quotarow.php:134 admin/quotarow.php:391
-#: admin/quotarow.php:587
+#: admin/quotareport.php:310 admin/quotarow.php:134 admin/quotarow.php:390
+#: admin/quotarow.php:586
 msgid "Quota"
 msgstr ""
 
-#: admin/quotareport.php:299
+#: admin/quotareport.php:310
 msgid "Sample Used"
 msgstr ""
 
-#: admin/quotareport.php:299
+#: admin/quotareport.php:310
 msgid "Sample Remaining"
 msgstr ""
 
-#: admin/quotareport.php:299
+#: admin/quotareport.php:310
 msgid "% Complete"
 msgstr ""
 
-#: admin/quotareport.php:299
+#: admin/quotareport.php:310
 msgid "Set priority"
 msgstr ""
 
-#: admin/quotareport.php:299 admin/quotarow.php:587
+#: admin/quotareport.php:310 admin/quotarow.php:586
 msgid "Auto prioritise"
 msgstr ""
 
-#: admin/quotareport.php:303
+#: admin/quotareport.php:314
 msgid "Update priorities"
 msgstr ""
 
-#: admin/assigntimeslots.php:159 admin/index.php:129
+#: admin/assigntimeslots.php:159 admin/index.php:140
 msgid "Assign Time slots"
 msgstr ""
 
@@ -1679,7 +1670,7 @@ msgid ""
 msgstr ""
 
 #: admin/assigntimeslots.php:171 admin/assigntimeslots.php:219
-#: admin/assigntimeslots.php:273 admin/assignsample.php:276
+#: admin/assigntimeslots.php:273 admin/assignsample.php:344
 #: admin/casestatus.php:101
 msgid "Click to unassign"
 msgstr ""
@@ -1739,73 +1730,78 @@ msgid "Add call attempt time slot for sample"
 msgstr ""
 
 #: admin/questionnaireprefill.php:104
-msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
+msgid "Set values for questionnaire to prefill"
 msgstr ""
 
-#: admin/questionnaireprefill.php:116
+#: admin/questionnaireprefill.php:106
+msgid "Prefill questionnaire:"
+msgstr ""
+
+#: admin/questionnaireprefill.php:118
 msgid "Current pre fills"
 msgstr ""
 
-#: admin/questionnaireprefill.php:126
+#: admin/questionnaireprefill.php:128
 msgid "Currently no pre fills"
 msgstr ""
 
-#: admin/questionnaireprefill.php:132
+#: admin/questionnaireprefill.php:134
 msgid "SGQA code"
 msgstr ""
 
-#: admin/questionnaireprefill.php:132 admin/quotarow.php:509
+#: admin/questionnaireprefill.php:134 admin/quotarow.php:508
 msgid "Sample variable"
 msgstr ""
 
-#: admin/questionnaireprefill.php:132 admin/samplesearch.php:101
-#: admin/supervisor.php:195 admin/supervisor.php:368 admin/supervisor.php:414
-#: admin/quotarow.php:423 admin/quotarow.php:509
-#: admin/displayappointments.php:263 admin/displayappointments.php:282
+#: admin/questionnaireprefill.php:134 admin/samplesearch.php:101
+#: admin/clientquestionnaire.php:305 admin/supervisor.php:199
+#: admin/supervisor.php:372 admin/supervisor.php:418 admin/quotarow.php:422
+#: admin/quotarow.php:508 admin/displayappointments.php:313
+#: admin/displayappointments.php:335
 msgid "Delete"
 msgstr ""
 
-#: admin/questionnaireprefill.php:137
+#: admin/questionnaireprefill.php:139
 msgid "Select a question to pre fill"
 msgstr ""
 
-#: admin/questionnaireprefill.php:170
+#: admin/questionnaireprefill.php:172
 msgid "Enter a value to pre fill this question with:"
 msgstr ""
 
-#: admin/questionnaireprefill.php:172
+#: admin/questionnaireprefill.php:174
 msgid "Possible uses:"
 msgstr ""
 
-#: admin/questionnaireprefill.php:174
+#: admin/questionnaireprefill.php:176
 msgid "{Respondent:firstName} First name of the respondent"
 msgstr ""
 
-#: admin/questionnaireprefill.php:175
+#: admin/questionnaireprefill.php:177
 msgid "{Respondent:lastName} Last name of the respondent"
 msgstr ""
 
-#: admin/questionnaireprefill.php:176
+#: admin/questionnaireprefill.php:178
 msgid "{Sample:var} A record from the sample where the column name is 'var'"
 msgstr ""
 
-#: admin/questionnaireprefill.php:185
+#: admin/questionnaireprefill.php:187
 msgid "The value to pre fill"
 msgstr ""
 
-#: admin/questionnaireprefill.php:186
+#: admin/questionnaireprefill.php:188
 msgid "or: Select pre fill from sample list"
 msgstr ""
 
-#: admin/questionnaireprefill.php:192
+#: admin/questionnaireprefill.php:196
 msgid "Add pre fill"
 msgstr ""
 
-#: admin/auth-admin.php:66
+#: admin/auth-admin.php:63
 msgid "You do not have permission to access this area"
 msgstr ""
 
-#: admin/auth-admin.php:67 admin/index.php:95 endwork.php:82
+#: admin/auth-admin.php:64 admin/index.php:105 endwork.php:82
 msgid "Logout"
 msgstr ""
 
@@ -1840,88 +1836,88 @@ msgstr ""
 msgid "Add time slot"
 msgstr ""
 
-#: admin/outcomes.php:79 admin/outcomes.php:189
+#: admin/outcomes.php:80 admin/outcomes.php:190
 msgid "Sample status"
 msgstr ""
 
-#: admin/outcomes.php:81 admin/outcomes.php:191
+#: admin/outcomes.php:82 admin/outcomes.php:192
 msgid "Drawn from sample"
 msgstr ""
 
-#: admin/outcomes.php:81 admin/outcomes.php:191
+#: admin/outcomes.php:82 admin/outcomes.php:192
 msgid "Remain in sample"
 msgstr ""
 
-#: admin/outcomes.php:87 admin/outcomes.php:199
+#: admin/outcomes.php:88 admin/outcomes.php:200
 msgid "Number"
 msgstr ""
 
-#: admin/outcomes.php:88 admin/outcomes.php:186
+#: admin/outcomes.php:89 admin/outcomes.php:187
 msgid "No samples assigned"
 msgstr ""
 
-#: admin/outcomes.php:91
+#: admin/outcomes.php:92
 msgid "Case availability (cases with temporary or appointment outcomes)"
 msgstr ""
 
-#: admin/outcomes.php:123
+#: admin/outcomes.php:124
 msgid "No cases currently available to call"
 msgstr ""
 
-#: admin/outcomes.php:135
+#: admin/outcomes.php:136
 msgid "Average time on a completed questionnaire"
 msgstr ""
 
-#: admin/outcomes.php:135
+#: admin/outcomes.php:136
 msgid "Min"
 msgstr ""
 
-#: admin/outcomes.php:135
+#: admin/outcomes.php:136
 msgid "Secs"
 msgstr ""
 
-#: admin/outcomes.php:168 admin/outcomes.php:219 admin/outcomes.php:261
+#: admin/outcomes.php:169 admin/outcomes.php:220 admin/outcomes.php:262
 msgid "%"
 msgstr ""
 
-#: admin/outcomes.php:222
+#: admin/outcomes.php:223
 msgid "No outcomes recorded for this sample"
 msgstr ""
 
-#: admin/outcomes.php:242
+#: admin/outcomes.php:243
 msgid "No operators assigned"
 msgstr ""
 
-#: admin/outcomes.php:246
+#: admin/outcomes.php:247
 msgid "Operator call outcomes"
 msgstr ""
 
-#: admin/outcomes.php:273 admin/questionnairelist.php:566 index.php:264
-#: index_interface2.php:282
+#: admin/outcomes.php:274 admin/questionnairelist.php:576 index.php:264
+#: index_interface2.php:285
 msgid "Shifts"
 msgstr ""
 
-#: admin/outcomes.php:277
+#: admin/outcomes.php:278
 msgid "No shift reports: Add report"
 msgstr ""
 
-#: admin/outcomes.php:278
+#: admin/outcomes.php:279
 msgid "View shift reports"
 msgstr ""
 
-#: admin/outcomes.php:281
+#: admin/outcomes.php:282
 msgid "View operator performance"
 msgstr ""
 
-#: admin/outcomes.php:300
+#: admin/outcomes.php:301
 msgid "No shifts defined for this questionnaire"
 msgstr ""
 
-#: admin/outcomes.php:304
+#: admin/outcomes.php:305
 msgid "Shift time"
 msgstr ""
 
-#: admin/outcomes.php:304 admin/operatorlist.php:414 admin/index.php:149
+#: admin/outcomes.php:305 admin/operatorlist.php:428 admin/index.php:160
 msgid "Operator performance"
 msgstr ""
 
@@ -1929,20 +1925,20 @@ msgstr ""
 msgid "Search within this sample"
 msgstr ""
 
-#: admin/samplesearch.php:94 admin/supervisor.php:188
+#: admin/samplesearch.php:94 admin/supervisor.php:192
 msgid "WARNING !"
 msgstr ""
 
-#: admin/samplesearch.php:97 admin/supervisor.php:191
+#: admin/samplesearch.php:97 admin/supervisor.php:195
 msgid "Are you sure you want to delete"
 msgstr ""
 
 #: admin/samplesearch.php:97 admin/samplesearch.php:138
-#: admin/supervisor.php:191
+#: admin/supervisor.php:195
 msgid "Sample ID"
 msgstr ""
 
-#: admin/samplesearch.php:100 admin/supervisor.php:194
+#: admin/samplesearch.php:100 admin/supervisor.php:198
 msgid "NOOOO..."
 msgstr ""
 
@@ -1962,7 +1958,7 @@ msgstr ""
 msgid "Assigned to case ID :"
 msgstr ""
 
-#: admin/samplesearch.php:159 admin/supervisor.php:325
+#: admin/samplesearch.php:159 admin/supervisor.php:329
 msgid "Sample id"
 msgstr ""
 
@@ -1975,7 +1971,7 @@ msgid "Result"
 msgstr ""
 
 #: admin/bulkappointment.php:134 admin/bulkappointment.php:223
-#: admin/bulkappointment.php:259 admin/index.php:173
+#: admin/bulkappointment.php:259 admin/index.php:184
 msgid "Bulk appointment generator"
 msgstr ""
 
@@ -2000,12 +1996,12 @@ msgid ""
 msgstr ""
 
 #: admin/bulkappointment.php:237 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/displayappointments.php:209
+#: admin/callhistory.php:157 admin/displayappointments.php:248
 msgid "Start time"
 msgstr ""
 
 #: admin/bulkappointment.php:237 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/displayappointments.php:211
+#: admin/callhistory.php:157 admin/displayappointments.php:250
 msgid "End time"
 msgstr ""
 
@@ -2041,7 +2037,7 @@ msgstr ""
 msgid "Select bulk appointment CSV file to upload"
 msgstr ""
 
-#: admin/bulkappointment.php:284 admin/import.php:134 admin/quotarow.php:614
+#: admin/bulkappointment.php:284 admin/import.php:134 admin/quotarow.php:613
 msgid "Select file"
 msgstr ""
 
@@ -2049,7 +2045,7 @@ msgstr ""
 msgid "Upload file"
 msgstr ""
 
-#: admin/callrestrict.php:104 admin/index.php:181
+#: admin/callrestrict.php:104 admin/index.php:193
 msgid "Set call restriction times"
 msgstr ""
 
@@ -2083,7 +2079,7 @@ msgid ""
 "shifts"
 msgstr ""
 
-#: admin/addshift.php:145 admin/index.php:133
+#: admin/addshift.php:145 admin/index.php:144
 msgid "Shift management"
 msgstr ""
 
@@ -2109,7 +2105,7 @@ msgstr ""
 msgid "Use shift?"
 msgstr ""
 
-#: admin/process.php:95
+#: admin/process.php:90
 msgid "Cannot connect to VoIP Server"
 msgstr ""
 
@@ -2149,166 +2145,171 @@ msgid "Edit instrument in Limesurvey"
 msgstr ""
 
 #: admin/questionnairelist.php:385 admin/questionnairelist.php:386
-#: admin/new.php:167 admin/new.php:169
+#: admin/new.php:183 admin/new.php:185
 msgid "Name for questionnaire:"
 msgstr ""
 
-#: admin/questionnairelist.php:389 admin/new.php:202
+#: admin/questionnairelist.php:389 admin/new.php:218
 msgid "Restrict appointments to shifts?"
 msgstr ""
 
-#: admin/questionnairelist.php:392 admin/new.php:209
+#: admin/questionnairelist.php:392 admin/new.php:225
 msgid "Restrict work to shifts?"
 msgstr ""
 
-#: admin/questionnairelist.php:396 admin/new.php:216
+#: admin/questionnairelist.php:396 admin/new.php:232
 msgid "Questionnaire for testing only?"
 msgstr ""
 
-#: admin/questionnairelist.php:400 admin/new.php:223
+#: admin/questionnairelist.php:400 admin/new.php:239
 msgid "Allow operators to generate referrals?"
 msgstr ""
 
-#: admin/questionnairelist.php:404 admin/new.php:230
+#: admin/questionnairelist.php:404 admin/new.php:246
 msgid "Allow for respondent self completion via email invitation?"
 msgstr ""
 
-#: admin/questionnairelist.php:409 admin/new.php:238
+#: admin/questionnairelist.php:409 admin/new.php:254
 msgid "Questionnaire display mode for respondent"
 msgstr ""
 
-#: admin/questionnairelist.php:412 admin/new.php:241
+#: admin/questionnairelist.php:412 admin/new.php:257
 msgid "All in one"
 msgstr ""
 
-#: admin/questionnairelist.php:413 admin/new.php:242
+#: admin/questionnairelist.php:413 admin/new.php:258
 msgid "Question by question"
 msgstr ""
 
-#: admin/questionnairelist.php:414 admin/new.php:243
+#: admin/questionnairelist.php:414 admin/new.php:259
 msgid "Group at a time"
 msgstr ""
 
-#: admin/questionnairelist.php:419 admin/new.php:248
+#: admin/questionnairelist.php:419 admin/new.php:264
 msgid "Limesurvey template for respondent"
 msgstr ""
 
-#: admin/questionnairelist.php:438 admin/new.php:266
+#: admin/questionnairelist.php:448 admin/new.php:294
 msgid "URL to forward respondents on self completion (required)"
 msgstr ""
 
-#: admin/questionnairelist.php:449 admin/questionnairelist.php:459
-#: admin/questionnairelist.php:469 admin/questionnairelist.php:479
-#: admin/questionnairelist.php:495 admin/questionnairelist.php:505
-#: admin/new.php:302 admin/new.php:312 admin/new.php:322 admin/new.php:332
-#: admin/new.php:344 admin/new.php:354
+#: admin/questionnairelist.php:459 admin/questionnairelist.php:469
+#: admin/questionnairelist.php:479 admin/questionnairelist.php:489
+#: admin/questionnairelist.php:505 admin/questionnairelist.php:515
+#: admin/new.php:330 admin/new.php:340 admin/new.php:350 admin/new.php:360
+#: admin/new.php:372 admin/new.php:382
 msgid "Expand/Collapse"
 msgstr ""
 
-#: admin/questionnairelist.php:450 admin/new.php:303
+#: admin/questionnairelist.php:460 admin/new.php:331
 msgid "Respondent selection introduction:"
 msgstr ""
 
-#: admin/questionnairelist.php:460 admin/new.php:313
+#: admin/questionnairelist.php:470 admin/new.php:341
 msgid "Respondent selection project introduction:"
 msgstr ""
 
-#: admin/questionnairelist.php:470 admin/new.php:323
+#: admin/questionnairelist.php:480 admin/new.php:351
 msgid "Respondent selection callback (already started questionnaire):"
 msgstr ""
 
-#: admin/questionnairelist.php:480 admin/new.php:333
+#: admin/questionnairelist.php:490 admin/new.php:361
 msgid "Message to leave on an answering machine:"
 msgstr ""
 
-#: admin/questionnairelist.php:490
+#: admin/questionnairelist.php:500
 msgid "Edit respondent selection instrument in Limesurvey"
 msgstr ""
 
-#: admin/questionnairelist.php:496 admin/new.php:345
+#: admin/questionnairelist.php:506 admin/new.php:373
 msgid "Project end text (thank you screen):"
 msgstr ""
 
-#: admin/questionnairelist.php:506 admin/new.php:355
+#: admin/questionnairelist.php:516 admin/new.php:383
 msgid "Project information for interviewers/operators:"
 msgstr ""
 
-#: admin/questionnairelist.php:514
+#: admin/questionnairelist.php:524
 msgid "Update Questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:528
+#: admin/questionnairelist.php:538
 msgid "Delete Questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:530
+#: admin/questionnairelist.php:540
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
 msgstr ""
 
-#: admin/questionnairelist.php:531
+#: admin/questionnairelist.php:541
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
 "operators, clients and the questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:532
+#: admin/questionnairelist.php:542
 msgid "Please confirm you wish to delete the questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:535
+#: admin/questionnairelist.php:545
 msgid "Delete this questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:541 admin/index.php:114 admin/new.php:141
-#: admin/new.php:151
+#: admin/questionnairelist.php:551 admin/index.php:124 admin/new.php:157
+#: admin/new.php:167
 msgid "Questionnaire management"
 msgstr ""
 
-#: admin/questionnairelist.php:541
+#: admin/questionnairelist.php:551
 msgid "Questionnaire list"
 msgstr ""
 
-#: admin/questionnairelist.php:544 admin/index.php:113 admin/new.php:47
+#: admin/questionnairelist.php:554 admin/index.php:123 admin/new.php:47
 msgid "Create a new questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:561
+#: admin/questionnairelist.php:571
 msgid "Edit Questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:562
+#: admin/questionnairelist.php:572
 msgid "Edit Lime survey"
 msgstr ""
 
-#: admin/questionnairelist.php:566 admin/questionnairelist.php:583
-#: admin/questionnairelist.php:587
+#: admin/questionnairelist.php:576 admin/questionnairelist.php:593
+#: admin/questionnairelist.php:594 admin/questionnairelist.php:598
+#: admin/questionnairelist.php:608
 msgid "questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:571 admin/index.php:116
+#: admin/questionnairelist.php:581 admin/index.php:127
 msgid "Pre-fill questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:576
+#: admin/questionnairelist.php:586
 msgid "Delete questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:581
+#: admin/questionnairelist.php:591
 msgid "Outcomes for questionnaire"
 msgstr ""
 
-#: admin/questionnairelist.php:587 admin/index.php:160
-#: admin/dataoutput.php:199
+#: admin/questionnairelist.php:594
+msgid "Set outcomes"
+msgstr ""
+
+#: admin/questionnairelist.php:598 admin/index.php:171
+#: admin/dataoutput.php:200
 msgid "Data output"
 msgstr ""
 
-#: admin/questionnairelist.php:592
+#: admin/questionnairelist.php:603
 msgid "Assigned samples"
 msgstr ""
 
-#: admin/questionnairelist.php:597 admin/index.php:172
-#: admin/casestatus.php:209
+#: admin/questionnairelist.php:613 admin/index.php:183
+#: admin/casestatus.php:213
 msgid "Case status and assignment"
 msgstr ""
 
@@ -2317,7 +2318,7 @@ msgid "Call History List"
 msgstr ""
 
 #: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/supervisor.php:409 admin/databasestrings.php:82
+#: admin/supervisor.php:413 admin/databasestrings.php:82
 msgid "Phone number"
 msgstr ""
 
@@ -2329,51 +2330,74 @@ msgstr ""
 msgid "Download Call History List"
 msgstr ""
 
-#: admin/clients.php:88
+#: admin/clients.php:102
+msgid "Updated"
+msgstr ""
+
+#: admin/clients.php:102
+msgid "Update error"
+msgstr ""
+
+#: admin/clients.php:105
+msgid "Could not update"
+msgstr ""
+
+#: admin/clients.php:120
+msgid "Added"
+msgstr ""
+
+#: admin/clients.php:120
+msgid "Error adding client"
+msgstr ""
+
+#: admin/clients.php:123
 msgid "Could not add"
 msgstr ""
 
-#: admin/clients.php:88
-msgid "There may already be a client of this name"
+#: admin/clients.php:126
+msgid "is already in use"
 msgstr ""
 
-#: admin/clients.php:93 admin/clients.php:179
+#: admin/clients.php:132
 msgid "Add a client"
 msgstr ""
 
-#: admin/clients.php:148
-msgid ""
-"Adding a client here will allow them to access project information in the "
-"client subdirectory. You can assign a client to a particular project using "
-"the"
+#: admin/clients.php:133
+msgid "Add new client"
+msgstr ""
+
+#: admin/clients.php:138
+msgid "Edit client data"
 msgstr ""
 
 #: admin/clients.php:148
+msgid "NO such client"
+msgstr ""
+
+#: admin/clients.php:157
+msgid "Update client data"
+msgstr ""
+
+#: admin/clients.php:211
+msgid ""
+"Adding a client here will allow them to access project information in the "
+"client subdirectory."
+msgstr ""
+
+#: admin/clients.php:214
+msgid "You can assign a client to a particular project with"
+msgstr ""
+
+#: admin/clients.php:214
 msgid "Assign client to Questionnaire"
 msgstr ""
 
-#: admin/clients.php:148
-msgid "tool."
+#: admin/clients.php:226
+msgid "Leave this blank to keep current password"
 msgstr ""
 
-#: admin/clients.php:152
-msgid "Enter the username of a client to add:"
-msgstr ""
-
-#: admin/clients.php:156
-msgid "Enter the password of a client to add:"
-msgstr ""
-
-#: admin/clients.php:164
-msgid "Enter the first name of a client to add:"
-msgstr ""
-
-#: admin/clients.php:168
-msgid "Enter the surname of a client to add:"
-msgstr ""
-
-#: admin/clients.php:176
-msgid "Enter the Time Zone of a client to add:"
+#: admin/clients.php:237
+msgid "Surname"
 msgstr ""
 
 #: admin/availability.php:79
@@ -2384,7 +2408,7 @@ msgstr ""
 msgid "Modify time slots"
 msgstr ""
 
-#: admin/availability.php:138 admin/supervisor.php:459
+#: admin/availability.php:138 admin/supervisor.php:463
 msgid "Time slot"
 msgstr ""
 
@@ -2400,13 +2424,26 @@ msgstr ""
 msgid "Delete this time slot group"
 msgstr ""
 
-#: admin/clientquestionnaire.php:152 admin/clientquestionnaire.php:267
-#: admin/index.php:166
-msgid "Assign clients to questionnaires"
+#: admin/clientquestionnaire.php:198
+msgid "Clients and questionnaires"
 msgstr ""
 
-#: admin/clientquestionnaire.php:243
+#: admin/clientquestionnaire.php:291
 msgid "Client"
+msgstr ""
+
+#: admin/clientquestionnaire.php:294
+msgid ""
+"NOTICE!  Please, check your user righs to edit client permissions or contact "
+"your superviser."
+msgstr ""
+
+#: admin/clientquestionnaire.php:294
+msgid "Questionnaire permissions"
+msgstr ""
+
+#: admin/clientquestionnaire.php:321
+msgid "Assign clients to questionnaires"
 msgstr ""
 
 #: admin/operatorlist.php:127
@@ -2429,74 +2466,78 @@ msgstr ""
 msgid "leave blank to keep existing password"
 msgstr ""
 
-#: admin/operatorlist.php:282
+#: admin/operatorlist.php:260
+msgid "Add"
+msgstr ""
+
+#: admin/operatorlist.php:296
 msgid "Update operator"
 msgstr ""
 
-#: admin/operatorlist.php:373
+#: admin/operatorlist.php:387
 msgid "Win .bat file"
 msgstr ""
 
-#: admin/operatorlist.php:374
+#: admin/operatorlist.php:388
 msgid "*nix script file"
 msgstr ""
 
-#: admin/operatorlist.php:381
+#: admin/operatorlist.php:395
 msgid "Enable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:383
+#: admin/operatorlist.php:397
 msgid "Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:391
+#: admin/operatorlist.php:405
 msgid "Operator list"
 msgstr ""
 
-#: admin/operatorlist.php:401
+#: admin/operatorlist.php:415
 msgid "VoIP ON/Off"
 msgstr ""
 
-#: admin/operatorlist.php:402
+#: admin/operatorlist.php:416
 msgid "Win file"
 msgstr ""
 
-#: admin/operatorlist.php:403
+#: admin/operatorlist.php:417
 msgid "*nix flle"
 msgstr ""
 
-#: admin/operatorlist.php:412
+#: admin/operatorlist.php:426
 msgid "Assign to questionnaire"
 msgstr ""
 
-#: admin/operatorlist.php:413
+#: admin/operatorlist.php:427
 msgid "Operator skills"
 msgstr ""
 
-#: admin/operatorlist.php:418
+#: admin/operatorlist.php:432
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
 
-#: admin/operatorlist.php:420
+#: admin/operatorlist.php:434
 msgid "Download Windows VoIP Client Executable file"
 msgstr ""
 
-#: admin/operatorlist.php:420
+#: admin/operatorlist.php:434
 msgid "Download Win file"
 msgstr ""
 
-#: admin/operatorlist.php:421
+#: admin/operatorlist.php:435
 msgid "Download Linux VoIP Executable file"
 msgstr ""
 
-#: admin/operatorlist.php:421
+#: admin/operatorlist.php:435
 msgid "Download Linux file"
 msgstr ""
 
-#: admin/centreinfo.php:68 admin/index.php:182
+#: admin/centreinfo.php:68 admin/index.php:194
 msgid "Set centre information"
 msgstr ""
 
@@ -2532,7 +2573,7 @@ msgstr ""
 msgid "Select columns to import"
 msgstr ""
 
-#: admin/import.php:102 admin/import.php:150 admin/assignsample.php:335
+#: admin/import.php:102 admin/import.php:150 admin/assignsample.php:430
 msgid "Add sample"
 msgstr ""
 
@@ -2561,184 +2602,204 @@ msgid "Click to Collapse / Expand Sidebar MENU "
 msgstr ""
 
 #: admin/index.php:89
-msgid "Logged as:"
-msgstr ""
-
-#: admin/index.php:93
-msgid "Settings"
+msgid "Operator panel"
 msgstr ""
 
 #: admin/index.php:94
+msgid "Client panel"
+msgstr ""
+
+#: admin/index.php:99
+msgid "Logged as:"
+msgstr ""
+
+#: admin/index.php:103
+msgid "Settings"
+msgstr ""
+
+#: admin/index.php:104
 msgid "Lock Screen"
 msgstr ""
 
-#: admin/index.php:109
+#: admin/index.php:119
 msgid "Dashboard"
 msgstr ""
 
-#: admin/index.php:110
+#: admin/index.php:120
 msgid "Questionnairies"
 msgstr ""
 
-#: admin/index.php:112 admin/new.php:183 admin/new.php:377
+#: admin/index.php:122 admin/new.php:199 admin/new.php:405
 msgid "Create an instrument in Limesurvey"
 msgstr ""
 
-#: admin/index.php:115 admin/new.php:379
+#: admin/index.php:125 admin/set_outcomes.php:129
+msgid "Set questionnaire outcomes"
+msgstr ""
+
+#: admin/index.php:126 admin/new.php:407
 msgid "Administer instruments with Limesurvey"
 msgstr ""
 
-#: admin/index.php:119
+#: admin/index.php:130
 msgid "Samples"
 msgstr ""
 
-#: admin/index.php:124
+#: admin/index.php:135
 msgid "Assign samples to questionnaires"
 msgstr ""
 
-#: admin/index.php:127
+#: admin/index.php:138
 msgid "Time slots and shifts"
 msgstr ""
 
-#: admin/index.php:136
+#: admin/index.php:147
 msgid "Quotas"
 msgstr ""
 
-#: admin/index.php:138 admin/quota.php:114
+#: admin/index.php:149 admin/quota.php:114
 msgid "Quota management"
 msgstr ""
 
-#: admin/index.php:139 admin/quotarow.php:292
+#: admin/index.php:150 admin/quotarow.php:292
 msgid "Quota row management"
 msgstr ""
 
-#: admin/index.php:142
+#: admin/index.php:153
 msgid "Operators"
 msgstr ""
 
-#: admin/index.php:144
+#: admin/index.php:155
 msgid "Add operators to the system"
 msgstr ""
 
-#: admin/index.php:145
+#: admin/index.php:156
 msgid "Operator management"
 msgstr ""
 
-#: admin/index.php:146
+#: admin/index.php:157
 msgid "Extension status"
 msgstr ""
 
-#: admin/index.php:147 admin/operatorquestionnaire.php:157
+#: admin/index.php:158 admin/operatorquestionnaire.php:157
 #: admin/operatorquestionnaire.php:272
 msgid "Assign operators to questionnaires"
 msgstr ""
 
-#: admin/index.php:148 admin/operatorskill.php:275
+#: admin/index.php:159 admin/operatorskill.php:275
 msgid "Modify operator skills"
 msgstr ""
 
-#: admin/index.php:152
+#: admin/index.php:163
 msgid "Results"
 msgstr ""
 
-#: admin/index.php:154
+#: admin/index.php:165
 msgid "Display all future appointments"
 msgstr ""
 
-#: admin/index.php:155
+#: admin/index.php:166
 msgid "Sample call attempts report"
 msgstr ""
 
-#: admin/index.php:157 admin/shiftreport.php:67
+#: admin/index.php:168 admin/shiftreport.php:67
 msgid "Shift reports"
 msgstr ""
 
-#: admin/index.php:159
+#: admin/index.php:170
 msgid "Questionnaire outcomes"
 msgstr ""
 
-#: admin/index.php:163
+#: admin/index.php:174
 msgid "Clients"
 msgstr ""
 
-#: admin/index.php:165
+#: admin/index.php:176
 msgid "Add clients to the system"
 msgstr ""
 
-#: admin/index.php:169
+#: admin/index.php:177
+msgid "Manage clients"
+msgstr ""
+
+#: admin/index.php:180
 msgid "Supervisor functions"
 msgstr ""
 
-#: admin/index.php:171 admin/supervisor.php:125
+#: admin/index.php:182 admin/supervisor.php:125
 msgid "Assign outcomes to cases"
 msgstr ""
 
-#: admin/index.php:176
+#: admin/index.php:187
 msgid "System settings"
 msgstr ""
 
-#: admin/index.php:178
+#: admin/index.php:189 admin/set_outcomes.php:128
+msgid "Set default outcomes"
+msgstr ""
+
+#: admin/index.php:190
 msgid "Set default timezone list"
 msgstr ""
 
-#: admin/index.php:179
+#: admin/index.php:191
 msgid "Manage Time slots"
 msgstr ""
 
-#: admin/index.php:180 admin/shifttemplate.php:99
+#: admin/index.php:192 admin/shifttemplate.php:99
 msgid "Set default shift times"
 msgstr ""
 
-#: admin/index.php:184
+#: admin/index.php:196
 msgid "System wide case sorting"
 msgstr ""
 
-#: admin/index.php:191 admin/index.php:199
+#: admin/index.php:203 admin/index.php:211
 msgid "VoIP"
 msgstr ""
 
-#: admin/index.php:193
+#: admin/index.php:205
 msgid "Start and monitor VoIP"
 msgstr ""
 
-#: admin/samplecallattempts.php:127
+#: admin/samplecallattempts.php:125
 msgid "Call attempts made"
 msgstr ""
 
-#: admin/samplecallattempts.php:127
+#: admin/samplecallattempts.php:125
 msgid "Number of cases"
 msgstr ""
 
-#: admin/samplecallattempts.php:190
+#: admin/samplecallattempts.php:188
 msgid "Sample call attempt"
 msgstr ""
 
-#: admin/samplecallattempts.php:192 admin/dataoutput.php:201
+#: admin/samplecallattempts.php:190 admin/dataoutput.php:202
 #: admin/operatorperformance.php:78 admin/shiftreport.php:71
 msgid "Please select a questionnaire"
 msgstr ""
 
-#: admin/samplecallattempts.php:195
+#: admin/samplecallattempts.php:193
 msgid "Overall"
 msgstr ""
 
-#: admin/samplecallattempts.php:204 admin/dataoutput.php:217
+#: admin/samplecallattempts.php:202 admin/dataoutput.php:218
 msgid "Please select a sample"
 msgstr ""
 
-#: admin/samplecallattempts.php:215
+#: admin/samplecallattempts.php:213
 msgid "Please select a quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:221
+#: admin/samplecallattempts.php:219
 msgid "No calls for this quota"
 msgstr ""
 
-#: admin/samplecallattempts.php:225
+#: admin/samplecallattempts.php:223
 msgid "No calls for this sample"
 msgstr ""
 
-#: admin/samplecallattempts.php:230
+#: admin/samplecallattempts.php:228
 msgid "No calls for this questionnaire"
 msgstr ""
 
@@ -2746,192 +2807,244 @@ msgstr ""
 msgid "Cases by outcome"
 msgstr ""
 
-#: admin/casesbyoutcome.php:77 admin/supervisor.php:307
+#: admin/casesbyoutcome.php:77 admin/supervisor.php:311
 msgid "Project"
 msgstr ""
 
-#: admin/casesbyoutcome.php:83
+#: admin/casesbyoutcome.php:84
 msgid "Sample:"
 msgstr ""
 
-#: admin/casesbyoutcome.php:98 admin/supervisor.php:309
+#: admin/casesbyoutcome.php:100 admin/supervisor.php:313
 msgid "Current outcome:"
 msgstr ""
 
-#: admin/casesbyoutcome.php:112
+#: admin/casesbyoutcome.php:114
 msgid "No cases with this outcome"
 msgstr ""
 
-#: admin/casesbyoutcome.php:119
+#: admin/casesbyoutcome.php:121
 msgid "Error with input"
 msgstr ""
 
-#: admin/quota.php:140 admin/quotarow.php:315
+#: admin/set_outcomes.php:191 admin/set_outcomes.php:221
+msgid "Outcome ID"
+msgstr ""
+
+#: admin/set_outcomes.php:191 admin/set_outcomes.php:221
+msgid "Outcome type"
+msgstr ""
+
+#: admin/set_outcomes.php:191 admin/quotarow.php:586
+msgid "Select"
+msgstr ""
+
+#: admin/set_outcomes.php:221
+msgid "Default"
+msgstr ""
+
+#: admin/set_outcomes.php:221
+msgid "Delay, min"
+msgstr ""
+
+#: admin/set_outcomes.php:221 rs_intro_interface2.php:87
+msgid "Contacted"
+msgstr ""
+
+#: admin/set_outcomes.php:221
+msgid "Try another"
+msgstr ""
+
+#: admin/set_outcomes.php:221
+msgid "Eligible"
+msgstr ""
+
+#: admin/set_outcomes.php:221
+msgid "Require note"
+msgstr ""
+
+#: admin/set_outcomes.php:254
+msgid "Save selection"
+msgstr ""
+
+#: admin/quota.php:141 admin/quotarow.php:316
 msgid "No samples assigned to this questionnaire."
 msgstr ""
 
-#: admin/quota.php:148
+#: admin/quota.php:149
 msgid "Current quotas"
 msgstr ""
 
-#: admin/quota.php:160
+#: admin/quota.php:161
 msgid "Currently no quotas"
 msgstr ""
 
-#: admin/quota.php:166
+#: admin/quota.php:167
 msgid "Stop calling this sample when:"
 msgstr ""
 
-#: admin/quota.php:166
+#: admin/quota.php:167
 msgid "for"
 msgstr ""
 
-#: admin/quota.php:166
+#: admin/quota.php:167
 msgid "completions"
 msgstr ""
 
-#: admin/quota.php:169
+#: admin/quota.php:170
 msgid "Quota reached"
 msgstr ""
 
-#: admin/quota.php:171
+#: admin/quota.php:172
 msgid "Quota not yet reached"
 msgstr ""
 
-#: admin/quota.php:173
+#: admin/quota.php:174
 msgid "Current completions: "
 msgstr ""
 
-#: admin/quota.php:181
+#: admin/quota.php:182
 msgid "Select a question for the quota"
 msgstr ""
 
-#: admin/quota.php:210
+#: admin/quota.php:211
 msgid "Enter the details for creating the quota:"
 msgstr ""
 
-#: admin/quota.php:215 admin/quotarow.php:459 admin/quotarow.php:540
+#: admin/quota.php:216 admin/quotarow.php:458 admin/quotarow.php:539
 msgid "The type of comparison"
 msgstr ""
 
-#: admin/quota.php:225 admin/quotarow.php:460
+#: admin/quota.php:226 admin/quotarow.php:459
 msgid "The code value to compare"
 msgstr ""
 
-#: admin/quota.php:228 admin/quotarow.php:396 admin/quotarow.php:600
+#: admin/quota.php:229 admin/quotarow.php:395 admin/quotarow.php:599
 msgid "The number of completions to stop calling at"
 msgstr ""
 
-#: admin/quota.php:235
+#: admin/quota.php:236
 msgid "Add quota"
 msgstr ""
 
-#: admin/quota.php:241 admin/quotarow.php:466
+#: admin/quota.php:242 admin/quotarow.php:465
 msgid "Code values for this question"
 msgstr ""
 
-#: admin/quota.php:253 admin/quotarow.php:481
+#: admin/quota.php:254 admin/quotarow.php:480
 msgid "No labels defined for this question"
 msgstr ""
 
-#: admin/quota.php:255 admin/quotarow.php:483
+#: admin/quota.php:256 admin/quotarow.php:482
 msgid "Code value"
 msgstr ""
 
-#: admin/assignsample.php:187
+#: admin/assignsample.php:193
 msgid "Edit assignment parameters"
 msgstr ""
 
-#: admin/assignsample.php:188 admin/assignsample.php:257
+#: admin/assignsample.php:194 admin/assignsample.php:325
 msgid "Assign samples to questionnaire: "
 msgstr ""
 
-#: admin/assignsample.php:219 admin/assignsample.php:284
-#: admin/assignsample.php:307
+#: admin/assignsample.php:225 admin/assignsample.php:378
+#: admin/assignsample.php:402
 msgid "Max calls"
 msgstr ""
 
-#: admin/assignsample.php:221 admin/assignsample.php:224
-#: admin/assignsample.php:270 admin/assignsample.php:271
-#: admin/assignsample.php:309 admin/assignsample.php:313
+#: admin/assignsample.php:227 admin/assignsample.php:230
+#: admin/assignsample.php:338 admin/assignsample.php:339
+#: admin/assignsample.php:404 admin/assignsample.php:408
 msgid "Unlimited"
 msgstr ""
 
-#: admin/assignsample.php:222 admin/assignsample.php:284
-#: admin/assignsample.php:311
+#: admin/assignsample.php:228 admin/assignsample.php:378
+#: admin/assignsample.php:406
 msgid "Max call attempts"
 msgstr ""
 
-#: admin/assignsample.php:225 admin/assignsample.php:315
+#: admin/assignsample.php:231 admin/assignsample.php:410
 msgid "Number of answering machine messages to leave per case"
 msgstr ""
 
-#: admin/assignsample.php:227 admin/assignsample.php:273
-#: admin/assignsample.php:317
+#: admin/assignsample.php:233 admin/assignsample.php:341
+#: admin/assignsample.php:412
 msgid "Never"
 msgstr ""
 
-#: admin/assignsample.php:228 admin/assignsample.php:319
+#: admin/assignsample.php:234 admin/assignsample.php:414
 msgid "Select from sample randomly?"
 msgstr ""
 
-#: admin/assignsample.php:230 admin/assignsample.php:321
+#: admin/assignsample.php:236 admin/assignsample.php:416
 msgid "Sequentially"
 msgstr ""
 
-#: admin/assignsample.php:231 admin/assignsample.php:284
-#: admin/assignsample.php:323
+#: admin/assignsample.php:237 admin/assignsample.php:378
+#: admin/assignsample.php:418
 msgid "Allow new numbers to be drawn?"
 msgstr ""
 
-#: admin/assignsample.php:256
+#: admin/assignsample.php:324
 msgid "List & Add Sample"
 msgstr ""
 
-#: admin/assignsample.php:267
+#: admin/assignsample.php:335
 msgid "Samples selected for this questionnaire"
 msgstr ""
 
-#: admin/assignsample.php:272
+#: admin/assignsample.php:340
 msgid "Sequential"
 msgstr ""
 
-#: admin/assignsample.php:272
+#: admin/assignsample.php:340
 msgid "Random"
 msgstr ""
 
-#: admin/assignsample.php:284
+#: admin/assignsample.php:359
+msgid "Pull step Down"
+msgstr ""
+
+#: admin/assignsample.php:360
+msgid "Push step Up"
+msgstr ""
+
+#: admin/assignsample.php:378
+msgid "Sort order"
+msgstr ""
+
+#: admin/assignsample.php:378
 msgid "Answering machine messages"
 msgstr ""
 
-#: admin/assignsample.php:284
+#: admin/assignsample.php:378
 msgid "Selection type"
 msgstr ""
 
-#: admin/assignsample.php:284
+#: admin/assignsample.php:378
 msgid "Unassign sample"
 msgstr ""
 
-#: admin/assignsample.php:286
+#: admin/assignsample.php:381
 msgid "No samples selected for this questionnaire"
 msgstr ""
 
-#: admin/assignsample.php:300
+#: admin/assignsample.php:395
 msgid "Add a sample to this questionnaire:"
 msgstr ""
 
-#: admin/assignsample.php:303
+#: admin/assignsample.php:398
 msgid "Select sample:"
 msgstr ""
 
-#: admin/assignsample.php:329
+#: admin/assignsample.php:424
 msgid ""
 "Generate cases for all sample records and set outcome to 'Self completion "
 "email invitation sent'? (Ideal if you intend to send an email invitation to "
 "sample members before attempting to call using queXS)"
 msgstr ""
 
-#: admin/supervisor.php:131 respondent.php:107 contactdetails.php:104
+#: admin/supervisor.php:131 respondent.php:107 contactdetails.php:106
 msgid "Case id:"
 msgstr ""
 
@@ -2943,240 +3056,236 @@ msgstr ""
 msgid "Select case"
 msgstr ""
 
-#: admin/supervisor.php:152
+#: admin/supervisor.php:156
 msgid "Select case from list of cases referred to the supervisor:"
 msgstr ""
 
-#: admin/supervisor.php:162
+#: admin/supervisor.php:166
 msgid "Set an outcome for this call"
 msgstr ""
 
-#: admin/supervisor.php:177 admin/supervisor.php:549 call_interface2.php:311
+#: admin/supervisor.php:181 admin/supervisor.php:553 call_interface2.php:303
 msgid "Set outcome"
 msgstr ""
 
-#: admin/supervisor.php:315
+#: admin/supervisor.php:319
 msgid "Sample details"
 msgstr ""
 
-#: admin/supervisor.php:325 admin/casestatus.php:121
+#: admin/supervisor.php:329 admin/casestatus.php:125
 msgid "Time NOW"
 msgstr ""
 
-#: admin/supervisor.php:353
+#: admin/supervisor.php:357
 msgid "No sample data for this case"
 msgstr ""
 
-#: admin/supervisor.php:358 admin/displayappointments.php:245
-#: admin/databasestrings.php:68 index.php:273 index_interface2.php:291
+#: admin/supervisor.php:362 admin/displayappointments.php:292
+#: admin/databasestrings.php:68 index.php:273 index_interface2.php:293
 msgid "Appointments"
 msgstr ""
 
-#: admin/supervisor.php:382 admin/displayappointments.php:263
+#: admin/supervisor.php:386 admin/displayappointments.php:313
 msgid "Current outcome"
 msgstr ""
 
-#: admin/supervisor.php:382 admin/displayappointments.php:263
+#: admin/supervisor.php:386 admin/displayappointments.php:313
 msgid "Operator who called"
 msgstr ""
 
-#: admin/supervisor.php:385
+#: admin/supervisor.php:389
 msgid "No appointments for this case"
 msgstr ""
 
-#: admin/supervisor.php:396
+#: admin/supervisor.php:400
 msgid "Change outcome"
 msgstr ""
 
-#: admin/supervisor.php:403
+#: admin/supervisor.php:407
 msgid "Call list"
 msgstr ""
 
-#: admin/supervisor.php:458
+#: admin/supervisor.php:462
 msgid "Call attempts by timeslot"
 msgstr ""
 
-#: admin/supervisor.php:459 admin/casestatus.php:121
+#: admin/supervisor.php:463 admin/casestatus.php:125
 msgid "Call attempts"
 msgstr ""
 
-#: admin/supervisor.php:462
+#: admin/supervisor.php:466
 msgid "Time slots NOT defined"
 msgstr ""
 
-#: admin/supervisor.php:469
+#: admin/supervisor.php:473
 msgid "Assign this case to operator (will appear as next case for them)"
 msgstr ""
 
-#: admin/supervisor.php:481
+#: admin/supervisor.php:485
 msgid "Assign this case to operator"
 msgstr ""
 
-#: admin/supervisor.php:491
+#: admin/supervisor.php:495
 msgid "Modify responses for this case"
 msgstr ""
 
-#: admin/supervisor.php:493
+#: admin/supervisor.php:497
 msgid "Case not yet started in Limesurvey"
 msgstr ""
 
-#: admin/supervisor.php:498
+#: admin/supervisor.php:502
 msgid "Availability groups"
 msgstr ""
 
-#: admin/supervisor.php:526
+#: admin/supervisor.php:530
 msgid "Update case availability"
 msgstr ""
 
-#: admin/supervisor.php:537
+#: admin/supervisor.php:541
 msgid "Set a case outcome"
 msgstr ""
 
-#: admin/supervisor.php:555 admin/supervisor.php:560
+#: admin/supervisor.php:559 admin/supervisor.php:564
 msgid "Deidentify"
 msgstr ""
 
-#: admin/supervisor.php:556
+#: admin/supervisor.php:560
 msgid "Remove all sample details and contact numbers from this case"
 msgstr ""
 
-#: admin/supervisor.php:566
+#: admin/supervisor.php:570
 msgid "Case does not exist"
 msgstr ""
 
-#: admin/quotarow.php:318
+#: admin/quotarow.php:319
 msgid "To quota report"
 msgstr ""
 
-#: admin/quotarow.php:390
+#: admin/quotarow.php:388
 msgid "To Row quotas"
 msgstr ""
 
-#: admin/quotarow.php:396 admin/quotarow.php:598
+#: admin/quotarow.php:395 admin/quotarow.php:597
 msgid "Describe this quota"
 msgstr ""
 
-#: admin/quotarow.php:397 admin/quotarow.php:599
+#: admin/quotarow.php:396 admin/quotarow.php:598
 msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
 msgstr ""
 
-#: admin/quotarow.php:397 admin/quotarow.php:601
+#: admin/quotarow.php:396 admin/quotarow.php:600
 msgid ""
 "Should the priority be automatically updated based on the number of "
 "completions in this quota?"
 msgstr ""
 
-#: admin/quotarow.php:413
+#: admin/quotarow.php:412
 msgid "Restrictions based on answered questions"
 msgstr ""
 
-#: admin/quotarow.php:418
+#: admin/quotarow.php:417
 msgid "Currently NO Restrictions based on answered questions"
 msgstr ""
 
-#: admin/quotarow.php:418
+#: admin/quotarow.php:417
 msgid ""
 "All completed responses that match the sample criteria below will be counted "
 "towards the quota"
 msgstr ""
 
-#: admin/quotarow.php:422
+#: admin/quotarow.php:421
 msgid ""
 "Only completed responses that have answered the following will be counted"
 msgstr ""
 
-#: admin/quotarow.php:423
+#: admin/quotarow.php:422
 msgid "SGQ code"
 msgstr ""
 
-#: admin/quotarow.php:423 admin/quotarow.php:509
+#: admin/quotarow.php:422 admin/quotarow.php:508
 msgid "Comparison"
 msgstr ""
 
-#: admin/quotarow.php:423 admin/quotarow.php:509 admin/quotarow.php:541
-#: respondent.php:175 contactdetails.php:169
+#: admin/quotarow.php:422 admin/quotarow.php:508 admin/quotarow.php:540
+#: respondent.php:175 contactdetails.php:171
 msgid "Value"
 msgstr ""
 
-#: admin/quotarow.php:452
+#: admin/quotarow.php:451
 msgid "Add restriction based on answered questions"
 msgstr ""
 
-#: admin/quotarow.php:453
+#: admin/quotarow.php:452
 msgid "Select Question"
 msgstr ""
 
-#: admin/quotarow.php:462 admin/quotarow.php:558
+#: admin/quotarow.php:461 admin/quotarow.php:557
 msgid "Add restriction"
 msgstr ""
 
-#: admin/quotarow.php:500
+#: admin/quotarow.php:499
 msgid "Restrictions based on sample records"
 msgstr ""
 
-#: admin/quotarow.php:504
+#: admin/quotarow.php:503
 msgid "Currently NO Restrictions based on sample records"
 msgstr ""
 
-#: admin/quotarow.php:504
+#: admin/quotarow.php:503
 msgid "This sample will be limited to number of completions set in quota"
 msgstr ""
 
-#: admin/quotarow.php:504
+#: admin/quotarow.php:503
 msgid "Caling cases for this sample will be stopped when the quota is reached"
 msgstr ""
 
-#: admin/quotarow.php:508
+#: admin/quotarow.php:507
 msgid ""
 "Completed responses that have the following sample details will be counted "
 "towards the quota and excluded when the quota is reached"
 msgstr ""
 
-#: admin/quotarow.php:509
+#: admin/quotarow.php:508
 msgid "Sample var ID"
 msgstr ""
 
-#: admin/quotarow.php:532
+#: admin/quotarow.php:531
 msgid "Add restriction based on sample records"
 msgstr ""
 
-#: admin/quotarow.php:534
+#: admin/quotarow.php:533
 msgid "Sample record"
 msgstr ""
 
-#: admin/quotarow.php:581
+#: admin/quotarow.php:580
 msgid "Currently no row quotas"
 msgstr ""
 
-#: admin/quotarow.php:586
+#: admin/quotarow.php:585
 msgid "Current row quotas"
 msgstr ""
 
-#: admin/quotarow.php:587
+#: admin/quotarow.php:586
 msgid "Priority"
 msgstr ""
 
-#: admin/quotarow.php:587
-msgid "Select"
-msgstr ""
-
-#: admin/quotarow.php:589
+#: admin/quotarow.php:588
 msgid "Export selected"
 msgstr ""
 
-#: admin/quotarow.php:591
+#: admin/quotarow.php:590
 msgid "Delete selected"
 msgstr ""
 
-#: admin/quotarow.php:595 admin/quotarow.php:602
+#: admin/quotarow.php:594 admin/quotarow.php:601
 msgid "Add row quota"
 msgstr ""
 
-#: admin/quotarow.php:607 admin/quotarow.php:615
+#: admin/quotarow.php:606 admin/quotarow.php:614
 msgid "Import row quota"
 msgstr ""
 
-#: admin/quotarow.php:613
+#: admin/quotarow.php:612
 msgid "Choose the CSV row quota file to import:"
 msgstr ""
 
@@ -3208,23 +3317,23 @@ msgstr ""
 msgid "DATE/TIME Last number dialled"
 msgstr ""
 
-#: admin/dataoutput.php:215
+#: admin/dataoutput.php:216
 msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
-#: admin/dataoutput.php:224
+#: admin/dataoutput.php:225
 msgid "Download data for this sample via Limesurvey"
 msgstr ""
 
-#: admin/dataoutput.php:232
+#: admin/dataoutput.php:233
 msgid "Download key file: select sample var"
 msgstr ""
 
-#: admin/dataoutput.php:239
+#: admin/dataoutput.php:240
 msgid "Download complete key file"
 msgstr ""
 
-#: admin/dataoutput.php:242
+#: admin/dataoutput.php:243
 msgid "Download complete sample file with current outcomes"
 msgstr ""
 
@@ -3233,7 +3342,7 @@ msgid "Operator Performance"
 msgstr ""
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
-#: admin/casestatus.php:121
+#: admin/casestatus.php:125
 msgid "Calls"
 msgstr ""
 
@@ -3309,39 +3418,39 @@ msgstr ""
 msgid "Not assigned, select to assign"
 msgstr ""
 
-#: admin/casestatus.php:121
+#: admin/casestatus.php:125
 msgid "Available in"
 msgstr ""
 
-#: admin/casestatus.php:121
+#: admin/casestatus.php:125
 msgid "Assigned to"
 msgstr ""
 
-#: admin/casestatus.php:121
+#: admin/casestatus.php:125
 msgid "Order"
 msgstr ""
 
-#: admin/casestatus.php:133
+#: admin/casestatus.php:137
 msgid "Assign selected cases to"
 msgstr ""
 
-#: admin/casestatus.php:133
+#: admin/casestatus.php:137
 msgid "operator"
 msgstr ""
 
-#: admin/casestatus.php:136
+#: admin/casestatus.php:140
 msgid "Assign cases to operator queue"
 msgstr ""
 
-#: admin/casestatus.php:136
+#: admin/casestatus.php:140
 msgid "Assign"
 msgstr ""
 
-#: admin/casestatus.php:217
+#: admin/casestatus.php:221
 msgid "INFORMATION"
 msgstr ""
 
-#: admin/casestatus.php:220
+#: admin/casestatus.php:224
 msgid ""
 "List cases by questionnaire and sample with the ability to assign them to be "
 "called next in a queue by a particular operator. <br/>If you assign cases to "
@@ -3349,7 +3458,7 @@ msgid ""
 "soon as the operator is available."
 msgstr ""
 
-#: admin/casestatus.php:223
+#: admin/casestatus.php:227
 msgid "OK"
 msgstr ""
 
@@ -3371,233 +3480,239 @@ msgstr ""
 msgid "Extensions & status"
 msgstr ""
 
-#: admin/extensionstatus.php:193
+#: admin/extensionstatus.php:192
 msgid "Edit extension"
 msgstr ""
 
-#: admin/extensionstatus.php:193
+#: admin/extensionstatus.php:192
 msgid "Add an extension"
 msgstr ""
 
-#: admin/extensionstatus.php:196
+#: admin/extensionstatus.php:195
 msgid "Extension name: "
 msgstr ""
 
-#: admin/extensionstatus.php:197
+#: admin/extensionstatus.php:196
 msgid "such as SIP/1000"
 msgstr ""
 
-#: admin/extensionstatus.php:200
+#: admin/extensionstatus.php:199
 msgid "Extension password: "
 msgstr ""
 
-#: admin/extensionstatus.php:201
+#: admin/extensionstatus.php:200
 msgid "Enter New Password"
 msgstr ""
 
-#: admin/extensionstatus.php:201
+#: admin/extensionstatus.php:200
 msgid " or "
 msgstr ""
 
-#: admin/extensionstatus.php:202
+#: admin/extensionstatus.php:201
 msgid "New password"
 msgstr ""
 
-#: admin/extensionstatus.php:203
+#: admin/extensionstatus.php:202
 msgid "characters long"
 msgstr ""
 
-#: admin/extensionstatus.php:207 admin/extensionstatus.php:268
+#: admin/extensionstatus.php:210 admin/extensionstatus.php:272
 msgid "Add extension"
 msgstr ""
 
-#: admin/extensionstatus.php:216
+#: admin/extensionstatus.php:218
 msgid "Delete extension"
 msgstr ""
 
-#: admin/extensionstatus.php:219
+#: admin/extensionstatus.php:221
 msgid "Unassign the operator from this extension to be able to delete it"
 msgstr ""
 
-#: admin/extensionstatus.php:229
+#: admin/extensionstatus.php:231
 msgid "Unassign"
 msgstr ""
 
-#: admin/extensionstatus.php:229
+#: admin/extensionstatus.php:231
 msgid "End case to change assignment"
 msgstr ""
 
-#: admin/extensionstatus.php:230
+#: admin/extensionstatus.php:232
 msgid "VoIP Offline"
 msgstr ""
 
-#: admin/extensionstatus.php:230
+#: admin/extensionstatus.php:232
 msgid "VoIP Online"
 msgstr ""
 
-#: admin/extensionstatus.php:231
+#: admin/extensionstatus.php:233
 msgid "Not called"
 msgstr ""
 
-#: admin/extensionstatus.php:231 call.php:433
+#: admin/extensionstatus.php:233 call.php:433
 msgid "Requesting call"
 msgstr ""
 
-#: admin/extensionstatus.php:231 call.php:454
+#: admin/extensionstatus.php:233 call.php:454
 msgid "Requires coding"
 msgstr ""
 
-#: admin/extensionstatus.php:231
+#: admin/extensionstatus.php:233
 msgid "Done"
 msgstr ""
 
-#: admin/extensionstatus.php:262
+#: admin/extensionstatus.php:266
 msgid "Assignment"
 msgstr ""
 
-#: admin/extensionstatus.php:262
+#: admin/extensionstatus.php:266
 msgid "VoIP Status"
 msgstr ""
 
-#: admin/extensionstatus.php:262
+#: admin/extensionstatus.php:266
 msgid "Call state"
 msgstr ""
 
-#: admin/extensionstatus.php:262
+#: admin/extensionstatus.php:266
 msgid "Time on call"
 msgstr ""
 
-#: admin/extensionstatus.php:266
+#: admin/extensionstatus.php:270
 msgid "No extensions"
 msgstr ""
 
-#: admin/displayappointments.php:122
+#: admin/displayappointments.php:132
 msgid "Now modify case outcome"
 msgstr ""
 
-#: admin/displayappointments.php:124
+#: admin/displayappointments.php:134
 msgid "The appointment has been deleted. Now you must modify the case outcome"
 msgstr ""
 
-#: admin/displayappointments.php:125
+#: admin/displayappointments.php:135
 msgid "Modify case outcome"
 msgstr ""
 
-#: admin/displayappointments.php:131
+#: admin/displayappointments.php:156
 msgid "Create NEW appointment"
 msgstr ""
 
-#: admin/displayappointments.php:131
+#: admin/displayappointments.php:164
 msgid "Edit appointment"
 msgstr ""
 
-#: admin/displayappointments.php:196
+#: admin/displayappointments.php:183
+msgid ""
+"ERROR in DB records, Check tables 'appointment' and 'respondent' and Time "
+"zone settings"
+msgstr ""
+
+#: admin/displayappointments.php:216
 msgid "Contact phone"
 msgstr ""
 
-#: admin/displayappointments.php:203
+#: admin/displayappointments.php:240
 msgid ""
 "ATTENTION!    Keep in mind that you're setting 'Start' & 'End' appoinment "
 "times in RESPONDENT LOCAL TIME !!!"
 msgstr ""
 
-#: admin/displayappointments.php:205
+#: admin/displayappointments.php:244
 msgid "Respondent TimeZone"
 msgstr ""
 
-#: admin/displayappointments.php:207
+#: admin/displayappointments.php:246
 msgid "Respondent Time"
 msgstr ""
 
-#: admin/displayappointments.php:234
+#: admin/displayappointments.php:279
 msgid "Cancel edit"
 msgstr ""
 
-#: admin/displayappointments.php:238
+#: admin/displayappointments.php:285
 msgid "Delete this appointment"
 msgstr ""
 
-#: admin/displayappointments.php:246
+#: admin/displayappointments.php:293
 msgid "Display Appointments"
 msgstr ""
 
-#: admin/displayappointments.php:247
+#: admin/displayappointments.php:294
 msgid "All appointments (with times displayed in your time zone)"
 msgstr ""
 
-#: admin/displayappointments.php:263
+#: admin/displayappointments.php:313
 msgid "Created by"
 msgstr ""
 
-#: admin/displayappointments.php:265
+#: admin/displayappointments.php:315
 msgid "No future appointments"
 msgstr ""
 
-#: admin/displayappointments.php:267
+#: admin/displayappointments.php:317
 msgid "Missed appointments (with times displayed in your time zone)"
 msgstr ""
 
-#: admin/displayappointments.php:284
-msgid "No appointments missed"
+#: admin/displayappointments.php:337
+msgid "No missed appointments"
 msgstr ""
 
-#: admin/new.php:105
+#: admin/new.php:121
 msgid "Successfully inserted"
 msgstr ""
 
-#: admin/new.php:105
+#: admin/new.php:121
 msgid "with ID"
 msgstr ""
 
-#: admin/new.php:105
+#: admin/new.php:121
 msgid "linked to survey"
 msgstr ""
 
-#: admin/new.php:110
+#: admin/new.php:126
 msgid "Error: Failed to insert questionnaire"
 msgstr ""
 
-#: admin/new.php:140
+#: admin/new.php:156
 msgid "Create another ?"
 msgstr ""
 
-#: admin/new.php:141
+#: admin/new.php:157
 msgid "No, Thank you, go to"
 msgstr ""
 
-#: admin/new.php:151
+#: admin/new.php:167
 msgid "Go to"
 msgstr ""
 
-#: admin/new.php:169
+#: admin/new.php:185
 msgid "Enter New questionnaire name.."
 msgstr ""
 
-#: admin/new.php:174
+#: admin/new.php:190
 msgid "Select limesurvey instrument:"
 msgstr ""
 
-#: admin/new.php:178 admin/new.php:195
+#: admin/new.php:194 admin/new.php:211
 msgid "Survey"
 msgstr ""
 
-#: admin/new.php:188
+#: admin/new.php:204
 msgid "Respondent selection type:"
 msgstr ""
 
-#: admin/new.php:191
+#: admin/new.php:207
 msgid "No respondent selection (go straight to questionnaire)"
 msgstr ""
 
-#: admin/new.php:192
+#: admin/new.php:208
 msgid "Use basic respondent selection text (below)"
 msgstr ""
 
-#: admin/new.php:367
+#: admin/new.php:395
 msgid "Create Questionnaire"
 msgstr ""
 
-#: admin/new.php:376
+#: admin/new.php:404
 msgid "NO active Lime surveys available"
 msgstr ""
 
@@ -3841,62 +3956,62 @@ msgstr ""
 msgid "Max calls reached (Unknown eligibility)"
 msgstr ""
 
-#: call_interface2.php:121
+#: call_interface2.php:124
 msgid "CONTACTED"
 msgstr ""
 
-#: call_interface2.php:122
+#: call_interface2.php:125
 msgid "NOT CONTACTED"
 msgstr ""
 
-#: call_interface2.php:197 call_interface2.php:226 call_interface2.php:258
-#: call_interface2.php:262 call_interface2.php:280 call_interface2.php:359
-#: call_interface2.php:430 call.php:197 call.php:217 call.php:233 call.php:264
+#: call_interface2.php:189 call_interface2.php:218 call_interface2.php:250
+#: call_interface2.php:254 call_interface2.php:272 call_interface2.php:352
+#: call_interface2.php:424 call.php:197 call.php:217 call.php:233 call.php:264
 #: call.php:312 call.php:383
 msgid "Call"
 msgstr ""
 
-#: call_interface2.php:318 call.php:271
+#: call_interface2.php:310 call.php:271
 msgid "Not on a call"
 msgstr ""
 
-#: call_interface2.php:330 call_interface2.php:446 call_interface2.php:451
-#: call_interface2.php:467 call_interface2.php:473 call.php:283 call.php:399
+#: call_interface2.php:322 call_interface2.php:440 call_interface2.php:445
+#: call_interface2.php:461 call_interface2.php:467 call.php:283 call.php:399
 #: call.php:404 call.php:420 call.php:426
 msgid "End case"
 msgstr ""
 
-#: call_interface2.php:355 call.php:308
+#: call_interface2.php:347 call.php:308
 msgid "Press the call button to dial the number for this appointment:"
 msgstr ""
 
-#: call_interface2.php:358 call.php:311
+#: call_interface2.php:350 call.php:311
 msgid "Number to call:"
 msgstr ""
 
-#: call_interface2.php:362 call_interface2.php:433 call.php:315 call.php:386
+#: call_interface2.php:356 call_interface2.php:427 call.php:315 call.php:386
 msgid ""
 "Your VoIP extension is not enabled. Please close this window and enable VoIP "
 "by clicking once on the red button that says 'VoIP Off'"
 msgstr ""
 
-#: call_interface2.php:423 call.php:376
+#: call_interface2.php:417 call.php:376
 msgid "Select phone number to dial:"
 msgstr ""
 
-#: call_interface2.php:438 call_interface2.php:472 call.php:391 call.php:425
+#: call_interface2.php:432 call_interface2.php:466 call.php:391 call.php:425
 msgid "The last call completed this call attempt"
 msgstr ""
 
-#: call_interface2.php:442 call_interface2.php:465 call.php:395 call.php:418
+#: call_interface2.php:436 call_interface2.php:459 call.php:395 call.php:418
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr ""
 
-#: call_interface2.php:487 call.php:457
+#: call_interface2.php:481 call.php:457
 msgid "Assign outcome"
 msgstr ""
 
-#: call_interface2.php:492 call.php:461
+#: call_interface2.php:486 call.php:461
 msgid "Error: Close window"
 msgstr ""
 
@@ -3944,7 +4059,7 @@ msgstr ""
 msgid "Call/Hangup"
 msgstr ""
 
-#: index.php:174 index_interface2.php:236
+#: index.php:174 index_interface2.php:241
 msgid "Arrow for expanding or contracting"
 msgstr ""
 
@@ -3952,23 +4067,23 @@ msgstr ""
 msgid "Restart"
 msgstr ""
 
-#: index.php:228 index_interface2.php:248
+#: index.php:228 index_interface2.php:253
 msgid "Notes"
 msgstr ""
 
-#: index.php:246 index_interface2.php:264 contactdetails.php:76
+#: index.php:246 index_interface2.php:269 contactdetails.php:78
 msgid "Contact details"
 msgstr ""
 
-#: index.php:290 index_interface2.php:308
+#: index.php:290 index_interface2.php:309
 msgid "Work history"
 msgstr ""
 
-#: index.php:298 index_interface2.php:316 project_info.php:67
+#: index.php:298 index_interface2.php:317 project_info.php:67
 msgid "Project information"
 msgstr ""
 
-#: index.php:314 index_interface2.php:325
+#: index.php:314 index_interface2.php:326
 msgid "Info"
 msgstr ""
 
@@ -3986,10 +4101,6 @@ msgstr ""
 
 #: rs_intro_interface2.php:86
 msgid "Accidental hang up"
-msgstr ""
-
-#: rs_intro_interface2.php:87
-msgid "Contacted"
 msgstr ""
 
 #: rs_intro_interface2.php:88
@@ -4018,7 +4129,7 @@ msgstr ""
 msgid "Respondent Selector"
 msgstr ""
 
-#: respondent.php:108 contactdetails.php:105
+#: respondent.php:108 contactdetails.php:107
 msgid "Respondent:"
 msgstr ""
 
@@ -4026,7 +4137,7 @@ msgstr ""
 msgid "Show details"
 msgstr ""
 
-#: respondent.php:175 contactdetails.php:169
+#: respondent.php:175 contactdetails.php:171
 msgid "Var"
 msgstr ""
 

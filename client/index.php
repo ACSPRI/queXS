@@ -41,7 +41,7 @@ include_once(dirname(__FILE__).'/../db.inc.php');
 /** 
  * Authentication
  */
-include ("auth-client.php");
+require ("auth-client.php");
 
 
 /**
@@ -62,11 +62,11 @@ include ("../functions/functions.client.php");
 
 $client_id = get_client_id();
 
-xhtml_head(T_("Questionnaire Outcomes"),true,array("css/table.css"));
+xhtml_head(T_("Questionnaire Outcomes"),true,array("../include/bootstrap/css/bootstrap.min.css", "../css/custom.css"));
 
 if ($client_id)
 {
-	$sql = "SELECT q.questionnaire_id,q.description
+	$sql = "SELECT q.questionnaire_id,q.description,q.lime_sid
 		FROM questionnaire as q, client_questionnaire as cq
 		WHERE cq.questionnaire_id = q.questionnaire_id
 		AND q.enabled = 1
@@ -75,14 +75,16 @@ if ($client_id)
 	$qs = $db->GetAll($sql);
 
 	if (empty($qs))
-		print "<p>" . T_("There are no questionnaires assigned to you") . "</p>";
+		print "<p class='alert alert-info'>" . T_("There are no questionnaires assigned to you") . "</p>";
 	else
 	{
 		foreach($qs as $q)
 		{
-			print "<h2>{$q['description']}</h2>";
+			print "<div class='col-lg-2'>";
+			print "<div class=' '><h2>{$q['description']}</h2>";
 
 			$questionnaire_id = $q['questionnaire_id'];
+			$qsid=$q['lime_sid'];
 
 			$sql = "SELECT o.calc, count( c.case_id )
 				FROM `case` AS c, `outcome` AS o
@@ -91,15 +93,15 @@ if ($client_id)
 				GROUP BY o.calc";
 			
 			$a = $db->GetAssoc($sql);
+			
 			$a = aapor_clean($a);
 		
-			
-			print "<table><tr><th>" . T_("Outcome") . "</th><th>" . T_("Rate") . "</th></tr>"; 
+			print "<table class='table-hover table-condensed tclass'><thead class=\"highlight\"><tr><th>" . T_("Outcome") . "</th><th>" . T_("Rate") . "</th></tr></thead>"; 
 			print "<tr><td>" . T_("Response Rate 1") . "</td><td>" . round(aapor_rr1($a),2) . "</td></tr>";
 			print "<tr><td>" . T_("Refusal Rate 1") . "</td><td>" . round(aapor_ref1($a),2) . "</td></tr>";
 			print "<tr><td>" . T_("Cooperation Rate 1") . "</td><td>" . round(aapor_coop1($a),2) . "</td></tr>";
 			print "<tr><td>" . T_("Contact Rate 1") . "</td><td>" . round(aapor_con1($a),2) . "</td></tr>";
-			print "</table>";
+			print "</table></br>";
 			
 			
 			$sql = "SELECT o.description as des, o.outcome_id, count( c.case_id ) as count
@@ -113,22 +115,30 @@ if ($client_id)
 			if (!empty($rs))
 			{
 				translate_array($rs,array("des"));
-				xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"));
+				xhtml_table($rs,array("des","count"),array(T_("Outcome"),T_("Count")),"tclass",array("des" => "Complete"),array("count"));
 			}
-			else
-				print "<p>" . T_("No outcomes recorded for this questionnaire") . "</p>";
+			else print "<p class='alert alert-info'>" . T_("No outcomes recorded for this questionnaire") . "</p>";
+
+			print "</br><a href=\"?qsid=$qsid\" class=\"btn btn-default btn-block btn-lime\">" . T_("View summary results") . "</a></div></div>";
+		}
 		
+		if (isset($_GET['qsid'])) {
+			$qsid = intval($_GET['qsid']);
+			$page = LIME_URL . "admin/admin.php?action=browse&amp;sid=$qsid"; }
+		else $page ='';
+		
+		if ($page){
+?>				
+		<div class="col-lg-10 pull-right" id=" " style="height:820px;">
+			<?php xhtml_object($page,' ',"full"); ?>
+		</div>	
+<?php
 		}
 
 	}
-
-
-
 }
 else
-	print "<p>" . T_("You are not a valid client") . "</p>";
-
-
+	print "<p class='alert alert-danger'>" . T_("You are not a valid client") . "</p>";
 
 xhtml_foot();
 

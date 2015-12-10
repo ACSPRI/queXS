@@ -44,7 +44,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -305,10 +305,11 @@ if ($questionnaire_id != false)
 	$sql = "SELECT s.sample_import_id as value,s.description, CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 	 	FROM sample_import as s, questionnaire_sample as q
 		WHERE q.questionnaire_id = $questionnaire_id
-		AND q.sample_import_id = s.sample_import_id";
+		AND q.sample_import_id = s.sample_import_id
+		AND s.enabled = 1";
 	$s = $db->GetAll($sql);
 	if (!empty($s)){
-		print "<h3 class='form-inline pull-left'>&emsp;&emsp;&emsp;" . T_("Sample") . ":&emsp;</h3>";
+		print "<h3 class='form-inline pull-left'>&emsp;" . T_("Sample") . ":&emsp;</h3>";
 
 	display_chooser($s,"sample","sample_import_id",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"pull-left");
 	} else {	
@@ -317,9 +318,6 @@ if ($questionnaire_id != false)
 
 	print "<div class='col-sm-2 pull-right'><a href='quotareport.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-info btn-block'><i class='fa fa-filter fa-lg'></i>&emsp;" . T_("To quota report") . "</a></div>";
 	
-	print "<div class='clearfix'></div>";
-	
-
 	if ($sample_import_id != false)
   {
     if (isset($_POST['import_quota']))
@@ -387,8 +385,9 @@ if ($questionnaire_id != false)
 
     if ($qsqri != false)
     {
-      print "<h2 class='col-sm-2'><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default'><i class='fa fa-arrow-up fa-lg text-primary'></i>&emsp;" . T_("To Row quotas") . "</a></h2>";
-      print "<h2>" . T_("Quota") . ": $qsqrid</h2>";
+      print "<div class='col-lg-2 pull-right'><a href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id' class='btn btn-default'><i class='fa fa-arrow-up fa-lg text-primary'></i>&emsp;" . T_("To Row quotas") . "</a></div>";
+	  print "<div class='clearfix form-group'></div>";
+      print "<h2 class='col-lg-offset-4'>" . T_("Quota") . ": $qsqrid</h2>";
 	  
       ?>
 	  <div class='panel-body' >
@@ -578,7 +577,7 @@ if ($questionnaire_id != false)
 
 		if (empty($r))
 		{
-			print "<p class='well text-info'>" . T_("Currently no row quotas") . "</p>";
+			print "<p class='well text-info col-lg-12'>" . T_("Currently no row quotas") . "</p>";
 		}
 		else
 		{

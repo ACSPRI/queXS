@@ -44,7 +44,7 @@ include ("../db.inc.php");
 /**
  * Authentication file
  */
-include ("auth-admin.php");
+require ("auth-admin.php");
 
 /**
  * XHTML functions
@@ -107,12 +107,12 @@ xhtml_head(T_("Search the sample"),true,$css,$js_head);
 echo "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left' ><i class='fa fa-chevron-left text-primary'></i>&emsp;" . T_("Go back") . "</a>";
 
 $sql = "SELECT sample_import_id as value,description, CASE WHEN sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-	FROM sample_import";
+	FROM sample_import ORDER BY description ASC";
 $r = $db->GetAll($sql);
 
 if(!empty($r))
 
-	print "<div class=' form-inline form-group col-md-6'><h4 class='control-label form-group col-sm-6 text-right'>" . T_("Select sample ") . "&emsp;</h4>";
+	print "<div class=' form-inline form-group col-md-10'><h4 class='control-label form-group col-md-4 text-right'>" . T_("Select sample ") . "</h4>";
 	display_chooser($r,"sample_import_id","sample_import_id",true,false,true,false);
 	
 	print "</div>";
