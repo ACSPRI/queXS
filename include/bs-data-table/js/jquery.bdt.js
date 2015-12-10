@@ -4,7 +4,7 @@
  * @copyright 2014 Patric Gutersohn
  * @author Patric Gutersohn
  * @example index.html BDT in action.
- * @link http://bdt.gutersohn.biz Documentation
+ * @link http://bdt.pguso.de Documentation
  * @version 1.0.0
  *
  * @summary BDT - Bootstrap Data Tables
@@ -29,7 +29,7 @@
     /**
      * @type {string}
      */
-    var pages = 'Тоtal pages';
+    var pages = 'Total pages: ';
     /**
      * @type {object}
      */
@@ -41,18 +41,33 @@
     /**
      * @type {string}
      */
-    var arrowUp = ' ';
+    var arrowUp = '';
     /**
      * @type {string}
      */
-    var arrowDown = ' ';
+    var arrowDown = '';
+    /**
+     * @type {string}
+     */
+    var searchFormClass = '';
+    /**
+     * @type {string}
+     */
+    var pageFieldText = '';
+    /**
+     * @type {string}
+     */
+    var searchFieldText = '';
 
     $.fn.bdt = function (options, callback) {
 
         var settings = $.extend({
             pageRowCount: 50,
-            arrowDown: 'fa-arrow-down text-primary fa-lg',
-            arrowUp: 'fa-arrow-up text-primary fa-lg'
+            arrowDown: 'fa-sort-amount-asc text-primary',
+            arrowUp: 'fa-sort-amount-desc text-primary',
+            searchFormClass: 'search-form col-lg-3',
+            pageFieldText: 'Entries per Page: ',
+            searchFieldText: 'Search '
         }, options);
 
         /**
@@ -66,35 +81,31 @@
             pageRowCount = settings.pageRowCount;
             arrowDown = settings.arrowDown;
             arrowUp = settings.arrowUp;
+            searchFormClass = settings.searchFormClass;
+            pageFieldText = settings.pageFieldText;
+            searchFieldText = settings.searchFieldText;
 
             /**
              * search input field
              */
-
-      obj.before(
-                $('<form/>')
-                    .addClass('float-left')
-                    .attr('role', 'form')
-					.attr('style', 'width:30%;')
+            obj.before(
+                $('<div/>')
+                    .addClass('float-left table-header')
                     .append(
-                        $('<div/>')
-                            .addClass('form-group')
+                        $('<form/>')
+                            .addClass(searchFormClass)
+                            .attr('role', 'form')
                             .append(
-                                $('<input/>')
-                                    .addClass('form-control')
-                                    .attr('id', 'search')
-                                    .attr('placeholder',   'Type to Search here ...' )
+                                $('<div/>')
+                                    .addClass('form-group')
+                                    .append(
+                                        $('<input/>')
+                                            .addClass('form-control')
+                                            .attr('id', 'search')
+                                            .attr('placeholder', searchFieldText)
+                                    )
                             )
                     )
-				
-            );
-
-            /**
-             * select field for changing row per page
-             */
-            obj.after(
-                $('<div/>')
-                    .attr('id', 'table-footer')
                     .append(
                         $('<div/>')
                             .addClass('pull-left')
@@ -104,7 +115,7 @@
                                     .attr('id', 'page-rows-form')
                                     .append($('<label/>')
                                         .addClass('pull-left control-label')
-                                        .text('Rows per Page:')
+                                        .text(pageFieldText)
                                     )
                                     .append(
                                         $('<div/>')
@@ -112,6 +123,12 @@
                                             .append(
                                                 $('<select/>')
                                                     .addClass('form-control')
+                                                    .append(
+                                                        $('<option>', {
+                                                            value: 10,
+                                                            text: 10
+                                                        })
+                                                    )
                                                     .append(
                                                         $('<option>', {
                                                             value: 25,
@@ -137,16 +154,24 @@
                                                             text: 200
                                                         })
                                                     )
-                                                    .append(
-                                                        $('<option>', {
-                                                            value: 500,
-                                                            text: 500
-                                                        })
-                                                    )
                                             )
                                     )
                             )
                     )
+            );
+
+            /**
+             * select field for changing row per page
+             */
+            obj.after(
+                $('<div/>')
+                    .attr('id', 'table-footer')
+                    .append(
+                        $('<div/>')
+                            .addClass('pull-left table-info')
+                            //.text('Showing 1 to 10 of 100 entries')
+                    )
+                    
             );
 
             if (tableBody.children('tr').length > pageRowCount) {
@@ -197,19 +222,11 @@
 
             obj
                 .find('thead th')
-				.append(
-                    $('<span class="pull-right"/>')
-                       // .addClass('')
-						.append(
-                    $('<i class=" "/>')
-                        .addClass('fa sort-icon')
-						
+                .wrapInner('<span class="sort-element"/>')
+                .append(
+                    $('<span/>')
+                        .addClass('fa sort-icon fa-sort')
                 )
-
-                )
-				//.wrapInner('<p class="sort-element "/>')
-				.wrapInner('<div class=" "/>')
-				
                 .each(function () {
 
                     var th = $(this);
@@ -218,48 +235,49 @@
                     var addOrRemove = true;
 
                     th.click(function () {
+                        if(!$(this).hasClass('disable-sorting')) {
+                            if($(this).find('.sort-icon').hasClass(arrowDown)) {
+                                $(this)
+                                    .find('.sort-icon')
+                                    .removeClass( arrowDown )
+                                    .addClass(arrowUp);
 
-                        if($(this).find('.sort-icon').hasClass(arrowDown)) {
-                            $(this)
-                                .find('.sort-icon')
-                                .removeClass( arrowDown )
-                                .addClass(arrowUp);
+                            } else {
+                                $(this)
+                                    .find('.sort-icon')
+                                    .removeClass( arrowUp )
+                                    .addClass(arrowDown);
+                            }
 
-                        } else {
-                            $(this)
-                                .find('.sort-icon')
-                                .removeClass( arrowUp )
-                                .addClass(arrowDown);
+                            if(oldIndex != thIndex) {
+                                obj.find('.sort-icon').removeClass(arrowDown);
+                                obj.find('.sort-icon').removeClass(arrowUp);
+
+                                $(this)
+                                    .find('.sort-icon')
+                                    .toggleClass( arrowDown, addOrRemove );
+                            }
+
+                            table.find('td').filter(function () {
+
+                                return $(this).index() === thIndex;
+
+                            }).sortElements(function (a, b) {
+
+                                return $.text([a]) > $.text([b]) ?
+                                    inverse ? -1 : 1
+                                    : inverse ? 1 : -1;
+
+                            }, function () {
+
+                                // parentNode is the element we want to move
+                                return this.parentNode;
+
+                            });
+
+                            inverse = !inverse;
+                            oldIndex = thIndex;
                         }
-
-                        if(oldIndex != thIndex) {
-                            obj.find('.sort-icon').removeClass(arrowDown);
-                            obj.find('.sort-icon').removeClass(arrowUp);
-
-                            $(this)
-                                .find('.sort-icon')
-                                .toggleClass( arrowDown, addOrRemove );
-                        }
-
-                        table.find('td').filter(function () {
-
-                            return $(this).index() === thIndex;
-
-                        }).sortElements(function (a, b) {
-
-                            return $.text([a]) > $.text([b]) ?
-                                inverse ? -1 : 1
-                                : inverse ? 1 : -1;
-
-                        }, function () {
-
-                            // parentNode is the element we want to move
-                            return this.parentNode;
-
-                        });
-
-                        inverse = !inverse;
-                        oldIndex = thIndex;
                     });
 
                 });
@@ -295,10 +313,10 @@
              * pagination, with pages and previous and next link
              */
             $('#table-footer')
-                .addClass('form-group')
+                .addClass('container')
                 .append(
                     $('<nav/>')
-                        .addClass('pull-right')
+                        .addClass('pull-right panel-body')
                         .attr('id', 'table-nav')
                         .append(
                             pages
@@ -388,9 +406,9 @@
          */
         function setPageCount(tableBody) {
             if (activeSearch) {
-                pageCount = Math.round(tableBody.children('.search-item').length / pageRowCount);
+                pageCount = Math.ceil(tableBody.children('.search-item').length / pageRowCount);
             } else {
-                pageCount = Math.round(tableBody.children('tr').length / pageRowCount);
+                pageCount = Math.ceil(tableBody.children('tr').length / pageRowCount);
             }
 
             if (pageCount == 0) {
