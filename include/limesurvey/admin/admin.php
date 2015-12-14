@@ -325,11 +325,11 @@ if(isset($_SESSION['loginID']))
     {
         include('listcolumn.php');
     }
-    elseif ($action=='update')
-    {
-        if( $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    include($homedir.'/update/updater.php');
-        else { include('access_denied.php');}
-    }
+//    elseif ($action=='update')
+//    {
+//      if( $_SESSION['USER_RIGHT_SUPERADMIN'] == 1)    include($homedir.'/update/updater.php');
+//        else { include('access_denied.php');}
+//    }
     elseif ($action=='assessments' || $action=='assessmentdelete' || $action=='assessmentedit' || $action=='assessmentadd' || $action=='assessmentupdate')
     {
         if(bHasSurveyPermission($surveyid,'assessments','read'))    {
