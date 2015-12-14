@@ -52,8 +52,8 @@ WHERE 1;
 DROP TABLE `sessions2`;
 
 /* Add sort order feature to questionnaire sample table */
-ALTER TABLE `questionnaire_sample` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0';
-UPDATE `questionnaire_sample` SET sort_order = sample_import_id;
+/* after update just open "Assign & Sort questionnaire samples" admin page (assignsample.php) and set required sort_order*/
+ALTER TABLE `questionnaire_sample` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '1';
 
 /* Add default outcomes feature */
 
