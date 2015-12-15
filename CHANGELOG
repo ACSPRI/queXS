@@ -52,8 +52,8 @@ WHERE 1;
 DROP TABLE `sessions2`;
 
 /* Add sort order feature to questionnaire sample table */
-ALTER TABLE `questionnaire_sample` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0';
-UPDATE `questionnaire_sample` SET sort_order = sample_import_id;
+/* after update just open "Assign & Sort questionnaire samples" admin page (assignsample.php) and set required sort_order*/
+ALTER TABLE `questionnaire_sample` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '1';
 
 /* Add default outcomes feature */
 
@@ -69,6 +69,14 @@ ALTER TABLE `questionnaire` ADD `outcomes` VARCHAR(256) NULL DEFAULT '1,2,3,7,9,
 /* -- enable all outcomes for existing questionnaires -- */
 UPDATE `questionnaire` SET `outcomes` = '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,40,41,42,43,44,45' ;
 
+
+!!-- IMPORTANT --!! 
+If you had more than 1 sample assigned to a questionaire before "samplesort" update, you'll need to have different sort_order values (llike 0,1,2 e.t.c.)for each sample per questionnaire to make "samplesort" feature work.
+
+Easy way: unassign samples from quesionnaires (no more than 1 could be left per questionnaire)  and reassign them back.
+
+Check that you have different "Sort order" values for each sample per questionnaire, test order change with up/down arrows.
+!!
 
 queXS 1.13.1 - Changes since 1.13.0
 
