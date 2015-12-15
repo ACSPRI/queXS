@@ -42,7 +42,7 @@ include ("functions/functions.xhtml.php");
 /**
  * Language
  */
-include ("lang.inc.php");
+include_once ("lang.inc.php");
 
 /**
  * Database

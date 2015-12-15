@@ -43,18 +43,20 @@ $css = array(
 "../include/bootstrap/css/bootstrap-theme.min.css",
 "../include/font-awesome/css/font-awesome.css",
 "../include/jquery-ui/jquery-ui.min.css",
-"../include/timepicker/jquery-ui.min.css",
 "../include/timepicker/jquery-ui-timepicker-addon.css",
 "../css/custom.css"
 			);
 $js_head = array(
 "../include/jquery/jquery.min.js",
 "../include/bootstrap/js/bootstrap.min.js",
-"../include/timepicker/jquery-ui.min.js",
-//"../include/jquery-ui/jquery-ui.min.js",
+"../include/jquery-ui/jquery-ui.min.js",
 "../include/timepicker/jquery-ui-timepicker-addon.js",
-//"../include/timepicker/jquery-ui-timepicker-ru.js",
 				);
+$lang = $_SESSION['adminlang'];
+if($lang != "en"){
+	$js_head[] = "../include/jquery-ui/i18n/datepicker-" . $lang . ".js";
+	$js_head[] = "../include/timepicker/i18n/jquery-ui-timepicker-" . $lang . ".js";
+				}
 $js_foot = array(
 "../js/bootstrap-confirmation.js",
 "../js/custom.js"
@@ -136,8 +138,6 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 	}
 	else
 	{
-		$lang = DEFAULT_LOCALE ;
-
 		$sql = "SELECT  CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, 
 						CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 10 YEAR),'SYSTEM',r.Time_zone_name) as enddate,
 						r.respondent_id, ca.contact_phone_id
@@ -301,7 +301,8 @@ else {
 	JOIN (`case` as c, respondent as r, questionnaire as q, operator as oo, call_attempt as cc, `sample` as s, sample_import as si) on (c.sample_id = s.sample_id and  a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id and si.sample_import_id = s.import_id) 
 	LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id) 
 	LEFT JOIN operator AS ao ON ao.operator_id = a.require_operator_id 
-	LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id and s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
+	LEFT JOIN (questionnaire_sample_quota as qsq) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id)
+	LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
 	WHERE q.enabled=1 AND si.enabled=1 AND a.end >= CONVERT_TZ(NOW(),'System','UTC') AND c.current_outcome_id IN (19,20,21,22)
 	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1)
 	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
@@ -323,7 +324,8 @@ else {
 	FROM appointment as a 
 	JOIN (`case` as c, respondent as r, questionnaire as q, `sample` as s, sample_import as si) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and s.sample_id = c.sample_id and s.import_id= si.sample_import_id) 
 	LEFT JOIN (`call` as ca) ON (ca.call_id = a.completed_call_id)
-	LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id and s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
+	LEFT JOIN (questionnaire_sample_quota as qsq) on (s.import_id  = qsq.sample_import_id and c.questionnaire_id = qsq.questionnaire_id)
+	LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (s.import_id = qsqr.sample_import_id  and c.questionnaire_id = qsqr.questionnaire_id)
 	WHERE q.enabled=1 AND si.enabled=1 AND a.end < CONVERT_TZ(NOW(),'System','UTC') AND a.completed_call_id IS NULL AND c.current_outcome_id IN (19,20,21,22)
 	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
 	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)

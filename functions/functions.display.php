@@ -118,7 +118,8 @@ function display_sample_chooser($questionnaire_id, $sample_import_id = false, $d
 	if (!$disabled) $s = " AND si.enabled = 1 "; else $s = "";
 
 	if ($quota_reached){
-		$qr = " LEFT JOIN (questionnaire_sample_quota as qsq, questionnaire_sample_quota_row as qsqr) on (si.sample_import_id  = qsq.sample_import_id and si.sample_import_id = qsqr.sample_import_id)";
+		$qr = " LEFT JOIN (questionnaire_sample_quota as qsq) on (si.sample_import_id  = qsq.sample_import_id)
+				LEFT JOIN (questionnaire_sample_quota_row as qsqr) on (si.sample_import_id = qsqr.sample_import_id)";
 		$qrq = " AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
 				AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)";
 	}
@@ -127,7 +128,8 @@ function display_sample_chooser($questionnaire_id, $sample_import_id = false, $d
 	$sql = "SELECT s.sample_import_id,si.description,CASE WHEN s.sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 		FROM questionnaire_sample as s, sample_import as si $qr
 		WHERE s.questionnaire_id = '$questionnaire_id'
-		AND s.sample_import_id = si.sample_import_id $s $qrq";
+		AND s.sample_import_id = si.sample_import_id $s $qrq
+		GROUP BY s.sample_import_id";
 		
 	$rs = $db->GetAll($sql);
 
