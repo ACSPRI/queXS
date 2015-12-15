@@ -52,10 +52,9 @@ $js_head = array(
 "../include/jquery-ui/jquery-ui.min.js",
 "../include/timepicker/jquery-ui-timepicker-addon.js",
 				);
-$lang = $_SESSION['adminlang'];
-if($lang != "en"){
-	$js_head[] = "../include/jquery-ui/i18n/datepicker-" . $lang . ".js";
-	$js_head[] = "../include/timepicker/i18n/jquery-ui-timepicker-" . $lang . ".js";
+if($locale != "en"){
+	$js_head[] = "../include/jquery-ui/i18n/datepicker-" . $locale . ".js";
+	$js_head[] = "../include/timepicker/i18n/jquery-ui-timepicker-" . $locale . ".js";
 				}
 $js_foot = array(
 "../js/bootstrap-confirmation.js",
@@ -195,7 +194,7 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 				dateFormat: 'yy-mm-dd', 
 				timeFormat: 'HH:mm:ss',
 				showSecond: false,
-				regional: '$lang',
+				regional: '$locale',
 				hourMin: 0,
 				hourMax: 23,
 				stepMinute: 5,
