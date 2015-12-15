@@ -132,7 +132,8 @@ include ("../functions/functions.operator.php");
                 <li><a href="?g=2&amp;page=import.php"><i class="fa fa-upload fa-fw"></i><?php print T_("Import a sample file") ;?></a></li>
                 <li><a href="?g=2&amp;page=samplelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Sample management") ;?></a></li>
                 <li><a href="?g=2&amp;page=samplesearch.php"><i class="fa fa-search fa-fw"></i><?php print T_("Search the sample") ;?></a></li>
-                <li><a href="?g=2&amp;page=assignsample.php"><i class="fa fa-link fa-fw"></i><i class='fa fa-sort-numeric-asc fa-fw'></i><?php print T_("Assign & Sort questionnaire samples") ;?></a></li>
+                <li><a href="?g=2&amp;page=assignsample.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign questionnaire samples") ;?></a></li>
+                <li><a href="?g=2&amp;page=sortsample.php"><i class='fa fa-sort-numeric-asc fa-fw'></i><?php print T_("Sort questionnaire samples") ;?></a></li>
               </ul>
           </li>
 		  <li class="has_sub"><a href="" class=""><i class="fa fa-calendar fa-lg"></i><span><?php print T_("Time slots and shifts") ;?></span></a>
