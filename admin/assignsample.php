@@ -242,72 +242,49 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 		xhtml_foot($js_foot);
 		die();
 	}
-	else if (isset($_GET['sort']))   
+	else if (isset($_GET['sort']) && ($_GET['sort'] == "up" || $_GET['sort'] == "down"))   
 	{
-	  $cso = $db->GetOne("	SELECT sort_order
+		$cso = $db->GetOne("	SELECT sort_order
 				FROM questionnaire_sample
 				WHERE questionnaire_id = $questionnaire_id 
 				AND sample_import_id = $sid");
 
-	  if ($_GET['sort'] == "up")
-	  {
-	    //find previous in sort order and do a swap
-	    $sql = "SELECT sample_import_id,sort_order
+		if ($_GET['sort'] == "up")
+		{	//find previous in sort order
+			$dir = "<";
+		}
+		else if ($_GET['sort'] == "down")
+		{	//find next in sort order
+			$dir = ">";
+		}
+
+		$sql = "SELECT sample_import_id,sort_order
 	            FROM questionnaire_sample
 	            WHERE questionnaire_id = $questionnaire_id
-	            AND sort_order < $cso
+	            AND sort_order $dir $cso
 	            ORDER BY sort_order DESC LIMIT 1";
 
-	     $rs = $db->GetRow($sql);
+		$rs = $db->GetRow($sql);
+		
+		//do a swap
+		$ssid = $rs['sample_import_id'];
+		$sso = $rs['sort_order'];
 
-	     $ssid = $rs['sample_import_id'];
-	     $sso = $rs['sort_order'];
-
-	     $sql = "UPDATE questionnaire_sample
+		$sql = "UPDATE questionnaire_sample
 		     SET sort_order = $sso
 		     WHERE sample_import_id = $sid
 		     AND questionnaire_id = $questionnaire_id";
 
-	     $db->Execute($sql);
+		$db->Execute($sql);
 
-	     $sql = "UPDATE questionnaire_sample
+		$sql = "UPDATE questionnaire_sample
 		     SET sort_order = $cso
 		     WHERE sample_import_id = $ssid
 		     AND questionnaire_id = $questionnaire_id";
 
-	     $db->Execute($sql);
-	   }
-	   else
-	   {
-	     //find next in sort order and do a swap
-	     $sql = "SELECT sample_import_id,sort_order
-		     FROM questionnaire_sample
-		     WHERE questionnaire_id = $questionnaire_id
-		     AND sort_order > $cso
-		     ORDER BY sort_order ASC LIMIT 1";
-
-	     $rs = $db->GetRow($sql);
-
-	     $ssid = $rs['sample_import_id'];
-	     $sso = $rs['sort_order'];
-
-	     $sql = "UPDATE questionnaire_sample
-		     SET sort_order = $sso
-		     WHERE sample_import_id = $sid
-		     AND questionnaire_id = $questionnaire_id";
-
-	     $db->Execute($sql);
-
-	     $sql = "UPDATE questionnaire_sample
-		     SET sort_order = $cso
-		     WHERE sample_import_id = $ssid
-		     AND questionnaire_id = $questionnaire_id";
-
-	     $db->Execute($sql);
+		$db->Execute($sql);
 		
 		unset($_GET['sort']);
-	   
-	   }
 	}
 	else
 	{
@@ -324,8 +301,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['rsid']))
 }
 
 
-$subtitle = T_("Assign questionnaire samples");
-xhtml_head(T_("Assign questionnaire samples"),true,$css,$js_head,false,false,false,$subtitle);//array("../css/table.css"),array("../js/window.js")
+$subtitle = T_("List & Add Sample");
+xhtml_head(T_("Assign samples to questionnaires"),true,$css,$js_head,false,false,false,$subtitle);//array("../css/table.css"),array("../js/window.js")
 
 print "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a>";
 
@@ -333,7 +310,7 @@ print "<a href='' onclick='history.back();return false;' class='btn btn-default 
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);	
 	
-print "<div class='form-group clearfix'><h2 class='col-lg-6 text-right'><i class='fa fa-link text-primary'></i>&emsp;" . T_("Assign samples to questionnaire: ") . "</h2>";
+print "<div class='form-group clearfix'><h2 class='col-lg-4 text-right'><i class='fa fa-link text-primary'></i>&emsp;" . T_("Select a questionnaire") . "</h2>";
 display_questionnaire_chooser($questionnaire_id,false, "pull-left btn", "form-control ");
 print "</div>";
 
