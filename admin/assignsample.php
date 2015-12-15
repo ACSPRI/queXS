@@ -358,7 +358,7 @@ if ($questionnaire_id != false)
        }
      }
      else
-       $qs[0]['sort_order'] = "&emsp;<i class=\"fa fa-minus fa-lg\"></i>&emsp;";
+       $qs[0]['sort_order'] = "&emsp;<span class=\"badge\">" . $qs[0]['sort_order'] . "</span>&emsp;";
 
 
     xhtml_table($qs,array("sort_order","description","call_max","call_attempt_max","answering_machine_messages","random_select","allow_new","edit","unassign"),array(T_("Sort order"),T_("Sample"), T_("Max calls"), T_("Max call attempts"), T_("Answering machine messages"), T_("Selection type"), T_("Allow new numbers to be drawn?"), T_("Edit"), T_("Unassign sample")));
