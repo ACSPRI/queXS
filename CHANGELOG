@@ -63,6 +63,9 @@ ALTER TABLE `outcome` ADD `default` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' COM
 /* -- define and set mandatory(constant) outcome_id's --*/
 UPDATE `outcome` SET `permanent` = '1' WHERE `outcome`.`outcome_id` IN (1,2,3,7,9,10,14,17,18,19) ;
 
+/* -- set AUTO_INCREMENT to 100 @ `outcome` to reserve some id's -- */
+ALTER TABLE `outcome` AUTO_INCREMENT = 100;
+
 /* -- add `outcomes` parameter ,  define default list of outcome_ID's to be enabled for new questionnaries --*/
 ALTER TABLE `questionnaire` ADD `outcomes` VARCHAR(256) NULL DEFAULT '1,2,3,7,9,10,14,17,18,19' COMMENT 'Comma-separated string of outcomes defined for the questionnaire' AFTER `enabled`;
 
