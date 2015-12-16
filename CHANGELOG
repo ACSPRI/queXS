@@ -3,7 +3,6 @@ queXS 1.14.0 - Changes since 1.13.1
 Changes for session authentication:
 
 queXS now uses the Limesurvey session based authentication system to authenticate all users.
-Sessions are stored in the lime_sessions table and are managed by adodb. 
 
 If this is a fresh install - you can ignore the notes below. Otherwise - please read through 
 the following for converting from directory based authentication to session based authentication.
