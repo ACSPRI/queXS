@@ -20,11 +20,11 @@
  *	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *
- * @author Adam Zammit <adam.zammit@deakin.edu.au>
- * @copyright Deakin University 2007,2008
+ * @author Adam Zammit <adam.zammit@acspri.org.au>
+ * @copyright Australian Consortium for Social and Political Research Inc 2007,2008
  * @package queXS
  * @subpackage user
- * @link http://www.deakin.edu.au/dcarf/ queXS was writen for DCARF - Deakin Computer Assisted Research Facility
+ * @link http://www.acspri.org.au/ queXS was writen for Australian Consortium for Social and Political Research Incorporated (ACSPRI)
  * @license http://opensource.org/licenses/gpl-2.0.php The GNU General Public License (GPL) Version 2
  * 
  */
@@ -52,21 +52,25 @@ include_once ("lang.inc.php");
 
 $js = array("js/popup.js","include/jquery/jquery-1.4.2.min.js","include/jquery-ui/jquery-ui.min.js");
 
-if (AUTO_LOGOUT_MINUTES !== false)
-{  
-        $js[] = "js/childnap.js";
-}
+if (AUTO_LOGOUT_MINUTES !== false) $js[] = "js/childnap.js"; 
 
 
-xhtml_head(T_("Respondent Selection - Business answers"),true,array("css/rs.css","include/jquery-ui/jquery-ui.min.css"), $js);
+xhtml_head(T_("Respondent Selection") . " - " . T_("Business answers"),true,array("include/bootstrap/css/bootstrap.min.css","css/rs.css"), $js);
 
+print "<p class='rstext well rs'>" . T_("Sorry to bother you, I have called the wrong number") . "</p>";
 
-?>
-<p class='rstext'><?php  echo T_("Sorry to bother you, I have called the wrong number")?></p>
+print "<div class=' '>
+		<div class='col-lg-2'><p><a class='btn btn-default' href=\"rs_intro.php\" >" . T_("Go Back") . "</a></p></div>";
+		
+	$des = $db->GetAll("SELECT description FROM outcome WHERE outcome_id = 16");
+	print "<div class='col-lg-4'><p><h4 class='text-right'>" . T_("End call with outcome:") . "</h4></p></div>
+			<div class='col-lg-6'><p><a class='btn btn-primary' ";
+			if ( ALTERNATE_INTERFACE ) print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=16&amp;endcase=endcase'\">";
+			else print "href=\"javascript:parent.poptastic('call.php?defaultoutcome=16');\">";
+	print  T_($des[0]['description']) . "</a></p></div>";
 
-<p class='rsoption'><a href="javascript:parent.poptastic('call.php?defaultoutcome=16');"><?php  echo T_("End call with outcome: Business number"); ?></a></p>
-<p class='rsoption'><a href="rs_intro.php"><?php  echo T_("Go Back"); ?></a></p>
-<?php 
+print "</div>";
+
 
 xhtml_foot();
 

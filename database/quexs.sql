@@ -1059,7 +1059,7 @@ CREATE TABLE `outcome` (
   `permanent` TINYINT(1) UNSIGNED NOT NULL COMMENT 'Permanent outcome, used for all questionnaires, not possible to de-select',
   PRIMARY KEY (`outcome_id`),
   KEY `calc` (`calc`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=100;
 
 --
 -- Dumping data for table `outcome`
