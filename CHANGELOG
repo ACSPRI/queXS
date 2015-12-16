@@ -1,5 +1,16 @@
 queXS 1.14.0 - Changes since 1.13.1
 
+New feature: Session based authentication instead of web server authentication
+New feature: Ordering of sample files on an overall and by questionnaire level to determine which numbers will be drawn first
+New feature: Client panel now displays basic summary stats
+New feature: Can add custom outcome codes and assign a subset of outcomes to questionnaires
+New feature: Added skeletonquest Limesurvey theme for self completion (mobile friendly)
+
+Bug fix: lp:1510368 Lime quota with more than one option in list doesn't display in queXS quota report
+Bug fix: lp:1510369 When survey completed as "Self completed online", quotas based on either sample or data inputs, are not counted as completed
+Fixed Bug: Web first case generation failing with some insert strings
+Fixed bug: Error inserting case due to token random generation collision
+
 Changes for session authentication:
 
 queXS now uses the Limesurvey session based authentication system to authenticate all users.
