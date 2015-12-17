@@ -74,6 +74,7 @@ function templatereplace($line, $replacements=array(), $anonymized=false, $quest
 		{
 	        	$(".text").focus();
 		        $(".textarea").focus();
+			document[\'onkeypress\'] = checkEnter;
 		});
 		</script>';
 	}
