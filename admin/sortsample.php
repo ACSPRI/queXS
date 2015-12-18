@@ -64,7 +64,6 @@ $js_head = array(
 "../js/window.js"
 				);
 $js_foot = array(
-"../js/bootstrap-confirmation.js",
 "../js/custom.js"
 				);
 global $db;
@@ -145,9 +144,6 @@ if (!empty($qs))
 	print"</div>";
 
 
-
 xhtml_foot($js_foot);
+
 ?>
-<script type="text/javascript">
-$('[data-toggle="confirmation"]').confirmation()
-</script>

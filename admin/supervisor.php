@@ -370,7 +370,7 @@ if ($case_id != false)
 		CONCAT (oo.firstName,' ', oo.lastName) as makerName, 
 		CONCAT (ooo.firstName,' ', ooo.lastName) as callerName,
 		CONCAT('<a href=\'supervisor.php?case_id=', c.case_id, '\'>', c.case_id, '</a>') as case_id,
-		CONCAT('&emsp;<a href=\'\' data-toggle=\'confirmation\' data-placement=\'left\' data-href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id,'&amp;delete=delete\'><i class=\'fa fa-trash fa-lg text-danger\' data-toggle=\'tooltip\' title=\'" . TQ_("Delete") . "\'></i></a>&emsp;') as link,
+		CONCAT('&emsp;<a href=\'\' data-toggle=\'confirmation\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("No") . "\' data-placement=\'left\' data-href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id,'&amp;delete=delete\'><i class=\'fa fa-trash fa-lg text-danger\' data-toggle=\'tooltip\' title=\'" . TQ_("Delete") . "\'></i></a>&emsp;') as link,
 		CONCAT('&emsp;<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\' data-toggle=\'tooltip\' title=\'" . TQ_("Edit") . "\'><i class=\'fa fa-edit fa-lg\'></i></a>&emsp;') as edit
 		FROM appointment as a
 		JOIN (`case` as c, respondent as r, questionnaire as q, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
@@ -416,7 +416,7 @@ if ($case_id != false)
 		print "</div>";
 
 		//view notes
-		$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.datetime,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as time, CONCAT(op.firstName,' ',op.lastName) as firstName, c.note as note,  CONCAT('<a href=\'\' data-toggle=\'confirmation\' data-placement=\'left\' data-href=\'?case_id=$case_id&amp;case_note_id=', c.case_note_id, '\' class=\'btn  center-block\' ><i class=\'fa fa-trash fa-lg text-danger\' data-toggle=\'tooltip\' title=\'" . TQ_("Delete") . "\'></i></a>') as link 
+		$sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.datetime,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as time, CONCAT(op.firstName,' ',op.lastName) as firstName, c.note as note,  CONCAT('<a href=\'\' data-toggle=\'confirmation\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("No") . "\' data-placement=\'left\' data-href=\'?case_id=$case_id&amp;case_note_id=', c.case_note_id, '\' class=\'btn  center-block\' ><i class=\'fa fa-trash fa-lg text-danger\' data-toggle=\'tooltip\' title=\'" . TQ_("Delete") . "\'></i></a>') as link 
 			FROM `case_note` as c
 			JOIN (operator as op) on (c.operator_id = op.operator_id)
 			WHERE c.case_id = '$case_id'

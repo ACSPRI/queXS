@@ -327,7 +327,7 @@ if ($questionnaire_id != false)
 			CASE WHEN q.answering_machine_messages = 0 THEN '". TQ_("Never") . "' ELSE q.answering_machine_messages END as answering_machine_messages,
 			CASE WHEN q.allow_new = 0 THEN '". TQ_("No") ."' ELSE '".TQ_("Yes")."' END as allow_new,
 			CONCAT('<a href=\"?edit=edit&amp;questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\" data-toggle=\'tooltip\' title=\'". TQ_("Edit") ."\' class=\'btn center-block\'><i class=\'fa fa-pencil-square-o fa-lg\'></i></a>') as edit,
-			CONCAT('<a href=\'\' data-toggle=\'confirmation\' data-title=\'".TQ_("Are you sure?")."\' data-btnOkLabel=\'&emsp;".TQ_("Yes")."\' data-btnCancelLabel=\'&emsp;".TQ_("No")."\' data-placement=\'top\' data-href=\"?questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\" class=\'btn center-block\'><i class=\'fa fa-chain-broken fa-lg\' data-toggle=\'tooltip\' title=\'". TQ_("Click to unassign") ."\'></i></a>') as unassign
+			CONCAT('<a href=\'\' data-toggle=\'confirmation\' data-title=\'".TQ_("ARE YOU SURE?")."\' data-btnOkLabel=\'&emsp;".TQ_("Yes")."\' data-btnCancelLabel=\'&emsp;".TQ_("No")."\' data-placement=\'top\' data-href=\"?questionnaire_id=$questionnaire_id&amp;rsid=', si.sample_import_id ,'\" class=\'btn center-block\'><i class=\'fa fa-chain-broken fa-lg\' data-toggle=\'tooltip\' title=\'". TQ_("Click to unassign") ."\'></i></a>') as unassign
 			FROM questionnaire_sample as q, sample_import as si
 			WHERE q.sample_import_id = si.sample_import_id
 			AND q.questionnaire_id = '$questionnaire_id'

@@ -215,7 +215,7 @@ if (isset($_GET['edit']) || isset($_GET['addext']))
 	
 <?php if (empty($rs['current_operator_id'])) { ?>
 		
-	<input type="submit" name="delete" class="btn btn-danger col-lg-offset-2 pull-left" data-toggle="confirmation" value="<?php  echo T_("Delete extension"); ?>" />
+	<input type="submit" name="delete" class="btn btn-danger col-lg-offset-2 pull-left" value="<?php  echo T_("Delete extension"); ?>" />
 		
 <?php 	} else 
 		print "</br></br><b class='well text-danger'>" . T_("Unassign the operator from this extension to be able to delete it") . "</b>";
