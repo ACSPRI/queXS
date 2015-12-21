@@ -256,6 +256,7 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
             $exportoutput .= "<option value='token' id='token' />".T_("Token")."</option>\n"
             ."<option value='caseid' id='caseid' />".T_("Case ID")."</option>\n"
+            ."<option value='outcomeid' id='outcomeid' />".T_("Outcome ID")."</option>\n"
             ."<option value='caseoutcome' id='caseoutcome' />".T_("Case outcome")."</option>\n"
             ."<option value='callattempts' id='callattempts' />".T_("Number of call attempts")."</option>\n"
             ."<option value='messagesleft' id='messagesleft' />".T_("Number of answering machine messages left")."</option>\n"
@@ -280,7 +281,7 @@ $quexsfilterstate = questionnaireSampleFilterstate();
 
             foreach ($queXSrs as $attr_name=>$val)
             {
-                $exportoutput .= "<option value='SAMPLE:$attr_name' id='SAMPLE:$attr_name' />Sample: ".$attr_name."</option>\n";
+                $exportoutput .= "<option value='SAMPLE:$attr_name' id='SAMPLE:$attr_name' />SAMPLE: ".$attr_name."</option>\n";
             }
             $exportoutput .= "</select></fieldset>\n";
         }
@@ -435,6 +436,12 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
         $dquery .= ", 	(SELECT c4.case_id
 			FROM `case` as c4
 			WHERE c4.token = {$dbprefix}survey_$surveyid.token) as caseid ";
+    }
+	if (in_array('outcomeid',$_POST['attribute_select']))
+    {
+        $dquery .= ", 	(SELECT c5.current_outcome_id
+			FROM `case` as c5
+			WHERE c5.token = {$dbprefix}survey_$surveyid.token) as outcomeid ";
     }
     if (in_array('caseoutcome',$_POST['attribute_select']))
     {
@@ -644,10 +651,15 @@ for ($i=0; $i<$fieldcount; $i++)
         if ($type == "csv") {$firstline .= "\"".T_("Case ID")."\"$separator";}
         else {$firstline .= T_("Case ID")."$separator";}
     }
+	elseif ($fieldinfo == "outcomeid")
+    {
+        if ($type == "csv") {$firstline .= "\"".T_("Outcome ID")."\"$separator";}
+        else {$firstline .= T_("Outcome ID")."$separator";}
+    }
     elseif ($fieldinfo == "caseoutcome")
     {
         if ($type == "csv") {$firstline .= "\"".T_("Case outcome")."\"$separator";}
-        else {$firstline .= T_("Case outcome")."$separator";}
+        else {$firstline .= T_("Case outcome")."$separator";} 	$caseoutcome_key = $i;
     }
     elseif ($fieldinfo == "email")
     {
@@ -838,7 +850,7 @@ if ($answers == "short") //Nice and easy. Just dump the data straight
     $rowcounter=0;
     while ($drow = $dresult->FetchRow())
     {
-        $drow=array_map('strip_tags_full',$drow);		if (isset($drow['caseoutcome'])) $drow['caseoutcome'] = T_($drow['caseoutcome']);
+        $drow=array_map('strip_tags_full',$drow);		if (isset($drow['caseoutcome']) && !empty($drow['caseoutcome'])) $drow['caseoutcome'] = T_($drow['caseoutcome']);
         if($convertyto1 == "Y")
         //Converts "Y" to "1" in export
         {
@@ -921,6 +933,7 @@ elseif ($answers == "long")        //chose complete answers
 
     while ($drow = $dresult->FetchRow())
     {
+		if (isset($caseoutcome_key) && isset($drow[$caseoutcome_key]) && !empty($drow[$caseoutcome_key])) $drow[$caseoutcome_key] = T_($drow[$caseoutcome_key]);
         $rowcounter++;
         if ($type == "pdf")
         {
@@ -942,7 +955,7 @@ elseif ($answers == "long")        //chose complete answers
             $fqid=0;            // By default fqid is set to zero
             $field=$dresult->FetchField($i);
             $fieldinfo=$field->name;
-            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed"  && $fieldinfo != "caseoutcome"&& $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft"&& $fieldinfo != "casenotes"&& $fieldinfo != "interviewtimec"&& $fieldinfo != "interviewtimel"&& $fieldinfo != "lastnumber"&& $fieldinfo != "operatoru"&& $fieldinfo != "shiftr")
+            if ($fieldinfo != "startlanguage" && $fieldinfo != "id" && $fieldinfo != "datestamp" && $fieldinfo != "startdate" && $fieldinfo != "ipaddr"  && $fieldinfo != "refurl" && $fieldinfo != "token" && $fieldinfo != "firstname" && $fieldinfo != "lastname" && $fieldinfo != "email" && (substr($fieldinfo,0,10)!="attribute_") && $fieldinfo != "completed"  && $fieldinfo != "outcomeid" && $fieldinfo != "caseoutcome"&& $fieldinfo != "caseid" && $fieldinfo != "callattempts" && $fieldinfo != "messagesleft"&& $fieldinfo != "casenotes"&& $fieldinfo != "interviewtimec"&& $fieldinfo != "interviewtimel"&& $fieldinfo != "lastnumber"&& $fieldinfo != "operatoru"&& $fieldinfo != "shiftr")
             {
                 $fielddata=$fieldmap[$fieldinfo];
                 $fqid=$fielddata['qid'];
@@ -966,7 +979,10 @@ elseif ($answers == "long")        //chose complete answers
 			case "caseid":
 	                    $ftitle=T_("Case ID").":";
                             break;
- 			case "caseoutcome":
+			case "outcomeid":
+	                    $ftitle=T_("Outcome ID").":";
+                            break;
+			case "caseoutcome":
 	                    $ftitle=T_("Case outcome").":";
                             break;
  			case "callattempts":

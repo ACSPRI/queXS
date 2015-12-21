@@ -89,13 +89,9 @@ if (isset($_POST['ed']))
 	
 	unset($_POST['ed']);
 	unset($_POST['sample_import_id']);
-	
-//	print_r($_POST). "</br>"; //посмотрим чего отравляется
 
 	if (isset($_POST['del']) && isset($_POST['type']) ) { 
 		$a = array(); $b = array(); $cert = array(); $a = $_POST['type']; 
-		
-		//echo "<p> type before unset->>"; foreach($_POST['type'] as $key => $val) { echo ' | ', $key,' => ',$val,' | '; }; print "</p>";
 
 		foreach($_POST['del'] as $p) {
 			unset ($_POST['type'][$p]);
@@ -110,7 +106,6 @@ if (isset($_POST['ed']))
 			} 
 			/* else { echo "<div class='alert alert-info'>", T_("You can delete string '$key'. "), "</div>";  } */
 		}
-		//echo "<p>del ->>"; foreach($_POST['del'] as $key => $val) { echo ' | ', $key,' => ',$val,' | '; }; print "</p>"; 
 	}	
 
 	if (isset($_POST['type'])){ 
@@ -136,7 +131,7 @@ if (isset($_POST['ed']))
 		if ($eml < 2) {$ch4 = true;} 
 			else { echo "<div class='alert alert-warning'>", T_("Too many e-mail fields. Please check selected types for E-mail."), "</div>"; }
 			
-		if ($ch1 && $ch2 && $ch3 && $ch4)  */$typecheck = true; //echo $ch1,$ch2,$ch3,$ch4, "typecheck=",$typecheck, "</br>" ; 
+		if ($ch1 && $ch2 && $ch3 && $ch4)  */$typecheck = true; 
 		
 		if ($typecheck){
 			
@@ -178,11 +173,10 @@ if (isset($_POST['ed']))
 	if (isset($_POST['var'])){ 
 
 		foreach($_POST['var'] as $p => $val)
-		{//		 echo  '| ',$p,' => ',$val,'+ ';
-			$v = str_replace(" ", "_", $val);
-
+		{
+			$val = str_replace(array(" ,",", ",",","  "," "),"_", $val);
 			$sql = "UPDATE sample_import_var_restrict
-				SET `var` = '$v'
+				SET `var` = '$val'
 				WHERE sample_import_id = $sample_import_id
 				AND `var_id` = $p";
 			$db->Execute($sql);
@@ -199,7 +193,7 @@ if (isset($_POST['ed']))
 		$db->Execute($sql);
 
 		foreach($_POST['see'] as $p => $val)
-		{//		 echo $p,' => ',$val,' + ';
+		{
 			$sql = "UPDATE sample_import_var_restrict
 				SET `restrict` = 0
 				WHERE sample_import_id = $sample_import_id
@@ -300,7 +294,7 @@ if (isset($_GET['edit']) )
 	$rd = $db->GetAll($sql);
 
 	$sql = "SELECT sir.var_id, 
-		CONCAT('<input type=\"text\" onInput=\"$(this).attr(\'name\',\'var[',sir.var_id,']\');\"  value=\"' ,sir.var, '\" required class=\"form-control\" style=\"min-width: 300px;\" $dis />') as var, 
+		CONCAT('<input type=\"text\" name=\"var[',sir.var_id,']\"  value=\"' ,sir.var, '\" required class=\"form-control\" style=\"min-width: 300px;\" $dis />') as var, 
 		CONCAT ('<select name=\"type[',sir.var_id,']\" class=\"form-control\" $dis >";
 			foreach($rd as $r)
 			{
@@ -356,7 +350,7 @@ if ($rs){
 
 <?php
 
-	print "<div class='well text-danger col-sm-3'><p>" . T_("Select which fields from this sample to deidentify. </p> Deidentified fields will be permanently deleted from the sample.") . "</p></div>";
+	if($sd['enabled'] == 0) print "<div class='well text-danger col-sm-3'><p>" . T_("Select which fields from this sample to deidentify. </p> Deidentified fields will be permanently deleted from the sample.") . "</p></div>";
 	}
 else 
 {
@@ -391,7 +385,6 @@ else
 	$rs = $db->GetAll($sql);
 	if (!empty($rs)) {
 		$count = count($rs);
-		//print_r($rs); 
 		print "<div class='well text-danger col-sm-3'><p>" . T_("Fix  this sample ") . "</p>";
 		print "<p>" . $count . " var id's not match</p>";
  
