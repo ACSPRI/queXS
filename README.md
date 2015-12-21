@@ -21,6 +21,7 @@ If you have a previous version of queXS installed, please check the CHANGELOG fi
 ```
 #Download and extract queXS to your webroot
 unzip quexs-1.14.0.zip -d /var/www/html
+cd /var/www/html/quexs
 #Create a MySQL/mariadb database 
 mysqladmin create quexs
 #Import the database structure from the database/quexs.sql file
@@ -29,6 +30,9 @@ mysql -uroot quexs < database/quexs.sql
 mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql
 #Create the default config file
 cp config.inc.local.php.example config.inc.local.php
+#Update file permissions
+chown www-data:www-data -R include/limesurvey/tmp/
+chown www-data:www-data -R include/limesurvey/upload/
 ```
 
 Then browse to the queXS URL and login using the default credentials (admin/password)

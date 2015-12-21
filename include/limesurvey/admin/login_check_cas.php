@@ -23,218 +23,92 @@ if(!isset($_SESSION['CASauthenticated']) || (isset($_SESSION['CASauthenticated']
     //echo "bla";
     // import phpCAS lib
     include_once('classes/phpCAS/CAS.php');
-    include_once("classes/phpCAS/cas_config.php");
-    if(isset($_GET['user']))
+
+
+//        phpCAS::setDebug();
+
+        
+        phpCAS::client(CAS_VERSION_2_0, $casAuthServer,$casAuthPort, $casAuthUri);
+
+        phpCAS::setNoCasServerValidation();
+
+        if (isset($_REQUEST['action']) && $_REQUEST['action']=='logout')
     {
-        $token = $_GET['token'];
-        $user = $_GET['user'];
+        phpCAS::handleLogoutRequests();
+        //session_unset();
+        phpCAS::logout();
+        session_destroy();
+        session_write_close();
+        //phpCAS::forceAuthentication();
+    }
+  else
+  {
+        // force CAS authentication
+        $auth = phpCAS::forceAuthentication();
 
-        $action = getGet('action');
-        $siddy = getGet('sid');
-
-        $get = '?';
-        if($action!=FALSE)
-        $get .= "action=".$action."&";
-        if($siddy!=FALSE)
-        $get .= "sid=".$siddy."&";
-
-        if($user == verifyToken($token) && verifyToken($token) != null)
+        if($auth)
         {
-            $auth = TRUE;
-            //setUserRightsCas($user);
-            $_SESSION['CASauthenticated'] = $auth;
-            header("Location: admin.php$get");
+           
+            $query = "SELECT uid, users_name, password, one_time_pw, dateformat, full_name, htmleditormode, questionselectormode, templateeditormode FROM ".db_table_name('users')." WHERE users_name=".$connect->qstr(phpCAS::getUser());
+            $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC; //Checked
+            $result = $connect->SelectLimit($query, 1) or safe_die ($query."<br />".$connect->ErrorMsg());
+            if(!$result)
+            {
+                echo "<br />".$connect->ErrorMsg();
+            }
+            if ($result->RecordCount() < 1)
+            {
+                // wrong or unknown username
+              $loginsummary = sprintf($clang->gT("No user"))."<br />";
+                if ($sessionhandler=='db')
+                {
+                    adodb_session_regenerate_id();
+                }
+                else
+                {
+                    session_regenerate_id();
+                }
+            }
+            else
+            {
+         
+                  $srow = $result->FetchRow();
+                    $_SESSION['user'] = $srow['users_name'];
+                    $_SESSION['checksessionpost'] = sRandomChars(10);
+                    $_SESSION['loginID'] = $srow['uid'];
+                    $_SESSION['dateformat'] = $srow['dateformat'];
+                    $_SESSION['htmleditormode'] = $srow['htmleditormode'];
+                    $_SESSION['questionselectormode'] = $srow['questionselectormode'];
+                    $_SESSION['templateeditormode'] = $srow['templateeditormode'];
+                    $_SESSION['full_name'] = $srow['full_name'];
+                    GetSessionUserRights($_SESSION['loginID']);
+
+                    $auth = TRUE;
+                    $_SESSION['CASauthenticated'] = $auth;
+                
+                    //go to queXS
+                        $loc = "";
+                        if ($_SESSION['USER_RIGHT_SUPERADMIN'] == 1) 
+                          $loc = "admin";
+                        else
+                        {
+                          $utest = $connect->GetOne("SELECT username FROM client WHERE username = '" . $_SESSION['user'] . "'");
+                          if (!empty($utest))
+                            $loc = "client";
+                        }
+                        header('Location: ' . QUEXS_URL . $loc);
+                        die();
+
+          }
+
         }
         else
         {
             $auth = FALSE;
             $_SESSION['CASauthenticated'] = $auth;
-            header("Location: http://$casAuthServer$casAuthUri&category=auth.login");
         }
-    }elseif(!isset($_SESSION['CASauthenticated']))
-    {
-        header("Location: http://$casAuthServer$casAuthUri&category=auth.login");
-    }
 
-    if (isset($_REQUEST['action']) && $_REQUEST['action']=='logout')
-    {
-        //session_unset();
-        session_destroy();
-        session_write_close();
-        //phpCAS::logout();
-        //phpCAS::forceAuthentication();
-        header("Location: http://$casAuthServer$casAuthUri&category=auth.logout");
-    }
-
-    //if ($action=='login')
-    if (isset($_REQUEST['action']) && $_REQUEST['action']=='login')
-    {
-        //phpCAS::forceAuthentication();
-        header("Location: http://$casAuthServer$casAuthUri&category=auth.login");
-    }
-    if($_SESSION['CASauthenticated']===FALSE)
-    {
-        header("Location: http://$casAuthServer$casAuthUri&category=auth.login");
-    }
-
-}
-if(isset($_GET['token']))
-{
-
-    $action = getGet('action');
-    $siddy = getGet('sid');
-
-    $get = '?';
-    if($action!=FALSE)
-    $get .= "action=".$action."&";
-    if($siddy!=FALSE)
-    $get .= "sid=".$siddy."&";
-
-
-    header("Location: admin.php$get");
-
-}
-
-function getGet($var)
-{
-    switch ($var){
-        case "all":
-            foreach($_GET as $get)
-            {
-                return;
-            }
-            break;
-        default:
-            if(isset($_GET["$var"]))
-            {
-                return $_GET["$var"];
-            }
-            else return FALSE;
-            break;
-
-    }
-}
-function verifyToken($token) {
-    global $singleSignOnService, $singleSignOnSharedSecret;
-
-    // check the configuration options in LocalSettings.php
-    //QISSingleSignOn::checkConfiguration();
-
-    //echo ('QISSingleSignOn: token:'.htmlspecialchars($token));
-
-    // prepare token
-    $tokens = explode('/', $token, 4);
-    if ((count($tokens) != 4) or (strpos($tokens[3], '/') === false)) {
-        echo ('QISSingleSignOn: Token incomplete:'.htmlspecialchars($token));
-        return null;
-    }
-
-    // find the _last_ '/' to split username and hash as the username may include '/'-chars.
-    $temp_pos = strrpos($tokens[3], '/');
-    $tokens[4] = substr($tokens[3], $temp_pos + 1);
-    $tokens[3] = substr($tokens[3], 0, $temp_pos);
-
-    // check version
-    if ($tokens[0] != '1.0') {
-        echo ('QISSingleSignOn: Unknown version:'.htmlspecialchars($tokens));
-        return null;
-    }
-
-    // check time
-    $currentTime = microtime();
-    $currentTime = substr($currentTime, strpos($currentTime, ' '));
-    if (intval($tokens[1]) > intval($currentTime) + 60) {
-        echo ('QISSingleSignOn: Token was created in the future (Check your clocks):'.htmlspecialchars($token));
-        return null;
-    }
-    if (intval($tokens[1]) + 60 < intval($currentTime)) {
-        echo ('QISSingleSignOn: Token expired:'.htmlspecialchars($token));
-        return null;
-    }
-
-    // check service name
-    if ($tokens[2] != $singleSignOnService) {
-        echo ('QISSingleSignOn: Wrong service:'.htmlspecialchars($token));
-        return null;
-    }
-
-    // check username name (using Title::newFormText as in User::newFromName)
-    $userinfo = explode('/', urldecode($tokens[3]));
-
-    // Andere Methode wie bei tokens: find the _last_ '/' to split username and hash as the username may include '/'-chars.
-    //               $temp_pos = strrpos($tokens[3], '/');
-    //               $userinfo[1] = substr($tokens[3], $temp_pos + 1);
-    //               $userinfo[0] = substr($tokens[3], 0, $temp_pos);
-
-    //				echo ('QISSingleSignOn: userinfo-0:'.$userinfo[0]."\n");
-    //				echo ('QISSingleSignOn: userinfo-1:'.$userinfo[1]."\n");
-
-    //$t = Title::newFromText($userinfo[0]);
-
-    $user = $userinfo[0];
-    if ($user == null) {
-        echo ('QISSingleSignOn: Invalid character in user name: '.htmlspecialchars($userinfo[0]));
-        return null;
-    }
-
-    // check hash
-    $toHash = $tokens[0].'/'.$tokens[1].'/'.$tokens[2].'/'.$tokens[3].'/'.$singleSignOnSharedSecret;
-    $hash =  md5($toHash);
-    if ($hash != $tokens[4]) {
-        echo ('QISSingleSignOn: Hash verification failed:'.htmlspecialchars($token).' Should be: ' . $hash);
-        return null;
-    }
-
-    // copy _ridlist to session for WikiRights (if present)
-    if (count($userinfo) > -1) {
-        //session_start();
-        setUserRightsCas($user, $user);
-        //$_SESSION['_ridlist'] = $userinfo[1];
-    }
-
-    // welcome, you passed all tests.
-    return $user;
-}
-
-function setUserRightsCas($user, $role="")
-{
-    include_once("../config-defaults.php");
-    //include("../config.php"); //Not needed since config-defaults includes config.php
-
-    $_SESSION['user'] = $user;
-    $_SESSION['loginID'] = 1;
-    $_SESSION['dateformat'] = 1;
-
-    $_SESSION['adminlang'] = $defaultlang;
-    $_SESSION['htmleditormode'] = 'default';
-    $_SESSION['questionselectormode'] = 'default';
-    $_SESSION['templateeditormode'] = 'default';
-    $_SESSION['checksessionpost'] = sRandomChars(10);
-    $_SESSION['pw_notify']=false;
-
-    switch ($role){
-        case "admin":
-            //echo "hallo";
-            $_SESSION['USER_RIGHT_CREATE_SURVEY'] = 1;
-            $_SESSION['USER_RIGHT_CONFIGURATOR'] = 1;
-            $_SESSION['USER_RIGHT_CREATE_USER'] = 1;
-            $_SESSION['USER_RIGHT_DELETE_USER'] = 1;
-            $_SESSION['USER_RIGHT_SUPERADMIN'] = 1;
-            $_SESSION['USER_RIGHT_MANAGE_TEMPLATE'] = 1;
-            $_SESSION['USER_RIGHT_MANAGE_LABEL'] = 1;
-            break;
-        default:
-            //echo "default";
-            $_SESSION['USER_RIGHT_CREATE_SURVEY'] = 1;
-            $_SESSION['USER_RIGHT_CONFIGURATOR'] = 1;
-            $_SESSION['USER_RIGHT_CREATE_USER'] = 0;
-            $_SESSION['USER_RIGHT_DELETE_USER'] = 0;
-            $_SESSION['USER_RIGHT_SUPERADMIN'] = 0;
-            $_SESSION['USER_RIGHT_MANAGE_TEMPLATE'] = 1;
-            $_SESSION['USER_RIGHT_MANAGE_LABEL'] = 1;
-
-            break;
-    }
+  }
 
 }
 
