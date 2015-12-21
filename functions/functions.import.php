@@ -136,7 +136,7 @@ function display_table($data)
 
 	foreach ($data as $key => $value)
 	{
-		$val = str_replace(" ", "_", $value);
+		$val = str_replace(array(" ,",", ",",","  "," "),"_", $value);
 		$checked = "checked";
 		if (empty($val)) $val = "samp_$row";
 
@@ -219,19 +219,14 @@ function import_file($file, $description, $fields, $firstrow = 2)
 		if (strncmp($key, "i_", 2) == 0)
 		{
 			$selected_type[substr($key,2)] = $fields["t_" . substr($key,2)];
-			$selected_name[substr($key,2)] = $fields["n_" . substr($key,2)];
-
-			$restrict = 1;
+			$selected_name[substr($key,2)] = str_replace(array(" ,",", ",",","  "," "),"_", $fields["n_" . substr($key,2)]);
 
 			//Set restrictions on columns
-			if (isset($fields["a_" . substr($key,2)]))
-			{
-				$restrict = 0;
-			}
+			if (isset($fields["a_" . substr($key,2)])) $restrict = 0; else $restrict = 1;
 			
 			$sql = "INSERT INTO sample_import_var_restrict
 				(`sample_import_id`,`var`,`type`,`restrict`)
-				VALUES ($id,'" . $fields["n_" . substr($key,2)] . "','" . $fields["t_" . substr($key,2)] . "',$restrict)";
+				VALUES ($id,'" . $selected_name[substr($key,2)] . "','" . $selected_type[substr($key,2)] . "',$restrict)";
 
 			$db->Execute($sql);
 		
