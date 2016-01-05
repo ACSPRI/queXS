@@ -85,19 +85,19 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 	echo("token,".T_("Case ID")."");
 	foreach($svars as $s)
 	{
-		echo("," . $s['value']);
+		echo("," . str_replace(","," ",$s['value']));
 	}
 	
 	if (isset($_GET['sample']))
 	{
-		echo(",".T_("Current Outcome").",".T_("Number of call attempts").",".T_("Number of calls").",".T_("Case notes").",".T_("Total interview time over all calls (mins)").",".T_("Interview time for last call (mins)").",".T_("Last number dialled").",".T_("DATE/TIME Last number dialled").",".T_("Operator username for last call").",".T_("Shift report").", AAPOR");
+		echo(",".T_("Outcome ID").",".T_("Current Outcome").",".T_("Number of call attempts").",".T_("Number of calls").",".T_("Case notes").",".T_("Total interview time over all calls (mins)").",".T_("Interview time for last call (mins)").",".T_("Last number dialled").",".T_("DATE/TIME Last number dialled").",".T_("Operator username for last call").",".T_("Shift report").", AAPOR");
 	}
 	
 	echo("\n");
 
 	$sql = "SELECT c.token,c.case_id ";
 
-	if (isset($_GET['sample'])) $sql .= ", o.description, 
+	if (isset($_GET['sample'])) $sql .= ", o.outcome_id, o.description, 
 	(SELECT COUNT(ca.call_attempt_id) FROM `call_attempt` as ca WHERE ca.case_id = c.case_id ) as callattempts,
 	(SELECT COUNT(cl.call_id) FROM `call` as cl WHERE cl.case_id = c.case_id ) as calls,
 	(SELECT GROUP_CONCAT(cn1.note SEPARATOR '|') FROM `case_note`  as cn1 WHERE c.case_id = cn1.case_id GROUP BY cn1.case_id)as casenotes,
@@ -149,8 +149,8 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 			}
 			if (isset($_GET['sample']))
 			{
-				$l['description'] = T_($l['description']);
-				echo "," . str_replace(","," ",$l['description']) . "," .$l['callattempts']."," .$l['calls']."," .$l['casenotes'].",".$l['interviewtimec'].",".$l['interviewtimel'].",".$l['lastnumber'].",".$l['lastcallstart'].",".$l['operatoru'].",".$l['shiftr'].",". $l['aapor_id'];
+				if(!empty($l['description'])) $l['description'] = T_($l['description']);
+				echo ",".$l['outcome_id'].",". str_replace(","," ",$l['description']).",".$l['callattempts'].",".$l['calls']."," .str_replace(","," ",$l['casenotes']).",".$l['interviewtimec'].",".$l['interviewtimel'].",".$l['lastnumber'].",".$l['lastcallstart'].",".$l['operatoru'].",".$l['shiftr'].",". $l['aapor_id'];
 			}
 			echo  "\n";
 		}
