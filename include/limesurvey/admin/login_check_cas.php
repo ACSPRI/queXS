@@ -18,7 +18,7 @@ if (!isset($action)) {$action=returnglobal('action');}
 // phpCAS simple client
 //
 
-if(!isset($_SESSION['CASauthenticated']) || (isset($_SESSION['CASauthenticated']) && $_SESSION['CASauthenticated']==FALSE) || isset($_REQUEST['action']))
+if(!isset($_SESSION['CASauthenticated']) || (isset($_SESSION['CASauthenticated']) && $_SESSION['CASauthenticated']==FALSE) || (isset($_REQUEST['action']) && $_REQUEST['action'] =='logout') )
 {
     //echo "bla";
     // import phpCAS lib
