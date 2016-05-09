@@ -20,7 +20,7 @@ If you have a previous version of queXS installed, please check the CHANGELOG fi
 
 ```
 #Download and extract queXS to your webroot
-unzip quexs-1.14.0.zip -d /var/www/html
+unzip quexs-1.14.1.zip -d /var/www/html
 cd /var/www/html/quexs
 #Create a MySQL/mariadb database 
 mysqladmin create quexs

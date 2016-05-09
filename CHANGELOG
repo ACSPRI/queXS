@@ -1,3 +1,16 @@
+queXS 1.14.1 - Changes since 1.14.0
+
+New feature: CAS Authentication
+
+Fixed bug: When self completing group by group or all-in-one, numeric key presses may change previous answers
+Fixed bug: lp:1528293 fix and translated outcomes descriptions, added 'outcome id' to output (thanks Alex)
+Fixed bug: lp:1527201 output to csv in dataoutput.php (thanks Alex)
+Fixed bug: lp:1527201 (thanks Alex)
+Fixed bug: Removed extraneous documentation
+
+Thank you again to those who contributed translations - these have been updated.
+
+
 queXS 1.14.0 - Changes since 1.13.1
 
 New feature: Session based authentication instead of web server authentication
