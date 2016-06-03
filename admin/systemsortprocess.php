@@ -216,6 +216,33 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 
     $db->StartTrans();
 
+
+	//Delete all completed call attempts with no call in them
+	$sql = "SELECT ca.call_attempt_id FROM call_attempt as ca 
+		JOIN `case` as cs ON (cs.case_id = ca.case_id and cs.questionnaire_id = '$questionnaire_id')
+		LEFT JOIN `call` as c ON (c.call_attempt_id = ca.call_attempt_id) 
+		WHERE ca.end < CONVERT_TZ(NOW(),'System','UTC') 
+		AND c.call_attempt_id IS NULL";
+
+	$rs = $db->GetAll($sql);
+
+	$cad = count($rs);
+
+	if ($cad > 0)
+	{
+		foreach($rs as $r)
+		{
+			$sql = "DELETE from call_attempt 
+				WHERE call_attempt_id = '{$r['call_attempt_id']}'";
+			$db->Execute($sql);
+		}
+		print T_("Deleted") . " $cad " . T_("call attempts with no calls");
+	}
+	else
+	{
+		print T_("No call attempts without calls");
+	}
+
   	//Set all cases as unavailable
   	$sql = "UPDATE `case`
   		SET sortorder = NULL
