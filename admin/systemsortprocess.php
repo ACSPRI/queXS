@@ -324,11 +324,15 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
       LEFT JOIN call_restrict as cr on (cr.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= cr.start and TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= cr.end)
       LEFT JOIN shift as sh on (sh.questionnaire_id = q.questionnaire_id and (CONVERT_TZ(NOW(),'System','UTC') >= sh.start) AND (CONVERT_TZ(NOW(),'System','UTC') <= sh.end))
       LEFT JOIN questionnaire_sample_exclude_priority AS qsep ON (qsep.questionnaire_id = qs.questionnaire_id AND qsep.sample_id = s.sample_id)
+		  LEFT JOIN questionnaire_timeslot AS qast ON (qast.questionnaire_id = q.questionnaire_id)
+  		LEFT JOIN questionnaire_sample_timeslot AS qasts ON (qasts.questionnaire_id = q.questionnaire_id AND qasts.sample_import_id = si.sample_import_id)
       WHERE c.case_id is NULL
       AND ((qsep.questionnaire_id IS NULL) or qsep.exclude = 0)
       AND !(q.restrict_work_shifts = 1 AND sh.shift_id IS NULL)
       AND !(si.call_restrict = 1 AND cr.day_of_week IS NULL)
       AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = qs.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
+   		AND (qast.questionnaire_id IS NULL OR ((SELECT COUNT(*) FROM availability WHERE availability.availability_group_id = qast.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= availability.end)) >= 1))
+			AND (qasts.questionnaire_id IS NULL OR ((SELECT COUNT(*) FROM availability WHERE availability.availability_group_id = qasts.availability_group_id AND (availability.day_of_week = DAYOFWEEK(CONVERT_TZ(NOW(),'System',s.Time_zone_name)) AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) >= availability.start AND TIME(CONVERT_TZ(NOW(), 'System' , s.Time_zone_name)) <= availability.end)) >= 1))
       GROUP BY s.sample_id,qs.questionnaire_id
       ORDER BY qsep.priority DESC, rand() * qs.random_select, qs.sort_order ASC";
           
