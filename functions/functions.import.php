@@ -308,8 +308,11 @@ function import_file($file, $description, $fields, $firstrow = 2)
 				 * insert into sample_var field
 				 */
 				foreach($selected_name as $key => $val)
-				{
-					$dkey = $db->Quote($data[$key - 1]);			
+        {
+          if (isset($data[$key -1 ]))
+  					$dkey = $db->Quote($data[$key - 1]);			
+          else
+            $dkey = $db->Quote("");
 		
 					$sql = "INSERT INTO sample_var (sample_id,var_id,val)
 						VALUES ('$sid','{$sirv_id[$key]}',{$dkey})";
