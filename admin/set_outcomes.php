@@ -68,12 +68,12 @@ if (isset($_POST['default']) && isset($_POST['save'])){
 				AND o.outcome_id IN ($sel)";
 		$db->Execute($sql);
 	}
-	if(!empty($_POST['delay']) && $_SESSION['user'] === "admin" ){
+	if(!empty($_POST['delay'])){
 		foreach($_POST['delay'] as $n => $val) {
 			$db->Execute("UPDATE `outcome`SET default_delay_minutes = $val WHERE outcome_id = $n");
 		}
 	}
-	if(!empty($_POST['delete']) && $_SESSION['user'] === "admin" ){
+	if(!empty($_POST['delete'])){
 		foreach($_POST['delete'] as $n => $val) {
 			$db->Execute("DELETE FROM `outcome` WHERE outcome_id = $n AND outcome_id >= 100");
 		}
@@ -121,7 +121,7 @@ if (isset($_POST['qid']) && $_POST['qid'] > 0 && isset($_POST['save'])){
 	unset($_POST['save']);
 }
 
-if ($_SESSION['user'] === "admin" && isset($_POST['addoutcome']) && isset($_POST['save'])){
+if (isset($_POST['addoutcome']) && isset($_POST['save'])){
 	if (isset($_POST['description']) && !empty($_POST['description']) && intval($_POST['outcome_type_id']) > 0 ) {
 		$desc = $_POST['description'];
 		$outcome_type_id = intval($_POST['outcome_type_id']);
@@ -166,7 +166,7 @@ xhtml_head($title,true,$css,$js_head);
 
 
 /* to add customm outcome*/
-if ($_SESSION['user'] === "admin" && isset($_GET['addoutcome'])){
+if (isset($_GET['addoutcome'])){
 
 	$rs[] = ["description" => "<label class='text-capitalize' style='width:20em;' >" . T_("Outcome description") . "</label>", "value" => "<input name='description' type='text' class='form-control' required size=60 maxlength=60 />"];
 	$sql = "SELECT outcome_type_id as value,description FROM `outcome_type`"; 
@@ -258,14 +258,8 @@ if (isset($_GET['qid'])) {
 if (isset($_GET['default'])) {
 	
 	/* allow delay edit only to superadmins (currenlty admin) */
-	if ($_SESSION['user'] === "admin"){ 
 		$delay = "CONCAT('<input type=\'number\' name=\"delay[', o.outcome_id ,']\" class=\'form-control text-right\' style=\'width:6em;\' max=50000 min=0 required value=\'', o.default_delay_minutes ,'\' />') ";
 		$delete = "CASE WHEN o.outcome_id >= 100 THEN CONCAT('<input type=\'checkbox\' class=\' \' data-onstyle=\"danger\" title=\'".TQ_("Delete outcome")." ?\' name=\"delete[', o.outcome_id ,']\" data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=".TQ_("Yes")." data-off=".TQ_("No")." data-width=\"60\"  />') ELSE '' END as `delete`,";
-	}
-	else {
-		$delay = "CONCAT('<span class=\'pull-right\' >', o.default_delay_minutes ,'&emsp;</span>')";
-		$delete = "";
-	}	
 	$sql = "SELECT o.*, ot.description as type, $delay as `delay`, $delete 
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.tryanother = 1 THEN  'primary\">".T_("Yes")."' ELSE 'default\">".T_("No")."' END , '</span></h4>') as tryanother,
 			CONCAT('<h4>&ensp;<span class=\"label label-', CASE WHEN o.tryagain = 1 THEN  'primary\">" . T_("Yes")."' ELSE 'default\">".T_("No")."' END , '</span></h4>') as tryagain,
@@ -281,7 +275,7 @@ if (isset($_GET['default'])) {
 
 	$row = array("outcome_id","description","select","type","delay","contacted","tryanother","tryagain","eligible","require_note");
 	$hdr = array(T_("Outcome ID"),T_("Description"),T_("Set default")."&nbsp;?",T_("Outcome type"),T_("Delay, min"),T_("Contacted")."&nbsp;?",T_("Try another")."&nbsp;?",T_("Try again")."&nbsp;?",T_("Eligible")."&nbsp;?",T_("Require note")."&nbsp;?");
-	if ($_SESSION['user'] === "admin"){ $row[] = "delete"; $hdr[] = T_("Delete")."&nbsp;?";}
+	$row[] = "delete"; $hdr[] = T_("Delete")."&nbsp;?";
 	$hid  = "default"; $value = ""; $h  = "default"; $v = "";
 	$abtn = T_("Add custom Outcome");
 	$sbtn = T_("Update default outcomes");
@@ -319,7 +313,7 @@ if (isset($rs) && !empty($rs)){
 				<a href="set_outcomes.php?<?php echo $h;?>=<?php echo $v;?>"  class="btn btn-default" ><i class="fa fa-undo fa-lg text-primary"></i>&emsp;<?php echo T_("Reset");?></a>
 			</div>
 			<div class="col-lg-3">
-			<?php if ($_SESSION['user'] === "admin" && !isset($_GET['addoutcome'])) { ?> 
+			<?php if (!isset($_GET['addoutcome'])) { ?> 
 				<a href="set_outcomes.php?addoutcome&amp;h=<?php echo $h;?>&amp;v=<?php echo $v;?>"  class="btn btn-default" ><i class="fa fa-plus fa-lg text-primary"></i>&emsp;<?php echo $abtn; ?></a>
 			 <?php } ?>
 			</div>
