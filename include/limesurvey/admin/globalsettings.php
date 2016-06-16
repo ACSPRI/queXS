@@ -31,7 +31,7 @@ function injectglobalsettings()
     {
         foreach  ($dbvaluearray as $setting)
         {
-            global $$setting['stg_name'];
+            global ${$setting['stg_name']};
             if (isset($$setting['stg_name']))
             {
                 $$setting['stg_name']=$setting['stg_value'];

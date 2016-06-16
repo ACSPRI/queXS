@@ -1,4 +1,4 @@
- <?php
+<?php
  /**
  * Display an index of Admin tools
  *

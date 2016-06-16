@@ -31,7 +31,7 @@ require_once(dirname(__FILE__).'/../../config.inc.php');
 
 // Basic Setup
 
-$databasetype       =   'mysql';       // ADOdb database driver - valid values are mysql, mysqli, odbc_mssql, mssql_n, odbtp or postgres
+$databasetype       =   'mysqli';       // ADOdb database driver - valid values are mysql, mysqli, odbc_mssql, mssql_n, odbtp or postgres
                                        // mysql: Recommended driver for mysql
                                        // mysqli: Slightly faster driver for mysql - not on all server systems available
                                        // odbc_mssql: MSSQL driver using ODBC with MS SQL Server

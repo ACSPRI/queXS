@@ -6751,7 +6751,7 @@ function usedTokens($token)
     $utresult = true;
     $query = "SELECT tid, usesleft from {$dbprefix}tokens_$surveyid WHERE token=".db_quoteall($token);
 
-    $result=db_execute_assoc($query,null,true);
+    $result=db_execute_assoc($query,false,true);
     if ($result !== false) {
         $row=$result->FetchRow();
         if ($row['usesleft']>0) $utresult = false;
