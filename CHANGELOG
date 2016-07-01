@@ -1,3 +1,15 @@
+queXS 1.14.2 - Changes since 1.14.1
+
+A bug fix release for the 1.14 series of queXS
+
+Fixed issue: Call attempts can exist with no calls - clear them out
+Fixed issue: Samples with call attempt time slots assigned will still draw new numbers out of defined times
+Fixed issue: Importing CSV with empty columns at end of file causing failure
+Fixed issue: Cannot delete outcomes
+
+Translations have been updated - thank you for your continued contributions!
+
+
 queXS 1.14.1 - Changes since 1.14.0
 
 New feature: CAS Authentication
