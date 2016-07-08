@@ -204,6 +204,7 @@ if (!defined('TAB_CASENOTES')) define('TAB_CASENOTES', true);
 if (!defined('TAB_CALLLIST')) define('TAB_CALLLIST', true);
 if (!defined('TAB_SHIFTS')) define('TAB_SHIFTS', true);
 if (!defined('TAB_APPOINTMENTLIST')) define('TAB_APPOINTMENTLIST', true);
+if (!defined('TAB_MYAPPOINTMENTLIST')) define('TAB_MYAPPOINTMENTLIST', true);
 if (!defined('TAB_PERFORMANCE')) define('TAB_PERFORMANCE', true);
 if (!defined('TAB_CALLHISTORY')) define('TAB_CALLHISTORY', true);
 if (!defined('TAB_PROJECTINFO')) define('TAB_PROJECTINFO', true);

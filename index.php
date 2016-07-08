@@ -292,6 +292,15 @@ xhtml_object($data,"main-content");
      </div>
 <?php  }?>
 
+<?php  if (TAB_MYAPPOINTMENTLIST) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'myappointmentlist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'myappointmentlist' && $appointment)) 
+					print "tabbertabdefault"; ?>">
+	  <h2><?php  echo T_("My appointments"); ?></h2>
+	  <div id="div-myappointmentlist" class="tabberdiv"><?php xhtml_object("myappointments.php","main-myappointmentlist");?></div>
+     </div>
+<?php  }?>
+
+
 <?php  if (TAB_PROJECTINFO) { ?>
      <div class="tabbertab <?php  if ((DEFAULT_TAB == 'projectinfo' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'projectinfo' && $appointment)) 
 					print "tabbertabdefault"; ?>">
