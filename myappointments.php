@@ -87,14 +87,17 @@ $rs = "";
   $sql = "SELECT DATE_FORMAT(CONVERT_TZ(c.start,'UTC',op.Time_zone_name),'".DATE_TIME_FORMAT."') as start,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',op.Time_zone_name),'".TIME_FORMAT."') as end,
     DATE_FORMAT(CONVERT_TZ(c.start,'UTC',r.Time_zone_name),'".TIME_FORMAT."') as rstart,DATE_FORMAT(CONVERT_TZ(c.end,'UTC',r.Time_zone_name),'".TIME_FORMAT."') as rend, c.completed_call_id, 
     CONCAT(r.firstName, ' ', r.lastName) as respname, IFNULL(ao.firstName,'" . TQ_("Any operator") . "') as witho,
-    CASE WHEN op.next_case_id IS NULL THEN CONCAT('<a href=\"?callnext=',c.case_id,'\">".T_("Call next")."</a>') ELSE CONCAT('".T_("Calling case")." ', op.next_case_id, ' ".T_("next")."') END as callnext
+    CASE WHEN op.next_case_id IS NULL THEN CONCAT('<a href=\"?callnext=',c.case_id,'\">".T_("Call next")."</a>') ELSE CONCAT('".T_("Calling case")." ', op.next_case_id, ' ".T_("next")."') END as callnext,
+    q.description as qd
     FROM `appointment` as c
     JOIN operator as op on (op.operator_id = $operator_id)
+    JOIN `case` as cc ON (cc.case_id = c.case_id)
+    JOIN `questionnaire` as q ON (q.questionnaire_id = cc.questionnaire_id)
 		JOIN respondent as r on  (r.respondent_id = c.respondent_id)
 		LEFT JOIN operator AS ao ON (ao.operator_id = c.require_operator_id)
     WHERE c.end >= CONVERT_TZ(NOW(),'System','UTC')
     AND c.completed_call_id IS NULL
-    AND (c.require_operator_id IS NULL OR c.require_operator_id = $operator_id)
+    AND (c.require_operator_id = $operator_id)
 		ORDER BY c.start DESC";
 	
 $rs = $db->GetAll($sql);
@@ -107,7 +110,7 @@ if (empty($rs))
 else
 {
 	translate_array($rs,array("des"));
-	xhtml_table($rs,array("start","end","rstart","respname","witho","callnext"),array(T_("Start"),T_("End"),T_("RTime Start"),T_("Respondent"),T_("Operator"),T_("Call next")));
+	xhtml_table($rs,array("start","end","rstart","qd","respname","witho","callnext"),array(T_("Start"),T_("End"),T_("RTime Start"),T_("Questionnaire"),T_("Respondent"),T_("Operator"),T_("Call next")));
 }
 		
 
