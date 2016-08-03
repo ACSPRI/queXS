@@ -1,3 +1,6 @@
+ALTER TABLE `questionnaire_timeslot` ADD `weight` INT( 11 ) NOT NULL DEFAULT '1';
+ALTER TABLE `questionnaire_sample_timeslot` ADD `weight` INT( 11 ) NOT NULL DEFAULT '1';
+
 queXS 1.14.2 - Changes since 1.14.1
 
 A bug fix release for the 1.14 series of queXS
