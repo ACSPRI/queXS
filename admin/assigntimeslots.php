@@ -105,9 +105,10 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['ca_availability_group']))
 	//need to add availability_group to questionnaire
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$availability_group = bigintval($_GET['ca_availability_group']);
+	$weight = bigintval($_GET['weight']);
 
-	$sql = "INSERT INTO questionnaire_timeslot(questionnaire_id,availability_group_id)
-		VALUES('$questionnaire_id','$availability_group')";
+	$sql = "INSERT INTO questionnaire_timeslot(questionnaire_id,availability_group_id,weight)
+		VALUES('$questionnaire_id','$availability_group','$weight')";
 	$db->Execute($sql);
 }
 
@@ -131,9 +132,10 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample_import_id']) && isse
 	$questionnaire_id = bigintval($_GET['questionnaire_id']);
 	$sample_import_id = bigintval($_GET['sample_import_id']);
 	$availability_group = bigintval($_GET['qs_availability_group']);
+	$weight = bigintval($_GET['weights']);
 
-	$sql = "INSERT INTO questionnaire_sample_timeslot (questionnaire_id,sample_import_id,availability_group_id)
-		VALUES('$questionnaire_id','$sample_import_id','$availability_group')";
+	$sql = "INSERT INTO questionnaire_sample_timeslot (questionnaire_id,sample_import_id,availability_group_id,weight)
+		VALUES('$questionnaire_id','$sample_import_id','$availability_group','$weight')";
 	$db->Execute($sql);
 }
 
@@ -216,11 +218,12 @@ print "</div>";
 print "<div class=col-sm-4><h2>" . T_("Call attempt time slots") . "</h2>";
 print "<div class='well'>" . T_("Assigning call attempt time slots to questionnaires will only allow cases to be attempted in a time slot for the n + 1th time where it has been attempted at least n times in all assigned timeslots. Please note timeslots must cover all possible time periods otherwise no cases will be available during missing timeslots.") ."</div>";
 
-	$sql = "SELECT q.availability_group_id,a.description as description, CONCAT('<a href=\'?questionnaire_id=$questionnaire_id&amp;ca_ravailability_group=', q.availability_group_id,'\'  >" . T_("Click to unassign") . "</a>') as link
-	
-		FROM questionnaire_timeslot as q, availability_group as a
-		WHERE q.availability_group_id = a.availability_group_id
-		AND q.questionnaire_id = '$questionnaire_id'";
+$sql = "SELECT q.availability_group_id,a.description as description, 
+        CONCAT('<a href=\'?questionnaire_id=$questionnaire_id&amp;ca_ravailability_group=', q.availability_group_id,'\'  >" . T_("Click to unassign") . "</a>') as link,
+        q.weight	
+    		FROM questionnaire_timeslot as q, availability_group as a
+    		WHERE q.availability_group_id = a.availability_group_id
+     		AND q.questionnaire_id = '$questionnaire_id'";
 
 	$qs = $db->GetAll($sql);
 	print "</br><div class='panel-body'>";
@@ -231,7 +234,7 @@ print "<div class='well'>" . T_("Assigning call attempt time slots to questionna
 	else
 	{
 		print "<h4>" . T_("Call attempt time slots selected for this questionnaire") . "</h4>";
-		xhtml_table ($qs,array("availability_group_id","description","link"),false,"table table-hover");
+		xhtml_table ($qs,array("description","weight","link"),array(T_("Availability group"),T_("Weight"),T_("Unassign")),"table table-hover");
 	}
 	print "</div>";
 	
@@ -251,9 +254,15 @@ print "<div class='well'>" . T_("Assigning call attempt time slots to questionna
 		{
 			print "<option value=\"{$q['availability_group_id']}\">{$q['description']}</option>";
 		}
-		print "</select></div>
-				<input type='hidden' name='questionnaire_id' value='$questionnaire_id'/>
-				&ensp;<input type='submit' class='btn btn-default' name='add_ca_availability' value='" . TQ_("Add call attempt time slot") . "'/>
+    print "</select></div>";
+?>
+    <div>
+		<label for="weight"><?php echo T_("Weighting (relative number of calls in this slot)");?></label>
+		<div><input type="number" min="1" max="20" style="width:6em;" name="weight" id="weight" value="1" class="form-control"/></div>
+	  </div>
+<?php
+      print "<input type='hidden' name='questionnaire_id' value='$questionnaire_id'/>
+				&ensp;<div><input type='submit' class='btn btn-default' name='add_ca_availability' value='" . TQ_("Add call attempt time slot") . "'/></div>
 				</form></div>";
 	}
 print "</div>";
@@ -270,7 +279,9 @@ print "<div class='well'>" . T_("Assigning call attempt time slots to questionna
 
   if ($sample_import_id !== false)
   {
-    $sql = "SELECT q.availability_group_id,a.description as description, CONCAT('<a href=\'?sample_import_id=$sample_import_id&amp;questionnaire_id=$questionnaire_id&amp;qs_ravailability_group=', q.availability_group_id,'\'  >" . T_("Click to unassign") . "</a>') as link
+    $sql = "SELECT q.availability_group_id,a.description as description, 
+      CONCAT('<a href=\'?sample_import_id=$sample_import_id&amp;questionnaire_id=$questionnaire_id&amp;qs_ravailability_group=', q.availability_group_id,'\'  >" . T_("Click to unassign") . "</a>') as link,
+      q.weight
       FROM questionnaire_sample_timeslot as q, availability_group as a
       WHERE q.availability_group_id = a.availability_group_id
       AND q.questionnaire_id = '$questionnaire_id'
@@ -285,7 +296,7 @@ print "<div class='well'>" . T_("Assigning call attempt time slots to questionna
     else
     {
       print "<h4>" . T_("Call attempt time slots selected for this sample") . ":</h4>";
-	  xhtml_table ($qs,array("availability_group_id","description","link"),false,"table table-hover");
+		  xhtml_table ($qs,array("description","weight","link"),array(T_("Availability group"),T_("Weight"),T_("Unassign")),"table table-hover");
     }
 
     $sql = "SELECT si.availability_group_id,si.description
@@ -304,8 +315,14 @@ print "<div class='well'>" . T_("Assigning call attempt time slots to questionna
       {
         print "<option value=\"{$q['availability_group_id']}\">{$q['description']}</option>";
       }
-	  print "</select></div>
-      <input type='hidden' name='questionnaire_id' value='$questionnaire_id'/>
+      print "</select></div>";
+?>
+    <div>
+		<label for="weights"><?php echo T_("Weighting (relative number of calls in this slot)");?></label>
+		<div><input type="number" min="1" max="20" style="width:6em;" name="weights" id="weights" value="1" class="form-control"/></div>
+	  </div>
+<?php
+      print "<input type='hidden' name='questionnaire_id' value='$questionnaire_id'/>
       <input type='hidden' name='sample_import_id' value='$sample_import_id'/>
       &ensp;<input type='submit' name='add_qs_availability' class='btn btn-default' value='" . T_("Add call attempt time slot for sample") . "'/>
       </form></div>";
