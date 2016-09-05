@@ -167,11 +167,11 @@ $_POST['import_file'] = false;
 <a href="questionnairelist.php" class="btn btn-default pull-left" ><i class="fa fa-list text-primary"></i>&emsp;<?php echo T_("Go to");?>&ensp;<?php echo T_("Questionnaire management");?> </a>
 	
 <?php	
-$sql = "SELECT s.sid as sid, CONCAT(s.sid,' -> ',sl.surveyls_title) AS title
+$sql = "SELECT DISTINCT s.sid as sid, CONCAT(s.sid,' -> ',sl.surveyls_title) AS title
 	FROM " . LIME_PREFIX . "surveys AS s
 	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
-	WHERE s.active = 'Y'
-	GROUP BY s.sid";
+	WHERE s.active = 'Y'";
+
 $surveys = $db->GetAll($sql);
 
 if (!empty($surveys)){?>
