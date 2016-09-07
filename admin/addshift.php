@@ -197,7 +197,7 @@ if ($questionnaire_id != false)
 	}
 	print "</h4>";
 	
-	$sql = "SELECT shift_id, dt, dta,start,end
+	$sql = "SELECT MAX(shift_id) as shift_id, MIN(dt) as dt, dta,start,end
 		FROM (
 			(
 			SELECT shift_id, DATE_FORMAT( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) , '%W %d %m %Y' ) AS dt,
@@ -224,9 +224,9 @@ if ($questionnaire_id != false)
 	$shifts = $db->GetAll($sql);
 	
 	
-	$sql = "SELECT DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W %d %m %Y') as dt,
-		       DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W') as dtd,
-		       DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%d %m %Y') as dto,
+	$sql = "SELECT MIN(DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W %d %m %Y')) as dt,
+		       MIN(DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%W')) as dtd,
+		       MIN(DATE_FORMAT(STR_TO_DATE(CONCAT($year, ' ',$woy,' ',day_of_week - 1),'%x %v %w'), '%d %m %Y')) as dto,
 		       day_of_week - 1 as value
 		FROM day_of_week 
 		GROUP BY value";
