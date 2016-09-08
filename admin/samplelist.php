@@ -294,16 +294,16 @@ if (isset($_GET['edit']) )
 	$rd = $db->GetAll($sql);
 
 	$sql = "SELECT sir.var_id, 
-		CONCAT('<input type=\"text\" name=\"var[',sir.var_id,']\"  value=\"' ,sir.var, '\" required class=\"form-control\" style=\"min-width: 300px;\" $dis />') as var, 
-		CONCAT ('<select name=\"type[',sir.var_id,']\" class=\"form-control\" $dis >";
+		MIN(CONCAT('<input type=\"text\" name=\"var[',sir.var_id,']\"  value=\"' ,sir.var, '\" required class=\"form-control\" style=\"min-width: 300px;\" $dis />')) as var, 
+		MIN(CONCAT ('<select name=\"type[',sir.var_id,']\" class=\"form-control\" $dis >";
 			foreach($rd as $r)
 			{
 				$sql .= "<option value=\"{$r['type']}\"', CASE WHEN ( svt.type = {$r['type']}) THEN 'selected=\"selected\"' ELSE '' END , ' >" . T_($r['description']) . "</option>";
 			}
-	$sql .= "</select>') as type, sv.val,
-		CONCAT('<input type=\'checkbox\' ', CASE WHEN (sir.restrict IS NULL || sir.restrict = 0) THEN 'checked=\"checked\"' ELSE '' END   ,'  name=\"see[]\" value=\'',sir.var_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\"/>') as see,
-		CONCAT('<input type=\'checkbox\' name=\"del[',sir.var_id,']\" value=\'',sir.var_id,'\' $dis data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\" data-onstyle=\'danger \'/>') as del,
-		sir.restrict IS NULL as existss
+	$sql .= "</select>')) as type, MIN(sv.val),
+		MIN(CONCAT('<input type=\'checkbox\' ', CASE WHEN (sir.restrict IS NULL || sir.restrict = 0) THEN 'checked=\"checked\"' ELSE '' END   ,'  name=\"see[]\" value=\'',sir.var_id,'\' data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\"/>')) as see,
+		MIN(CONCAT('<input type=\'checkbox\' name=\"del[',sir.var_id,']\" value=\'',sir.var_id,'\' $dis data-toggle=\"toggle\" data-size=\"small\" data-style=\"center-block\" data-on=" . TQ_("Yes") . " data-off=" . TQ_("No") . " data-width=\"70\" data-onstyle=\'danger \'/>')) as del,
+		MIN(sir.restrict IS NULL) as existss
 		FROM sample_import as si, sample_var as sv, sample as s, sample_import_var_restrict as sir, sample_var_type as svt
 		WHERE si.sample_import_id = $sample_import_id
 		AND sir.sample_import_id = si.sample_import_id 

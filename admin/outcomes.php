@@ -79,7 +79,7 @@ if ($questionnaire_id != false)
 	//print "<h1>" . T_("Outcomes") . "</h1>";
 	print "<div class='col-sm-4'><div class='panel panel-body'><h5>" . T_("Sample status") . "</h5>";
 
-	$sql = "SELECT CASE WHEN (c.sample_id is not null) = 1 THEN '" . TQ_("Drawn from sample") . "' ELSE '" . TQ_("Remain in sample") . "' END as drawn,
+	$sql = "SELECT MIN(CASE WHEN (c.sample_id is not null) = 1 THEN '" . TQ_("Drawn from sample") . "' ELSE '" . TQ_("Remain in sample") . "' END) as drawn,
 			count(*) as count
 		FROM sample as s
 		JOIN questionnaire_sample as qs ON (qs.questionnaire_id = '$questionnaire_id' and qs.sample_import_id = s.import_id)
@@ -91,7 +91,7 @@ if ($questionnaire_id != false)
 	
 	print "<div class='panel panel-body'><h5>" . T_("Case availability (cases with temporary or appointment outcomes)") ."</h5>";
 
-	$sql = "SELECT count(c.case_id) as available, si.description
+	$sql = "SELECT count(c.case_id) as available, MIN(si.description) as description
             FROM `case`  as c
             LEFT JOIN `call` as a on (a.call_id = c.last_call_id)
             JOIN (sample as s, sample_import as si) on (s.sample_id = c.sample_id and si.sample_import_id = s.import_id)
@@ -154,7 +154,7 @@ group by s.import_id";
 	$sql = "SELECT count(case_id) FROM `case` WHERE `case`.questionnaire_id = '$questionnaire_id'";
 	$cases = $db->GetOne($sql);
 	
-	$sql = "SELECT CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;')as link, o.description as des, o.outcome_id, count(c.case_id) as count, ROUND((count( c.case_id ) / $cases) * 100,2) as perc
+	$sql = "SELECT MIN(CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;')) as link, MIN(o.description) as des, MIN(o.outcome_id) as outcome_id, count(c.case_id) as count, ROUND((count( c.case_id ) / $cases) * 100,2) as perc
 		FROM `case` AS c, `outcome` AS o
 		WHERE c.questionnaire_id = '$questionnaire_id'
 		AND c.current_outcome_id = o.outcome_id
@@ -203,7 +203,7 @@ group by s.import_id";
 			print "<div class='col-sm-8'><div class='panel panel-body'>"; //<p>" . T_("Outcomes") . "</p>";
 
 
-			$sql = "SELECT CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;')as link, o.description as des, o.outcome_id, count( c.case_id ) as count, ROUND(count(c.case_id) / (SELECT count(case_id) FROM `case` JOIN sample ON (`case`.sample_id = sample.sample_id AND sample.import_id = '$sample_import_id') WHERE questionnaire_id = '$questionnaire_id' ) * 100,2) as perc
+			$sql = "SELECT MIN(CONCAT('&emsp;<a href=\'casesbyoutcome.php?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id&amp;outcome_id=', o.outcome_id, '\'><b>', '=>' ,'</b></a>&emsp;'))as link, MIN(o.description) as des, o.outcome_id, count( c.case_id ) as count, ROUND(count(c.case_id) / (SELECT count(case_id) FROM `case` JOIN sample ON (`case`.sample_id = sample.sample_id AND sample.import_id = '$sample_import_id') WHERE questionnaire_id = '$questionnaire_id' ) * 100,2) as perc
 
 				FROM `case` AS c, `outcome` AS o, sample as s
 				WHERE c.questionnaire_id = '$questionnaire_id'
@@ -228,7 +228,7 @@ group by s.import_id";
 		if (isset($_GET['operator_id'])) $operator_id = bigintval($_GET['operator_id']); 
 
 		//display a list of operators   !!!worked for this questionnaire_id !!!!
-		$sql = "SELECT s.operator_id as value, s.firstname as description, CASE WHEN s.operator_id = '$operator_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
+		$sql = "SELECT MIN(s.operator_id) as value, MIN(s.firstname) as description, MIN(CASE WHEN s.operator_id = '$operator_id' THEN 'selected=\'selected\'' ELSE '' END) AS selected
 			FROM  `call` as c , `operator`as s, `case` as ca
 			WHERE ca.questionnaire_id = '$questionnaire_id'
 			AND ca.case_id = c.case_id
@@ -246,7 +246,7 @@ group by s.import_id";
 		{
 			print "<div class='clearfix form-group'></div><div class='col-sm-6'><div class='panel panel-body'><p>" . T_("Operator call outcomes") . "</p>";
 		
-			$sql = "SELECT o.description as des, o.outcome_id, count( c.call_id ) as count, ROUND((count(c.call_id) / (SELECT count(call.call_id) FROM `call` JOIN `case` ON (call.case_id = `case`.case_id AND `case`.questionnaire_id = $questionnaire_id ) WHERE call.operator_id = '$operator_id')) * 100,2) as perc
+			$sql = "SELECT MIN(o.description) as des, o.outcome_id, count( c.call_id ) as count, ROUND((count(c.call_id) / (SELECT count(call.call_id) FROM `call` JOIN `case` ON (call.case_id = `case`.case_id AND `case`.questionnaire_id = $questionnaire_id ) WHERE call.operator_id = '$operator_id')) * 100,2) as perc
 				FROM `call` AS c, `case` as ca, `outcome` AS o
 				WHERE ca.questionnaire_id = '$questionnaire_id'
 				AND ca.case_id = c.case_id
@@ -273,13 +273,13 @@ group by s.import_id";
 	print "<div class='clearfix'></div>";
 	print "<h3 class='col-sm-4 pull-left text-center'>" . T_("Shifts") . ":</h3>";
 
-	$sql = "SELECT s.shift_id, CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . DATE_FORMAT . "')) as sdate,CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . TIME_FORMAT . "'),'-', DATE_FORMAT(CONVERT_TZ(s.end,'UTC',o.Time_zone_name),'" . TIME_FORMAT . "')) as stime,
-		CASE WHEN sr.shift_id IS NULL THEN 
+	$sql = "SELECT s.shift_id, MIN(CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . DATE_FORMAT . "'))) as sdate, MIN(CONCAT(DATE_FORMAT(CONVERT_TZ(s.start,'UTC',o.Time_zone_name),'" . TIME_FORMAT . "'),'-', DATE_FORMAT(CONVERT_TZ(s.end,'UTC',o.Time_zone_name),'" . TIME_FORMAT . "'))) as stime,
+		MIN(CASE WHEN sr.shift_id IS NULL THEN 
 			CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '&amp;createnewreport=yes\' data-toggle=\'tooltip\' title=\'" . TQ_("No shift reports: Add report") . "\' class=\'btn center-block\'><i class=\'fa fa-plus text-warning\'></i><i class=\'fa fa-file-text-o fa-lg\'></i></a>') 
 			ELSE CONCAT('<a href=\'shiftreport.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\'  data-toggle=\'tooltip\' title=\'" . TQ_("View shift reports") . "\' class=\'btn center-block\'><i class=\'fa fa-file-text-o fa-lg\'></i></a>')
-			END AS link,
-			c.completions as completions, 
-			CONCAT('<a href=\'operatorperformance.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\' data-toggle=\'tooltip\' title=\'" . TQ_("View operator performance") . "\' class=\'btn center-block\'><i class=\'fa fa-user fa-lg\'></i><i class=\'fa fa-signal \'></i></a>') as operform
+			END) AS link,
+			MIN(c.completions) as completions, 
+			MIN(CONCAT('<a href=\'operatorperformance.php?questionnaire_id=$questionnaire_id&amp;shift_id=', s.shift_id, '\' data-toggle=\'tooltip\' title=\'" . TQ_("View operator performance") . "\' class=\'btn center-block\'><i class=\'fa fa-user fa-lg\'></i><i class=\'fa fa-signal \'></i></a>')) as operform
 		FROM `shift` as s
 		JOIN operator as o on (o.operator_id = '$admin_operator_id')
 		LEFT JOIN shift_report as sr on (sr.shift_id = s.shift_id)

@@ -513,8 +513,8 @@ if ($questionnaire_id != false)
 	  if (isset($_GET['sample_var_id'])) $ssample_var_id = $db->qstr($_GET['sample_var_id']);   
 
       //add sample references (records from sample to exclude when quota reached)
-			$sql = "SELECT sivr.var_id as value, sivr.var as description, 
-					CASE WHEN sivr.var_id = $ssample_var_id THEN 'selected=\'selected\'' ELSE '' END AS selected
+			$sql = "SELECT sivr.var_id as value, MIN(sivr.var) as description, 
+				MIN(CASE WHEN sivr.var_id = $ssample_var_id THEN 'selected=\'selected\'' ELSE '' END) AS selected
       				FROM `sample_import_var_restrict` as sivr, `sample_var` AS sv, `sample` AS s 
       				WHERE sivr.sample_import_id = $sample_import_id
       				AND s.sample_id = sv.sample_id
@@ -539,7 +539,7 @@ if ($questionnaire_id != false)
 			&emsp;<label for="comparisons" class="control-label"><?php  echo T_("The type of comparison"); ?></label>:&emsp;<select name="comparisons" id="comparisons" class="form-control"><option value="LIKE">LIKE</option><option value="NOT LIKE">NOT LIKE</option><option value="=">=</option><option value="!=">!=</option><option value="&lt;">&lt;</option><option value="&gt;">&gt;</option><option value="&lt;=">&lt;=</option><option value="&gt;=">&gt;=</option></select>&emsp;
 			<label for="exclude_val" class="control-label"><?php  echo T_("Value"); ?>:&emsp;</label>
 		<?php 		
-			$sql = "SELECT sv.val as value, sv.val as description, ''  AS selected, sivr.var as var
+			$sql = "SELECT sv.val as value, sv.val as description, ''  AS selected, MIN(sivr.var) as var
 				FROM sample_var AS sv, sample AS s, `sample_import_var_restrict` as sivr
 				WHERE s.import_id = $sample_import_id
 				AND s.sample_id = sv.sample_id
