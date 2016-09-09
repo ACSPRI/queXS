@@ -120,7 +120,7 @@ print "</div>";
 
 print "<div class='col-sm-5'><h3>" . T_("Timezone list") . "</h3>";
 
-$sql = "SELECT Time_zone_name, TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,Time_zone_name),'". TIME_FORMAT ."') as time, CONCAT('<p class=\'text-center\' style=\'margin-bottom: 3px;\'><b class=\'label label-default\' style=\'font-size:85%;\'>', TIME_FORMAT(TIMEDIFF( CONVERT_TZ(NOW(),'$dtz','$dtz'),CONVERT_TZ(NOW(), Time_zone_name,'$dtz')),' %H : %i'), '</b></p>') AS timediff,
+$sql = "SELECT Time_zone_name, TIME_FORMAT(CONVERT_TZ(NOW(),'System',Time_zone_name),'". TIME_FORMAT ."') as time, CONCAT('<p class=\'text-center\' style=\'margin-bottom: 3px;\'><b class=\'label label-default\' style=\'font-size:85%;\'>', TIME_FORMAT(TIMEDIFF( CONVERT_TZ(NOW(),'$dtz','$dtz'),CONVERT_TZ(NOW(), Time_zone_name,'$dtz')),' %H : %i'), '</b></p>') AS timediff,
 CONCAT('<a href=\"?tz=', Time_zone_name ,'\" title=\"" . T_("Remove Timezone") . "\"><i class=\"fa fa-trash fa-lg text-danger\">" . T_("Remove") . "</i></a>') as link
 	FROM timezone_template ORDER BY time ASC";
 

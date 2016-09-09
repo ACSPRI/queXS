@@ -320,7 +320,7 @@ if ($case_id != false)
 		print "<div class='panel-body'><h4 class=''><i class='fa fa-book'></i>&emsp;" . T_("Sample details")."</h4>";
 		
 		$sql = "SELECT sv.sample_id, MIN(c.case_id) as case_id , MIN(s.Time_zone_name) as Time_zone_name,
-			MIN(TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,s.Time_zone_name),'". TIME_FORMAT ."')) as time
+			MIN(TIME_FORMAT(CONVERT_TZ(NOW(),'System',s.Time_zone_name),'". TIME_FORMAT ."')) as time
 			FROM sample_var AS sv
 			LEFT JOIN (`case` AS c , sample as s) ON ( c.sample_id = sv.sample_id AND s.sample_id = c.sample_id ) WHERE c.case_id = '$case_id'
 			GROUP BY sv.sample_id";
@@ -363,8 +363,8 @@ if ($case_id != false)
 		print "<div class='panel-body'><h4 class=''><i class='fa fa-clock-o'></i>&emsp;" . T_("Appointments")."</h4>";
 
 		$sql = "SELECT  
-		MIN(CONVERT_TZ(a.start,'UTC',@@session.time_zone)) as start,
-		MIN(CONVERT_TZ(a.end,'UTC',@@session.time_zone)) as end, 
+		MIN(CONVERT_TZ(a.start,'UTC',co.Time_zone_name)) as start,
+		MIN(CONVERT_TZ(a.end,'UTC',co.Time_zone_name)) as end, 
 		MIN(CONCAT(r.firstName,' ', r.lastName)) as resp,
 		MIN(IFNULL(ou.description,'" . T_("Not yet called") . "')) as outcome, 
 		MIN(CONCAT (oo.firstName,' ', oo.lastName)) as makerName, 
@@ -373,9 +373,10 @@ if ($case_id != false)
 		MIN(CONCAT('&emsp;<a href=\'\' data-toggle=\'confirmation\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("No") . "\' data-placement=\'left\' data-href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id,'&amp;delete=delete\'><i class=\'fa fa-trash fa-lg text-danger\' data-toggle=\'tooltip\' title=\'" . TQ_("Delete") . "\'></i></a>&emsp;')) as link,
 		MIN(CONCAT('&emsp;<a href=\'displayappointments.php?case_id=', c.case_id, '&amp;appointment_id=', a.appointment_id, '\' data-toggle=\'tooltip\' title=\'" . TQ_("Edit") . "\'><i class=\'fa fa-edit fa-lg\'></i></a>&emsp;')) as edit
 		FROM appointment as a
-		JOIN (`case` as c, respondent as r, questionnaire as q, operator as oo, call_attempt as cc) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
+		JOIN (`case` as c, respondent as r, questionnaire as q, operator as oo, call_attempt as cc, operator as co) on (a.case_id = c.case_id and a.respondent_id = r.respondent_id and q.questionnaire_id = c.questionnaire_id and a.call_attempt_id = cc.call_attempt_id and cc.operator_id =  oo.operator_id)
 		LEFT JOIN (`call` as ca, outcome as ou, operator as ooo) ON (ca.call_id = a.completed_call_id and ou.outcome_id = ca.outcome_id and ca.operator_id = ooo.operator_id)
 		WHERE c.case_id = '$case_id'
+		AND co.operator_id = '$operator_id'
 		GROUP BY a.appointment_id
 		ORDER BY a.start ASC";
 	
