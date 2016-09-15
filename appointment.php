@@ -197,7 +197,7 @@ else if($respondent_id)
 					?>
 					<p><?php  echo T_("Add new phone number (with area code, eg 0398761234):"); ?></p>
 					<form id="addPhone" method="get" action="" class="form-inline form-group">
-					<div class="pull-left"><input type="tel" maxlength="10" size="12" pattern="[0-9]{10}" class="form-control" name="phonenum"/></div>
+					<div class="pull-left"><input type="tel" size="15" class="form-control" name="phonenum"/></div>
 					&emsp;<input type="submit" class="btn btn-info" value="<?php  echo T_("Add this phone number"); ?>"/>
 					<input type="hidden" name="start" value="<?php  print $_GET['start']; ?>"/>
 					<input type="hidden" name="end" value="<?php  print $_GET['end']; ?>"/>
