@@ -306,7 +306,7 @@ else {
 	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1)
 	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
 	AND co.operator_id = '$operator_id'
-	GROUP BY c.case_id ORDER BY a.start ASC";
+	GROUP BY a.appointment_id ORDER BY a.start ASC";
 	$rs = $db->GetAll($sql);
 	if (!empty($rs)) {
 		translate_array($rs,array("outcome"));
@@ -329,7 +329,7 @@ else {
 	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
 	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
 	AND co.operator_id = '$operator_id'
-	GROUP BY c.case_id
+	GROUP BY a.appointment_id
 	ORDER BY a.start ASC";
 	
 	$rs = $db->GetAll($sql);
