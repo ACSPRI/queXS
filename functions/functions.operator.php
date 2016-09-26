@@ -413,7 +413,7 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 				$tnum =  preg_replace("/[^0-9]/", "",$r5v['phone']); 
 				if (empty($tnum)) $tnum = "88888888"; //handle error condition
 				$sql = "INSERT INTO contact_phone (case_id,priority,phone,description)
-					VALUES ($case_id,$i,$tnum,'')";
+					VALUES ($case_id,$i,'$tnum','')";
 				$db->Execute($sql);
 				$i++;
 			}
