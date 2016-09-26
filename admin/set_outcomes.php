@@ -168,21 +168,21 @@ xhtml_head($title,true,$css,$js_head);
 /* to add customm outcome*/
 if (isset($_GET['addoutcome'])){
 
-	$rs[] = ["description" => "<label class='text-capitalize' style='width:20em;' >" . T_("Outcome description") . "</label>", "value" => "<input name='description' type='text' class='form-control' required size=60 maxlength=60 />"];
+	$rs[] = array("description" => "<label class='text-capitalize' style='width:20em;' >" . T_("Outcome description") . "</label>", "value" => "<input name='description' type='text' class='form-control' required size=60 maxlength=60 />");
 	$sql = "SELECT outcome_type_id as value,description FROM `outcome_type`"; 
 	$ot = $db->GetAll($sql); translate_array($ot, array("description"));
 	$select = display_chooser($ot,"outcome_type_id","outcome_type_id",true,false,false,true,false,false);
-	$rs[] = ["description" => "<label>" . T_("Outcome type") . "</label>", "value" => "{$select}"];
-	$rs[] = ["description" => "<label>" . T_("Default delay, minutes") . "</label>", "value" => "<input name='default_delay_minutes' type='number' min='0' max='600000' size=8 class='form-control' style='width:8em;' />"];
-	$rs[] = ["description" => "<label>" . T_("Contacted") . " ?</label>", "value" => "<input name='contacted' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />"];
-	$rs[] = ["description" => "<label>" . T_("Try another number") . " ?</label>", "value" => "<input name='tryanother' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />"];
-	$rs[] = ["description" => "<label>" . T_("Try again") . " ?</label>", "value" => "<input name='tryagain' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />"];
-	$rs[] = ["description" => "<label>" . T_("Eligible") . " ?</label>", "value" => "<input name='eligible' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />"];
-	$rs[] = ["description" => "<label>" . T_("Require note") . " ?</label>", "value" => "<input name='require_note' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />"];
-	$rs[] = ["description" => "<label>" . T_("Calculation") . "</label>", "value" => "<input name='calc' type='text' class='form-control' size=10 style='width:8em;' maxlength=10 />"];
-	$rs[] = ["description" => "<label>" . T_("AAPOR code") . "</label>", "value" => "<input name='aapor_id' type='text' class='form-control' size=10 style='width:8em;' maxlength=10 />"];
-	$rs[] = ["description" => "<label>" . T_("Default outcome") . " ?</label>", "value" => "<input name='default_o' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />"];
-	$rs[] = ["description" => "<label>" . T_("Permanent outcome") . " ?</label>", "value" => "<input name='permanent' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />"];
+	$rs[] = array("description" => "<label>" . T_("Outcome type") . "</label>", "value" => "{$select}");
+	$rs[] = array("description" => "<label>" . T_("Default delay, minutes") . "</label>", "value" => "<input name='default_delay_minutes' type='number' min='0' max='600000' size=8 class='form-control' style='width:8em;' />");
+	$rs[] = array("description" => "<label>" . T_("Contacted") . " ?</label>", "value" => "<input name='contacted' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />");
+	$rs[] = array("description" => "<label>" . T_("Try another number") . " ?</label>", "value" => "<input name='tryanother' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />");
+	$rs[] = array("description" => "<label>" . T_("Try again") . " ?</label>", "value" => "<input name='tryagain' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />");
+	$rs[] = array("description" => "<label>" . T_("Eligible") . " ?</label>", "value" => "<input name='eligible' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />");
+	$rs[] = array("description" => "<label>" . T_("Require note") . " ?</label>", "value" => "<input name='require_note' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />");
+	$rs[] = array("description" => "<label>" . T_("Calculation") . "</label>", "value" => "<input name='calc' type='text' class='form-control' size=10 style='width:8em;' maxlength=10 />");
+	$rs[] = array("description" => "<label>" . T_("AAPOR code") . "</label>", "value" => "<input name='aapor_id' type='text' class='form-control' size=10 style='width:8em;' maxlength=10 />");
+	$rs[] = array("description" => "<label>" . T_("Default outcome") . " ?</label>", "value" => "<input name='default_o' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />");
+	$rs[] = array("description" => "<label>" . T_("Permanent outcome") . " ?</label>", "value" => "<input name='permanent' type='checkbox' data-toggle=\"toggle\" data-on=" . T_("Yes") . " data-off=" . T_("No") . " />");
 	
 	$hid  = "addoutcome"; $value = "newoutcome"; $h = $_GET['h']; $v = $_GET['v'];
 	$row = array("description","value");
