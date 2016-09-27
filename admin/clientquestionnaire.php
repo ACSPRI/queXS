@@ -95,9 +95,11 @@ function vqi($client_id,$questionnaire_id,$lime_sid,$uid)
 		VALUES('$client_id','$questionnaire_id')";
 
 	$db->Execute($sql);
-	
+
+  $rs = $db->GetAll("SELECT * FROM " . LIME_PREFIX . "survey_permissions WHERE `sid` = '$lime_sid' AND `uid` = '$uid'");
+
 	/* Add client questionnaire permissions to view Lime results + statistics and quotas,  //preserve superadmin permissions */
-	if ($uid != 1 && empty($db->GetAll("SELECT * FROM " . LIME_PREFIX . "survey_permissions WHERE `sid` = '$lime_sid' AND `uid` = '$uid'")))
+	if ($uid != 1 && empty($rs))
 	{
 		$sql = "INSERT INTO " . LIME_PREFIX . "survey_permissions (`sid`,`uid`,`permission`,`create_p`,`read_p`,`update_p`,`delete_p`,`import_p`,`export_p`)
               VALUES ($lime_sid,$uid,'survey',0,1,0,0,0,0),($lime_sid,$uid,'statistics',0,1,0,0,0,0),($lime_sid,$uid,'quotas',0,1,0,0,0,0)";
