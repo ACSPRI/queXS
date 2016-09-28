@@ -136,7 +136,7 @@ if (isset($_POST['addoutcome']) && isset($_POST['save'])){
 		if (isset($_POST['default_o'])) $def = 1; else $def = 0;
 		if (isset($_POST['permanent'])) $perm = 1; else $perm = 0;
 			
-		$sql = "INSERT INTO `outcome` VALUES ('NULL','$aapor_id','$desc','$ddm','$outcome_type_id','$tryanother','$contacted','$tryagain','$eligible','$require_note','$calc','$def','$perm')";	
+		$sql = "INSERT INTO `outcome` VALUES (NULL,'$aapor_id','$desc','$ddm','$outcome_type_id','$tryanother','$contacted','$tryagain','$eligible','$require_note','$calc','$def','$perm')";	
 		if ($db->Execute($sql)) {
 			$msg_ok = T_("Custom outcome") . " <b>" . $desc . "</b> "  . T_("saved");
 		}
