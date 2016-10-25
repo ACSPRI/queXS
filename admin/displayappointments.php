@@ -231,7 +231,7 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 
 			print "<div class='col-lg-4' id='addPhone' style='display:none'>
 						<div class='col-lg-6' id=''>
-							<input type=\"tel\" maxlength=\"10\" pattern=\"[0-9]{10}\" class='form-control col-lg-2 ' name='addphonenumber'  />
+							<input type=\"tel\" class='form-control col-lg-2 ' name='addphonenumber'  />
 						</div>
 					</div>";
 //*end option

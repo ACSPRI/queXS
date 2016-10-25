@@ -1,3 +1,20 @@
+queXS 1.14.3 - Changes since 1.14.2
+
+The third bug fix release for the 1.14 series of queXS.
+
+Fixed issue: More than 2 character long locale code not being recognised
+Fixed issue: Method return value error
+Fixed issue: Numbers starting with 0 were being stripped
+Fixed issue: Appointments not working when no shifts scheduled and local timezone is different from respondent
+Fixed issue: lp:1620421 SQL not compatible with ONLY_FULL_GROUP_BY mode
+
+New feature: Allow operators to see upcoming appointments and assign to themselves if necessary
+
+Database update (Please note - if you are having issues with custom outcomes - please run this code on your database):
+
+ALTER TABLE `outcome` AUTO_INCREMENT = 100;
+
+
 queXS 1.14.2 - Changes since 1.14.1
 
 A bug fix release for the 1.14 series of queXS

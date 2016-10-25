@@ -197,7 +197,7 @@ if (isset($_GET['edit']) || isset($_GET['addext']))
 	</div>
 	<div class="form-group form-inline">
 		<label class="control-label col-lg-3"><?php  echo T_("Extension password: ");?></label>
-		<input name="password" type="text" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" style="width:20em;" maxlength="50" value="<?php if (isset($_GET['edit'])) echo $rs['password'];?>" class="form-control pull-left" placeholder="<?php echo T_("Enter New Password");?>"/>&emsp;&emsp;<?php echo T_(" or ");?>&ensp;
+		<input name="password" type="text" required style="width:20em;" maxlength="50" value="<?php if (isset($_GET['edit'])) echo $rs['password'];?>" class="form-control pull-left" placeholder="<?php echo T_("Enter New Password");?>"/>&emsp;&emsp;<?php echo T_(" or ");?>&ensp;
 		<input type="button" onclick="generate();" value="<?php echo T_("Generate");?>" class="btn btn-default fa" />&emsp;<?php echo T_("New password");?>&ensp;
 		<input type="number" name="number" value="25" min="8" max="50" style="width:5em;"  class="form-control" />&ensp;<?php echo T_("characters long");?>
 	</div>
