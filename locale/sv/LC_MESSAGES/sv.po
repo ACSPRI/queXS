@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-05-09 11:25+1000\n"
+"POT-Creation-Date: 2016-07-01 15:20+1000\n"
 "PO-Revision-Date: 2013-03-08 01:20+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-07-01 05:16+0000\n"
-"X-Generator: Launchpad (build 18115)\n"
+"X-Launchpad-Export-Date: 2016-10-25 04:04+0000\n"
+"X-Generator: Launchpad (build 18246)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -192,10 +192,10 @@ msgstr ""
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:181
 #: admin/set_outcomes.php:184 admin/set_outcomes.php:185
-#: admin/set_outcomes.php:242 admin/set_outcomes.php:263
-#: admin/set_outcomes.php:270 admin/set_outcomes.php:271
-#: admin/set_outcomes.php:272 admin/set_outcomes.php:273
-#: admin/set_outcomes.php:274 admin/set_outcomes.php:275
+#: admin/set_outcomes.php:242 admin/set_outcomes.php:262
+#: admin/set_outcomes.php:264 admin/set_outcomes.php:265
+#: admin/set_outcomes.php:266 admin/set_outcomes.php:267
+#: admin/set_outcomes.php:268 admin/set_outcomes.php:269
 #: admin/assignsample.php:232 admin/assignsample.php:235
 #: admin/assignsample.php:328 admin/assignsample.php:330
 #: admin/assignsample.php:400 admin/assignsample.php:404
@@ -220,10 +220,10 @@ msgstr ""
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:181
 #: admin/set_outcomes.php:184 admin/set_outcomes.php:185
-#: admin/set_outcomes.php:242 admin/set_outcomes.php:263
-#: admin/set_outcomes.php:270 admin/set_outcomes.php:271
-#: admin/set_outcomes.php:272 admin/set_outcomes.php:273
-#: admin/set_outcomes.php:274 admin/set_outcomes.php:275
+#: admin/set_outcomes.php:242 admin/set_outcomes.php:262
+#: admin/set_outcomes.php:264 admin/set_outcomes.php:265
+#: admin/set_outcomes.php:266 admin/set_outcomes.php:267
+#: admin/set_outcomes.php:268 admin/set_outcomes.php:269
 #: admin/assignsample.php:232 admin/assignsample.php:233
 #: admin/assignsample.php:235 admin/assignsample.php:328
 #: admin/assignsample.php:330 admin/assignsample.php:400
@@ -248,7 +248,7 @@ msgstr "eftermiddag"
 msgid "evening"
 msgstr "kv&auml;ll"
 
-#: functions/functions.operator.php:985
+#: functions/functions.operator.php:988
 msgid "ERROR: You are not logged in."
 msgstr ""
 
@@ -446,7 +446,7 @@ msgid ""
 msgstr ""
 
 #: selectextension.php:106 admin/set_outcomes.php:179
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Try again"
 msgstr ""
 
@@ -685,7 +685,7 @@ msgstr ""
 msgid "Not Contacted"
 msgstr ""
 
-#: rs_intro.php:94 admin/set_outcomes.php:177 admin/set_outcomes.php:283
+#: rs_intro.php:94 admin/set_outcomes.php:177 admin/set_outcomes.php:277
 msgid "Contacted"
 msgstr ""
 
@@ -809,7 +809,7 @@ msgstr "Intervju ID"
 #: include/limesurvey/admin/exportresults.php:656
 #: include/limesurvey/admin/exportresults.php:657
 #: include/limesurvey/admin/exportresults.php:983 admin/set_outcomes.php:250
-#: admin/set_outcomes.php:283 admin/dataoutput.php:93
+#: admin/set_outcomes.php:277 admin/dataoutput.php:93
 msgid "Outcome ID"
 msgstr ""
 
@@ -1143,7 +1143,7 @@ msgstr "ID"
 
 #: nocaseavailable.php:98 nocaseavailable.php:122 admin/samplelist.php:326
 #: admin/set_outcomes.php:146 admin/set_outcomes.php:189
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:283 admin/quota.php:256
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277 admin/quota.php:256
 #: admin/quotarow.php:422 admin/quotarow.php:460 admin/quotarow.php:482
 #: admin/quotarow.php:508 admin/quotarow.php:555 admin/quotarow.php:586
 msgid "Description"
@@ -1474,12 +1474,12 @@ msgid "Completed case closing"
 msgstr ""
 
 #: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
-#: admin/systemsortprocess.php:328 admin/systemsortprocess.php:330
+#: admin/systemsortprocess.php:359 admin/systemsortprocess.php:361
 msgid "This task took"
 msgstr "Denna uppgift tog"
 
 #: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
-#: admin/systemsortprocess.php:328 admin/systemsortprocess.php:330
+#: admin/systemsortprocess.php:359 admin/systemsortprocess.php:361
 #: nocallavailable.php:208
 msgid "seconds"
 msgstr "sekunder"
@@ -1492,11 +1492,23 @@ msgstr ""
 msgid "Sorting cases for "
 msgstr ""
 
-#: admin/systemsortprocess.php:328
+#: admin/systemsortprocess.php:239 admin/samplesearch.php:138
+msgid "Deleted"
+msgstr ""
+
+#: admin/systemsortprocess.php:239
+msgid "call attempts with no calls"
+msgstr ""
+
+#: admin/systemsortprocess.php:243
+msgid "No call attempts without calls"
+msgstr ""
+
+#: admin/systemsortprocess.php:359
 msgid "Completed sort"
 msgstr "Sortering klar"
 
-#: admin/systemsortprocess.php:330
+#: admin/systemsortprocess.php:361
 msgid "Failed to complete sort"
 msgstr "Misslyckades med att slutf&ouml;ra sortering"
 
@@ -1779,7 +1791,7 @@ msgid "Sample variable"
 msgstr ""
 
 #: admin/questionnaireprefill.php:134 admin/samplesearch.php:101
-#: admin/clientquestionnaire.php:305 admin/set_outcomes.php:284
+#: admin/clientquestionnaire.php:305 admin/set_outcomes.php:278
 #: admin/supervisor.php:200 admin/supervisor.php:373 admin/supervisor.php:419
 #: admin/quotarow.php:422 admin/quotarow.php:508
 #: admin/displayappointments.php:313 admin/displayappointments.php:336
@@ -1969,10 +1981,6 @@ msgstr ""
 
 #: admin/samplesearch.php:115
 msgid "Select sample "
-msgstr ""
-
-#: admin/samplesearch.php:138
-msgid "Deleted"
 msgstr ""
 
 #: admin/samplesearch.php:146
@@ -2949,7 +2957,7 @@ msgid "New outcome not saved"
 msgstr ""
 
 #: admin/set_outcomes.php:147 admin/set_outcomes.php:175
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:283
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
 msgid "Outcome type"
 msgstr ""
 
@@ -2973,11 +2981,11 @@ msgstr ""
 msgid "Try another number"
 msgstr ""
 
-#: admin/set_outcomes.php:180 admin/set_outcomes.php:283
+#: admin/set_outcomes.php:180 admin/set_outcomes.php:277
 msgid "Eligible"
 msgstr ""
 
-#: admin/set_outcomes.php:181 admin/set_outcomes.php:283
+#: admin/set_outcomes.php:181 admin/set_outcomes.php:277
 msgid "Require note"
 msgstr ""
 
@@ -3010,7 +3018,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: admin/set_outcomes.php:251 admin/set_outcomes.php:286
+#: admin/set_outcomes.php:251 admin/set_outcomes.php:280
 msgid "Add custom Outcome"
 msgstr ""
 
@@ -3018,27 +3026,27 @@ msgstr ""
 msgid "Save questionnaire outcomes"
 msgstr ""
 
-#: admin/set_outcomes.php:263
+#: admin/set_outcomes.php:262
 msgid "Delete outcome"
 msgstr ""
 
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Set default"
 msgstr ""
 
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Delay, min"
 msgstr ""
 
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Try another"
 msgstr ""
 
-#: admin/set_outcomes.php:287
+#: admin/set_outcomes.php:281
 msgid "Update default outcomes"
 msgstr ""
 
-#: admin/set_outcomes.php:319
+#: admin/set_outcomes.php:313
 msgid "Reset"
 msgstr ""
 

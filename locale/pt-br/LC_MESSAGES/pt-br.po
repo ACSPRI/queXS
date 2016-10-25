@@ -1,4 +1,4 @@
-# Chinese (Simplified) translation for quexs
+# Brazilian Portuguese translation for quexs
 # Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the quexs package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
@@ -7,29 +7,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-05-09 11:25+1000\n"
-"PO-Revision-Date: 2014-09-01 03:16+0000\n"
-"Last-Translator: Daniel lee <liding@ruc.edu.cn>\n"
-"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"POT-Creation-Date: 2016-07-01 15:20+1000\n"
+"PO-Revision-Date: 2013-12-04 16:38+0000\n"
+"Last-Translator: Marco Antonio Ciciliati <marco@ciciliati.com.br>\n"
+"Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-07-01 05:16+0000\n"
-"X-Generator: Launchpad (build 18115)\n"
-"Language: zh\n"
+"X-Launchpad-Export-Date: 2016-10-25 04:04+0000\n"
+"X-Generator: Launchpad (build 18246)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
-msgstr "预约错误"
+msgstr "Erro no agendamento"
 
 #: appointment.php:77
 msgid ""
 "You have not been assigned a case therefore cannot create an appointment"
-msgstr "您没有被分配受访者，所以不能进行预约"
+msgstr ""
+"Você não possui um caso atribuído, por isso não pode criar um agendamento"
 
 #: appointment.php:116
 msgid "Appointment made"
-msgstr "完成预约"
+msgstr "Agendamento realizado"
 
 #: appointment.php:128 admin/supervisor.php:395
 msgid "Create appointment"
@@ -40,21 +40,21 @@ msgstr ""
 #: admin/supervisor.php:387 admin/displayappointments.php:208
 #: admin/displayappointments.php:313 admin/displayappointments.php:336
 msgid "Respondent"
-msgstr "受访者"
+msgstr "Respondente"
 
 #: appointment.php:140
 msgid "Create new respondent:"
-msgstr "创建新受访者"
+msgstr "Criar novo respondente"
 
 #: appointment.php:143
 msgid "Add this respondent"
-msgstr "增加该受访者"
+msgstr "Adicionar este respondente"
 
 #: appointment.php:153 admin/operators.php:257 admin/clients.php:245
 #: admin/operatorlist.php:240 admin/supervisor.php:330
 #: admin/casestatus.php:126
 msgid "Timezone"
-msgstr "时区"
+msgstr "Fuso horário"
 
 #: appointment.php:153
 msgid "Current Time"
@@ -62,44 +62,45 @@ msgstr ""
 
 #: appointment.php:171
 msgid "Select phone number:"
-msgstr "选择电话号码："
+msgstr "Selecione o número de telefone"
 
 #: appointment.php:185 admin/displayappointments.php:230
 msgid "Add new phone number"
-msgstr "增加新电话号码"
+msgstr "Adicionar novo número de telefone"
 
 #: appointment.php:198
 msgid "Add new phone number (with area code, eg 0398761234):"
-msgstr "增加新电话号码(包括区号，如0398761234)："
+msgstr ""
+"Adicionar novo número de telefone (com código de área, ex: 6199991111):"
 
 #: appointment.php:201
 msgid "Add this phone number"
-msgstr "增加该电话号码"
+msgstr "Adicionar este número de telefone"
 
 #: appointment.php:221
 msgid "Accept appointment from "
-msgstr "接受来自 的预约 "
+msgstr "Realizar agendamento das "
 
 #: appointment.php:221 functions/functions.calendar.php:313
 msgid " till "
-msgstr " 到 "
+msgstr " até as "
 
 #: appointment.php:221
 msgid " on "
-msgstr " 在 "
+msgstr " no dia "
 
 #: appointment.php:221
 msgid "on"
-msgstr "在"
+msgstr "para o número"
 
 #: appointment.php:222
 msgid "Appointment with myself only?"
-msgstr "只与我预约？"
+msgstr "Agendar apenas para você mesmo?"
 
 #: appointment.php:231 include/limesurvey/qanda.php:1701
 #: include/limesurvey/qanda.php:1921
 msgid "Schedule Appointment"
-msgstr "预约"
+msgstr ""
 
 #: appointment.php:248
 msgid "Clear"
@@ -113,7 +114,7 @@ msgstr ""
 
 #: info.php:62
 msgid "Information"
-msgstr "信息"
+msgstr "Informações"
 
 #: rs_project_end.php:65 rs_callback.php:68 rs_intro.php:73 rs_intro.php:133
 #: rs_answeringmachine.php:69 rs_business.php:58 rs_project_intro.php:63
@@ -131,12 +132,12 @@ msgstr ""
 
 #: rs_project_end.php:85 rs_project_end.php:99 admin/databasestrings.php:41
 msgid "Complete"
-msgstr "完成"
+msgstr "Entrevista Completa"
 
 #: rs_project_end.php:88 call_interface2.php:295 call.php:283 call.php:399
 #: call.php:404 call.php:420 call.php:426
 msgid "End case"
-msgstr "结束访问"
+msgstr "Encerrar caso"
 
 #: rs_project_end.php:92 rs_callback.php:94 rs_intro.php:83
 #: rs_answeringmachine.php:96 rs_business.php:66 rs_project_intro.php:90
@@ -154,7 +155,7 @@ msgstr ""
 
 #: functions/functions.import.php:111
 msgid "You must select one and one only Primary Phone number"
-msgstr "您必须选择唯一一项作主电话号码"
+msgstr "Você deve selecionar um e somente um número de telefone primário"
 
 #: functions/functions.import.php:127
 msgid "Selected file column name"
@@ -190,10 +191,10 @@ msgstr ""
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:181
 #: admin/set_outcomes.php:184 admin/set_outcomes.php:185
-#: admin/set_outcomes.php:242 admin/set_outcomes.php:263
-#: admin/set_outcomes.php:270 admin/set_outcomes.php:271
-#: admin/set_outcomes.php:272 admin/set_outcomes.php:273
-#: admin/set_outcomes.php:274 admin/set_outcomes.php:275
+#: admin/set_outcomes.php:242 admin/set_outcomes.php:262
+#: admin/set_outcomes.php:264 admin/set_outcomes.php:265
+#: admin/set_outcomes.php:266 admin/set_outcomes.php:267
+#: admin/set_outcomes.php:268 admin/set_outcomes.php:269
 #: admin/assignsample.php:232 admin/assignsample.php:235
 #: admin/assignsample.php:328 admin/assignsample.php:330
 #: admin/assignsample.php:400 admin/assignsample.php:404
@@ -218,10 +219,10 @@ msgstr ""
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:181
 #: admin/set_outcomes.php:184 admin/set_outcomes.php:185
-#: admin/set_outcomes.php:242 admin/set_outcomes.php:263
-#: admin/set_outcomes.php:270 admin/set_outcomes.php:271
-#: admin/set_outcomes.php:272 admin/set_outcomes.php:273
-#: admin/set_outcomes.php:274 admin/set_outcomes.php:275
+#: admin/set_outcomes.php:242 admin/set_outcomes.php:262
+#: admin/set_outcomes.php:264 admin/set_outcomes.php:265
+#: admin/set_outcomes.php:266 admin/set_outcomes.php:267
+#: admin/set_outcomes.php:268 admin/set_outcomes.php:269
 #: admin/assignsample.php:232 admin/assignsample.php:233
 #: admin/assignsample.php:235 admin/assignsample.php:328
 #: admin/assignsample.php:330 admin/assignsample.php:400
@@ -236,94 +237,94 @@ msgstr ""
 
 #: functions/functions.operator.php:167 include/limesurvey/quexs.php:362
 msgid "morning"
-msgstr "上午"
+msgstr "manhã"
 
 #: functions/functions.operator.php:168 include/limesurvey/quexs.php:363
 msgid "afternoon"
-msgstr "下午"
+msgstr "tarde"
 
 #: functions/functions.operator.php:169 include/limesurvey/quexs.php:364
 msgid "evening"
-msgstr "晚间"
+msgstr "noite"
 
-#: functions/functions.operator.php:985
+#: functions/functions.operator.php:988
 msgid "ERROR: You are not logged in."
 msgstr ""
 
 #: functions/functions.performance.php:469
 msgid "No shift"
-msgstr "无可用调查时段"
+msgstr "Sem turnos"
 
 #: functions/functions.performance.php:492
 msgid "Total completions"
-msgstr "完成总数"
+msgstr "Total Realizadas"
 
 #: functions/functions.performance.php:521
 msgid "Completions this shift"
-msgstr "本调查时段完成数"
+msgstr "Realizadas neste turno"
 
 #: functions/functions.performance.php:544
 #: functions/functions.performance.php:590
 msgid "No previous shift"
-msgstr "没有更早的调查时段了"
+msgstr "Sem turno anterior"
 
 #: functions/functions.performance.php:564
 msgid "Completions on the previous shift"
-msgstr "此前调查时段的完成数"
+msgstr "Realizadas no turno anterior"
 
 #: functions/functions.performance.php:611
 msgid "Completions this time on the previous shift"
-msgstr "以往调查时段的相应完成数"
+msgstr "Realizadas neste horário no turno anterior"
 
 #: functions/functions.performance.php:629
 msgid "No calls made for this shift"
-msgstr "该调查时段没有进行呼叫"
+msgstr "Não há ligações realizadas neste turno"
 
 #: functions/functions.performance.php:631
 msgid "Top CPH for this shift"
-msgstr "本时段最高的小时完成量"
+msgstr "Maiores realizações neste turno"
 
 #: functions/functions.performance.php:648
 msgid "No calls made for this project"
-msgstr "该项目无呼叫"
+msgstr "Não há ligações realizadas neste projeto"
 
 #: functions/functions.performance.php:650
 msgid "Top CPH"
-msgstr "最高小时完成量"
+msgstr "Maiores realizações"
 
 #: functions/functions.calendar.php:193
 msgid "Select a respondent"
-msgstr "选择一个受访者"
+msgstr "Selecione um respondente"
 
 #: functions/functions.calendar.php:202 functions/functions.calendar.php:204
 #: respondent.php:99 respondent.php:137 contactdetails.php:98
 #: contactdetails.php:136
 msgid "Add respondent"
-msgstr "添加受访者"
+msgstr "Adicionar respondente"
 
 #: functions/functions.calendar.php:256
 msgid "First name:"
-msgstr "名："
+msgstr "Primeiro Nome:"
 
 #: functions/functions.calendar.php:257
 msgid "Last  name:"
-msgstr "姓："
+msgstr "Sobrenome"
 
 #: functions/functions.calendar.php:262
 msgid "Time Zone:"
-msgstr "时区："
+msgstr "Fuso Horário:"
 
 #: functions/functions.calendar.php:313
 msgid "Shift from:"
-msgstr "调查时段为："
+msgstr "Turno das:"
 
 #: functions/functions.calendar.php:317
 msgid "Start Time"
-msgstr "开始时间"
+msgstr "Hora Inicial"
 
 #: functions/functions.calendar.php:360
 msgid "End Time"
-msgstr "结束时间"
+msgstr "Hora final"
 
 #: functions/functions.calendar.php:462
 msgid "Mon"
@@ -357,34 +358,34 @@ msgstr ""
 #: admin/operators.php:271 admin/operatorlist.php:255
 #: admin/operatorlist.php:408 admin/extensionstatus.php:266
 msgid "Extension"
-msgstr "分机"
+msgstr "Ramal"
 
 #: functions/functions.voip.php:449
 msgid "online"
-msgstr "在线"
+msgstr "Ligado"
 
 #: functions/functions.voip.php:449
 msgid "offline"
-msgstr "下线"
+msgstr "Desligado"
 
 #: functions/functions.voip.php:528
 msgid "Disconnected"
-msgstr "掉线"
+msgstr "Desconectado"
 
 #: functions/functions.voip.php:530
 msgid "Reconnected"
-msgstr "重新连线"
+msgstr "Reconectado"
 
 #: functions/functions.voip.php:553 status.php:124
 #: admin/extensionstatus.php:233 call.php:440
 msgid "Ringing"
-msgstr "响铃"
+msgstr "Chamando"
 
 #: functions/functions.voip.php:553 functions/functions.voip.php:565
 #: functions/functions.voip.php:577 functions/functions.voip.php:587
 #: functions/functions.voip.php:596
 msgid " Extension "
-msgstr " 分机 "
+msgstr " Ramal "
 
 #: functions/functions.voip.php:553 functions/functions.voip.php:565
 #: functions/functions.voip.php:577 supervisorchat.php:88
@@ -392,24 +393,24 @@ msgstr " 分机 "
 #: admin/bulkappointment.php:215 admin/bulkappointment.php:237
 #: admin/casestatus.php:126
 msgid "Case id"
-msgstr "访问编号"
+msgstr "Caso Nr"
 
 #: functions/functions.voip.php:565 status.php:128
 #: admin/extensionstatus.php:233 call.php:447
 msgid "Answered"
-msgstr "接通"
+msgstr "Atendida"
 
 #: functions/functions.voip.php:577 call.php:437 call.php:444 call.php:451
 msgid "Hangup"
-msgstr "挂机"
+msgstr "Chamada desligada"
 
 #: functions/functions.voip.php:587
 msgid "Unregistered"
-msgstr "未注册"
+msgstr "Não registrado"
 
 #: functions/functions.voip.php:596
 msgid "Registered"
-msgstr "已注册"
+msgstr "Registrado"
 
 #: rs_callback.php:68
 msgid "Call back"
@@ -426,11 +427,11 @@ msgstr ""
 #: rs_callback.php:85 rs_answeringmachine.php:87 rs_business.php:63
 #: rs_project_intro.php:79
 msgid "Go Back"
-msgstr "返回"
+msgstr "Voltar"
 
 #: rs_callback.php:103
 msgid "Yes - Continue where we left off"
-msgstr "是的 - 继续上次没说完的"
+msgstr "Sim - Continuar de onde paramos"
 
 #: selectextension.php:94 index.php:150
 msgid "queXS"
@@ -440,119 +441,119 @@ msgstr "queXS"
 msgid ""
 "There are no extensions available, please contact the supervisor or click "
 "below to try again for an available extension"
-msgstr "现无可用分机，请联系调查督导员或点击下面的链接重试可用分机"
+msgstr ""
 
 #: selectextension.php:106 admin/set_outcomes.php:179
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Try again"
-msgstr "重试"
+msgstr ""
 
 #: selectextension.php:110
 msgid "Select extension"
-msgstr "选择分机"
+msgstr ""
 
 #: selectextension.php:111
 msgid ""
 "Please select your extension from the list below then click on 'Choose "
 "extension'"
-msgstr "请从以下列表中选择您的分机并点击“选择分机”"
+msgstr ""
 
 #: selectextension.php:116
 msgid "Choose extension"
-msgstr "选择分机"
+msgstr ""
 
 #: status.php:64 status.php:83 status_interface2.php:76
 #: admin/quotareport.php:310 admin/outcomes.php:88 admin/outcomes.php:200
 #: admin/quotarow.php:586
 msgid "Status"
-msgstr "状态"
+msgstr "Situação"
 
 #: status.php:65 callhistory.php:92 admin/callhistory.php:192
 #: admin/casesbyoutcome.php:124
 msgid "No operator"
-msgstr "没有电话调查员"
+msgstr "Sem operador"
 
 #: status.php:101
 msgid "VoIP On"
-msgstr "VoIP启用"
+msgstr "PBX OK"
 
 #: status.php:103
 msgid "VoIP Off"
-msgstr "VoIP关闭"
+msgstr "PBX DESL"
 
 #: status.php:108
 msgid "No VoIP"
-msgstr "无VoIP"
+msgstr "Ligação Manual"
 
 #: status.php:112
 msgid "No call"
-msgstr "无呼叫"
+msgstr "Livre"
 
 #: status.php:116
 msgid "To be coded"
-msgstr "待编码"
+msgstr "Informe Resultado"
 
 #: status.php:120
 msgid "Requesting"
-msgstr "通话中"
+msgstr "Ligando"
 
 #: status.php:136
 msgid "APPT"
-msgstr "APPT"
+msgstr "AGEN"
 
 #: status.php:137 status_interface2.php:181
 msgid "MISSED"
-msgstr "掉线"
+msgstr "PERDIDO"
 
 #: status.php:140 casenote.php:119 status_interface2.php:239 calllist.php:93
 #: project_info.php:88
 msgid "No case"
-msgstr "无受访者"
+msgstr "Sem caso"
 
 #: referral.php:189
 msgid "Generated referral to case id"
-msgstr "给访问编号生成被引荐受访者"
+msgstr ""
 
 #: referral.php:195
 msgid "Generated as referral from case id"
-msgstr "生成属于访问编号的被引荐受访者"
+msgstr ""
 
 #: referral.php:201
 msgid "Created referral case - you may now close this window"
-msgstr "创建被引荐受访者的访问 - 您现在可以关闭该窗口"
+msgstr ""
 
 #: referral.php:205
 msgid ""
 "Failed to create referral case - please check your input and try again"
-msgstr "创建被引荐受访者的访问失败 - 请检查您的输入并重试"
+msgstr ""
 
 #: referral.php:211
 msgid "You must supply a primary phone number"
-msgstr "您必须提供一个主电话号码"
+msgstr ""
 
 #: referral.php:220 index.php:172 index_interface2.php:231
 msgid "Referral"
-msgstr "被引荐的受访者"
+msgstr ""
 
 #: referral.php:231 referral.php:268
 msgid "Create referral"
-msgstr "创建被引荐的受访者"
+msgstr ""
 
 #: referral.php:266
 msgid "Call this new referral immediately after this case?"
-msgstr "该访问结束后立即呼叫新添的被引荐受访者吗？"
+msgstr ""
 
 #: referral.php:275
 msgid "Referrals not available for this questionnaire"
-msgstr "被引荐的受访者没时间接受本次问卷调查"
+msgstr ""
 
 #: performance.php:67 index.php:282 index_interface2.php:301
 msgid "Performance"
-msgstr "表现"
+msgstr "Desempenho"
 
 #: performance.php:83 admin/operatorperformance.php:108
 msgid "This shift"
-msgstr "当前调查时段"
+msgstr "Neste turno"
 
 #: performance.php:84 performance.php:91 casenote.php:116
 #: appointmentlist.php:95 calllist.php:89 admin/outcomes.php:240
@@ -564,29 +565,29 @@ msgstr "当前调查时段"
 #: admin/operatorperformance.php:109 admin/shiftreport.php:110
 #: admin/extensionstatus.php:266 admin/operatorquestionnaire.php:247
 msgid "Operator"
-msgstr "电话调查员"
+msgstr "Operador(a)"
 
 #: performance.php:84 performance.php:91 admin/quotareport.php:310
 #: admin/outcomes.php:305 admin/quotarow.php:586
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 msgid "Completions"
-msgstr "完成调查数"
+msgstr "Realizadas"
 
 #: performance.php:84 performance.php:91
 msgid "Completions per hour"
-msgstr "每小时完成调查数"
+msgstr "Realizadas por hora"
 
 #: performance.php:90 admin/operatorperformance.php:85
 msgid "This project"
-msgstr "本次调查项目"
+msgstr "Este projeto"
 
 #: casenote.php:62
 msgid "Case Notes"
-msgstr "访问备注"
+msgstr "Notas do Caso"
 
 #: casenote.php:72 casenote.php:111 admin/supervisor.php:439
 msgid "Add note"
-msgstr "添加备注"
+msgstr "Adicionar nota"
 
 #: casenote.php:75 admin/samplelist.php:283 admin/samplelist.php:491
 #: admin/samplesearch.php:107 admin/sortsample.php:94
@@ -598,20 +599,20 @@ msgstr "添加备注"
 #: admin/assignsample.php:307 admin/casestatus.php:215 respondent.php:101
 #: contactdetails.php:100
 msgid "Go back"
-msgstr "返回"
+msgstr "Voltar"
 
 #: casenote.php:114 admin/supervisor.php:429
 msgid "No notes"
-msgstr "无备注"
+msgstr "Sem observações"
 
 #: casenote.php:116 callhistory.php:88 calllist.php:89
 #: admin/supervisor.php:414 admin/supervisor.php:431
 msgid "Date/Time"
-msgstr "日期/时间"
+msgstr "Data/Hora"
 
 #: casenote.php:116 admin/bulkappointment.php:237 admin/supervisor.php:431
 msgid "Note"
-msgstr "备注"
+msgstr "Nota"
 
 #: waitnextcase_interface2.php:49
 msgid "Standby"
@@ -627,36 +628,36 @@ msgstr ""
 
 #: waitnextcase_interface2.php:63 endwork.php:55
 msgid "You have been automatically logged out of work due to inactivity"
-msgstr "由于长时间未活动，您已自动登出系统。"
+msgstr "Você foi automaticamente desconectado por tempo de inatividade"
 
 #: waitnextcase_interface2.php:90 nocaseavailable.php:101
 msgid "ERROR: No questionnaires assigned to you"
-msgstr "错误：您未被分派问卷"
+msgstr "ERRO: Não há questionários atribuídos à você"
 
 #: waitnextcase_interface2.php:95 nocaseavailable.php:95
 msgid "Assigned questionnaires:"
-msgstr "被分派的问卷是："
+msgstr "Questionários atribuídos:"
 
 #: waitnextcase_interface2.php:121 nocaseavailable.php:125
 msgid "ERROR: No samples assigned to the questionnaires"
-msgstr "错误：问卷未分派样本"
+msgstr "ERRO: Não há listagens atribuídas para os questionários"
 
 #: waitnextcase_interface2.php:123 nocaseavailable.php:119
 msgid "Assigned samples:"
-msgstr "被分派的样本是："
+msgstr "Listagens atribuídas:"
 
 #: waitnextcase_interface2.php:139 nocaseavailable.php:150
 msgid "ERROR: No shifts at this time"
-msgstr "错误：当前没有调查时段(没有安排调查员轮班)"
+msgstr "ERRO: Não há turnos disponíveis no momento"
 
 #: waitnextcase_interface2.php:142 nocaseavailable.php:144
 msgid "Current shifts available:"
-msgstr "当前可用调查时段："
+msgstr "Turnos atualmente disponíveis"
 
 #: waitnextcase_interface2.php:162 waitnextcase_interface2.php:165
 #: admin/outcomes.php:128
 msgid "Cases currently available to call"
-msgstr "当前待呼叫的可用访问"
+msgstr "Casos disponíveis para contato"
 
 #: waitnextcase_interface2.php:181 waitnextcase_interface2.php:184
 msgid "New samples available to call"
@@ -664,13 +665,13 @@ msgstr ""
 
 #: waitnextcase_interface2.php:197
 msgid "Get a new case"
-msgstr "调取新样本"
+msgstr "Obter um novo caso"
 
 #: waitnextcase_interface2.php:200 call_interface2.php:299
 #: call_interface2.php:317 call.php:282 call.php:284 call.php:400 call.php:405
 #: call.php:421 call.php:427 index_interface2.php:233
 msgid "End work"
-msgstr "结束工作"
+msgstr "Encerrar trabalho"
 
 #: rs_intro.php:73 rs_intro.php:133
 msgid "Introduction"
@@ -680,7 +681,7 @@ msgstr ""
 msgid "Not Contacted"
 msgstr ""
 
-#: rs_intro.php:94 admin/set_outcomes.php:177 admin/set_outcomes.php:283
+#: rs_intro.php:94 admin/set_outcomes.php:177 admin/set_outcomes.php:277
 msgid "Contacted"
 msgstr ""
 
@@ -696,56 +697,56 @@ msgstr ""
 
 #: rs_intro.php:129 rs_answeringmachine.php:69
 msgid "Answering machine"
-msgstr "电话答录机"
+msgstr "Caixa de Mensagens"
 
 #: rs_intro.php:156 rs_project_intro.php:114
 msgid "Yes - Continue"
-msgstr "是 - 请继续"
+msgstr "Sim - Continue"
 
 #: record.php:61
 msgid "Stop REC"
-msgstr "停止录音"
+msgstr "Parar GRV"
 
 #: record.php:62 record.php:85 record.php:102
 msgid "Record"
-msgstr "录音"
+msgstr "Gravar"
 
 #: record.php:72
 msgid "Beginning recording..."
-msgstr "开始录音..."
+msgstr "Iniciando gravação..."
 
 #: record.php:75 record.php:103
 msgid "Not on a call, so not beginning a recording"
-msgstr "未接通，所以不能开始录音"
+msgstr "Não há ligação ativa. Impossível iniciar uma gravação"
 
 #: record.php:79
 msgid "Begin the manual recording now..."
-msgstr "启动手动录音..."
+msgstr "Iniciar gravação manual agora..."
 
 #: record.php:84 email.php:280 call_interface2.php:211 call.php:212
 #: call.php:230 index.php:173
 msgid "Start REC"
-msgstr "开始录音"
+msgstr "Gravar"
 
 #: record.php:92
 msgid "Stopping recording..."
-msgstr "正在停止录音..."
+msgstr "Parando a gravação..."
 
 #: record.php:96
 msgid "Stop the manual recording now..."
-msgstr "停止手动录音..."
+msgstr "Parando a gravação manual agora..."
 
 #: include/limesurvey/quexs.php:171 admin/databasestrings.php:90
 msgid "Self completed online"
-msgstr "在线自助完成"
+msgstr "Auto Resposta online"
 
 #: include/limesurvey/quexs.php:676 include/limesurvey/quexs.php:755
 msgid "Not on an appointment"
-msgstr "无预约"
+msgstr ""
 
 #: include/limesurvey/quexs.php:678 include/limesurvey/quexs.php:757
 msgid "On an appointment"
-msgstr "预约中"
+msgstr ""
 
 #: include/limesurvey/quexs.php:989
 msgid "All samples"
@@ -753,19 +754,19 @@ msgstr ""
 
 #: include/limesurvey/common_functions.php:6298
 msgid "queXS: Number of call attempts"
-msgstr "queXS：呼叫尝试数量"
+msgstr ""
 
 #: include/limesurvey/common_functions.php:6299
 msgid "queXS: On appointment?"
-msgstr "queXS：有预约？"
+msgstr ""
 
 #: include/limesurvey/common_functions.php:6300
 msgid "queXS: Percentage complete"
-msgstr "queXS：完成百分数"
+msgstr ""
 
 #: include/limesurvey/common_functions.php:6301
 msgid "queXS: Number of answering machine messages left"
-msgstr "queXS：电话答录机留言数量"
+msgstr ""
 
 #: include/limesurvey/optout.php:83
 msgid "Self completion refused via opt out function"
@@ -776,18 +777,18 @@ msgstr ""
 #: include/limesurvey/admin/browse.php:791
 #: include/limesurvey/admin/vvexport.php:69
 msgid "Questionnaire and Sample selection:"
-msgstr "问卷及样本选择："
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:111
 #: include/limesurvey/admin/statistics.php:269
 #: include/limesurvey/admin/browse.php:792
 #: include/limesurvey/admin/vvexport.php:70
 msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr "所有与该主问卷相关的queXS问卷和样本"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:257
 msgid "Token"
-msgstr "标志符"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:258
 #: include/limesurvey/admin/exportresults.php:651
@@ -798,13 +799,13 @@ msgstr "标志符"
 #: admin/dataoutput.php:85 admin/extensionstatus.php:266
 #: admin/displayappointments.php:313 admin/displayappointments.php:336
 msgid "Case ID"
-msgstr "访问编号"
+msgstr "Caso Nr"
 
 #: include/limesurvey/admin/exportresults.php:259
 #: include/limesurvey/admin/exportresults.php:656
 #: include/limesurvey/admin/exportresults.php:657
 #: include/limesurvey/admin/exportresults.php:983 admin/set_outcomes.php:250
-#: admin/set_outcomes.php:283 admin/dataoutput.php:93
+#: admin/set_outcomes.php:277 admin/dataoutput.php:93
 msgid "Outcome ID"
 msgstr ""
 
@@ -813,21 +814,21 @@ msgstr ""
 #: include/limesurvey/admin/exportresults.php:662
 #: include/limesurvey/admin/exportresults.php:986
 msgid "Case outcome"
-msgstr "访问结果"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:261
 #: include/limesurvey/admin/exportresults.php:611
 #: include/limesurvey/admin/exportresults.php:612
 #: include/limesurvey/admin/exportresults.php:989 admin/dataoutput.php:93
 msgid "Number of call attempts"
-msgstr "呼叫尝试数量"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:262
 #: include/limesurvey/admin/exportresults.php:616
 #: include/limesurvey/admin/exportresults.php:617
 #: include/limesurvey/admin/exportresults.php:992
 msgid "Number of answering machine messages left"
-msgstr "电话答录机留言数量"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:263
 #: include/limesurvey/admin/exportresults.php:621
@@ -835,35 +836,35 @@ msgstr "电话答录机留言数量"
 #: include/limesurvey/admin/exportresults.php:995 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/supervisor.php:426 admin/dataoutput.php:93
 msgid "Case notes"
-msgstr "访问备注"
+msgstr "Observações do caso"
 
 #: include/limesurvey/admin/exportresults.php:264
 #: include/limesurvey/admin/exportresults.php:626
 #: include/limesurvey/admin/exportresults.php:627
 #: include/limesurvey/admin/exportresults.php:998 admin/dataoutput.php:93
 msgid "Total interview time over all calls (mins)"
-msgstr "所有呼叫的总体访问时间（分钟）"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:265
 #: include/limesurvey/admin/exportresults.php:631
 #: include/limesurvey/admin/exportresults.php:632
 #: include/limesurvey/admin/exportresults.php:1001 admin/dataoutput.php:93
 msgid "Interview time for last call (mins)"
-msgstr "最后呼叫的访问时间（分钟）"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:266
 #: include/limesurvey/admin/exportresults.php:636
 #: include/limesurvey/admin/exportresults.php:637
 #: include/limesurvey/admin/exportresults.php:1004 admin/dataoutput.php:93
 msgid "Last number dialled"
-msgstr "最后拨叫号码"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:267
 #: include/limesurvey/admin/exportresults.php:641
 #: include/limesurvey/admin/exportresults.php:642
 #: include/limesurvey/admin/exportresults.php:1007 admin/dataoutput.php:93
 msgid "Operator username for last call"
-msgstr "最后一次呼叫的电话调查员的用户名"
+msgstr ""
 
 #: include/limesurvey/admin/exportresults.php:268
 #: include/limesurvey/admin/exportresults.php:646
@@ -871,19 +872,19 @@ msgstr "最后一次呼叫的电话调查员的用户名"
 #: include/limesurvey/admin/exportresults.php:1010 admin/outcomes.php:305
 #: admin/dataoutput.php:93
 msgid "Shift report"
-msgstr "时段报告"
+msgstr "Ocorrência do turno"
 
 #: voip/downloadvoipclient.php:59
 msgid "Error: Cannot write to temporary directory"
-msgstr "错误：无法写入临时目录"
+msgstr "ERRO: não foi possível gravar no diretório temporário"
 
 #: status_interface2.php:85
 msgid "Name"
-msgstr "姓名"
+msgstr "Nome"
 
 #: status_interface2.php:182 index.php:168 index_interface2.php:226
 msgid "Appointment"
-msgstr "预约"
+msgstr "Agendamentos"
 
 #: status_interface2.php:224
 msgid "Dial"
@@ -891,36 +892,36 @@ msgstr ""
 
 #: status_interface2.php:233 status_interface2.php:236
 msgid "No more numbers to call"
-msgstr "无可呼叫电话号码"
+msgstr "Sem mais números para chamar"
 
 #: appointmentlist.php:61
 msgid "Appointment List"
-msgstr "预约列表"
+msgstr "Lista de Agendamentos"
 
 #: appointmentlist.php:75 admin/supervisor.php:369
 #: admin/displayappointments.php:295
 msgid "Not yet called"
-msgstr "尚未呼叫"
+msgstr "Disponível"
 
 #: appointmentlist.php:75 admin/displayappointments.php:265
 #: admin/displayappointments.php:298
 msgid "Any operator"
-msgstr "任何电话调查员"
+msgstr "Qualquer operador"
 
 #: appointmentlist.php:88
 msgid "No appointments made"
-msgstr "无预约"
+msgstr "Não existem agendamentos"
 
 #: appointmentlist.php:90
 msgid "No future appointments scheduled"
-msgstr "无预约时刻表"
+msgstr "Não existem agendamentos futuros"
 
 #: appointmentlist.php:95 admin/callrestrict.php:140 admin/addshift.php:243
 #: admin/availability.php:165 admin/supervisor.php:387
 #: admin/shifttemplate.php:136 admin/displayappointments.php:313
 #: admin/displayappointments.php:336 shifts.php:88 shifts.php:109
 msgid "Start"
-msgstr "开始"
+msgstr "Iniciar"
 
 #: appointmentlist.php:95 admin/callrestrict.php:140 admin/addshift.php:243
 #: admin/availability.php:165 admin/supervisor.php:387
@@ -928,12 +929,12 @@ msgstr "开始"
 #: admin/displayappointments.php:336 index.php:167 shifts.php:88
 #: shifts.php:109
 msgid "End"
-msgstr "结束"
+msgstr "Encerrar"
 
 #: appointmentlist.php:95 admin/displayappointments.php:251
 #: admin/displayappointments.php:313
 msgid "Appointment with"
-msgstr "预约"
+msgstr "Agendado para"
 
 #: appointmentlist.php:95 client/index.php:99 client/index.php:118
 #: callhistory.php:88 calllist.php:89 admin/outcomes.php:147
@@ -941,44 +942,44 @@ msgstr "预约"
 #: admin/callhistory.php:132 admin/callhistory.php:157
 #: admin/supervisor.php:414 admin/casestatus.php:126 index_interface2.php:225
 msgid "Outcome"
-msgstr "结果"
+msgstr "Resultado"
 
 #: client/index.php:65 admin/outcomes.php:71
 msgid "Questionnaire Outcomes"
-msgstr "问卷结果"
+msgstr "Resultados do Questionário"
 
 #: client/index.php:78
 msgid "There are no questionnaires assigned to you"
-msgstr "没有分派给您的问卷"
+msgstr "Não existem questionários atribuídos à você"
 
 #: client/index.php:99 admin/outcomes.php:147
 msgid "Rate"
-msgstr "率"
+msgstr "Taxa"
 
 #: client/index.php:100 admin/outcomes.php:148
 msgid "Response Rate 1"
-msgstr "回应率 1"
+msgstr "Taxa de Resposta 1"
 
 #: client/index.php:101 admin/outcomes.php:149
 msgid "Refusal Rate 1"
-msgstr "拒绝率 1"
+msgstr "Taxa de Recusa 1"
 
 #: client/index.php:102 admin/outcomes.php:150
 msgid "Cooperation Rate 1"
-msgstr "合作率 1"
+msgstr "Taxa de Cooperação 1"
 
 #: client/index.php:103 admin/outcomes.php:151
 msgid "Contact Rate 1"
-msgstr "联系率 1"
+msgstr "Taxa de Contato 1"
 
 #: client/index.php:118 admin/outcomes.php:169 admin/outcomes.php:220
 #: admin/outcomes.php:262
 msgid "Count"
-msgstr "总数"
+msgstr "Qtde"
 
 #: client/index.php:120 admin/outcomes.php:269
 msgid "No outcomes recorded for this questionnaire"
-msgstr "该问卷无结果记录"
+msgstr "Resultados de ligação não foram gravados neste questionário"
 
 #: client/index.php:122
 msgid "View summary results"
@@ -986,16 +987,16 @@ msgstr ""
 
 #: client/index.php:141
 msgid "You are not a valid client"
-msgstr "您不是已验证客户"
+msgstr "Desculpe, você não é um cliente autorizado"
 
 #: supervisorchat.php:62 admin/supervisorchat.php:66 admin/index.php:196
 #: index.php:306
 msgid "Supervisor chat"
-msgstr "与督导通话"
+msgstr "Chat com o Supervisor"
 
 #: supervisorchat.php:85 index.php:170 supervisor.php:58
 msgid "Supervisor"
-msgstr "督导员"
+msgstr "Supervisor"
 
 #: supervisorchat.php:86
 msgid "Me"
@@ -1003,27 +1004,27 @@ msgstr ""
 
 #: supervisorchat.php:93
 msgid "Supervisor is available"
-msgstr "调查督导员在线"
+msgstr "Supervisor Disponível"
 
 #: supervisorchat.php:94
 msgid "Supervisor not available"
-msgstr "调查督导员离开"
+msgstr "Supervisor Indisponível"
 
 #: supervisorchat.php:96 supervisorchat.php:99
 msgid "Message"
-msgstr "留言"
+msgstr "Mensagem"
 
 #: supervisorchat.php:96
 msgid "Send"
-msgstr "发送"
+msgstr "Enviar"
 
 #: supervisorchat.php:99
 msgid "From"
-msgstr "从"
+msgstr "De"
 
 #: supervisorchat.php:102
 msgid "Supervisor chat is not enabled"
-msgstr "调查督导员聊天室未启用"
+msgstr "Chat com o Supervisor não habilitado"
 
 #: email.php:248
 msgid "Self completion invitation sent via email to"
@@ -1036,91 +1037,93 @@ msgstr ""
 
 #: email.php:304
 msgid "The email did not send"
-msgstr "邮件未发送"
+msgstr "O e-mail não foi enviado"
 
 #: email.php:309
 msgid "The email address is not valid"
-msgstr "邮件地址无效"
+msgstr "Endereço de e-mail inválido"
 
 #: email.php:338
 msgid "Email respondent for self completion"
-msgstr "发邮件请受访员参与自助问卷调查"
+msgstr "E-mail do entrevistado para auto-resposta"
 
 #: email.php:347 admin/operators.php:245 admin/clients.php:233
 #: admin/operatorlist.php:228
 msgid "First name"
-msgstr "名"
+msgstr "Primeiro nome"
 
 #: email.php:350 admin/operators.php:249 admin/operatorlist.php:232
 msgid "Last name"
-msgstr "姓"
+msgstr "Sobrenome"
 
 #: email.php:353 admin/operators.php:253 admin/clients.php:241
 #: admin/operatorlist.php:236 index.php:171
 msgid "Email"
-msgstr "邮件"
+msgstr "E-mail"
 
 #: email.php:357
 msgid "Send invitation"
-msgstr "发送邀请"
+msgstr "Enviar convite"
 
 #: email.php:359
 msgid "Send invitation and Hang up"
-msgstr "发送邀请并挂机"
+msgstr "Enviar convite e encerrar chamada"
 
 #: email.php:365
 msgid "Self completion email not available for this questionnaire"
-msgstr "本次调查问卷未预备自助完成问卷邮件"
+msgstr "E-mail de auto-resposta não disponível para este questionário"
 
 #: callhistory.php:61
 msgid "Case History List"
-msgstr "访问历史记录"
+msgstr "Histórico de Casos"
 
 #: callhistory.php:84 admin/callhistory.php:114
 msgid "No calls ever made"
-msgstr "没有打过电话"
+msgstr "Nenhuma ligação foi realizada"
 
 #: availability.php:61 index.php:236 index_interface2.php:261
 msgid "Availability"
-msgstr "可选时间"
+msgstr "Disponibilidade"
 
 #: availability.php:128 admin/supervisor.php:518
 msgid ""
 "Select groups to limit availability (Selecting none means always available)"
-msgstr "选择分组以限定可选时间（不选表示随时都可以）"
+msgstr ""
+"Selecione grupos para limitar a disponibilidade (Selecione Nenhum para "
+"manter sempre disponível)"
 
 #: availability.php:148 admin/supervisor.php:537
 msgid "Availability groups not defined for this questionnaire"
-msgstr "本次调查问卷未定义可选时间分组"
+msgstr "Grupos de disponibilidade não definidos para este questionário"
 
 #: calllist.php:61
 msgid "Call List"
-msgstr "呼叫清单"
+msgstr "Lista de chamadas"
 
 #: calllist.php:85 admin/supervisor.php:410
 msgid "No calls made"
-msgstr "没有打过电话"
+msgstr "Não existem ligações efetuadas"
 
 #: calllist.php:89
 msgid "Number called"
-msgstr "已呼叫的号码"
+msgstr "Número chamado"
 
 #: nocaseavailable.php:69
 msgid "No case available"
-msgstr "无可用访问"
+msgstr "Caso indisponível"
 
 #: nocaseavailable.php:74
 msgid "There is no case currently available"
-msgstr "当前无可用访问"
+msgstr "Sem casos disponíveis"
 
 #: nocaseavailable.php:75
 msgid "Reasons:"
-msgstr "原因："
+msgstr "Motivos:"
 
 #: nocaseavailable.php:86 nocaseavailable.php:98 admin/samplelist.php:462
 #: admin/questionnairelist.php:564 admin/operatorlist.php:290
 msgid "Enabled"
-msgstr "已启用"
+msgstr "Ativado"
 
 #: nocaseavailable.php:86 admin/samplelist.php:460
 #: admin/questionnairelist.php:562 admin/index.php:212
@@ -1131,15 +1134,15 @@ msgstr ""
 #: admin/availabilitygroup.php:133 admin/outcomes.php:169
 #: admin/outcomes.php:220
 msgid "ID"
-msgstr "序号"
+msgstr "NR"
 
 #: nocaseavailable.php:98 nocaseavailable.php:122 admin/samplelist.php:326
 #: admin/set_outcomes.php:146 admin/set_outcomes.php:189
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:283 admin/quota.php:256
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277 admin/quota.php:256
 #: admin/quotarow.php:422 admin/quotarow.php:460 admin/quotarow.php:482
 #: admin/quotarow.php:508 admin/quotarow.php:555 admin/quotarow.php:586
 msgid "Description"
-msgstr "描述"
+msgstr "Descrição"
 
 #: nocaseavailable.php:122 admin/samplelist.php:317 admin/quotareport.php:310
 #: admin/assigntimeslots.php:265 admin/outcomes.php:128 admin/outcomes.php:184
@@ -1150,7 +1153,7 @@ msgstr "描述"
 #: admin/casestatus.php:244 admin/displayappointments.php:313
 #: admin/displayappointments.php:336
 msgid "Sample"
-msgstr "样本"
+msgstr "Lista"
 
 #: nocaseavailable.php:147 admin/sortsample.php:139 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/callhistory.php:162
@@ -1159,39 +1162,40 @@ msgstr "样本"
 #: admin/displayappointments.php:313 admin/displayappointments.php:336
 #: admin/new.php:148 admin/new.php:156 shifts.php:109
 msgid "Questionnaire"
-msgstr "问卷"
+msgstr "Questionário"
 
 #: nocaseavailable.php:147
 msgid "Shift start"
-msgstr "可用调查时段开始"
+msgstr "Início do Turno"
 
 #: nocaseavailable.php:147
 msgid "Shift end"
-msgstr "可用调查时段结束"
+msgstr "Término do Turno"
 
 #: nocaseavailable.php:185
 msgid "Limesurvey links:"
-msgstr "Limesurvey连接："
+msgstr "Conexão com o LimeSurvey:"
 
 #: nocaseavailable.php:204
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
-msgstr "错误：Limesurvey问卷无定义的验证码表"
+msgstr ""
+"ERRO: Não foi gerada a tabela de TOKENS no LimeSurvey para este questionário"
 
 #: nocaseavailable.php:204
 msgid "from questionnaire:"
-msgstr "取自问卷："
+msgstr "do questionário:"
 
 #: nocaseavailable.php:206
 msgid "Tokens table exists for Limesurvey questionnaire:"
-msgstr "Limesurvey问卷存在验证码表："
+msgstr "Tabela de TOKENS existente para este questionário:"
 
 #: nocaseavailable.php:211
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
-msgstr "错误：无法使用Limesurvey序号找到问卷"
+msgstr "ERRO: Não foram encontrados questionários com IDs do LimeSurvey"
 
 #: nocaseavailable.php:231
 msgid "ERROR: Quota reached for this question"
-msgstr "错误：该问题达到指标"
+msgstr "ERRO: Amostra fechada para esta pergunta"
 
 #: nocaseavailable.php:250
 msgid "POSSIBLE ERROR: Row quota reached for this quota"
@@ -1206,7 +1210,9 @@ msgstr ""
 #: admin/shifttemplate.php:106
 msgid ""
 "Your database does not have timezones installed, please see here for details"
-msgstr "您的数据库没有安装时区，请看这里查看详细信息"
+msgstr ""
+"Seu banco de dados não possui Fusos Horários ou Timezones instaladas. Por "
+"favor, leia aqui para detalhes"
 
 #: admin/timezonetemplate.php:109 admin/supervisor.php:157 admin/new.php:198
 #: admin/new.php:406
@@ -1253,11 +1259,11 @@ msgstr ""
 
 #: admin/timezonetemplate.php:131
 msgid "Add a Timezone:"
-msgstr "添加时区："
+msgstr "Adicionar um fuso horário:"
 
 #: admin/timezonetemplate.php:135
 msgid "Add Timezone"
-msgstr "添加时区"
+msgstr "Adicionar Fuso horário"
 
 #: admin/samplelist.php:168
 msgid ""
@@ -1271,7 +1277,7 @@ msgstr ""
 
 #: admin/samplelist.php:281 admin/samplelist.php:489 admin/index.php:133
 msgid "Sample management"
-msgstr "样本管理"
+msgstr "Gerenciar listagens"
 
 #: admin/samplelist.php:318
 msgid "Search this sample"
@@ -1287,7 +1293,7 @@ msgstr ""
 
 #: admin/samplelist.php:330
 msgid "Rename"
-msgstr "重命名"
+msgstr "Renomear"
 
 #: admin/samplelist.php:339
 msgid "Sample variable (Column)"
@@ -1303,7 +1309,7 @@ msgstr ""
 
 #: admin/samplelist.php:339
 msgid "Example data"
-msgstr "样例数据"
+msgstr "Dados de Exemplo"
 
 #: admin/samplelist.php:339
 msgid "Delete ?"
@@ -1313,7 +1319,7 @@ msgstr ""
 #: admin/quotarow.php:398 admin/extensionstatus.php:210
 #: admin/displayappointments.php:281
 msgid "Save changes"
-msgstr "保存修改"
+msgstr "Salvar alterações"
 
 #: admin/samplelist.php:353
 msgid ""
@@ -1336,7 +1342,7 @@ msgstr ""
 #: admin/samplelist.php:465 admin/questionnairelist.php:567
 #: admin/operatorlist.php:390
 msgid "Enable"
-msgstr "启用"
+msgstr "Habilitado"
 
 #: admin/samplelist.php:467 admin/samplelist.php:478
 #: admin/questionnairelist.php:569 admin/assignsample.php:330
@@ -1348,7 +1354,7 @@ msgstr ""
 #: admin/samplelist.php:467 admin/questionnairelist.php:569
 #: admin/operatorlist.php:392
 msgid "Disable"
-msgstr "禁用"
+msgstr "Desabilitado"
 
 #: admin/samplelist.php:471 admin/operators.php:260 admin/operators.php:274
 #: admin/sortsample.php:105 admin/sortsample.php:139
@@ -1359,7 +1365,7 @@ msgstr "禁用"
 #: admin/shiftreport.php:102 admin/shiftreport.php:110
 #: admin/displayappointments.php:313 admin/displayappointments.php:336
 msgid "Edit"
-msgstr "编辑"
+msgstr "Alterar"
 
 #: admin/samplelist.php:471
 msgid "Viewing permissions"
@@ -1375,12 +1381,12 @@ msgstr ""
 
 #: admin/samplelist.php:480 admin/samplesearch.php:86 admin/index.php:134
 msgid "Search the sample"
-msgstr "查询样本"
+msgstr "Localizar na listagem"
 
 #: admin/samplelist.php:481 admin/questionnairelist.php:593
 #: admin/index.php:168 index.php:255 index_interface2.php:277
 msgid "Call history"
-msgstr "呼叫历史"
+msgstr "Histórico de chamadas"
 
 #: admin/samplelist.php:481
 msgid "sample"
@@ -1388,7 +1394,7 @@ msgstr ""
 
 #: admin/samplelist.php:488
 msgid "Sample list"
-msgstr "样本列表"
+msgstr "Listagens"
 
 #: admin/samplelist.php:492 admin/index.php:132
 msgid "Import a sample file"
@@ -1396,11 +1402,11 @@ msgstr ""
 
 #: admin/voipmonitor.php:78 admin/voipmonitor.php:100
 msgid "Monitor VoIP Process"
-msgstr "监控VoIP进程"
+msgstr "Monitora a comunicação VoIP"
 
 #: admin/voipmonitor.php:80 admin/systemsort.php:82
 msgid "Running process:"
-msgstr "运行进程："
+msgstr "Processo em execução:"
 
 #: admin/voipmonitor.php:84
 msgid ""
@@ -1418,39 +1424,39 @@ msgstr ""
 
 #: admin/voipmonitor.php:89 admin/systemsort.php:91
 msgid "Kill the running process"
-msgstr "终止运行进程"
+msgstr "Encerrar o processo em execução"
 
 #: admin/voipmonitor.php:89
 msgid "(requires activity on the VoIP Server to take effect)"
-msgstr "（需要VoIP服务器有反应动作才有效）"
+msgstr "(necessita atividade no servidor VoIP para ter efeito)"
 
 #: admin/voipmonitor.php:95 admin/voipmonitor.php:107 admin/systemsort.php:97
 #: admin/systemsort.php:111
 msgid "Log id"
-msgstr "登录编号"
+msgstr "Nr Log"
 
 #: admin/voipmonitor.php:95 admin/voipmonitor.php:107 admin/systemsort.php:97
 #: admin/systemsort.php:111 admin/outcomes.php:305 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/shiftreport.php:110
 msgid "Date"
-msgstr "日期"
+msgstr "Data"
 
 #: admin/voipmonitor.php:95 admin/voipmonitor.php:107 admin/systemsort.php:97
 #: admin/systemsort.php:111
 msgid "Log entry"
-msgstr "登录"
+msgstr "Situação"
 
 #: admin/voipmonitor.php:102
 msgid "Click here to begin monitoring the VoIP Process"
-msgstr "点击开始监控VoIP进程"
+msgstr "Clique aqui para iniciar o processo de monitoramento do VoIP"
 
 #: admin/voipmonitor.php:103 admin/systemsort.php:110
 msgid "Outcome of last process run (if any)"
-msgstr "最近的进程运行结果（如果有的话）"
+msgstr "Resultado do último processo em curso (se algum)"
 
 #: admin/systemsortprocess.php:93
 msgid "Sorting cases process starting"
-msgstr "访问排序程序开始"
+msgstr "Iniciando o processo de sorteio de casos"
 
 #: admin/systemsortprocess.php:106
 msgid "Checking for cases open for more than 24 hours"
@@ -1459,22 +1465,24 @@ msgstr ""
 #: admin/systemsortprocess.php:135 admin/systemsortprocess.php:147
 #: admin/systemsortprocess.php:173 admin/systemsortprocess.php:185
 msgid "System automatically closed case as not closed for more than 24 hours"
-msgstr "由于访问24小时以上未被关闭，系统自动关闭该访问"
+msgstr ""
+"O sistema fechou automaticamente o caso como caso não fechado por mais de 24 "
+"horas"
 
 #: admin/systemsortprocess.php:194
 msgid "Completed case closing"
 msgstr ""
 
 #: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
-#: admin/systemsortprocess.php:328 admin/systemsortprocess.php:330
+#: admin/systemsortprocess.php:359 admin/systemsortprocess.php:361
 msgid "This task took"
-msgstr "本次任务需要"
+msgstr "Esta tarefa levou"
 
 #: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
-#: admin/systemsortprocess.php:328 admin/systemsortprocess.php:330
+#: admin/systemsortprocess.php:359 admin/systemsortprocess.php:361
 #: nocallavailable.php:208
 msgid "seconds"
-msgstr "秒"
+msgstr "segundos"
 
 #: admin/systemsortprocess.php:196
 msgid "Failed to complete case closing"
@@ -1484,30 +1492,44 @@ msgstr ""
 msgid "Sorting cases for "
 msgstr ""
 
-#: admin/systemsortprocess.php:328
-msgid "Completed sort"
-msgstr "完成排序"
+#: admin/systemsortprocess.php:239 admin/samplesearch.php:138
+msgid "Deleted"
+msgstr ""
 
-#: admin/systemsortprocess.php:330
+#: admin/systemsortprocess.php:239
+msgid "call attempts with no calls"
+msgstr ""
+
+#: admin/systemsortprocess.php:243
+msgid "No call attempts without calls"
+msgstr ""
+
+#: admin/systemsortprocess.php:359
+msgid "Completed sort"
+msgstr "Sorteio completado"
+
+#: admin/systemsortprocess.php:361
 msgid "Failed to complete sort"
-msgstr "排序未完成"
+msgstr "Falha para completar o sorteio"
 
 #: admin/systemsort.php:80 admin/systemsort.php:102
 msgid "Monitor system wide case sorting"
-msgstr "监控全系统访问排序"
+msgstr "Monitorar o sistema de sorteio de casos"
 
 #: admin/systemsort.php:86
 msgid "Kill signal sent: Please wait..."
-msgstr "终止信号发送：请等待..."
+msgstr "Interromper o comando enviado: Por favor aguarde..."
 
 #: admin/systemsort.php:87
 msgid ""
 "Process is already closed (eg. server was rebooted) - click here to confirm"
-msgstr "进程已关闭（例如：服务器重启） - 点击确认"
+msgstr ""
+"Processo já foi encerrado (ex.: servidor foi reiniciado) - clique aqui para "
+"confirmar"
 
 #: admin/systemsort.php:104
 msgid "Click here to enable and begin system wide case sorting"
-msgstr "点击启动并开始系统大规模访问排序"
+msgstr "Clique aqui para habilitar e iniciar o sistema de sorteio de casos"
 
 #: admin/systemsort.php:105
 msgid ""
@@ -1518,9 +1540,13 @@ msgid ""
 "complex quotas in place. If you are not experiencing any performance "
 "problems, it is not recommended to use this feature."
 msgstr ""
-"全系统访问排序定期（使用SYSTEM_SORT_MINUTES配置指令）进行系统范围内的访问排序， "
-"而不是在每次电话调查员请求一个新访问的时候寻找最合适的访问对象。这样可以在有大量访问或复杂配额的时候提高效率。如果您没有任何访问效率方面的问题，我们不推荐"
-"您使用本功能。"
+"O sistema de sorteio de casos para bases grandes periodicamente (via a "
+"diretiva de configuração SYSTEM_SORT_MINUTES) sorteia os registros com base "
+"na métrica definida, ao invés de procurar um caso mais apropriado cada vez "
+"que um pesquisador requisita um novo caso. Isto pode aumentar a "
+"produtividade quando há um grande número de casos ou amostras complexas. Se "
+"você não estiver com dificuldades de desempenho, não é recomendado usar este "
+"recurso."
 
 #: admin/operators.php:146
 msgid "Added operator :"
@@ -1534,22 +1560,24 @@ msgstr ""
 #: admin/operators.php:163
 msgid ""
 "Could not add operator. There may already be an operator of this name:"
-msgstr "无法添加调查员。系统中可能已有同名访问员："
+msgstr ""
+"Não foi possível adicionar o operador. Já existe um operador com este nome:"
 
 #: admin/operators.php:169 admin/operators.php:309 admin/operatorlist.php:424
 msgid "Add an operator"
-msgstr "添加电话调查员"
+msgstr "Adicionar um operador"
 
 #: admin/operators.php:178
 msgid "The username and extension must be unique for each operator."
-msgstr "每位电话调查员的用户名和分机号必须唯一。"
+msgstr ""
+"O nome de usuário (logon) e extensão devem ser únicos para cada operador"
 
 #: admin/operators.php:233 admin/clients.php:126 admin/clients.php:221
 #: admin/clientquestionnaire.php:291 admin/operatorlist.php:216
 #: admin/operatorlist.php:408 admin/operatorskill.php:251
 #: admin/operatorquestionnaire.php:247
 msgid "Username"
-msgstr "用户名"
+msgstr "Usuário"
 
 #: admin/operators.php:237 admin/clients.php:225 admin/operatorlist.php:220
 msgid "Password"
@@ -1574,7 +1602,7 @@ msgstr ""
 
 #: admin/operators.php:266 admin/operatorlist.php:250
 msgid "Uses VoIP"
-msgstr "使用VoIP"
+msgstr "Utilizar VoIP"
 
 #: admin/operators.php:275 admin/operatorlist.php:261
 #: admin/operatorlist.php:425
@@ -1583,15 +1611,15 @@ msgstr ""
 
 #: admin/operators.php:282 admin/operatorlist.php:268
 msgid "Uses chat"
-msgstr "使用聊天室"
+msgstr "Utilizar chat"
 
 #: admin/operators.php:288 admin/operatorlist.php:274
 msgid "Jabber/XMPP chat user"
-msgstr "Jabber/XMPP聊天室用户名"
+msgstr "Usuário do Chat Jabber/XMPP"
 
 #: admin/operators.php:292 admin/operatorlist.php:278
 msgid "Jabber/XMPP chat password"
-msgstr "Jabber/XMPP聊天室密码"
+msgstr "Senha do usuário do chat Jabber/XMPP"
 
 #: admin/operators.php:298 admin/operatorlist.php:285
 msgid "Is the operator a system administrator?"
@@ -1600,7 +1628,7 @@ msgstr ""
 #: admin/quotareport.php:114 admin/questionnairelist.php:608
 #: admin/index.php:170
 msgid "Quota report"
-msgstr "配额报表"
+msgstr "Relatório de Amostragem"
 
 #: admin/quotareport.php:116 admin/assigntimeslots.php:161
 #: admin/questionnaireprefill.php:107 admin/outcomes.php:74
@@ -1614,12 +1642,12 @@ msgstr ""
 
 #: admin/quotareport.php:212 admin/quotareport.php:219 admin/quotarow.php:571
 msgid "closed"
-msgstr "已关闭"
+msgstr "fechada"
 
 #: admin/quotareport.php:212 admin/quotareport.php:214
 #: admin/quotareport.php:221 admin/quotarow.php:571
 msgid "open"
-msgstr "开启"
+msgstr "aberta"
 
 #: admin/quotareport.php:214
 msgid "close"
@@ -1627,40 +1655,40 @@ msgstr ""
 
 #: admin/quotareport.php:307
 msgid "Total sample"
-msgstr "样本总量"
+msgstr "Amostra Total"
 
 #: admin/quotareport.php:310
 msgid "Strata"
-msgstr "阶层"
+msgstr "Estrato"
 
 #: admin/quotareport.php:310 admin/quotarow.php:134 admin/quotarow.php:390
 #: admin/quotarow.php:586
 msgid "Quota"
-msgstr "配额"
+msgstr "Cota"
 
 #: admin/quotareport.php:310
 msgid "Sample Used"
-msgstr "样本已使用"
+msgstr "Amostra Utilizada"
 
 #: admin/quotareport.php:310
 msgid "Sample Remaining"
-msgstr "样本存留"
+msgstr "Amostra Remanescente"
 
 #: admin/quotareport.php:310
 msgid "% Complete"
-msgstr "% 完成"
+msgstr "% Concluído"
 
 #: admin/quotareport.php:310
 msgid "Set priority"
-msgstr "设置优先级"
+msgstr "Definir prioridade"
 
 #: admin/quotareport.php:310 admin/quotarow.php:586
 msgid "Auto prioritise"
-msgstr "自动优先级"
+msgstr "Priorização automática"
 
 #: admin/quotareport.php:314
 msgid "Update priorities"
-msgstr "更新优先级"
+msgstr "Atualizar prioridades"
 
 #: admin/assigntimeslots.php:159 admin/index.php:141
 msgid "Assign Time slots"
@@ -1681,7 +1709,7 @@ msgstr ""
 #: admin/assigntimeslots.php:273 admin/assignsample.php:330
 #: admin/casestatus.php:101
 msgid "Click to unassign"
-msgstr "点击解除分派"
+msgstr "Clique para desmarcar"
 
 #: admin/assigntimeslots.php:181
 msgid "There are no time slots groups selected for this questionnaire"
@@ -1751,7 +1779,7 @@ msgstr ""
 
 #: admin/questionnaireprefill.php:128
 msgid "Currently no pre fills"
-msgstr "当前无预设"
+msgstr "Não há questões com auto-preenchimento definidas"
 
 #: admin/questionnaireprefill.php:134
 msgid "SGQA code"
@@ -1762,48 +1790,50 @@ msgid "Sample variable"
 msgstr ""
 
 #: admin/questionnaireprefill.php:134 admin/samplesearch.php:101
-#: admin/clientquestionnaire.php:305 admin/set_outcomes.php:284
+#: admin/clientquestionnaire.php:305 admin/set_outcomes.php:278
 #: admin/supervisor.php:200 admin/supervisor.php:373 admin/supervisor.php:419
 #: admin/quotarow.php:422 admin/quotarow.php:508
 #: admin/displayappointments.php:313 admin/displayappointments.php:336
 msgid "Delete"
-msgstr "删除"
+msgstr "Excluir"
 
 #: admin/questionnaireprefill.php:139
 msgid "Select a question to pre fill"
-msgstr "选择一个预设问题"
+msgstr "Selecione uma pergunta para ser auto-preenchida"
 
 #: admin/questionnaireprefill.php:172
 msgid "Enter a value to pre fill this question with:"
-msgstr "输入该问题的预设值："
+msgstr "Informe um valor para auto-resposta nesta questão com:"
 
 #: admin/questionnaireprefill.php:174
 msgid "Possible uses:"
-msgstr "可能的用处："
+msgstr "Possibilidades de usos:"
 
 #: admin/questionnaireprefill.php:176
 msgid "{Respondent:firstName} First name of the respondent"
-msgstr "{Respondent:firstName} 受访者的名"
+msgstr "{Respondent:firstName} Primeiro nome do entrevistado"
 
 #: admin/questionnaireprefill.php:177
 msgid "{Respondent:lastName} Last name of the respondent"
-msgstr "{Respondent:lastName} 受访者的姓"
+msgstr "{Respondent:lastName} Sobrenome do entrevistado"
 
 #: admin/questionnaireprefill.php:178
 msgid "{Sample:var} A record from the sample where the column name is 'var'"
-msgstr "{Sample:var} 列名是 'var' 的样本记录"
+msgstr ""
+"{Sample:var} Um campo da listagem (Sample) onde a coluna desejada chama-se "
+"var."
 
 #: admin/questionnaireprefill.php:187
 msgid "The value to pre fill"
-msgstr "预设的值"
+msgstr "O valor para preencher"
 
 #: admin/questionnaireprefill.php:188
 msgid "or: Select pre fill from sample list"
-msgstr "或者：从样本列表中选择预设"
+msgstr "ou: Selecione uma auto-resposta da listagem"
 
 #: admin/questionnaireprefill.php:196
 msgid "Add pre fill"
-msgstr "添加预设"
+msgstr "Adicionar auto-resposta"
 
 #: admin/auth-admin.php:63
 msgid "You do not have permission to access this area"
@@ -1819,7 +1849,7 @@ msgstr ""
 
 #: admin/availabilitygroup.php:122 admin/availabilitygroup.php:133
 msgid "Modify"
-msgstr "修改"
+msgstr "Modificar"
 
 #: admin/availabilitygroup.php:127
 msgid ""
@@ -1846,19 +1876,19 @@ msgstr ""
 
 #: admin/outcomes.php:80 admin/outcomes.php:190
 msgid "Sample status"
-msgstr "样本状态"
+msgstr "Situação da Listagem"
 
 #: admin/outcomes.php:82 admin/outcomes.php:192
 msgid "Drawn from sample"
-msgstr "从样本中提取"
+msgstr "Utilizados"
 
 #: admin/outcomes.php:82 admin/outcomes.php:192
 msgid "Remain in sample"
-msgstr "保留在样本中"
+msgstr "Livres na listagem"
 
 #: admin/outcomes.php:88 admin/outcomes.php:200
 msgid "Number"
-msgstr "数字"
+msgstr "Quantidade"
 
 #: admin/outcomes.php:89 admin/outcomes.php:187
 msgid "No samples assigned"
@@ -1866,23 +1896,24 @@ msgstr ""
 
 #: admin/outcomes.php:92
 msgid "Case availability (cases with temporary or appointment outcomes)"
-msgstr "访问有效时间（带有临时或预约结果的访问）"
+msgstr ""
+"Registros em andamento (casos com resultados temporários ou agendamentos)"
 
 #: admin/outcomes.php:124
 msgid "No cases currently available to call"
-msgstr "当前无待呼叫的可用访问"
+msgstr "Não existem registros disponíveis para ligar"
 
 #: admin/outcomes.php:136
 msgid "Average time on a completed questionnaire"
-msgstr "完成问卷的平均时间"
+msgstr "Média do tempo de preenchimento do questionário"
 
 #: admin/outcomes.php:136
 msgid "Min"
-msgstr "最小"
+msgstr "Minutos"
 
 #: admin/outcomes.php:136
 msgid "Secs"
-msgstr "秒"
+msgstr "Segundos"
 
 #: admin/outcomes.php:169 admin/outcomes.php:220 admin/outcomes.php:262
 msgid "%"
@@ -1890,7 +1921,7 @@ msgstr "%"
 
 #: admin/outcomes.php:223
 msgid "No outcomes recorded for this sample"
-msgstr "该样本无结果记录"
+msgstr "Não há resultados gravados para esta listagem"
 
 #: admin/outcomes.php:243
 msgid "No operators assigned"
@@ -1898,28 +1929,28 @@ msgstr ""
 
 #: admin/outcomes.php:247
 msgid "Operator call outcomes"
-msgstr "电话调查员呼叫结果"
+msgstr "Resultados por operador"
 
 #: admin/outcomes.php:274 admin/questionnairelist.php:576 index.php:264
 #: index_interface2.php:285
 msgid "Shifts"
-msgstr "调查时段"
+msgstr "Turnos"
 
 #: admin/outcomes.php:278
 msgid "No shift reports: Add report"
-msgstr "无时时段报告：添加报告"
+msgstr "Sem ocorrências no turno: Adicionar ocorrência"
 
 #: admin/outcomes.php:279
 msgid "View shift reports"
-msgstr "查看时段报告"
+msgstr "Consultar ocorrências"
 
 #: admin/outcomes.php:282
 msgid "View operator performance"
-msgstr "查看电话调查员绩效"
+msgstr "Consultar performance do operador"
 
 #: admin/outcomes.php:301
 msgid "No shifts defined for this questionnaire"
-msgstr "该问卷没有设置可用调查时段"
+msgstr "Sem turnos definidos para este questionário"
 
 #: admin/outcomes.php:305
 msgid "Shift time"
@@ -1927,11 +1958,11 @@ msgstr ""
 
 #: admin/outcomes.php:305 admin/operatorlist.php:428 admin/index.php:161
 msgid "Operator performance"
-msgstr "电话调查员绩效"
+msgstr "Produtividade dos Pesquisadores"
 
 #: admin/samplesearch.php:84
 msgid "Search within this sample"
-msgstr "在该样本中查询"
+msgstr "Pesquisar dentro desta listagem"
 
 #: admin/samplesearch.php:94 admin/supervisor.php:193
 msgid "WARNING !"
@@ -1954,10 +1985,6 @@ msgstr ""
 msgid "Select sample "
 msgstr ""
 
-#: admin/samplesearch.php:138
-msgid "Deleted"
-msgstr ""
-
 #: admin/samplesearch.php:146
 msgid "Delete sample record"
 msgstr ""
@@ -1968,7 +1995,7 @@ msgstr ""
 
 #: admin/samplesearch.php:159 admin/supervisor.php:330
 msgid "Sample id"
-msgstr "样本编号"
+msgstr "ID"
 
 #: admin/samplesearch.php:190
 msgid "There's no data in this sample."
@@ -1976,22 +2003,24 @@ msgstr ""
 
 #: admin/bulkappointment.php:133 admin/bulkappointment.php:215
 msgid "Result"
-msgstr "结果"
+msgstr "Resultado"
 
 #: admin/bulkappointment.php:134 admin/bulkappointment.php:223
 #: admin/bulkappointment.php:259 admin/index.php:185
 msgid "Bulk appointment generator"
-msgstr "批量预约生成器"
+msgstr "Gerador de Agendamentos em Massa"
 
 #: admin/bulkappointment.php:205
 msgid "Added appointment"
-msgstr "已添加预约"
+msgstr "Agendamento realizado"
 
 #: admin/bulkappointment.php:209
 msgid ""
 "No such case id, or case set to a final outcome, or case currently assigned "
 "to an operator"
-msgstr "无此样本编号，已经完结，或已被分派给其他调查员"
+msgstr ""
+"Não há um caso, ou caso atribuído a um resultado não retornável, ou não há "
+"caso atribuído para um operador"
 
 #: admin/bulkappointment.php:222
 msgid "Check data to submit"
@@ -2001,31 +2030,35 @@ msgstr ""
 msgid ""
 "Please check the case id's, appointment start and end times and notes are "
 "correct before accepting below"
-msgstr "接受下列内容前请检查访问编号、预约起止时间及备注是否准确"
+msgstr ""
+"Por favor, verifique se os números dos casos, os horários agendados e "
+"observações estão corretas antes de aceitar abaixo"
 
 #: admin/bulkappointment.php:237 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/displayappointments.php:247
 msgid "Start time"
-msgstr "开始时间"
+msgstr "Horário Inicial"
 
 #: admin/bulkappointment.php:237 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/displayappointments.php:249
 msgid "End time"
-msgstr "结束时间"
+msgstr "Horário final"
 
 #: admin/bulkappointment.php:242
 msgid "Accept and generate bulk appointments"
-msgstr "接受并生成批量预约"
+msgstr "Aceitar e gerar agendamentos em massa"
 
 #: admin/bulkappointment.php:247
 msgid ""
 "The file does not contain at least caseid, starttime and endtime columns. "
 "Please try again."
-msgstr "文件不包含必要的访问编号caseid、开始时间starttime和结束时间endtime列。请重试。"
+msgstr ""
+"O arquivo não contém ao menos as colunas do Nr do caso (ID), hora de início "
+"e hora de término. Por favor, tente novamente."
 
 #: admin/bulkappointment.php:258
 msgid "Import: Select file to upload"
-msgstr "导入：选择文件上传"
+msgstr "Importar: Selecione o arquivo para carregar"
 
 #: admin/bulkappointment.php:266
 msgid ""
@@ -2039,7 +2072,7 @@ msgstr ""
 
 #: admin/bulkappointment.php:269
 msgid "Example CSV file:"
-msgstr "样例CSV文件："
+msgstr "Exemplo de arquivo CSV:"
 
 #: admin/bulkappointment.php:281
 msgid "Select bulk appointment CSV file to upload"
@@ -2055,37 +2088,41 @@ msgstr ""
 
 #: admin/callrestrict.php:104 admin/index.php:194
 msgid "Set call restriction times"
-msgstr "设置呼叫限定时间"
+msgstr "Ajustar restrições de chamadas"
 
 #: admin/callrestrict.php:118 admin/availability.php:163
 msgid ""
 "Enter the start and end times for each day of the week to restrict calls "
 "within"
-msgstr "输入一周每天的起止时间来限定呼叫时间在"
+msgstr ""
+"Informe os horários de início e término para cada dia da semana para "
+"autorizar as chamadas dentro desses intervalos"
 
 #: admin/callrestrict.php:140 admin/addshift.php:243
 #: admin/availability.php:165 admin/shifttemplate.php:136
 msgid "Day"
-msgstr "日"
+msgstr "Dia"
 
 #: admin/callrestrict.php:158 admin/availability.php:181
 #: admin/shifttemplate.php:154
 msgid "Add row"
-msgstr "添加行"
+msgstr "Adicionar linha"
 
 #: admin/callrestrict.php:159
 msgid "Save changes to restriction times"
-msgstr "保存对限定时间的修改"
+msgstr "Salvar alterações"
 
 #: admin/addshift.php:92
 msgid "Add shifts"
-msgstr "添加调查时段"
+msgstr "Adicionar turnos"
 
 #: admin/addshift.php:93
 msgid ""
 "You must be an operator (as well as have administrator access) to add/edit "
 "shifts"
-msgstr "您必须是电话调查员（以及具有管理员访问权限）才可以添加/编辑调查时段"
+msgstr ""
+"Você deve ser um operador (bem como ter acesso administrativo) para "
+"adicionar ou editar os turnos"
 
 #: admin/addshift.php:145 admin/index.php:145
 msgid "Shift management"
@@ -2093,17 +2130,20 @@ msgstr ""
 
 #: admin/addshift.php:168
 msgid "Add shifts in your Time Zone"
-msgstr "在您的时区内添加可用调查时段"
+msgstr "Adicionar turnos em seu fuso-horário"
 
 #: admin/addshift.php:171
 msgid ""
 "Shifts allow you to restrict appointments being made, and interviewers to "
 "working on a particlar project at defined times."
-msgstr "可用调查时段允许您将特定项目的预约、访问员的工作限定在规定的时间段内。"
+msgstr ""
+"Turnos habilitam você a limitar os agendamentos realizados, bem como limitam "
+"os pesquisadores a trabalharem em um estudo específico dentro do cronograma "
+"definido."
 
 #: admin/addshift.php:179
 msgid "Select year"
-msgstr "选择年份"
+msgstr "Selecione o Ano"
 
 #: admin/addshift.php:190
 msgid "Select week"
@@ -2111,11 +2151,11 @@ msgstr ""
 
 #: admin/addshift.php:243
 msgid "Use shift?"
-msgstr "使用调查时段？"
+msgstr "Utilizar turnos?"
 
 #: admin/process.php:90
 msgid "Cannot connect to VoIP Server"
-msgstr "无法连接到VoIP服务器"
+msgstr "Não foi possível conectar ao seu servidor VoIP"
 
 #: admin/supervisorchat.php:68
 msgid ""
@@ -2123,24 +2163,25 @@ msgid ""
 "is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will "
 "need XMPP/Jabber accounts."
 msgstr ""
-"允许电话调查员使用XMPP（Jabber）与督导员谈话。需要一个启动BOSH的XMPP/Jabber服务器。电话调查员和督导员需要XMPP/Jabber账"
-"户。"
+"Habilita os pesquisadores a conversarem com o supervisor via chat sobre XMPP "
+"(Jabber). Necessário ter um servidor Jabber XMPP BOSH habilitado. Tanto os "
+"pesquisadores quanto o supervisor precisam ter uma conta XMPP Jabber."
 
 #: admin/supervisorchat.php:78
 msgid "Enable supervisor chat?"
-msgstr "启用督导员聊天室？"
+msgstr "Habilita chat com o supervisor?"
 
 #: admin/supervisorchat.php:82
 msgid "Set BOSH URL"
-msgstr "设置BOSH链接"
+msgstr "Define URL do servidor BOSH para o chat"
 
 #: admin/supervisorchat.php:86
 msgid "Supervisor XMPP/Jabber id"
-msgstr "调查督导员XMPP/Jabber账号"
+msgstr "ID do Supervisor XMPP/Jabber"
 
 #: admin/supervisorchat.php:90
 msgid "Update"
-msgstr "更新"
+msgstr "Atualizar"
 
 #: admin/sortsample.php:91
 msgid "List and sort samples"
@@ -2156,7 +2197,7 @@ msgstr ""
 
 #: admin/sortsample.php:100
 msgid "Samples selected for this questionnaire"
-msgstr "该问卷选择的样本"
+msgstr "Listagens selecionadas para este questionário"
 
 #: admin/sortsample.php:101 admin/sortsample.php:102
 #: admin/assignsample.php:224 admin/assignsample.php:227
@@ -2193,20 +2234,20 @@ msgstr ""
 #: admin/sortsample.php:139 admin/assignsample.php:222
 #: admin/assignsample.php:364 admin/assignsample.php:387
 msgid "Max calls"
-msgstr "最多呼叫数"
+msgstr "Max Chamadas"
 
 #: admin/sortsample.php:139 admin/assignsample.php:225
 #: admin/assignsample.php:364 admin/assignsample.php:391
 msgid "Max call attempts"
-msgstr "最多呼叫尝试数"
+msgstr "Max Tentativas"
 
 #: admin/sortsample.php:139 admin/assignsample.php:364
 msgid "Answering machine messages"
-msgstr "电话答录机留言"
+msgstr "Recados na Cx Msg"
 
 #: admin/sortsample.php:139 admin/assignsample.php:364
 msgid "Selection type"
-msgstr "受访者筛选方式"
+msgstr "Tipo de seleção"
 
 #: admin/sortsample.php:142
 msgid "No samples assigned to questionnaires"
@@ -2222,56 +2263,56 @@ msgstr ""
 
 #: admin/questionnairelist.php:379
 msgid "Edit instrument in Limesurvey"
-msgstr "在LimeSurvey中编辑主问卷"
+msgstr "Editar instrumento no Limesurvey"
 
 #: admin/questionnairelist.php:385 admin/questionnairelist.php:386
 #: admin/new.php:183 admin/new.php:185
 msgid "Name for questionnaire:"
-msgstr "问卷名："
+msgstr "Nome para o questionário:"
 
 #: admin/questionnairelist.php:389 admin/new.php:218
 msgid "Restrict appointments to shifts?"
-msgstr "将预约限定在调查时段内？"
+msgstr "Restringir agendamentos aos turnos?"
 
 #: admin/questionnairelist.php:392 admin/new.php:225
 msgid "Restrict work to shifts?"
-msgstr "将访问限定在调查时段内？"
+msgstr "Restringir trabalho aos turnos?"
 
 #: admin/questionnairelist.php:396 admin/new.php:232
 msgid "Questionnaire for testing only?"
-msgstr "问卷仅用于测试吗？"
+msgstr "Questionário apenas de teste?"
 
 #: admin/questionnairelist.php:400 admin/new.php:239
 msgid "Allow operators to generate referrals?"
-msgstr "允许电话调查员生成被引荐的受访者吗？"
+msgstr ""
 
 #: admin/questionnairelist.php:404 admin/new.php:246
 msgid "Allow for respondent self completion via email invitation?"
-msgstr "允许受访者通过邮件邀请自助完成访问吗？"
+msgstr "Habilitar para auto-resposta via email?"
 
 #: admin/questionnairelist.php:409 admin/new.php:254
 msgid "Questionnaire display mode for respondent"
-msgstr "受访者问卷显示模式"
+msgstr "Modo de visualização do questionário pelo entrevistado"
 
 #: admin/questionnairelist.php:412 admin/new.php:257
 msgid "All in one"
-msgstr "在一页中显示所有问题"
+msgstr "Tudo em um"
 
 #: admin/questionnairelist.php:413 admin/new.php:258
 msgid "Question by question"
-msgstr "按问题显示"
+msgstr "Questão por questão"
 
 #: admin/questionnairelist.php:414 admin/new.php:259
 msgid "Group at a time"
-msgstr "按组显示"
+msgstr "Um grupo por vez"
 
 #: admin/questionnairelist.php:419 admin/new.php:264
 msgid "Limesurvey template for respondent"
-msgstr "受访者LimeSurvey模板"
+msgstr "Modelo do LimeSurvey para o respondente"
 
 #: admin/questionnairelist.php:448 admin/new.php:294
 msgid "URL to forward respondents on self completion (required)"
-msgstr "受访者自助完成问卷后的跳转链接（必要）"
+msgstr "URL para encaminhar os respondentes para auto-resposta (obrigatório)"
 
 #: admin/questionnairelist.php:459 admin/questionnairelist.php:469
 #: admin/questionnairelist.php:479 admin/questionnairelist.php:489
@@ -2283,35 +2324,36 @@ msgstr ""
 
 #: admin/questionnairelist.php:460 admin/new.php:331
 msgid "Respondent selection introduction:"
-msgstr "受访者筛选说明："
+msgstr "Introdução para a seleção do respondente:"
 
 #: admin/questionnairelist.php:470 admin/new.php:341
 msgid "Respondent selection project introduction:"
-msgstr "受访者筛选-项目说明："
+msgstr "Introdução do Projeto para seleção do respondente"
 
 #: admin/questionnairelist.php:480 admin/new.php:351
 msgid "Respondent selection callback (already started questionnaire):"
-msgstr "受访者筛选回叫（已开始的问卷）："
+msgstr ""
+"Ligação de Retorno Seleção do Entrevistado (questionário já iniciado):"
 
 #: admin/questionnairelist.php:490 admin/new.php:361
 msgid "Message to leave on an answering machine:"
-msgstr "电话答录机留言："
+msgstr "Mensagem para deixar na caixa de mensagens:"
 
 #: admin/questionnairelist.php:500
 msgid "Edit respondent selection instrument in Limesurvey"
-msgstr "在LimeSurvey中编辑受访者筛选工具"
+msgstr "Editar instrumento de arrolamento no Limesurvey"
 
 #: admin/questionnairelist.php:506 admin/new.php:373
 msgid "Project end text (thank you screen):"
-msgstr "项目结束文本（感谢结语）："
+msgstr "Texto de Encerramento do projeto (Tela de agradecimento):"
 
 #: admin/questionnairelist.php:516 admin/new.php:383
 msgid "Project information for interviewers/operators:"
-msgstr "提供给访问员/电话调查员的项目信息："
+msgstr "Informações do Projeto para os pesquisadores/operadores:"
 
 #: admin/questionnairelist.php:524
 msgid "Update Questionnaire"
-msgstr "更新问卷"
+msgstr "Atualizar Questionário"
 
 #: admin/questionnairelist.php:538
 msgid "Delete Questionnaire"
@@ -2319,35 +2361,39 @@ msgstr ""
 
 #: admin/questionnairelist.php:540
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
-msgstr "任何收集的数据和LimeSurvey主问卷都不会被删除"
+msgstr ""
+"Qualquer dado coletado e o questionário do Limesurvey NÃO serão deletados"
 
 #: admin/questionnairelist.php:541
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
 "operators, clients and the questionnaire"
-msgstr "问卷将从queXS中删除，包括呼叫历史、访问、访问备注、受访者详细信息、预约和电话调查员、客户与问卷间的联系"
+msgstr ""
+"O questionário será deletado do queXS, incluindo o histórico de chamadas, "
+"casos, notas, detalhes dos respondentes, agendamentos e os links entre os "
+"pesquisadores, clientes e o questionário"
 
 #: admin/questionnairelist.php:542
 msgid "Please confirm you wish to delete the questionnaire"
-msgstr "请确认您想删除问卷"
+msgstr "Por favor, confirme se você quer mesmo deletar o questionário"
 
 #: admin/questionnairelist.php:545
 msgid "Delete this questionnaire"
-msgstr "删除该问卷"
+msgstr "Deleta este questionário"
 
 #: admin/questionnairelist.php:551 admin/index.php:124 admin/new.php:157
 #: admin/new.php:167
 msgid "Questionnaire management"
-msgstr "问卷管理"
+msgstr "Gerenciar um questionário"
 
 #: admin/questionnairelist.php:551
 msgid "Questionnaire list"
-msgstr "问卷列表"
+msgstr "Questionários"
 
 #: admin/questionnairelist.php:554 admin/index.php:123 admin/new.php:47
 msgid "Create a new questionnaire"
-msgstr "创建新问卷"
+msgstr "Atribuir um questionário no QueXS"
 
 #: admin/questionnairelist.php:571
 msgid "Edit Questionnaire"
@@ -2382,7 +2428,7 @@ msgstr ""
 #: admin/questionnairelist.php:598 admin/index.php:172
 #: admin/dataoutput.php:200
 msgid "Data output"
-msgstr "数据输出"
+msgstr "Exportação de Resultados"
 
 #: admin/questionnairelist.php:603
 msgid "Assigned samples"
@@ -2391,16 +2437,16 @@ msgstr ""
 #: admin/questionnairelist.php:613 admin/index.php:184
 #: admin/casestatus.php:214
 msgid "Case status and assignment"
-msgstr "访问状态及分派"
+msgstr "Redistribuir ligações"
 
 #: admin/callhistory.php:113 admin/callhistory.php:144
 msgid "Call History List"
-msgstr "呼叫历史列表"
+msgstr "Histórico de Chamadas"
 
 #: admin/callhistory.php:132 admin/callhistory.php:157
 #: admin/supervisor.php:414 admin/databasestrings.php:82
 msgid "Phone number"
-msgstr "电话号码"
+msgstr "Telefone"
 
 #: admin/callhistory.php:150
 msgid "NO Call history records for Your query"
@@ -2408,7 +2454,7 @@ msgstr ""
 
 #: admin/callhistory.php:181
 msgid "Download Call History List"
-msgstr "下载呼叫历史列表"
+msgstr "Efetuar Download do Histórico de Chamadas"
 
 #: admin/clients.php:102
 msgid "Updated"
@@ -2432,7 +2478,7 @@ msgstr ""
 
 #: admin/clients.php:123
 msgid "Could not add"
-msgstr "不能添加"
+msgstr "Impossível adicionar"
 
 #: admin/clients.php:126
 msgid "is already in use"
@@ -2440,7 +2486,7 @@ msgstr ""
 
 #: admin/clients.php:132
 msgid "Add a client"
-msgstr "添加客户"
+msgstr "Adicionar um cliente"
 
 #: admin/clients.php:133
 msgid "Add new client"
@@ -2470,7 +2516,7 @@ msgstr ""
 
 #: admin/clients.php:214
 msgid "Assign client to Questionnaire"
-msgstr "给问卷分派客户"
+msgstr "Atribuir cliente ao questionário"
 
 #: admin/clients.php:226
 msgid "Leave this blank to keep current password"
@@ -2478,7 +2524,7 @@ msgstr ""
 
 #: admin/clients.php:237
 msgid "Surname"
-msgstr "姓"
+msgstr "Sobrenome"
 
 #: admin/availability.php:79
 msgid "No time slot group set"
@@ -2524,11 +2570,11 @@ msgstr ""
 
 #: admin/clientquestionnaire.php:321
 msgid "Assign clients to questionnaires"
-msgstr "给项目分派客户"
+msgstr "Atribuir clientes aos questionários"
 
 #: admin/operatorlist.php:127
 msgid "Successfully updated user"
-msgstr "成功更新用户信息"
+msgstr "Usuário atualizado com sucesso"
 
 #: admin/operatorlist.php:131 admin/operatorlist.php:136
 msgid "Failed to update user"
@@ -2552,7 +2598,7 @@ msgstr ""
 
 #: admin/operatorlist.php:296
 msgid "Update operator"
-msgstr "更新电话调查员信息"
+msgstr "Atualizar operador"
 
 #: admin/operatorlist.php:387
 msgid "Win .bat file"
@@ -2560,19 +2606,19 @@ msgstr ""
 
 #: admin/operatorlist.php:388
 msgid "*nix script file"
-msgstr "*nix脚本文件"
+msgstr "Arquivo de Script *nix"
 
 #: admin/operatorlist.php:395
 msgid "Enable VoIP"
-msgstr "启用VoIP"
+msgstr "Ativar VoIP"
 
 #: admin/operatorlist.php:397
 msgid "Disable VoIP"
-msgstr "禁用VoIP"
+msgstr "Desativar VoIP"
 
 #: admin/operatorlist.php:405
 msgid "Operator list"
-msgstr "电话调查员列表"
+msgstr "Lista de Operadores"
 
 #: admin/operatorlist.php:415
 msgid "VoIP ON/Off"
@@ -2600,8 +2646,9 @@ msgid ""
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
-"为每个用户下载列表中的脚本文件。同时下载客户端文件voip.exe。两者保存在同一文件夹内。执行本脚本文件将启动voip.exe程序，并自动利用其中的连接"
-"信息将电话调查员连接到VoIP服务器"
+"Baixe o arquivo para cada usuário e salve na mesma pasta como VOIP.EXE. "
+"Quando o arquivo é executado, ele rodará o programa VOIP.EXE com os detalhes "
+"para conectar corretamente o operador ao servidor PBX/VoIP."
 
 #: admin/operatorlist.php:434
 msgid "Download Windows VoIP Client Executable file"
@@ -2621,11 +2668,11 @@ msgstr ""
 
 #: admin/centreinfo.php:68 admin/index.php:195
 msgid "Set centre information"
-msgstr "设置中心信息"
+msgstr "Ajustar informações gerais"
 
 #: admin/centreinfo.php:73
 msgid "Update centre information"
-msgstr "更新中心信息"
+msgstr "Atualizar"
 
 #: admin/import.php:46
 msgid "Validating and uploading"
@@ -2641,12 +2688,12 @@ msgstr ""
 
 #: admin/import.php:69
 msgid "Error importing file. Please try again"
-msgstr "错误的导入文件。请重试"
+msgstr "Erro na importação do arquivo. Por favor, tente novamente"
 
 #: admin/import.php:73 admin/set_outcomes.php:117 admin/set_outcomes.php:143
 #: admin/set_outcomes.php:148
 msgid "Error:"
-msgstr "错误："
+msgstr "Erro:"
 
 #: admin/import.php:73
 msgid ""
@@ -2659,7 +2706,7 @@ msgstr ""
 
 #: admin/import.php:102 admin/import.php:150 admin/assignsample.php:417
 msgid "Add sample"
-msgstr "添加样本"
+msgstr "Adicionar Listagem"
 
 #: admin/import.php:115
 msgid "Select file to upload"
@@ -2715,7 +2762,7 @@ msgstr ""
 
 #: admin/index.php:122 admin/new.php:199 admin/new.php:405
 msgid "Create an instrument in Limesurvey"
-msgstr "在LimeSurvey中创建主问卷"
+msgstr "Criar um Questionário no LimeSurvey"
 
 #: admin/index.php:125 admin/set_outcomes.php:161
 msgid "Set questionnaire outcomes"
@@ -2723,7 +2770,7 @@ msgstr ""
 
 #: admin/index.php:126 admin/new.php:407
 msgid "Administer instruments with Limesurvey"
-msgstr "用LimeSurvey管理主问卷"
+msgstr "Administrar questionário no LimeSurvey"
 
 #: admin/index.php:130
 msgid "Samples"
@@ -2731,7 +2778,7 @@ msgstr ""
 
 #: admin/index.php:135 admin/assignsample.php:305
 msgid "Assign samples to questionnaires"
-msgstr "给问卷分派样本"
+msgstr "Atribuir listagens a questionários"
 
 #: admin/index.php:139
 msgid "Time slots and shifts"
@@ -2743,11 +2790,11 @@ msgstr ""
 
 #: admin/index.php:150 admin/quota.php:114
 msgid "Quota management"
-msgstr "配额管理"
+msgstr "Amostras - Gerenciamento"
 
 #: admin/index.php:151 admin/quotarow.php:292
 msgid "Quota row management"
-msgstr "配额行管理"
+msgstr "Gerenciar grupos de amostras"
 
 #: admin/index.php:154
 msgid "Operators"
@@ -2755,24 +2802,24 @@ msgstr ""
 
 #: admin/index.php:156
 msgid "Add operators to the system"
-msgstr "添加电话调查员"
+msgstr "Adicionar Pesquisadores no sistema"
 
 #: admin/index.php:157
 msgid "Operator management"
-msgstr "电话调查员管理"
+msgstr "Operadores - Gerenciamento"
 
 #: admin/index.php:158
 msgid "Extension status"
-msgstr "分机状态"
+msgstr "Registro de Ramais"
 
 #: admin/index.php:159 admin/operatorquestionnaire.php:157
 #: admin/operatorquestionnaire.php:272
 msgid "Assign operators to questionnaires"
-msgstr "给问卷分派电话调查员"
+msgstr "Atribuir pesquisadores aos questionários"
 
 #: admin/index.php:160 admin/operatorskill.php:275
 msgid "Modify operator skills"
-msgstr "修改电话调查员职能"
+msgstr "12. Alterar permissões dos operadores"
 
 #: admin/index.php:164
 msgid "Results"
@@ -2780,19 +2827,19 @@ msgstr ""
 
 #: admin/index.php:166
 msgid "Display all future appointments"
-msgstr "显示全部未来预约"
+msgstr "Mostrar todos os agendamentos futuros"
 
 #: admin/index.php:167
 msgid "Sample call attempts report"
-msgstr "样本呼叫尝试报告"
+msgstr "Relatório de Chamadas Realizadas"
 
 #: admin/index.php:169 admin/shiftreport.php:67
 msgid "Shift reports"
-msgstr "调查时段报告"
+msgstr "Relatórios de Turnos"
 
 #: admin/index.php:171
 msgid "Questionnaire outcomes"
-msgstr "问卷结果"
+msgstr "Resultados de Ligações"
 
 #: admin/index.php:175
 msgid "Clients"
@@ -2800,7 +2847,7 @@ msgstr ""
 
 #: admin/index.php:177
 msgid "Add clients to the system"
-msgstr "在系统中添加客户"
+msgstr "Adicionar clientes ao sistema"
 
 #: admin/index.php:178
 msgid "Manage clients"
@@ -2808,15 +2855,15 @@ msgstr ""
 
 #: admin/index.php:181
 msgid "Supervisor functions"
-msgstr "调查督导员功能"
+msgstr "Supervisão - Funções"
 
 #: admin/index.php:183 admin/supervisor.php:125
 msgid "Assign outcomes to cases"
-msgstr "给访问分派结果"
+msgstr "Atribuir Resultados de Ligações aos casos"
 
 #: admin/index.php:188
 msgid "System settings"
-msgstr "系统设置"
+msgstr "Sistema - Configurações"
 
 #: admin/index.php:190 admin/set_outcomes.php:160
 msgid "Set default outcomes"
@@ -2824,7 +2871,7 @@ msgstr ""
 
 #: admin/index.php:191
 msgid "Set default timezone list"
-msgstr "设置默认时区列表"
+msgstr "Definir o Fuso Horário padrão"
 
 #: admin/index.php:192
 msgid "Manage Time slots"
@@ -2832,7 +2879,7 @@ msgstr ""
 
 #: admin/index.php:193 admin/shifttemplate.php:99
 msgid "Set default shift times"
-msgstr "设置默认的调查时段"
+msgstr "Definir os turnos padrões"
 
 #: admin/index.php:197
 msgid "System wide case sorting"
@@ -2840,60 +2887,60 @@ msgstr ""
 
 #: admin/index.php:204 admin/index.php:212
 msgid "VoIP"
-msgstr "VoIP"
+msgstr "Telefonia - Gerenciamento"
 
 #: admin/index.php:206
 msgid "Start and monitor VoIP"
-msgstr "启动并监控VoIP"
+msgstr "Iniciar e Monitorar Telefonia"
 
 #: admin/samplecallattempts.php:125
 msgid "Call attempts made"
-msgstr "呼叫尝试"
+msgstr "Tentativas"
 
 #: admin/samplecallattempts.php:125
 msgid "Number of cases"
-msgstr "访问数"
+msgstr "Número de casos"
 
 #: admin/samplecallattempts.php:188
 msgid "Sample call attempt"
-msgstr "样本呼叫尝试"
+msgstr "Tentativas de chamadas"
 
 #: admin/samplecallattempts.php:190 admin/dataoutput.php:202
 #: admin/operatorperformance.php:78 admin/shiftreport.php:71
 msgid "Please select a questionnaire"
-msgstr "请选择一个问卷"
+msgstr "Por favor, selecione um quesionário"
 
 #: admin/samplecallattempts.php:193
 msgid "Overall"
-msgstr "整体"
+msgstr "Global"
 
 #: admin/samplecallattempts.php:202 admin/dataoutput.php:218
 msgid "Please select a sample"
-msgstr "请选择样本"
+msgstr "Por favor, selecione uma listagem"
 
 #: admin/samplecallattempts.php:213
 msgid "Please select a quota"
-msgstr "请选择一个配额"
+msgstr "Por favor, selecione uma amostra"
 
 #: admin/samplecallattempts.php:219
 msgid "No calls for this quota"
-msgstr "该配额无呼叫"
+msgstr "Sem chamadas para esta amostra"
 
 #: admin/samplecallattempts.php:223
 msgid "No calls for this sample"
-msgstr "该样本无呼叫"
+msgstr "Sem chamadas para esta listagem"
 
 #: admin/samplecallattempts.php:228
 msgid "No calls for this questionnaire"
-msgstr "该问卷无呼叫"
+msgstr "Sem chamadas para este questionário"
 
 #: admin/casesbyoutcome.php:57
 msgid "Cases by outcome"
-msgstr "访问结果"
+msgstr "Casos por Resultados"
 
 #: admin/casesbyoutcome.php:77 admin/supervisor.php:312
 msgid "Project"
-msgstr "项目"
+msgstr "Projeto"
 
 #: admin/casesbyoutcome.php:84
 msgid "Sample:"
@@ -2901,15 +2948,15 @@ msgstr ""
 
 #: admin/casesbyoutcome.php:100 admin/supervisor.php:314
 msgid "Current outcome:"
-msgstr "当前结果："
+msgstr "Resultado atual:"
 
 #: admin/casesbyoutcome.php:114
 msgid "No cases with this outcome"
-msgstr "该结果无访问"
+msgstr "Sem casos com este resultado"
 
 #: admin/casesbyoutcome.php:121
 msgid "Error with input"
-msgstr "输入错误"
+msgstr "Erro com a entrada"
 
 #: admin/set_outcomes.php:82
 msgid "Default outcomes updated"
@@ -2936,7 +2983,7 @@ msgid "New outcome not saved"
 msgstr ""
 
 #: admin/set_outcomes.php:147 admin/set_outcomes.php:175
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:283
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
 msgid "Outcome type"
 msgstr ""
 
@@ -2960,11 +3007,11 @@ msgstr ""
 msgid "Try another number"
 msgstr ""
 
-#: admin/set_outcomes.php:180 admin/set_outcomes.php:283
+#: admin/set_outcomes.php:180 admin/set_outcomes.php:277
 msgid "Eligible"
 msgstr ""
 
-#: admin/set_outcomes.php:181 admin/set_outcomes.php:283
+#: admin/set_outcomes.php:181 admin/set_outcomes.php:277
 msgid "Require note"
 msgstr ""
 
@@ -2987,7 +3034,7 @@ msgstr ""
 #: admin/set_outcomes.php:189 admin/quotarow.php:422 admin/quotarow.php:508
 #: admin/quotarow.php:540 respondent.php:175 contactdetails.php:171
 msgid "Value"
-msgstr "值"
+msgstr "Valor"
 
 #: admin/set_outcomes.php:190
 msgid "Save custom Outcome"
@@ -2997,7 +3044,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: admin/set_outcomes.php:251 admin/set_outcomes.php:286
+#: admin/set_outcomes.php:251 admin/set_outcomes.php:280
 msgid "Add custom Outcome"
 msgstr ""
 
@@ -3005,27 +3052,27 @@ msgstr ""
 msgid "Save questionnaire outcomes"
 msgstr ""
 
-#: admin/set_outcomes.php:263
+#: admin/set_outcomes.php:262
 msgid "Delete outcome"
 msgstr ""
 
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Set default"
 msgstr ""
 
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Delay, min"
 msgstr ""
 
-#: admin/set_outcomes.php:283
+#: admin/set_outcomes.php:277
 msgid "Try another"
 msgstr ""
 
-#: admin/set_outcomes.php:287
+#: admin/set_outcomes.php:281
 msgid "Update default outcomes"
 msgstr ""
 
-#: admin/set_outcomes.php:319
+#: admin/set_outcomes.php:313
 msgid "Reset"
 msgstr ""
 
@@ -3039,55 +3086,55 @@ msgstr ""
 
 #: admin/quota.php:161
 msgid "Currently no quotas"
-msgstr "当前无配额"
+msgstr "Sem amostras em execução atualmente"
 
 #: admin/quota.php:167
 msgid "Stop calling this sample when:"
-msgstr "以下情况发生时停止呼叫该样本："
+msgstr "Pare de chamar esta listagem quando:"
 
 #: admin/quota.php:167
 msgid "for"
-msgstr "给"
+msgstr "para"
 
 #: admin/quota.php:167
 msgid "completions"
-msgstr "完成"
+msgstr "completas"
 
 #: admin/quota.php:170
 msgid "Quota reached"
-msgstr "达到配额"
+msgstr "Amostra encerrada (fechada)"
 
 #: admin/quota.php:172
 msgid "Quota not yet reached"
-msgstr "配额尚未达到"
+msgstr "Amostra ainda não encerrada (aberta)"
 
 #: admin/quota.php:174
 msgid "Current completions: "
-msgstr "当前完成： "
+msgstr "Atualmente realizadas: "
 
 #: admin/quota.php:182
 msgid "Select a question for the quota"
-msgstr "给配额选择一个问卷"
+msgstr "Selecione uma pergunta para a amostra"
 
 #: admin/quota.php:211
 msgid "Enter the details for creating the quota:"
-msgstr "输入详细信息以创建配额："
+msgstr "Informe os detalhes para criar a amostra:"
 
 #: admin/quota.php:216 admin/quotarow.php:458 admin/quotarow.php:539
 msgid "The type of comparison"
-msgstr "比较类型"
+msgstr "Tipo de comparação"
 
 #: admin/quota.php:226 admin/quotarow.php:459
 msgid "The code value to compare"
-msgstr "要比较的编码值"
+msgstr "Código da resposta para comparar"
 
 #: admin/quota.php:229 admin/quotarow.php:395 admin/quotarow.php:599
 msgid "The number of completions to stop calling at"
-msgstr "停止呼叫的已完成数量"
+msgstr "Parar de chamar quando o número de entrevistas nesta cota for"
 
 #: admin/quota.php:236
 msgid "Add quota"
-msgstr "添加配额"
+msgstr "Adicionar amostra"
 
 #: admin/quota.php:242 admin/quotarow.php:465
 msgid "Code values for this question"
@@ -3095,11 +3142,11 @@ msgstr ""
 
 #: admin/quota.php:254 admin/quotarow.php:480
 msgid "No labels defined for this question"
-msgstr "该问卷尚未定义标题"
+msgstr "Sem opções de respostas definidas para esta pergunta"
 
 #: admin/quota.php:256 admin/quotarow.php:482
 msgid "Code value"
-msgstr "编码值"
+msgstr "Código da resposta"
 
 #: admin/assignsample.php:190
 msgid "Edit assignment parameters"
@@ -3136,19 +3183,19 @@ msgstr ""
 
 #: admin/assignsample.php:364
 msgid "Unassign sample"
-msgstr "尚未分派样本"
+msgstr "Desativar listagem"
 
 #: admin/assignsample.php:367
 msgid "No samples selected for this questionnaire"
-msgstr "该问卷未选择样本"
+msgstr "Não foram selecionadas listagens para este questionário"
 
 #: admin/assignsample.php:380
 msgid "Add a sample to this questionnaire:"
-msgstr "给该问卷添加样本："
+msgstr "Adicionar uma listagem para este questionário:"
 
 #: admin/assignsample.php:383
 msgid "Select sample:"
-msgstr "选择样本："
+msgstr "Selecionar listagem:"
 
 #: admin/assignsample.php:409
 msgid ""
@@ -3164,7 +3211,7 @@ msgstr ""
 
 #: admin/supervisor.php:131 respondent.php:107 contactdetails.php:106
 msgid "Case id:"
-msgstr "访问编号："
+msgstr "Caso Nr:"
 
 #: admin/supervisor.php:132
 msgid "Enter a case id"
@@ -3172,19 +3219,19 @@ msgstr ""
 
 #: admin/supervisor.php:133
 msgid "Select case"
-msgstr "选择访问"
+msgstr "Selecionar caso"
 
 #: admin/supervisor.php:157
 msgid "Select case from list of cases referred to the supervisor:"
-msgstr "从调查督导员管理的访问列表中选择访问："
+msgstr "Selecione o caso da lista de casos atribuídos ao supervisor:"
 
 #: admin/supervisor.php:167
 msgid "Set an outcome for this call"
-msgstr "给该呼叫设置一个结果"
+msgstr "Definir um resultado para esta chamada"
 
 #: admin/supervisor.php:182 admin/supervisor.php:554 call_interface2.php:290
 msgid "Set outcome"
-msgstr "设置结果"
+msgstr "Definir resultado"
 
 #: admin/supervisor.php:320
 msgid "Sample details"
@@ -3201,27 +3248,27 @@ msgstr ""
 #: admin/supervisor.php:363 admin/displayappointments.php:291
 #: admin/databasestrings.php:68 index.php:273 index_interface2.php:293
 msgid "Appointments"
-msgstr "预约"
+msgstr "Agendamentos"
 
 #: admin/supervisor.php:387 admin/displayappointments.php:313
 msgid "Current outcome"
-msgstr "当前结果"
+msgstr "Resultado atual"
 
 #: admin/supervisor.php:387 admin/displayappointments.php:313
 msgid "Operator who called"
-msgstr "拨打过电话的电话调查员"
+msgstr "Pesquisador que chamou"
 
 #: admin/supervisor.php:390
 msgid "No appointments for this case"
-msgstr "该访问无预约"
+msgstr "Sem agendamentos para este caso"
 
 #: admin/supervisor.php:401
 msgid "Change outcome"
-msgstr "修改结果"
+msgstr "Mudar resultado"
 
 #: admin/supervisor.php:408
 msgid "Call list"
-msgstr "呼叫列表"
+msgstr "Lista de chamadas"
 
 #: admin/supervisor.php:463
 msgid "Call attempts by timeslot"
@@ -3237,43 +3284,45 @@ msgstr ""
 
 #: admin/supervisor.php:474
 msgid "Assign this case to operator (will appear as next case for them)"
-msgstr "将该样本分派给电话调查员（作为下一个访问样本出现在调查员的访问页面）"
+msgstr ""
+"Atribuir este caso para um pesquisador (aparecerá como o próximo caso para "
+"ele)"
 
 #: admin/supervisor.php:486
 msgid "Assign this case to operator"
-msgstr "将该访问分派给电话调查员"
+msgstr "Atribuir para o pesquisador"
 
 #: admin/supervisor.php:496
 msgid "Modify responses for this case"
-msgstr "修改该访问受访者"
+msgstr "Modificar respostas deste caso"
 
 #: admin/supervisor.php:498
 msgid "Case not yet started in Limesurvey"
-msgstr "访问尚未在LimeSurvey中开始"
+msgstr "Caso não iniciado ainda no Limesurvey"
 
 #: admin/supervisor.php:503
 msgid "Availability groups"
-msgstr "可用组"
+msgstr "Grupos de disponibilidade"
 
 #: admin/supervisor.php:531
 msgid "Update case availability"
-msgstr "更新访问有效时间"
+msgstr "Atualizar a disponibilidade do caso"
 
 #: admin/supervisor.php:542
 msgid "Set a case outcome"
-msgstr "设置一个访问结果"
+msgstr "Definir um resultado para o caso"
 
 #: admin/supervisor.php:560 admin/supervisor.php:565
 msgid "Deidentify"
-msgstr "删除"
+msgstr "Desvinculação"
 
 #: admin/supervisor.php:561
 msgid "Remove all sample details and contact numbers from this case"
-msgstr "从该访问移除所有的样本详细信息和联系电话"
+msgstr ""
 
 #: admin/supervisor.php:571
 msgid "Case does not exist"
-msgstr "访问不存在"
+msgstr "Caso inexistente"
 
 #: admin/quotarow.php:319
 msgid "To quota report"
@@ -3285,17 +3334,20 @@ msgstr ""
 
 #: admin/quotarow.php:395 admin/quotarow.php:597
 msgid "Describe this quota"
-msgstr "描述该配额"
+msgstr "Descreva esta cota/amostra"
 
 #: admin/quotarow.php:396 admin/quotarow.php:598
 msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
-msgstr "配额优先级（默认为50，100是最高级，0是最低级）"
+msgstr ""
+"Prioridade da amostra (50 é o padrão, 100 para mais alta, 0 para mais baixa)"
 
 #: admin/quotarow.php:396 admin/quotarow.php:600
 msgid ""
 "Should the priority be automatically updated based on the number of "
 "completions in this quota?"
-msgstr "优先级是否要基于该配额的完成数量进行自动更新？"
+msgstr ""
+"A prioridade da amostra pode ser atualizada automaticamente com base no "
+"número de entrevistas concluídas?"
 
 #: admin/quotarow.php:412
 msgid "Restrictions based on answered questions"
@@ -3373,7 +3425,7 @@ msgstr ""
 
 #: admin/quotarow.php:580
 msgid "Currently no row quotas"
-msgstr "当前无行配额"
+msgstr "Atualmente não existem amostras definidas"
 
 #: admin/quotarow.php:585
 msgid "Current row quotas"
@@ -3393,7 +3445,7 @@ msgstr ""
 
 #: admin/quotarow.php:594 admin/quotarow.php:601
 msgid "Add row quota"
-msgstr "添加行配额"
+msgstr "Adicionar amostra"
 
 #: admin/quotarow.php:606 admin/quotarow.php:614
 msgid "Import row quota"
@@ -3405,7 +3457,7 @@ msgstr ""
 
 #: admin/operatorskill.php:152
 msgid "Assign operators to Skills"
-msgstr "给电话调查员分派职能"
+msgstr "Atribui pesquisadores às regras"
 
 #: admin/operatorskill.php:154
 msgid ""
@@ -3433,92 +3485,92 @@ msgstr ""
 
 #: admin/dataoutput.php:216
 msgid "Download data for this questionnaire via Limesurvey"
-msgstr "使用LimeSurvey下载该问卷数据"
+msgstr "Efetuar Download dos resultados deste questionário via Limesurvey"
 
 #: admin/dataoutput.php:225
 msgid "Download data for this sample via Limesurvey"
-msgstr "使用LimeSurvey下载该样本数据"
+msgstr "Efetuar Download da listagem via Limesurvey"
 
 #: admin/dataoutput.php:233
 msgid "Download key file: select sample var"
-msgstr "下载关键文件：选择样本变量"
+msgstr "Download de arquivo chave (token): selecione a variável da listagem"
 
 #: admin/dataoutput.php:240
 msgid "Download complete key file"
-msgstr "下载完整关键文件"
+msgstr "Efetuar Download do arquivo chave completo"
 
 #: admin/dataoutput.php:243
 msgid "Download complete sample file with current outcomes"
-msgstr "下载当前结果的完整关键文件"
+msgstr "Efetuar Download da listagem completa com resultado das chamadas"
 
 #: admin/operatorperformance.php:71
 msgid "Operator Performance"
-msgstr "电话调查员绩效"
+msgstr "Desempenho do Operador"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 #: admin/casestatus.php:126
 msgid "Calls"
-msgstr "呼叫"
+msgstr "Chamadas"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 msgid "Total time"
-msgstr "总时间"
+msgstr "Tempo total"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 msgid "Call time"
-msgstr "呼叫时间"
+msgstr "Tempo de chamada"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 msgid "Completions p/h"
-msgstr "完成数 人/小时"
+msgstr "Completadas por hora"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 msgid "Calls p/h"
-msgstr "呼叫数 人/小时"
+msgstr "Chamadas por hora"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 msgid "Effectiveness"
-msgstr "有效时间"
+msgstr "Efetividade"
 
 #: admin/operatorperformance.php:93
 msgid "till"
-msgstr "直到"
+msgstr "até"
 
 #: admin/operatorperformance.php:101 admin/shiftreport.php:78
 msgid "Please select a shift"
-msgstr "请选择一个可用调查时段"
+msgstr "Selecione o Turno"
 
 #: admin/shiftreport.php:98
 msgid "Reports for this shift"
-msgstr "该调查时段概况"
+msgstr "Ocorrências para este turno"
 
 #: admin/shiftreport.php:110
 msgid "Report"
-msgstr "报告"
+msgstr "Ocorrências"
 
 #: admin/shiftreport.php:113
 msgid "Create new report for this shift"
-msgstr "创建调查时段报告"
+msgstr "Criar nova ocorrência para este turno"
 
 #: admin/shiftreport.php:119
 msgid "Enter report for this shift"
-msgstr "输入调查时段报告"
+msgstr "Informe as ocorrências para este turno"
 
 #: admin/shiftreport.php:123
 msgid "Add report"
-msgstr "添加报告"
+msgstr "Adicionar"
 
 #: admin/shiftreport.php:159
 msgid "This report does not exist in the database"
-msgstr "该报告在数据库中不存在"
+msgstr "Esta ocorrência não existe no banco de dados"
 
 #: admin/shiftreport.php:164
 msgid "Edit report for this shift"
-msgstr "编辑调查时段报告"
+msgstr "Editar ocorrência para este turno"
 
 #: admin/shiftreport.php:169
 msgid "Modify report"
-msgstr "修改报告"
+msgstr "Modificar"
 
 #: admin/casestatus.php:87 admin/casestatus.php:88
 msgid "Available"
@@ -3554,7 +3606,7 @@ msgstr ""
 
 #: admin/casestatus.php:141
 msgid "Assign cases to operator queue"
-msgstr "给电话调查员队列分派访问"
+msgstr "Atribui casos para um grupo de pesquisadores"
 
 #: admin/casestatus.php:141
 msgid "Assign"
@@ -3580,16 +3632,18 @@ msgstr ""
 msgid ""
 "Enter standard shift start and end times for each day of the week in local "
 "time"
-msgstr "按当地时间输入一周每天的标准调查起止时段"
+msgstr ""
+"Informe os horários de início e término do trabalho para cada dia da semana, "
+"no seu horário local"
 
 #: admin/shifttemplate.php:155
 msgid "Save changes to shifts"
-msgstr "保存对调查时段的修改"
+msgstr "Salvar alterações para os turnos"
 
 #: admin/extensionstatus.php:106
 msgid ""
 "Failed to add extension. There already may be an extension of this name"
-msgstr "添加分机失败。该姓名可能已有分机"
+msgstr ""
 
 #: admin/extensionstatus.php:138
 msgid "Extensions & status"
@@ -3597,11 +3651,11 @@ msgstr ""
 
 #: admin/extensionstatus.php:192
 msgid "Edit extension"
-msgstr "编辑分机信息"
+msgstr ""
 
 #: admin/extensionstatus.php:192
 msgid "Add an extension"
-msgstr "添加一个分机"
+msgstr ""
 
 #: admin/extensionstatus.php:195
 msgid "Extension name: "
@@ -3633,15 +3687,15 @@ msgstr ""
 
 #: admin/extensionstatus.php:210 admin/extensionstatus.php:272
 msgid "Add extension"
-msgstr "添加分机"
+msgstr ""
 
 #: admin/extensionstatus.php:218
 msgid "Delete extension"
-msgstr "删除分机"
+msgstr ""
 
 #: admin/extensionstatus.php:221
 msgid "Unassign the operator from this extension to be able to delete it"
-msgstr "解除该分机的电话调查员分派以便删除分机"
+msgstr ""
 
 #: admin/extensionstatus.php:231
 msgid "Unassign"
@@ -3653,60 +3707,62 @@ msgstr ""
 
 #: admin/extensionstatus.php:232
 msgid "VoIP Offline"
-msgstr "VoIP离线"
+msgstr "VoIP Desl"
 
 #: admin/extensionstatus.php:232
 msgid "VoIP Online"
-msgstr "VoIP在线"
+msgstr "VoIP Lig"
 
 #: admin/extensionstatus.php:233
 msgid "Not called"
-msgstr "未呼叫"
+msgstr "Não chamado"
 
 #: admin/extensionstatus.php:233 call.php:433
 msgid "Requesting call"
-msgstr "需要呼叫"
+msgstr "Solicitando chamada"
 
 #: admin/extensionstatus.php:233 call.php:454
 msgid "Requires coding"
-msgstr "需要区号"
+msgstr "Requer código"
 
 #: admin/extensionstatus.php:233
 msgid "Done"
-msgstr "完成"
+msgstr "Concluído"
 
 #: admin/extensionstatus.php:266
 msgid "Assignment"
-msgstr "分派"
+msgstr ""
 
 #: admin/extensionstatus.php:266
 msgid "VoIP Status"
-msgstr "VoIP状态"
+msgstr "Situação VoIP"
 
 #: admin/extensionstatus.php:266
 msgid "Call state"
-msgstr "呼叫状态"
+msgstr "Estado da chamada"
 
 #: admin/extensionstatus.php:266
 msgid "Time on call"
-msgstr "呼叫时间"
+msgstr "Tempo na chamada"
 
 #: admin/extensionstatus.php:270
 msgid "No extensions"
-msgstr "无分机"
+msgstr ""
 
 #: admin/displayappointments.php:133
 msgid "Now modify case outcome"
-msgstr "现在修改访问结果"
+msgstr "Agora modifique o resultado"
 
 #: admin/displayappointments.php:135
 msgid ""
 "The appointment has been deleted. Now you must modify the case outcome"
-msgstr "预约已删除。现在您必须修改访问结果"
+msgstr ""
+"O agendamento foi deletado. Agora você deverá modificar o resultado da "
+"ligação"
 
 #: admin/displayappointments.php:136
 msgid "Modify case outcome"
-msgstr "修改访问结果"
+msgstr "Modificar resultado"
 
 #: admin/displayappointments.php:155
 msgid "Create NEW appointment"
@@ -3714,7 +3770,7 @@ msgstr ""
 
 #: admin/displayappointments.php:163
 msgid "Edit appointment"
-msgstr "编辑预约"
+msgstr "Editar agendamento"
 
 #: admin/displayappointments.php:182
 msgid ""
@@ -3724,7 +3780,7 @@ msgstr ""
 
 #: admin/displayappointments.php:215
 msgid "Contact phone"
-msgstr "联系电话"
+msgstr "Telefone de contato"
 
 #: admin/displayappointments.php:239
 msgid ""
@@ -3742,19 +3798,19 @@ msgstr ""
 
 #: admin/displayappointments.php:278
 msgid "Cancel edit"
-msgstr "取消编辑"
+msgstr "Cancelar alteração"
 
 #: admin/displayappointments.php:284
 msgid "Delete this appointment"
-msgstr "删除该预约"
+msgstr "Deletar este agendamento"
 
 #: admin/displayappointments.php:292
 msgid "Display Appointments"
-msgstr "显示预约"
+msgstr "Mostrar agendamentos"
 
 #: admin/displayappointments.php:293
 msgid "All appointments (with times displayed in your time zone)"
-msgstr "所有预约（按您的时区显示时间）"
+msgstr "Todos os agendamentos (horário local)"
 
 #: admin/displayappointments.php:313
 msgid "Created by"
@@ -3774,7 +3830,7 @@ msgstr ""
 
 #: admin/new.php:121
 msgid "Successfully inserted"
-msgstr "成功添加"
+msgstr "Inserido com sucesso"
 
 #: admin/new.php:121
 msgid "with ID"
@@ -3786,7 +3842,7 @@ msgstr ""
 
 #: admin/new.php:126
 msgid "Error: Failed to insert questionnaire"
-msgstr "错误：添加问卷失败"
+msgstr "ERRO: Falha ao inserir o questionário"
 
 #: admin/new.php:156
 msgid "Create another ?"
@@ -3806,7 +3862,7 @@ msgstr ""
 
 #: admin/new.php:190
 msgid "Select limesurvey instrument:"
-msgstr "选择LimeSurvey主问卷："
+msgstr "Selecione um instrumento do LimeSurvey:"
 
 #: admin/new.php:194 admin/new.php:211
 msgid "Survey"
@@ -3814,19 +3870,19 @@ msgstr ""
 
 #: admin/new.php:204
 msgid "Respondent selection type:"
-msgstr "受访者筛选方式"
+msgstr "Tipo de seleção do respondente:"
 
 #: admin/new.php:207
 msgid "No respondent selection (go straight to questionnaire)"
-msgstr "不进行受访者筛选（直接开始问卷）"
+msgstr "Sem pré-seleção (vai direto ao questionário)"
 
 #: admin/new.php:208
 msgid "Use basic respondent selection text (below)"
-msgstr "使用基本的受访者筛选文本（如下）"
+msgstr "Usar texto de seleção básico (abaixo)"
 
 #: admin/new.php:395
 msgid "Create Questionnaire"
-msgstr "创建问卷"
+msgstr "Criar Questionário"
 
 #: admin/new.php:404
 msgid "NO active Lime surveys available"
@@ -3834,223 +3890,223 @@ msgstr ""
 
 #: admin/databasestrings.php:32
 msgid "Not attempted or worked"
-msgstr "尚未尝试或工作"
+msgstr "Mudo ou não toca o telefone"
 
 #: admin/databasestrings.php:33
 msgid "No answer"
-msgstr "无回应"
+msgstr "Não Atende"
 
 #: admin/databasestrings.php:34
 msgid "Technical phone problems"
-msgstr "技术性电话故障"
+msgstr "Problemas técnicos na linha"
 
 #: admin/databasestrings.php:35
 msgid "Other, Referred to Supervisor (Eligible)"
-msgstr "否则，联系调查督导员（有相关资格的）"
+msgstr "Outros, encaminhar ao supervisor (Retornável)"
 
 #: admin/databasestrings.php:36
 msgid "Other, Referred to Supervisor (Unknown eligibility)"
-msgstr "否则，联系调查督导员（未知相关资格）"
+msgstr "Outros, encaminhar ao supervisor (Retorno desconhecido)"
 
 #: admin/databasestrings.php:37
 msgid "Soft Refusal, Other"
-msgstr "委婉拒绝，其他人"
+msgstr "Recusa Simples, Outras pessoas"
 
 #: admin/databasestrings.php:38
 msgid "Hard Refusal, Other"
-msgstr "坚决拒绝，其他人"
+msgstr "Recusa Forte, Outras pessoas"
 
 #: admin/databasestrings.php:39
 msgid "Soft Refusal, Respondent"
-msgstr "委婉拒绝，受访者"
+msgstr "Recusa Simples do Entrevistado"
 
 #: admin/databasestrings.php:40
 msgid "Hard Refusal, Respondent"
-msgstr "坚决拒绝，受访者"
+msgstr "Recusa Forte do Entrevistado"
 
 #: admin/databasestrings.php:42
 msgid "Known respondent refusal"
-msgstr "已知的受访者拒绝"
+msgstr "Recusa por respondente conhecido"
 
 #: admin/databasestrings.php:43
 msgid "Household-level refusal"
-msgstr "户级拒绝"
+msgstr "Recusa em nível de domicílio (Não ligar para mais ninguém na casa)"
 
 #: admin/databasestrings.php:44
 msgid "Broken appointment (Implicit refusal)"
-msgstr "失约（含蓄拒绝）"
+msgstr "Agendamento Negado (Recusa declarada)"
 
 #: admin/databasestrings.php:45
 msgid "Disconnected number"
-msgstr "失联数"
+msgstr "Telefone indisponível ou fora de serviço"
 
 #: admin/databasestrings.php:46
 msgid "Fax/data line"
-msgstr "传真/数据线"
+msgstr "Fax/linha de dados"
 
 #: admin/databasestrings.php:47
 msgid "Business, government office, other organization"
-msgstr "商务、政府机关、其他组织"
+msgstr "Telefone errado (Escritório, Governo, Outra organização)"
 
 #: admin/databasestrings.php:48
 msgid "No eligible respondent"
-msgstr "无合适受访者"
+msgstr "FILTRO: Respondente não qualificado"
 
 #: admin/databasestrings.php:49
 msgid "Accidental hang up or temporary phone problem"
-msgstr "意外挂断或暂时性电话故障"
+msgstr "LIGAÇÃO CAIU (desligamento acidental ou problema temporário)"
 
 #: admin/databasestrings.php:50
 msgid "Definite Appointment - Respondent"
-msgstr "确定的预约 - 受访者"
+msgstr "Agendamento Realizado pelo Entrevistado"
 
 #: admin/databasestrings.php:51
 msgid "Definite Appointment - Other"
-msgstr "确定的预约 - 其他人"
+msgstr "Agendamento Realizado por outra pessoa"
 
 #: admin/databasestrings.php:52
 msgid "Unspecified Appointment - Respondent"
-msgstr "未指定的预约 - 受访者"
+msgstr "LIGAR DEPOIS (agendamento sem data certa, pelo entrevistado)"
 
 #: admin/databasestrings.php:53
 msgid "Unspecified Appointment - Other"
-msgstr "未指定的预约 - 其他人"
+msgstr "LIGAR DEPOIS (agendamento sem data certa, por outra pessoa)"
 
 #: admin/databasestrings.php:54
 msgid "Household answering machine - Message left"
-msgstr "家庭电话答录机 - 已留留言"
+msgstr "Secretária Eletrônica Residencial - DEIXEI RECADO"
 
 #: admin/databasestrings.php:55
 msgid "Household answering machine - No message left"
-msgstr "家庭电话答录机 - 未留留言"
+msgstr "Secretária Eletrônica Residencial - NÃO deixei recado"
 
 #: admin/databasestrings.php:56
 msgid "Respondent Dead"
-msgstr "受访者去世"
+msgstr "Entrevistado FALECIDO"
 
 #: admin/databasestrings.php:57
 msgid "Physically or mentally unable/incompetent"
-msgstr "生理或心理上失能/残障"
+msgstr "Entrevistado física ou mentalmente INCAPAZ"
 
 #: admin/databasestrings.php:58
 msgid "Household level language problem"
-msgstr "户级语言问题"
+msgstr "Problemas com IDIOMA no domicílio"
 
 #: admin/databasestrings.php:59
 msgid "Respondent language problem"
-msgstr "受访者语言问题"
+msgstr "Problemas com IDIOMA pelo entrevistado"
 
 #: admin/databasestrings.php:60
 msgid "Answering machine - Not a household"
-msgstr "电话答录机 - 不是一个家庭"
+msgstr "URA ou Central de Atendimento empresarial"
 
 #: admin/databasestrings.php:61
 msgid "Out of sample"
-msgstr "样本用尽"
+msgstr "Fora da listagem"
 
 #: admin/databasestrings.php:62
 msgid "Non contact"
-msgstr "无联系"
+msgstr "Sem contato"
 
 #: admin/databasestrings.php:63
 msgid "Temporary Outcomes (normal cases)"
-msgstr "临时结果（普通访问）"
+msgstr "Resultado Temporário (caso normal)"
 
 #: admin/databasestrings.php:64
 msgid "Supervisor Outcomes (referred to supervisor)"
-msgstr "调查督导员结果（提交给督导员的）"
+msgstr "Supervisor (encaminhar ao supervisor)"
 
 #: admin/databasestrings.php:65
 msgid "Refusal Outcomes (respondent refused)"
-msgstr "拒访结果（受访者拒绝）"
+msgstr "Resultados de Recusas (recusa do respondente)"
 
 #: admin/databasestrings.php:66
 msgid "Final Outcomes (completed, final refusal, etc)"
-msgstr "最终结果（完成的，最终拒绝的等）"
+msgstr "Resultados Finais (completos, recusas, etc)"
 
 #: admin/databasestrings.php:67
 msgid "Miscellaneous - Unavailable for a week"
-msgstr "其他 - 一周内没时间"
+msgstr "DIVERSOS - Indisponível por uma semana"
 
 #: admin/databasestrings.php:69
 msgid "Monday"
-msgstr "周一"
+msgstr "Segunda"
 
 #: admin/databasestrings.php:70
 msgid "Tuesday"
-msgstr "周二"
+msgstr "Terça"
 
 #: admin/databasestrings.php:71
 msgid "Wednesday"
-msgstr "周三"
+msgstr "Quarta"
 
 #: admin/databasestrings.php:72
 msgid "Thursday"
-msgstr "周四"
+msgstr "Quinta"
 
 #: admin/databasestrings.php:73
 msgid "Friday"
-msgstr "周五"
+msgstr "Sexta"
 
 #: admin/databasestrings.php:74
 msgid "Saturday"
-msgstr "周六"
+msgstr "Sábado"
 
 #: admin/databasestrings.php:75
 msgid "Sunday"
-msgstr "周日"
+msgstr "Domingo"
 
 #: admin/databasestrings.php:76
 msgid "Quota filled"
-msgstr "配额完成"
+msgstr "AMOSTRA ENCERRADA"
 
 #: admin/databasestrings.php:77
 msgid "Weekday mornings (Before 12pm)"
-msgstr "工作日上午（12pm之前）"
+msgstr "Manhãs, durante a semana (Antes das 12h00)"
 
 #: admin/databasestrings.php:78
 msgid "Weekday afternoons (After 12pm but before 6pm)"
-msgstr "工作日下下午（12pm之后6pm之前）"
+msgstr "Tardes, durante a semana (Das 12h00 as 18h00)"
 
 #: admin/databasestrings.php:79
 msgid "Evenings (After 6pm)"
-msgstr "晚间（6pm之后）"
+msgstr "Noites (Depois das 18h00)"
 
 #: admin/databasestrings.php:80
 msgid "Saturdays"
-msgstr "周六"
+msgstr "Sábados"
 
 #: admin/databasestrings.php:81
 msgid "String"
-msgstr "字符串"
+msgstr "Texto"
 
 #: admin/databasestrings.php:83
 msgid "Primary phone number"
-msgstr "主电话号码"
+msgstr "Telefone Primário"
 
 #: admin/databasestrings.php:84
 msgid "State"
-msgstr "省"
+msgstr "Estado"
 
 #: admin/databasestrings.php:85
 msgid "Postcode"
-msgstr "邮编"
+msgstr "CEP"
 
 #: admin/databasestrings.php:86
 msgid "Respondent first name"
-msgstr "受访者名称"
+msgstr "Nome Entrevistado"
 
 #: admin/databasestrings.php:87
 msgid "Respondent last name"
-msgstr "受访者姓氏"
+msgstr "Sobrenome Entrevistado"
 
 #: admin/databasestrings.php:88
 msgid "Email address"
-msgstr "电子邮箱地址"
+msgstr "E-mail"
 
 #: admin/databasestrings.php:89
 msgid "Self completion email invitation sent"
-msgstr "自助完成邮件邀请已发送"
+msgstr "Auto Resposta com envio de email"
 
 #: admin/databasestrings.php:91
 msgid "Max call attempts reached (Eligible)"
@@ -4080,49 +4136,51 @@ msgstr ""
 #: call.php:197 call.php:217 call.php:233 call.php:264 call.php:312
 #: call.php:383
 msgid "Call"
-msgstr "呼叫"
+msgstr "Ligar"
 
 #: call_interface2.php:306 call.php:271
 msgid "Not on a call"
-msgstr "呼叫未接通"
+msgstr "Telefone Livre"
 
 #: call_interface2.php:343 call.php:308
 msgid "Press the call button to dial the number for this appointment:"
-msgstr "拨打该预约电话请按呼叫键："
+msgstr "Pressione o botão LIGAR para discar para este agendamento."
 
 #: call_interface2.php:346 call.php:311
 msgid "Number to call:"
-msgstr "呼叫号码："
+msgstr "Número para discar:"
 
 #: call_interface2.php:352 call_interface2.php:422 call.php:315 call.php:386
 msgid ""
 "Your VoIP extension is not enabled. Please close this window and enable VoIP "
 "by clicking once on the red button that says 'VoIP Off'"
-msgstr "您的VoIP分机未启用。请关闭窗口并点击一下标有‘VoIP关闭’字样的红色按键以启用VoIP"
+msgstr ""
+"Sua extensão VoIP não está habilitada. Por favor, feche esta janela e "
+"habilite o VoIP clicando um vez sobre o botão vermelho denominado 'VoIP Off'"
 
 #: call_interface2.php:412 call.php:376
 msgid "Select phone number to dial:"
-msgstr "选择所拨电话号码："
+msgstr "Selecione o número de telefone para discar:"
 
 #: call_interface2.php:427 call_interface2.php:458 call.php:391 call.php:425
 msgid "The last call completed this call attempt"
-msgstr "上次呼叫完成了本次呼叫尝试"
+msgstr "Última chamada concluída para esta tentativa"
 
 #: call_interface2.php:431 call_interface2.php:451 call.php:395 call.php:418
 msgid "Enter a reason for this outcome before completing this case:"
-msgstr "完成本次访问前请输入此次结果的成因："
+msgstr "Informe um motivo ou resultado antes de encerrar este caso."
 
 #: call_interface2.php:473 call.php:457
 msgid "Assign outcome"
-msgstr "分派结果"
+msgstr "Informe um resultado"
 
 #: call_interface2.php:478 call.php:461
 msgid "Error: Close window"
-msgstr "错误：关闭窗口"
+msgstr "Erro: Feche a janela"
 
 #: rs_answeringmachine.php:84
 msgid "Do not leave a message, please hang up"
-msgstr "不留言，直接挂机"
+msgstr "Não deixe uma mensagem, por favor, desligue"
 
 #: rs_business.php:58
 msgid "Business answers"
@@ -4130,105 +4188,110 @@ msgstr ""
 
 #: rs_business.php:60
 msgid "Sorry to bother you, I have called the wrong number"
-msgstr "对不起，打扰了，我拨错号码了"
+msgstr "Desculpe incomodá-lo, eu liguei para o número errado"
 
 #: call.php:434 call.php:441
 msgid "Call Answered"
-msgstr "呼叫已接通"
+msgstr "Chamada atendida"
 
 #: call.php:448
 msgid "Not Answered"
-msgstr "未接通"
+msgstr "Não Atendida"
 
 #: index.php:169 nocallavailable.php:88
 msgid "Call/Hangup"
-msgstr "呼叫/挂机"
+msgstr "Chamar/Encerrar"
 
 #: index.php:174 index_interface2.php:241
 msgid "Arrow for expanding or contracting"
-msgstr "伸缩轴"
+msgstr "Expandir ou Contrair"
 
 #: index.php:175
 msgid "Restart"
-msgstr "重新开始"
+msgstr "Reiniciar"
 
 #: index.php:228 index_interface2.php:253
 msgid "Notes"
-msgstr "备注"
+msgstr "Notas"
 
 #: index.php:246 index_interface2.php:269 contactdetails.php:78
 msgid "Contact details"
-msgstr "联络详细信息"
+msgstr "Detalhes do contato"
 
 #: index.php:290 index_interface2.php:309
 msgid "Work history"
-msgstr "工作历史"
+msgstr "Histórico de trabalho"
 
 #: index.php:298 index_interface2.php:317 project_info.php:67
 msgid "Project information"
-msgstr "项目信息"
+msgstr "Informações do projeto"
 
 #: index.php:314 index_interface2.php:326
 msgid "Info"
-msgstr "信息"
+msgstr "Informações"
 
 #: respondent.php:76
 msgid "Respondent Selector"
-msgstr "受访者选项"
+msgstr "Seletor de Entrevistado"
 
 #: respondent.php:108 contactdetails.php:107
 msgid "Respondent:"
-msgstr "受访者："
+msgstr "Respondente:"
 
 #: respondent.php:171
 msgid "Show details"
-msgstr "显示具体信息"
+msgstr "Mostrar detalhes"
 
 #: respondent.php:175 contactdetails.php:171
 msgid "Var"
-msgstr "变量"
+msgstr "Variável"
 
 #: shifts.php:63
 msgid "Shift List"
-msgstr "可用调查时段"
+msgstr "Lista de Agendamentos"
 
 #: shifts.php:86
 msgid "No shifts for this project"
-msgstr "无可用的调查时段"
+msgstr "Não existem agendamentos para este projeto"
 
 #: shifts.php:107
 msgid "No future shifts scheduled"
-msgstr "还未设置调查时段计划"
+msgstr "Não existem agendamentos futuros"
 
 #: supervisor.php:67
 msgid "Please wait till you have ended this call to call the supervisor"
-msgstr "请您切断本次呼叫后，再呼叫调查督导员"
+msgstr ""
+"Por favor, aguarde até o encerramento desta chamada para falar com o "
+"Supervisor"
 
 #: supervisor.php:111
 msgid "You may now close this window"
-msgstr "您现在可以关闭此窗口"
+msgstr "Você pode fechar agora esta janela"
 
 #: supervisor.php:116
 msgid "Calling the supervisor, you may close this window"
-msgstr "您可以关闭此窗口后呼叫调查督导员"
+msgstr "Chamando o Supervisor. Você pode fechar esta janela"
 
 #: supervisor.php:121
 msgid ""
 "Click here to call the supervisor's phone. Otherwise close this window"
-msgstr "点击该链接呼叫调查督导员，或关闭此窗口"
+msgstr ""
+"Clique aqui para chamar o Telefone do Supervisor. Caso contrário, feche esta "
+"janela"
 
 #: supervisor.php:122
 msgid "Hangup when calling the supervisor"
-msgstr "呼叫调查督导员时请挂机"
+msgstr "Encerre a chamada quando for falar com o Supervisor"
 
 #: supervisor.php:127
 msgid "Try calling the supervisor"
-msgstr "呼叫调查督导员"
+msgstr "Tentando chamar o Supervisor"
 
 #: supervisor.php:134
 msgid ""
 "Please wait for this call to answer before attempting to call the supervisor"
-msgstr "呼叫调查督导员前，请等待本次呼叫应答"
+msgstr ""
+"Por favor, aguarde esta chamada responder antes de tentar chamar o Supervisor"
 
 #: rs_project_intro.php:63
 msgid "Project Introduction"
@@ -4236,31 +4299,31 @@ msgstr ""
 
 #: endwork.php:51
 msgid "End of work"
-msgstr "结束工作"
+msgstr "Suspender ou Fechar o trabalho"
 
 #: endwork.php:58
 msgid "Work has ended. That is it"
-msgstr "您的工作已结束。今天告一段落。"
+msgstr "Operação suspensa! Selecione abaixo:"
 
 #: endwork.php:76
 msgid "You have been unassigned from your extension"
-msgstr "您已注销分机"
+msgstr ""
 
 #: endwork.php:81
 msgid "Go back to work"
-msgstr "返回工作"
+msgstr "Voltar ao trabalho"
 
 #: nocallavailable.php:85
 msgid "No call available"
-msgstr "无可用呼叫"
+msgstr "Chamada indisponível"
 
 #: nocallavailable.php:88
 msgid "Please click on:"
-msgstr "请点击："
+msgstr "Por favor clique em:"
 
 #: nocallavailable.php:88
 msgid "to display call script"
-msgstr "显示呼叫脚本"
+msgstr "para mostrar o roteiro da chamada"
 
 #: nocallavailable.php:182
 msgid "Will dial in"
@@ -4282,15 +4345,15 @@ msgstr ""
 msgid ""
 "Your VoIP extension is not active. Please activate VoIP by clicking once on "
 "the red button that says 'VoIP Off'"
-msgstr "您的VoIP分机未启动。请点击一次注有“VoIP关闭”的红色按钮以启动VoIP"
+msgstr ""
 
 #: nocallavailable.php:227
 msgid "Auto dialling unavailable as VoIP is not enabled"
-msgstr "自动拨号不可用，VoIP未启用该功能"
+msgstr ""
 
 #: nocallavailable.php:233
 msgid "Auto dialling unavailable as you are already on a call"
-msgstr "自动拨号不可用，您已经连线中"
+msgstr ""
 
 #: index_interface2.php:203
 msgid "Case"
@@ -4300,178 +4363,298 @@ msgstr ""
 msgid "Project Quota End"
 msgstr ""
 
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person not available on this "
-#~ "number)"
-#~ msgstr "结束电话：没有符合条件的调查对象（此号码无人接听）"
-
-#~ msgid "End call with outcome: Business answering machine"
-#~ msgstr "结束电话：业务电话答录机"
-
 #~ msgid "None"
-#~ msgstr "无"
+#~ msgstr "Nenhum"
 
-#~ msgid "Appointment:"
-#~ msgstr "预约："
+#~ msgid "Respondent Selection - Call back"
+#~ msgstr "Seleção do entrevistado - Retornar ligação"
 
-#~ msgid "You are: "
-#~ msgstr "您是： "
+#~ msgid "Respondent Selection - Introduction"
+#~ msgstr "Seleção do Entrevistado - Intrudução"
 
-#~ msgid "Business number"
-#~ msgstr "业务电话号码"
+#~ msgid "% complete"
+#~ msgstr "% concluído"
 
-#~ msgid "End call with outcome: No answer (ring out or busy) "
-#~ msgstr "结束电话：无应答（无人接听或线路繁忙） "
+#~ msgid "Respondent Selection - Project Introduction"
+#~ msgstr "Seleção do Entrevistado - Introdução do Projeto"
 
-#~ msgid "End call with outcome: Accidental hang up"
-#~ msgstr "结束电话：掉线"
-
-#~ msgid "End call with outcome: Refusal by unknown person"
-#~ msgstr "结束电话：非受访者本人拒绝接受访问"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person never available on "
-#~ "this number)"
-#~ msgstr "结束电话：无合适的受访者（此电话号码联系人没时间参与调查）"
-
-#~ msgid ""
-#~ "End call with outcome: Non contact (person not currently available on this "
-#~ "number: no appointment made)"
-#~ msgstr "结束电话：无法联系（此电话号码联系人目前没空：没有进行预约）"
-
-#~ msgid ""
-#~ "End call with outcome: Out of sample (already completed in another mode)"
-#~ msgstr "结束电话：样本用尽（样本已经采用其他方式访问完成）"
-
-#~ msgid "Call restrictions:"
-#~ msgstr "呼叫限制："
+#~ msgid "Respondent Selection - Answering machine"
+#~ msgstr "Seleção do Entrevistado - Secretária Eletrônica/Caixa de Mensagens"
 
 #~ msgid ""
 #~ "ERROR: There are no cases available that fall within call restrictions"
-#~ msgstr "错误：呼叫限制内无可用访问"
+#~ msgstr ""
+#~ "ERRO: Não há casos disponíveis condizentes com as restrições de chamadas"
 
-#~ msgid "There are "
-#~ msgstr "有 "
-
-#~ msgid " unassigned case(s) available within the specified call restrictions"
-#~ msgstr " 特定呼叫限制内可用的未分派访问"
-
-#~ msgid "POSSIBLE ERROR: Row quota reached for this question"
-#~ msgstr "可能错误：该问题达到行指标"
+#~ msgid "Call restrictions:"
+#~ msgstr "Restrições de chamadas:"
 
 #~ msgid "Call automatically ended with outcome: Complete"
-#~ msgstr "自动结束电话：完成"
-
-#~ msgid "End call with outcome: Complete"
-#~ msgstr "结束电话：完成"
-
-#~ msgid "Call automatically ended with outcome: Complete - End case"
-#~ msgstr "自动结束电话：完成 - 结束访问"
+#~ msgstr "Chamada Encerrada Automaticamente: Entrevista Realizada"
 
 #~ msgid "End call with outcome: Business number"
-#~ msgstr "结束电话：业务号码"
+#~ msgstr "Chamada Encerrada: Telefone comercial"
 
-#~ msgid "End call with outcome: Quota filled"
-#~ msgstr "结束电话：配额已满"
+#~ msgid "Respondent Selection - Project Quota End"
+#~ msgstr "Seleção do Entrevistado - Encerramento da amostra do projeto"
 
-#~ msgid "Reload failed because retrieve_conf encountered an error: %s"
-#~ msgstr "重新加载失败，retrieve_conf 文件遇到错误：%s"
-
-#~ msgid "retrieve_conf failed, config not applied"
-#~ msgstr "retrieve_conf 失败，配置未应用"
+#~ msgid ""
+#~ "Could not reload the FOP operator panel server using the bounce_op.sh "
+#~ "script. Configuration changes may not be reflected in the panel display."
+#~ msgstr ""
+#~ "Não foi possível recarregar o servidor do Flash Operator Pannel (FOP) usando "
+#~ "o script bounce_op.sh. As configurações realizadas não serão mostradas na "
+#~ "visualização do painel."
 
 #~ msgid ""
 #~ "Reload failed because FreePBX could not connect to the asterisk manager "
 #~ "interface."
-#~ msgstr "重新加载失败，FreePBX无法连接到asterisk管理员界面"
+#~ msgstr ""
+#~ "Recarregamento falhou porque o FreePBX não pode se conectar à interface de "
+#~ "gerenciamento do Asterisk"
+
+#~ msgid "retrieve_conf failed, config not applied"
+#~ msgstr "Falha no arquivo retrieve_conf. Configurações não aplicadas"
 
 #~ msgid "Exit code was %s and output was: %s"
-#~ msgstr "退出编码是 %s ，输出是：%s"
+#~ msgstr "Código de saída foi %s e saída foi: %s"
 
 #~ msgid "Duplicate name"
-#~ msgstr "副本名"
+#~ msgstr "Nome duplicado"
 
 #~ msgid "Import?"
-#~ msgstr "导入吗？"
+#~ msgstr "Importar?"
 
 #~ msgid "Type"
-#~ msgstr "类型"
+#~ msgstr "Tipo"
+
+#~ msgid "Sorting cases"
+#~ msgstr "Sorteando casos"
 
 #~ msgid ""
 #~ "ERROR: You do not have server side authentication enabled therefore queXS "
 #~ "cannot determine which user is accessing the system."
-#~ msgstr "错误：您没有服务器登陆认证，因此queXS无法判断哪位使用者在登录系统。"
-
-#~ msgid ""
-#~ "This is how the story goes.\n"
-#~ "\n"
 #~ msgstr ""
-#~ "事情是这样的。\n"
-#~ "\n"
-
-#~ msgid "Sorting cases"
-#~ msgstr "访问排序"
-
-#~ msgid "Select a questionnaire from the list below"
-#~ msgstr "从下列列表中选择一张问卷"
+#~ "ERRO: Você não tem uma autenticação do lado do servidor. Por essa razão, "
+#~ "queXS não pode determinar qual usuário está acessando o sistema."
 
 #~ msgid "Select a sample from the list below"
-#~ msgstr "从下列列表中选择一批样本"
+#~ msgstr "Selecione uma amostra da lista abaixo"
 
 #~ msgid "Added:"
-#~ msgstr "添加："
+#~ msgstr "Adicionado:"
 
-#~ msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
-#~ msgstr "FreePBX已重新加载以启用新的VoIP分机"
-
-#~ msgid "Assign Operator to Questionnaire"
-#~ msgstr "给问卷分派电话调查员"
-
-#~ msgid "tool"
-#~ msgstr "工具"
+#~ msgid "Enter the username of an operator to add:"
+#~ msgstr "Informe o nome de usuário (logon) de um operador para adicionar:"
 
 #~ msgid ""
 #~ "Use this form to enter the username of a user based on your directory "
 #~ "security system. For example, if you have secured the base directory of "
 #~ "queXS using Apache file based security, enter the usernames of the users "
 #~ "here."
-#~ msgstr "基于您的目录安全系统，使用该表单输入用户的用户名。例如，如果您使用Apache基于文件的安全设置来保护根目录，就在本页输入用户的用户名。"
+#~ msgstr ""
+#~ "Utilize este formulário para inserir o nome de usuário (logon) de um usuário "
+#~ "com base em seu sistema de segurança de diretório. Por exemplo, se você sabe "
+#~ "que o diretório base do queXS usa a segurança baseada em arquivos Apache, "
+#~ "digite os nomes dos usuários aqui."
 
-#~ msgid "Enter the username of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的用户名："
+#~ msgid "tool"
+#~ msgstr "Ferramenta"
 
-#~ msgid "Enter the password of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的密码："
+#~ msgid "Assign Operator to Questionnaire"
+#~ msgstr "Atribuir um Operador ao Questionário"
 
-#~ msgid "Enter the first name of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的名："
+#~ msgid "Adding an operator here will give the user the ability to call cases"
+#~ msgstr ""
+#~ "Adicionar um operador aqui dará ao usuário a habilidade para fazer chamadas"
+
+#~ msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
+#~ msgstr "FreePBX foi recarregado para que a nova extensão VoIP tenha efeito"
 
 #~ msgid "Enter the surname of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的姓："
-
-#~ msgid "Enter the Time Zone of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的时区："
-
-#~ msgid "Enter the telephone extension number:"
-#~ msgstr "输入要添加的电话调查员的分机号："
-
-#~ msgid "Enter the telephone extension password:"
-#~ msgstr "输入要添加的电话调查员的分机密码："
+#~ msgstr "Informe o sobrenome do operador para adicionar:"
 
 #~ msgid "Will this operator be using VoIP?"
-#~ msgstr "该电话调查员使用VoIP吗？"
+#~ msgstr "Este operador usará VoIP?"
+
+#~ msgid "Enter the password of an operator to add:"
+#~ msgstr "Informe a senha do operador para adicionar:"
+
+#~ msgid "Enter the first name of an operator to add:"
+#~ msgstr "Informe o primeiro nome do operador para adicionar:"
+
+#~ msgid "Enter the Time Zone of an operator to add:"
+#~ msgstr "Informe o fuso-horário do operador para adicionar:"
+
+#~ msgid "Enter the telephone extension number:"
+#~ msgstr "Informe o número da extensão/ramal:"
+
+#~ msgid "Enter the telephone extension password:"
+#~ msgstr "Informe a senha da extensão:"
 
 #~ msgid "Is the operator a normal interviewer?"
-#~ msgstr "该调查员是普通的访问员吗？"
+#~ msgstr "Este operador é um Pesquisador convencional?"
 
 #~ msgid "Is the operator a supervisor?"
-#~ msgstr "该调查员是调查督导员吗？"
+#~ msgstr "Este operador é um Supervisor?"
 
 #~ msgid "Is the operator a refusal converter?"
-#~ msgstr "该调查员可以转接拒绝访问的样本吗？"
+#~ msgstr "Este operador tem habilidade para converter recusas?"
 
 #~ msgid "Add user"
-#~ msgstr "添加电话调查员"
+#~ msgstr "Adicionar Usuário"
+
+#~ msgid "Choose the CSV file to upload:"
+#~ msgstr "Escolha o arquivo CSV para carregar:"
+
+#~ msgid "Respondent Selection - Business answers"
+#~ msgstr "Seleção do Entrevistado - Contato Empresarial"
+
+#~ msgid "Business number"
+#~ msgstr "Encerrado: Fone Comercial"
+
+#~ msgid "End call with outcome: No answer (ring out or busy) "
+#~ msgstr "Encerrado: Não Atende ou Ocupado "
+
+#~ msgid "End call with outcome: Accidental hang up"
+#~ msgstr "Encerrado: Queda de ligação"
+
+#~ msgid "Respondent Selection - Project end"
+#~ msgstr "Seleção do Entrevistado - Projeto Encerrado."
+
+#~ msgid ""
+#~ "End call with outcome: Non contact (person not currently available on this "
+#~ "number: no appointment made)"
+#~ msgstr "Encerrado: Entrevistado não disponível neste número. Sem agendar."
+
+#~ msgid ""
+#~ "End call with outcome: No eligible respondent (person never available on "
+#~ "this number)"
+#~ msgstr "Encerrado: Entrevistado nunca encontrado neste número"
+
+#~ msgid "End call with outcome: Refusal by respondent"
+#~ msgstr "Encerrado: Recusa do Entrevistado"
+
+#~ msgid "End call with outcome: Refusal by unknown person"
+#~ msgstr "Encerrado: Recusa de Terceiro"
+
+#~ msgid ""
+#~ "End call with outcome: Out of sample (already completed in another mode)"
+#~ msgstr "Encerrado: Fora da Listagem (Já completado em outro modo)"
+
+#~ msgid "End call with outcome: Business answering machine"
+#~ msgstr "Encerrado: URA ou Cx Msg Comercial"
+
+#~ msgid "End call with outcome: Answering machine Message left"
+#~ msgstr "Encerrado: Recado gravado na Caixa de Mensagem"
+
+#~ msgid "End call with outcome: Answering machine No message left"
+#~ msgstr "Encerrado: Caixa de Mensagens - Sem Recado Gravado"
+
+#~ msgid "You are: "
+#~ msgstr "Estamos com: "
+
+#~ msgid ""
+#~ "End call with outcome: No eligible respondent (person not available on this "
+#~ "number)"
+#~ msgstr "Encerrado: Entrevistado não disponível neste número"
+
+#~ msgid " unassigned case(s) available within the specified call restrictions"
+#~ msgstr " registros não atribuídos devido as restrições de chamadas."
+
+#~ msgid "There are "
+#~ msgstr "Existem "
+
+#~ msgid "End call with outcome: Quota filled"
+#~ msgstr "Encerrado: Amostra Encerrada"
+
+#~ msgid "POSSIBLE ERROR: Row quota reached for this question"
+#~ msgstr "POSSÍVEL ERRO: Amostra encerrada para esta questão"
+
+#~ msgid "Call automatically ended with outcome: Complete - End case"
+#~ msgstr "Encerrado Automaticamente: Entrevista realizada - Término do caso"
+
+#~ msgid "Appointment:"
+#~ msgstr "Agendamentos:"
+
+#~ msgid "Reload failed because retrieve_conf encountered an error: %s"
+#~ msgstr "Falha ao recarregar. Arquivo retrieve_conf encontrou um erro: %s"
+
+#~ msgid ""
+#~ "This is how the story goes.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Assim começa a história\n"
+#~ "\n"
+
+#~ msgid "Display"
+#~ msgstr "Mostrar"
+
+#~ msgid "Availablity group"
+#~ msgstr "Grupo de disponibilidade"
+
+#~ msgid "Add availability group"
+#~ msgstr "Adicionar grupo de disponibilidade"
+
+#~ msgid "No availability groups"
+#~ msgstr "Não existem grupos de disponibilidade"
+
+#~ msgid "Assign availability group to questionnaire"
+#~ msgstr "Atribuir um grupo de disponibilidade para o questionário"
+
+#~ msgid "There are no availability groups selected for this questionnaire"
+#~ msgstr "Não há grupos de disponibilidade selecionados para este questionário"
+
+#~ msgid "Availability groups selected for this questionnaire"
+#~ msgstr "Grupos de disponibilidade selecionados para este questionário"
+
+#~ msgid "Select a questionnaire from the list below"
+#~ msgstr "Selecione um questionário na lista abaixo"
+
+#~ msgid "Administrative Tools"
+#~ msgstr "Ferramentas Administrativas"
+
+#~ msgid "Select availability group:"
+#~ msgstr "Selecione um grupo de disponibilidade:"
+
+#~ msgid "Add an availability group to this questionnaire:"
+#~ msgstr "Adicione um grupo de disponibilidade para este questionário"
+
+#~ msgid "Start and monitor system wide case sorting"
+#~ msgstr "Gerenciar e Monitorar o sistema de sorteio"
+
+#~ msgid "New: Create new questionnaire"
+#~ msgstr "Novo: Criar novo quesionário"
+
+#~ msgid "as questionnaire"
+#~ msgstr "como questionário"
+
+#~ msgid "linked to"
+#~ msgstr "vinculado em/para"
+
+#~ msgid "Existing instrument:"
+#~ msgstr "Instrumentos existentes:"
+
+#~ msgid "Download Windows VoIP Executable"
+#~ msgstr "Baixar o executável VoiP para Windows"
+
+#~ msgid "Enable/Disable"
+#~ msgstr "Habilitar/Desabilitar"
+
+#~ msgid "Windows bat file"
+#~ msgstr "Arquivo bat para Windows"
+
+#~ msgid "Windows VoIP"
+#~ msgstr "Windows VoIP"
+
+#~ msgid "*nix VoIP"
+#~ msgstr "*nix VoIP"
+
+#~ msgid "Download Linux VoIP Executable"
+#~ msgstr "Baixar o Executável VoIP para Linux"
+
+#~ msgid "Enable/Disable VoIP"
+#~ msgstr "Habilitar/Desabilitar VoIP"
 
 #~ msgid ""
 #~ "Provide a headered CSV file containing at least 3 columns - caseid, "
@@ -4480,364 +4663,280 @@ msgstr ""
 #~ "temporary (non final) outcomes will have appointments generated, and the "
 #~ "outcome of the case will be updated to an appointment outcome."
 #~ msgstr ""
-#~ "提交一份至少包含访问编号caseid、开始时间starttime和结束时间endtime这三列的带标头的CSV文件。您可以选择性地加入备注列note，用来"
-#~ "记录除了预约之外的访问信息。只有有临时结果（非最终结果）的访问才可以生成预约，而且访问的结果将在预约结果中更新。"
-
-#~ msgid "Choose the CSV file to upload:"
-#~ msgstr "选择要上传的CSV文件："
+#~ "Forneça um arquivo CSV com cabeçalho, contendo pelo menos 3 colunas - NR do "
+#~ "Caso (ID), Hora de Início e Hora de Término. Opcionalmente você pode incluir "
+#~ "uma coluna de observação para registrar uma nota ao caso, adicionalmente a "
+#~ "um agendamento. Somente casos que possuem resultados temporários "
+#~ "(retornáveis) terão agendamento gerado e seu resultado será atualizado para "
+#~ "agendamento."
 
 #~ msgid "Load bulk appointment CSV"
-#~ msgstr "加载批量预约CSV"
-
-#~ msgid "Operator Name"
-#~ msgstr "电话调查员姓名"
-
-#~ msgid "Respondent Name"
-#~ msgstr "受访者姓名"
-
-#~ msgid "No appointments in the future"
-#~ msgstr "未来无预约"
-
-#~ msgid "Date/Time call start"
-#~ msgstr "日期/时间呼叫开始"
-
-#~ msgid "Time end"
-#~ msgstr "时间结束"
-
-#~ msgid "Outcomes"
-#~ msgstr "结果"
-
-#~ msgid "Assign availability group to questionnaire"
-#~ msgstr "给问卷分派有效组"
-
-#~ msgid "There are no availability groups selected for this questionnaire"
-#~ msgstr "该问卷没有选择有效组"
-
-#~ msgid "Availability groups selected for this questionnaire"
-#~ msgstr "该问卷选择的有效组"
-
-#~ msgid "Add an availability group to this questionnaire:"
-#~ msgstr "给该问卷添加有效组："
-
-#~ msgid "Select availability group:"
-#~ msgstr "选择有效组："
-
-#~ msgid "Current quotas (click to delete)"
-#~ msgstr "当前配额（点击删除）"
-
-#~ msgid "Pre defined values for this question:"
-#~ msgstr "该问卷预先定义值："
-
-#~ msgid "Enter a case id or select a case from the list below:"
-#~ msgstr "输入一个访问编号或从下列列表中选择一个访问："
-
-#~ msgid "Create appointment for this case"
-#~ msgstr "给该访问创建预约"
+#~ msgstr "Carregar arquivo de agendamento em massa"
 
 #~ msgid "There may already be a client of this name"
-#~ msgstr "可能客户姓名已存在"
+#~ msgstr "Já deve existir um cliente com este nome"
+
+#~ msgid "Enter the Time Zone of a client to add:"
+#~ msgstr "Informe o fuso-horário do cliente:"
+
+#~ msgid ""
+#~ "Kill signal sent: Please wait... (Note: Process will be stalled until there "
+#~ "is activity on the VoIP Server)"
+#~ msgstr ""
+#~ "Encerrando o sinal enviado: Por favor aguarde... (Obs: Este processo será "
+#~ "paralisado até que exista atividade no servidor VoIP)"
+
+#~ msgid "Max calls (0 for unlimited)"
+#~ msgstr "Máximo de chamadas (0 para ilimitado)"
+
+#~ msgid "Max call attempts (0 for unlimited)"
+#~ msgstr "Máximo de tentativas (0 para ilimitado)"
+
+#~ msgid "Assign Sample: Select sample to assign"
+#~ msgstr "Atribui Listagem: Selecione uma lista para atribuir"
 
 #~ msgid ""
 #~ "Adding a client here will allow them to access project information in the "
 #~ "client subdirectory. You can assign a client to a particular project using "
 #~ "the"
-#~ msgstr "在本页添加一个客户会允许其在客户子目录下查看项目信息。您可以给客户分派指定的项目，用"
-
-#~ msgid "tool."
-#~ msgstr "工具。"
-
-#~ msgid "Enter the username of a client to add:"
-#~ msgstr "输入要添加的客户用户名："
-
-#~ msgid "Enter the password of a client to add:"
-#~ msgstr "输入要添加的客户密码："
+#~ msgstr ""
+#~ "Adicionando um cliente aqui habilitará ele a acessar informações do projeto "
+#~ "no subdiretório do cliente. Você pode atribuir um cliente para um projeto em "
+#~ "particular utilizando o"
 
 #~ msgid "Enter the first name of a client to add:"
-#~ msgstr "输入要添加的客户的名："
+#~ msgstr "Informe o Primeiro Nome do Cliente:"
 
 #~ msgid "Enter the surname of a client to add:"
-#~ msgstr "输入要添加的客户的姓："
+#~ msgstr "Informe o Sobrenome do cliente:"
 
-#~ msgid "Enter the Time Zone of a client to add:"
-#~ msgstr "输入要添加的客户的时区："
+#~ msgid "Enter the username of a client to add:"
+#~ msgstr "Informe o Nome de Usuário de um cliente para adicionar:"
 
-#~ msgid "No availability groups"
-#~ msgstr "无有效组"
+#~ msgid "Enter the password of a client to add:"
+#~ msgstr "Informe a senha do cliente para adicionar:"
 
-#~ msgid "Availablity group"
-#~ msgstr "有效组"
+#~ msgid "tool."
+#~ msgstr "."
 
-#~ msgid "Add availability group"
-#~ msgstr "添加有效组"
+#~ msgid "End call with outcome: Complete"
+#~ msgstr "Ligação encerrada: Entrevista Completa"
 
-#~ msgid "Windows bat file"
-#~ msgstr "Windows下的bat文件"
+#~ msgid "Modify shift template"
+#~ msgstr "Modificar modelo do turno"
 
-#~ msgid "Enable/Disable"
-#~ msgstr "启用/禁用"
+#~ msgid "Date/Time call start"
+#~ msgstr "Data/Hora início da chamada"
 
-#~ msgid "Enable/Disable VoIP"
-#~ msgstr "启用/禁用VoIP"
+#~ msgid "Time end"
+#~ msgstr "Hora do término"
+
+#~ msgid "Set centre information: "
+#~ msgstr "Definir informações do centro: "
+
+#~ msgid "Outcomes"
+#~ msgstr "Resultados"
+
+#~ msgid "Current pre fills (click to delete)"
+#~ msgstr "Auto-Preenchimento atual (clique para deletar)"
+
+#~ msgid "Shift"
+#~ msgstr "Turno"
+
+#~ msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
+#~ msgstr ""
+#~ "Auto-preenchimento: defina as questões e os valores para resposta automática"
+
+#~ msgid "Enter a case id or select a case from the list below:"
+#~ msgstr "Informe um Número do Caso (ID) ou selecione da lista abaixo:"
+
+#~ msgid "Create appointment for this case"
+#~ msgstr "Criar agendamento para este caso"
+
+#~ msgid "Operator Name"
+#~ msgstr "Nome do(a) Pesquisador(a)"
+
+#~ msgid "Respondent Name"
+#~ msgstr "Nome do Entrevistado"
+
+#~ msgid "Search sample"
+#~ msgstr "Procurar na listagem"
+
+#~ msgid "No records in this sample match this search criteria"
+#~ msgstr "Não há registros nesta listagem que satisfaçam os critérios de busca"
+
+#~ msgid "No cases yet assigned: Delete this sample record"
+#~ msgstr "Nenhum caso ainda atribuído: Deletar este registro da listagem"
+
+#~ msgid "Assigned to questionnaire: "
+#~ msgstr "Atribuído ao questionário: "
+
+#~ msgid "Link"
+#~ msgstr "Vínculo"
+
+#~ msgid "Start search"
+#~ msgstr "Iniciar busca"
+
+#~ msgid "Search for:"
+#~ msgstr "Buscar por:"
+
+#~ msgid "Display extension status"
+#~ msgstr "Mosta a situação do ramal"
+
+#~ msgid "No operators"
+#~ msgstr "Sem pesquisadores"
 
 #~ msgid "Copied quotas"
-#~ msgstr "复制的配额"
+#~ msgstr "Amostras copiadas"
+
+#~ msgid "Modify call restriction times"
+#~ msgstr "Modificar os intervalos de restrição de chamadas"
 
 #~ msgid "Current row quotas (click to delete)"
-#~ msgstr "当前行配额（点击删除）"
-
-#~ msgid "Replicate: Where"
-#~ msgstr "复制：在"
-
-#~ msgid "like"
-#~ msgstr "像"
-
-#~ msgid "Sample only. Stop calling where"
-#~ msgstr "仅样本。停止呼叫于"
-
-#~ msgid "rows from this sample when:"
-#~ msgstr "行在该样本中当："
+#~ msgstr "Amostras em execução (clique no link para excluir a cota)"
 
 #~ msgid "Stop calling"
-#~ msgstr "停止呼叫"
+#~ msgstr "Pare de ligar"
+
+#~ msgid "like"
+#~ msgstr "conter"
+
+#~ msgid "Replicate: Where"
+#~ msgstr "Replicar: Onde"
 
 #~ msgid "Row quota reached (Closed)"
-#~ msgstr "行配额达标（已关闭）"
+#~ msgstr "Linha de amostra encerrada (Fechada)"
 
 #~ msgid "Row quota not yet reached (Open)"
-#~ msgstr "行配额尚未达标（开启中）"
+#~ msgstr "Linha de amostra ainda não encerrada (Aberta)"
 
-#~ msgid "Copy quotas for this sample to (No error/duplicate checking): "
-#~ msgstr "复制该样本的配额给（无错误/重复检查）： "
+#~ msgid "rows from this sample when:"
+#~ msgstr "os registros desta listagem quando:"
 
-#~ msgid "Copy"
-#~ msgstr "复制"
+#~ msgid "Sample only. Stop calling where"
+#~ msgstr "Somente listagem. Pare de chamar quando"
+
+#~ msgid "No question (Replicate)"
+#~ msgstr "Nenhuma Pergunta (Repetição)"
+
+#~ msgid "Copy adjustments"
+#~ msgstr "Copiar ajustes"
 
 #~ msgid ""
 #~ "Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
-#~ msgstr "复制并调整该样本的配额给（无错误/重复检查）： "
-
-#~ msgid "Copy adjustments"
-#~ msgstr "复制调整"
-
-#~ msgid "Select a question for the row quota"
-#~ msgstr "给行配额选择一个问题"
-
-#~ msgid "No question (Replicate)"
-#~ msgstr "没有问题（复本）"
+#~ msgstr ""
+#~ "Copiar amostras para esta listagem para ( Sem erros/checagem de "
+#~ "duplicidades) com ajsutes: "
 
 #~ msgid "Sample only quota"
-#~ msgstr "仅样本配额"
+#~ msgstr "Amostra somente da listagem"
+
+#~ msgid "Select a question for the row quota"
+#~ msgstr "Selecione uma pergunta para a amostra"
 
 #~ msgid "Select the sample variable to exclude"
-#~ msgstr "选择要排除的样本变量"
+#~ msgstr "Selecione a variável da amostra para excluir"
 
 #~ msgid "Enter the details for creating the row quota:"
-#~ msgstr "输入详细信息创建行配额："
+#~ msgstr "Informe os detalhes para criar as amostras de linhas:"
+
+#~ msgid "Copy quotas for this sample to (No error/duplicate checking): "
+#~ msgstr ""
+#~ "Copiar amostras para esta listagem para ( Sem erros/checagem de "
+#~ "duplicidades): "
+
+#~ msgid "Copy"
+#~ msgstr "Copiar"
+
+#~ msgid "Pre defined values for this question:"
+#~ msgstr "Valores pré-definidos para esta pergunta:"
 
 #~ msgid "Exclude from the sample where the value is like"
-#~ msgstr "从样本中排除此类变量"
+#~ msgstr "Elimine da listagem onde o valor for igual"
 
-#~ msgid "Add/Remove Timezones"
-#~ msgstr "添加/移除时区"
-
-#~ msgid "Click to remove a Timezone from the default list"
-#~ msgstr "点击从默认列表中移除一个时区"
-
-#~ msgid "Timezone: "
-#~ msgstr "时区： "
-
-#~ msgid "Display extension status"
-#~ msgstr "显示分机状态"
-
-#~ msgid "No operators"
-#~ msgstr "无电话调查员"
+#~ msgid "No appointments in the future"
+#~ msgstr "Sem agendamentos futuros"
 
 #~ msgid "No availability group set"
-#~ msgstr "未设立有效组"
-
-#~ msgid "Modify availability"
-#~ msgstr "修改有效时间"
-
-#~ msgid "Save changes to availabilities"
-#~ msgstr "保存对有效时间的修改"
-
-#~ msgid "Modify call restriction times"
-#~ msgstr "修改呼叫限定时间"
-
-#~ msgid "Search sample"
-#~ msgstr "查询样本"
-
-#~ msgid "No cases yet assigned: Delete this sample record"
-#~ msgstr "尚未分派访问：删除该样本记录"
-
-#~ msgid "Assigned to questionnaire: "
-#~ msgstr "分派给问卷： "
-
-#~ msgid "No records in this sample match this search criteria"
-#~ msgstr "样本中无记录符合本次查询条件"
-
-#~ msgid "Link"
-#~ msgstr "连接"
-
-#~ msgid "Search for:"
-#~ msgstr "查询："
-
-#~ msgid "Start search"
-#~ msgstr "开始查询"
-
-#~ msgid "New: Create new questionnaire"
-#~ msgstr "新建：创建新问卷"
-
-#~ msgid "as questionnaire"
-#~ msgstr "作为问卷"
-
-#~ msgid "linked to"
-#~ msgstr "连接到"
-
-#~ msgid "Submit changes"
-#~ msgstr "提交修改"
-
-#~ msgid "Administrative Tools"
-#~ msgstr "管理工具"
-
-#~ msgid "Questionnaire creation and management"
-#~ msgstr "问卷创建及管理"
-
-#~ msgid "Sample/List management"
-#~ msgstr "样本/列表管理"
-
-#~ msgid "Set values in questionnaire to pre fill"
-#~ msgstr "问卷预设值"
-
-#~ msgid "Manage availablity groups"
-#~ msgstr "管理可用组"
-
-#~ msgid "Assign availabilities to questionnaires"
-#~ msgstr "给问卷分派有效时间"
-
-#~ msgid "Questionnaire progress"
-#~ msgstr "问卷进度"
-
-#~ msgid "Client management"
-#~ msgstr "客户管理"
+#~ msgstr "Não foi ajustado um grupo de disponibilidade"
 
 #~ msgid "Import: Validating and uploading"
-#~ msgstr "导入：验证并上传"
+#~ msgstr "Importar: Validação e Upload"
 
 #~ msgid "Successfully imported file"
-#~ msgstr "成功导入文件"
+#~ msgstr "Arquivo importado com sucesso"
 
 #~ msgid "Please go back in your browser and fix the problem"
-#~ msgstr "请回到您的浏览器修正问题"
+#~ msgstr "Por favor retorne no seu navegador e corrija o problema"
 
 #~ msgid "Import: Select columns to import"
-#~ msgstr "导入：选择要导入的列"
+#~ msgstr "Importação: Selecione as colunas para importar"
 
 #~ msgid "Choose the CSV sample file to upload:"
-#~ msgstr "选择要上传的CSV样本文件："
+#~ msgstr "Escolha uma listagem no formato CSV para carregar"
 
 #~ msgid "Description for file:"
-#~ msgstr "文件描述："
+#~ msgstr "Descrição para o arquivo:"
 
-#~ msgid "Current pre fills (click to delete)"
-#~ msgstr "当前预设（点击删除）"
+#~ msgid "Modify availability"
+#~ msgstr "Modificar disponibilidade"
 
-#~ msgid "Assign Sample: Select sample to assign"
-#~ msgstr "分派样本：选择要分派的样本"
+#~ msgid "Submit changes"
+#~ msgstr "Enviar alterações"
 
-#~ msgid "Max calls (0 for unlimited)"
-#~ msgstr "最多呼叫次数（0表示无限制）"
+#~ msgid "Save changes to availabilities"
+#~ msgstr "Salvar alterações para as disponibilidades"
 
-#~ msgid "Max call attempts (0 for unlimited)"
-#~ msgstr "最多呼叫尝试（0表示无限制）"
+#~ msgid "Current quotas (click to delete)"
+#~ msgstr "Amostras atuais (clique para deletar)"
 
-#~ msgid "Number of answering machine messages to leave per case (0 for never)"
-#~ msgstr "每个访问电话答录机的留言数量（0表示从不留言）"
+#~ msgid "Click to remove a Timezone from the default list"
+#~ msgstr "Clique para remover um fuso horário da lista padrão"
 
-#~ msgid "Select from sample randomly? (otherwise sequentially)"
-#~ msgstr "从样本中随机选择？（否则按顺序选择）"
+#~ msgid "Add/Remove Timezones"
+#~ msgstr "Adicionar/Remover fusos horários"
 
-#~ msgid "Set centre information: "
-#~ msgstr "设置中心信息： "
+#~ msgid "Timezone: "
+#~ msgstr "Fuso horário: "
 
-#~ msgid "Display"
-#~ msgstr "显示"
+#~ msgid "Use the % character as a wildcard"
+#~ msgstr "Use the % character as a wildcard"
 
-#~ msgid "End call with outcome: Answering machine Message left"
-#~ msgstr "结束电话：已给答录机留言"
+#~ msgid "Questionnaire creation and management"
+#~ msgstr "Questionários - Criação e Gerenciamento"
 
-#~ msgid "End call with outcome: Answering machine No message left"
-#~ msgstr "结束电话：未给答录机留言"
-
-#~ msgid "Respondent Selection - Business answers"
-#~ msgstr "受访者筛选-商业电话"
-
-#~ msgid "Respondent Selection - Call back"
-#~ msgstr "受访者筛选-稍后回拨"
-
-#~ msgid "Respondent Selection - Project Introduction"
-#~ msgstr "受访者筛选-项目介绍"
-
-#~ msgid "End call with outcome: Refusal by respondent"
-#~ msgstr "结束电话：受访者拒访"
-
-#~ msgid "Availability and shift management"
-#~ msgstr "受访对象可及性及访问员电访时段管理"
-
-#~ msgid "Shift management (add/remove)"
-#~ msgstr "调查时段管理（添加/移除）"
-
-#~ msgid "Shift"
-#~ msgstr "调查时段（访问员轮班）"
-
-#~ msgid "Modify shift template"
-#~ msgstr "修改调查时段模板"
-
-#~ msgid ""
-#~ "Could not reload the FOP operator panel server using the bounce_op.sh "
-#~ "script. Configuration changes may not be reflected in the panel display."
-#~ msgstr "无法用bounce_op.sh脚本重新加载FOP电话调查员控制面板。面板可能没有反映系统配置修改。"
-
-#~ msgid "Respondent Selection - Project Quota End"
-#~ msgstr "受访者筛选 - 项目配额结束"
-
-#~ msgid "Respondent Selection - Project end"
-#~ msgstr "受访者筛选 - 项目结束"
-
-#~ msgid "Respondent Selection - Answering machine"
-#~ msgstr "受访者筛选 - 电话答录机"
-
-#~ msgid "Respondent Selection - Introduction"
-#~ msgstr "受访者筛选 - 介绍"
-
-#~ msgid ""
-#~ "Kill signal sent: Please wait... (Note: Process will be stalled until there "
-#~ "is activity on the VoIP Server)"
-#~ msgstr "终止信号发送：请等待...（注意：进程将直到VoIP服务器有反应才会停止）"
-
-#~ msgid "Download Windows VoIP Executable"
-#~ msgstr "VoIP客户端(Windows)"
-
-#~ msgid "Download Linux VoIP Executable"
-#~ msgstr "VoIP客户端(Linux)"
-
-#~ msgid "Windows VoIP"
-#~ msgstr "VoIP Windows客户端"
-
-#~ msgid "*nix VoIP"
-#~ msgstr "VoIP L/Unix等客户端"
+#~ msgid "Sample/List management"
+#~ msgstr "Listagens - Gerenciamento"
 
 #~ msgid "Import a sample file (in CSV form)"
-#~ msgstr "导入样本（CSV格式）"
+#~ msgstr "Importar uma listagem (formato CSV)"
 
-#~ msgid "Start and monitor system wide case sorting"
-#~ msgstr "开始并监控全系统访问排序"
+#~ msgid "Set values in questionnaire to pre fill"
+#~ msgstr "Definir auto-respostas no questionário"
 
-#~ msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
-#~ msgstr "加载问卷预填字段：设置问卷预填信息"
+#~ msgid "Availability and shift management"
+#~ msgstr "Cronograma e Gerenciamento de Turnos"
 
-#~ msgid "Adding an operator here will give the user the ability to call cases"
-#~ msgstr "在此添加电话调查员，将允许新调查员呼叫受访者"
+#~ msgid "Manage availablity groups"
+#~ msgstr "Gerenciar grupos de disponibilidade"
 
-#~ msgid "Existing instrument:"
-#~ msgstr "已有问卷工具："
+#~ msgid "Assign availabilities to questionnaires"
+#~ msgstr "Atribuir grupos de disponibilidade"
+
+#~ msgid "Shift management (add/remove)"
+#~ msgstr "Gerenciar Turnos (adicionar/remover)"
+
+#~ msgid "Questionnaire progress"
+#~ msgstr "Evolução do Estudo"
+
+#~ msgid "Client management"
+#~ msgstr "Clientes - Gerenciamento"
+
+#~ msgid "Number of answering machine messages to leave per case (0 for never)"
+#~ msgstr ""
+#~ "Número de recados para deixar na secretária eletrônica (0 para nunca)"
+
+#~ msgid "Select from sample randomly? (otherwise sequentially)"
+#~ msgstr ""
+#~ "Selecionar os casos da listagem de forma aleatória? (desliga a forma "
+#~ "sequencial)"

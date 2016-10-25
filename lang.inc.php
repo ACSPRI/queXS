@@ -62,8 +62,25 @@ function TQ_($msg)
   return str_replace("'","\\'",$msg);
 }
 
-
-$locale = isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) ? substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2) : DEFAULT_LOCALE;
+$locale = DEFAULT_LOCALE;
+if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]))
+{
+  $l = explode(",",$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+  foreach($l as $ls)
+  {
+    $ls = strtolower($ls);
+    if (file_exists(dirname(__FILE__)."/locale/".$ls))
+    {
+      $locale = $ls;
+      break;
+    }
+    else if (file_exists(dirname(__FILE__)."/locale/". substr($ls,0,2)))
+    {
+      $locale = substr($ls,0,2);
+      break;
+    }
+  }
+}
 T_setlocale(LC_MESSAGES, $locale);
 T_bindtextdomain($locale,  dirname(__FILE__)."/locale");
 T_bind_textdomain_codeset($locale, 'UTF-8');
