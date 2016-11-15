@@ -341,7 +341,7 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 				print "<option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id&amp;start=$t\" $selected>".$t."</option>";
 			}
 
-			$sm += 15;
+			$sm += 5;
 			if ($sm >= 60) 
 			{
 				$sh++;
@@ -364,7 +364,7 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 			$sm = $r['sm'];
 			$intervals = $r['intervals'];
 	
-			// * Display only times after the start time and within the shift in 15 minute intervals
+			// * Display only times after the start time and within the shift in 5 minute intervals
 			for ($i = 0; $i <= $intervals-1; $i++)
 			{
 				$t = str_pad($sh,2,"0",STR_PAD_LEFT).":".str_pad($sm,2,"0",STR_PAD_LEFT).":00";
@@ -377,7 +377,7 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 					print "<option value=\"?y=$year&amp;m=$month&amp;d=$day&amp;respondent_id=$respondent_id&amp;start=$time&amp;end=$t\" $selected>".$t."</option>";
 				}	
 				
-				$sm += 15;
+				$sm += 5;
 				if ($sm >= 60) 
 				{
 					$sh++;
