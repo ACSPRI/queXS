@@ -291,7 +291,7 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 		/**
 		 * Select shift start and end times for this day
 		 */
-		$sql = "SELECT s.shift_id, HOUR(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sh, MINUTE(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( s.end, s.start)) / 900) as intervals, TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) as start, TIME(CONVERT_TZ(s.end,'UTC',r.Time_zone_name)) as  end
+		$sql = "SELECT s.shift_id, HOUR(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sh, MINUTE(TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ(s.start,'UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, (TIME_TO_SEC( TIMEDIFF( s.end, s.start)) / 300) as intervals, TIME(CONVERT_TZ(s.start,'UTC',r.Time_zone_name)) as start, TIME(CONVERT_TZ(s.end,'UTC',r.Time_zone_name)) as  end
 					FROM shift as s, respondent as r, `case` as c
 					WHERE r.respondent_id = '$respondent_id'
 					AND r.case_id = c.case_id
@@ -302,7 +302,7 @@ function display_time($questionnaire_id,$respondent_id, $day, $month, $year, $ti
 					ORDER BY s.start ASC";
 	}
 	else
-		$sql = "SELECT  0 as sh, 0 as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ('$year-$month-$day 08:00:00','UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, 96 as intervals, '00:00:00' as start, '23:59:59' as  end
+		$sql = "SELECT  0 as sh, 0 as sm, !(DATE(CONVERT_TZ(NOW(),'System',r.Time_zone_name)) = DATE(CONVERT_TZ('$year-$month-$day 08:00:00','UTC',r.Time_zone_name))) as today,  HOUR(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as eh, MINUTE(TIME(CONVERT_TZ(NOW(),'System',r.Time_zone_name))) as em, 288 as intervals, '00:00:00' as start, '23:59:59' as  end
 			FROM respondent as r
 			WHERE r.respondent_id = '$respondent_id'";
 
