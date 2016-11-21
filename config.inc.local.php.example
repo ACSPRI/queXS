@@ -58,6 +58,17 @@ define('AUTO_POPUP',false);
 define('QUEXS_PATH', '/quexs/');
 
 /**
+ * The port queXS is running on (leave default)
+ */
+define('QUEXS_PORT', '');
+
+/**
+ * Debugging - disabled
+ */
+define('DEBUG', false);
+
+
+/**
  * Database configuration for queXS
  */
 define('DB_USER', 'root');
