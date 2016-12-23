@@ -505,8 +505,9 @@ else
 }
 
 
+$qtmp = quexs_get_template($clienttoken);
 
-if ($interviewer)
+if ($interviewer || $qtmp === false)
 {
 	//SET THE TEMPLATE DIRECTORY
 	if (!$thissurvey['templatedir'])
@@ -520,8 +521,8 @@ if ($interviewer)
 }
 else
 {
-	$thissurvey['templatedir'] = quexs_get_template($clienttoken);
-	$thistpl=sGetTemplatePath(quexs_get_template($clienttoken));
+	$thissurvey['templatedir'] = $qtmp;
+	$thistpl=sGetTemplatePath($qtmp);
 }
 
 

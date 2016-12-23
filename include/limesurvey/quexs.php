@@ -70,7 +70,7 @@ else
  */
 function quexs_get_template($clienttoken)
 {
-	if (empty($clienttoken)) return 'default';
+	if (empty($clienttoken)) return false;
 
 	$db = newADOConnection(DB_TYPE);
 	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -84,7 +84,7 @@ function quexs_get_template($clienttoken)
 	$tpl = $db->GetOne($sql);
 
 	if (empty($tpl)) 
-		return 'default';
+		return false;
 	else
 		return $tpl;
 }
