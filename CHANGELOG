@@ -1,3 +1,13 @@
+queXS 1.14.4 - Changes since 1.14.3
+
+Fourth bug fix release.
+
+Fixed issue: Wrong template appearing for self complete respondents
+Fixed issue: Appointment minimum time was 15 minutes
+Fixed issue: Admin page failing to appear due to PHP notice
+
+Translations have also been updated - thank you again!
+
 queXS 1.14.3 - Changes since 1.14.2
 
 The third bug fix release for the 1.14 series of queXS.
