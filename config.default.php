@@ -172,7 +172,7 @@ if (!defined('PHP_EXEC')) define('PHP_EXEC', "php");
 /**
  * Path to ADODB
  */
-if (!defined('ADODB_PATH')) define('ADODB_PATH',dirname(__FILE__).'/include/limesurvey/classes/adodb/');
+if (!defined('ADODB_PATH')) define('ADODB_PATH','/usr/share/php/adodb/');
 
 /**
  * Whether to automatically assign a call as complete if VoIP disabled at the end of a completed questionnaire
@@ -268,7 +268,7 @@ if (!defined('DB_USER')) define('DB_USER', 'quexs');
 if (!defined('DB_PASS')) define('DB_PASS', 'quexs');
 if (!defined('DB_HOST')) define('DB_HOST', 'localhost');
 if (!defined('DB_NAME')) define('DB_NAME', 'quexs');
-if (!defined('DB_TYPE')) define('DB_TYPE', 'mysqlt');
+if (!defined('DB_TYPE')) define('DB_TYPE', 'mysqli');
 
 /**
  * The prefix for the limesurvey database
