@@ -44,27 +44,6 @@ include_once(dirname(__FILE__).'/../config.inc.php');
 include_once(dirname(__FILE__).'/../db.inc.php');
 
 /**
-* Creates a random sequence of characters
-*
-* @param mixed $length Length of resulting string
-* @param string $pattern To define which characters should be in the resulting string
-* 
-* From Limesurvey
-*/
-function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
-{
-    $patternlength = strlen($pattern)-1;
-    for($i=0;$i<$length;$i++)
-    {   
-        if(isset($key))
-            $key .= $pattern{mt_rand(0,$patternlength)};
-        else
-            $key = $pattern{mt_rand(0,$patternlength)};
-    }
-    return $key;
-}
-
-/**
  * Check if the project associated with this case is using 
  * questionnaire availability
  * 

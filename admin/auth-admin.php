@@ -61,7 +61,7 @@ if ($_SESSION['USER_RIGHT_SUPERADMIN'] != 1)
   include_once(dirname(__FILE__) . "/../functions/functions.xhtml.php");
   xhtml_head();
   print "<p>" . T_("You do not have permission to access this area") . "</p>";
-  print "<p><a href='../include/limesurvey/admin/admin.php?action=logout'>" . T_("Logout") . "</a></p>";
+  print "<p><a href='../login.php?action=logout'>" . T_("Logout") . "</a></p>";
   xhtml_foot();
   die();
 }

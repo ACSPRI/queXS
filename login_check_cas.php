@@ -12,23 +12,32 @@
  *
  * $Id: login_check_cas.php 12211 2012-01-26 17:02:27Z shnoulle $
  */
-if (!isset($dbprefix) || isset($_REQUEST['dbprefix'])) {die("Cannot run this script directly");}
-if (!isset($action)) {$action=returnglobal('action');}
+if (!isset($action)) {if (isset($_GET['action'])) {$action=$_GET['action'];} else {$action = "";}}
 //
 // phpCAS simple client
 //
+//
+
+/**
+ * Configuration file
+ */
+include_once ("config.inc.php");
+
+/**
+ * Database file
+ */
+include_once ("db.inc.php");
+
+
+
 
 if(!isset($_SESSION['CASauthenticated']) || (isset($_SESSION['CASauthenticated']) && $_SESSION['CASauthenticated']==FALSE) || (isset($_REQUEST['action']) && $_REQUEST['action'] =='logout') )
 {
-    //echo "bla";
     // import phpCAS lib
     include_once('include/phpCAS/CAS.php');
 
 
-//        phpCAS::setDebug();
-
-        
-        phpCAS::client(CAS_VERSION_2_0, $casAuthServer,$casAuthPort, $casAuthUri);
+        phpCAS::client(CAS_VERSION_2_0, CAS_AUTH_SERVER, CAS_AUTH_PORT, CAS_AUTH_URI);
 
         phpCAS::setNoCasServerValidation();
 
@@ -49,25 +58,18 @@ if(!isset($_SESSION['CASauthenticated']) || (isset($_SESSION['CASauthenticated']
         if($auth)
         {
            
-            $query = "SELECT uid, users_name, password, one_time_pw, dateformat, full_name, htmleditormode, questionselectormode, templateeditormode FROM ".db_table_name('users')." WHERE users_name=".$connect->qstr(phpCAS::getUser());
+            $query = "SELECT uid, users_name,superadmin FROM users WHERE users_name=".$db->qstr(phpCAS::getUser());
             $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC; //Checked
-            $result = $connect->SelectLimit($query, 1) or safe_die ($query."<br />".$connect->ErrorMsg());
+            $result = $db->SelectLimit($query, 1) or safe_die ($query."<br />".$db->ErrorMsg());
             if(!$result)
             {
-                echo "<br />".$connect->ErrorMsg();
+                echo "<br />".$db->ErrorMsg();
             }
             if ($result->RecordCount() < 1)
             {
                 // wrong or unknown username
               $loginsummary = sprintf($clang->gT("No user"))."<br />";
-                if ($sessionhandler=='db')
-                {
-                    adodb_session_regenerate_id();
-                }
-                else
-                {
                     session_regenerate_id();
-                }
             }
             else
             {
@@ -76,12 +78,14 @@ if(!isset($_SESSION['CASauthenticated']) || (isset($_SESSION['CASauthenticated']
                     $_SESSION['user'] = $srow['users_name'];
                     $_SESSION['checksessionpost'] = sRandomChars(10);
                     $_SESSION['loginID'] = $srow['uid'];
-                    $_SESSION['dateformat'] = $srow['dateformat'];
-                    $_SESSION['htmleditormode'] = $srow['htmleditormode'];
-                    $_SESSION['questionselectormode'] = $srow['questionselectormode'];
-                    $_SESSION['templateeditormode'] = $srow['templateeditormode'];
-                    $_SESSION['full_name'] = $srow['full_name'];
-                    GetSessionUserRights($_SESSION['loginID']);
+
+                        $_SESSION['USER_RIGHT_SUPERADMIN'] = 0;
+                                              
+                                            if ($srow['superadmin'] == 1) {
+
+                        $_SESSION['USER_RIGHT_SUPERADMIN'] = 1;
+                                               }
+ 
 
                     $auth = TRUE;
                     $_SESSION['CASauthenticated'] = $auth;
@@ -92,7 +96,7 @@ if(!isset($_SESSION['CASauthenticated']) || (isset($_SESSION['CASauthenticated']
                           $loc = "admin";
                         else
                         {
-                          $utest = $connect->GetOne("SELECT username FROM client WHERE username = '" . $_SESSION['user'] . "'");
+                          $utest = $db->GetOne("SELECT username FROM client WHERE username = '" . $_SESSION['user'] . "'");
                           if (!empty($utest))
                             $loc = "client";
                         }

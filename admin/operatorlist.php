@@ -68,7 +68,7 @@ if (isset($_POST['submit']))
 
   $uname = $db->GetOne($sql);
 
-  $sql = "UPDATE " . LIME_PREFIX . "users 
+  $sql = "UPDATE users 
           SET users_name = " . $db->qstr($_POST['username']) . ",
           email = " . $db->qstr($_POST['email']) . ",
           full_name = " . $db->qstr($_POST['firstName']) . ",
@@ -145,8 +145,8 @@ if (isset($_GET['edit']))
 
 	$operator_id = intval($_GET['edit']);
 
-	$sql = "SELECT o.*,l.superadmin,l.email,l.parent_id
-		FROM operator as o, " . LIME_PREFIX ."users as l
+	$sql = "SELECT o.*,l.superadmin,l.email
+		FROM operator as o, users as l
     WHERE o.operator_id = $operator_id
     AND l.users_name = o.username";
 
@@ -283,7 +283,7 @@ function generate() {
 	
 	<div class="form-group">
 		<label for="admin" class="col-lg-3 control-label"><?php echo T_("Is the operator a system administrator?");?></label>
-    <div class="col-lg-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger" <?php if ($rs['superadmin'] || ($rs['parent_id'] == 0)) echo " checked=\"checked\" "; if ($rs['parent_id'] == 0) echo " disabled=\"disabled\" "; ?> value="1"/></div>
+    <div class="col-lg-3"><input name="admin" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-offstyle="primary" data-onstyle="danger" <?php if ($rs['superadmin']) echo " checked=\"checked\" "; ?> value="1"/></div>
 	</div>
 
 	<div class="form-group">

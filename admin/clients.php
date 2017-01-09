@@ -88,7 +88,7 @@ if (isset($_POST['client']) && !empty($_POST['client']))
 					
 			if ($db->Execute($sql))
 			{
-				$sql = "UPDATE " . LIME_PREFIX . "users SET `users_name` = $client, `full_name` = $firstname, `email` = $email";
+				$sql = "UPDATE users SET `users_name` = $client, `full_name` = $firstname, `email` = $email";
 				
 				/* rewrite 'password' only if not blank in edit mode */
 				if (isset($_GET['edit']) && $_GET['edit'] >0 && isset($_POST['password']) && !empty($_POST['password'])) {
@@ -114,8 +114,8 @@ if (isset($_POST['client']) && !empty($_POST['client']))
 				include_once("../include/sha256.php");
 
 				//Insert into lime_users 
-				$sql = "INSERT INTO " . LIME_PREFIX . "users (`users_name`,`password`,`full_name`,`parent_id`,`superadmin`,`email`,`lang`) 
-						VALUES ($client, '" . SHA256::hashing($_POST['password']) . "', $firstname ,1,0,$email,'auto')";
+				$sql = "INSERT INTO users (`users_name`,`password`,`full_name`,`superadmin`,`email`) 
+						VALUES ($client, '" . SHA256::hashing($_POST['password']) . "', $firstname ,0,$email)";
 
 				if ($db->Execute($sql)) $a = T_("Added") . ": " . $client; else $a =  T_("Error adding client");	
 			}
@@ -139,7 +139,7 @@ if (isset($_GET['edit']) && $_GET['edit'] >0 ) {
 
 	$clid = intval($_GET['edit']);
 			
-	$sql = "SELECT client.*, u.email, u.uid from client, " . LIME_PREFIX . "users as u WHERE client_id=$clid and u.users_name=username";
+	$sql = "SELECT client.*, u.email, u.uid from client, users as u WHERE client_id=$clid and u.users_name=username";
 			
 	$cdata = $db->GetRow($sql);
 

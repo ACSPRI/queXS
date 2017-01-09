@@ -79,7 +79,7 @@ if (ALLOW_OPERATOR_EXTENSION_SELECT && VOIP_ENABLED)
 }
 
 print "<p><a href='index.php'>" . T_("Go back to work") . "</a></p>";
-print "<p><a href='include/limesurvey/admin/admin.php?action=logout'>" . T_("Logout") . "</a></p>";
+print "<p><a href='login.php?action=logout'>" . T_("Logout") . "</a></p>";
 
 xhtml_foot();
 

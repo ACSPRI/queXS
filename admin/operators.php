@@ -118,8 +118,8 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
       include_once("../include/sha256.php");
 
       //Insert into lime_users
-      $sql = "INSERT INTO " . LIME_PREFIX . "users (`users_name`,`password`,`full_name`,`parent_id`,`superadmin`,`email`,`lang`)
-              VALUES ($operator, '" . SHA256::hashing($_POST['password']) . "',$firstname,1,$admin,$email,'auto')";
+      $sql = "INSERT INTO users (`users_name`,`password`,`full_name`,`superadmin`,`email`)
+              VALUES ($operator, '" . SHA256::hashing($_POST['password']) . "',$firstname,$admin,$email)";
 
       $db->Execute($sql);
 

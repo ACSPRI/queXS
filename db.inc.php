@@ -128,4 +128,42 @@ function set_setting($name,$value)
 	return $db->Execute($sql);
 }
 
+
+/**
+ * Get the IP address of the client
+ */
+function getIPAddress()
+{
+    if (!empty($_SERVER['REMOTE_ADDR']))
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+    else
+    {
+        return '127.0.0.1';
+    }
+}
+
+/**
+* Creates a random sequence of characters
+*
+* @param mixed $length Length of resulting string
+* @param string $pattern To define which characters should be in the resulting string
+* 
+* From Limesurvey
+*/
+function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
+{
+    $patternlength = strlen($pattern)-1;
+    for($i=0;$i<$length;$i++)
+    {   
+        if(isset($key))
+            $key .= $pattern{mt_rand(0,$patternlength)};
+        else
+            $key = $pattern{mt_rand(0,$patternlength)};
+    }
+    return $key;
+}
+
+
 ?>

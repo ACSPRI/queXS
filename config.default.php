@@ -294,6 +294,15 @@ if (!defined('ADMIN_PANEL_NAME')) define ('ADMIN_PANEL_NAME',' Administration Pa
  */
 if (!defined('LS_SESSION_NAME')) define ('LS_SESSION_NAME', 'ls28629164789259281352');
 
+/* CAS Authentication
+ *
+ */
+if (!defined('CAS_ENABLED')) define ('CAS_ENABLED', false);
+if (!defined('CAS_AUTH_SERVER')) define ('CAS_AUTH_SERVER', 'www.acspri.org.au');
+if (!defined('CAS_AUTH_PORT')) define ('CAS_AUTH_PORT', 443);
+if (!defined('CAS_AUTH_URI')) define ('CAS_AUTH_URI', 'cas');
+
+
 /**
  * Debugging
  */
