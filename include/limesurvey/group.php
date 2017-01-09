@@ -21,7 +21,9 @@ include_once("quexs.php"); //queXS funcitons
 $LEMdebugLevel=0;   // LEM_DEBUG_TIMING;    // (LEM_DEBUG_TIMING + LEM_DEBUG_VALIDATION_SUMMARY + LEM_DEBUG_VALIDATION_DETAIL);
 $LEMskipReprocessing=false; // true if used GetLastMoveResult to avoid generation of unneeded extra JavaScript
 
-if ($interviewer)
+$surveyMode=quexs_get_survey_mode($clienttoken);
+
+if ($interviewer || $surveyMode === false)
 {
 	switch ($thissurvey['format'])
 	{
@@ -37,8 +39,6 @@ if ($interviewer)
 	        break;
 	}
 }
-else
-	$surveyMode=quexs_get_survey_mode($clienttoken);
 
 $radix=getRadixPointData($thissurvey['surveyls_numberformat']);
 $radix = $radix['seperator'];

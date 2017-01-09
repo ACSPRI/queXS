@@ -109,7 +109,13 @@ function quexs_get_survey_mode($clienttoken)
 		WHERE q.questionnaire_id = c.questionnaire_id
 		AND c.token = '$clienttoken'";
 
-	return $db->GetOne($sql);
+  $md = $db->GetOne($sql);
+
+  if (empty($md)) {
+    return false;        
+  } else {
+    return $md;
+  }
 }
 
 
