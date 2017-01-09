@@ -51,7 +51,7 @@ if ((defined('PHP_SESSION_ACTIVE') && session_status() !== PHP_SESSION_ACTIVE) |
 if (session_id() == "" || !isset($_SESSION['loginID']))
 {
   //need to log in
-  header('Location: ../include/limesurvey/admin/admin.php');
+  header('Location: ../login.php');
   die();
 }
 

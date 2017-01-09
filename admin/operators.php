@@ -115,7 +115,7 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
     {
       $oid = $db->Insert_ID();
 
-      include_once("../include/limesurvey/admin/classes/core/sha256.php");
+      include_once("../include/sha256.php");
 
       //Insert into lime_users
       $sql = "INSERT INTO " . LIME_PREFIX . "users (`users_name`,`password`,`full_name`,`parent_id`,`superadmin`,`email`,`lang`)
