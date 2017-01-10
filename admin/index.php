@@ -187,6 +187,7 @@ include ("../functions/functions.operator.php");
           </li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-lg fa-gear"></i><span><?php print T_("System settings") ;?></span></a>
               <ul style="<?php if ($g == 9) echo "display:block";?>">
+			    <li><a href="?g=9&amp;page=remote.php"><i class="fa fa-server fa-fw"></i><?php print T_("Questionnaire service (RPC)") ;?></a></li>
 			    <li><a href="?g=9&amp;page=set_outcomes.php?default"><i class="fa fa-list-ol fa-fw"></i><?php print T_("Set default outcomes") ;?></a></li>
                 <li><a href="?g=9&amp;page=timezonetemplate.php"><i class="fa fa-globe fa-fw"></i><?php print T_("Set default timezone list") ;?></a></li>
 				<li><a href="?g=9&amp;page=availabilitygroup.php"><i class="fa fa-clock-o fa-fw"></i><?php print T_("Manage Time slots") ;?></a></li>

@@ -42,6 +42,37 @@ include_once(dirname(__FILE__).'/../config.inc.php');
  */
 include_once(dirname(__FILE__).'/../db.inc.php');
 
+/**
+ * JSON RPC
+ */
+include_once(dirname(__FILE__).'/../include/JsonRPCClient.php');
+
+
+$limeRPC = "";
+$limeKey = "";
+
+function limerpc_init ($url,$user,$pass)
+{
+  global $limeRPC;
+  global $limeKey;
+
+  $limeRPC = new \org\jsonrpcphp\JsonRPCClient($url);
+
+  try {
+    $limeKey = $limeRPC->get_session_key($user,$pass);  
+  } catch (Exception $e) {
+    return $e->getMessage();  
+  }
+
+  if (is_array($limeKey) && isset($limeKey['status'])) {
+    return $limeKey['status'];
+  }
+  
+  return true;
+}
+
+
+
 
 /**
  * Strip comments from email taken from limesurvey common functions
