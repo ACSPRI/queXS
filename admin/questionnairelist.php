@@ -308,28 +308,16 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 			WHERE questionnaire_id = '$questionnaire_id'";
 		$db->Execute($sql);
 	}
-
-	if ($respsc == 1)
-	{
-		$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
-		$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
-		$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
-
-		$sql = "UPDATE questionnaire
-			SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
-			WHERE questionnaire_id = $questionnaire_id";
-		$db->Execute($sql);
-	}
 }
 
 if (isset($_GET['modify']))
 {
 	$questionnaire_id = intval($_GET['modify']);
 
-	$sql = "SELECT `questionnaire`.*, sl.surveyls_title as title
-		FROM questionnaire
-		LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( questionnaire.lime_sid = sl.surveyls_survey_id)
-		WHERE questionnaire_id = $questionnaire_id";
+	$sql = "SELECT `questionnaire`.*,remote.entry_url
+		FROM questionnaire, remote
+    WHERE questionnaire_id = $questionnaire_id
+    AND questionnaire.remote_id = remote.id";
 	$rs = $db->GetRow($sql);
 
 	$referral = $testing = $rws = $ras = $rsc = "checked=\"checked\"";
@@ -375,8 +363,8 @@ if (isset($_GET['modify']))
 			<a href='questionnairelist.php' class='btn btn-default pull-left' ><i class='fa fa-chevron-left fa-lg' style='color:blue;'></i>&emsp;<?php  echo T_("Go back"); ?></a><h3 class="pull-right"><?php echo T_("Assigned survey"); ?>:</h3>
 		</div>
 		<div class="col-sm-8">
-			<h3 class="pull-left" ><?php echo $rs['lime_sid'],"&emsp;",$rs['title']; ?></h3>
-			<?php echo "<a class='btn btn-default btn-lime pull-right' href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> 
+			<h3 class="pull-left" ><?php echo $rs['lime_sid'],"&emsp;"; ?></h3>
+			<?php echo "<a class='btn btn-default btn-lime pull-right' href='" . $rs['entry_url']. "admin/survey/sa/view/surveyid/{$rs['lime_sid']}'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> 
 		</div>
 	</div>
 
@@ -495,9 +483,7 @@ if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
 	</div>
 	
 	<?php	
-	}
-else if (!empty($rs['lime_rs_sid'])) { 
-	echo "<div class='well text-center'><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></div>"; } 	
+	} 	
 ?>	
 
 	<div class="panel  panel-default">
@@ -557,7 +543,7 @@ else
 
 	$sql = "SELECT 
 		CONCAT('&ensp;<b class=\'badge\'>',questionnaire_id,'</b>&ensp;') as qid,
-		CONCAT('<h4>',description,'</h4>') as description,
+		CONCAT('<h4>',q.description,'</h4>') as description,
 		CASE WHEN enabled = 0 THEN
 			CONCAT('&ensp;<span class=\'btn label label-default\'>" . TQ_("Disabled") . "</span>&ensp;')
 		ELSE
@@ -569,7 +555,7 @@ else
 			CONCAT('&ensp;<a href=\'\' data-toggle=\'confirmation\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("No") . "\' data-href=\'?disable=',questionnaire_id,'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Disable") . "\' class=\'fa fa-toggle-on fa-3x\'></i></a>&ensp;')
 		END as enabledisable,
 		CONCAT('<a href=\'?modify=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Edit Questionnaire") . "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-edit fa-2x \'></i></a>') as modify,
-		CONCAT('<a href=\'" . LIME_URL . "admin/admin.php?sid=',lime_sid,'\' class=\'btn\' title=\'" . T_("Edit Lime survey") . "&ensp;',lime_sid,'\' data-toggle=\'tooltip\'><i class=\'btn-lime fa fa-lemon-o fa-2x\'></i></a>') as inlime,
+		CONCAT('<a href=\'', entry_url, '/admin/survey/sa/view/surveyid/',lime_sid,'\' class=\'btn\' title=\'" . T_("Edit Lime survey") . "&ensp;',lime_sid,'\' data-toggle=\'tooltip\'><i class=\'btn-lime fa fa-lemon-o fa-2x\'></i></a>') as inlime,
 		CASE WHEN enabled = 0 THEN 
 			CONCAT('<i class=\'btn fa fa-calendar fa-2x\' style=\'color:lightgrey;\'></i>')
 		ELSE
@@ -612,7 +598,8 @@ else
 		ELSE
 			CONCAT('<a href=\'casestatus.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Case status and assignment"). "\' data-toggle=\'tooltip\'><i class=\'fa fa-question-circle fa-2x\'></i></a>')
 		END as casestatus
-		FROM questionnaire";
+    FROM questionnaire as q, remote as r
+    WHERE r.id = q.remote_id";
 	$rs = $db->GetAll($sql);
 
 	$columns = array("qid","description","status","enabledisable","outcomes","calls","casestatus","shifts","assample","quotareport","dataout","modify","setoutcomes","inlime","prefill","deletee");
