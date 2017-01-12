@@ -1,3 +1,7 @@
+ALTER TABLE `questionnaire` ADD `remote_id` INT NOT NULL ,
+ADD INDEX ( `remote_id` ) ;
+
+
 queXS 1.14.4 - Changes since 1.14.3
 
 Fourth bug fix release.

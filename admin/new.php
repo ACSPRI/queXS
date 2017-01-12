@@ -26,6 +26,11 @@ include ("../functions/functions.xhtml.php");
  */
 include("../functions/functions.input.php");
 
+/**
+ * Limesurvey functions
+ */
+include("../functions/functions.limesurvey.php");
+
 $css = array(
 "../include/bootstrap/css/bootstrap.min.css", 
 "../include/bootstrap/css/bootstrap-theme.min.css",
@@ -72,14 +77,10 @@ if (isset($_POST['import_file']))
 	$rs_answeringmachine = $db->qstr(html_entity_decode($_POST['rs_answeringmachine'],ENT_QUOTES,'UTF-8'));
 	$info  = $db->qstr(html_entity_decode($_POST['info'],ENT_QUOTES,'UTF-8'));
 
-	//use existing lime instrument
-	$lime_sid = bigintval($_POST['select']);
-
-
-	if (is_numeric($_POST['selectrs']))
-	{
-		$lime_rs_sid = bigintval($_POST['selectrs']);
-	}
+  //use existing lime instrument
+  $tmp = explode(';',$_POST['select']);
+  $lime_sid = bigintval($tmp[0]);
+  $remote = intval($tmp[1]);
 
 //**  get default coma-separated outcomes list and use it for new questionnaire as initial set
 	$sql = "SELECT o.outcome_id
@@ -97,26 +98,14 @@ if (isset($_POST['import_file']))
 	
 //** - end 
 	
-	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete,referral,outcomes)
-		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc,$referral,'$do')";
+	$sql = "INSERT INTO questionnaire (questionnaire_id,description,lime_sid,restrict_appointments_shifts,restrict_work_shifts,respondent_selection,rs_intro,rs_project_intro,rs_project_end,rs_callback,rs_answeringmachine,testing,lime_rs_sid,info,self_complete,referral,outcomes,remote_id)
+		VALUES (NULL,$name,'$lime_sid','$ras','$rws','$rs',$rs_intro,$rs_project_intro,$rs_project_end,$rs_callback,$rs_answeringmachine,'$testing',$lime_rs_sid,$info,$respsc,$referral,'$do','$remote')";
 
 	$rs = $db->Execute($sql);
 
 	if ($rs)
 	{
 		$qid = $db->Insert_ID();
-		if ($respsc == 1)
-		{
-			$lime_mode = $db->qstr($_POST['lime_mode']);
-			$lime_template = $db->qstr($_POST['lime_template']);
-			$lime_endurl = $db->qstr($_POST['lime_endurl']);
-
-			$sql = "UPDATE questionnaire
-				SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl
-				WHERE questionnaire_id = $qid";
-
-			$db->Execute($sql);
-		}
 		$cl = "info";
 		$message =  T_("Successfully inserted") . "&ensp;" . T_("with ID") . "&ensp; $qid, </h4><h4>" . T_("linked to survey") . "&ensp; $lime_sid ";
 				
@@ -167,12 +156,11 @@ $_POST['import_file'] = false;
 <a href="questionnairelist.php" class="btn btn-default pull-left" ><i class="fa fa-list text-primary"></i>&emsp;<?php echo T_("Go to");?>&ensp;<?php echo T_("Questionnaire management");?> </a>
 	
 <?php	
-$sql = "SELECT DISTINCT s.sid as sid, CONCAT(s.sid,' -> ',sl.surveyls_title) AS title
-	FROM " . LIME_PREFIX . "surveys AS s
-	LEFT JOIN " . LIME_PREFIX . "surveys_languagesettings AS sl ON ( s.sid = sl.surveyls_survey_id)
-	WHERE s.active = 'Y'";
 
-$surveys = $db->GetAll($sql);
+//get list of surveys via RPC
+
+$surveys = get_survey_list();
+
 
 if (!empty($surveys)){?>
 
@@ -191,12 +179,8 @@ if (!empty($surveys)){?>
 		<div class='col-sm-4'>
 			<select name="select" class="form-control">
 			<?php foreach($surveys as $s){?>  
-				<option value="<?php echo $s['sid'];?>"><?php echo T_("Survey"), ":&ensp;", $s['title'] ;?></option><?php } ?>
+				<option value="<?php echo $s['sid'] . ";" . $s['remote_id'];?>"><?php echo $s['host'] . ":&ensp;" . $s['description'];?></option><?php } ?>
 			</select>
-		</div>
-		<div class='col-sm-4'>
-			<strong><?php echo T_("or") ;?>&emsp;</strong>
-			<a class="btn btn-lime" href="<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Create an instrument in Limesurvey") ;?></a>
 		</div>
 	</div>
 		
@@ -206,10 +190,6 @@ if (!empty($surveys)){?>
 			<select class="form-control" name="selectrs" id="selectrs" onchange="if(this.value == 'old') show(this,'rstext');  else hide(this,'rstext')">
 				<option value="none"><?php  echo T_("No respondent selection (go straight to questionnaire)"); ?></option>
 				<option value="old" ><?php echo T_("Use basic respondent selection text (below)"); ?></option>
-			<?php 
-			foreach($surveys as $s){ ?> 
-				<option value="<?php echo $s['sid'];?>"><?php echo T_("Survey") ,":&ensp;", $s['title'] ;?></option>
-			<?php }?>
 			</select>
 		</div>
 	</div>
@@ -242,63 +222,6 @@ if (!empty($surveys)){?>
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<label class="col-sm-4 control-label" ><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> </label>
-		<div class="col-sm-4"style="height: 30px;">
-			<input name="respsc" type="checkbox"  onchange="if(this.checked==true) {show(this,'limesc'); $('#url').attr('required','required');} else{ hide(this,'limesc'); $('#url').removeAttr('required');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/>
-		</div>
-	</div>
-	
-	<div id="limesc" style="display:none" >
-	<div class="form-group">
-		<label class="col-sm-4 control-label" ><?php echo T_("Questionnaire display mode for respondent");?>: </label>
-		<div class="col-sm-4">
-			<select class="form-control"  name="lime_mode">
-				<option value="survey"><?php echo T_("All in one"); ?></option>
-				<option value="question"><?php echo T_("Question by question"); ?></option>
-				<option value="group"><?php echo T_("Group at a time"); ?></option>
-			</select>
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-4 control-label" ><?php echo T_("Limesurvey template for respondent");?>: </label>
-		<div class="col-sm-4">
-			<select class="form-control"  name="lime_template">
-			<?php 
-			if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
-				while (false !== ($entry = readdir($handle))) {
-					if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
-						$default = "";
-						if ($entry == 'skeletonquest') $default = "selected=\"selected\"";
-						echo "<option value=\"$entry\" $default>$entry</option>";
-					}
-				}
-				closedir($handle);
-			}
-			if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/upload/templates")) {
-				while (false !== ($entry = readdir($handle))) {
-					if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/upload/templates/" . $entry)){
-						$default = "";
-						if ($entry == 'skeletonquest') $default = "selected=\"selected\"";
-						echo "<option value=\"$entry\" $default>$entry</option>";
-					}
-				}
-				closedir($handle);
-			}
-			?>
-			</select>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
-		<div class="col-sm-4">
-			<input class="form-control"  name="lime_endurl" id="url" type="url" />
-		</div>
-	</div>
-</div>
-
-
 <?php
 /*   CKEditor  */
  
@@ -402,9 +325,6 @@ $ckeditorConfig = array("toolbar" => array(array("tokens","-","Source"),
 else { ?>
 		<div class='col-sm-6 col-sm-offset-1'>
 		<h3 class="alert alert-warning"> <?php echo T_("NO active Lime surveys available");?> </h3>
-			<a class="btn btn-lime btn-lg btn-block" href="<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Create an instrument in Limesurvey");?>  </a>
-			<h4 class="text-center"><?php echo T_("or"); ?></h4>
-			<a class="btn btn-lime btn-lg btn-block" href="<?php echo LIME_URL ;?>admin/admin.php?action=listsurveys"><i class="fa fa-lemon-o text-danger"></i>&emsp;<?php echo T_("Administer instruments with Limesurvey");?>  </a> 
 		</div>
 <?php } ?>
 

@@ -72,6 +72,42 @@ function limerpc_init ($url,$user,$pass)
 }
 
 
+function get_survey_list ()
+{
+  global $db;
+  global $limeRPC;
+  global $limeKey;
+
+  //get a list of surveys from each possible remote
+
+  $sql = "SELECT id, rpc_url, username, password, description
+          FROM remote";
+
+  $rs = $db->GetAll($sql);
+
+  $ret = array();
+
+  foreach($rs as $r) {
+    if (limerpc_init($r['rpc_url'],$r['username'],$r['password']) === true) {
+      $l = $limeRPC->list_surveys($limeKey);
+      if (isset($l['status'])) {
+        //none available
+      } else if (is_array($l)) {
+        foreach ($l as $s) {
+          if ($s["active"] == "Y") {
+            $ret[] = array("sid" => $s['sid'],
+                        "description" => $s['surveyls_title'],
+                        "host" => $r['description'],
+                        "remote_id" => $r['id']);
+          }
+        }
+      }
+    }
+  }
+
+  return $ret;
+}
+
 
 
 /**
