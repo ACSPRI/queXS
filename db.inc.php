@@ -74,9 +74,6 @@ if (DEBUG == true) $db->debug = true;
 
 $db->Execute("set names 'utf8'");
 
-//store session in database (see sessions2 table)
-//ADOdb_Session::config(DB_TYPE, DB_HOST, DB_USER, DB_PASS, DB_NAME, array('table' => LIME_PREFIX . 'sessions'));
-
 
 /**
  * Get a setting from the database
