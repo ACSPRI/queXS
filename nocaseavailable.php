@@ -184,23 +184,25 @@ else
 //no link to limesurvey
 echo "<p>" . T_("Limesurvey links:") . "</p>";
 
-$sql = "SELECT q.lime_sid, q.description
-	FROM questionnaire as q, operator_questionnaire as oq
+$sql = "SELECT q.lime_sid, q.description, r.rpc_url, r.username, r.password
+	FROM questionnaire as q, operator_questionnaire as oq, remote as r
 	WHERE oq.operator_id = '$operator_id'
 	AND q.questionnaire_id = oq.questionnaire_id
-	AND q.enabled = 1";
+  AND q.enabled = 1
+  AND r.id = q.remote_id";
 
 $rs = $db->GetAll($sql);
 
 if (!empty($rs))
 {
 	foreach($rs as $r)
-	{
-		$sql = "SELECT count(*)
-			FROM " . LIME_PREFIX ."tokens_{$r['lime_sid']}";
-		$rs2 = $db->GetRow($sql);
+  {
+    //interrogate server for tokens table
+    lime_rpc_init($r['rpc_url'],$r['username'],$r['password']);
 
-		if (empty($rs2))
+    $l = $limeRPC->get_summary($limeKey,$r['lime_sid'],'token_count'); //get number of tokens
+
+		if (isset($l['status']))
 			print "<p class='error'>" . T_("ERROR: No tokens table defined for LimeSurvey questionnaire") . " {$r['lime_sid']} " . T_("from questionnaire:") . " {$r['description']}</p>";
 		else
 			print "<p>{$r['description']}: " . T_("Tokens table exists for Limesurvey questionnaire:") . " {$r['lime_sid']}</p>";
