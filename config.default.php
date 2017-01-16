@@ -120,16 +120,6 @@ if (!defined('AUTO_POPUP')) define('AUTO_POPUP',false);
 if (!defined('SUPERVISOR_EXTENSION')) define('SUPERVISOR_EXTENSION',"1000");
 
 /**
- * The path to limesurvey
- */
-if (!defined('LIME_PATH')) define('LIME_PATH', 'include/limesurvey/');
-
-/**
- * Automatically move to the next question when clicked in limesurvey
- */
-if (!defined('LIME_AUTO_ADVANCE')) define('LIME_AUTO_ADVANCE', true);
-
-/**
  * The path to queXS from the server root
  */
 if (!defined('QUEXS_PATH')) define('QUEXS_PATH', '/quexs/');
@@ -146,11 +136,6 @@ if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER
 {
 	$protocol = "https://";
 }
-
-/**
- * The complete URL to limesurvey
- */
-if (!defined('LIME_URL')) define('LIME_URL', $protocol . $_SERVER['SERVER_NAME'] . QUEXS_PORT . QUEXS_PATH . LIME_PATH);
 
 /**
  * The complete URL to this copy of queXS
@@ -269,21 +254,6 @@ if (!defined('DB_PASS')) define('DB_PASS', 'quexs');
 if (!defined('DB_HOST')) define('DB_HOST', 'localhost');
 if (!defined('DB_NAME')) define('DB_NAME', 'quexs');
 if (!defined('DB_TYPE')) define('DB_TYPE', 'mysqli');
-
-/**
- * The prefix for the limesurvey database
- */
-if (!defined('LIME_PREFIX')) define('LIME_PREFIX','lime_');
-
-/**
- * Limesurvey database information (default is same as queXS database)
- */
-if (!defined('LDB_USER')) define('LDB_USER', DB_USER);
-if (!defined('LDB_PASS')) define('LDB_PASS', DB_PASS);
-if (!defined('LDB_HOST')) define('LDB_HOST', DB_HOST);
-if (!defined('LDB_NAME')) define('LDB_NAME', DB_NAME);
-if (!defined('LDB_TYPE')) define('LDB_TYPE', DB_TYPE);
-
 
 if (!defined('COMPANY_NAME')) define ('COMPANY_NAME', 'queXS ');
 if (!defined('ADMIN_PANEL_NAME')) define ('ADMIN_PANEL_NAME',' Administration Panel');
