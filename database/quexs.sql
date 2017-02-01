@@ -1523,6 +1523,7 @@ INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(5, 'Postco
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(6, 'Respondent first name', '');
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(7, 'Respondent last name', '');
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(8, 'Email address', '');
+INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(9, 'Token', '');
 
 -- --------------------------------------------------------
 

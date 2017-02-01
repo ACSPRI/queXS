@@ -354,10 +354,23 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 {
 	global $db;
 
+  //if token is specified, get from sample
+  $sql = "SELECT sv.val
+          FROM sample_var as sv, sample_import_var_restrict as sivr
+          WHERE sv.sample_id = '$sample_id'
+          AND sv.var_id = sivr.var_id
+          AND sivr.type = 9"; //9 is the token value
+
+  $dtoken = $db->GetOne($sql);
+
 	$ttries = 0;
 	
 	do {
-	$token = sRandomChars();
+    if (empty($dtoken)) {
+      $token = sRandomChars();
+    } else {
+      $token = $dtoken;
+    }
 
 		$sql = "SELECT count(*) as c
 			FROM `case`
@@ -365,7 +378,9 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		$ttries++;
 	} while ($db->GetOne($sql) > 0 && $ttries < 10);
-	
+
+  if ($ttries >= 10)  //failed to get a token
+    return false;
 
 	$sql = "INSERT INTO `case` (case_id, sample_id, questionnaire_id, last_call_id, current_operator_id, current_call_id, current_outcome_id,token)
 		VALUES (NULL, $sample_id, $questionnaire_id, NULL, $operator_id, NULL, '$current_outcome_id','$token')";

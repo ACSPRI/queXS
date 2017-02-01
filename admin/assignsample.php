@@ -79,6 +79,8 @@ $js_foot = array(
 				);
 global $db;
 
+$error = "";
+
 if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['call_max']) && isset($_GET['call_attempt_max']))
 {
 	//need to add sample to questionnaire
@@ -144,10 +146,14 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
 		$rs = $db->GetAll($sql);
 
+    $count = 0;
 		foreach($rs as $r)
-		{
+    {
+      $count++;
 		  set_time_limit(30);			
-		  add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
+      if (add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true) === false) {
+        $error .= "<br/>Failed to add case for record #$count";    
+      }
 		}
 
 		$db->CompleteTrans();
@@ -306,6 +312,9 @@ xhtml_head(T_("Assign samples to questionnaires"),true,$css,$js_head,false,false
 
 print "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a>";
 
+if (!empty($error)) {
+  print "<div class='alert text-danger'>$error</div>";
+}
 	
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);	

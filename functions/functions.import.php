@@ -95,6 +95,18 @@ function verify_fields($fields)
 		}
 	}
 
+  //check that only 0 or 1 token fields selected
+  $count = 0;
+  foreach($names as $val)
+  {
+    if ($val == 9) $count++;
+  }
+
+  if ($count > 1)
+  {
+    return T_("No more than one field may be a token field");
+  }
+
 	//check that there is one and one only primary phone selected
 	$count = 0;
 	foreach($names as $val)
