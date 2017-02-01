@@ -88,16 +88,15 @@ else
     {
         $totalquestions = buildsurveysession();
         LimeExpressionManager::StartSurvey($thissurvey['sid'], $surveyMode, $surveyOptions, false,$LEMdebugLevel);
-//      $_SESSION['step'] = 0;
-        //if ($surveyMode == 'survey') {
-          //  $move = "movenext"; // to force a call to NavigateForwards()
-       // }
-       // else if (isset($thissurvey['showwelcome']) && $thissurvey['showwelcome'] == 'N') {
+      $_SESSION['step'] = 0;
+        if ($surveyMode == 'survey') {
+            $move = "movenext"; // to force a call to NavigateForwards()
+        }
+        else if (isset($thissurvey['showwelcome']) && $thissurvey['showwelcome'] == 'N') {
                 //If explicitply set, hide the welcome screen
-         //       $_SESSION['step'] = 0;
                 $_SESSION['step'] = 1;
                 $move = "movenext";
-           // }
+            }
     }
 
     if (!isset($_SESSION['totalsteps'])) {$_SESSION['totalsteps']=0;}
@@ -718,11 +717,11 @@ echo sDefaultSubmitHandler();
 
 if ($surveyMode == 'survey')
 {
-//    if(isset($thissurvey['showwelcome']) && $thissurvey['showwelcome'] == 'N') {
+    if(isset($thissurvey['showwelcome']) && $thissurvey['showwelcome'] == 'N') {
         //Hide the welcome screen if explicitly set
- //   } else {
-   //     echo templatereplace(file_get_contents("$thistpl/welcome.pstpl"))."\n";
-   // }
+    } else {
+        echo templatereplace(file_get_contents("$thistpl/welcome.pstpl"))."\n";
+    }
 
     if ($thissurvey['anonymized'] == "Y")
     {
