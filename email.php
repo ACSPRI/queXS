@@ -85,162 +85,19 @@ if (isset($_POST['email']) && ((isset($_POST['firstname']) && !empty($_POST['fir
 		$firstname = $db->qstr($_POST['firstname']);
 		$lastname = $db->qstr($_POST['lastname']);
 
-		//update the limesurvey database email details
-		$sql = "UPDATE " . LIME_PREFIX ."tokens_{$lime_sid}
-			SET email = $email, firstname = $firstname, lastname = $lastname, emailstatus = 'OK'
-			WHERE token = '$token'";
+    
+    //set in Limesurvey    
+    //set_participant_properties($sSessionKey, $lime_sid, array['token' => $token], array['email' => $email, 'firstname' => $firstname, 'lastname' => $lastname, 'emailstatus' => 'OK']);
 
-		$db->Execute($sql);
 
-		//Send email
-		include_once("include/limesurvey/classes/phpmailer/class.phpmailer.php");
-		$fieldsarray = array();
-		$fieldsarray["{EMAIL}"]=$_POST['email'];
-		$fieldsarray["{FIRSTNAME}"]=$_POST['firstname'];
-		$fieldsarray["{LASTNAME}"]=$_POST['lastname'];
-		$fieldsarray["{TOKEN}"]=$token;
-		$fieldsarray["{LANGUAGE}"]=DEFAULT_LOCALE;
-		$fieldsarray["{SID}"]=$fieldsarray["{SURVEYID}"]=$lime_sid;
-		//$fieldsarray["{SURVEYNAME}"]=$thissurvey["surveyls_title"];
-
-		$sql = "SELECT sivr.var,sv.val
-			FROM `sample_var` as sv, `sample_import_var_restrict` as sivr, `case` as c
-			WHERE c.case_id = $case_id
-			AND sv.sample_id = c.sample_id
-			AND sivr.var_id = sv.var_id";
-
-		$attributes = $db->GetAssoc($sql);
-
-		//Assign sample variables
-		foreach ($attributes as $attributefield=>$val)
+		if (0) //if mail sent - disable temporarily
 		{
-			$fieldsarray['{SAMPLE:'.strtoupper($attributefield).'}']=$val;
-		}
-
-		$fieldsarray["{OPTOUTURL}"]=LIME_URL . "optout.php?lang=".trim(DEFAULT_LOCALE)."&sid=$lime_sid&token={$token}";
-		$fieldsarray["{SURVEYURL}"]=LIME_URL . "index.php?lang=".trim(DEFAULT_LOCALE)."&sid=$lime_sid&token={$token}";
-		$barebone_link=$fieldsarray["{SURVEYURL}"];
-                       
-		$customheaders = array( '1' => "X-surveyid: ".$lime_sid, '2' => "X-tokenid: ".$fieldsarray["{TOKEN}"]);
-
-		$sql = "SELECT surveyls_email_invite_subj, surveyls_email_invite
-			FROM `lime_surveys_languagesettings`
-			WHERE `surveyls_survey_id` = $lime_sid
-			order by surveyls_language LIKE '" . DEFAULT_LOCALE . "' DESC";
-
-		$econtent = $db->GetRow($sql);
-
-		$modsubject =  $econtent['surveyls_email_invite_subj'];
-		$modmessage =  $econtent['surveyls_email_invite'];
-
-		foreach ( $fieldsarray as $key => $value )
-		{   
-			$modsubject=str_replace($key, $value, $modsubject);
-		}
-
-		foreach ( $fieldsarray as $key => $value )
-		{   
-			$modmessage=str_replace($key, $value, $modmessage);
-		}
-
-		$modsubject = str_replace("@@SURVEYURL@@", $barebone_link, $modsubject);
-		$modmessage = str_replace("@@SURVEYURL@@", $barebone_link, $modmessage);
-
-		$mail = new PHPMailer;
-
-		$mail->CharSet = 'UTF-8';
-
-		$sql = "SELECT stg_value
-			FROM " . LIME_PREFIX . "settings_global
-			WHERE stg_name = 'emailsmtpssl'";
-
-		$emailsmtpssl = $db->GetOne($sql);
-
-		if (isset($emailsmtpssl) && trim($emailsmtpssl)!=='' && $emailsmtpssl!==0) 
-		{
-			if ($emailsmtpssl===1) 
-			{
-				$mail->SMTPSecure = "ssl";
-			}
-			else 
-			{
-				$mail->SMTPSecure = $emailsmtpssl;
-			}
-		}
-
-
-		$sql = "SELECT stg_value
-			FROM " . LIME_PREFIX . "settings_global
-			WHERE stg_name = 'emailmethod'";
-
-		$emailmethod = $db->GetOne($sql);
-
-		    switch ($emailmethod) {
-			case "qmail":
-			    $mail->IsQmail();
-			    break;
-			case "smtp":
-			    $mail->IsSMTP();
-			    
-				$sql = "SELECT stg_name,stg_value
-					FROM " . LIME_PREFIX . "settings_global";				
-				$ec =$db->GetAssoc($sql);
-		
-			    if (strpos($ec['emailsmtphost'],':')>0)
-			    {
-				$mail->Host = substr($ec['emailsmtphost'],0,strpos($ec['emailsmtphost'],':'));
-				$mail->Port = substr($ec['emailsmtphost'],strpos($ec['emailsmtphost'],':')+1);
-			    }
-			    else {
-				$mail->Host = $ec['emailsmtphost'];
-			    }
-			    $mail->Username =$ec['emailsmtpuser'];
-			    $mail->Password =$ec['emailsmtppassword'];
-			    if (trim($ec['emailsmtpuser'])!="")
-			    {
-				$mail->SMTPAuth = true;
-			    }
-			    break;
-			case "sendmail":
-			    $mail->IsSendmail();
-			    break;
-			default:
-			    //Set to the default value to rule out incorrect settings.
-			    $emailmethod="mail";
-			    $mail->IsMail();
-		    }
-
-
-		$sql = "SELECT admin,adminemail
-			FROM " . LIME_PREFIX . "surveys
-			WHERE sid = $lime_sid";
-
-		$from = $db->GetRow($sql);
-
-		$mail->SetFrom($from['adminemail'],$from['admin']);
-		$mail->Sender = $from['adminemail'];
-
-		$mail->AddAddress($_POST['email']);
-		foreach ($customheaders as $key=>$val) 
-		{
-			$mail->AddCustomHeader($val);
-		}
-		$mail->AddCustomHeader("X-Surveymailer: queXS Emailer (quexs.sourceforge.net)");
-
-		$mail->IsHTML(true);
-		$mail->Body = $modmessage;
-		$mail->AltBody = trim(strip_tags(html_entity_decode($modmessage,ENT_QUOTES,'UTF-8')));
-		$mail->Subject = $modsubject;
-
-
-		if ($mail->Send())
-		{
-			// Put call attempt id in to sent
+			// Put call attempt id in to sent in Limesurvey
 			$sql = "UPDATE ". LIME_PREFIX . "tokens_{$lime_sid}
 				SET sent='$ca' 
 				WHERE token='$token'";
 
-			$db->Execute($sql);
+			//$db->Execute($sql);
 
 			//Add a note that sent
 
@@ -248,23 +105,6 @@ if (isset($_POST['email']) && ((isset($_POST['firstname']) && !empty($_POST['fir
 				VALUES ($case_id,$operator_id,'" . TQ_("Self completion invitation sent via email to") . ": " . $_POST['email'] . "',CONVERT_TZ(NOW(),'System','UTC'))";
 
 			$db->Execute($sql);
-
-			//set to start frm the first page if the format for the respondent is not question by question
-			$sql = "SELECT q.lime_mode
-				FROM questionnaire as q, `case` as c
-				WHERE c.case_id = $case_id
-				AND q.questionnaire_id = c.questionnaire_id";
-
-			$lmode = $db->GetOne($sql);
-
-			if ($lmode != "question")
-			{
-				$sql = "UPDATE " . LIME_PREFIX ."survey_{$lime_sid}
-					SET lastpage = 0
-					WHERE token = '$token'";
-	
-				$db->Execute($sql);
-			}
 
 			if (isset($_POST['submith']))
 			{

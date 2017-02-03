@@ -676,6 +676,20 @@ function create_limesurvey_questionnaire($title,$exittoend = true)
 }
 
 
+function get_lime_url($case_id)
+{
+  global $db;
+
+  $sql = "SELECT r.entry_url
+          FROM remote as r, `case` as c, questionnaire as q
+          WHERE c.case_id = $case_id
+          AND c.questionnaire_id = q.questionnaire_id
+          AND q.remote_id = r.id";
+
+  return $db->GetOne($sql);
+}
+
+
 /**
  * Return the limesurvey id given the case_id
  *
