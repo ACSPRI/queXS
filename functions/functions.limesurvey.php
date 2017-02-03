@@ -71,6 +71,31 @@ function limerpc_init ($url,$user,$pass)
   return true;
 }
 
+function get_token_value($questionnaire_id,$token, $value = 'sent')
+{
+  global $limeRPC;
+  global $limeKey;
+  global $db;
+
+  $sql = "SELECT r.rpc_url, r.username, r.password, r.description, q.lime_id
+          FROM remote as r, questionnaire as q
+          WHERE q.questoinnaire_d = '$questionnaire_id'
+          AND q.remote_id = r.id";
+
+  $r = $db->GetRow($sql);
+
+  $ret = false;
+
+  if (limerpc_init($r['rpc_url'],$r['username'],$r['password']) === true) {
+    $l = $limeRPC->get_participant_properties($limeKey,$r['lime_id'],array('token'=>$token),array($value));
+    if (isset($l[$value]) {
+      $ret= $l[$value];
+    }
+  }
+
+  return $ret;
+}
+
 
 function get_survey_list ()
 {

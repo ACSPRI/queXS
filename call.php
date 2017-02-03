@@ -140,16 +140,20 @@ function display_outcomes($contacted,$ca,$case_id)
 	print "<div>";
 	if (!empty($rs))
 	{
-		$lime_sid = get_limesurvey_id(get_operator_id());
+		$qid = get_questionnaire_id(get_operator_id());
+    
+    $sql = "SELECT token
+            FROM `case`
+            WHERE case_id = $case_id";
 
-		//Check to see if we have sent an email on this call and set the default outcome
-		$sql = "SELECT 41
-			FROM `case` as c, " . LIME_PREFIX . "tokens_$lime_sid as t
-			WHERE t.sent = '$ca'
-			AND c.case_id = $case_id
-			AND t.token = c.token";
+    $token = $db->GetOne($sql);
 
-		$do = $db->GetOne($sql);
+    $sent = get_token_value($qid,$token,'sent');
+
+    $do ="";
+
+    if ($sent == $ca)
+       $do = 41;
 
 		if (isset($_GET['defaultoutcome'])) $do = bigintval($_GET['defaultoutcome']);
 		foreach($rs as $r)
