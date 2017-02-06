@@ -432,32 +432,38 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		if ($lime_sid)
 		{
-			$lfirstname = "''";
-			$llastname = "''";
-			$lemail = "''";
+			$lfirstname = "";
+			$llastname = "";
+			$lemail = "";
 	
 			if ($addlimeattributes)
 			{
-				$lfirstname = $db->qstr($db->GetOne("SELECT sv.val 
+				$lfirstname = ($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
 								AND s.type = '6'"));
 
-				$llastname = $db->qstr($db->GetOne("SELECT sv.val 
+				$llastname = ($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
 								AND s.type = '7'"));
 
-				$lemail = $db->qstr($db->GetOne("SELECT sv.val 
+				$lemail = ($db->GetOne("SELECT sv.val 
 								FROM sample_var as sv, sample_import_var_restrict as s 
 								WHERE sv.var_id = s.var_id
 								AND sv.sample_id = '$sample_id'
 								AND s.type = '8'"));
 
 			}
-	
+  
+      //include limesurvey functions
+	  	include_once(dirname(__FILE__).'/functions.limesurvey.php');
+
+      
+
+
 			$sql = "INSERT INTO ".LIME_PREFIX."tokens_$lime_sid (tid,firstname,lastname,email,token,language,sent,completed,mpid)
 			VALUES (NULL,$lfirstname,$llastname,$lemail,'$token','".DEFAULT_LOCALE."','N','N',NULL)";
 
