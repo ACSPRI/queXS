@@ -90,7 +90,7 @@ if (isset($_POST['email']) && ((isset($_POST['firstname']) && !empty($_POST['fir
     //set_participant_properties($sSessionKey, $lime_sid, array['token' => $token], array['email' => $email, 'firstname' => $firstname, 'lastname' => $lastname, 'emailstatus' => 'OK']);
 
 
-		if (0) //if mail sent - disable temporarily
+		if (0) //if mail sent - disable temporarily TODO: update properties in limesurvey
 		{
 			// Put call attempt id in to sent in Limesurvey
 			$sql = "UPDATE ". LIME_PREFIX . "tokens_{$lime_sid}

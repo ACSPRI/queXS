@@ -119,12 +119,16 @@ if ($client_id)
 			}
 			else print "<p class='alert alert-info'>" . T_("No outcomes recorded for this questionnaire") . "</p>";
 
-			print "</br><a href=\"?qsid=$qsid\" class=\"btn btn-default btn-block btn-lime\">" . T_("View summary results") . "</a></div></div>";
+			print "</br><a href=\"?qsid=$qsid&amp;questionnaire_id=$questionnaire_id\" class=\"btn btn-default btn-block btn-lime\">" . T_("View summary results") . "</a></div></div>";
 		}
 		
 		if (isset($_GET['qsid'])) {
-			$qsid = intval($_GET['qsid']);
-			$page = LIME_URL . "admin/admin.php?action=browse&amp;sid=$qsid"; }
+            $qsid = intval($_GET['qsid']);
+            $questionnaire_id = intval($_GET['questionnaire_id']);
+            $url = $db->GetOne("SELECT r.entry_url FROM remote as r, questionnaire as q
+                                WHERE q.questionnaire_id = $questionnaire_id
+                                AND r.id = q.remote_id");
+			$page = $url . "/admin/responses/sa/browse/surveyid/admin/$qsid"; }
 		else $page ='';
 		
 		if ($page){
