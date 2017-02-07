@@ -149,15 +149,15 @@ if ($questionnaire_id != false)
 	$sgqa = false;
 	if (isset($_GET['sgqa'])) 	$sgqa = $_GET['sgqa'];
 
-	$sql = "SELECT CONCAT( q.sid, 'X', q.gid, 'X', q.qid) AS value,
-		CONCAT( q.sid, 'X', q.gid, 'X', q.qid, '&ensp;->&ensp;' , CASE WHEN qo.question IS NULL THEN q.question ELSE CONCAT(qo.question,' : ',q.question) END) as description,
-		CASE WHEN CONCAT(q.sid, 'X', q.gid, 'X', q.qid) = '$sgqa' THEN 'selected=\'selected\'' ELSE '' END AS selected
-		FROM `" . LIME_PREFIX . "questions` AS q
-		LEFT JOIN `" . LIME_PREFIX . "questions` as qo ON (qo.qid = q.parent_qid)
-		WHERE q.sid = '$lime_sid'
-		ORDER BY CASE WHEN qo.question_order IS NULL THEN q.question_order ELSE qo.question_order + (q.question_order / 1000) END ASC";
+    /**
+     * Display functions
+     */
+    include_once("../functions/functions.limesurvey.php");
 
-	$rs = $db->GetAll($sql);
+    $rs = lime_list_questions($questionnaire_id);
+
+    //TODO: Test output of listing questions
+    var_dump($rs); die();
 
 	for ($i=0; $i<count($rs); $i++)
 	{

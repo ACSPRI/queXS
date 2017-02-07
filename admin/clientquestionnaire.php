@@ -96,16 +96,6 @@ function vqi($client_id,$questionnaire_id,$lime_sid,$uid)
 
 	$db->Execute($sql);
 
-  $rs = $db->GetAll("SELECT * FROM " . LIME_PREFIX . "survey_permissions WHERE `sid` = '$lime_sid' AND `uid` = '$uid'");
-
-	/* Add client questionnaire permissions to view Lime results + statistics and quotas,  //preserve superadmin permissions */
-	if ($uid != 1 && empty($rs))
-	{
-		$sql = "INSERT INTO " . LIME_PREFIX . "survey_permissions (`sid`,`uid`,`permission`,`create_p`,`read_p`,`update_p`,`delete_p`,`import_p`,`export_p`)
-              VALUES ($lime_sid,$uid,'survey',0,1,0,0,0,0),($lime_sid,$uid,'statistics',0,1,0,0,0,0),($lime_sid,$uid,'quotas',0,1,0,0,0,0)";
-		$db->Execute($sql);
-	}
-	
 	$db->CompleteTrans();
 }
 
@@ -118,18 +108,6 @@ if (isset($_POST['submit']))
 	$sql = "DELETE FROM client_questionnaire
 		WHERE questionnaire_id IN ( SELECT questionnaire_id FROM questionnaire WHERE enabled = 1)";
 	$db->Execute($sql);
-/*Currently disabled -> need to decide how to manage permissions set earlier*/	
-/* 	$questionnaires = $db->GetAll("SELECT lime_sid FROM questionnaire WHERE enabled = 1");
-	
-	$clients = $db->GetAll("SELECT uid FROM client, " . LIME_PREFIX . "users WHERE `users_name` = `username`");
-
-	foreach($questionnaires as $q){
-		foreach($clients as $v){
-			$sql = "DELETE FROM " . LIME_PREFIX . "survey_permissions WHERE `uid` = {$v['uid']} AND `sid`={$q['lime_sid']} AND `uid` != 1";
-			$db->Execute($sql);
-		}
-	} */
-	/* - end - */
 
 	foreach ($_POST as $g => $v)
 	{
@@ -154,18 +132,6 @@ if (isset($_GET['delete']) && isset($_GET['uid']) && isset($_GET['uname']))
 		
 		$db->StartTrans();
 		
-		$sql = "DELETE FROM " . LIME_PREFIX . "templates_rights WHERE `uid` = '$uid' AND `uid` != 1";
-		$db->Execute($sql);
-		
-		$sql = "DELETE FROM " . LIME_PREFIX . "survey_permissions WHERE `uid` = '$uid' AND `uid` != 1";
-		$db->Execute($sql);
-		
-		$sql = "DELETE FROM " . LIME_PREFIX . "user_in_groups WHERE `uid` = '$uid' AND `uid` != 1";
-		$db->Execute($sql);
-		
-		$sql = "DELETE FROM " . LIME_PREFIX . "users WHERE `uid` = '$uid' AND `uid` != 1";
-		$db->Execute($sql);
-		
 		$sql = "DELETE FROM `client_questionnaire` WHERE `client_id` = '$client_id' ";
 		$db->Execute($sql);
 		
@@ -182,15 +148,16 @@ if (isset($_GET['delete']) && isset($_GET['uid']) && isset($_GET['uname']))
 }
 
 
-$sql = "SELECT questionnaire_id,description, lime_sid
-	FROM questionnaire
-	WHERE enabled = 1
+$sql = "SELECT q.questionnaire_id,q.description, q.lime_sid, r.entry_url
+	FROM questionnaire as q, remote as r
+    WHERE enabled = 1
+    AND q.remote_id = r.id
 	ORDER by questionnaire_id ASC";
 
 $questionnaires = $db->GetAll($sql);
 
 $sql = "SELECT client_id, CONCAT(firstName,' ', lastName ) as description, username, uid
-	FROM client, " . LIME_PREFIX . "users 
+	FROM client, users 
 	WHERE `users_name` = `username`
 	ORDER by client_id ASC";
 
@@ -293,7 +260,7 @@ print "<form action=\"\" method=\"post\" class=''><table class='table-bordered t
 print "<tr><th>&emsp;" . T_("Username") . "&emsp;</th><th>&emsp;" . T_("Client") . "&emsp;</th>";
 foreach($questionnaires as $q)
 {
-	print "<th><a href=\"".LIME_URL."admin/admin.php?sid={$q['lime_sid']}&amp;action=surveysecurity\" title=\"". T_("NOTICE!  Please, check your user righs to edit client permissions or contact your superviser.") ."\"class=\"btn btn-default btn-sm btn-lime\" >" . T_("Questionnaire permissions") . "</a>
+	print "<th><a href=\"{$q['entry_url']}/admin/surveypermission/sa/view/surveyid/{$q['lime_sid']}\" title=\"". T_("NOTICE!  Please, check your user righs to edit client permissions or contact your superviser.") ."\"class=\"btn btn-default btn-sm btn-lime\" >" . T_("Questionnaire permissions") . "</a>
 			</br>&emsp;<a href=\"javascript:checkQid({$q['questionnaire_id']})\">{$q['description']}</a>
 			</th>";
 }

@@ -104,6 +104,9 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 	if (isset($_GET['generatecases']))
 	{
 		include_once("../functions/functions.operator.php");
+    
+        //TODO: check here if attributes available for assigning sample variables
+        //if not - fail
 
 		$db->StartTrans();
 
@@ -113,7 +116,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 		//add limesurvey attribute for each sample var record
 		$sql = "SELECT var,type
 			FROM sample_import_var_restrict
-			WHERE sample_import_id = '$sid'";
+            WHERE sample_import_id = '$sid'
+            ORDER BY var_id ASC";
 
 		$rs = $db->GetAll($sql);
 
@@ -127,17 +131,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 		    $fieldcontents.='attribute_'.$i.'='.$r['var']."\n";
 		    $i++;
 		}
-		$dict = NewDataDictionary($db);
-		$sqlarray = $dict->ChangeTableSQL(LIME_PREFIX ."tokens_$lime_sid", $fields);
-		$execresult=$dict->ExecuteSQLArray($sqlarray, false);
 
-		$sql = "UPDATE " . LIME_PREFIX . "surveys
-			SET attributedescriptions = " . $db->qstr($fieldcontents) . "
-			WHERE sid='$lime_sid'";
-
-		$db->Execute($sql);
-
-		//generate one case for each sample record and set outcome to 41
+        //generate one case for each sample record and set outcome to 41
 		$sql = "SELECT sample_id
 			FROM sample
 			WHERE import_id = '$sid'";
@@ -146,7 +141,8 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
 		foreach($rs as $r)
 		{
-		  set_time_limit(30);			
+            set_time_limit(30);
+            //TODO : update add_case function to include attributes based on var_id ASC            
 		  add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
 		}
 

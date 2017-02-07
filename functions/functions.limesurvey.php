@@ -92,6 +92,70 @@ function limerpc_init_qid($qid)
 
 }
 
+function lime_list_questions($qid)
+{
+  global $limeKey;
+  global $limeRPC;
+
+  $ret = false;
+  $lime_id = limerpc_init_qid($qid);
+
+  if ($lime_id !== false) {
+      $q = $limeRPC->list_questions($limeKey,$lime_id);
+      if (!isset($q['status'])) {
+        $ret = $q;
+      }
+  } 
+
+  return $ret;
+}
+
+
+function lime_list_answeroptions($qid,$qcode)
+{
+  global $limeKey;
+  global $limeRPC;
+
+  $ret = false;
+
+  $q = lime_list_questions($qid);
+
+  if ($q !== false)
+  {
+    
+    foreach($q as $qid => $val) {
+        if ($val['title'] == $qcode) {
+            $qp = $limeRPC->get_question_properties($limeKey,$qid,array('answeroptions'));
+            if (!isset($qp['status'])) {
+                $ret = $qp;
+            }
+            break;
+        }
+    }
+  }
+
+  return $ret;
+
+}
+
+/** Get completed responses as an array based on the case_id
+ */
+function lime_get_responses_by_case($case_id,$fields)
+{
+
+
+}
+
+/** Get completd responses as an array based on the questionnaire
+ */
+function lime_get_responses_by_questionnaire($qid,$fields)
+{
+
+
+}
+
+
+
 function lime_add_token($qid,$params)
 {
   global $limeKey;
