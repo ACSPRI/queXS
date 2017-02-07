@@ -435,16 +435,12 @@ if ($questionnaire_id != false)
       if (isset($_GET['sgqa']))
         $ssgqa = $db->qstr($_GET['sgqa']);
 
-      //select question + corrected question order as in questionnaire with subquestions 
-  		$sql = "SELECT CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) as value, CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END, '&ensp;->&ensp;' , CASE WHEN lq.parent_qid = 0 THEN lq.question ELSE CONCAT(lq2.question, ' : ', lq.question) END) as description, CASE WHEN $ssgqa LIKE CONCAT( lq.sid, 'X', lq.gid, 'X', CASE WHEN lq.parent_qid = 0 THEN lq.qid ELSE CONCAT(lq.parent_qid, lq.title) END) THEN 'selected=\'selected\'' ELSE '' END AS selected
-	  		FROM `" . LIME_PREFIX . "questions` AS lq
-  			LEFT JOIN `" . LIME_PREFIX . "questions` AS lq2 ON ( lq2.qid = lq.parent_qid )
-  			JOIN `" . LIME_PREFIX . "groups` as g ON (g.gid = lq.gid)
-  			WHERE lq.sid = '$lime_sid'
-  			ORDER BY CASE WHEN lq2.question_order IS NULL THEN lq.question_order ELSE lq2.question_order + (lq.question_order / 1000) END ASC";
+        include_once("../functions/functions.limesurvey.php");
 
-	  	$rsgqa = $db->GetAll($sql);
-  
+	  	$rsgqa = lime_list_questions($questionnaire_id);
+        //TODO: check output matches
+        var_dump($rsgqa); die();
+	 
       if (!empty($rsgqa))
       {
         print "<div class=''><form method='post' action='?qsqri=$qsqri&amp;edit=edit' class='form-group'>";
@@ -470,11 +466,11 @@ if ($questionnaire_id != false)
 				$sgqa = $_GET['sgqa'];
 				$qid = explode("X", $sgqa);
 				$qid = $qid[2];
-		
-				$sql = "SELECT CONCAT('<b class=\'fa\'>&emsp;', l.code , '</b>')as code, l.answer as title
-					FROM `" . LIME_PREFIX . "answers` as l
-					WHERE l.qid = '$qid'";
-				$rsc = $db->GetAll($sql);
+
+
+                $rsc = lime_list_answeroptions($questionnaire_id,$sgqa);    
+                //TODO: check output matches
+                var_dump($rsc); die();
 			}
 		if (!isset($rsc) || empty($rsc))
 			print "<h4 class= 'alert alert-info'>" . T_("No labels defined for this question") ."</h4>";
