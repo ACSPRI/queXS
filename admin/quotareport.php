@@ -224,53 +224,6 @@ if ($questionnaire_id)
 			$report[] = array("strata" => "<a href='quotarow.php?qsqri=$qsqr&amp;edit=edit&amp;questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_import_id'>" . $v['description'] . "</a>", "status" => $status, "quota" => $v['completions'], "sample" => $drawn + $remain, "sampleused" => $drawn, "sampleremain" => $remain, "completions" => $completions, "perc" => $perc, "priority" => "<input type='number' maxlength='3' min='0' max='100' size='3' style='width:6em;' value='$priority' id='p$qsqr' name='p$qsqr' class='form-control'/>", "autoprioritise" => "&emsp;&emsp;<input type='checkbox' id='a$qsqr' name='a$qsqr' $checked />");
 		}
 
-		//c. (Questionnaire quota) Monitor outcomes of questions in completed questionnaires, and abort interview when completion limit is reached 
-		$sql = "SELECT *
-			FROM " . LIME_PREFIX . "quota as qu, questionnaire as q
-			WHERE qu.sid = q.lime_sid
-			AND qu.active = 1
-			AND q.questionnaire_id = '$questionnaire_id'";
-				
-		$rs = $db->GetAll($sql);
-
-		//for each limesurvey quota
-		foreach($rs as $r)
-		{
-			//limesurvey quotas for this question
-			$quotas = (get_limesurvey_quota_info($r['id']));
-			$cob = array();
-
-			foreach ($quotas as $qr)
-			{
-				$sqlq = array();
-				foreach($qr as $qid => $q)
-				{
-					$sqlq[] = "s." . $q['fieldname'] . " = '" . $q['value'] . "'";
-				}
-				$cob[] = "( " . implode(' OR ', $sqlq) . " )";
-			}
-		
-			if (!empty($cob))
-			{	
-			
-				$sql = "SELECT COUNT(id) as count
-					FROM ".LIME_PREFIX."survey_{$r['sid']} as s
-					JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
-					JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
-					WHERE ".implode(' AND ',$cob)." "." 
-					AND submitdate IS NOT NULL
-					AND s.token = c.token";
-
-				$rs = $db->GetRow($sql);
-
-				$completions = $rs['count'];
-				$perc = ROUND(($completions / $r['qlimit']) * 100,2);
-				
-				$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
-			}
-		}
-
-		
 		// At the end   - >  the entire sample
 
 		//We need to calc Sample size, Sample drawn, Sample remain, Completions, %complete
