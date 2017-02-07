@@ -33,7 +33,6 @@ $maxLoginAttempt = 10;
 $timeOutTime = 600; // 10 minutes
 
 // sanitize a username
-// TODO: define the exact format of the username
 // allow for instance 0-9a-zA-Z@_-.
 function sanitize_user($string)
 {

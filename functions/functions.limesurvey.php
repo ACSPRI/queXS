@@ -71,15 +71,13 @@ function limerpc_init ($url,$user,$pass)
   return true;
 }
 
-function get_token_value($questionnaire_id,$token, $value = 'sent')
+function limerpc_init_qid($qid)
 {
-  global $limeRPC;
-  global $limeKey;
   global $db;
 
   $sql = "SELECT r.rpc_url, r.username, r.password, r.description, q.lime_id
           FROM remote as r, questionnaire as q
-          WHERE q.questoinnaire_d = '$questionnaire_id'
+          WHERE q.questoinnaire_d = '$qid'
           AND q.remote_id = r.id";
 
   $r = $db->GetRow($sql);
@@ -87,8 +85,43 @@ function get_token_value($questionnaire_id,$token, $value = 'sent')
   $ret = false;
 
   if (limerpc_init($r['rpc_url'],$r['username'],$r['password']) === true) {
-    $l = $limeRPC->get_participant_properties($limeKey,$r['lime_id'],array('token'=>$token),array($value));
-    if (isset($l[$value]) {
+      return $r['lime_id'];
+  }
+
+  return false;
+
+}
+
+function lime_add_token($qid,$params)
+{
+  global $limeKey;
+  global $limeRPC;
+
+  $ret = false;
+  $lime_id = limerpc_init_qid($qid);
+
+  if ($lime_id !== false) {
+    $l = $limeRPC->add_participants($limeKey,$lime_id,$params,false); //don't create token
+    if (!isset($l['status'])) {
+        $ret = $l; //array of data
+    }
+  }
+
+  return $ret;
+}
+
+
+function get_token_value($questionnaire_id,$token, $value = 'sent')
+{
+  global $limeKey;
+  global $limeRPC;
+
+  $ret = false;
+  $lime_id = limerpc_init_qid($qid);
+
+  if ($lime_id !== false) {
+    $l = $limeRPC->get_participant_properties($limeKey,$lime_id,array('token'=>$token),array($value));
+    if (isset($l[$value])) {
       $ret= $l[$value];
     }
   }
