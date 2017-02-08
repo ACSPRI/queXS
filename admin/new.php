@@ -65,8 +65,8 @@ if (isset($_POST['import_file']))
 	if (isset($_POST['ras'])) $ras = 1;
 	if (isset($_POST['rws'])) $rws = 1;
 	if (isset($_POST['testing'])) $testing = 1;
+	if (isset($_POST['referral'])) $referral = 1;
 	if (isset($_POST['respsc'])) $respsc = 1;
-	if (isset($_POST['referral'])) $respsc = 1;
 	if ($_POST['selectrs'] != "none") $rs = 1;
 	
 	$name = $db->qstr($_POST['description']);
@@ -221,7 +221,14 @@ if (!empty($surveys)){?>
 			<input name="referral" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/>
 		</div>
 	</div>
-	
+  
+	<div class="form-group">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Allow for respondent self completion via email invitation?"); ?></label>
+		<div class="col-sm-4"style="height: 30px;">
+			<input name="respsc" type="checkbox" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/>
+		</div>
+	</div>
+  
 <?php
 /*   CKEditor  */
  

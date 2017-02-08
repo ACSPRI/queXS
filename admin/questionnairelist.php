@@ -296,7 +296,7 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 	$rs_project_end = $db->qstr(html_entity_decode($_POST['rs_project_end'],ENT_QUOTES,'UTF-8'));
 
 	$sql = "UPDATE questionnaire
-		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', self_complete = $respsc, referral = $referral
+		SET description = $name, info = $info, rs_project_end = $rs_project_end, restrict_appointments_shifts = '$ras', restrict_work_shifts = '$rws', referral = $referral, self_complete = $respsc
 		WHERE questionnaire_id = '$questionnaire_id'";
 
 	$db->Execute($sql);
@@ -321,7 +321,6 @@ if (isset($_GET['modify']))
 	$rs = $db->GetRow($sql);
 
 	$referral = $testing = $rws = $ras = $rsc = "checked=\"checked\"";
-	$rscd = "";	
 
 	$aio = $qbq = $gat = "";
 	if ($rs['lime_mode'] == "survey") $aio = "selected=\"selected\"";
@@ -335,7 +334,6 @@ if (isset($_GET['modify']))
 	if ($rs['self_complete'] == 0)
 	{
 		$rsc = "";
-		$rscd = "style='display:none;'";
 	}
 
 	xhtml_head(T_("Modify Questionnaire "),true,$css,$js_head, false, false, false, " &ensp;<span class=' text-uppercase'>" . "$rs[description]" . "</span>");
@@ -390,53 +388,7 @@ if (isset($_GET['modify']))
 	</div>
 	<div class="form-group">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Allow for respondent self completion via email invitation?"); ?> </label>
-		<div class="col-sm-4" style="height: 30px;"><input name="respsc" id="respsc" type="checkbox" <?php echo $rsc ?> onchange="if(this.checked==true) {show(this,'limesc'); $('#url').attr('required','required');} else{ hide(this,'limesc'); $('#url').removeAttr('required');}" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/></div>
-	</div>
-<div id="limesc" <?php echo $rscd; ?> >
-<div class="form-group">
-	<label class="col-sm-4 control-label" ><?php echo T_("Questionnaire display mode for respondent");?>: </label>
-	<div class="col-sm-4">
-		<select class="form-control"  name="lime_mode">
-			<option <?php echo $aio;?> value="survey"><?php echo T_("All in one"); ?></option>
-			<option <?php echo $qbq;?> value="question"><?php echo T_("Question by question"); ?></option>
-			<option <?php echo $gat;?> value="group"><?php echo T_("Group at a time"); ?></option>
-		</select>
-	</div>
-</div>
-<div class="form-group">
-	<label class="col-sm-4 control-label" ><?php echo T_("Limesurvey template for respondent");?>: </label>
-	<div class="col-sm-4">
-		<select class="form-control"  name="lime_template">
-<?php 
-	if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/templates")) {
-	    while (false !== ($entry = readdir($handle))) {
-	        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/templates/" . $entry)){
-	            echo "<option value=\"$entry\" ";
-		    if ($rs['lime_template'] == $entry) echo " selected=\"selected\" ";
-		    echo ">$entry</option>";
-	        }
-	    }
-	    closedir($handle);
-	}
-	if ($handle = opendir(dirname(__FILE__)."/../include/limesurvey/upload/templates")) {
-	    while (false !== ($entry = readdir($handle))) {
-	        if ($entry != "." && $entry != ".." && is_dir(dirname(__FILE__)."/../include/limesurvey/upload/templates/" . $entry)){
-	            echo "<option value=\"$entry\" ";
-		    if ($rs['lime_template'] == $entry) echo " selected=\"selected\" ";
-		    echo ">$entry</option>";
-	        }
-	    }
-	    closedir($handle);
-	}		
-?>
-		</select>
-	</div>
-</div>
-	<div class="form-group">
-		<label class="col-sm-4 control-label text-danger" ><?php echo T_("URL to forward respondents on self completion (required)");?>: </label>
-		<div class="col-sm-4">
-			<input class="form-control" name="lime_endurl" id="url" type="url" value="<?php echo $rs['lime_endurl']; ?>"/>
-		</div>
+		<div class="col-sm-4" style="height: 30px;"><input name="respsc" id="respsc" type="checkbox" <?php echo $rsc ?> data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80"/></div>
 	</div>
 </div>
 <?php 
