@@ -605,7 +605,7 @@ function get_lime_id($case_id)
 	$rs = $db->GetRow($sql);
 
     $token = $rs['token'];
-    $qid = $rs['qid'];
+    $qid = $rs['questionnaire_id'];
 
     $lime_id = limerpc_init_qid($qid);
 
