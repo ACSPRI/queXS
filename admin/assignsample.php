@@ -401,13 +401,10 @@ if ($questionnaire_id != false)
 		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" checked="checked" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
 		<label class="control-label text-info"><?php   ;?></label><br/><br/><br/>
 		
-		<?php $self_complete = $db->GetOne("SELECT self_complete FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
-		if ($self_complete) {?>
 		<label for="generatecases" class="control-label col-lg-4"><?php echo T_("Generate cases for all sample records and set outcome to 'Self completion email invitation sent'?");?></label>
 		<div class="col-sm-1"><input type="checkbox" id = "generatecases" name="generatecases" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
-		<em class="control-label"> * <?php echo T_("Ideal if you intend to send an email invitation to sample members before attempting to call using queXS");?></em>
+		<em class="control-label"> * <?php echo T_("Ideal if you intend to send an email invitation to sample members before attempting to call using queXS") . " " . T_("Please ensure there are sufficient additional attribute fields in your Limesurvey questionnaire so that sample records can be inserted."); ?></em>
 		<div class='clearfix '></div></br>
-		<?php }?>
 
 		<input type="hidden" name="questionnaire_id" value="<?php print($questionnaire_id);?>"/>
 		
