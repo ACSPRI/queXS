@@ -153,16 +153,63 @@ function lime_list_answeroptions($qid,$qcode)
  */
 function lime_get_responses_by_case($case_id,$fields)
 {
+	global $db;
+    global $limeRPC;
+    global $limeKey;
+
+	$sql = "SELECT c.token,c.questionnaire_id
+		FROM `case` as c
+		WHERE c.case_id = '$case_id'";
+	
+	$rs = $db->GetRow($sql);
+
+    $token = $rs['token'];
+    $qid = $rs['qid'];
+
+    $lime_id = limerpc_init_qid($qid);
+
+    $ret = false;
+
+    if ($lime_id !== false) {
+      $q = $limeRPC->export_responses_by_token($limeKey,$lime_id,'json',$token,null,'complete','code','short',$fields);
+      if (!isset($q['status'])) {
+          $ret = json_decode(base64_decode($q));
+            //TODO: check how this returns
+          var_dump($ret); die();
+      }
+    } 
+
+    limerpc_close();
+
+	return $ret;
 
 
 }
 
 /** Get completd responses as an array based on the questionnaire
+ * indexed by token 
  */
 function lime_get_responses_by_questionnaire($qid,$fields)
 {
+    global $limeRPC;
+    global $limeKey;
 
+    $lime_id = limerpc_init_qid($qid);
 
+    $ret = false;
+
+    if ($lime_id !== false) {
+      $q = $limeRPC->export_responses($limeKey,$lime_id,'json',null,'complete','code','short',null,null,$fields);
+      if (!isset($q['status'])) {
+          $ret = json_decode(base64_decode($q));
+            //TODO: check how this returns
+          var_dump($ret); die();
+      }
+    } 
+
+    limerpc_close();
+
+	return $ret;
 }
 
 
@@ -495,31 +542,27 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
 {
 	global $db;
 
-  $sql = "SELECT COUNT(*)
-          FROM information_schema.tables
-          WHERE table_schema = '".DB_NAME."'
-          AND table_name = '" . LIME_PREFIX . "survey_$lime_sid'";
+    $resp = lime_get_responses_by_questionnaire($questionnaire_id,array($lime_sgqa));
 
-  $rs = $db->GetOne($sql);
+    $completions = false;
 
-  if ($rs != 1)
-    return false;
+    if ($resp !== false) {
+    	$sql = "SELECT c.token
+    		    FROM `case` as c
+    		    JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
+    		    WHERE c.questionnaire_id = '$questionnaire_id'";
+    
+    	$rs = $db->GetAssoc($sql);
 
-	$sql = "SELECT count(*) as c
-		FROM " . LIME_PREFIX . "survey_$lime_sid as s
-		JOIN `case` as c ON (c.questionnaire_id = '$questionnaire_id')
-		JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
-		WHERE s.submitdate IS NOT NULL
-		AND s.token = c.token
-		AND s.`$lime_sgqa` $comparison '$value'";
+        $completions = 0;
 
-	$rs = $db->GetRow($sql);
+        foreach($resp as $r) {
+            
+        }
 
-
-	if (isset($rs) && !empty($rs))
-		return $rs['c'];
+    }
 	
-	return false;
+	return $completions;
 }
 
 
@@ -668,30 +711,6 @@ function limesurvey_is_completed($case_id)
 	return false;
 }
 
-
-/**
- * Return the number of questions in the given questionnaire
- *
- * @param int $lime_sid The limesurvey sid
- * @return bool|int False if no data, otherwise the number of questions
- *
- */
-function limesurvey_get_numberofquestions($lime_sid)
-{
-	global $db;
-
-	$sql = "SELECT count(qid) as c
-		FROM " . LIME_PREFIX . "questions
-		WHERE sid = '$lime_sid'";
-
-	$r = $db->GetRow($sql);
-
-	if (!empty($r))
-		return $r['c'];
-
-	return false;
-}
-
 /**
  * Return the percent complete a questionnaire is, or false if not started
  *
@@ -703,39 +722,13 @@ function limesurvey_percent_complete($case_id)
 {
 	global $db;
 
-	$lime_sid = get_lime_sid($case_id);
-	if ($lime_sid == false) return false;
 
-	$sql = "SELECT saved_thisstep
-		FROM ". LIME_PREFIX ."saved_control
-		WHERE sid = '$lime_sid'
-		AND identifier = '$case_id'";
-
-	$r = $db->GetRow($sql);
-
-	if (!empty($r))
-	{
-		$step = $r['saved_thisstep'];
-		$questions = limesurvey_get_numberofquestions($lime_sid);
-		return ($step / $questions) * 100.0;
-	}
-
+    //TODO: use export_responses_by_token and check the lastpage variable
+    //
+    
 	return false;
 
 }
 
-
-function limesurvey_get_width($qid,$default)
-{
-	global $db;
-
-	$sql = "SELECT value FROM ".LIME_PREFIX."question_attributes WHERE qid = '$qid' and attribute = 'maximum_chars'";
-	$r = $db->GetRow($sql);
-
-	if (!empty($r))
-		$default = $r['value'];
-
-	return $default;
-}
 
 ?>
