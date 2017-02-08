@@ -629,18 +629,15 @@ function limesurvey_is_quota_full($case_id)
 {
 	global $db;
 
-	$lime_sid = get_lime_sid($case_id);
-	if ($lime_sid == false) return false;
+    $sql = "SELECT questionnaire_id, token
+            FROM `case`
+            WHERE case_id = '$case_id'";
 
-	$sql = "SELECT t.completed
-		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
-		WHERE c.case_id = '$case_id'
-		AND c.token = t.token";
-	
-	$r = $db->GetRow($sql);
+    $rs = $db->GetRow($sql);
 
-	if (!empty($r))
-		if ($r['completed'] == 'Q') return true;
+    $r = get_token_value($rs['questionnaire_id'],$rs['token'], 'completed');
+
+	if ($r == 'Q') return true;
 
 	return false;
 }
@@ -657,18 +654,16 @@ function limesurvey_is_completed($case_id)
 {
 	global $db;
 
-	$lime_sid = get_lime_sid($case_id);
-	if ($lime_sid == false) return false;
+    $sql = "SELECT questionnaire_id, token
+            FROM `case`
+            WHERE case_id = '$case_id'";
 
-	$sql = "SELECT t.completed
-		FROM " . LIME_PREFIX . "tokens_$lime_sid as t, `case` as c
-		WHERE c.case_id = '$case_id'
-		AND t.token = c.token";
-	
-	$r = $db->GetRow($sql);
+    $rs = $db->GetRow($sql);
 
-	if (!empty($r))
-		if ($r['completed'] != 'N' && $r['completed'] != 'Q') return true;
+    $r = get_token_value($rs['questionnaire_id'],$rs['token'], 'completed');
+
+    //hasn't failed, not quota filled or not marked as incomplete
+	if ($r !== false && $r != 'Q' && $r != 'N') return true;
 
 	return false;
 }
