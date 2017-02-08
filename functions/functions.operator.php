@@ -435,29 +435,25 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 			$lfirstname = "";
 			$llastname = "";
 			$lemail = "";
-	
-			if ($addlimeattributes)
-			{
-				$lfirstname = ($db->GetOne("SELECT sv.val 
-								FROM sample_var as sv, sample_import_var_restrict as s 
-								WHERE sv.var_id = s.var_id
-								AND sv.sample_id = '$sample_id'
-								AND s.type = '6'"));
 
-				$llastname = ($db->GetOne("SELECT sv.val 
-								FROM sample_var as sv, sample_import_var_restrict as s 
-								WHERE sv.var_id = s.var_id
-								AND sv.sample_id = '$sample_id'
-								AND s.type = '7'"));
+      $lfirstname = ($db->GetOne("SELECT sv.val 
+              FROM sample_var as sv, sample_import_var_restrict as s 
+              WHERE sv.var_id = s.var_id
+              AND sv.sample_id = '$sample_id'
+              AND s.type = '6'"));
 
-				$lemail = ($db->GetOne("SELECT sv.val 
-								FROM sample_var as sv, sample_import_var_restrict as s 
-								WHERE sv.var_id = s.var_id
-								AND sv.sample_id = '$sample_id'
-								AND s.type = '8'"));
+      $llastname = ($db->GetOne("SELECT sv.val 
+              FROM sample_var as sv, sample_import_var_restrict as s 
+              WHERE sv.var_id = s.var_id
+              AND sv.sample_id = '$sample_id'
+              AND s.type = '7'"));
 
-			}
-  
+      $lemail = ($db->GetOne("SELECT sv.val 
+              FROM sample_var as sv, sample_import_var_restrict as s 
+              WHERE sv.var_id = s.var_id
+              AND sv.sample_id = '$sample_id'
+              AND s.type = '8'"));
+
       //include limesurvey functions
 	  	include_once(dirname(__FILE__).'/functions.limesurvey.php');
 
@@ -1276,6 +1272,19 @@ function get_respondentselection_url($operator_id,$escape = true,$interface2 = f
 	return $url;
 }
 
+function get_lime_url($case_id)
+{
+  global $db;
+
+  $sql = "SELECT r.entry_url
+          FROM remote as r, `case` as c, questionnaire as q
+          WHERE c.case_id = $case_id
+          AND c.questionnaire_id = q.questionnaire_id
+          AND q.remote_id = r.id";
+
+  return $db->GetOne($sql);
+}
+
 /**
  * Get the complete URL for the Limesurvey questionnaire
  * If no case available, return an error screen
@@ -1303,7 +1312,7 @@ function get_limesurvey_url($operator_id)
 		$token = $db->GetOne($sql);
 
 		$sid = get_limesurvey_id($operator_id);
-		$url = get_lime_url($case_id) .  "/sid/$sid/token/$token/lang/" . DEFAULT_LOCALE;
+		$url = get_lime_url($case_id) .  "/$sid/token/$token/lang/" . DEFAULT_LOCALE;
 		$questionnaire_id = get_questionnaire_id($operator_id);
 		
 		//get prefills

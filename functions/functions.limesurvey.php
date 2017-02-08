@@ -223,7 +223,7 @@ function lime_add_token($qid,$params)
   $lime_id = limerpc_init_qid($qid);
 
   if ($lime_id !== false) {
-    $l = $limeRPC->add_participants($limeKey,$lime_id,$params,false); //don't create token
+    $l = $limeRPC->add_participants($limeKey,$lime_id,array($params),false); //don't create token
     if (!isset($l['status'])) {
         $ret = $l; //array of data
     } 
@@ -240,7 +240,7 @@ function get_token_value($questionnaire_id,$token, $value = 'sent')
   global $limeRPC;
 
   $ret = false;
-  $lime_id = limerpc_init_qid($qid);
+  $lime_id = limerpc_init_qid($questionnaire_id);
 
   if ($lime_id !== false) {
     $l = $limeRPC->get_participant_properties($limeKey,$lime_id,array('token'=>$token),array($value));
@@ -582,20 +582,6 @@ function getRandomID()
         for ($i=0;$i<$totalChar;$i++) // loop and create sid
         $sid = $sid . substr ($salt, rand() % strlen($salt), 1);
         return $sid;
-}
-
-
-function get_lime_url($case_id)
-{
-  global $db;
-
-  $sql = "SELECT r.entry_url
-          FROM remote as r, `case` as c, questionnaire as q
-          WHERE c.case_id = $case_id
-          AND c.questionnaire_id = q.questionnaire_id
-          AND q.remote_id = r.id";
-
-  return $db->GetOne($sql);
 }
 
 
