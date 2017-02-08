@@ -431,22 +431,27 @@ if ($questionnaire_id != false)
 
       $lime_sid = $db->GetOne($sql);
 
-      $ssgqa = "''";
+      $ssgqa = "";
       if (isset($_GET['sgqa']))
-        $ssgqa = $db->qstr($_GET['sgqa']);
+        $ssgqa = $_GET['sgqa'];
 
         include_once("../functions/functions.limesurvey.php");
 
 	  	$rsgqa = lime_list_questions($questionnaire_id);
-        //TODO: check output matches
-        var_dump($rsgqa); die();
 	 
       if (!empty($rsgqa))
       {
         print "<div class=''><form method='post' action='?qsqri=$qsqri&amp;edit=edit' class='form-group'>";
         print "<h3>" . T_("Add restriction based on answered questions") . " </h3>";
-		print "<label for='sgqa' class='control-label'>" . T_("Select Question") . ": </label>";
-        display_chooser($rsgqa,"sgqa","sgqa",true,"edit=edit&amp;qsqri=$qsqri");
+        print "<label for='sgqa' class='control-label'>" . T_("Select Question") . ": </label>";
+
+        for ($i=0; $i<count($rsgqa); $i++)
+    	  {
+          $rsgqa[$i]['description'] = substr(strip_tags($rsgqa[$i]['question']),0,400);
+          $rsgqa[$i]['value'] = $rsgqa[$i]['title'];
+      	}
+
+        display_chooser($rsgqa,"sgqa","sgqa",true,"edit=edit&amp;qsqri=$qsqri",true,true,array('title',$ssgqa));
 		
 		if (isset($_GET['sgqa'])){
         ?>
@@ -464,18 +469,22 @@ if ($questionnaire_id != false)
 		if (isset($_GET['sgqa']))
 			{
 				$sgqa = $_GET['sgqa'];
-				$qid = explode("X", $sgqa);
-				$qid = $qid[2];
-
 
                 $rsc = lime_list_answeroptions($questionnaire_id,$sgqa);    
-                //TODO: check output matches
-                var_dump($rsc); die();
+
+      $list = array();
+
+      foreach($rsc['answeroptions'] as $key=>$val) {
+        $list[] = array('code' => $key, 'answer' => $val['answer']);
+      }
+
+				
+
 			}
-		if (!isset($rsc) || empty($rsc))
+		if (!isset($rsc['answeroptions']) || is_string($rsc['answeroptions']))
 			print "<h4 class= 'alert alert-info'>" . T_("No labels defined for this question") ."</h4>";
 		else 
-			xhtml_table($rsc,array('code','title'),array(T_("Code value"), T_("Description")));
+      xhtml_table($list,array('code','answer'),array(T_("Code value"), T_("Description")));
 		}
 		else { print "</form>";	}
 		print "</div></div>";
