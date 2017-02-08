@@ -61,11 +61,11 @@ function limerpc_init ($url,$user,$pass)
   try {
     $limeKey = $limeRPC->get_session_key($user,$pass);  
   } catch (Exception $e) {
-    return $e->getMessage();  
+    die($e->getMessage());  
   }
 
   if (is_array($limeKey) && isset($limeKey['status'])) {
-    return $limeKey['status'];
+    die($limeKey['status']);
   }
   
   return true;
@@ -84,9 +84,9 @@ function limerpc_init_qid($qid)
 {
   global $db;
 
-  $sql = "SELECT r.rpc_url, r.username, r.password, r.description, q.lime_id
+  $sql = "SELECT r.rpc_url, r.username, r.password, r.description, q.lime_sid
           FROM remote as r, questionnaire as q
-          WHERE q.questoinnaire_d = '$qid'
+          WHERE q.questionnaire_id = '$qid'
           AND q.remote_id = r.id";
 
   $r = $db->GetRow($sql);
@@ -94,7 +94,7 @@ function limerpc_init_qid($qid)
   $ret = false;
 
   if (limerpc_init($r['rpc_url'],$r['username'],$r['password']) === true) {
-      return $r['lime_id'];
+      return $r['lime_sid'];
   }
 
   return false;
@@ -226,7 +226,7 @@ function lime_add_token($qid,$params)
     $l = $limeRPC->add_participants($limeKey,$lime_id,$params,false); //don't create token
     if (!isset($l['status'])) {
         $ret = $l; //array of data
-    }
+    } 
   }
 
   limerpc_close();
