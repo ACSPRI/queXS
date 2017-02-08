@@ -156,15 +156,12 @@ if ($questionnaire_id != false)
 
     $rs = lime_list_questions($questionnaire_id);
 
-    //TODO: Test output of listing questions
-    var_dump($rs); die();
-
 	for ($i=0; $i<count($rs); $i++)
 	{
-		$rs[$i]['description'] = substr(strip_tags($rs[$i]['description']),0,400);
+    $rs[$i]['description'] = substr(strip_tags($rs[$i]['question']),0,400);
+    $rs[$i]['value'] = $rs[$i]['title'];
 	}
-
-	display_chooser($rs,"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id",true,true,false,true,"pull-left");
+	display_chooser($rs,"sgqa","sgqa",true,"questionnaire_id=$questionnaire_id",true,true,array('title', $sgqa),true,"pull-left");
 	print "<div class='clearfix'></div>";
 	
 	if ($sgqa != false)
