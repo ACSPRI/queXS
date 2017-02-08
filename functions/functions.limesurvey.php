@@ -133,14 +133,15 @@ function lime_list_answeroptions($qid,$qcode)
   if ($q !== false)
   {
     
-    foreach($q as $qid => $val) {
-        if ($val['title'] == $qcode) {
-            $qp = $limeRPC->get_question_properties($limeKey,$qid,array('answeroptions'));
-            if (!isset($qp['status'])) {
-                $ret = $qp;
-            }
-            break;
+    foreach($q as $tmp => $val) {
+      if ($val['title'] == $qcode) {
+        limerpc_init_qid($qid);
+        $qp = $limeRPC->get_question_properties($limeKey,$val['qid'],array('answeroptions'));
+        if (!isset($qp['status'])) {
+            $ret = $qp;
         }
+        break;
+      }
     }
   }
 
