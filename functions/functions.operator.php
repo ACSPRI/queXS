@@ -436,19 +436,24 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 			$llastname = "";
 			$lemail = "";
 
-      $lfirstname = ($db->GetOne("SELECT sv.val 
+      $params = array('firstname' => "",
+                      'lastname' => "",
+                      'email' => "",
+                      'token' => $token);
+
+      $params['firstname'] = ($db->GetOne("SELECT sv.val 
               FROM sample_var as sv, sample_import_var_restrict as s 
               WHERE sv.var_id = s.var_id
               AND sv.sample_id = '$sample_id'
               AND s.type = '6'"));
 
-      $llastname = ($db->GetOne("SELECT sv.val 
+      $params['lastname'] = ($db->GetOne("SELECT sv.val 
               FROM sample_var as sv, sample_import_var_restrict as s 
               WHERE sv.var_id = s.var_id
               AND sv.sample_id = '$sample_id'
               AND s.type = '7'"));
 
-      $lemail = ($db->GetOne("SELECT sv.val 
+      $params['email'] = ($db->GetOne("SELECT sv.val 
               FROM sample_var as sv, sample_import_var_restrict as s 
               WHERE sv.var_id = s.var_id
               AND sv.sample_id = '$sample_id'
@@ -457,19 +462,32 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
       //include limesurvey functions
 	  	include_once(dirname(__FILE__).'/functions.limesurvey.php');
 
-            $ret = lime_add_token($questionnaire_id,array( 'firstname' => $lfirstname,
-                'lastname' => $llastname,
-                'email' => $lemail,
-                'token' => $token));      
-
-            //fail to create case if can't add remote token
-            if ($ret === false)
-                $db->FailTrans();
-
-			if ($addlimeattributes)
+      if ($addlimeattributes)
 			{			
-                //TODO: Add attributes from sample
+        $sql = "SELECT sv.val
+                FROM sample_var as sv, sample_import_var_restrict as s
+                WHERE sv.var_id = s.var_id
+                AND sv.sample_id = '$sample_id'
+                AND s.type = '1'
+                ORDER BY s.var_id ASC";
+
+        $vars = $db->GetAll($sql);
+
+        $att = 1;
+
+        foreach($vars as $v) {
+          $params['attribute_' . $att] = $v['val'];
+          $att++;
+        }
 			}
+
+      $ret = lime_add_token($questionnaire_id,$params);      
+
+      //fail to create case if can't add remote token
+      if ($ret === false) {
+        $db->FailTrans();
+        $case_id = false;
+      }
 		}
 	}
 

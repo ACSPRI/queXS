@@ -79,6 +79,9 @@ $js_foot = array(
 				);
 global $db;
 
+$error = "";
+
+
 if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['call_max']) && isset($_GET['call_attempt_max']))
 {
 	//need to add sample to questionnaire
@@ -103,51 +106,46 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
 	if (isset($_GET['generatecases']))
 	{
-		include_once("../functions/functions.operator.php");
-    
-        //TODO: check here if attributes available for assigning sample variables
-        //if not - fail
 
-		$db->StartTrans();
-
-		$lime_sid = $db->GetOne("SELECT lime_sid FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
-		$testing = $db->GetOne("SELECT testing FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
-	
-		//add limesurvey attribute for each sample var record
-		$sql = "SELECT var,type
-			FROM sample_import_var_restrict
+    //find the number of sample variables required
+    $sql = "SELECT count(*)
+            FROM sample_import_var_restrict
             WHERE sample_import_id = '$sid'
-            ORDER BY var_id ASC";
+            AND type = 1";
 
-		$rs = $db->GetAll($sql);
+    $varsrequired = $db->GetOne($sql);
 
-		$i = 1;
+    $addsample = false;
 
-		$fields = array();
-		$fieldcontents='';
-		foreach($rs as $r)
-		{
-		    $fields[]=array('attribute_'.$i,'C','255');
-		    $fieldcontents.='attribute_'.$i.'='.$r['var']."\n";
-		    $i++;
-		}
+    if ($varsrequired > 0) {
+      $addsample = true;
+    }
 
+    include_once("../functions/functions.operator.php");
+
+    $db->StartTrans();
+
+    $lime_sid = $db->GetOne("SELECT lime_sid FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
+    $testing = $db->GetOne("SELECT testing FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
+  
         //generate one case for each sample record and set outcome to 41
-		$sql = "SELECT sample_id
-			FROM sample
-			WHERE import_id = '$sid'";
+    $sql = "SELECT sample_id
+      FROM sample
+      WHERE import_id = '$sid'";
 
-		$rs = $db->GetAll($sql);
+    $rs = $db->GetAll($sql);
 
-		foreach($rs as $r)
-		{
-            set_time_limit(30);
-            //TODO : update add_case function to include attributes based on var_id ASC            
-		  add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
-		}
+    foreach($rs as $r)
+    {
+      set_time_limit(30);
+      if (add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, $addsample) === false) {
+        $error = "Could not add case - please ensure there enough additional attributes available in your Limesurvey participant table";
+        break;
+      }
+    }
 
-		$db->CompleteTrans();
-	}
+    $db->CompleteTrans();
+  }
 }
 
 if (isset($_POST['edit']))
@@ -312,8 +310,11 @@ print "</div>";
 
 if ($questionnaire_id != false)
 {
-	
-	print "<div class='panel-body'>
+  if ($error != "") {
+    print "<div class='alert text-danger'>$error</div>";
+  }
+  
+  print "<div class='panel-body'>
 			<h3 class=''><i class='fa fa-list-ul text-primary'></i>&emsp;". T_("Samples assigned to questionnaire") ."  <span class='text-primary'>" . $db->GetOne("SELECT description from questionnaire WHERE questionnaire_id = $questionnaire_id") . "</span></h3>";
 
 	$sql = "SELECT q.sort_order, si.description as description,si.sample_import_id, 

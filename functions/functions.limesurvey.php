@@ -234,7 +234,6 @@ function lime_add_token($qid,$params)
   return $ret;
 }
 
-
 function get_token_value($questionnaire_id,$token, $value = 'sent')
 {
   global $limeKey;
