@@ -868,7 +868,7 @@ CREATE TABLE `sample_import_var_restrict` (
   PRIMARY KEY (`var_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---- --------------------------------------------------------
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `sample_postcode_timezone`
@@ -918,7 +918,7 @@ CREATE TABLE `sample_var` (
   KEY `sample_id` (`sample_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---- --------------------------------------------------------
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `sample_var_type`
