@@ -493,7 +493,8 @@ if ($case_id != false)
 		$sid = get_lime_sid($case_id);
     $id = get_lime_id($case_id);
     $url = get_lime_url($case_id);
-		print "<div class='panel-body'>";
+
+   		print "<div class='panel-body'>";
 		if ($id)
 			print "<h4><a href='" . $url  . "/admin/dataentry/sa/editdata/subaction/edit/surveyid/$sid/id/$id' class='btn btn-default btn-lime'><i class='fa fa-lemon-o fa-lg'></i>&emsp;" . T_("Modify responses for this case") . "</a></h4>";
 		else

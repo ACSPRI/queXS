@@ -1794,13 +1794,16 @@ function update_single_row_quota($qsqri,$case_id = false)
       //get response data from Limesurvey
       $resp = lime_get_responses_by_case($case_id);
 
+      //get the result from the current response
+      $resp = current(current(current($resp)));
 
       foreach($qev as $ev)
       {
-        $sql2 .= " AND '"  . $resp[$ev['lime_sgqa']] . " ' {$ev['comparison']} '{$ev['value']}' ";
+        $sql2 .= " AND '"  . trim($resp->$ev['lime_sgqa']) . "' {$ev['comparison']} '{$ev['value']}' ";
       }
 
       $match = $db->GetOne($sql2);
+
     }
 
     if ($match == 1)
@@ -1841,24 +1844,40 @@ function update_single_row_quota($qsqri,$case_id = false)
     else
     {
       //find all completions from cases with matching limesurvey records
-      $sql2 = "SELECT token
-              FROM `case` as c 
-              WHERE c.questionnaire_id = '$questionnaire_id'";
 
-      //get all completed responses from limesurvey, indexed by token
-      
       include_once(dirname(__FILE__).'/functions.limesurvey.php');
       $resp = lime_get_responses_by_questionnaire($questionnaire_id);
 
-      foreach($qev as $ev)
-      {
-        //TODO: Exclude responses from the $resp array where there isn't a match
-          //based on the comparisons
-        $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
+      if ($resp !== false) {
+
+        $sql2 = "SELECT c.token,c.token as tok
+              FROM `case` as c
+              JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
+              WHERE c.questionnaire_id = '$questionnaire_id'";
+      
+        $rs = $db->GetAssoc($sql2);
+
+        foreach($resp as $r) {
+          foreach($r as $r1) {
+            foreach($r1 as $rl) {
+            if (isset($rl->token) && isset($rs[$rl->token])) {
+              //match to a case in the sample
+              $tmp = 0;
+              foreach($qev as $ev) {
+                if (isset($rl->$ev['lime_sgqa'])) {
+                  $tmp = lime_compare($rl->$ev['lime_sgqa'], $ev['comparison'], $ev['value']);
+                  if ($tmp != 1) {
+                    break;
+                  }
+                }
+              }
+              $completions += $tmp;
+            }
+            }
+          }
+        }
       }
 
-
-      $completions = count($resp);
     }
 
     $updatequota = true;
@@ -2483,11 +2502,8 @@ function get_limesurvey_id($operator_id,$rs = false)
 	else
 		$sql = "SELECT q.lime_sid as sid";
 
-	$sql .= " FROM `case` as c, questionnaire_sample as qs, sample as s, questionnaire as q
+	$sql .= " FROM `case` as c, questionnaire as q
 		WHERE c.current_operator_id = '$operator_id'
-		AND c.sample_id = s.sample_id
-		AND s.import_id = qs.sample_import_id
-		AND q.questionnaire_id = qs.questionnaire_id
 		AND c.questionnaire_id = q.questionnaire_id";
 
 	$rs = $db->GetRow($sql);
