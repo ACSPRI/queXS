@@ -150,13 +150,49 @@ function lime_list_answeroptions($qid,$qcode)
 
 }
 
+function lime_send_email($case_id,$email,$firstname,$lastname) 
+{
+	global $db;
+  global $limeRPC;
+  global $limeKey;
+
+	$sql = "SELECT c.token,c.questionnaire_id
+		FROM `case` as c
+		WHERE c.case_id = '$case_id'";
+	
+	$rs = $db->GetRow($sql);
+
+  $token = $rs['token'];
+  $qid = $rs['questionnaire_id'];
+
+  $lime_id = limerpc_init_qid($qid);
+
+  $ret = false;
+
+  if ($lime_id !== false) {
+    $q = $limeRPC->set_participant_properties($limeKey,$lime_id,array('token' => $token),array('firstname' => $firstname, 'email' => $email, 'lastname' => $lastname));
+    if (!isset($q['status'])) {
+      //send email
+      $q2 = $limeRPC->invite_participants($limeKey, $lime_id, array($q['tid']));
+      if (!isset($q['status'])) {
+        $ret = true;
+      }
+    }
+  } 
+
+  limerpc_close();
+
+	return $ret;
+}
+
+
 /** Get completed responses as an array based on the case_id
  */
 function lime_get_responses_by_case($case_id,$fields = null)
 {
 	global $db;
-    global $limeRPC;
-    global $limeKey;
+  global $limeRPC;
+  global $limeKey;
 
 	$sql = "SELECT c.token,c.questionnaire_id
 		FROM `case` as c
