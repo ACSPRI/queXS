@@ -91,9 +91,19 @@ if (isset($_POST['description']))
   	$username = $db->qstr($_POST['username']);
   	$password = $db->qstr($_POST['password']);
   	$entry_url = $db->qstr($_POST['entry_url']);
-  	
-  	$sql = "INSERT INTO `remote` (description,rpc_url,username,password,entry_url)
-  		VALUES ($description,$rpc_url,$username,$password,$entry_url)";
+    
+    if (isset($_POST['id'])) {
+        $id = intval($_POST['id']);
+        $sql = "UPDATE `remote` SET description = $description, 
+                rpc_url = $rpc_url,
+                username = $username,
+                password = $password,
+                entry_url = $entry_url
+                WHERE id = '$id'";
+    } else {
+      	$sql = "INSERT INTO `remote` (description,rpc_url,username,password,entry_url)
+  	    	VALUES ($description,$rpc_url,$username,$password,$entry_url)";
+    }
   
   	$db->Execute($sql);
   } else {
@@ -111,7 +121,7 @@ $sql = "SELECT id, rpc_url, username, description,
 print "<div class='well'>" . T_("Questionnaire services available. Services include Limesurvey remote control.") . "</div>";
 
 if ($error !== false) {
-  print "<div class='alert alert-danger'>" . T_("Service not added. Error: ") . $error . "</div>";
+  print "<div class='alert alert-danger'>" . T_("Service not added/updated. Error: ") . $error . "</div>";
 
 }
 
@@ -124,16 +134,42 @@ else{
 }
 
 //add a service
+//
+if (isset($_GET['id'])) {
+    $id = intval($id);
+
+    $sql = "SELECT * 
+            FROM remote
+            WHERE id = $id";
+
+    $rs = $db->GetRow($sql);
+?>
+<div class=" panel-body col-sm-4"><form method="post" action="?">
+	<h3><?php echo T_("Update questionnaire service")," :";?></h3>
+	<p><input type="text" class="textclass form-control" name="description" id="description" value="<?php echo $rs['description']; ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="rpc_url" id="rpc_url" placeholder="<?php echo $rs['rpc_url']; ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="username" id="username" placeholder="<?php echo $rs['username']; ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="password" id="password" placeholder="<?php echo $rs['password']; ?>"/></p>
+  <p><input type="text" class="textclass form-control" name="entry_url" id="entry_url" placeholder="<?php echo $rs['entry_url']; ?>"/></p>
+    <p><input class="submitclass btn btn-default" type="submit" name="submit" value="<?php  echo T_("Update questionnaire serivce"); ?>"/></p>
+    <input type="hidden" name="id" value="<?php echo $id;?>"/>
+</form></div>
+
+<?php
+}
+else
+{
 ?>
 <div class=" panel-body col-sm-4"><form method="post" action="?">
 	<h3><?php echo T_("Add new questionnaire service")," :";?></h3>
-	<p><input type="text" class="textclass form-control" name="description" id="description" placeholder="<?php echo T_("Enter"),"&ensp;",T_("new"),"&ensp;",T_("Questionnaire service descripion"); ?>"/></p>
-	<p><input type="text" class="textclass form-control" name="rpc_url" id="rpc_url" placeholder="<?php echo T_("RPC Url (eg: http://localhost/limesurvey/admin/remotecontrol)"); ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="description" id="description" placeholder="<?php echo T_("Enter"),"&ensp;",T_("new"),"&ensp;",T_("Questionnaire service description"); ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="rpc_url" id="rpc_url" placeholder="<?php echo T_("RPC Url (eg: http://localhost/limesurvey/index.php/admin/remotecontrol)"); ?>"/></p>
 	<p><input type="text" class="textclass form-control" name="username" id="username" placeholder="<?php echo T_("Username (eg: admin)"); ?>"/></p>
 	<p><input type="text" class="textclass form-control" name="password" id="password" placeholder="<?php echo T_("Password (eg: password)"); ?>"/></p>
-  <p><input type="text" class="textclass form-control" name="entry_url" id="entry_url" placeholder="<?php echo T_("Questionnaire entry Url (eg: http://localhost/limesurvey/)"); ?>"/></p>
+  <p><input type="text" class="textclass form-control" name="entry_url" id="entry_url" placeholder="<?php echo T_("Questionnaire entry Url (eg: http://localhost/limesurvey/index.php/)"); ?>"/></p>
 	<p><input class="submitclass btn btn-default" type="submit" name="submit" value="<?php  echo T_("Add questionnaire serivce"); ?>"/></p>
 </form></div>
 <?php 
+}
 xhtml_foot($js_foot);
 ?>
