@@ -150,13 +150,49 @@ function lime_list_answeroptions($qid,$qcode)
 
 }
 
-/** Get completed responses as an array based on the case_id
- */
-function lime_get_responses_by_case($case_id,$fields)
+function lime_send_email($case_id,$email,$firstname,$lastname) 
 {
 	global $db;
-    global $limeRPC;
-    global $limeKey;
+  global $limeRPC;
+  global $limeKey;
+
+	$sql = "SELECT c.token,c.questionnaire_id
+		FROM `case` as c
+		WHERE c.case_id = '$case_id'";
+	
+	$rs = $db->GetRow($sql);
+
+  $token = $rs['token'];
+  $qid = $rs['questionnaire_id'];
+
+  $lime_id = limerpc_init_qid($qid);
+
+  $ret = false;
+
+  if ($lime_id !== false) {
+    $q = $limeRPC->set_participant_properties($limeKey,$lime_id,array('token' => $token),array('firstname' => $firstname, 'email' => $email, 'lastname' => $lastname));
+    if (!isset($q['status'])) {
+      //send email
+      $q2 = $limeRPC->invite_participants($limeKey, $lime_id, array($q['tid']));
+      if (!isset($q['status'])) {
+        $ret = true;
+      }
+    }
+  } 
+
+  limerpc_close();
+
+	return $ret;
+}
+
+
+/** Get completed responses as an array based on the case_id
+ */
+function lime_get_responses_by_case($case_id,$fields = null)
+{
+	global $db;
+  global $limeRPC;
+  global $limeKey;
 
 	$sql = "SELECT c.token,c.questionnaire_id
 		FROM `case` as c
@@ -165,7 +201,7 @@ function lime_get_responses_by_case($case_id,$fields)
 	$rs = $db->GetRow($sql);
 
     $token = $rs['token'];
-    $qid = $rs['qid'];
+    $qid = $rs['questionnaire_id'];
 
     $lime_id = limerpc_init_qid($qid);
 
@@ -175,12 +211,10 @@ function lime_get_responses_by_case($case_id,$fields)
       $q = $limeRPC->export_responses_by_token($limeKey,$lime_id,'json',$token,null,'complete','code','short',$fields);
       if (!isset($q['status'])) {
           $ret = json_decode(base64_decode($q));
-            //TODO: check how this returns
-          var_dump($ret); die();
       }
     } 
 
-    limerpc_close();
+  limerpc_close();
 
 	return $ret;
 
@@ -190,7 +224,7 @@ function lime_get_responses_by_case($case_id,$fields)
 /** Get completd responses as an array based on the questionnaire
  * indexed by token 
  */
-function lime_get_responses_by_questionnaire($qid,$fields)
+function lime_get_responses_by_questionnaire($qid,$fields = null)
 {
     global $limeRPC;
     global $limeKey;
@@ -203,8 +237,6 @@ function lime_get_responses_by_questionnaire($qid,$fields)
       $q = $limeRPC->export_responses($limeKey,$lime_id,'json',null,'complete','code','short',null,null,$fields);
       if (!isset($q['status'])) {
           $ret = json_decode(base64_decode($q));
-            //TODO: check how this returns
-          var_dump($ret); die();
       }
     } 
 
@@ -233,7 +265,6 @@ function lime_add_token($qid,$params)
   limerpc_close();
   return $ret;
 }
-
 
 function get_token_value($questionnaire_id,$token, $value = 'sent')
 {
@@ -301,7 +332,6 @@ function get_survey_list ()
  * @param mixed    $email   
  * @param resource $replace Optional, defaults to ''. 
  * 
- * @return TODO
  * @author Adam Zammit <adam.zammit@acspri.org.au>
  * @since  2013-02-26
  */
@@ -525,6 +555,25 @@ function validate_email($email){
     return TRUE;
 }
 
+function lime_compare($val1,$operator,$val2)
+{
+  $val1 = trim($val1);
+  $val2 = trim($val2);
+  if ($operator == "<")
+    return ($val1 < $val2);
+  else if ($operator == ">")
+    return ($val1 > $val2);
+  else if ($operator == "<=")
+    return ($val1 <= $val2);
+  else if ($operator == ">=")
+    return ($val1 >= $val2);
+  else if ($operator == "NOT LIKE" || $operator == "!=")
+    return ($val1 != $val2);
+  else 
+    return ($val1 == $val2);
+}
+
+
 /**
  * Return the number of completions for a given
  * questionnaire, where the given question has
@@ -543,25 +592,32 @@ function limesurvey_quota_completions($lime_sgqa,$lime_sid,$questionnaire_id,$sa
 {
 	global $db;
 
-    $resp = lime_get_responses_by_questionnaire($questionnaire_id,array($lime_sgqa));
+  $resp = lime_get_responses_by_questionnaire($questionnaire_id);
 
-    $completions = false;
+  $completions = false;
 
-    if ($resp !== false) {
-    	$sql = "SELECT c.token
-    		    FROM `case` as c
-    		    JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
-    		    WHERE c.questionnaire_id = '$questionnaire_id'";
-    
-    	$rs = $db->GetAssoc($sql);
+  if ($resp !== false) {
+    $sql = "SELECT c.token,c.token as tok
+          FROM `case` as c
+          JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
+          WHERE c.questionnaire_id = '$questionnaire_id'";
+  
+    $rs = $db->GetAssoc($sql);
 
-        $completions = 0;
-
-        foreach($resp as $r) {
-            
+    $completions = 0;
+    foreach($resp as $r) {
+      foreach($r as $r1) {
+        foreach($r1 as $rl) {
+        if (isset($rl->token) && isset($rs[$rl->token])) {
+          //match to a case in the sample
+          if (isset($rl->$lime_sgqa)) {
+            $completions += lime_compare($rl->$lime_sgqa, $comparison, $value);
+          }
         }
-
+        }
+      }
     }
+  }
 	
 	return $completions;
 }
@@ -710,7 +766,7 @@ function limesurvey_percent_complete($case_id)
 	global $db;
 
 
-    //TODO: use export_responses_by_token and check the lastpage variable
+    //TODO: use export_responses_by_token and check the lastpage variable?
     //
     
 	return false;

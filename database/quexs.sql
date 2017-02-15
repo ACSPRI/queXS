@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2015 at 12:47 PM
--- Server version: 5.5.44
--- PHP Version: 5.3.10-1ubuntu3.19
+-- Generation Time: Feb 09, 2017 at 02:02 PM
+-- Server version: 5.5.54-0ubuntu0.14.04.1-log
+-- PHP Version: 5.5.9-1ubuntu4.20
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `quexs`
+-- Database: `quexs-remotelime`
 --
 
 -- --------------------------------------------------------
@@ -123,7 +123,7 @@ CREATE TABLE `call` (
   KEY `call_attempt_id` (`call_attempt_id`),
   KEY `contact_phone_id` (`contact_phone_id`),
   KEY `start` (`start`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -142,7 +142,7 @@ CREATE TABLE `call_attempt` (
   KEY `case_id` (`case_id`),
   KEY `end` (`end`),
   KEY `respondent_id` (`respondent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -233,7 +233,7 @@ CREATE TABLE `case` (
   KEY `questionnaire_id` (`questionnaire_id`),
   KEY `sortorder` (`sortorder`),
   KEY `last_call_id` (`last_call_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -262,7 +262,7 @@ CREATE TABLE `case_note` (
   PRIMARY KEY (`case_note_id`),
   KEY `case_id` (`case_id`),
   KEY `operator_id` (`operator_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -322,7 +322,7 @@ CREATE TABLE `contact_phone` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`contact_phone_id`),
   KEY `case_id` (`case_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -367,39 +367,16 @@ CREATE TABLE `extension` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lime_users`
+-- Table structure for table `failed_login_attempts`
 --
 
-CREATE TABLE `lime_users` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `users_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `password` blob NOT NULL,
-  `full_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `parent_id` int(11) NOT NULL,
-  `lang` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(320) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `create_survey` tinyint(1) NOT NULL DEFAULT '0',
-  `create_user` tinyint(1) NOT NULL DEFAULT '0',
-  `participant_panel` tinyint(1) NOT NULL DEFAULT '0',
-  `delete_user` tinyint(1) NOT NULL DEFAULT '0',
-  `superadmin` tinyint(1) NOT NULL DEFAULT '0',
-  `configurator` tinyint(1) NOT NULL DEFAULT '0',
-  `manage_template` tinyint(1) NOT NULL DEFAULT '0',
-  `manage_label` tinyint(1) NOT NULL DEFAULT '0',
-  `htmleditormode` varchar(7) COLLATE utf8_unicode_ci DEFAULT 'default',
-  `templateeditormode` varchar(7) COLLATE utf8_unicode_ci DEFAULT 'default',
-  `questionselectormode` varchar(7) COLLATE utf8_unicode_ci DEFAULT 'default',
-  `one_time_pw` blob,
-  `dateformat` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `users_name` (`users_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `lime_users`
---
-
-INSERT INTO `lime_users` (`uid`, `users_name`, `password`, `full_name`, `parent_id`, `lang`, `email`, `create_survey`, `create_user`, `participant_panel`, `delete_user`, `superadmin`, `configurator`, `manage_template`, `manage_label`, `htmleditormode`, `templateeditormode`, `questionselectormode`, `one_time_pw`, `dateformat`) VALUES(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 0, 'auto', 'your-email@example.net', 1, 1, 0, 1, 1, 1, 1, 1, 'default', 'default', 'default', NULL, 1);
+CREATE TABLE `failed_login_attempts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(37) COLLATE utf8_unicode_ci NOT NULL,
+  `last_attempt` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `number_attempts` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -421,12 +398,15 @@ CREATE TABLE `operator` (
   `chat_password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`operator_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `operator`
+--
+
+INSERT INTO `operator` (`operator_id`, `username`, `firstName`, `lastName`, `Time_zone_name`, `enabled`, `voip`, `next_case_id`, `chat_enable`, `chat_user`, `chat_password`) VALUES(1, 'admin', 'CATI', 'Admin', 'Australia/Victoria', 1, 0, NULL, 0, '', '');
 
 -- --------------------------------------------------------
-INSERT INTO `operator` (`operator_id`, `username`, `firstName`, `lastName`, `Time_zone_name`, `enabled`, `voip`, `next_case_id`, `chat_enable`, `chat_user`, `chat_password`) VALUES
-(1, 'admin', 'CATI', 'Admin', 'Australia/Victoria', 1, 0, NULL, 0, '', '');
-
 
 --
 -- Table structure for table `operator_questionnaire`
@@ -450,11 +430,14 @@ CREATE TABLE `operator_skill` (
   PRIMARY KEY (`operator_id`,`outcome_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `operator_skill`
+--
 
-INSERT INTO `operator_skill` (`operator_id`, `outcome_type_id`) VALUES
-(1, 1),
-(1, 5);
+INSERT INTO `operator_skill` (`operator_id`, `outcome_type_id`) VALUES(1, 1);
+INSERT INTO `operator_skill` (`operator_id`, `outcome_type_id`) VALUES(1, 5);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `outcome`
@@ -472,59 +455,60 @@ CREATE TABLE `outcome` (
   `eligible` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'If the respondent is eligible to participate',
   `require_note` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Whether to require a note to be entered',
   `calc` char(2) COLLATE utf8_unicode_ci NOT NULL,
-  `default` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Used as default for questionnaire outcomes',
-  `permanent` TINYINT(1) UNSIGNED NOT NULL COMMENT 'Permanent outcome, used for all questionnaires, not possible to de-select',
+  `default` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT 'Used as default for questionnaire outcomes',
+  `permanent` tinyint(1) unsigned NOT NULL COMMENT 'Permanent outcome, used for all questionnaires, not possible to de-select',
   PRIMARY KEY (`outcome_id`),
   KEY `calc` (`calc`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=100;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `outcome`
 --
 
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (1,'3.11','Not attempted or worked',0,1,1,0,1,0,0,'UH',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (2,'3.13','No answer',180,1,1,0,1,1,0,'UH',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (3,'3.16','Technical phone problems',180,1,1,0,1,0,0,'UH',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (4,'2.34','Other, Referred to Supervisor (Eligible)',0,2,0,1,1,1,1,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (5,'3.91','Other, Referred to Supervisor (Unknown eligibility)',0,2,0,0,1,0,1,'UO',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (6,'2.111a','Soft Refusal, Other',10080,3,0,1,1,1,1,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (7,'2.111b','Hard Refusal, Other',10080,3,0,1,1,1,1,'R',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (8,'2.112a','Soft Refusal, Respondent',10080,3,0,1,1,1,1,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (9,'2.112b','Hard Refusal, Respondent',10080,3,0,1,1,1,1,'R',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (10,'1.1','Complete',0,4,0,1,1,1,0,'I',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (11,'2.112','Known respondent refusal',0,4,0,1,1,1,0,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (12,'2.111','Household-level refusal',0,4,0,1,1,1,0,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (13,'2.112c','Broken appointment (Implicit refusal)',10080,3,1,0,1,1,0,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (14,'4.32','Disconnected number',0,4,1,0,0,0,0,'',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (15,'4.20','Fax/data line',0,4,1,1,0,0,0,'',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (16,'4.51','Business, government office, other organization',0,4,1,1,0,0,0,'',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (17,'4.70','No eligible respondent',0,4,1,1,0,0,0,'',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (18,'2.35a','Accidental hang up or temporary phone problem',0,1,1,1,1,1,0,'O',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (19,'2.12a','Definite Appointment - Respondent',0,5,0,1,1,1,0,'R',1,1);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (20,'2.12b','Definite Appointment - Other',0,5,0,1,1,1,0,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (21,'2.13a','Unspecified Appointment - Respondent',0,5,0,1,1,1,0,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (22,'2.13b','Unspecified Appointment - Other',0,5,0,1,1,1,0,'R',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (23,'2.221','Household answering machine - Message left',180,1,1,1,1,1,0,'NC',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (24,'2.222','Household answering machine - No message left',180,1,1,1,1,1,0,'NC',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (25,'2.31','Respondent Dead',0,4,0,1,0,1,0,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (26,'2.32','Physically or mentally unable/incompetent',0,4,0,1,0,1,0,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (27,'2.331','Household level language problem',0,4,1,1,0,1,0,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (28,'2.332','Respondent language problem',0,4,0,1,0,1,0,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (29,'3.14','Answering machine - Not a household',0,4,1,1,0,0,0,'UH',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (30,'4.10','Out of sample',0,4,0,1,0,0,0,'',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (31,'2.20','Non contact',180,1,1,1,1,1,0,'NC',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (32,'4.80','Quota filled',0,4,0,1,0,0,0,'',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (33,'2.36','Miscellaneous - Unavailable for a week',10080,1,0,1,1,1,0,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (40,'1.1','Self completed online',0,4,0,1,1,1,0,'I',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (41,'2.36','Self completion email invitation sent',10080,1,0,1,1,1,0,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (42,'3.90','Max call attempts reached (Unknown eligibility)',0,1,0,1,1,0,0,'UH',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (43,'3.90','Max calls reached (Unknown eligibility)',0,1,0,1,1,0,0,'UH',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (44,'2.30','Max call attempts reached (Eligible)',0,1,0,1,1,1,0,'O',1,0);
-INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES (45,'2.30','Max calls reached (Eligible)',0,1,0,1,1,1,0,'O',1,0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(1, '3.11', 'Not attempted or worked', 0, 1, 1, 0, 1, 0, 0, 'UH', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(2, '3.13', 'No answer', 180, 1, 1, 0, 1, 1, 0, 'UH', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(3, '3.16', 'Technical phone problems', 180, 1, 1, 0, 1, 0, 0, 'UH', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(4, '2.34', 'Other, Referred to Supervisor (Eligible)', 0, 2, 0, 1, 1, 1, 1, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(5, '3.91', 'Other, Referred to Supervisor (Unknown eligibility)', 0, 2, 0, 0, 1, 0, 1, 'UO', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(6, '2.111a', 'Soft Refusal, Other', 10080, 3, 0, 1, 1, 1, 1, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(7, '2.111b', 'Hard Refusal, Other', 10080, 3, 0, 1, 1, 1, 1, 'R', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(8, '2.112a', 'Soft Refusal, Respondent', 10080, 3, 0, 1, 1, 1, 1, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(9, '2.112b', 'Hard Refusal, Respondent', 10080, 3, 0, 1, 1, 1, 1, 'R', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(10, '1.1', 'Complete', 0, 4, 0, 1, 1, 1, 0, 'I', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(11, '2.112', 'Known respondent refusal', 0, 4, 0, 1, 1, 1, 0, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(12, '2.111', 'Household-level refusal', 0, 4, 0, 1, 1, 1, 0, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(13, '2.112c', 'Broken appointment (Implicit refusal)', 10080, 3, 1, 0, 1, 1, 0, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(14, '4.32', 'Disconnected number', 0, 4, 1, 0, 0, 0, 0, '', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(15, '4.20', 'Fax/data line', 0, 4, 1, 1, 0, 0, 0, '', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(16, '4.51', 'Business, government office, other organization', 0, 4, 1, 1, 0, 0, 0, '', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(17, '4.70', 'No eligible respondent', 0, 4, 1, 1, 0, 0, 0, '', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(18, '2.35a', 'Accidental hang up or temporary phone problem', 0, 1, 1, 1, 1, 1, 0, 'O', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(19, '2.12a', 'Definite Appointment - Respondent', 0, 5, 0, 1, 1, 1, 0, 'R', 1, 1);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(20, '2.12b', 'Definite Appointment - Other', 0, 5, 0, 1, 1, 1, 0, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(21, '2.13a', 'Unspecified Appointment - Respondent', 0, 5, 0, 1, 1, 1, 0, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(22, '2.13b', 'Unspecified Appointment - Other', 0, 5, 0, 1, 1, 1, 0, 'R', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(23, '2.221', 'Household answering machine - Message left', 180, 1, 1, 1, 1, 1, 0, 'NC', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(24, '2.222', 'Household answering machine - No message left', 180, 1, 1, 1, 1, 1, 0, 'NC', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(25, '2.31', 'Respondent Dead', 0, 4, 0, 1, 0, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(26, '2.32', 'Physically or mentally unable/incompetent', 0, 4, 0, 1, 0, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(27, '2.331', 'Household level language problem', 0, 4, 1, 1, 0, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(28, '2.332', 'Respondent language problem', 0, 4, 0, 1, 0, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(29, '3.14', 'Answering machine - Not a household', 0, 4, 1, 1, 0, 0, 0, 'UH', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(30, '4.10', 'Out of sample', 0, 4, 0, 1, 0, 0, 0, '', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(31, '2.20', 'Non contact', 180, 1, 1, 1, 1, 1, 0, 'NC', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(32, '4.80', 'Quota filled', 0, 4, 0, 1, 0, 0, 0, '', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(33, '2.36', 'Miscellaneous - Unavailable for a week', 10080, 1, 0, 1, 1, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(40, '1.1', 'Self completed online', 0, 4, 0, 1, 1, 1, 0, 'I', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(41, '2.36', 'Self completion email invitation sent', 10080, 1, 0, 1, 1, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(42, '3.90', 'Max call attempts reached (Unknown eligibility)', 0, 1, 0, 1, 1, 0, 0, 'UH', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(43, '3.90', 'Max calls reached (Unknown eligibility)', 0, 1, 0, 1, 1, 0, 0, 'UH', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(44, '2.30', 'Max call attempts reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(45, '2.30', 'Max calls reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O', 1, 0);
 
 -- Auto increment start from 100 for manual entries
 
 ALTER TABLE `outcome` AUTO_INCREMENT = 100;
+
 
 -- --------------------------------------------------------
 
@@ -562,7 +546,7 @@ CREATE TABLE `process` (
   `kill` tinyint(1) NOT NULL DEFAULT '0',
   `data` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`process_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -577,7 +561,7 @@ CREATE TABLE `process_log` (
   `data` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`process_log_id`),
   KEY `process_id` (`process_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -594,7 +578,7 @@ CREATE TABLE `qsqr_question` (
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`qsqr_question_id`),
   KEY `questionnaire_sample_quota_row_id` (`questionnaire_sample_quota_row_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -642,11 +626,11 @@ CREATE TABLE `questionnaire` (
   `lime_template` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Limesurvey template for respondent self completion',
   `lime_endurl` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Forwarding end URL for respondent self completion',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
-  `outcomes` varchar(256) COLLATE utf8_unicode_ci NULL DEFAULT '1,2,3,7,9,10,14,17,18,19' COMMENT 'Comma-separated string of outcomes defined for the questionnaire',
+  `outcomes` varchar(256) COLLATE utf8_unicode_ci DEFAULT '1,2,3,7,9,10,14,17,18,19' COMMENT 'Comma-separated string of outcomes defined for the questionnaire',
   `remote_id` int(11) NOT NULL,
   PRIMARY KEY (`questionnaire_id`),
   KEY `remote_id` (`remote_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -673,7 +657,7 @@ CREATE TABLE `questionnaire_prefill` (
   `value` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`questionnaire_prefill_id`),
   KEY `questionnaire_id` (`questionnaire_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -728,7 +712,7 @@ CREATE TABLE `questionnaire_sample_quota` (
   `completions` int(11) NOT NULL,
   `quota_reached` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`questionnaire_sample_quota_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -749,7 +733,7 @@ CREATE TABLE `questionnaire_sample_quota_row` (
   PRIMARY KEY (`questionnaire_sample_quota_row_id`),
   KEY `questionnaire_id` (`questionnaire_id`),
   KEY `sample_import_id` (`sample_import_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -794,6 +778,23 @@ CREATE TABLE `questionnaire_timeslot` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `remote`
+--
+
+CREATE TABLE `remote` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `rpc_url` text COLLATE utf8_unicode_ci NOT NULL,
+  `username` text COLLATE utf8_unicode_ci NOT NULL,
+  `password` text COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(16) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'limesurvey' COMMENT 'type of host',
+  `entry_url` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'entry url for interviewers',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `respondent`
 --
 
@@ -805,7 +806,7 @@ CREATE TABLE `respondent` (
   `Time_zone_name` char(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`respondent_id`),
   KEY `case_id` (`case_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -835,7 +836,7 @@ CREATE TABLE `sample` (
   `phone` char(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`sample_id`),
   KEY `import_id` (`import_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -850,7 +851,7 @@ CREATE TABLE `sample_import` (
   `refusal_conversion` tinyint(1) NOT NULL DEFAULT '1',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`sample_import_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -865,7 +866,7 @@ CREATE TABLE `sample_import_var_restrict` (
   `type` smallint(10) unsigned NOT NULL,
   `restrict` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`var_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1030,6 +1031,29 @@ CREATE TABLE `timezone_template` (
   `Time_zone_name` char(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`Time_zone_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `users_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` blob NOT NULL,
+  `full_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(320) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `superadmin` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `users_name` (`users_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`uid`, `users_name`, `password`, `full_name`, `email`, `superadmin`) VALUES(1, 'admin', 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438, 'Your Name', 'your-email@example.net', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

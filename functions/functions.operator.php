@@ -436,19 +436,24 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 			$llastname = "";
 			$lemail = "";
 
-      $lfirstname = ($db->GetOne("SELECT sv.val 
+      $params = array('firstname' => "",
+                      'lastname' => "",
+                      'email' => "",
+                      'token' => $token);
+
+      $params['firstname'] = ($db->GetOne("SELECT sv.val 
               FROM sample_var as sv, sample_import_var_restrict as s 
               WHERE sv.var_id = s.var_id
               AND sv.sample_id = '$sample_id'
               AND s.type = '6'"));
 
-      $llastname = ($db->GetOne("SELECT sv.val 
+      $params['lastname'] = ($db->GetOne("SELECT sv.val 
               FROM sample_var as sv, sample_import_var_restrict as s 
               WHERE sv.var_id = s.var_id
               AND sv.sample_id = '$sample_id'
               AND s.type = '7'"));
 
-      $lemail = ($db->GetOne("SELECT sv.val 
+      $params['email'] = ($db->GetOne("SELECT sv.val 
               FROM sample_var as sv, sample_import_var_restrict as s 
               WHERE sv.var_id = s.var_id
               AND sv.sample_id = '$sample_id'
@@ -457,19 +462,32 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
       //include limesurvey functions
 	  	include_once(dirname(__FILE__).'/functions.limesurvey.php');
 
-            $ret = lime_add_token($questionnaire_id,array( 'firstname' => $lfirstname,
-                'lastname' => $llastname,
-                'email' => $lemail,
-                'token' => $token));      
-
-            //fail to create case if can't add remote token
-            if ($ret === false)
-                $db->FailTrans();
-
-			if ($addlimeattributes)
+      if ($addlimeattributes)
 			{			
-                //TODO: Add attributes from sample
+        $sql = "SELECT sv.val
+                FROM sample_var as sv, sample_import_var_restrict as s
+                WHERE sv.var_id = s.var_id
+                AND sv.sample_id = '$sample_id'
+                AND s.type = '1'
+                ORDER BY s.var_id ASC";
+
+        $vars = $db->GetAll($sql);
+
+        $att = 1;
+
+        foreach($vars as $v) {
+          $params['attribute_' . $att] = $v['val'];
+          $att++;
+        }
 			}
+
+      $ret = lime_add_token($questionnaire_id,$params);      
+
+      //fail to create case if can't add remote token
+      if ($ret === false) {
+        $db->FailTrans();
+        $case_id = false;
+      }
 		}
 	}
 
@@ -1776,13 +1794,16 @@ function update_single_row_quota($qsqri,$case_id = false)
       //get response data from Limesurvey
       $resp = lime_get_responses_by_case($case_id);
 
+      //get the result from the current response
+      $resp = current(current(current($resp)));
 
       foreach($qev as $ev)
       {
-        $sql2 .= " AND '"  . $resp[$ev['lime_sgqa']] . " ' {$ev['comparison']} '{$ev['value']}' ";
+        $sql2 .= " AND '"  . trim($resp->$ev['lime_sgqa']) . "' {$ev['comparison']} '{$ev['value']}' ";
       }
 
       $match = $db->GetOne($sql2);
+
     }
 
     if ($match == 1)
@@ -1823,24 +1844,40 @@ function update_single_row_quota($qsqri,$case_id = false)
     else
     {
       //find all completions from cases with matching limesurvey records
-      $sql2 = "SELECT token
-              FROM `case` as c 
-              WHERE c.questionnaire_id = '$questionnaire_id'";
 
-      //get all completed responses from limesurvey, indexed by token
-      
       include_once(dirname(__FILE__).'/functions.limesurvey.php');
       $resp = lime_get_responses_by_questionnaire($questionnaire_id);
 
-      foreach($qev as $ev)
-      {
-        //TODO: Exclude responses from the $resp array where there isn't a match
-          //based on the comparisons
-        $sql2 .= " AND s.`{$ev['lime_sgqa']}` {$ev['comparison']} '{$ev['value']}' ";
+      if ($resp !== false) {
+
+        $sql2 = "SELECT c.token,c.token as tok
+              FROM `case` as c
+              JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = '$sample_import_id')
+              WHERE c.questionnaire_id = '$questionnaire_id'";
+      
+        $rs = $db->GetAssoc($sql2);
+
+        foreach($resp as $r) {
+          foreach($r as $r1) {
+            foreach($r1 as $rl) {
+            if (isset($rl->token) && isset($rs[$rl->token])) {
+              //match to a case in the sample
+              $tmp = 0;
+              foreach($qev as $ev) {
+                if (isset($rl->$ev['lime_sgqa'])) {
+                  $tmp = lime_compare($rl->$ev['lime_sgqa'], $ev['comparison'], $ev['value']);
+                  if ($tmp != 1) {
+                    break;
+                  }
+                }
+              }
+              $completions += $tmp;
+            }
+            }
+          }
+        }
       }
 
-
-      $completions = count($resp);
     }
 
     $updatequota = true;
@@ -2465,11 +2502,8 @@ function get_limesurvey_id($operator_id,$rs = false)
 	else
 		$sql = "SELECT q.lime_sid as sid";
 
-	$sql .= " FROM `case` as c, questionnaire_sample as qs, sample as s, questionnaire as q
+	$sql .= " FROM `case` as c, questionnaire as q
 		WHERE c.current_operator_id = '$operator_id'
-		AND c.sample_id = s.sample_id
-		AND s.import_id = qs.sample_import_id
-		AND q.questionnaire_id = qs.questionnaire_id
 		AND c.questionnaire_id = q.questionnaire_id";
 
 	$rs = $db->GetRow($sql);

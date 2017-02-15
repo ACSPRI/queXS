@@ -81,24 +81,15 @@ if (isset($_POST['email']) && ((isset($_POST['firstname']) && !empty($_POST['fir
 		$lime_sid = get_lime_sid($case_id);
 		$ca = get_call_attempt($operator_id);
 		$token = get_token($case_id);
-		$email = $db->qstr($_POST['email']);
-		$firstname = $db->qstr($_POST['firstname']);
-		$lastname = $db->qstr($_POST['lastname']);
+		$email = ($_POST['email']);
+		$firstname = ($_POST['firstname']);
+		$lastname = ($_POST['lastname']);
 
     
-    //set in Limesurvey    
-    //set_participant_properties($sSessionKey, $lime_sid, array['token' => $token], array['email' => $email, 'firstname' => $firstname, 'lastname' => $lastname, 'emailstatus' => 'OK']);
+    $ret = lime_send_email($case_id,$email,$firstname,$lastname);
 
-
-		if (0) //if mail sent - disable temporarily TODO: update properties in limesurvey
+		if ($ret) //if mail sent 
 		{
-			// Put call attempt id in to sent in Limesurvey
-			$sql = "UPDATE ". LIME_PREFIX . "tokens_{$lime_sid}
-				SET sent='$ca' 
-				WHERE token='$token'";
-
-			//$db->Execute($sql);
-
 			//Add a note that sent
 
 			$sql = "INSERT INTO `case_note` (case_id,operator_id,note,datetime)
