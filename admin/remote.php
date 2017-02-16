@@ -147,10 +147,10 @@ if (isset($_GET['id'])) {
 <div class=" panel-body col-sm-4"><form method="post" action="?">
 	<h3><?php echo T_("Update questionnaire service")," :";?></h3>
 	<p><input type="text" class="textclass form-control" name="description" id="description" value="<?php echo $rs['description']; ?>"/></p>
-	<p><input type="text" class="textclass form-control" name="rpc_url" id="rpc_url" placeholder="<?php echo $rs['rpc_url']; ?>"/></p>
-	<p><input type="text" class="textclass form-control" name="username" id="username" placeholder="<?php echo $rs['username']; ?>"/></p>
-	<p><input type="text" class="textclass form-control" name="password" id="password" placeholder="<?php echo $rs['password']; ?>"/></p>
-  <p><input type="text" class="textclass form-control" name="entry_url" id="entry_url" placeholder="<?php echo $rs['entry_url']; ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="rpc_url" id="rpc_url" value="<?php echo $rs['rpc_url']; ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="username" id="username" value="<?php echo $rs['username']; ?>"/></p>
+	<p><input type="text" class="textclass form-control" name="password" id="password" value="<?php echo $rs['password']; ?>"/></p>
+  <p><input type="text" class="textclass form-control" name="entry_url" id="entry_url" value="<?php echo $rs['entry_url']; ?>"/></p>
     <p><input class="submitclass btn btn-default" type="submit" name="submit" value="<?php  echo T_("Update questionnaire serivce"); ?>"/></p>
     <input type="hidden" name="id" value="<?php echo $id;?>"/>
 </form></div>
