@@ -136,7 +136,7 @@ else{
 //add a service
 //
 if (isset($_GET['id'])) {
-    $id = intval($id);
+    $id = intval($_GET['id']);
 
     $sql = "SELECT * 
             FROM remote
