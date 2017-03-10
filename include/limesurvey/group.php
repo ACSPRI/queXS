@@ -244,9 +244,9 @@ else
     if ($thissurvey['active'] == "Y" && isset($_POST['saveall']))
     {
         // must do this here to process the POSTed values
-        //$moveResult = LimeExpressionManager::JumpTo($_SESSION['step'],false);   // by jumping to current step, saves data so far
+        $moveResult = LimeExpressionManager::JumpTo($_SESSION['step'],false);   // by jumping to current step, saves data so far
 
-        //showsaveform(); // generates a form and exits, awaiting input
+        showsaveform(); // generates a form and exits, awaiting input
         if(!tableExists('tokens_'.$surveyid) || $thissurvey['anonymized']=='Y' || (tableExists('tokens_'.$surveyid) && $thissurvey['tokenanswerspersistence'] == 'N' ))
         {
             $moveResult = LimeExpressionManager::JumpTo($_SESSION['step'],false,true,false,false,true);   // by jumping to current step, saves data so far
