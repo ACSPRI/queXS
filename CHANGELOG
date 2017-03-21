@@ -1,6 +1,8 @@
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(9, 'Token', '');
 ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `var` ) ;
 ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `sample_import_id` ) ;
+ALTER TABLE `questionnaire_timeslot` ADD `weight` INT( 11 ) NOT NULL DEFAULT '1';
+ALTER TABLE `questionnaire_sample_timeslot` ADD `weight` INT( 11 ) NOT NULL DEFAULT '1';
 
 
 queXS 1.14.4 - Changes since 1.14.3

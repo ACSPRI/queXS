@@ -1357,6 +1357,7 @@ CREATE TABLE `questionnaire_sample_timeslot` (
   `questionnaire_id` bigint(20) NOT NULL,
   `sample_import_id` bigint(20) NOT NULL,
   `availability_group_id` bigint(20) NOT NULL,
+  `weight` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`questionnaire_id`,`availability_group_id`,`sample_import_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1369,6 +1370,7 @@ CREATE TABLE `questionnaire_sample_timeslot` (
 CREATE TABLE `questionnaire_timeslot` (
   `questionnaire_id` bigint(20) NOT NULL,
   `availability_group_id` bigint(20) NOT NULL,
+  `weight` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`questionnaire_id`,`availability_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
