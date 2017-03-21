@@ -1,3 +1,20 @@
+queXS 1.15.0 - Changes since 1.14.4
+
+This release contains a weighted timeslot feature to allow for varying numbers of attempts in particular timeslots, 
+as well as features and fixes to web/CATI mode integration.
+
+New feature: Weighted timeslots (allow more attempts in particular timeslots)
+New feature: Allow for tokens to be imported in a queXS sample
+
+Fixed issue: Database structure not optimised for sample_var_import_restrict table
+Fixed issue: Cases being generated without a valid email address when importing to Limesurvey
+Fixed issue: Limesurvey save form not displaying
+Fixed issue: Limesurvey welcome screen not displaying
+Fixed issue: Admin permissions not propogating to Limesurvey
+Fixed issue: Mode of delivery (single page, group by group, etc) not determined if no token in queXS
+
+Database changes required:
+
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(9, 'Token', '');
 ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `var` ) ;
 ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `sample_import_id` ) ;
