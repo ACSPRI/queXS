@@ -81,7 +81,6 @@ global $db;
 
 $error = "";
 
-
 if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['call_max']) && isset($_GET['call_attempt_max']))
 {
 	//need to add sample to questionnaire
@@ -106,7 +105,6 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
 	if (isset($_GET['generatecases']))
 	{
-
     //find the number of sample variables required
     $sql = "SELECT count(*)
             FROM sample_import_var_restrict
@@ -122,28 +120,31 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
     }
 
     include_once("../functions/functions.operator.php");
+    include_once("../functions/functions.limesurvey.php");
 
     $db->StartTrans();
 
     $lime_sid = $db->GetOne("SELECT lime_sid FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
     $testing = $db->GetOne("SELECT testing FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
   
-        //generate one case for each sample record and set outcome to 41
-    $sql = "SELECT sample_id
-      FROM sample
-      WHERE import_id = '$sid'";
+		//generate one case for each sample record and set outcome to 41 (where an email address provided)
+		$sql = "SELECT s.sample_id, sv.val as email
+			FROM sample as s
+			LEFT JOIN (sample_var as sv, sample_import_var_restrict as sivr) ON (sv.sample_id = s.sample_id and sv.var_id = sivr.var_id and sivr.type = 8)
+			WHERE s.import_id = '$sid'";
 
     $rs = $db->GetAll($sql);
 
     foreach($rs as $r)
     {
       set_time_limit(30);
-      if (add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, $addsample) === false) {
-        $error = "Could not add case - please ensure there enough additional attributes available in your Limesurvey participant table";
-        break;
+      if (validate_email($r['email'])) {
+        if (add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, $addsample) === false) {
+          $error = "Could not add case - please ensure there enough additional attributes available in your Limesurvey participant table";
+          break;
+        }
       }
     }
-
     $db->CompleteTrans();
   }
 }
@@ -300,6 +301,9 @@ xhtml_head(T_("Assign samples to questionnaires"),true,$css,$js_head,false,false
 
 print "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a>";
 
+if (!empty($error)) {
+  print "<div class='alert text-danger'>$error</div>";
+}
 	
 $questionnaire_id = false;
 if (isset($_GET['questionnaire_id'])) 	$questionnaire_id = bigintval($_GET['questionnaire_id']);	
@@ -401,7 +405,7 @@ if ($questionnaire_id != false)
 		<div class="col-sm-1"><input type="checkbox" id = "allownew" name="allownew" checked="checked" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
 		<label class="control-label text-info"><?php   ;?></label><br/><br/><br/>
 		
-		<label for="generatecases" class="control-label col-lg-4"><?php echo T_("Generate cases for all sample records and set outcome to 'Self completion email invitation sent'?");?></label>
+		<label for="generatecases" class="control-label col-lg-4"><?php echo T_("Generate cases for all sample records with a valid email address and set outcome to 'Self completion email invitation sent'?");?></label>
 		<div class="col-sm-1"><input type="checkbox" id = "generatecases" name="generatecases" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
 		<em class="control-label"> * <?php echo T_("Ideal if you intend to send an email invitation to sample members before attempting to call using queXS") . " " . T_("Please ensure there are sufficient additional attribute fields in your Limesurvey questionnaire so that sample records can be inserted."); ?></em>
 		<div class='clearfix '></div></br>

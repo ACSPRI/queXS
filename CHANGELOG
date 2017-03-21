@@ -1,6 +1,62 @@
+queXS 2.0.0 - Changes since 1.15.0
+
+queXS 2.0.0 removes the included version of Limesurvey 1.91+ and instead relies on an existing install of Limesurvey
+of at least version 2.0, with the JSON remote control API enabled to collect data.
+
+Therefore queXS 2.0.0 has an additional requirement of a separate installation of Limesurvey with the JSON RPC API enabled.
+
+Both the 1.x and 2.x branches will continue to be maintained for now. Be warned: If you choose to upgrade to the 2.0.0 version,
+there is "no going back" unless you restore from a backup.
+
+Due to the previous tight integration of queXS and Limesurvey, some noteable features are NOT supported in the 2.x series, including:
+
+- Data export:
+* Exporting data "by sample" or "by questionnaire" from Limesurvey directly
+* queXS paradata export from within Limesurvey
+
+- Integration:
+* {SAMPLE:xxx} replacement fields in Limesurvey (you will need to replace these with {TOKEN:attribute_1}, {TOKEN:attribute_2}, etc)
+* queXS replacement fields including: CALLATTEMPTS, ONAPPOINTMENT, PERIODOFDAY, APPOINTMENTDATE, APPOINTMENTTIME, APPOINTMENTNUMBER, PERCCOMPLETE, ENDINTERVIEWURL, STARTINTERVIEWURL
+* Altering of template / mode of delivery for self complete surveys versus interviewer administered surveys
+
+- Interface:
+* Automatically proceedingt to next question on answer selection (no need to press "NEXT")
+
+Please note that you may be able to implement some of these in Limesurvey directly or work around them. If they are critical for your operations,
+please do not proceed with the upgrade to queXS 2.0.0
+
+
+
+Upgrade procedure from 1.15.0 to 2.0.0:
+
+
+
 ALTER TABLE `questionnaire` ADD `remote_id` INT NOT NULL ,
 ADD INDEX ( `remote_id` ) ;
 
+
+queXS 1.15.0 - Changes since 1.14.4
+
+This release contains a weighted timeslot feature to allow for varying numbers of attempts in particular timeslots, 
+as well as features and fixes to web/CATI mode integration.
+
+New feature: Weighted timeslots (allow more attempts in particular timeslots)
+New feature: Allow for tokens to be imported in a queXS sample
+
+Fixed issue: Database structure not optimised for sample_var_import_restrict table
+Fixed issue: Cases being generated without a valid email address when importing to Limesurvey
+Fixed issue: Limesurvey save form not displaying
+Fixed issue: Limesurvey welcome screen not displaying
+Fixed issue: Admin permissions not propogating to Limesurvey
+Fixed issue: Mode of delivery (single page, group by group, etc) not determined if no token in queXS
+
+Database changes required:
+
+INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(9, 'Token', '');
+ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `var` ) ;
+ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `sample_import_id` ) ;
+ALTER TABLE `questionnaire_timeslot` ADD `weight` INT( 11 ) NOT NULL DEFAULT '1';
+ALTER TABLE `questionnaire_sample_timeslot` ADD `weight` INT( 11 ) NOT NULL DEFAULT '1';
 
 queXS 1.14.4 - Changes since 1.14.3
 

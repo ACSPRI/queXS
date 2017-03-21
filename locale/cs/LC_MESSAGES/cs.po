@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-10-25 15:08+1100\n"
+"POT-Creation-Date: 2017-01-06 15:16+1100\n"
 "PO-Revision-Date: 2013-12-24 14:41+0000\n"
 "Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-01-06 04:12+0000\n"
-"X-Generator: Launchpad (build 18302)\n"
+"X-Launchpad-Export-Date: 2017-03-21 03:24+0000\n"
+"X-Generator: Launchpad (build 18332)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -4502,9 +4502,11 @@ msgstr ""
 #~ msgid "retrieve_conf failed, config not applied"
 #~ msgstr "retrieve_conf selhalo, nastavení není použito"
 
+#, php-format
 #~ msgid "Reload failed because retrieve_conf encountered an error: %s"
 #~ msgstr "Znovu načtení selhalo protože retrieve_conf narazilo na chybu: %s"
 
+#, php-format
 #~ msgid "Exit code was %s and output was: %s"
 #~ msgstr "Kód ukončení byl %s a výstup byl: %s"
 
@@ -4837,6 +4839,7 @@ msgstr ""
 #~ msgid "Search for:"
 #~ msgstr "Hledat:"
 
+#, php-format
 #~ msgid "Use the % character as a wildcard"
 #~ msgstr "Použit znak % cjako zástupný znak"
 

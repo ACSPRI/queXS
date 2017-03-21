@@ -117,10 +117,9 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
 
       include_once("../include/sha256.php");
 
-      //Insert into lime_users
+      //Insert into users
       $sql = "INSERT INTO users (`users_name`,`password`,`full_name`,`superadmin`,`email`)
               VALUES ($operator, '" . SHA256::hashing($_POST['password']) . "',$firstname,$admin,$email)";
-
       $db->Execute($sql);
 
 			if (FREEPBX_PATH !== false)

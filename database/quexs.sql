@@ -760,6 +760,7 @@ CREATE TABLE `questionnaire_sample_timeslot` (
   `questionnaire_id` bigint(20) NOT NULL,
   `sample_import_id` bigint(20) NOT NULL,
   `availability_group_id` bigint(20) NOT NULL,
+  `weight` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`questionnaire_id`,`availability_group_id`,`sample_import_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -772,6 +773,7 @@ CREATE TABLE `questionnaire_sample_timeslot` (
 CREATE TABLE `questionnaire_timeslot` (
   `questionnaire_id` bigint(20) NOT NULL,
   `availability_group_id` bigint(20) NOT NULL,
+  `weight` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`questionnaire_id`,`availability_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -865,8 +867,10 @@ CREATE TABLE `sample_import_var_restrict` (
   `var` char(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` smallint(10) unsigned NOT NULL,
   `restrict` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`var_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`var_id`),
+  KEY (`var`),
+  KEY (`sample_import_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -943,6 +947,7 @@ INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(5, 'Postco
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(6, 'Respondent first name', '');
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(7, 'Respondent last name', '');
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(8, 'Email address', '');
+INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(9, 'Token', '');
 
 -- --------------------------------------------------------
 
