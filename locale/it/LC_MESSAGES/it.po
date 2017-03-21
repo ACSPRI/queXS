@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-10-25 15:08+1100\n"
+"POT-Creation-Date: 2017-01-06 15:16+1100\n"
 "PO-Revision-Date: 2013-12-17 13:37+0000\n"
 "Last-Translator: Cristiano Santinello <cristiano.santinello@unitn.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-01-06 04:12+0000\n"
-"X-Generator: Launchpad (build 18302)\n"
+"X-Launchpad-Export-Date: 2017-03-21 03:24+0000\n"
+"X-Generator: Launchpad (build 18332)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -4609,6 +4609,7 @@ msgstr ""
 #~ msgid "End call with outcome: Quota filled"
 #~ msgstr "Termina la chiamata con esito: Quota raggiunta"
 
+#, php-format
 #~ msgid "Reload failed because retrieve_conf encountered an error: %s"
 #~ msgstr ""
 #~ "Ricarica non riuscita perché retrieve_conf ha incontrato un errore: %s"
@@ -4631,6 +4632,7 @@ msgstr ""
 #~ "utilizzando lo script bounce_op.sh. Modifiche alle configurazioni potrebbero "
 #~ "non comparire nel pannello."
 
+#, php-format
 #~ msgid "Exit code was %s and output was: %s"
 #~ msgstr "Il codice in uscita è stato %s e l'output è stato: %s"
 
@@ -4901,6 +4903,7 @@ msgstr ""
 #~ msgid "Link"
 #~ msgstr "Crea legame"
 
+#, php-format
 #~ msgid "Use the % character as a wildcard"
 #~ msgstr "Utilizza il carattere % come jolly"
 
