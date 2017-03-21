@@ -1,4 +1,6 @@
 INSERT INTO `sample_var_type` (`type`, `description`, `table`) VALUES(9, 'Token', '');
+ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `var` ) ;
+ALTER TABLE `sample_import_var_restrict` ADD INDEX ( `sample_import_id` ) ;
 
 
 queXS 1.14.4 - Changes since 1.14.3

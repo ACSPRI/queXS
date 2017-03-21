@@ -1445,7 +1445,9 @@ CREATE TABLE `sample_import_var_restrict` (
   `var` char(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` smallint(10) unsigned NOT NULL,
   `restrict` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`var_id`)
+  PRIMARY KEY (`var_id`),
+  KEY (`var`),
+  KEY (`sample_import_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
