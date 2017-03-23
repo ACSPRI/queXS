@@ -16,11 +16,11 @@ If you have a previous version of queXS installed, please check the CHANGELOG fi
 
 `apt-get install php mysql-server php-mysql unzip php-mbstring libphp-adodb
 
-##Installation (from queXS 1.15.0)
+##Installation (from queXS 2.0.0)
 
 ```
 #Download and extract queXS to your webroot
-unzip quexs-1.15.0.zip -d /var/www/html
+unzip quexs-2.0.0.zip -d /var/www/html
 cd /var/www/html/quexs
 #Create a MySQL/mariadb database 
 mysqladmin create quexs

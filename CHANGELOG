@@ -20,7 +20,8 @@ Due to the previous tight integration of queXS and Limesurvey, some noteable fea
 * Altering of template / mode of delivery for self complete surveys versus interviewer administered surveys
 
 - Interface:
-* Automatically proceedingt to next question on answer selection (no need to press "NEXT")
+* Automatically proceeding to next question on answer selection (no need to press "NEXT")
+* Custom limesurvey 1.92+ templates will not work with the latest Limesurvey
 
 Please note that you may be able to implement some of these in Limesurvey directly or work around them. If they are critical for your operations,
 please do not proceed with the upgrade to queXS 2.0.0
@@ -29,11 +30,96 @@ please do not proceed with the upgrade to queXS 2.0.0
 
 Upgrade procedure from 1.15.0 to 2.0.0:
 
+1. Browse to System settings and stop the system wide case sorting process
+2. Browse to VoIP settings (if enabled) and stop the VoIP monitoring process
+3. IMPORTANT: Backup the queXS database
+4. IMPORTANT: Backup the queXS files
+5. Run the following commands on your database:
+
+CREATE TABLE `remote` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `rpc_url` text COLLATE utf8_unicode_ci NOT NULL,
+  `username` text COLLATE utf8_unicode_ci NOT NULL,
+  `password` text COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(16) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'limesurvey' COMMENT 'type of host',
+  `entry_url` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'entry url for interviewers',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `users` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `users_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` blob NOT NULL,
+  `full_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(320) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `superadmin` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `users_name` (`users_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `users` (uid,users_name,password,full_name,email,superadmin)
+SELECT uid,users_name,password,full_name,email,superadmin
+FROM lime_users;
+
+CREATE TABLE `failed_login_attempts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(37) COLLATE utf8_unicode_ci NOT NULL,
+  `last_attempt` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `number_attempts` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `questionnaire` ADD `remote_id` INT NOT NULL DEFAULT '1', ADD INDEX ( `remote_id`);
+
+ALTER TABLE lime_saved_control DROP INDEX identifier;
 
 
-ALTER TABLE `questionnaire` ADD `remote_id` INT NOT NULL ,
-ADD INDEX ( `remote_id` ) ;
+6. Download the latest version of Limesurvey: https://www.limesurvey.org/stable-release (This was tested with 2.64.1+170310)
+7. Extract the Limesurvey package to your webserver (separate directory to queXS)
 
+8. Edit the Limesurvey file:  application/controllers/admin/databaseupdate.php 
+	Comment out the line:  $this->_renderWrappedTemplate('update', $aViewUrls, $aData);
+	Uncomment the following lines:
+		        //$aData = array_merge($aData, $aViewUrls);
+		        //Yii::app()->getController()->renderPartial('databaseupdate/db', $aData);
+
+9. Give write permissions to tmp, upload, template, third_party/kcfinder/cache and application/config Limesurvey directories
+   - For example in Ubuntu: 
+	chown www-data:www-data -R tmp
+	chown www-data:www-data -R upload
+	chown www-data:www-data -R application/config
+	chown www-data:www-data -R templates
+	chown www-data:www-data -R third_party/kcfinder/cache/
+
+10. Browse to the Limesurvey installation and proceed with the installation up until the Database configuration page
+11. Enter in the database settings from your queXS installation (see the queXS config.inc.local.php file for details)
+12. Confirm the "table prefix" matches the default of: lime_
+13. Proceed to database upgrade
+14. Log in as the administrative user (default from queXS was: admin/password)
+15. Browse to Configuration -> Global Settings -> Interfaces
+16. Enable the JSON-RPC interface, and click on "Save"
+17. Take note of the URL, eg: https://localhost/limesurvey/index.php/admin/remotecontrol 
+
+Modify the the following SQL to suit your URL, username and password, then run it on the queXS database:
+
+INSERT INTO `remote` (id,description,rpc_url,username,password,entry_url)
+VALUES (1,'Limesurvey','https://localhost/limesurvey/index.php/admin/remotecontrol','admin','password','https://localhost/limesurvey/index.php');
+
+18. Take note of your new queXS URL, eg: https://localhost/quexs
+
+Modify the following SQL to suit your queXS URL, then run it on the database:
+
+UPDATE `lime_surveys_languagesettings` 
+SET surveyls_url = 'https://localhost/quexs/rs_project_end.php'
+WHERE surveyls_url = '{ENDINTERVIEWURL}';
+
+
+19. Extract queXS 2.0.0 to a directory on your web server
+20. Copy the config.inc.local.php file from your existing queXS installation
+21. Update the QUEXS_PATH config directive in config.inc.local.php if the path has changed
+22. Browse to the queXS 2.0.0 system in your browser
+23. Log in
 
 queXS 1.15.0 - Changes since 1.14.4
 
