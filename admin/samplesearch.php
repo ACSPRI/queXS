@@ -138,6 +138,24 @@ if (isset($_GET['sample_id']))
 	print "<div class='alert alert-danger pull-left  form-group col-sm-6' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p>" . T_("Sample ID") .  "&ensp;<b>" . $sample_id . "</b>&ensp;" . T_("Deleted") . ".</p></div>";
 }
 
+if (isset($_POST['questionnaire'])) {
+  //assign cases
+  //
+  $cases = 0;
+  include_once("../functions/functions.operator.php");
+  $questionnaire_id = bigintval($_POST['questionnaire']);
+  foreach($_POST as $key => $val) {
+    if (substr($key,0,10) == "assigncase") {
+      $val = bigintval($val);
+      if (add_case($val,$questionnaire_id) !== false) {
+        $cases++;
+      }
+    }
+  }
+
+	print "<div class='alert pull-left  form-group col-sm-6' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p>" . T_("Added") .  "&ensp;<b>" . $cases . "</b>&ensp;" . T_("Cases") . ".</p></div>";
+}
+
 print "<div class='clearfix'></div>";
 
 if ($sample_import_id != false)
@@ -145,7 +163,11 @@ if ($sample_import_id != false)
 		$sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN 
 		CONCAT('&emsp;<a href=\'\' data-toggle=\'modal\' data-target=\'.delete-confirm\' data-href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id ,'\' data-sample_id=\' ', sv.sample_id ,' \'  class=\'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Delete sample record") . " ', sv.sample_id ,'\' class=\'fa fa-2x fa-trash-o text-danger\'></i></a>&emsp;')
 		ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\' data-toggle=\'tooltip\' title=\'" . TQ_("Assigned to case ID :") . " ', c.case_id , '\'><b>', c.case_id ,'</b></a>')
-		END as link
+    END as link,
+    CASE WHEN c.case_id IS NULL THEN
+    CONCAT('<input type=\"checkbox\" name=\"assigncase', sv.sample_id, '\" value=\"' , sv.sample_id  , '\"/>')
+    ELSE ''
+    END as assigncase
 			FROM sample_var AS sv
 			JOIN (sample as s) ON (s.import_id = '$sample_import_id' and sv.sample_id = s.sample_id)
 			LEFT JOIN (`case` AS c, questionnaire AS q) ON ( c.sample_id = sv.sample_id AND q.questionnaire_id = c.questionnaire_id )
@@ -160,6 +182,9 @@ if ($sample_import_id != false)
 			
 			$fnames[] = "link";
 			$fdesc[] = T_("Case ID");
+      
+      $fnames[] = "assigncase";
+			$fdesc[] = T_("Assign Case ID");
 			
 			$sql = "SELECT var,var_id
 				FROM sample_import_var_restrict
@@ -183,9 +208,34 @@ if ($sample_import_id != false)
 				}
 			}
 
-			print "<div class='form-group'>";
-			xhtml_table($r,$fnames,$fdesc,"tclass",false,false,"bs-table");
-			print "</div>";
+      print "<div class='form-group'><form action='?sample_import_id=$sample_import_id' method='post'>";
+      xhtml_table($r,$fnames,$fdesc,"tclass",false,false,"bs-table");
+
+      $sql = "SELECT q.description, q.questionnaire_id
+            FROM questionnaire as q, questionnaire_sample as qs
+            WHERE qs.sample_import_id = $sample_import_id
+            AND q.questionnaire_id = qs.questionnaire_id";
+
+      $rs = $db->GetAll($sql);
+
+
+      if (!empty($rs)) {
+        ?>
+	<div class="form-group row">
+		<label class="col-sm-4 control-label" ><?php  echo T_("Questionnaire");?> </label>
+		<div class='col-sm-4'>
+			<select name="select" class="form-control" name="questionnaire">
+	      <?php 
+        foreach($rs as $rsw) {
+         print "<option value=\"{$rsw['questionnaire_id']}\">{$rsw['description']}</option>";
+        }
+        ?>
+        </select>      		</div>
+		<div class='col-sm-4'>
+    <button class="submitclass btn btn-primary" type="submit" name="submit" ><i class="fa fa-dot-circle-o fa-lg"></i>&emsp;<?php  echo T_("Assign Case IDs to this questionnaire"); ?></button>
+    </div></div><?php
+      }
+      print "</form></div>";
 		}
 		else print "<div class='alert alert-info col-sm-6 ' role='alert'><h4>" . T_("There's no data in this sample.") .  "</h4></div>";
 }
