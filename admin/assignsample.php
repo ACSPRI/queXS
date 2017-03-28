@@ -154,11 +154,42 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
       $count++;
 		  set_time_limit(30);			
 	//only if a valid email
-	if (validate_email($r['email'])) {
-	      if (add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true) === false) {
+      if (validate_email($r['email'])) {
+        $case_id = add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
+	      if ($case_id === false) {
         	$error .= "<br/>Failed to add case for record #$count";    
-	      }
-	}
+        } else {
+          //add call and call attempt records
+          $resp_id = 0;
+
+          $sql = "SELECT respondent_id
+                  FROM respondent
+                  WHERE case_id = $case_id";
+          $rsp = $db->GetOne($sql);
+
+          if (!empty($rsp)) {
+            $resp_id = $rsp;
+          }
+
+          $sql = "INSERT INTO call_attempt (case_id,operator_id,respondent_id,start,end)
+                  VALUES ($case_id, 1, $resp_id, NOW(), NOW())";
+          $db->Execute($sql);
+
+          $call_attempt_id = $db->Insert_ID();
+
+          $sql = "INSERT INTO `call` (operator_id,respondent_id,case_id,contact_phone_id,call_attempt_id,start,end,outcome_id,state)
+                  VALUES (1,$resp_id,$case_id,0,$call_attempt_id,NOW(),NOW(),41,5)";
+          $db->Execute($sql);
+
+          $call_id = $db->Insert_ID();
+
+          $sql = "UPDATE `case`
+                  SET last_call_id = $call_id
+                  WHERE case_id = $case_id";
+
+          $db->Execute($sql);
+        }
+  	  }
 		}
 
 		$db->CompleteTrans();
