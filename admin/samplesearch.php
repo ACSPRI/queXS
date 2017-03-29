@@ -224,7 +224,7 @@ if ($sample_import_id != false)
 	<div class="form-group row">
 		<label class="col-sm-4 control-label" ><?php  echo T_("Questionnaire");?> </label>
 		<div class='col-sm-4'>
-			<select name="select" class="form-control" name="questionnaire">
+			<select class="form-control" name="questionnaire">
 	      <?php 
         foreach($rs as $rsw) {
          print "<option value=\"{$rsw['questionnaire_id']}\">{$rsw['description']}</option>";
