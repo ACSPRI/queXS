@@ -1,3 +1,12 @@
+queXS 1.15.1 - Changes since 1.15.0
+
+This release supports PHP 7 (ADODB has been updated). Administrators can assign sample records to cases where not yet assigned. 
+
+New feature: Assign sample records to cases via search function
+
+Fixed issue: Make sure call and call attempt records created when creating cases
+Fixed issue: Add support for PHP7, update ADODB
+
 queXS 1.15.0 - Changes since 1.14.4
 
 This release contains a weighted timeslot feature to allow for varying numbers of attempts in particular timeslots, 
