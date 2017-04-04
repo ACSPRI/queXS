@@ -113,7 +113,11 @@ if (isset($_GET['endcase']))
 
 	$db->CompleteTrans(); //need to complete here otherwise getting the case later will fail
 
-	$db->StartTrans();
+  //redirect back here
+  header('Location: index.php');
+  exit();
+
+	//$db->StartTrans();
 	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}
 }
 
