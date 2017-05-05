@@ -289,7 +289,7 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 else {
 	$operator_id = get_operator_id();
 	$subtitle = T_("Appointments"); 
-	xhtml_head(T_("Display Appointments"),true,$css,$js_head,false,30);
+	xhtml_head(T_("Display Appointments"),true,$css,$js_head,false);
 	print "<h3>" . T_("All appointments (with times displayed in your time zone)") . "</h3>";
 
 	$sql = "SELECT MIN(q.description) as description, MIN(si.description) as smpl, MIN(CONVERT_TZ(a.start,'UTC',co.Time_zone_name)) as start, MIN(CONVERT_TZ(a.end,'UTC',co.Time_zone_name)) as end,MIN(CONCAT(r.firstName, ' ', r.lastName)) as resp, MIN( IFNULL(ou.description,'" . TQ_("Not yet called") . "')) as outcome, MIN(oo.firstName) as makerName, MIN(ooo.firstName) as callerName, 
