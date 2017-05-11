@@ -2301,6 +2301,22 @@ function end_case($operator_id)
 
 		$o = $db->Execute($sql);
 
+    //if this is a refusal outcome - set Limesurvey as opt-out
+		$sql = "SELECT lime_sid
+			FROM questionnaire
+			WHERE questionnaire_id = '$questionnaire_id'";
+
+		$lime_sid = $db->GetOne($sql);
+
+    $sql = "UPDATE ".LIME_PREFIX."tokens_$lime_sid as t, `case` as c, `outcome` as o
+            SET t.emailstatus = 'OptOut'
+            WHERE t.token = c.token
+            AND c.case_id = '$case_id'
+            AND o.outcome_id = '$outcome'
+            AND o.outcome_type_id = 3";
+
+    $db->Execute($sql);
+
 		$return = true;
 	}
 	else
