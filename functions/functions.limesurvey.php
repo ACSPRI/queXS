@@ -185,6 +185,37 @@ function lime_send_email($case_id,$email,$firstname,$lastname)
 	return $ret;
 }
 
+function lime_set_token_properties($case_id,$params = array('emailstatus' => 'OptOut'))
+{
+	global $db;
+  global $limeRPC;
+  global $limeKey;
+
+	$sql = "SELECT c.token,c.questionnaire_id
+		FROM `case` as c
+		WHERE c.case_id = '$case_id'";
+	
+	$rs = $db->GetRow($sql);
+
+  $token = $rs['token'];
+  $qid = $rs['questionnaire_id'];
+
+  $lime_id = limerpc_init_qid($qid);
+
+  $ret = false;
+
+  if ($lime_id !== false) {
+    $q = $limeRPC->set_participant_properties($limeKey,$lime_id,array('token' => $token),$params);
+    if (!isset($q['status'])) {
+      $ret = true;
+    }
+  }
+
+  limerpc_close();
+
+	return $ret;
+}
+
 
 /** Get completed responses as an array based on the case_id
  */

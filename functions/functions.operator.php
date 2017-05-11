@@ -2287,7 +2287,22 @@ function end_case($operator_id)
 			SET current_operator_id = NULL, current_call_id = NULL, sortorder = NULL, current_outcome_id = '$outcome', last_call_id = '$lastcall'
 			WHERE case_id = '$case_id'";
 
-		$o = $db->Execute($sql);
+    $o = $db->Execute($sql);
+
+    //if this is a refusal outcome - set the Limesurvey token table to opt-out
+    //this will avoid sending email invitations once refused on the phone
+
+    $sql = "SELECT count(*)
+            FROM outcome
+            WHERE outcome_type_id = 3
+            AND outcome_id = $outcome";
+
+    $isrefusal = $db->GetOne($sql);
+
+    if ($isrefusal > 0) {
+      include_once(dirname(__FILE__).'/functions.limesurvey.php');
+      lime_set_token_properties($case_id,array('emailstatus' => 'OptOut'));
+    }
 
 		$return = true;
 	}
