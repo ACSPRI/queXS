@@ -1,3 +1,12 @@
+queXS 1.15.2 - Changes since 1.15.1
+
+This release fixes some bugs found since 1.15.1
+
+Fixed issue: Not opting out of web when opting out of CATI
+Fixed issue: Refreshing appointment screen added more appointments
+Fixed issue: Timeslot scheduling not working where no calls yet in timeslot 
+Fixed issue: Case sometimes ends unintentionally due to page requests
+
 queXS 1.15.1 - Changes since 1.15.0
 
 This release supports PHP 7 (ADODB has been updated). Administrators can assign sample records to cases where not yet assigned. 
