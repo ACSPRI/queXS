@@ -1,3 +1,15 @@
+queXS 2.0.1 - Changes since 2.0.0
+
+This release includes fixes ported from the 1.x branch
+
+Fixed issue: Not opting out of web when opting out of CATI
+Fixed issue: Refreshing appointment screen added more appointments
+Fixed issue: Timeslot scheduling not working where no calls yet in timeslot 
+Fixed issue: Case sometimes ends unintentionally due to page requests
+Fixed issue: Make sure call and call attempt records created when creating cases
+
+New feature: Assign sample records to cases via search function
+
 queXS 2.0.0 - Changes since 1.15.0
 
 queXS 2.0.0 removes the included version of Limesurvey 1.91+ and instead relies on an existing install of Limesurvey
