@@ -198,7 +198,7 @@ if (!empty($rs))
 	foreach($rs as $r)
   {
     //interrogate server for tokens table
-    lime_rpc_init($r['rpc_url'],$r['username'],$r['password']);
+    limerpc_init($r['rpc_url'],$r['username'],$r['password']);
 
     $l = $limeRPC->get_summary($limeKey,$r['lime_sid'],'token_count'); //get number of tokens
 
