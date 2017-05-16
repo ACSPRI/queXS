@@ -72,11 +72,7 @@ if (isset($_POST['submit']))
           SET users_name = " . $db->qstr($_POST['username']) . ",
           email = " . $db->qstr($_POST['email']) . ",
           full_name = " . $db->qstr($_POST['firstName']) . ",
-          superadmin = $superadmin,
-          create_survey = $superadmin,
-          configurator = $superadmin,
-          manage_template = $superadmin,
-          manage_label = $superadmin";
+          superadmin = $superadmin";
 
   if (!empty($_POST['password']))
   {
