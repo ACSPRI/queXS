@@ -229,8 +229,10 @@ if (isset($_GET['delete_sample'])){
 		$db->StartTrans();
 	 
 		//del from questionnaire_sample_exclude_priority
-		$sql = "DELETE FROM `questionnaire_sample_exclude_priority` WHERE sample_id IN ($samimdel_s)";
-		$db->Execute($sql);
+		if (!empty($samimdel_s)) {
+			$sql = "DELETE FROM `questionnaire_sample_exclude_priority` WHERE sample_id IN ($samimdel_s)";
+			$db->Execute($sql);
+		}
 		
 		//del from questionnaire_sample_quota
 		$sql = "DELETE FROM `questionnaire_sample_quota` WHERE sample_import_id  = $sample_import_id";
@@ -241,16 +243,20 @@ if (isset($_GET['delete_sample'])){
 		$db->Execute($sql);	 
 	 
 		//del from questionnaire_sample_quota_row_exclude
-		$sql = "DELETE FROM `questionnaire_sample_quota_row_exclude` WHERE sample_id IN ($samimdel_s)";
-		$db->Execute($sql);	
+		if (!empty($samimdel_s)) {
+			$sql = "DELETE FROM `questionnaire_sample_quota_row_exclude` WHERE sample_id IN ($samimdel_s)";
+			$db->Execute($sql);	
+		}
 	
 		//del from questionnaire_sample_timeslot 
 		$sql = "DELETE FROM `questionnaire_sample_timeslot` WHERE sample_import_id  = $sample_import_id";
 		$db->Execute($sql);
 		
 		//delete from sample_var
-		$sql = "DELETE FROM `sample_var` WHERE sample_id IN ($samimdel_s)";
-		$db->Execute($sql);
+		if (!empty($samimdel_s)) {
+			$sql = "DELETE FROM `sample_var` WHERE sample_id IN ($samimdel_s)";
+			$db->Execute($sql);
+		}
 		
 		//del from sample_import_var_restrict
 		$sql = "DELETE FROM `sample_import_var_restrict` WHERE sample_import_id  = $sample_import_id";
