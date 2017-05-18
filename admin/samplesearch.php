@@ -56,13 +56,141 @@ include("../functions/functions.xhtml.php");
  */
 include("../functions/functions.input.php");
 
+/*
+ * From: https://secure.php.net/manual/en/function.array-multisort.php#100534
+ */
+function array_orderby()
+{
+    $args = func_get_args();
+    $data = array_shift($args);
+    foreach ($args as $n => $field) {
+            if (is_string($field)) {
+                          $tmp = array();
+                                      foreach ($data as $key => $row)
+                                                        $tmp[$key] = $row[$field];
+                                                  $args[$n] = $tmp;
+                                                  }
+        }
+    $args[] = &$data;
+    call_user_func_array('array_multisort', $args);
+    return array_pop($args);
+}
+
+
 global $db;
+
+
+
+
+$sample_import_id = false;
+if (isset($_GET['sample_import_id'])) 	$sample_import_id = bigintval($_GET['sample_import_id']);
+
+if (isset($_GET['ajax'])) {
+
+  $length = intval($_GET['length']);
+  $start = intval($_GET['start']);
+
+  $search = "";
+
+  if (isset($_GET['search']['value'])) {
+    $search = " WHERE (sv.val LIKE " . $db->qstr("%" . $_GET['search']['value'] . "%") . 
+                      " OR c.case_id LIKE " . $db->qstr("%" . $_GET['search']['value'] . "%") .
+                      " OR sv.sample_id LIKE " . $db->qstr("%" . $_GET['search']['value'] . "%") . ")";
+  }
+
+  $sql = "SELECT count(*)
+          FROM sample
+          WHERE import_id = '$sample_import_id'";
+
+  $totalData = $db->GetOne($sql);
+
+  $sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN 
+		CONCAT('&emsp;<a href=\'\' data-toggle=\'modal\' data-target=\'.delete-confirm\' data-href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id ,'\' data-sample_id=\' ', sv.sample_id ,' \'  class=\'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Delete sample record") . " ', sv.sample_id ,'\' class=\'fa fa-2x fa-trash-o text-danger\'></i></a>&emsp;')
+		ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\' data-toggle=\'tooltip\' title=\'" . TQ_("Assigned to case ID :") . " ', c.case_id , '\'><b>', c.case_id ,'</b></a>')
+    END as link,
+    CASE WHEN c.case_id IS NULL THEN
+    CONCAT('<input type=\"checkbox\" name=\"assigncase', sv.sample_id, '\" value=\"' , sv.sample_id  , '\"/>')
+    ELSE ''
+    END as assigncase
+			FROM sample_var AS sv
+			JOIN (sample as s) ON (s.import_id = '$sample_import_id' and sv.sample_id = s.sample_id)
+      LEFT JOIN (`case` AS c, questionnaire AS q) ON ( c.sample_id = sv.sample_id AND q.questionnaire_id = c.questionnaire_id )" .
+      $search 
+      . " GROUP BY sv.sample_id, c.case_id";
+
+		$r = $db->GetAll($sql);
+  
+    $totalFiltered = count($r);
+
+    $s = array();
+
+    if ($r) {
+
+
+			$sql = "SELECT var,var_id
+				FROM sample_import_var_restrict
+				WHERE sample_import_id = $sample_import_id
+				ORDER by var ASC";
+			$rs = $db->GetAll($sql);
+			
+			foreach($r as &$rw)
+			{
+				$sql = "SELECT var_id,val
+					FROM sample_var
+					WHERE sample_id = {$rw['sample_id']}";
+        $rs = $db->GetAll($sql);
+
+				foreach($rs as $rsw){
+					$rw['v' . $rsw['var_id']] = $rsw['val'];
+				}
+      }
+
+      if (isset($_GET['order'][0]['column'])) {
+        $col = intval($_GET['order'][0]['column']);
+        $dir = SORT_DESC;
+        if ($_GET['order'][0]['dir'] != 'desc')
+           $dir = SORT_ASC;
+
+        $keys = array_keys($r[0]);
+
+        $r = array_orderby($r,$keys[$col], $dir, SORT_NATURAL);
+      }
+
+
+      for ($i=0; $i < $length; $i++) {
+        $j = $i + $start;
+
+        if (isset($r[$j])) {
+          $s[] = $r[$j];
+        } else {
+          break;
+        }
+      }
+
+      unset($r);
+
+
+
+    }
+
+    $json_data = array(
+          "draw"            => intval( $_GET['draw'] ),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw. 
+          "recordsTotal"    => intval( $totalData ),  // total number of records
+          "recordsFiltered" => intval( $totalFiltered ), // total number of records after searching, if there is no searching then totalFiltered = totalData
+          "data"            => $s  // total data array
+        );
+
+    echo json_encode($json_data);
+    die();
+}
+
+
 $css = array(
 "../include/bootstrap/css/bootstrap.min.css", 
 "../include/bootstrap/css/bootstrap-theme.min.css",
 "../include/font-awesome/css/font-awesome.css",
 /* "../include/bootgrid/jquery.bootgrid.css", */
-"../include/bs-data-table/css/jquery.bdt.css",
+"../include/datatables/datatables.min.css",
 "../css/custom.css"
 			);
 $js_head = array(
@@ -72,14 +200,10 @@ $js_head = array(
 				);
 $js_foot = array(
 
-"../include/bs-data-table/js/vendor/jquery.sortelements.js",
-"../include/bs-data-table/js/jquery.bdt.js",
+"../include/datatables/datatables.min.js",
 "../js/window.js",
 "../js/custom.js"
 				);
-
-$sample_import_id = false;
-if (isset($_GET['sample_import_id'])) 	$sample_import_id = bigintval($_GET['sample_import_id']);
 
 $subtitle = T_("Search within this sample");
 
@@ -160,94 +284,49 @@ print "<div class='clearfix'></div>";
 
 if ($sample_import_id != false)
 {
-		$sql = "SELECT sv.sample_id, CASE WHEN c.case_id IS NULL THEN 
-		CONCAT('&emsp;<a href=\'\' data-toggle=\'modal\' data-target=\'.delete-confirm\' data-href=\'?sample_import_id=$sample_import_id&amp;sample_id=', sv.sample_id ,'\' data-sample_id=\' ', sv.sample_id ,' \'  class=\'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Delete sample record") . " ', sv.sample_id ,'\' class=\'fa fa-2x fa-trash-o text-danger\'></i></a>&emsp;')
-		ELSE CONCAT('<a href=\'supervisor.php?case_id=', c.case_id , '\' data-toggle=\'tooltip\' title=\'" . TQ_("Assigned to case ID :") . " ', c.case_id , '\'><b>', c.case_id ,'</b></a>')
-    END as link,
-    CASE WHEN c.case_id IS NULL THEN
-    CONCAT('<input type=\"checkbox\" name=\"assigncase', sv.sample_id, '\" value=\"' , sv.sample_id  , '\"/>')
-    ELSE ''
-    END as assigncase
-			FROM sample_var AS sv
-			JOIN (sample as s) ON (s.import_id = '$sample_import_id' and sv.sample_id = s.sample_id)
-			LEFT JOIN (`case` AS c, questionnaire AS q) ON ( c.sample_id = sv.sample_id AND q.questionnaire_id = c.questionnaire_id )
-			GROUP BY sv.sample_id, c.case_id";
-		$r = $db->GetAll($sql);
-		
-		if ($r) {
+  $r = [];
 
+    $fnames = array("sample_id");
+    $fdesc = array(T_("Sample id"));
+    
+    $fnames[] = "link";
+    $fdesc[] = T_("Case ID");
+    
+    $fnames[] = "assigncase";
+    $fdesc[] = T_("Assign Case ID");
+    
+    $sql = "SELECT var,var_id
+      FROM sample_import_var_restrict
+      WHERE sample_import_id = $sample_import_id
+      ORDER by var ASC";
+    $rs = $db->GetAll($sql);
+    
+    foreach($rs as $rsw)
+    {
+      $fnames[] = "v" . $rsw['var_id'];
+      $fdesc[] = $rsw['var'];
+    }
 
-			$fnames = array("sample_id");
-			$fdesc = array(T_("Sample id"));
-			
-			$fnames[] = "link";
-			$fdesc[] = T_("Case ID");
-      
-      $fnames[] = "assigncase";
-			$fdesc[] = T_("Assign Case ID");
-			
-			$sql = "SELECT var,var_id
-				FROM sample_import_var_restrict
-				WHERE sample_import_id = $sample_import_id
-				ORDER by var ASC";
-			$rs = $db->GetAll($sql);
-			
-			foreach($rs as $rsw)
-			{
-				$fnames[] = $rsw['var_id'];
-				$fdesc[] = $rsw['var'];
-			}
-			foreach($r as &$rw)
-			{
-				$sql = "SELECT var_id,val
-					FROM sample_var
-					WHERE sample_id = {$rw['sample_id']}";
-				$rs = $db->GetAll($sql);
-				foreach($rs as $rsw){
-					$rw[$rsw['var_id']] = $rsw['val'];
-				}
-			}
+    print "<div class='form-group'><form action='?sample_import_id=$sample_import_id' method='post'>";
+    xhtml_table($r,$fnames,$fdesc,"tclass",false,false,"bs-table");
 
-      print "<div class='form-group'><form action='?sample_import_id=$sample_import_id' method='post'>";
-      xhtml_table($r,$fnames,$fdesc,"tclass",false,false,"bs-table");
-
-      $sql = "SELECT q.description, q.questionnaire_id
-            FROM questionnaire as q, questionnaire_sample as qs
-            WHERE qs.sample_import_id = $sample_import_id
-            AND q.questionnaire_id = qs.questionnaire_id";
-
-      $rs = $db->GetAll($sql);
-
-
-      if (!empty($rs)) {
-        ?>
-	<div class="form-group row">
-		<label class="col-sm-4 control-label" ><?php  echo T_("Questionnaire");?> </label>
-		<div class='col-sm-4'>
-			<select class="form-control" name="questionnaire">
-	      <?php 
-        foreach($rs as $rsw) {
-         print "<option value=\"{$rsw['questionnaire_id']}\">{$rsw['description']}</option>";
-        }
-        ?>
-        </select>      		</div>
-		<div class='col-sm-4'>
-    <button class="submitclass btn btn-primary" type="submit" name="submit" ><i class="fa fa-dot-circle-o fa-lg"></i>&emsp;<?php  echo T_("Assign Case IDs to this questionnaire"); ?></button>
-    </div></div><?php
-      }
-      print "</form></div>";
-		}
-		else print "<div class='alert alert-info col-sm-6 ' role='alert'><h4>" . T_("There's no data in this sample.") .  "</h4></div>";
-}
-xhtml_foot($js_foot);
 ?>
 <script type="text/javascript">
-$('#bs-table').bdt();
-/* $('#bs-table').bootgrid({ 
-	ajax: true,
-	post: "$sample_import_id",
-	url: "?sample_import_id=\"$sample_import_id\"",
- }); */
+$(document).ready(function() {
+  $('#bs-table').DataTable( {
+    "processing": true,
+    "serverSide": true,
+    "ajax": "samplesearch.php?ajax=true&sample_import_id=<?= $sample_import_id; ?>",
+    "columns": [
+<?php 
+    foreach($fnames as $val) {
+      print "{ \"data\": \"$val\" },\n";
+    }
+?>
+                ]
+  } );
+} );
+
 	
 $('#delete-confirm').on('show.bs.modal', function (event) {
   var a = $(event.relatedTarget)
@@ -258,3 +337,34 @@ $('#delete-confirm').on('show.bs.modal', function (event) {
   modal.find('.modal-footer a').attr('href', href)
 })
 </script>
+<?php 
+
+    $sql = "SELECT q.description, q.questionnaire_id
+          FROM questionnaire as q, questionnaire_sample as qs
+          WHERE qs.sample_import_id = $sample_import_id
+          AND q.questionnaire_id = qs.questionnaire_id";
+
+    $rs = $db->GetAll($sql);
+
+
+    if (!empty($rs)) {
+      ?>
+<div class="form-group row">
+  <label class="col-sm-4 control-label" ><?php  echo T_("Questionnaire");?> </label>
+  <div class='col-sm-4'>
+    <select class="form-control" name="questionnaire">
+      <?php 
+      foreach($rs as $rsw) {
+       print "<option value=\"{$rsw['questionnaire_id']}\">{$rsw['description']}</option>";
+      }
+      ?>
+      </select>      		</div>
+  <div class='col-sm-4'>
+  <button class="submitclass btn btn-primary" type="submit" name="submit" ><i class="fa fa-dot-circle-o fa-lg"></i>&emsp;<?php  echo T_("Assign Case IDs to this questionnaire"); ?></button>
+  </div></div><?php
+    }
+    print "</form></div>";
+}
+xhtml_foot($js_foot);
+?>
+
