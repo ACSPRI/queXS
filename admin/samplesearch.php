@@ -153,8 +153,6 @@ if (isset($_GET['ajax'])) {
 
         $keys = array_keys($r[0]);
 
-        error_log("key:{$keys[$col]} dir:$dir");
-
         $r = array_orderby($r,$keys[$col], $dir, SORT_NATURAL);
       }
 
