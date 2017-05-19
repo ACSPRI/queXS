@@ -135,12 +135,18 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
     $rs = $db->GetAll($sql);
 
+    $onlyvalidemail = false; 
+    if (isset($_GET['validemail'])) { 
+      $onlyvalidemail = true; 
+    } 
+
+
     foreach($rs as $r)
     {
       $count++;
 		  set_time_limit(30);			
 	//only if a valid email
-      if (validate_email($r['email'])) {
+      if (!$onlyvalidemail || validate_email($r['email'])) {
         $case_id = add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, $addsample);
         if ($case_id === false) {
           $error .= "Could not add case - please ensure there enough additional attributes available in your Limesurvey participant table";
@@ -439,9 +445,13 @@ if ($questionnaire_id != false)
 		<label class="control-label text-info"><?php   ;?></label><br/><br/><br/>
 		
 		<label for="generatecases" class="control-label col-lg-4"><?php echo T_("Generate cases for all sample records with a valid email address and set outcome to 'Self completion email invitation sent'?");?></label>
-		<div class="col-sm-1"><input type="checkbox" id = "generatecases" name="generatecases" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
+		<div class="col-sm-1"><input type="checkbox" onchange="if(this.checked==true) {$('#ve').show();} else {$('#ve').hide();}"  id = "generatecases" name="generatecases" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
 		<em class="control-label"> * <?php echo T_("Ideal if you intend to send an email invitation to sample members before attempting to call using queXS") . " " . T_("Please ensure there are sufficient additional attribute fields in your Limesurvey questionnaire so that sample records can be inserted."); ?></em>
 		<div class='clearfix '></div></br>
+
+    <div id='ve' style='display:none'><label for="validemail" class="control-label col-lg-4"><?php echo T_("Only generate cases where there is a valid email attached?");?></label>
+    <div class="col-sm-1"><input type="checkbox" checked="checked" id = "validemail" name="validemail" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
+    <div class='clearfix '></div></br></div>
 
 		<input type="hidden" name="questionnaire_id" value="<?php print($questionnaire_id);?>"/>
 		
