@@ -67,7 +67,6 @@ function limerpc_init ($url,$user,$pass)
   if (is_array($limeKey) && isset($limeKey['status'])) {
     die($limeKey['status']);
   }
-  
   return true;
 }
 
@@ -276,7 +275,37 @@ function lime_get_responses_by_questionnaire($qid,$fields = null)
 	return $ret;
 }
 
+function lime_get_token_attributes($qid)
+{
+  global $limeKey;
+  global $limeRPC;
 
+  $ret = false;
+  $lime_id = limerpc_init_qid($qid);
+
+  if ($lime_id !== false) {
+    //attribute array (test for all attributes)
+    for ($i = 1; $i < 256; $i++) {
+      $aa[] = "attribute_$i";
+    }
+    //add a dummy participant
+    $dtoken = 'QUEXSTESTTOKEN';
+    try {
+      $np = $limeRPC->add_participants($limeKey,$lime_id,array(array('firstname'=>$dtoken,'lastname'=>$dtoken)));
+    } catch (Exception $e) {
+      limerpc_close();
+      return false; 
+    }
+
+    if (isset($np[0]['tid'])) {
+      $ret = array_keys($np[0]); //array of data
+      $limeRPC->delete_participants($limeKey,$lime_id,array($np[0]['tid']));
+    }
+  }
+
+  limerpc_close();
+  return $ret;
+}
 
 function lime_add_token($qid,$params)
 {

@@ -1,3 +1,22 @@
+queXS 2.1.0 - Changes since 2.0.1
+
+Database changes required:
+
+CREATE TABLE IF NOT EXISTS `remote_sample_var` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `var_id` bigint(20) NOT NULL,
+ `questionnaire_id` bigint(20) NOT NULL,
+ `field` text COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `var_id` (`var_id`,`questionnaire_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+INSERT INTO remote_sample_var (var_id,questionnaire_id,field)
+SELECT sv.var_id,qs.questionnaire_id,CASE WHEN sv.type = 6 THEN 'firstname' WHEN sv.type = 7 THEN 'lastname' WHEN sv.type = 8 THEN 'email' WHEN sv.type = 9 THEN 'token' END
+FROM questionnaire_sample as qs
+JOIN sample_import_var_restrict as sv ON (sv.sample_import_id = qs.sample_import_id AND sv.type IN (6,7,8,9));
+
+
 queXS 2.0.1 - Changes since 2.0.0
 
 This release includes fixes ported from the 1.x branch

@@ -447,54 +447,27 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
 
 		if ($lime_sid)
 		{
-			$lfirstname = "";
-			$llastname = "";
-			$lemail = "";
+      $params = array('token' => $token);
 
-      $params = array('firstname' => "",
-                      'lastname' => "",
-                      'email' => "",
-                      'token' => $token);
+      //get remote sample fields for this questionaire/sample only
+      $sql = "SELECT rv.var_id,rv.field
+              FROM remote_sample_var as rv
+              JOIN sample as s ON (s.sample_id = $sample_id)
+              JOIN sample_import_var_restrict as sv ON (s.import_id = sv.sample_import_id AND rv.var_id = sv.var_id)
+              WHERE questionnaire_id = $questionnaire_id";
 
-      $params['firstname'] = ($db->GetOne("SELECT sv.val 
-              FROM sample_var as sv, sample_import_var_restrict as s 
-              WHERE sv.var_id = s.var_id
-              AND sv.sample_id = '$sample_id'
-              AND s.type = '6'"));
+      $ps = $db->GetAll($sql);
 
-      $params['lastname'] = ($db->GetOne("SELECT sv.val 
-              FROM sample_var as sv, sample_import_var_restrict as s 
-              WHERE sv.var_id = s.var_id
-              AND sv.sample_id = '$sample_id'
-              AND s.type = '7'"));
-
-      $params['email'] = ($db->GetOne("SELECT sv.val 
-              FROM sample_var as sv, sample_import_var_restrict as s 
-              WHERE sv.var_id = s.var_id
-              AND sv.sample_id = '$sample_id'
-              AND s.type = '8'"));
+      //copy across all selected variables to matching Limesurvey fields
+      foreach($ps as $p) {
+        $params[$p['field']] = $db->GetOne("SELECT val 
+              FROM sample_var 
+              WHERE var_id = {$p['var_id']}
+              AND sample_id = '$sample_id'");     
+      }
 
       //include limesurvey functions
 	  	include_once(dirname(__FILE__).'/functions.limesurvey.php');
-
-      if ($addlimeattributes)
-			{			
-        $sql = "SELECT sv.val
-                FROM sample_var as sv, sample_import_var_restrict as s
-                WHERE sv.var_id = s.var_id
-                AND sv.sample_id = '$sample_id'
-                AND s.type = '1'
-                ORDER BY s.var_id ASC";
-
-        $vars = $db->GetAll($sql);
-
-        $att = 1;
-
-        foreach($vars as $v) {
-          $params['attribute_' . $att] = $v['val'];
-          $att++;
-        }
-			}
 
       $ret = lime_add_token($questionnaire_id,$params);      
 
