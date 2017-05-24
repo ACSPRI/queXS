@@ -797,6 +797,21 @@ CREATE TABLE `remote` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `remote_sample_var`
+--
+
+CREATE TABLE `remote_sample_var` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `var_id` bigint(20) NOT NULL,
+ `questionnaire_id` bigint(20) NOT NULL,
+ `field` text COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `var_id` (`var_id`,`questionnaire_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `respondent`
 --
 
