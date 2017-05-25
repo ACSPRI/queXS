@@ -85,8 +85,8 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 			o.description as outcomes,
 			si.description as samples, s.Time_zone_name as timezone, TIME_FORMAT(CONVERT_TZ(NOW(),@@session.time_zone,s.Time_zone_name),'". TIME_FORMAT ."') as time, (SELECT COUNT(*) FROM `call` WHERE `call`.case_id = c.case_id) as nrcalls, (SELECT COUNT(*) FROM call_attempt WHERE call_attempt.case_id = c.case_id) as nrattempts, 	
 			CASE WHEN ca.end IS NULL THEN '" . TQ_("Available") . "'
-				WHEN TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL co.default_delay_minutes MINUTE),'System','UTC'))) < 0 THEN '" . TQ_("Available") . "'
-				ELSE CONCAT(ROUND(TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL co.default_delay_minutes MINUTE),'System','UTC'))) / 60),'&emsp;" . TQ_("minutes") . "')
+				WHEN TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL o.default_delay_minutes MINUTE),'System','UTC'))) < 0 THEN '" . TQ_("Available") . "'
+				ELSE CONCAT(ROUND(TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL o.default_delay_minutes MINUTE),'System','UTC'))) / 60),'&emsp;" . TQ_("minutes") . "')
 			END AS availableinmin,
 			CASE WHEN oq.operator_id IS NULL THEN 
 				CONCAT('')
