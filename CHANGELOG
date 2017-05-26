@@ -1,5 +1,20 @@
 queXS 2.1.0 - Changes since 2.0.1
 
+This release adds the ability to send sample variables from queXS to the Limesurvey participant table (database changes required).
+Other new features include significantly faster sample searching (server side) especially for large samples.
+
+Bugs fixed include not being able to delete a sample, and passwords not being able to be updated.
+
+New feature: Allow selection of outcome code when generating cases
+New feature: Choose Limesurvey attributes to assign sample records to on case creation
+New feature: Decide to create cases whether email valid or not
+New feature: Server side sample querying to speed up sample searching
+
+Fixed issue: Can't delete sample
+Fixed issue: Cannot update password
+Fixed issue: Typo in lime_rpc function
+Fixed issue: Case status incorrectly reporting time when case available
+
 Database changes required:
 
 CREATE TABLE IF NOT EXISTS `remote_sample_var` (
