@@ -140,7 +140,7 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 
 		$db->Execute($sql);
 
-		//generate one case for each sample record and set outcome to 41 (where an email address provided)
+		//generate one case for each sample record and set outcome to goutcome 
 		$sql = "SELECT s.sample_id, sv.val as email
 			FROM sample as s
 			LEFT JOIN (sample_var as sv, sample_import_var_restrict as sivr) ON (sv.sample_id = s.sample_id and sv.var_id = sivr.var_id and sivr.type = 8)
@@ -153,6 +153,7 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
       $onlyvalidemail = true;
     }
 
+    $goutcome = bigintval($_GET['goutcome']);
 
     $count = 0;
 		foreach($rs as $r)
@@ -161,7 +162,7 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
 		  set_time_limit(30);			
 	//only if a valid email
       if (!$onlyvalidemail || validate_email($r['email'])) {
-        $case_id = add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,41, true);
+        $case_id = add_case($r['sample_id'],$questionnaire_id,"NULL",$testing,$goutcome, true);
 	      if ($case_id === false) {
         	$error .= "<br/>Failed to add case for record #$count";    
         } else {
@@ -178,13 +179,13 @@ if (isset($_GET['questionnaire_id']) && isset($_GET['sample'])  && isset($_GET['
           }
 
           $sql = "INSERT INTO call_attempt (case_id,operator_id,respondent_id,start,end)
-                  VALUES ($case_id, 1, $resp_id, NOW(), NOW())";
+                  VALUES ($case_id, 1, $resp_id, CONVERT_TZ(NOW(),'System','UTC'), CONVERT_TZ(NOW(),'System','UTC'))";
           $db->Execute($sql);
 
           $call_attempt_id = $db->Insert_ID();
 
           $sql = "INSERT INTO `call` (operator_id,respondent_id,case_id,contact_phone_id,call_attempt_id,start,end,outcome_id,state)
-                  VALUES (1,$resp_id,$case_id,0,$call_attempt_id,NOW(),NOW(),41,5)";
+                  VALUES (1,$resp_id,$case_id,0,$call_attempt_id,CONVERT_TZ(NOW(),'System','UTC'),CONVERT_TZ(NOW(),'System','UTC'),$goutcome,5)";
           $db->Execute($sql);
 
           $call_id = $db->Insert_ID();
@@ -426,7 +427,13 @@ if ($questionnaire_id != false)
 	$qs = $db->GetAll($sql);
 	
 	if (!empty($qs))
-	{
+  {
+    $sql = "SELECT outcome_id,description
+            FROM outcome
+            WHERE 1";
+
+    $ou = $db->GetAll($sql);
+
 		print "<div class='clearfix '></div>";
 		print "<div class='panel-body form-group'><h3 class='text-primary col-lg-offset-4'>" . T_("Add a sample to this questionnaire:") . "</h3>";
 		?>
@@ -457,14 +464,23 @@ if ($questionnaire_id != false)
 		
 		<?php $self_complete = $db->GetOne("SELECT self_complete FROM questionnaire WHERE questionnaire_id = '$questionnaire_id'");
 		if ($self_complete) {?>
-		<label for="generatecases" class="control-label col-lg-4"><?php echo T_("Generate cases for all sample records and set outcome to 'Self completion email invitation sent'?");?></label>
+		<label for="generatecases" class="control-label col-lg-4"><?php echo T_("Generate cases for all sample records?");?></label>
 		<div class="col-sm-1"><input onchange="if(this.checked==true) {$('#ve').show();} else {$('#ve').hide();}" type="checkbox" id = "generatecases" name="generatecases" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
 		<em class="control-label"> * <?php echo T_("Ideal if you intend to send an email invitation to sample members before attempting to call using queXS");?></em>
 		<div class='clearfix '></div></br>
 
-    <div id='ve' style='display:none'><label for="validemail" class="control-label col-lg-4"><?php echo T_("Only generate cases where there is a valid email attached?");?></label>
+    <div id='ve' style='display:none'>
+
+    <label for="goutcome" class="control-label col-lg-4"><?php echo T_("Select an outcome to assign generated cases to");?></label>
+		<div class="col-lg-4"><select name="goutcome" id="goutcome" class="form-control " >
+		<?php foreach($ou as $q) { $sel =""; if ($q['outcome_id'] == 41) { $sel="selected='selected'";} print "<option $sel value=\"{$q['outcome_id']}\">{$q['description']}</option>"; } ?> </select></div>
+    <div class='clearfix '></div></br>
+    
+    <label for="validemail" class="control-label col-lg-4"><?php echo T_("Only generate cases where there is a valid email attached?");?></label>
 		<div class="col-sm-1"><input type="checkbox" checked="checked" id = "validemail" name="validemail" class="col-sm-1" data-toggle="toggle" data-size="small" data-on="<?php echo T_("Yes");?>" data-off="<?php echo T_("No");?>" data-width="85"/></div>
-		<div class='clearfix '></div></br></div>
+		<div class='clearfix '></div></br>
+
+    </div>
 		<?php }?>
 
 		<input type="hidden" name="questionnaire_id" value="<?php print($questionnaire_id);?>"/>
