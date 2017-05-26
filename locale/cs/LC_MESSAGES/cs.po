@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-01-06 15:16+1100\n"
+"POT-Creation-Date: 2017-03-30 14:17+1100\n"
 "PO-Revision-Date: 2013-12-24 14:41+0000\n"
 "Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-03-21 03:24+0000\n"
-"X-Generator: Launchpad (build 18332)\n"
+"X-Launchpad-Export-Date: 2017-05-26 01:08+0000\n"
+"X-Generator: Launchpad (build 18391)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -50,7 +50,7 @@ msgid "Add this respondent"
 msgstr "Přidat tohoto respondenta"
 
 #: appointment.php:153 admin/operators.php:257 admin/clients.php:245
-#: admin/operatorlist.php:240 admin/supervisor.php:330
+#: admin/operatorlist.php:244 admin/supervisor.php:330
 #: admin/casestatus.php:126
 msgid "Timezone"
 msgstr "Časové pásmo"
@@ -158,10 +158,11 @@ msgstr "ID případu"
 msgid "Start"
 msgstr "Začátek"
 
-#: myappointments.php:118 nocaseavailable.php:147 admin/sortsample.php:139
-#: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/callhistory.php:162 admin/set_outcomes.php:200 admin/quota.php:115
-#: admin/assignsample.php:210 admin/quotarow.php:293 admin/casestatus.php:241
+#: myappointments.php:118 nocaseavailable.php:147 admin/samplesearch.php:225
+#: admin/sortsample.php:139 admin/callhistory.php:132
+#: admin/callhistory.php:157 admin/callhistory.php:162
+#: admin/set_outcomes.php:200 admin/quota.php:115 admin/assignsample.php:252
+#: admin/quotarow.php:293 admin/casestatus.php:241
 #: admin/displayappointments.php:313 admin/displayappointments.php:337
 #: admin/new.php:148 admin/new.php:156 shifts.php:109
 msgid "Questionnaire"
@@ -212,31 +213,35 @@ msgstr ""
 msgid "Duplicate column name"
 msgstr ""
 
-#: functions/functions.import.php:111
+#: functions/functions.import.php:107
+msgid "No more than one field may be a token field"
+msgstr ""
+
+#: functions/functions.import.php:123
 msgid "You must select one and one only Primary Phone number"
 msgstr "Musíte zvolit jedno a pouze jedno Hlavní telefonní číslo"
 
-#: functions/functions.import.php:127
+#: functions/functions.import.php:139
 msgid "Selected file column name"
 msgstr ""
 
-#: functions/functions.import.php:127
+#: functions/functions.import.php:139
 msgid "Import ?"
 msgstr ""
 
-#: functions/functions.import.php:127
+#: functions/functions.import.php:139
 msgid "New Sample Variable Name"
 msgstr ""
 
-#: functions/functions.import.php:127
+#: functions/functions.import.php:139
 msgid "Variable Type"
 msgstr ""
 
-#: functions/functions.import.php:127
+#: functions/functions.import.php:139
 msgid "Show to operator?"
 msgstr ""
 
-#: functions/functions.import.php:144 functions/functions.import.php:156
+#: functions/functions.import.php:156 functions/functions.import.php:168
 #: waitnextcase_interface2.php:142 admin/samplelist.php:304
 #: admin/samplelist.php:305 admin/samplelist.php:467 admin/samplelist.php:478
 #: admin/operators.php:267 admin/operators.php:283 admin/operators.php:299
@@ -244,9 +249,9 @@ msgstr ""
 #: admin/supervisorchat.php:79 admin/questionnairelist.php:390
 #: admin/questionnairelist.php:393 admin/questionnairelist.php:397
 #: admin/questionnairelist.php:401 admin/questionnairelist.php:405
-#: admin/questionnairelist.php:569 admin/operatorlist.php:251
-#: admin/operatorlist.php:269 admin/operatorlist.php:286
-#: admin/operatorlist.php:291 admin/set_outcomes.php:177
+#: admin/questionnairelist.php:569 admin/operatorlist.php:255
+#: admin/operatorlist.php:273 admin/operatorlist.php:290
+#: admin/operatorlist.php:295 admin/set_outcomes.php:177
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:181
 #: admin/set_outcomes.php:184 admin/set_outcomes.php:185
@@ -254,10 +259,10 @@ msgstr ""
 #: admin/set_outcomes.php:264 admin/set_outcomes.php:265
 #: admin/set_outcomes.php:266 admin/set_outcomes.php:267
 #: admin/set_outcomes.php:268 admin/set_outcomes.php:269
-#: admin/assignsample.php:232 admin/assignsample.php:235
-#: admin/assignsample.php:328 admin/assignsample.php:330
-#: admin/assignsample.php:400 admin/assignsample.php:404
-#: admin/assignsample.php:410 admin/supervisor.php:200
+#: admin/assignsample.php:274 admin/assignsample.php:277
+#: admin/assignsample.php:373 admin/assignsample.php:375
+#: admin/assignsample.php:445 admin/assignsample.php:449
+#: admin/assignsample.php:455 admin/supervisor.php:200
 #: admin/supervisor.php:373 admin/supervisor.php:420 admin/quotarow.php:396
 #: admin/quotarow.php:570 admin/quotarow.php:600
 #: admin/displayappointments.php:297 admin/displayappointments.php:321
@@ -266,15 +271,15 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: functions/functions.import.php:144 functions/functions.import.php:156
+#: functions/functions.import.php:156 functions/functions.import.php:168
 #: admin/samplelist.php:304 admin/samplelist.php:305 admin/operators.php:267
 #: admin/operators.php:283 admin/operators.php:299 admin/addshift.php:261
 #: admin/supervisorchat.php:79 admin/questionnairelist.php:390
 #: admin/questionnairelist.php:393 admin/questionnairelist.php:397
 #: admin/questionnairelist.php:401 admin/questionnairelist.php:405
-#: admin/questionnairelist.php:569 admin/operatorlist.php:251
-#: admin/operatorlist.php:269 admin/operatorlist.php:286
-#: admin/operatorlist.php:291 admin/set_outcomes.php:177
+#: admin/questionnairelist.php:569 admin/operatorlist.php:255
+#: admin/operatorlist.php:273 admin/operatorlist.php:290
+#: admin/operatorlist.php:295 admin/set_outcomes.php:177
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:181
 #: admin/set_outcomes.php:184 admin/set_outcomes.php:185
@@ -282,11 +287,11 @@ msgstr ""
 #: admin/set_outcomes.php:264 admin/set_outcomes.php:265
 #: admin/set_outcomes.php:266 admin/set_outcomes.php:267
 #: admin/set_outcomes.php:268 admin/set_outcomes.php:269
-#: admin/assignsample.php:232 admin/assignsample.php:233
-#: admin/assignsample.php:235 admin/assignsample.php:328
-#: admin/assignsample.php:330 admin/assignsample.php:400
-#: admin/assignsample.php:401 admin/assignsample.php:404
-#: admin/assignsample.php:410 admin/supervisor.php:373
+#: admin/assignsample.php:274 admin/assignsample.php:275
+#: admin/assignsample.php:277 admin/assignsample.php:373
+#: admin/assignsample.php:375 admin/assignsample.php:445
+#: admin/assignsample.php:446 admin/assignsample.php:449
+#: admin/assignsample.php:455 admin/supervisor.php:373
 #: admin/supervisor.php:420 admin/quotarow.php:396 admin/quotarow.php:570
 #: admin/quotarow.php:600 admin/displayappointments.php:297
 #: admin/displayappointments.php:321 admin/new.php:220 admin/new.php:227
@@ -294,19 +299,19 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: functions/functions.operator.php:167 include/limesurvey/quexs.php:362
+#: functions/functions.operator.php:167 include/limesurvey/quexs.php:368
 msgid "morning"
 msgstr "ráno"
 
-#: functions/functions.operator.php:168 include/limesurvey/quexs.php:363
+#: functions/functions.operator.php:168 include/limesurvey/quexs.php:369
 msgid "afternoon"
 msgstr "odpoledne"
 
-#: functions/functions.operator.php:169 include/limesurvey/quexs.php:364
+#: functions/functions.operator.php:169 include/limesurvey/quexs.php:370
 msgid "evening"
 msgstr "večer"
 
-#: functions/functions.operator.php:988
+#: functions/functions.operator.php:1003
 msgid "ERROR: You are not logged in."
 msgstr ""
 
@@ -414,8 +419,8 @@ msgid "Sun"
 msgstr ""
 
 #: functions/functions.voip.php:449 selectextension.php:114 status.php:105
-#: admin/operators.php:271 admin/operatorlist.php:255
-#: admin/operatorlist.php:408 admin/extensionstatus.php:266
+#: admin/operators.php:271 admin/operatorlist.php:259
+#: admin/operatorlist.php:412 admin/extensionstatus.php:266
 msgid "Extension"
 msgstr "Rozšíření"
 
@@ -609,7 +614,7 @@ msgstr "Tato směna"
 #: performance.php:84 performance.php:91 casenote.php:116
 #: appointmentlist.php:95 calllist.php:89 admin/outcomes.php:240
 #: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/operatorlist.php:200 admin/operatorlist.php:408
+#: admin/operatorlist.php:204 admin/operatorlist.php:412
 #: admin/casesbyoutcome.php:95 admin/supervisor.php:388
 #: admin/supervisor.php:415 admin/supervisor.php:432
 #: admin/operatorskill.php:251 admin/operatorperformance.php:86
@@ -645,9 +650,9 @@ msgstr "Přidat poznámku"
 #: admin/questionnairelist.php:375 admin/questionnairelist.php:523
 #: admin/questionnairelist.php:545 admin/questionnairelist.php:553
 #: admin/callhistory.php:145 admin/availability.php:127
-#: admin/operatorlist.php:198 admin/import.php:48 admin/import.php:86
-#: admin/import.php:117 admin/casesbyoutcome.php:59 admin/assignsample.php:209
-#: admin/assignsample.php:307 admin/casestatus.php:215 respondent.php:101
+#: admin/operatorlist.php:202 admin/import.php:48 admin/import.php:86
+#: admin/import.php:117 admin/casesbyoutcome.php:59 admin/assignsample.php:251
+#: admin/assignsample.php:349 admin/casestatus.php:215 respondent.php:101
 #: contactdetails.php:100
 msgid "Go back"
 msgstr "Jít zpět"
@@ -787,19 +792,19 @@ msgstr "Nahrávání zastaveno..."
 msgid "Stop the manual recording now..."
 msgstr "Zastavit ruční nahrávání nyní..."
 
-#: include/limesurvey/quexs.php:171 admin/databasestrings.php:90
+#: include/limesurvey/quexs.php:177 admin/databasestrings.php:90
 msgid "Self completed online"
 msgstr "Samodokončeno online"
 
-#: include/limesurvey/quexs.php:676 include/limesurvey/quexs.php:755
+#: include/limesurvey/quexs.php:682 include/limesurvey/quexs.php:761
 msgid "Not on an appointment"
 msgstr ""
 
-#: include/limesurvey/quexs.php:678 include/limesurvey/quexs.php:757
+#: include/limesurvey/quexs.php:684 include/limesurvey/quexs.php:763
 msgid "On an appointment"
 msgstr ""
 
-#: include/limesurvey/quexs.php:989
+#: include/limesurvey/quexs.php:995
 msgid "All samples"
 msgstr ""
 
@@ -845,7 +850,7 @@ msgstr ""
 #: include/limesurvey/admin/exportresults.php:651
 #: include/limesurvey/admin/exportresults.php:652
 #: include/limesurvey/admin/exportresults.php:980 callhistory.php:88
-#: admin/samplesearch.php:162 admin/callhistory.php:132
+#: admin/samplesearch.php:184 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/casesbyoutcome.php:117
 #: admin/dataoutput.php:85 admin/extensionstatus.php:266
 #: admin/displayappointments.php:313 admin/displayappointments.php:337
@@ -1083,16 +1088,16 @@ msgid "Email respondent for self completion"
 msgstr "Poslat e-mail respondentovi pro vlastní dokončení"
 
 #: email.php:347 admin/operators.php:245 admin/clients.php:233
-#: admin/operatorlist.php:228
+#: admin/operatorlist.php:232
 msgid "First name"
 msgstr "Křestní jméno"
 
-#: email.php:350 admin/operators.php:249 admin/operatorlist.php:232
+#: email.php:350 admin/operators.php:249 admin/operatorlist.php:236
 msgid "Last name"
 msgstr "Příjmení"
 
 #: email.php:353 admin/operators.php:253 admin/clients.php:241
-#: admin/operatorlist.php:236 index.php:171
+#: admin/operatorlist.php:240 index.php:171
 msgid "Email"
 msgstr "E-mail"
 
@@ -1156,7 +1161,7 @@ msgid "Reasons:"
 msgstr "Důvody:"
 
 #: nocaseavailable.php:86 nocaseavailable.php:98 admin/samplelist.php:462
-#: admin/questionnairelist.php:564 admin/operatorlist.php:290
+#: admin/questionnairelist.php:564 admin/operatorlist.php:294
 msgid "Enabled"
 msgstr "Povoleno"
 
@@ -1180,10 +1185,10 @@ msgid "Description"
 msgstr "Popis"
 
 #: nocaseavailable.php:122 admin/samplelist.php:317 admin/quotareport.php:310
-#: admin/assigntimeslots.php:265 admin/outcomes.php:128 admin/outcomes.php:184
+#: admin/assigntimeslots.php:274 admin/outcomes.php:128 admin/outcomes.php:184
 #: admin/sortsample.php:139 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/callhistory.php:168 admin/quota.php:137
-#: admin/assignsample.php:211 admin/assignsample.php:364
+#: admin/assignsample.php:253 admin/assignsample.php:409
 #: admin/supervisor.php:313 admin/quotarow.php:312 admin/casestatus.php:126
 #: admin/casestatus.php:244 admin/displayappointments.php:313
 #: admin/displayappointments.php:337
@@ -1340,7 +1345,7 @@ msgstr "Příklad dat"
 msgid "Delete ?"
 msgstr ""
 
-#: admin/samplelist.php:343 admin/addshift.php:268 admin/assignsample.php:238
+#: admin/samplelist.php:343 admin/addshift.php:268 admin/assignsample.php:280
 #: admin/quotarow.php:398 admin/extensionstatus.php:210
 #: admin/displayappointments.php:281
 msgid "Save changes"
@@ -1365,28 +1370,28 @@ msgid "Fix  this sample "
 msgstr ""
 
 #: admin/samplelist.php:465 admin/questionnairelist.php:567
-#: admin/operatorlist.php:390
+#: admin/operatorlist.php:394
 msgid "Enable"
 msgstr "Povolit"
 
 #: admin/samplelist.php:467 admin/samplelist.php:478
-#: admin/questionnairelist.php:569 admin/assignsample.php:330
+#: admin/questionnairelist.php:569 admin/assignsample.php:375
 #: admin/supervisor.php:373 admin/supervisor.php:420
 #: admin/displayappointments.php:297 admin/displayappointments.php:321
 msgid "ARE YOU SURE?"
 msgstr ""
 
 #: admin/samplelist.php:467 admin/questionnairelist.php:569
-#: admin/operatorlist.php:392
+#: admin/operatorlist.php:396
 msgid "Disable"
 msgstr "Zakázat"
 
 #: admin/samplelist.php:471 admin/operators.php:260 admin/operators.php:274
 #: admin/sortsample.php:105 admin/sortsample.php:139
 #: admin/questionnairelist.php:385 admin/clientquestionnaire.php:308
-#: admin/operatorlist.php:243 admin/operatorlist.php:259
-#: admin/operatorlist.php:399 admin/assignsample.php:329
-#: admin/assignsample.php:364 admin/supervisor.php:374 admin/quotarow.php:586
+#: admin/operatorlist.php:247 admin/operatorlist.php:263
+#: admin/operatorlist.php:403 admin/assignsample.php:374
+#: admin/assignsample.php:409 admin/supervisor.php:374 admin/quotarow.php:586
 #: admin/shiftreport.php:102 admin/shiftreport.php:110
 #: admin/displayappointments.php:313 admin/displayappointments.php:337
 msgid "Edit"
@@ -1498,12 +1503,12 @@ msgid "Completed case closing"
 msgstr ""
 
 #: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
-#: admin/systemsortprocess.php:359 admin/systemsortprocess.php:361
+#: admin/systemsortprocess.php:356 admin/systemsortprocess.php:358
 msgid "This task took"
 msgstr "Tento úkol trval"
 
 #: admin/systemsortprocess.php:194 admin/systemsortprocess.php:196
-#: admin/systemsortprocess.php:359 admin/systemsortprocess.php:361
+#: admin/systemsortprocess.php:356 admin/systemsortprocess.php:358
 #: nocallavailable.php:208
 msgid "seconds"
 msgstr "vteřin"
@@ -1528,11 +1533,11 @@ msgstr ""
 msgid "No call attempts without calls"
 msgstr ""
 
-#: admin/systemsortprocess.php:359
+#: admin/systemsortprocess.php:356
 msgid "Completed sort"
 msgstr "Řazení dokončeno"
 
-#: admin/systemsortprocess.php:361
+#: admin/systemsortprocess.php:358
 msgid "Failed to complete sort"
 msgstr "Nelze dokončit řazení"
 
@@ -1584,7 +1589,7 @@ msgid ""
 "Could not add operator. There may already be an operator of this name:"
 msgstr "Nelze přidat operátora. Již možná existuje operátor s tímto názvem:"
 
-#: admin/operators.php:169 admin/operators.php:309 admin/operatorlist.php:424
+#: admin/operators.php:169 admin/operators.php:309 admin/operatorlist.php:428
 msgid "Add an operator"
 msgstr "Přidat operátora"
 
@@ -1594,55 +1599,55 @@ msgstr ""
 "Uživatelské jméno a rozšíření musí být pro každého operátora jedinečné."
 
 #: admin/operators.php:233 admin/clients.php:126 admin/clients.php:221
-#: admin/clientquestionnaire.php:293 admin/operatorlist.php:216
-#: admin/operatorlist.php:408 admin/operatorskill.php:251
+#: admin/clientquestionnaire.php:293 admin/operatorlist.php:220
+#: admin/operatorlist.php:412 admin/operatorskill.php:251
 #: admin/operatorquestionnaire.php:247
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: admin/operators.php:237 admin/clients.php:225 admin/operatorlist.php:220
+#: admin/operators.php:237 admin/clients.php:225 admin/operatorlist.php:224
 msgid "Password"
 msgstr ""
 
-#: admin/operators.php:240 admin/clients.php:228 admin/operatorlist.php:223
+#: admin/operators.php:240 admin/clients.php:228 admin/operatorlist.php:227
 #: admin/extensionstatus.php:201
 msgid "Generate"
 msgstr ""
 
-#: admin/operators.php:240 admin/clients.php:228 admin/operatorlist.php:223
+#: admin/operators.php:240 admin/clients.php:228 admin/operatorlist.php:227
 msgid "Password with"
 msgstr ""
 
-#: admin/operators.php:241 admin/clients.php:229 admin/operatorlist.php:224
+#: admin/operators.php:241 admin/clients.php:229 admin/operatorlist.php:228
 msgid "characters"
 msgstr ""
 
-#: admin/operators.php:261 admin/operatorlist.php:244
+#: admin/operators.php:261 admin/operatorlist.php:248
 msgid "TimeZones list"
 msgstr ""
 
-#: admin/operators.php:266 admin/operatorlist.php:250
+#: admin/operators.php:266 admin/operatorlist.php:254
 msgid "Uses VoIP"
 msgstr "Používá VoIP"
 
-#: admin/operators.php:275 admin/operatorlist.php:261
-#: admin/operatorlist.php:425
+#: admin/operators.php:275 admin/operatorlist.php:265
+#: admin/operatorlist.php:429
 msgid "Extensions"
 msgstr ""
 
-#: admin/operators.php:282 admin/operatorlist.php:268
+#: admin/operators.php:282 admin/operatorlist.php:272
 msgid "Uses chat"
 msgstr "Používá chat"
 
-#: admin/operators.php:288 admin/operatorlist.php:274
+#: admin/operators.php:288 admin/operatorlist.php:278
 msgid "Jabber/XMPP chat user"
 msgstr "Uživatel chatu Jabber/XMPP"
 
-#: admin/operators.php:292 admin/operatorlist.php:278
+#: admin/operators.php:292 admin/operatorlist.php:282
 msgid "Jabber/XMPP chat password"
 msgstr "Heslo chatu Jabber/XMPP"
 
-#: admin/operators.php:298 admin/operatorlist.php:285
+#: admin/operators.php:298 admin/operatorlist.php:289
 msgid "Is the operator a system administrator?"
 msgstr ""
 
@@ -1651,9 +1656,9 @@ msgstr ""
 msgid "Quota report"
 msgstr "Hlášení kvóty"
 
-#: admin/quotareport.php:116 admin/assigntimeslots.php:161
+#: admin/quotareport.php:116 admin/assigntimeslots.php:163
 #: admin/questionnaireprefill.php:107 admin/outcomes.php:74
-#: admin/addshift.php:173 admin/assignsample.php:313
+#: admin/addshift.php:173 admin/assignsample.php:358
 msgid "Select a questionnaire"
 msgstr ""
 
@@ -1711,44 +1716,44 @@ msgstr "Autopriorita"
 msgid "Update priorities"
 msgstr "Aktualizovat priority"
 
-#: admin/assigntimeslots.php:159 admin/index.php:141
+#: admin/assigntimeslots.php:161 admin/index.php:141
 msgid "Assign Time slots"
 msgstr ""
 
-#: admin/assigntimeslots.php:168
+#: admin/assigntimeslots.php:170
 msgid "Time slot groups"
 msgstr ""
 
-#: admin/assigntimeslots.php:169
+#: admin/assigntimeslots.php:171
 msgid ""
 "Assigning an availability group to a questionnaire will allow interviewers "
 "to select from those groups to restrict calls to a particular case to the "
 "times within the group"
 msgstr ""
 
-#: admin/assigntimeslots.php:171 admin/assigntimeslots.php:219
-#: admin/assigntimeslots.php:273 admin/assignsample.php:330
+#: admin/assigntimeslots.php:173 admin/assigntimeslots.php:222
+#: admin/assigntimeslots.php:283 admin/assignsample.php:375
 #: admin/casestatus.php:101
 msgid "Click to unassign"
 msgstr "Klikněte pro zrušení přidělení"
 
-#: admin/assigntimeslots.php:181
+#: admin/assigntimeslots.php:183
 msgid "There are no time slots groups selected for this questionnaire"
 msgstr ""
 
-#: admin/assigntimeslots.php:185
+#: admin/assigntimeslots.php:187
 msgid "Time slots groups selected for this questionnaire"
 msgstr ""
 
-#: admin/assigntimeslots.php:207
+#: admin/assigntimeslots.php:209
 msgid "Add time slot group"
 msgstr ""
 
-#: admin/assigntimeslots.php:216
+#: admin/assigntimeslots.php:218
 msgid "Call attempt time slots"
 msgstr ""
 
-#: admin/assigntimeslots.php:217 admin/assigntimeslots.php:263
+#: admin/assigntimeslots.php:219 admin/assigntimeslots.php:272
 msgid ""
 "Assigning call attempt time slots to questionnaires will only allow cases to "
 "be attempted in a time slot for the n + 1th time where it has been attempted "
@@ -1757,32 +1762,49 @@ msgid ""
 "missing timeslots."
 msgstr ""
 
-#: admin/assigntimeslots.php:229
+#: admin/assigntimeslots.php:232
 msgid "There are no call attempt time slots selected for this questionnaire"
 msgstr ""
 
-#: admin/assigntimeslots.php:233
+#: admin/assigntimeslots.php:236
 msgid "Call attempt time slots selected for this questionnaire"
 msgstr ""
 
-#: admin/assigntimeslots.php:256
+#: admin/assigntimeslots.php:237 admin/assigntimeslots.php:299
+msgid "Availability group"
+msgstr ""
+
+#: admin/assigntimeslots.php:237 admin/assigntimeslots.php:299
+msgid "Weight"
+msgstr ""
+
+#: admin/assigntimeslots.php:237 admin/assigntimeslots.php:299
+#: admin/extensionstatus.php:231
+msgid "Unassign"
+msgstr ""
+
+#: admin/assigntimeslots.php:260 admin/assigntimeslots.php:321
+msgid "Weighting (relative number of calls in this slot)"
+msgstr ""
+
+#: admin/assigntimeslots.php:265
 msgid "Add call attempt time slot"
 msgstr ""
 
-#: admin/assigntimeslots.php:262
+#: admin/assigntimeslots.php:271
 msgid "Call attempt time slots for sample"
 msgstr ""
 
-#: admin/assigntimeslots.php:283
+#: admin/assigntimeslots.php:294
 msgid ""
 "There are no call attempt time slots selected for this questionnaire sample"
 msgstr ""
 
-#: admin/assigntimeslots.php:287
+#: admin/assigntimeslots.php:298
 msgid "Call attempt time slots selected for this sample"
 msgstr ""
 
-#: admin/assigntimeslots.php:310
+#: admin/assigntimeslots.php:327
 msgid "Add call attempt time slot for sample"
 msgstr ""
 
@@ -1974,7 +1996,7 @@ msgstr "Pro tento dotazník nejsou určeny žádné směny"
 msgid "Shift time"
 msgstr ""
 
-#: admin/outcomes.php:305 admin/operatorlist.php:428 admin/index.php:161
+#: admin/outcomes.php:305 admin/operatorlist.php:432 admin/index.php:161
 msgid "Operator performance"
 msgstr "Výkon operátora"
 
@@ -2003,19 +2025,35 @@ msgstr ""
 msgid "Select sample "
 msgstr ""
 
-#: admin/samplesearch.php:146
+#: admin/samplesearch.php:156 admin/clients.php:120
+msgid "Added"
+msgstr ""
+
+#: admin/samplesearch.php:156
+msgid "Cases"
+msgstr ""
+
+#: admin/samplesearch.php:164
 msgid "Delete sample record"
 msgstr ""
 
-#: admin/samplesearch.php:147
+#: admin/samplesearch.php:165
 msgid "Assigned to case ID :"
 msgstr ""
 
-#: admin/samplesearch.php:159 admin/supervisor.php:330
+#: admin/samplesearch.php:181 admin/supervisor.php:330
 msgid "Sample id"
 msgstr "ID vzorku"
 
-#: admin/samplesearch.php:190
+#: admin/samplesearch.php:187
+msgid "Assign Case ID"
+msgstr ""
+
+#: admin/samplesearch.php:235
+msgid "Assign Case IDs to this questionnaire"
+msgstr ""
+
+#: admin/samplesearch.php:240
 msgid "There's no data in this sample."
 msgstr ""
 
@@ -2214,52 +2252,52 @@ msgid "Samples selected for this questionnaire"
 msgstr "Vzorky vybrané pro tento dotazník"
 
 #: admin/sortsample.php:101 admin/sortsample.php:102
-#: admin/assignsample.php:224 admin/assignsample.php:227
-#: admin/assignsample.php:324 admin/assignsample.php:325
-#: admin/assignsample.php:389 admin/assignsample.php:393
+#: admin/assignsample.php:266 admin/assignsample.php:269
+#: admin/assignsample.php:369 admin/assignsample.php:370
+#: admin/assignsample.php:434 admin/assignsample.php:438
 msgid "Unlimited"
 msgstr ""
 
-#: admin/sortsample.php:103 admin/assignsample.php:326
+#: admin/sortsample.php:103 admin/assignsample.php:371
 msgid "Sequential"
 msgstr ""
 
-#: admin/sortsample.php:103 admin/assignsample.php:326
+#: admin/sortsample.php:103 admin/assignsample.php:371
 msgid "Random"
 msgstr ""
 
-#: admin/sortsample.php:104 admin/assignsample.php:230
-#: admin/assignsample.php:327 admin/assignsample.php:397
+#: admin/sortsample.php:104 admin/assignsample.php:272
+#: admin/assignsample.php:372 admin/assignsample.php:442
 msgid "Never"
 msgstr ""
 
-#: admin/sortsample.php:120 admin/assignsample.php:344
+#: admin/sortsample.php:120 admin/assignsample.php:389
 msgid "Pull step Down"
 msgstr ""
 
-#: admin/sortsample.php:121 admin/assignsample.php:345
+#: admin/sortsample.php:121 admin/assignsample.php:390
 msgid "Push step Up"
 msgstr ""
 
-#: admin/sortsample.php:139 admin/assignsample.php:364
+#: admin/sortsample.php:139 admin/assignsample.php:409
 msgid "Sort order"
 msgstr ""
 
-#: admin/sortsample.php:139 admin/assignsample.php:222
-#: admin/assignsample.php:364 admin/assignsample.php:387
+#: admin/sortsample.php:139 admin/assignsample.php:264
+#: admin/assignsample.php:409 admin/assignsample.php:432
 msgid "Max calls"
 msgstr "Max volání"
 
-#: admin/sortsample.php:139 admin/assignsample.php:225
-#: admin/assignsample.php:364 admin/assignsample.php:391
+#: admin/sortsample.php:139 admin/assignsample.php:267
+#: admin/assignsample.php:409 admin/assignsample.php:436
 msgid "Max call attempts"
 msgstr "Max pokusů o volání"
 
-#: admin/sortsample.php:139 admin/assignsample.php:364
+#: admin/sortsample.php:139 admin/assignsample.php:409
 msgid "Answering machine messages"
 msgstr "Zprávy záznamníku"
 
-#: admin/sortsample.php:139 admin/assignsample.php:364
+#: admin/sortsample.php:139 admin/assignsample.php:409
 msgid "Selection type"
 msgstr "Typ výběru"
 
@@ -2481,10 +2519,6 @@ msgid "Could not update"
 msgstr ""
 
 #: admin/clients.php:120
-msgid "Added"
-msgstr ""
-
-#: admin/clients.php:120
 msgid "Error adding client"
 msgstr ""
 
@@ -2584,75 +2618,75 @@ msgstr ""
 msgid "Assign clients to questionnaires"
 msgstr "Přidělit klienty k dotazníkům"
 
-#: admin/operatorlist.php:127
+#: admin/operatorlist.php:131
 msgid "Successfully updated user"
 msgstr "Uživatel úspěšně aktualizován"
 
-#: admin/operatorlist.php:131 admin/operatorlist.php:136
+#: admin/operatorlist.php:135 admin/operatorlist.php:140
 msgid "Failed to update user"
 msgstr ""
 
-#: admin/operatorlist.php:131 admin/operatorlist.php:136
+#: admin/operatorlist.php:135 admin/operatorlist.php:140
 msgid "Please make sure the username is unique"
 msgstr ""
 
-#: admin/operatorlist.php:144
+#: admin/operatorlist.php:148
 msgid "Edit Operator settings"
 msgstr ""
 
-#: admin/operatorlist.php:221
+#: admin/operatorlist.php:225
 msgid "leave blank to keep existing password"
 msgstr ""
 
-#: admin/operatorlist.php:260
+#: admin/operatorlist.php:264
 msgid "Add"
 msgstr ""
 
-#: admin/operatorlist.php:296
+#: admin/operatorlist.php:300
 msgid "Update operator"
 msgstr "Aktualizovat operátora"
 
-#: admin/operatorlist.php:387
+#: admin/operatorlist.php:391
 msgid "Win .bat file"
 msgstr ""
 
-#: admin/operatorlist.php:388
+#: admin/operatorlist.php:392
 msgid "*nix script file"
 msgstr "soubor skriptu *nix"
 
-#: admin/operatorlist.php:395
+#: admin/operatorlist.php:399
 msgid "Enable VoIP"
 msgstr "Povolit VoIP"
 
-#: admin/operatorlist.php:397
+#: admin/operatorlist.php:401
 msgid "Disable VoIP"
 msgstr "Zakázat VoIP"
 
-#: admin/operatorlist.php:405
+#: admin/operatorlist.php:409
 msgid "Operator list"
 msgstr "Seznam operátorů"
 
-#: admin/operatorlist.php:415
+#: admin/operatorlist.php:419
 msgid "VoIP ON/Off"
 msgstr ""
 
-#: admin/operatorlist.php:416
+#: admin/operatorlist.php:420
 msgid "Win file"
 msgstr ""
 
-#: admin/operatorlist.php:417
+#: admin/operatorlist.php:421
 msgid "*nix flle"
 msgstr ""
 
-#: admin/operatorlist.php:426
+#: admin/operatorlist.php:430
 msgid "Assign to questionnaire"
 msgstr ""
 
-#: admin/operatorlist.php:427
+#: admin/operatorlist.php:431
 msgid "Operator skills"
 msgstr ""
 
-#: admin/operatorlist.php:432
+#: admin/operatorlist.php:436
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
@@ -2662,19 +2696,19 @@ msgstr ""
 "soubor voip.exe. Když je soubor spuštěn, spustí soubor voip.exe se správnými "
 "údaii o spojení pro připojení operátora k serveru VoIP"
 
-#: admin/operatorlist.php:434
+#: admin/operatorlist.php:438
 msgid "Download Windows VoIP Client Executable file"
 msgstr ""
 
-#: admin/operatorlist.php:434
+#: admin/operatorlist.php:438
 msgid "Download Win file"
 msgstr ""
 
-#: admin/operatorlist.php:435
+#: admin/operatorlist.php:439
 msgid "Download Linux VoIP Executable file"
 msgstr ""
 
-#: admin/operatorlist.php:435
+#: admin/operatorlist.php:439
 msgid "Download Linux file"
 msgstr ""
 
@@ -2716,7 +2750,7 @@ msgstr ""
 msgid "Select columns to import"
 msgstr ""
 
-#: admin/import.php:102 admin/import.php:150 admin/assignsample.php:417
+#: admin/import.php:102 admin/import.php:150 admin/assignsample.php:462
 msgid "Add sample"
 msgstr "Přidat vzorek"
 
@@ -2788,7 +2822,7 @@ msgstr "Správa nástrojů Limesurvey"
 msgid "Samples"
 msgstr ""
 
-#: admin/index.php:135 admin/assignsample.php:305
+#: admin/index.php:135 admin/assignsample.php:347
 msgid "Assign samples to questionnaires"
 msgstr "Přidělit vzorky k dotazníkům"
 
@@ -3160,62 +3194,62 @@ msgstr "Neurčeny žádné štítky pro tuto otázku"
 msgid "Code value"
 msgstr "Hodnota kódu"
 
-#: admin/assignsample.php:190
+#: admin/assignsample.php:232
 msgid "Edit assignment parameters"
 msgstr ""
 
-#: admin/assignsample.php:191
+#: admin/assignsample.php:233
 msgid "Assign samples to questionnaire: "
 msgstr ""
 
-#: admin/assignsample.php:228 admin/assignsample.php:395
+#: admin/assignsample.php:270 admin/assignsample.php:440
 msgid "Number of answering machine messages to leave per case"
 msgstr ""
 
-#: admin/assignsample.php:231 admin/assignsample.php:399
+#: admin/assignsample.php:273 admin/assignsample.php:444
 msgid "Select from sample randomly?"
 msgstr ""
 
-#: admin/assignsample.php:233 admin/assignsample.php:401
+#: admin/assignsample.php:275 admin/assignsample.php:446
 msgid "Sequentially"
 msgstr ""
 
-#: admin/assignsample.php:234 admin/assignsample.php:364
-#: admin/assignsample.php:403
+#: admin/assignsample.php:276 admin/assignsample.php:409
+#: admin/assignsample.php:448
 msgid "Allow new numbers to be drawn?"
 msgstr ""
 
-#: admin/assignsample.php:304
+#: admin/assignsample.php:346
 msgid "List & Add Sample"
 msgstr ""
 
-#: admin/assignsample.php:321
+#: admin/assignsample.php:366
 msgid "Samples assigned to questionnaire"
 msgstr ""
 
-#: admin/assignsample.php:364
+#: admin/assignsample.php:409
 msgid "Unassign sample"
 msgstr "Zrušit přiřazení vzorku"
 
-#: admin/assignsample.php:367
+#: admin/assignsample.php:412
 msgid "No samples selected for this questionnaire"
 msgstr "Pro tento dotazník nejsou zvoleny žádné vzorky"
 
-#: admin/assignsample.php:380
+#: admin/assignsample.php:425
 msgid "Add a sample to this questionnaire:"
 msgstr "Přidejte vzorek k tomuto dotazníku:"
 
-#: admin/assignsample.php:383
+#: admin/assignsample.php:428
 msgid "Select sample:"
 msgstr "Vyberte vzorek"
 
-#: admin/assignsample.php:409
+#: admin/assignsample.php:454
 msgid ""
-"Generate cases for all sample records and set outcome to 'Self completion "
-"email invitation sent'?"
+"Generate cases for all sample records with a valid email address and set "
+"outcome to 'Self completion email invitation sent'?"
 msgstr ""
 
-#: admin/assignsample.php:411
+#: admin/assignsample.php:456
 msgid ""
 "Ideal if you intend to send an email invitation to sample members before "
 "attempting to call using queXS"
@@ -3704,10 +3738,6 @@ msgstr ""
 
 #: admin/extensionstatus.php:221
 msgid "Unassign the operator from this extension to be able to delete it"
-msgstr ""
-
-#: admin/extensionstatus.php:231
-msgid "Unassign"
 msgstr ""
 
 #: admin/extensionstatus.php:231
@@ -4502,11 +4532,9 @@ msgstr ""
 #~ msgid "retrieve_conf failed, config not applied"
 #~ msgstr "retrieve_conf selhalo, nastavení není použito"
 
-#, php-format
 #~ msgid "Reload failed because retrieve_conf encountered an error: %s"
 #~ msgstr "Znovu načtení selhalo protože retrieve_conf narazilo na chybu: %s"
 
-#, php-format
 #~ msgid "Exit code was %s and output was: %s"
 #~ msgstr "Kód ukončení byl %s a výstup byl: %s"
 
@@ -4839,7 +4867,6 @@ msgstr ""
 #~ msgid "Search for:"
 #~ msgstr "Hledat:"
 
-#, php-format
 #~ msgid "Use the % character as a wildcard"
 #~ msgstr "Použit znak % cjako zástupný znak"
 

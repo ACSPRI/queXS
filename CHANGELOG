@@ -1,3 +1,16 @@
+queXS 1.15.3 - Changes since 1.15.2
+
+This release fixes some bugs and adds some features including greatly speeding up sample searching
+
+New feature: Allow selection of outcome code when generating cases
+New feature: Decide to create cases whether email valid or not
+New feature: Server side sample querying to speed up sample searching
+
+Fixed issue: Can't delete sample
+Fixed issue: Case status incorrectly reporting time when case available
+
+Translations have also been updated - thank you for your contributions!
+
 queXS 1.15.2 - Changes since 1.15.1
 
 This release fixes some bugs found since 1.15.1
