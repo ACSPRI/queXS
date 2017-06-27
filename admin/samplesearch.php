@@ -87,15 +87,15 @@ if (isset($_GET['sample_import_id'])) 	$sample_import_id = bigintval($_GET['samp
 
 if (isset($_GET['ajax'])) {
 
-  $length = intval($_GET['length']);
-  $start = intval($_GET['start']);
+  $length = intval($_POST['length']);
+  $start = intval($_POST['start']);
 
   $search = "";
 
-  if (isset($_GET['search']['value'])) {
-    $search = " WHERE (sv.val LIKE " . $db->qstr("%" . $_GET['search']['value'] . "%") . 
-                      " OR c.case_id LIKE " . $db->qstr("%" . $_GET['search']['value'] . "%") .
-                      " OR sv.sample_id LIKE " . $db->qstr("%" . $_GET['search']['value'] . "%") . ")";
+  if (isset($_POST['search']['value'])) {
+    $search = " WHERE (sv.val LIKE " . $db->qstr("%" . $_POST['search']['value'] . "%") . 
+                      " OR c.case_id LIKE " . $db->qstr("%" . $_POST['search']['value'] . "%") .
+                      " OR sv.sample_id LIKE " . $db->qstr("%" . $_POST['search']['value'] . "%") . ")";
   }
 
   $sql = "SELECT count(*)
@@ -145,10 +145,10 @@ if (isset($_GET['ajax'])) {
 				}
       }
 
-      if (isset($_GET['order'][0]['column'])) {
-        $col = intval($_GET['order'][0]['column']);
+      if (isset($_POST['order'][0]['column'])) {
+        $col = intval($_POST['order'][0]['column']);
         $dir = SORT_DESC;
-        if ($_GET['order'][0]['dir'] != 'desc')
+        if ($_POST['order'][0]['dir'] != 'desc')
            $dir = SORT_ASC;
 
         $keys = array_keys($r[0]);
@@ -174,7 +174,7 @@ if (isset($_GET['ajax'])) {
     }
 
     $json_data = array(
-          "draw"            => intval( $_GET['draw'] ),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw. 
+          "draw"            => intval( $_POST['draw'] ),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw. 
           "recordsTotal"    => intval( $totalData ),  // total number of records
           "recordsFiltered" => intval( $totalFiltered ), // total number of records after searching, if there is no searching then totalFiltered = totalData
           "data"            => $s  // total data array
@@ -316,7 +316,10 @@ $(document).ready(function() {
   $('#bs-table').DataTable( {
     "processing": true,
     "serverSide": true,
-    "ajax": "samplesearch.php?ajax=true&sample_import_id=<?= $sample_import_id; ?>",
+    "ajax": {
+      url: "samplesearch.php?ajax=true&sample_import_id=<?= $sample_import_id; ?>",
+      "type": "POST"
+    },
     "columns": [
 <?php 
     foreach($fnames as $val) {
