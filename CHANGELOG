@@ -1,3 +1,10 @@
+queXS 2.1.1 - Changes since 2.1.0
+
+This release fixes bugs with the display of appointments for the administrator and the sample searching function.
+
+Fixed issue: Display appointments failing if call attempt auto removed
+Fixed issue: Sample search not working with large number of columns
+
 queXS 2.1.0 - Changes since 2.0.1
 
 This release adds the ability to send sample variables from queXS to the Limesurvey participant table (database changes required).
