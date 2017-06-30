@@ -1,3 +1,12 @@
+queXS 1.15.4 - Changes since 1.15.3
+
+This release fixes bugs with the display of appointments for the administrator and the sample searching function.
+
+Fixed issue: Display appointments failing if call attempt auto removed
+Fixed issue: Sample search not working with large number of columns
+
+Translations have also been updated - thanks again for your contributions!
+
 queXS 1.15.3 - Changes since 1.15.2
 
 This release fixes some bugs and adds some features including greatly speeding up sample searching
