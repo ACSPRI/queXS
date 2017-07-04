@@ -23,7 +23,7 @@ $LEMskipReprocessing=false; // true if used GetLastMoveResult to avoid generatio
 
 $surveyMode=quexs_get_survey_mode($clienttoken);
 
-if ($interviewer || $surveyMode === false)
+if ($_SESSION['interviewer'] || $surveyMode === false)
 {
 	switch ($thissurvey['format'])
 	{
@@ -467,7 +467,7 @@ else
 		//queXS Addition
 		include_once("quexs.php");
 		  
-		if ($interviewer)
+		if ($_SESSION['interviewer'])
 		{
 			$quexs_url = get_start_interview_url(); 
 			$url = str_replace("{STARTINTERVIEWURL}", $quexs_url, $url);

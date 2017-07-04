@@ -281,7 +281,7 @@ $action!='vvimport' && $action!='vvexport' && $action!='exportresults')
         if (count($tmp_survlangs) == 1)
         {
             $surveysummary .= "<li><a href='#' accesskey='d' onclick=\"window.open('"
-            . $publicurl."/index.php?sid={$surveyid}&amp;interviewer=interviewer&amp;newtest=Y&amp;lang={$baselang}', '_blank')\" title=\"{$icontext2}\" >"
+            . $publicurl."/index.php?sid={$surveyid}&amp;interviewer=" . $_SESSION['interviewer'] . "&amp;newtest=Y&amp;lang={$baselang}', '_blank')\" title=\"{$icontext2}\" >"
             . "<img src='{$imageurl}/do.png' alt='{$icontext}' />"
             . "</a></li>\n";
 
@@ -290,12 +290,12 @@ $action!='vvimport' && $action!='vvexport' && $action!='exportresults')
             . "title='{$icontext2}' accesskey='d'>"
             . "<img src='{$imageurl}/do.png' alt='{$icontext}' />"
             . "</a><ul>\n";
-            $surveysummary .= "<li><a accesskey='d' target='_blank' href='{$publicurl}/index.php?sid=$surveyid&amp;interviewer=interviewer&amp;newtest=Y'>"
+            $surveysummary .= "<li><a accesskey='d' target='_blank' href='{$publicurl}/index.php?sid=$surveyid&amp;interviewer=". $_SESSION['interviewer']."&amp;newtest=Y'>"
               . "<img src='{$imageurl}/do_30.png' /> $icontext </a><ul>";
             // Test Survey Language Selection Popup
             foreach ($tmp_survlangs as $tmp_lang)
             {
-                $surveysummary .= "<li><a accesskey='d' target='_blank' href='{$publicurl}/index.php?sid=$surveyid&amp;interviewer=interviewer&amp;newtest=Y&amp;lang={$tmp_lang}'>"
+                $surveysummary .= "<li><a accesskey='d' target='_blank' href='{$publicurl}/index.php?sid=$surveyid&amp;interviewer=" . $_SESSION['interviewer'] ."&amp;newtest=Y&amp;lang={$tmp_lang}'>"
                 . "<img src='{$imageurl}/do_30.png' /> ".getLanguageNameFromCode($tmp_lang,false)."</a></li>";
             }
             $surveysummary .= "</ul></li>"

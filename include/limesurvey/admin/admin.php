@@ -254,9 +254,17 @@ if(isset($_SESSION['loginID']))
     }
     elseif ($action == 'previewgroup')
     {
-	$_SESSION['interviewer'] = true;
-        require_once('../index.php');
-        exit;
+      $interviewer=returnglobal('interviewer');
+      if (empty($interviewer))
+      {
+        $interviewer = false;
+      }
+      if (!isset($_SESSION['interviewer'])) {
+        $_SESSION['interviewer'] = $interviewer;
+      }
+  
+      require_once('../index.php');
+      exit;
 
     }
     elseif ($action == 'showlogicfile')

@@ -130,16 +130,17 @@ if ( $embedded && $embedded_inc != '' )
 
 //queXS Addition
 //see who is doing this survey - an interviewer or the respondent directly
-$interviewer=returnglobal('interviewer');
-if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true)) 
-{
-	$interviewer = true;
-	$_SESSION['interviewer'] = true;
-}
-else
-{
-	$interviewer = false;
-}
+//
+
+  $interviewer=returnglobal('interviewer');
+  if (empty($interviewer))
+  {
+    $interviewer = false;
+  }
+  if (!isset($_SESSION['interviewer'])) {
+    $_SESSION['interviewer'] = $interviewer;
+  }
+ 
 
 
 
@@ -507,7 +508,7 @@ else
 
 $qtmp = quexs_get_template($clienttoken);
 
-if ($interviewer || $qtmp === false)
+if ($_SESSION['interviewer'] || $qtmp === false)
 {
 	//SET THE TEMPLATE DIRECTORY
 	if (!$thissurvey['templatedir'])
@@ -2655,6 +2656,8 @@ function check_quota($checkaction,$surveyid)
 				     JOIN `sample` as sam ON (c.sample_id = sam.sample_id AND sam.import_id = sampt.import_id)
 			             WHERE ".implode(' AND ',$querycond)." "." 
 					AND s.submitdate IS NOT NULL";
+
+      error_log($querysel);
 
 
                     $result = db_execute_assoc($querysel) or safe_die($connect->ErrorMsg());    //Checked

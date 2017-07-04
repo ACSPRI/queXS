@@ -50,23 +50,20 @@ function templatereplace($line, $replacements=array(), $anonymized=false, $quest
     $_templateurl = sGetTemplateURL($_templatename) . '/';
     $templatedir = sgetTemplatePath($_templatename);
 
-    $interviewer=returnglobal('interviewer');
-    if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true))
-    {
-	$interviewer = true;
-	$_SESSION['interviewer'] = true;
-    }
-    else
-    {
-	$interviewer = false;
-    }
-
-    if (stripos($line, "</head>"))
+  $interviewer=returnglobal('interviewer');
+  if (empty($interviewer))
+  {
+    $interviewer = false;
+  }
+  if (!isset($_SESSION['interviewer'])) {
+    $_SESSION['interviewer'] = $interviewer;
+  }
+     if (stripos($line, "</head>"))
     {
 	//queXS Addition
 	$textfocus = "";
 
-	if ($interviewer)
+	if ($_SESSION['interviewer'])
 	{	
 		$textfocus =
 		'<script type="text/javascript">
@@ -771,7 +768,7 @@ EOD;
         
 	//queXS Addition
         include_once("quexs.php");
-	$coreReplacements['IS_INTERVIEWER'] = $interviewer;
+	$coreReplacements['IS_INTERVIEWER'] = $_SESSION['interviewer'];
         $coreReplacements = array_merge($coreReplacements,quexs_core_replace());
 
     if (!is_null($replacements) && is_array($replacements))

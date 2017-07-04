@@ -64,17 +64,16 @@ function quexs_submit_on_click($do = true)
 
 	$r = "; $('.submit').css('display', ''); ";
 
-	$interviewer=returnglobal('interviewer');
-	if (!empty($interviewer) || (isset($_SESSION['interviewer']) && $_SESSION['interviewer'] == true))
-	{
-		$interviewer = true;
-	}
-	else
-	{
-		$interviewer = false;
-	}
-
-	if (LIME_AUTO_ADVANCE && $do && $interviewer)
+  $interviewer=returnglobal('interviewer');
+  if (empty($interviewer))
+  {
+    $interviewer = false;
+  }
+  if (!isset($_SESSION['interviewer'])) {
+    $_SESSION['interviewer'] = $interviewer;
+  }
+  
+	if (LIME_AUTO_ADVANCE && $do && $_SESSION['interviewer'])
 	{
 		$r .= " document.limesurvey.move.value = '";
 		if (isset($_SESSION['step']) && $_SESSION['step'] && ($_SESSION['step'] == $_SESSION['totalsteps']))

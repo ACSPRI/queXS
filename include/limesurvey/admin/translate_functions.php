@@ -102,7 +102,7 @@ function menuSeparator()
     }
     if (count(GetAdditionalLanguagesFromSurveyID($surveyid)) == 0)
     {
-        $adminmenu .= menuItem($menutext, $menutext2, "do.png", "$publicurl/index.php?sid=$surveyid&amp;interviewer=interviewer&amp;newtest=Y&amp;lang=$baselang");
+        $adminmenu .= menuItem($menutext, $menutext2, "do.png", "$publicurl/index.php?sid=$surveyid&amp;interviewer=" . $_SESSION['interviewer'] . "&amp;newtest=Y&amp;lang=$baselang");
     }
     else
     {
@@ -123,7 +123,7 @@ function menuSeparator()
       {
           $adminmenu .= "<li><a accesskey='d' onclick=\"$('.dosurvey').qtip('hide');"
             ."\" target='_blank' href='{$publicurl}/index.php?sid=$surveyid&amp;"
-            ."interviewer=interviewer&amp;newtest=Y&amp;lang={$tmp_lang}'>".getLanguageNameFromCode($tmp_lang,false)."</a></li>";
+            ."interviewer=" . $_SESSION['interviewer'] . "&amp;newtest=Y&amp;lang={$tmp_lang}'>".getLanguageNameFromCode($tmp_lang,false)."</a></li>";
       }
       $adminmenu .= "</ul></div>";
     }

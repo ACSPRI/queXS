@@ -586,7 +586,7 @@ function get_respondent_variable($variable,$respondent_id)
  */
 function get_operator_id()
 {
-	if (!isset($_SERVER['PHP_AUTH_USER'])) return false;
+	if (!isset($_SESSION['interviewer'])) return false;
 
 	$db = newADOConnection(DB_TYPE);
 	$db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -595,7 +595,7 @@ function get_operator_id()
 
 	$sql = "SELECT operator_id
 		FROM operator
-		WHERE username = '{$_SERVER['PHP_AUTH_USER']}'
+		WHERE operator_id = '{$_SESSION['interviewer']}'
 		AND enabled = 1";
 
 	$o = $db->GetRow($sql);
@@ -859,7 +859,7 @@ function get_respondent_selection_url()
 	{
 		$sid = get_limesurvey_id($operator_id,true); //true for RS
 		if ($sid != false && !empty($sid) && $sid != 'NULL')
-			$url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
+			$url = LIME_URL . "index.php?interviewer=" . $_SESSION['interviewer'] . "&amp;loadall=reload&amp;sid=$sid&amp;token=$call_id&amp;lang=" . DEFAULT_LOCALE;
 		else
 			$url = 'rs_intro.php';
 	}
@@ -919,7 +919,7 @@ function get_start_interview_url()
 		$token = $db->GetOne($sql);
 
                 $sid = get_limesurvey_id($operator_id);
-                $url = LIME_URL . "index.php?interviewer=interviewer&amp;loadall=reload&sid=$sid&token=$token&lang=" . DEFAULT_LOCALE;
+                $url = LIME_URL . "index.php?interviewer=" . $_SESSION['interviewer'] . "&amp;loadall=reload&sid=$sid&token=$token&lang=" . DEFAULT_LOCALE;
                 $questionnaire_id = get_questionnaire_id($operator_id);
                 
                 //get prefills
