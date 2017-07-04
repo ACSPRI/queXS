@@ -138,7 +138,8 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 	else
 	{
 		$sql = "SELECT  CONVERT_TZ(NOW(),'SYSTEM',r.Time_zone_name) as startdate, 
-						CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 10 YEAR),'SYSTEM',r.Time_zone_name) as enddate,
+						CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 10 YEAR),'SYSTEM',r.Time_zone_name) as enddatem,
+						CONVERT_TZ(DATE_ADD(NOW(), INTERVAL 1 HOUR),'SYSTEM',r.Time_zone_name) as enddate,
 						r.respondent_id, ca.contact_phone_id
 						FROM `case` as c, `respondent` as r, `call` as ca
 						WHERE c.case_id = '$case_id'
@@ -147,6 +148,7 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 		$rs = $db->GetRow($sql); 
 		
 		$startdate = $rs['startdate'];
+		$enddatem = $rs['enddatem'];
 		$enddate = $rs['enddate'];
 		$respondent_id = $rs['respondent_id'];
 		if (!isset($contact_phone_id)) $contact_phone_id = $rs['contact_phone_id'];
@@ -201,7 +203,7 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 				hourGrid: 2,
 				minuteGrid: 10,
 				minDate: '$startdate',
-				maxDate: '$enddate'
+				maxDate: '$enddatem'
 				});});</script>";
 
 			print "<form action='?' method='get' class='form-horizontal form-group'>";
