@@ -2657,8 +2657,6 @@ function check_quota($checkaction,$surveyid)
 			             WHERE ".implode(' AND ',$querycond)." "." 
 					AND s.submitdate IS NOT NULL";
 
-      error_log($querysel);
-
 
                     $result = db_execute_assoc($querysel) or safe_die($connect->ErrorMsg());    //Checked
                     $quota_check = $result->FetchRow();
