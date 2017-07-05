@@ -1,3 +1,12 @@
+queXS 1.15.5 - Changes since 1.15.4
+
+A release to fix quotas set within Limesurvey (broken as of 1.14.0). Also fixes to supervisor appointment creation and display.
+
+Fixed issue: Fatal error in rs_quota_end
+Fixed issue: Limesurvey quotas not working
+Fixed issue: Default end of appointment is in 10 years (changed to 1 hour)
+Fixed issue: Display appointments failing if call attempt auto removed (supervisor page)
+
 queXS 1.15.4 - Changes since 1.15.3
 
 This release fixes bugs with the display of appointments for the administrator and the sample searching function.
