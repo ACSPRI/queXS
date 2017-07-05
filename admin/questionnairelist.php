@@ -376,7 +376,7 @@ if (isset($_GET['modify']))
 		</div>
 		<div class="col-sm-8">
 			<h3 class="pull-left" ><?php echo $rs['lime_sid'],"&emsp;",$rs['title']; ?></h3>
-			<?php echo "<a class='btn btn-default btn-lime pull-right' href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> 
+			<?php echo "<a class='btn btn-default btn-lime pull-right' href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_sid']}&amp;interviewer=1'><i class='fa fa-edit' style='color:blue;'></i>&emsp;" . T_("Edit instrument in Limesurvey") . "&emsp;</a>"; ?> 
 		</div>
 	</div>
 
@@ -497,7 +497,7 @@ if ($rs['respondent_selection'] == 1 && empty($rs['lime_rs_sid'])) { ?>
 	<?php	
 	}
 else if (!empty($rs['lime_rs_sid'])) { 
-	echo "<div class='well text-center'><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></div>"; } 	
+	echo "<div class='well text-center'><a href='" . LIME_URL . "admin/admin.php?sid={$rs['lime_rs_sid']}&amp;interviewer=1'>" . T_("Edit respondent selection instrument in Limesurvey") . "</a></div>"; } 	
 ?>	
 
 	<div class="panel  panel-default">
@@ -569,7 +569,7 @@ else
 			CONCAT('&ensp;<a href=\'\' data-toggle=\'confirmation\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("No") . "\' data-href=\'?disable=',questionnaire_id,'\'><i data-toggle=\'tooltip\' title=\'" . TQ_("Disable") . "\' class=\'fa fa-toggle-on fa-3x\'></i></a>&ensp;')
 		END as enabledisable,
 		CONCAT('<a href=\'?modify=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Edit Questionnaire") . "&ensp;',questionnaire_id,'\' data-toggle=\'tooltip\'><i class=\'fa fa-edit fa-2x \'></i></a>') as modify,
-		CONCAT('<a href=\'" . LIME_URL . "admin/admin.php?sid=',lime_sid,'\' class=\'btn\' title=\'" . T_("Edit Lime survey") . "&ensp;',lime_sid,'\' data-toggle=\'tooltip\'><i class=\'btn-lime fa fa-lemon-o fa-2x\'></i></a>') as inlime,
+		CONCAT('<a href=\'" . LIME_URL . "admin/admin.php?interviewer=1&amp;sid=',lime_sid,'\' class=\'btn\' title=\'" . T_("Edit Lime survey") . "&ensp;',lime_sid,'\' data-toggle=\'tooltip\'><i class=\'btn-lime fa fa-lemon-o fa-2x\'></i></a>') as inlime,
 		CASE WHEN enabled = 0 THEN 
 			CONCAT('<i class=\'btn fa fa-calendar fa-2x\' style=\'color:lightgrey;\'></i>')
 		ELSE

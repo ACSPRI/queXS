@@ -119,11 +119,11 @@ include ("../functions/functions.operator.php");
 		  <li><a class="" href="?"><i class="fa fa-tachometer fa-lg"></i><span><?php print T_("Dashboard") ;?></span></a></li>
           <li class="has_sub"><a href="" class=""><i class="fa fa-list-alt fa-lg"></i><span class="arrow"><?php print T_("Questionnairies") ;?></span></a>
           <ul style="<?php if ($g == 1) echo "display:block";?>">
-				<li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey"><i class="fa fa-file-text-o lime fa-fw"></i><?php print T_("Create an instrument in Limesurvey") ;?></a></li>
+				<li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php?action=newsurvey&amp;interviewer=1"><i class="fa fa-file-text-o lime fa-fw"></i><?php print T_("Create an instrument in Limesurvey") ;?></a></li>
                 <li><a href="?g=1&amp;page=new.php"><i class="fa fa-plus-circle fa-fw"></i><?php print T_("Create a new questionnaire") ;?></a></li>
                 <li><a href="?g=1&amp;page=questionnairelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Questionnaire management") ;?></a></li>
 			    <li><a href="?g=1&amp;page=set_outcomes.php?qid=0"><i class="fa fa-list-ol fa-fw"></i><?php print T_("Set questionnaire outcomes") ;?></a></li>
-                <li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php"><i class="fa fa-lemon-o lime fa-fw"></i><?php print T_("Administer instruments with Limesurvey") ;?></a></li>
+                <li><a href="?g=1&amp;page=<?php echo LIME_URL ;?>admin/admin.php?interviewer=1"><i class="fa fa-lemon-o lime fa-fw"></i><?php print T_("Administer instruments with Limesurvey") ;?></a></li>
                 <li><a href="?g=1&amp;page=questionnaireprefill.php"><i class="fa fa-thumb-tack fa-fw"></i><?php print T_("Pre-fill questionnaire") ;?></a></li>
               </ul>
 		  </li>

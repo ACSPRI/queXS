@@ -266,7 +266,7 @@ if ($questionnaire_id)
 				$completions = $rs['count'];
 				$perc = ROUND(($completions / $r['qlimit']) * 100,2);
 				
-				$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
+				$report[] = array("strata" => "<a href='" . LIME_URL . "/admin/admin.php?interviewer=1&action=quotas&sid={$r['sid']}&quota_id={$r['id']}&subaction=quota_editquota'>" . $r['name'] . "</a>", "quota" => $r['qlimit'], "completions" => $completions, "perc" => $perc);
 			}
 		}
 

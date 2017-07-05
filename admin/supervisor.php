@@ -495,7 +495,7 @@ if ($case_id != false)
 		$id = get_lime_id($case_id);
 		print "<div class='panel-body'>";
 		if ($id)
-			print "<h4><a href='" . LIME_URL . "admin/admin.php?action=dataentry&amp;sid=$sid&amp;subaction=edit&amp;id=$id' class='btn btn-default btn-lime'><i class='fa fa-lemon-o fa-lg'></i>&emsp;" . T_("Modify responses for this case") . "</a></h4>";
+			print "<h4><a href='" . LIME_URL . "admin/admin.php?interviewer=1&amp;action=dataentry&amp;sid=$sid&amp;subaction=edit&amp;id=$id' class='btn btn-default btn-lime'><i class='fa fa-lemon-o fa-lg'></i>&emsp;" . T_("Modify responses for this case") . "</a></h4>";
 		else
 			print "<div class='alert text-danger' role='alert'>" . T_("Case not yet started in Limesurvey") .  "</div>";
 		print "</div></div>";

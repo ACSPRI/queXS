@@ -213,7 +213,7 @@ if ($questionnaire_id)
 	$ls = $db->GetRow($sql);
 	$lsid = $ls['lime_sid'];
 
-	print "&emsp;<a href='" . LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid' class='btn btn-default fa btn-lime'>".  T_("Download data for this questionnaire via Limesurvey") . "</a></div>";
+	print "&emsp;<a href='" . LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid&amp;interviewer=1' class='btn btn-default fa btn-lime'>".  T_("Download data for this questionnaire via Limesurvey") . "</a></div>";
 
 	print "<div class='form-group clearfix'><h3 class='col-sm-4 text-right'>" . T_("Please select a sample") . ":&emsp;</h3>";
 	$sample_import_id = false;
@@ -222,7 +222,7 @@ if ($questionnaire_id)
 
 	if ($sample_import_id)
 	{
-		print "&emsp;<a href='" .LIME_URL . "admin/admin.php?action=exportresults&amp;sid=$lsid&amp;quexsfilterinc=$questionnaire_id:$sample_import_id' class='btn btn-default fa btn-lime'>" . T_("Download data for this sample via Limesurvey") . "</a></div>";
+		print "&emsp;<a href='" .LIME_URL . "admin/admin.php?action=exportresults&amp;interviewer=1&amp;sid=$lsid&amp;quexsfilterinc=$questionnaire_id:$sample_import_id' class='btn btn-default fa btn-lime'>" . T_("Download data for this sample via Limesurvey") . "</a></div>";
 		//get sample vars
 		$sql = "SELECT sivr.var_id as value, sivr.var as description
 		FROM `sample_import_var_restrict` as sivr
