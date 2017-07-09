@@ -29,14 +29,14 @@
  */
 
 /**
- * Language file
- */
-include ("../lang.inc.php");
-
-/**
  * Config file
  */
 include ("../config.inc.php");
+
+/**
+ * Language file
+ */
+include ("../lang.inc.php");
  
 /**
  * Authentication file
