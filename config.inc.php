@@ -42,4 +42,9 @@ if (file_exists(dirname(__FILE__).'/config.inc.local.php'))
 }
 
 include(dirname(__FILE__).'/config.default.php');
+
+if (substr(QUEXS_URL, -1) !== '/') {                                            
+  die("QUEXS_URL / QUEXS_PATH definition must end with a forward slash (/)");              
+}     
+
 ?>
