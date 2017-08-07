@@ -331,7 +331,8 @@ else {
 	WHERE q.enabled=1 AND si.enabled=1 AND a.end < CONVERT_TZ(NOW(),'System','UTC') AND a.completed_call_id IS NULL
 	AND (qsq.quota_reached IS NULL OR qsq.quota_reached != 1 )
 	AND (qsqr.quota_reached IS NULL OR qsqr.quota_reached != 1)
-	AND co.operator_id = '$operator_id'
+    AND co.operator_id = '$operator_id'
+    AND c.current_operator_id IS NULL
 	GROUP BY a.appointment_id
 	ORDER BY a.start ASC";
 	
