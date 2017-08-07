@@ -128,6 +128,7 @@ include ("../functions/functions.operator.php");
 		  <li class="has_sub"><a href="" class=""><i class="fa fa-book fa-lg"></i><span><?php print T_("Samples") ;?></span></a>
               <ul style="<?php if ($g == 2) echo "display:block";?>">
                 <li><a href="?g=2&amp;page=import.php"><i class="fa fa-upload fa-fw"></i><?php print T_("Import a sample file") ;?></a></li>
+                <li><a href="?g=2&amp;page=updatesample.php"><i class="fa fa-plus fa-fw"></i><?php print T_("Add to a sample file") ;?></a></li>
                 <li><a href="?g=2&amp;page=samplelist.php"><i class="fa fa-list fa-fw"></i><?php print T_("Sample management") ;?></a></li>
                 <li><a href="?g=2&amp;page=samplesearch.php"><i class="fa fa-search fa-fw"></i><?php print T_("Search the sample") ;?></a></li>
                 <li><a href="?g=2&amp;page=assignsample.php"><i class="fa fa-link fa-fw"></i><?php print T_("Assign samples to questionnaires") ;?></a></li>

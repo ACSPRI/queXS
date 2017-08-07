@@ -53,6 +53,46 @@ function only_numbers($str)
 	return preg_replace("/[^0-9]/", "",$str);
 }
 
+/**
+ * Verify that a provided file matches an existing sample file
+ */
+function verify_file($file,$import_id)
+{
+  $row = get_first_row($file);
+
+  global $db;
+
+  $sql = "SELECT var,type,var_id
+          FROM sample_import_var_restrict
+          WHERE sample_import_id = $import_id
+          ORDER BY var_id ASC";
+
+  $sivr = $db->GetAll($sql);
+
+  $count = 0;
+
+  $nrow = array();
+
+  foreach($row as $key => $val) {
+    $nrow[$key] = strtolower(str_replace(array(" ,",", ",",","  "," "),"_", $val));
+ 
+  }
+
+  foreach($sivr as $r) {
+    $var = strtolower($r['var']);
+    if ($var != $nrow[$count]) {
+      return false;
+    }
+
+    $count++;
+  }
+
+  //column headings match database
+  if ($count == count($row)) {
+    return true;
+  }
+}
+
 
 /**
  * Verify fields in a CSV file
@@ -188,6 +228,38 @@ function get_first_row($file)
 	return $data;
 }
 
+/** 
+ * Add records to an existing sample
+ */
+function update_file($file,$import_id)
+{
+  global $db;
+
+	$db->StartTrans();
+
+	$selected_type = array();
+	$selected_name = array();
+	$sirv_id = array();
+
+  $sql = "SELECT var_id,var,type
+          FROM sample_import_var_restrict
+          WHERE sample_import_id = $import_id
+          ORDER BY var_id ASC";
+
+  $sivr = $db->GetAll($sql);
+
+  $count = 1;
+  foreach($sivr as $s) {
+    $selected_type[$count] = $s['type'];
+    $selected_name[$count] = $s['var'];
+    $sirv_id[$count] = $s['var_id'];
+    $count++;
+  }
+
+  add_to_sample($file,$import_id,$selected_type,$selected_name,$sirv_id,2);
+
+  return $db->CompleteTrans();
+}
 
 /**
  * Import a CSV file to the sample database
@@ -202,10 +274,6 @@ function get_first_row($file)
  */
 function import_file($file, $description, $fields, $firstrow = 2)
 {
-
-	$row = 1;
-	$handle = fopen($file, "r");
-
 	//import into database
 
 	global $db;
@@ -246,12 +314,32 @@ function import_file($file, $description, $fields, $firstrow = 2)
 		}
 	}
 
+  add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstrow);
+
+  return $db->CompleteTrans();	
+}
+
+/**
+ * add_to_sample
+ *
+ * Add records to the sample file
+ *
+ */
+function add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstrow) 
+{
+  global $db;
+
+  $db->StartTrans();
+
 	/**
 	 * create an ordered index of columns that contain data for obtaining the timezone
 	 * type of 5,4,3,2 preferred
 	 */
 	
 	arsort($selected_type);
+
+	$row = 1;
+	$handle = fopen($file, "r");
 
 	$imported = 0;
 
@@ -346,8 +434,8 @@ function import_file($file, $description, $fields, $firstrow = 2)
 	unlink($file);
 
 	return $db->CompleteTrans();
-	
 }
+
 
 /**
  * Get the timezone given the sample value and type

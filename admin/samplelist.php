@@ -322,6 +322,7 @@ if (isset($_GET['edit']) )
 
 	print "<div class='col-sm-8'><h3>" . T_("Sample") . ":&emsp;" . $sd['description'] . "&emsp;<small>ID <b> $sample_import_id</b> </small></h3></div>";
 	print "<div class='col-sm-2'><a href='samplesearch.php?sample_import_id=$sample_import_id' class='btn btn-default' ><i class='fa fa-search fa-lg fa-fw text-primary'></i>&emsp;" . T_("Search this sample") . "</a></div>";
+	print "<div class='col-sm-2'><a href='updatesample.php?sample_import_id=$sample_import_id' class='btn btn-default' ><i class='fa fa-plus fa-lg fa-fw text-primary'></i>&emsp;" . T_("Add to this sample") . "</a></div>";
 	print "<div class='clearfix'></div>";
 
 	if($sd['enabled'] == 0){
@@ -484,6 +485,7 @@ $sql = "SELECT
 		CONCAT('<a href=\'\' class=\'btn btn-default \' data-toggle=\'confirmation\' data-href=\'?delete_sample=',sample_import_id,'\' data-title=\'" . TQ_("ARE YOU SURE?") . "\' data-btnOkLabel=\'" . TQ_("Yes") . "\' data-btnCancelLabel=\'" . TQ_("Cancel") . "\' ><i class=\'fa fa-trash fa-lg fa-fw text-danger \' data-toggle=\'tooltip\' title=\'" . TQ_("DELETE SAMPLE") . "\'></i></a>')
 	END as delsample,
 	CONCAT('<a href=\'samplesearch.php?sample_import_id=',sample_import_id,'\' class=\'btn btn-default\' data-toggle=\'tooltip\' title=\'" . TQ_("Search the sample") . "',sample_import_id,'\'><i class=\'fa fa-search fa-lg fa-fw text-primary\'></i></a>')  as ssearch,
+	CONCAT('<a href=\'updatesample.php?sample_import_id=',sample_import_id,'\' class=\'btn btn-default\' data-toggle=\'tooltip\' title=\'" . TQ_("Add to the sample") . "',sample_import_id,'\'><i class=\'fa fa-plus fa-lg fa-fw text-primary\'></i></a>')  as sadd,
 	CONCAT('<a href=\'callhistory.php?sample_import_id=',sample_import_id,'\' class=\'btn btn-default\' data-toggle=\'tooltip\' title=\'" . TQ_("Call history"). "&ensp;\n" . TQ_("sample"). "&ensp;',sample_import_id,'\'><i class=\'fa fa-phone fa-lg text-primary\'></i></a>') as calls,
 	CONCAT('<h4>',description,'&emsp;</h4>') as description,
 	CONCAT('<h4 class=\'fa fa-lg text-primary pull-right\'>',(SELECT COUNT( DISTINCT`sample_var`.sample_id) FROM `sample_var`, `sample` WHERE `sample`.sample_id = `sample_var`.sample_id AND `sample`.import_id = sample_import_id ),'&emsp;</h4>') as cnt
@@ -497,7 +499,7 @@ echo "<div class='form-group'>
 		<a href='' onclick='history.back();return false;' class='btn btn-default'><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a>
 		<a href='import.php' class='btn btn-default col-sm-offset-4' ><i class='fa fa-upload fa-lg'></i>&emsp;" . T_("Import a sample file") . "</a>
 	</div>";
-$columns = array("id","description","cnt","status","enabledisable","calls","did","ssearch","delsample"); //"vp","rname",
+$columns = array("id","description","cnt","status","enabledisable","calls","did","ssearch","sadd","delsample"); //"vp","rname",
 //$titles = array(T_("ID"),T_("Sample"),T_("Records"), T_("Call History"),T_("Enable/Disable"), T_("Status"), T_("Deidentify"), T_("View"), T_("Rename"), T_("Search"), T_("Delete sample")); 
 xhtml_table($rs,$columns, false, "table-hover table-condensed ");
 
