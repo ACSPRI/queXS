@@ -106,7 +106,7 @@ if (isset($_GET['key']) || isset($_GET['sample']))
 	(SELECT cp1.phone FROM `call` as cl4, `contact_phone` as cp1 WHERE cl4.call_id = c.last_call_id AND cp1.contact_phone_id = cl4.contact_phone_id ) as lastnumber,
 	(SELECT cl55.start  FROM `call` as cl55 WHERE cl55.call_id = c.last_call_id ) as lastcallstart,
 	(SELECT op1.username FROM `call` as cl5, `operator` as op1 WHERE cl5.call_id = c.last_call_id AND op1.operator_id = cl5.operator_id) as operatoru, 
-	(SELECT GROUP_CONCAT(DISTINCT sr1.report SEPARATOR '|') FROM `call` as cl6, `shift` as sh1, `shift_report` as sr1 WHERE cl6.case_id = c.case_id AND sr1.shift_id = sh1.shift_id AND sh1.questionnaire_id = c.questionnaire_id AND cl6.start >= sh1.start AND cl6.end < sh1.end GROUP BY sr1.shift_id) as shiftr,
+	(SELECT GROUP_CONCAT(DISTINCT sr1.report SEPARATOR '|') FROM `call` as cl6, `shift` as sh1, `shift_report` as sr1 WHERE cl6.case_id = c.case_id AND sr1.shift_id = sh1.shift_id AND sh1.questionnaire_id = c.questionnaire_id AND cl6.start >= sh1.start AND cl6.end < sh1.end GROUP BY cl6.case_id) as shiftr,
 	o.aapor_id ";
 
 	$i = 0;

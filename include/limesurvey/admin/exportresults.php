@@ -518,7 +518,7 @@ if ($tokenTableExists && $thissurvey['anonymized']=='N' && isset($_POST['attribu
       AND sh1.questionnaire_id = ca8.questionnaire_id
       AND cl6.start >= sh1.start
       AND cl6.end < sh1.end
-      GROUP BY sr1.shift_id) as shiftr ";
+      GROUP BY cl6.case_id) as shiftr ";
     }
     if (in_array('token',$_POST['attribute_select']))
     {
