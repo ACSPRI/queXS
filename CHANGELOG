@@ -1,3 +1,16 @@
+queXS 1.15.6 - Changes since 1.15.5
+
+Various bug fixes (see below), along with the ability to add records to an existing sample.
+
+Fixed issue: Data output including shift reports failing
+Fixed issue: Missing appointments displaying even where currently assigned to an operator
+Fixed issue: lp:1703319 QUEXS_URL Address Defenition
+Fixed issue: lp:1702874 DEFAULT_LOCALE not defined on admin
+
+New feature: Add records to an existing sample
+
+Translations have also been updated - thank you!
+
 queXS 1.15.5 - Changes since 1.15.4
 
 A release to fix quotas set within Limesurvey (broken as of 1.14.0). Also fixes to supervisor appointment creation and display.
