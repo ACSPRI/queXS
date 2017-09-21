@@ -314,6 +314,8 @@ if ($sample_import_id != false)
 <script type="text/javascript">
 $(document).ready(function() {
   $('#bs-table').DataTable( {
+    "dom": 'Bfrtip',
+    "buttons": ['copy','csv','excel','pdf','print'],
     "processing": true,
     "serverSide": true,
     "ajax": {
