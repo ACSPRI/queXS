@@ -62,7 +62,7 @@ function get_CPH_by_shift($qid,$sid)
 			AND s.`start` <= a.`start`
 			AND s.`end` >= a.`start`
 			GROUP BY a.operator_id) as c on (c.operator_id = o.operator_id)
-		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , a.start, IFNULL(a.end,CONVERT_TZ(NOW(),'System','UTC')))) as time, a.operator_id
+		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , a.start, IFNULL(a.end,a.start))) as time, a.operator_id
 			FROM `call_attempt` as a, `case` as b, `shift` as s
 			WHERE a.case_id = b.case_id
 			AND b.questionnaire_id = '$qid'
@@ -100,7 +100,7 @@ function get_CPH_by_questionnaire($qid)
 			AND a.case_id = b.case_id
 			AND b.questionnaire_id = '$qid'
 			GROUP BY a.operator_id) as c on (c.operator_id = o.operator_id)
-		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , a.start, IFNULL(a.end,CONVERT_TZ(NOW(),'System','UTC')))) as time, a.operator_id
+		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , a.start, IFNULL(a.end,a.start))) as time, a.operator_id
 			FROM `call_attempt` as a, `case` as b
 			WHERE a.case_id = b.case_id
 			AND b.questionnaire_id = '$qid'
@@ -133,7 +133,7 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
 		FROM operator AS o
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call` AS c, `case` as b, `shift` as s
 			WHERE c.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
@@ -144,7 +144,7 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
 			) AS calltime ON ( calltime.operator_id = o.operator_id )
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call_attempt` AS c, `case` as b, `shift` as s
 			WHERE c.case_id = b.case_id
 			AND s.shift_id = '$shift_id'
@@ -388,13 +388,13 @@ function get_stats()
 		FROM operator AS o
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call` AS c
 			GROUP BY operator_id
 			) AS calltime ON ( calltime.operator_id = o.operator_id )
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call_attempt` AS c, `case` as b
 			GROUP BY operator_id
 		) AS callattempttime ON ( callattempttime.operator_id = o.operator_id )
@@ -435,7 +435,7 @@ function get_stats_by_questionnaire($questionnaire_id)
 		FROM operator AS o
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call` AS c, `case` as b
 			WHERE c.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
@@ -443,7 +443,7 @@ function get_stats_by_questionnaire($questionnaire_id)
 			) AS calltime ON ( calltime.operator_id = o.operator_id )
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call_attempt` AS c, `case` as b
 			WHERE c.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
@@ -490,7 +490,7 @@ function get_CPH()
 			FROM `call`
 			WHERE outcome_id = '10'
 			GROUP BY operator_id) as c on (c.operator_id = o.operator_id)
-		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , start, IFNULL(end,CONVERT_TZ(NOW(),'System','UTC')))) as time, operator_id
+		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , start, IFNULL(end,start))) as time, operator_id
 			FROM `call_attempt`
 			GROUP BY operator_id) as ca on (ca.operator_id = o.operator_id)
 		WHERE o.enabled = 1
@@ -522,7 +522,7 @@ function get_effectiveness_by_questionnaire($questionnaire_id)
 		FROM operator AS o
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call` AS c, `case` as b
 			WHERE c.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
@@ -530,7 +530,7 @@ function get_effectiveness_by_questionnaire($questionnaire_id)
 			) AS calltime ON ( calltime.operator_id = o.operator_id )
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call_attempt` AS c, `case` as b
 			WHERE c.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
@@ -557,13 +557,13 @@ function get_effectiveness()
 		FROM operator AS o
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call` AS c
 			GROUP BY operator_id
 			) AS calltime ON ( calltime.operator_id = o.operator_id )
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
-			SECOND , c.start, IFNULL( c.end, CONVERT_TZ( NOW( ) , 'System', 'UTC' ) ) ) ) AS totaltime, operator_id
+			SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id
 			FROM `call_attempt` AS c
 			GROUP BY operator_id
 		) AS callattempttime ON ( callattempttime.operator_id = o.operator_id )
