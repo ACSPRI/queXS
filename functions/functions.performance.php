@@ -268,24 +268,45 @@ function get_stats_by_time($start,$end,$byoperator = true)
     $group = 'operator_id';
   }
 
+
   $initial = $report[0][$group];
   $rsplit = array(); //this part of the report
   $freport = array(); //final report;
 
   foreach($report as $key => $value) {
-    $rsplit[] = $value;
-    $freport[] = $value;
     if ($value[$group] != $initial) {
       $initial = $value[$group];
       $rtotal = get_stats_total($rsplit);
-      $rtotal[1]['firstName'] = $rsplit[0]['firstName'];
-      $rtotal[1]['description'] = $rsplit[0]['description'];
+      $rtotal = end($rtotal);
+      if ($byoperator) {
+        $rtotal['firstName'] = $rsplit[0]['firstName'];
+      } else {
+        $rtotal['description'] = $rsplit[0]['description'];
+      }
       $rsplit = array();
-      $freport[] = $rtotal[1];
+      $freport[] = $rtotal;
     }
+    $rsplit[] = $value;
+    $freport[] = $value;
   }
+  $rtotal = get_stats_total($rsplit);
+  $rtotal = end($rtotal);
+  if ($byoperator) {
+    $rtotal['firstName'] = $rsplit[0]['firstName'];
+  } else {
+    $rtotal['description'] = $rsplit[0]['description'];
+  }
+  $freport[] = $rtotal;
 
-  $freport[] = $overalltotal[1];
+  $overalltotal =  end($overalltotal);
+
+  if ($byoperator) {
+    $overalltotal['firstName'] = T_("Total");
+  } else {
+    $overalltotal['description'] = T_("Total");
+  }
+  
+  $freport[] = $overalltotal;
 
   return $freport;
 }
