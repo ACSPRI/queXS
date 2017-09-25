@@ -51,7 +51,7 @@ function get_CPH_by_shift($qid,$sid)
 {
 	global $db;
 
-	$sql = "SELECT o.firstName,o.operator_id,c.completions,SEC_TO_TIME(ca.time) as time, c.completions/(ca.time / 3600) as CPH
+	$sql = "SELECT o.firstName,o.operator_id,c.completions,ca.time as time, c.completions/(ca.time / 3600) as CPH
 		FROM operator as o
 		JOIN (  SELECT count(*) as completions,a.operator_id
 			FROM `call` as a, `case` as b, `shift` as s
@@ -71,9 +71,15 @@ function get_CPH_by_shift($qid,$sid)
 			AND s.`end` >= a.`start`
 			GROUP BY operator_id) as ca on (ca.operator_id = o.operator_id)
 		WHERE o.enabled = 1
-		ORDER BY cph DESC";
+    ORDER BY cph DESC";
 
-	return $db->GetAll($sql);
+  $r = $db->GetAll($sql);
+
+  foreach($r as $key => $value) {
+    $r[$key]['time'] = sec_to_time($value['time']);
+  }
+
+  return $r;
 }
 
 /**
@@ -86,7 +92,7 @@ function get_CPH_by_questionnaire($qid)
 {
 	global $db;
 
-	$sql = "SELECT o.firstName,o.operator_id,c.completions,SEC_TO_TIME(ca.time) as time, c.completions/(ca.time / 3600) as CPH
+	$sql = "SELECT o.firstName,o.operator_id,c.completions,ca.time as time, c.completions/(ca.time / 3600) as CPH
 		FROM operator as o
 		JOIN (  SELECT count(*) as completions,a.operator_id
 			FROM `call` as a, `case` as b
@@ -102,8 +108,13 @@ function get_CPH_by_questionnaire($qid)
 		WHERE o.enabled = 1
 		ORDER BY cph DESC";
 
+  $r = $db->GetAll($sql);
 
-	return $db->GetAll($sql);
+  foreach($r as $key => $value) {
+    $r[$key]['time'] = sec_to_time($value['time']);
+  }
+
+  return $r;
 }
 
 /**
@@ -117,7 +128,7 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
 {
 	global $db;
 
-	$sql = "SELECT o.operator_id, o.firstName, (calltime.totaltime / callattempttime.totaltime) AS effectiveness, c.completions,SEC_TO_TIME(callattempttime.totaltime) as time, c.completions/(callattempttime.totaltime / 3600) as CPH, SEC_TO_TIME(calltime.totaltime) as callt, SEC_TO_TIME(callattempttime.totaltime) as callatemptt, calls.calls as totalcalls, calls.calls/(callattempttime.totaltime / 3600) as CALLSPH, calltime.totaltime as calltotaltime, callattempttime.totaltime as callattempttotaltime
+	$sql = "SELECT o.operator_id, o.firstName, (calltime.totaltime / callattempttime.totaltime) AS effectiveness, c.completions,callattempttime.totaltime as time, c.completions/(callattempttime.totaltime / 3600) as CPH, calltime.totaltime as callt, callattempttime.totaltime as callatemptt, calls.calls as totalcalls, calls.calls/(callattempttime.totaltime / 3600) as CALLSPH, calltime.totaltime as calltotaltime, callattempttime.totaltime as callattempttotaltime
 
 		FROM operator AS o
 		JOIN (
@@ -162,7 +173,121 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
 		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 
-	return $db->GetAll($sql);
+  $r = $db->GetAll($sql);
+
+  foreach($r as $key => $value) {
+    $r[$key]['time'] = sec_to_time($value['time']);
+    $r[$key]['callt'] = sec_to_time($value['callt']);
+    $r[$key]['callatemptt'] = sec_to_time($value['callatemptt']);
+  }
+
+  return $r;
+}
+
+/**
+ * Get stats by interviewer by questionnaire by time
+ *
+ * @param string $start The start time
+ * @param string $end The end time
+ * @param bool $byoperator Display report by operator (false by questionnaire)
+ * @return arrayh An array containing operator,questionnaire,firstName,CPH,effectiveness,
+ */
+function get_stats_by_time($start,$end,$byoperator = true)
+{
+	global $db;
+
+  $start = $db->qstr($start);
+  $end = $db->qstr($end);
+
+	$sql = "SELECT q.questionnaire_id,o.operator_id, qq.description, o.firstName, (calltime.totaltime / callattempttime.totaltime) AS effectiveness, c.completions,callattempttime.totaltime as time, c.completions/(callattempttime.totaltime / 3600) as CPH, calltime.totaltime as callt, callattempttime.totaltime as callatemptt, calls.calls as totalcalls, calls.calls/(callattempttime.totaltime / 3600) as CALLSPH, calltime.totaltime as calltotaltime, callattempttime.totaltime as callattempttotaltime
+
+    FROM operator AS o
+    JOIN operator_questionnaire as q ON (q.operator_id = o.operator_id)
+    JOIN questionnaire as qq ON (qq.questionnaire_id = q.questionnaire_id) 
+
+    JOIN (
+      SELECT SUM( TIMESTAMPDIFF(
+      SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id, questionnaire_id
+      FROM `call` AS c, `case` as b
+      WHERE c.case_id = b.case_id
+      AND c.`start` >= $start
+      AND c.`end` <= $end
+      GROUP BY operator_id, questionnaire_id
+      ) AS calltime ON ( calltime.operator_id = o.operator_id AND calltime.questionnaire_id = q.questionnaire_id )
+
+    JOIN (
+      SELECT SUM( TIMESTAMPDIFF(
+      SECOND , c.start, IFNULL( c.end, c.start ) ) ) AS totaltime, operator_id, questionnaire_id
+      FROM `call_attempt` AS c, `case` as b
+      WHERE c.case_id = b.case_id
+      AND c.`start` >= $start
+      AND c.`end` <= $end
+      GROUP BY operator_id, questionnaire_id
+    ) AS callattempttime ON ( callattempttime.operator_id = o.operator_id  AND callattempttime.questionnaire_id = q.questionnaire_id )
+
+    JOIN (  SELECT count(*) as completions,a.operator_id,b.questionnaire_id
+      FROM `call` as a, `case` as b
+      WHERE a.outcome_id = '10'
+      AND a.`start` >= $start
+      AND a.`end` <= $end
+      AND a.case_id = b.case_id
+      GROUP BY a.operator_id,b.questionnaire_id) as c on (c.operator_id = o.operator_id AND c.questionnaire_id = q.questionnaire_id)
+
+    JOIN (  SELECT count(*) as calls,a.operator_id, b.questionnaire_id
+      FROM `call` as a, `case` as b
+      WHERE a.case_id = b.case_id
+      AND a.`start` >= $start
+      AND a.`end` <= $end
+      GROUP BY a.operator_id,b.questionnaire_id) as calls on (calls.operator_id = o.operator_id AND calls.questionnaire_id = q.questionnaire_id)";
+
+  if ($byoperator) {
+    $sql .= " WHERE o.enabled = 1
+    ORDER BY o.operator_id ASC, q.questionnaire_id ASC";
+  } else {
+    $sql .= " WHERE qq.enabled = 1
+    ORDER BY q.questionnaire_id ASC, o.operator_id ASC";
+  }
+
+  $report = $db->GetAll($sql);
+ 
+  foreach($report as $key => $value) {
+    $report[$key]['time'] = sec_to_time($value['time']);
+    $report[$key]['callt'] = sec_to_time($value['callt']);
+    $report[$key]['callatemptt'] = sec_to_time($value['callatemptt']);
+  }
+
+
+
+
+  //add totals
+  $overalltotal = get_stats_total($report);
+
+  //split by groupings and add subtotals
+  $group = 'questionnaire_id';
+  if ($byoperator) {
+    $group = 'operator_id';
+  }
+
+  $initial = $report[0][$group];
+  $rsplit = array(); //this part of the report
+  $freport = array(); //final report;
+
+  foreach($report as $key => $value) {
+    $rsplit[] = $value;
+    $freport[] = $value;
+    if ($value[$group] != $initial) {
+      $initial = $value[$group];
+      $rtotal = get_stats_total($rsplit);
+      $rtotal[1]['firstName'] = $rsplit[0]['firstName'];
+      $rtotal[1]['description'] = $rsplit[0]['description'];
+      $rsplit = array();
+      $freport[] = $rtotal[1];
+    }
+  }
+
+  $freport[] = $overalltotal[1];
+
+  return $freport;
 }
 
 /**
@@ -173,6 +298,7 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
  */
 function sec_to_time($seconds)
 {
+      var_dump($seconds);
 	$h = 0;
 	$m = 0;
 	if($seconds >= 3600){
@@ -184,7 +310,11 @@ function sec_to_time($seconds)
     		$seconds = ($seconds%60);
     	}
     	$s = floor($seconds);
-	
+
+  var_dump($h);
+  var_dump($m);
+  var_dump($s);
+
 	return sprintf("%02d:%02d:%02d", $h, $m, $s);
 }
 
@@ -238,7 +368,7 @@ function get_stats()
 {
 	global $db;
 
-	$sql = "SELECT o.operator_id, o.firstName, (calltime.totaltime / callattempttime.totaltime) AS effectiveness, c.completions,SEC_TO_TIME(callattempttime.totaltime) as time, c.completions/(callattempttime.totaltime / 3600) as CPH, SEC_TO_TIME(calltime.totaltime) as callt, SEC_TO_TIME(callattempttime.totaltime) as callatemptt, calls.calls as totalcalls, calls.calls/(callattempttime.totaltime / 3600) as CALLSPH, calltime.totaltime as calltotaltime, callattempttime.totaltime as callattempttotaltime
+	$sql = "SELECT o.operator_id, o.firstName, (calltime.totaltime / callattempttime.totaltime) AS effectiveness, c.completions,callattempttime.totaltime as time, c.completions/(callattempttime.totaltime / 3600) as CPH, calltime.totaltime as callt, callattempttime.totaltime as callatemptt, calls.calls as totalcalls, calls.calls/(callattempttime.totaltime / 3600) as CALLSPH, calltime.totaltime as calltotaltime, callattempttime.totaltime as callattempttotaltime
 		FROM operator AS o
 		JOIN (
 			SELECT SUM( TIMESTAMPDIFF(
@@ -262,7 +392,15 @@ function get_stats()
 		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 
-	return $db->GetAll($sql);
+  $r = $db->GetAll($sql);
+
+  foreach($r as $key => $value) {
+    $r[$key]['time'] = sec_to_time($value['time']);
+    $r[$key]['callt'] = sec_to_time($value['callt']);
+    $r[$key]['callatemptt'] = sec_to_time($value['callatemptt']);
+  }
+
+  return $r;
 }
 
 
@@ -276,7 +414,7 @@ function get_stats_by_questionnaire($questionnaire_id)
 {
 	global $db;
 
-	$sql = "SELECT o.operator_id, o.firstName, (calltime.totaltime / callattempttime.totaltime) AS effectiveness, c.completions,SEC_TO_TIME(callattempttime.totaltime) as time, c.completions/(callattempttime.totaltime / 3600) as CPH, SEC_TO_TIME(calltime.totaltime) as callt, SEC_TO_TIME(callattempttime.totaltime) as callatemptt, calls.calls as totalcalls, calls.calls/(callattempttime.totaltime / 3600) as CALLSPH, calltime.totaltime as calltotaltime, callattempttime.totaltime as callattempttotaltime
+	$sql = "SELECT o.operator_id, o.firstName, (calltime.totaltime / callattempttime.totaltime) AS effectiveness, c.completions,callattempttime.totaltime as time, c.completions/(callattempttime.totaltime / 3600) as CPH, calltime.totaltime as callt, callattempttime.totaltime as callatemptt, calls.calls as totalcalls, calls.calls/(callattempttime.totaltime / 3600) as CALLSPH, calltime.totaltime as calltotaltime, callattempttime.totaltime as callattempttotaltime
 
 		FROM operator AS o
 		JOIN (
@@ -309,7 +447,15 @@ function get_stats_by_questionnaire($questionnaire_id)
 		WHERE o.enabled = 1
 		ORDER BY effectiveness DESC";
 
-	return $db->GetAll($sql);
+  $r = $db->GetAll($sql);
+
+  foreach($r as $key => $value) {
+    $r[$key]['time'] = sec_to_time($value['time']);
+    $r[$key]['callt'] = sec_to_time($value['callt']);
+    $r[$key]['callatemptt'] = sec_to_time($value['callatemptt']);
+  }
+
+  return $r;
 }
 
 /**
@@ -322,7 +468,7 @@ function get_CPH()
 {
 	global $db;
 
-	$sql = "SELECT o.firstName,o.operator_id,c.completions,SEC_TO_TIME(ca.time) as time, c.completions/(ca.time / 3600) as CPH
+	$sql = "SELECT o.firstName,o.operator_id,c.completions,ca.time as time, c.completions/(ca.time / 3600) as CPH
 		FROM operator as o
 		JOIN (  SELECT count(*) as completions,operator_id
 			FROM `call`
@@ -334,7 +480,14 @@ function get_CPH()
 		WHERE o.enabled = 1
 		ORDER BY cph DESC";
 	
-	return $db->GetAll($sql);
+  $r = $db->GetAll($sql);
+
+  foreach($r as $key => $value) {
+    $r[$key]['time'] = sec_to_time($value['time']);
+  }
+
+  return $r;
+
 }
 
 
