@@ -1,3 +1,14 @@
+queXS 2.1.3 - CHanges since 2.1.2
+
+A new overall performance report has been added along with the ability to download the searched portion of the sample to a file.
+
+New feature: Overall performance report
+New feature: Download searched sample to file
+New feature: Added docker-compose template
+
+Fixed issue: Performance reporting with unended calls has undefined result (was using NOW())
+Fixed issue: Total call time limited to MySQL SEC_TO_TIME function
+
 queXS 2.1.2 - Changes since 2.1.1
 
 Various bug fixes (see below), along with the ability to add records to an existing sample.
