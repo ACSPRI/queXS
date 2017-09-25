@@ -298,7 +298,6 @@ function get_stats_by_time($start,$end,$byoperator = true)
  */
 function sec_to_time($seconds)
 {
-      var_dump($seconds);
 	$h = 0;
 	$m = 0;
 	if($seconds >= 3600){
@@ -310,10 +309,6 @@ function sec_to_time($seconds)
     		$seconds = ($seconds%60);
     	}
     	$s = floor($seconds);
-
-  var_dump($h);
-  var_dump($m);
-  var_dump($s);
 
 	return sprintf("%02d:%02d:%02d", $h, $m, $s);
 }
