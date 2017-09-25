@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+
+  quexs:
+    image: acspri/quexs:latest
+    ports:
+      - 8080:80
+    environment:
+      QUEXS_DB_PASSWORD: example
+      QUEXS_PORT: :8080
+    volumes:
+      - ./:/var/www/html
+
+  mysql:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: example
