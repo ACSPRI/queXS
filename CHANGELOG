@@ -1,3 +1,14 @@
+queXS 1.15.7 - Changes since 1.15.6
+
+A new overall performance report has been added along with the ability to download the searched portion of the sample to a file.
+
+New feature: Overall performance report
+New feature: Download searched sample to file
+New feature: Added docker-compose template
+
+Fixed issue: Performance reporting with unended calls has undefined result (was using NOW())
+Fixed issue: Total call time limited to MySQL SEC_TO_TIME function
+
 queXS 1.15.6 - Changes since 1.15.5
 
 Various bug fixes (see below), along with the ability to add records to an existing sample.
