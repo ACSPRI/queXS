@@ -1,3 +1,9 @@
+queXS 1.15.8 - Changes since 1.15.7
+
+Quick bug fix for missing file in release
+
+Fixed issue: Missing overallperformance.php file
+
 queXS 1.15.7 - Changes since 1.15.6
 
 A new overall performance report has been added along with the ability to download the searched portion of the sample to a file.
