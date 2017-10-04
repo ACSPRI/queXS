@@ -320,18 +320,19 @@ if ($case_id != false)
 		print "<div class='panel-body'><h4 class=''><i class='fa fa-book'></i>&emsp;" . T_("Sample details")."</h4>";
 		
 		$sql = "SELECT sv.sample_id, MIN(c.case_id) as case_id , MIN(s.Time_zone_name) as Time_zone_name,
-			MIN(TIME_FORMAT(CONVERT_TZ(NOW(),'System',s.Time_zone_name),'". TIME_FORMAT ."')) as time
+      MIN(TIME_FORMAT(CONVERT_TZ(NOW(),'System',s.Time_zone_name),'". TIME_FORMAT ."')) as time,
+      MIN(c.token) as token
 			FROM sample_var AS sv
 			LEFT JOIN (`case` AS c , sample as s) ON ( c.sample_id = sv.sample_id AND s.sample_id = c.sample_id ) WHERE c.case_id = '$case_id'
 			GROUP BY sv.sample_id";
 		$r = $db->GetAll($sql);
 		if ($r){
-		$fnames = array("sample_id", "Time_zone_name", "time");
-		$fdesc = array(T_("Sample id"),T_("Timezone"),T_("Time NOW"));
+		$fnames = array("sample_id", "token", "Time_zone_name", "time");
+		$fdesc = array(T_("Sample id"),T_("Token"),T_("Timezone"),T_("Time NOW"));
 		$varr= array();
 		$sql = "SELECT var,var_id
 				FROM sample_import_var_restrict
-				WHERE sample_import_id = $sid AND type IN (2,3,6,7)
+				WHERE sample_import_id = $sid 
 				ORDER by var DESC";
 		$rs = $db->GetAll($sql);
 
