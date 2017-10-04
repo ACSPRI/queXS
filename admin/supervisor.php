@@ -165,7 +165,7 @@ if (!empty($rs))
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h3 class="modal-title" id="calloutcome"><?php echo T_("Set an outcome for this call");?></h3>
-				</div><form method="get" action="?" class="form-inline ">
+				</div><form method="get" action="?case_id=<?php echo $case_id;?>" class="form-inline ">
 				<div class="modal-body">
 			<?php 	
 			if (isset($_GET['call_id'])){ $call_id = bigintval($_GET['call_id']); 
@@ -231,18 +231,18 @@ if (isset($_GET['call_id']))
 }
 if ($case_id != false)
 {
-	if (isset($_GET['note']))
+	if (isset($_POST['note']))
 	{
-		$note = $db->qstr($_GET['note']);
+		$note = $db->qstr($_POST['note']);
 		
 		$sql = "INSERT INTO `case_note` (case_note_id,case_id,operator_id,note,datetime)
 			VALUES (NULL,'$case_id','$operator_id',$note,CONVERT_TZ(NOW(),'System','UTC'))";
 		$db->Execute($sql);
 	}
 
-	if (isset($_GET['outcome_id']))
+	if (isset($_POST['outcome_id']))
 	{
-		$outcome_id = bigintval($_GET['outcome_id']);
+		$outcome_id = bigintval($_POST['outcome_id']);
 
 		if ($outcome_id > 0)
 		{
@@ -254,9 +254,9 @@ if ($case_id != false)
 		}
 	}
 
-	if (isset($_GET['operator_id']))
+	if (isset($_POST['operator_id']))
 	{
-		$case_operator_id = bigintval($_GET['operator_id']);
+		$case_operator_id = bigintval($_POST['operator_id']);
 
 		if ($case_operator_id == 0)
 		{
@@ -275,7 +275,7 @@ if ($case_id != false)
 		$db->Execute($sql);
 	}
 
-	if (isset($_GET['submitag']))
+	if (isset($_POST['submitag']))
 	{
 		$db->StartTrans();
 
@@ -284,7 +284,7 @@ if ($case_id != false)
 
 		$db->Execute($sql);
 
-		foreach($_GET as $key => $val)
+		foreach($_POST as $key => $val)
 		{
 			if (substr($key,0,2) == "ag")
 			{
@@ -436,8 +436,7 @@ if ($case_id != false)
 			}	
 		//add a note
 		?>
-		<form method="get" action="?" class="form-inline" >	
-		<input type="hidden" name="case_id" value="<?php  echo $case_id;?>"/>
+		<form method="post" action="?case_id=<?php echo $case_id;?>" class="form-inline" >	
 		<input type="text" class="textclass form-control" name="note" id="note" style="width: 70%;"/>&ensp;
 		<button class="submitclass btn btn-default" type="submit" name="submit"><i class="fa fa-file-text"></i>&emsp;<?php  echo T_("Add note"); ?></button> 
 		</form>
@@ -476,7 +475,7 @@ if ($case_id != false)
 		
 		print "<div class='panel-body'><h4><i class='fa fa-link'></i>&emsp;" . T_("Assign this case to operator (will appear as next case for them)") . "</h4>";
 		?>
-		<form method="get" action="?" class="form-inline">
+		<form method="post" action="?case_id=<?php echo $case_id;?>" class="form-inline">
 		<?php               
 			$sql = "SELECT operator_id as value,CONCAT(firstName,' ', lastName) as description, CASE WHEN next_case_id = '$case_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM operator
@@ -485,7 +484,6 @@ if ($case_id != false)
 			$rs3 = $db->GetAll($sql);
 			display_chooser($rs3, "operator_id", "operator_id",true,false,false,false);
 		?>
-		<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>
 		<button class="submitclass btn btn-default" type="submit" name="submit" ><i class="fa fa-link fa-lg"></i>&emsp;<?php echo T_("Assign this case to operator"); ?></button>
 		</form></div>
 		<?php 
@@ -517,7 +515,7 @@ if ($case_id != false)
 			$rs = $db->GetAll($sql);
 
 			//Display all availability groups as checkboxes
-			print "<form action='?' method='get' class='form-horizontal '>";
+			print "<form action='?case_id=<?php echo $case_id;?>' method='post' class='form-horizontal '>";
 			print "<h5 class=''>" . T_("Select groups to limit availability (Selecting none means always available)") .  "</h5><div class='col-sm-6'>";
 			foreach ($rs as $g)
 			{
@@ -530,7 +528,6 @@ if ($case_id != false)
 				print "&ensp;<input type='checkbox' name='ag{$g['availability_group_id']}' id='ag{$g['availability_group_id']}'	value='{$g['availability_group_id']}' $checked />&ensp; <label class='control-label' for='ag{$g['availability_group_id']}'>{$g['description']}</label></br>";
 			}
 		?>	</div>
-			<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>
 			<button class="submitclass btn btn-default pull-right" type="submit" name="submitag"><i class="fa fa-calendar fa-lg"></i>&emsp;<?php echo T_("Update case availability");?></button>
 			</form>
 		<?php 
@@ -544,7 +541,7 @@ if ($case_id != false)
 		//set an outcome
 		print "<div class='clearfix '></div><div class='panel-body col-sm-6 '><h4><i class='fa fa-dot-circle-o'></i>&emsp;" . T_("Set a case outcome") . "</h4>";
 		?>
-		<form method="get" action="?" class="form-inline">
+		<form method="post" action="?case_id=<?php echo $case_id;?>" class="form-inline">
 		<?php               
 			$sql = "SELECT outcome_id as value,description, CASE WHEN outcome_id = '$current_outcome_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
 				FROM outcome";
@@ -553,7 +550,7 @@ if ($case_id != false)
 			translate_array($rs2,array("description"));
 			display_chooser($rs2, "outcome_id", "outcome_id",true,false,false,false);
 		?>
-		<input type="hidden" name="case_id" value="<?php  echo $case_id;?>" /><br/><br/>
+		<br/><br/>
 		<button class="submitclass btn btn-primary" type="submit" name="submit" ><i class="fa fa-dot-circle-o fa-lg"></i>&emsp;<?php  echo T_("Set outcome"); ?></button>
 		</form>
 		<?php 
@@ -563,8 +560,7 @@ if ($case_id != false)
 		print "<div class='panel-body col-sm-6 pull-right'><h4 class ='text-danger'><i class='fa fa-trash-o fa-lg'></i>&emsp;" . T_("Deidentify") . "</h4>";
 		print "<div class='well'>" . T_("Remove all sample details and contact numbers from this case") . "</div>";
 		?>
-		<form method="get" action="?">
-		<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>
+		<form method="post" action="?case_id=<?php echo $case_id;?>">
 		<button class=" btn btn-danger" name="deidentify" id="deidentify" data-toggle="confirmation" ><i class="fa fa-trash fa-lg"></i>&emsp;<?php echo T_("Deidentify");?></button>
 		</form></div>
 		<?php }
