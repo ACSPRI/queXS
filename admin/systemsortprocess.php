@@ -124,8 +124,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
   		$sql = "UPDATE `case`
   			SET current_operator_id = NULL, current_outcome_id = 5
   			WHERE case_id = '{$r['case_id']}'
-  			AND current_operator_id IS NOT NULL
-  			AND current_call_id IS NULL";
+  			AND current_operator_id IS NOT NULL";
   
   		$db->Execute($sql);
   
