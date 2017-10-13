@@ -1,3 +1,12 @@
+queXS 1.15.9 - Changes since 1.15.8
+
+Fixes various bugs
+
+Fixed issue: Max call attempts outcome overriding Refusal outcomes
+Fixed issue: Stale cases not ending if technically still on a call
+Fixed issue: GET requests when adding case notes can cause duplicate requests
+Fixed issue: Not enough sample detail in assign outcomes to cases page
+
 queXS 1.15.8 - Changes since 1.15.7
 
 Quick bug fix for missing file in release
