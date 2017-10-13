@@ -1,4 +1,13 @@
-queXS 2.1.3 - CHanges since 2.1.2
+queXS 2.1.4 - Changes since 2.1.3
+
+Fixes various bugs
+
+Fixed issue: Max call attempts outcome overriding Refusal outcomes
+Fixed issue: Stale cases not ending if technically still on a call
+Fixed issue: GET requests when adding case notes can cause duplicate requests
+Fixed issue: Not enough sample detail in assign outcomes to cases page
+
+queXS 2.1.3 - Changes since 2.1.2
 
 A new overall performance report has been added along with the ability to download the searched portion of the sample to a file.
 
