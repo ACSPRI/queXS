@@ -2151,9 +2151,10 @@ function end_case($operator_id)
 			$outcome = 1; //default outcome is 1 - not attempted
 	
 			//last call
-			$sql = "SELECT call_id,outcome_id
-				FROM `call`
-				WHERE case_id = '$case_id'
+			$sql = "SELECT c.call_id,c.outcome_id, o.tryanother
+				FROM `call` as c, `outcome` as o
+                WHERE case_id = '$case_id'
+                AND c.outcome_id = o.outcome_id
 				ORDER BY call_id DESC
 				LIMIT 1";
 	
@@ -2211,7 +2212,7 @@ function end_case($operator_id)
                   AND o.eligible = 1
                   AND c.case_id = '$case_id'";
 
-        if ($cm['call_attempt_max'] > 0 && $callattempts >= $cm['call_attempt_max']) //max call attempts reached
+        if ($l['tryanother'] == 1 && $cm['call_attempt_max'] > 0 && $callattempts >= $cm['call_attempt_max']) //max call attempts reached AND last call to be tried again
         {
           //if ever eligible, code as eligible
           if ($db->GetOne($eligsql) > 0)
@@ -2219,7 +2220,7 @@ function end_case($operator_id)
           else
             $outcome = 42;
         }
-        else if ($cm['call_max'] > 0 && $calls >= $cm['call_max']) //max calls reached
+        else if ($l['tryanother'] == 1 && $cm['call_max'] > 0 && $calls >= $cm['call_max']) //max calls reached AND last call to be tried again
         {
           //if ever eligible, code as eligible
           if ($db->GetOne($eligsql) > 0)
@@ -2247,7 +2248,7 @@ function end_case($operator_id)
  		}
  		else
 		{
-			//the last call is the call with the final otucome
+			//there was a call with the final otucome
 			$outcome = $a['outcome_id'];
 			$lastcall = $a['call_id'];
 
