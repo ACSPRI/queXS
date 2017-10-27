@@ -63,7 +63,7 @@ if (ALLOW_OPERATOR_EXTENSION_SELECT && VOIP_ENABLED)
   //unassign extension
   $operator_id = get_operator_id();
 
-  if (get_case_id($operator_id) == false && is_voip_enabled($operator_id))
+  if (get_case_id($operator_id,false) == false && is_voip_enabled($operator_id))
   {
     $sql = "UPDATE `extension`
             SET current_operator_id = NULL

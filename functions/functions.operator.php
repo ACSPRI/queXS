@@ -528,7 +528,7 @@ function get_case_id($operator_id, $create = false)
 		
 		$sq = $db->GetRow($sql);
 
-		if (isset($rnc['next_case_id']) && !empty($rnc['next_case_id']))
+		if ($create && isset($rnc['next_case_id']) && !empty($rnc['next_case_id']))
 		{
 			$case_id = $rnc['next_case_id'];
 
@@ -555,7 +555,7 @@ function get_case_id($operator_id, $create = false)
 			}
 
 		}
-		else if (isset($sq['case_id']) && !empty($sq['case_id']))
+		else if ($create && isset($sq['case_id']) && !empty($sq['case_id']))
 		{
 			$case_id = $sq['case_id'];
 			$case_queue_id = $sq['case_queue_id'];
