@@ -71,7 +71,7 @@ if (isset($_GET['message']))  print "<p class='rstext well'>" . template_replace
 
 $des = $db->GetOne("SELECT description FROM outcome WHERE outcome_id = 32");
 
-print "<p class=' '><h4 class=''>" . T_("End call with outcome:") . "<a class='btn btn-primary' "
+print "<p class=' '><h4 class=''>" . T_("End call with outcome:") . "<a class='btn btn-primary' ";
 if (ALTERNATE_INTERFACE && !is_voip_enabled($operator_id))
 	print "href=\"javascript:parent.location.href = 'index_interface2.php?outcome=32&endcase=endcase'\">";
 else
