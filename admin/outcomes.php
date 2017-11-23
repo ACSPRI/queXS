@@ -288,6 +288,7 @@ group by s.import_id";
 			WHERE a.outcome_id = '10'
 			AND a.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
+			AND b.questionnaire_id = sh.questionnaire_id
 			AND sh.start <= a.start
 			AND sh.end >= a.start
 			GROUP BY sh.shift_id) as c on (s.shift_id = c.shift_id)

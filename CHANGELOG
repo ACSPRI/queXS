@@ -1,3 +1,17 @@
+queXS 2.1.5 - Changes since 2.1.4
+
+Fixes some bugs including optimising the questionnaire outcome page queries. Translations have also been updated (Thank you!)
+
+Fixed issue: Missing number of records per page in sample search
+Fixed issue: Missing "; " at end of line 75 on rs_quota_end.php
+Fixed issue: Unable to un-assign cases when cases in case queue and extensions set to automatically unassign
+Fixed issue: Questionnaire outcomes page slow with many shifts
+
+Database changes:
+ALTER TABLE `shift` ADD INDEX ( `start` );
+ALTER TABLE `shift` ADD INDEX ( `end` );
+
+
 queXS 2.1.4 - Changes since 2.1.3
 
 Fixes various bugs
