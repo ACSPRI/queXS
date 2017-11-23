@@ -1,3 +1,15 @@
+queXS 1.15.10 - Changes since 1.15.9
+
+Fixes some bugs including optimising the questionnaire outcome page queries. Translations have also been updated (Thank you!)
+
+Fixed issue: Missing number of records per page in sample search
+Fixed issue: Unable to un-assign cases when cases in case queue and extensions set to automatically unassign
+Fixed issue: Questionnaire outcomes page slow with many shifts
+
+Database changes:
+ALTER TABLE `shift` ADD INDEX ( `start` );
+ALTER TABLE `shift` ADD INDEX ( `end` );
+
 queXS 1.15.9 - Changes since 1.15.8
 
 Fixes various bugs
