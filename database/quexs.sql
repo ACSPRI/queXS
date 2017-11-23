@@ -1562,7 +1562,9 @@ CREATE TABLE `shift` (
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   PRIMARY KEY (`shift_id`),
-  KEY `questionnaire_id` (`questionnaire_id`)
+  KEY `questionnaire_id` (`questionnaire_id`),
+  KEY `start` (`start`),
+  KEY `end` (`end`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
