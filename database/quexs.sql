@@ -1499,7 +1499,8 @@ CREATE TABLE `sample_var` (
   `var_id` bigint(20) unsigned NOT NULL,
   `val` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`sample_id`,`var_id`),
-  KEY `sample_id` (`sample_id`)
+  KEY `sample_id` (`sample_id`),
+  KEY `var_id` (`var_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------

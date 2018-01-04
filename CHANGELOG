@@ -1,3 +1,5 @@
+ALTER TABLE `sample_var` ADD INDEX ( `var_id` );
+
 queXS 1.15.10 - Changes since 1.15.9
 
 Fixes some bugs including optimising the questionnaire outcome page queries. Translations have also been updated (Thank you!)
