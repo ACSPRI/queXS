@@ -520,7 +520,7 @@ function get_case_id($operator_id, $create = false)
 
 		$sql = "SELECT cq.case_id, cq.case_queue_id
 			FROM case_queue as cq, `case` as c
-			WHERE cq.operator_id = '$operator_id'
+			WHERE (cq.operator_id = '$operator_id' OR cq.operator_id = 0)
 			AND cq.case_id = c.case_id
 			AND c.current_operator_id IS NULL
 			ORDER BY cq.sortorder ASC
