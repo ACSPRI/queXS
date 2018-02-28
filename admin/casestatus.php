@@ -88,17 +88,21 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 				WHEN TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL o.default_delay_minutes MINUTE),'System','UTC'))) < 0 THEN '" . TQ_("Available") . "'
 				ELSE CONCAT(ROUND(TIME_TO_SEC(TIMEDIFF(ca.end,CONVERT_TZ(DATE_SUB(NOW(), INTERVAL o.default_delay_minutes MINUTE),'System','UTC'))) / 60),'&emsp;" . TQ_("minutes") . "')
 			END AS availableinmin,
-			CASE WHEN oq.operator_id IS NULL THEN 
+			CASE WHEN cq.operator_id = 0 THEN 
+				CONCAT('<span class=\'text-info\'>" . TQ_("Any operator") . "</span>')
+				WHEN oq.operator_id IS NULL THEN
 				CONCAT('')
 			ELSE CONCAT('<span class=\'text-info\'>', oq.firstName,' ',oq.lastName,'</span>')
 			END AS assignedoperator,
-			CASE WHEN oq.operator_id IS NULL THEN 
+			CASE WHEN (cq.operator_id = 0 OR oq.operator_id IS NOT NULL) THEN 
+				CONCAT(' &emsp; ', cq.sortorder ,'&emsp;')
+			ELSE 
 				CONCAT('')
-			ELSE CONCAT(' &emsp; ', cq.sortorder ,'&emsp;')
 			END AS ordr,
-			CASE WHEN oq.operator_id IS NULL THEN 
+			CASE WHEN (cq.operator_id = 0 OR oq.operator_id IS NOT NULL) THEN
+				CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_id&amp;unassign=', cq.case_queue_id, '\" data-toggle=\'tooltip\' title=\'" . TQ_("Click to unassign") ."\'><i class=\'fa fa-trash-o fa-lg text-danger\'></i></a>')
+			ELSE	
 				CONCAT('<span data-toggle=\'tooltip\' title=\'" . TQ_("Not assigned, select to assign") . "\'><input  type=\'checkbox\' name=\'c', c.case_id, '\' value=\'', c.case_id, '\' /></span>')
-			ELSE CONCAT('<a href=\"?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_id&amp;unassign=', cq.case_queue_id, '\" data-toggle=\'tooltip\' title=\'" . TQ_("Click to unassign") ."\'><i class=\'fa fa-trash-o fa-lg text-danger\'></i></a>')
 			END AS flag	
 		FROM `case` as c
 		JOIN questionnaire as q ON (q.questionnaire_id = c.questionnaire_id and q.enabled = 1)
@@ -135,16 +139,22 @@ function case_status_report($questionnaire_id = false, $sample_id = false, $outc
 	
 	$rs3 = $db->GetAll($sql);
 
+	$any = array('value' => 0, 'description' => TQ_("Any operator"), 'selected' => '');
+
+	$rs3[] = $any;
+
 	print "<h4 class='col-sm-offset-5 pull-left text-right control-label'>" . T_("Assign selected cases to") . "&ensp;" . T_("operator") . "&ensp;:&emsp;</h4> ";
 	display_chooser($rs3, "operator_id", "operator_id",true,false,false,true,false,true,"pull-left");
 	
 	print "&emsp;<button class='btn btn-default' type='submit' data-toggle='tooltip' title='" . T_("Assign cases to operator queue") . "'><i class='fa fa-link fa-lg text-primary'></i>&emsp;" . T_("Assign") . "</button>";
 	print "</form></br>";
 
+    print "<p><a class='btn btn-default' href='?questionnaire_id=$questionnaire_id&amp;sample_import_id=$sample_id&amp;unassignall=true'>" . TQ_("Unassign all cases from the operator queue") . "</a></p>";
+
 	return true;
 }
 
-if (isset($_POST['operator_id']) && !empty($_POST['operator_id']))
+if (isset($_POST['operator_id']) && $_POST['operator_id'] != "")
 {
 	$operator_id = intval($_POST['operator_id']);
 
@@ -211,6 +221,45 @@ if (isset($_GET['unassign']))
 	$db->CompleteTrans();
 }
 
+
+function unassignall($questionnaire_id,$sample_import_id)
+{
+	global $db;
+
+	$sql = "SELECT cq.case_queue_id
+			FROM case_queue as cq, `case` as c
+			WHERE c.questionnaire_id = $questionnaire_id
+			AND cq.case_id = c.case_id";
+
+
+	if ($sample_import_id) {
+			$sql = "SELECT cq.case_queue_id
+				FROM case_queue as cq, `case` as c, `sample` as s
+				WHERE c.questionnaire_id = $questionnaire_id
+				AND c.sample_id = s.sample_id
+				AND cq.case_id = c.case_id
+				AND s.import_id = $sample_import_id";
+	}
+
+	$ctoa = $db->GetAll($sql);
+
+	if (!empty($ctoa)) {
+    	$cq = "";
+
+		foreach($ctoa as $key => $val) {
+			$cq .= $val['case_queue_id'] . ",";
+		}
+
+		$cq = substr($cq,0,-1);	
+	
+		$sql = "DELETE FROM case_queue 
+				WHERE case_queue_id IN ($cq)";
+
+		$db->Execute($sql);
+	}
+}
+
+
 xhtml_head(T_("Case status and assignment"),true,$css,$js_head);
 echo "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left' ><i class='fa fa-chevron-left text-primary'></i>&emsp;" . T_("Go back") . "</a>
 		<i class='fa fa-question-circle fa-3x text-primary pull-right btn' data-toggle='modal' data-target='.inform'></i>";
@@ -241,10 +290,15 @@ $outcome_id = false;
 print "<div class='form-group '><h3 class=' col-sm-2 text-right'>" . T_("Questionnaire") . ":</h3>";
 display_questionnaire_chooser($questionnaire_id, false, "pull-left", "form-control");
 if ($questionnaire_id){
+	if (isset($_GET['unassignall'])) {
+		unassignall($questionnaire_id,$sample_import_id);
+	}
+
 	print "<h3 class=' col-sm-2 text-right'>" . T_("Sample") . ":</h3>";
 	display_sample_chooser($questionnaire_id,$sample_import_id,false, "pull-left", "form-control", true);
 	print "</div>
 	 <div class='clearfix'></div>";
+
 	
 	case_status_report($questionnaire_id,$sample_import_id,$outcome_id);
 }
