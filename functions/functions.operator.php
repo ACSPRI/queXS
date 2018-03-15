@@ -673,7 +673,7 @@ function get_case_id($operator_id, $create = false)
 					AND ((apn.appointment_id IS NOT NULL) OR (qs.call_max = 0) OR ((SELECT count(*) FROM `call` WHERE case_id = c.case_id) < qs.call_max))
 					AND ((apn.require_operator_id IS NULL) OR (apn.require_operator_id = '$operator_id'))
 					AND (SELECT count(*) FROM `questionnaire_sample_quota` WHERE questionnaire_id = c.questionnaire_id AND sample_import_id = s.import_id AND quota_reached = 1) = 0
-					ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, qsep.priority DESC, CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) DESC , a.start ASC, qs.sort_order ASC
+					ORDER BY IF(ISNULL(apn.end),1,0),apn.end ASC, IFNULL(qsep.priority,50) DESC, qs.sort_order ASC, CONVERT_TZ(NOW(), 'System' , s.Time_zone_name) DESC , a.start ASC
 					LIMIT 1";
 
  				//apn.appointment_id contains the id of an appointment if we are calling on an appointment
