@@ -355,7 +355,7 @@ INSERT INTO `day_of_week` (`day_of_week`) VALUES(7);
 
 CREATE TABLE `extension` (
   `extension_id` int(11) NOT NULL AUTO_INCREMENT,
-  `extension` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `extension` char(20) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `current_operator_id` bigint(20) DEFAULT NULL,
@@ -934,7 +934,8 @@ CREATE TABLE `sample_var` (
   `var_id` bigint(20) unsigned NOT NULL,
   `val` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`sample_id`,`var_id`),
-  KEY `sample_id` (`sample_id`)
+  KEY `sample_id` (`sample_id`),
+  KEY `var_id` (`var_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------

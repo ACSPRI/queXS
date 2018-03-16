@@ -1,3 +1,10 @@
+queXS 2.2.0 - Changes since 2.1.5
+
+ALTER TABLE `extension` CHANGE `extension` `extension` CHAR( 20 ) NOT NULL;
+ALTER TABLE `sample_var` ADD INDEX ( `var_id` );
+
+
+
 queXS 2.1.5 - Changes since 2.1.4
 
 Fixes some bugs including optimising the questionnaire outcome page queries. Translations have also been updated (Thank you!)
