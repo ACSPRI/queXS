@@ -1,7 +1,13 @@
 queXS 1.16.0 - Changes since 1.15.10
 
+Fixed issue: Extension column not wide enough for long extensions
+Fixed issue: System sorting giving low priority where some quotas exist and not others
+Fixed issue: Database queries slow when downloading metadata
 
+New feature: Assign cases to any operator to be called next in queue
+New feature: Unassign all cases in the queue in one click
 
+Database changes:
 ALTER TABLE `extension` CHANGE `extension` `extension` CHAR( 20 ) NOT NULL;
 ALTER TABLE `sample_var` ADD INDEX ( `var_id` );
 
