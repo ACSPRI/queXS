@@ -1,3 +1,7 @@
+queXS 2.2.1 - Changes since 2.2.0
+
+New feature: Mark cases completed online in Limesuvey as completed in queXS during system sort process
+
 queXS 2.2.0 - Changes since 2.1.5
 
 Fixed issue: Extension column not wide enough for long extensions
