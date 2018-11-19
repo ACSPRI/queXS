@@ -239,7 +239,7 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
                         //not already completed in queXS but is in Limesurvey
                         //insert a case and call record
                           $resp_id = 0;
-						  $case_id = $rs[$l->token]['case_id'];
+            						  $case_id = $rs[$l->token]['case_id'];
 
                           $sql = "SELECT respondent_id
                                   FROM respondent
@@ -267,6 +267,8 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
                                   WHERE case_id = $case_id";
 
                           $db->Execute($sql);
+
+                          print T_("Updating case as self completed online") . " - " . T_("Case id") . ": $case_id";
                     }
                 }
             }
