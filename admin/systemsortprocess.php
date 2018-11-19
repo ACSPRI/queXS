@@ -50,6 +50,11 @@ include (dirname(__FILE__) . "/../functions/functions.process.php");
 include (dirname(__FILE__) . "/../functions/functions.operator.php");
 
 /**
+ * Limesurvey functions
+ */
+include (dirname(__FILE__) . "/../functions/functions.limesurvey.php");
+
+/**
  * Update the database with the new data from the running script
  *
  * @param string $buffer The data to append to the database
@@ -215,6 +220,58 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 
     $db->StartTrans();
 
+    //Mark all completed cases in Limesurvey as completed online here.
+    limerpc_init_qid($questionnaire_id);	
+    $lcompleted = lime_get_responses_by_questionnaire($questionnaire_id);
+
+    if ($lcompleted !== false) {
+        $sql = "SELECT c.token, c.token as tok, c.case_id as case_id
+                FROM `case` as c
+                WHERE c.questionnaire_id = $questionnaire_id
+                AND c.current_outcome_id not in (10,40)";
+
+        $rs = $db->GetAssoc($sql);
+
+        foreach($lcompleted as $lc1) {
+            foreach($lc1 as $lc2) {
+                foreach($lc2 as $l) {
+                    if (isset($l->token) && isset($rs[$l->token])) {
+                        //not already completed in queXS but is in Limesurvey
+                        //insert a case and call record
+                          $resp_id = 0;
+						  $case_id = $rs[$l->token]['case_id'];
+
+                          $sql = "SELECT respondent_id
+                                  FROM respondent
+                                  WHERE case_id = $case_id";
+                          $rsp = $db->GetOne($sql);
+
+                          if (!empty($rsp)) {
+                            $resp_id = $rsp;
+                          }
+
+                          $sql = "INSERT INTO call_attempt (case_id,operator_id,respondent_id,start,end)
+                                  VALUES ($case_id, 1, $resp_id, CONVERT_TZ(NOW(),'System','UTC'), CONVERT_TZ(NOW(),'System','UTC'))";
+                          $db->Execute($sql);
+
+                          $call_attempt_id = $db->Insert_ID();
+
+                          $sql = "INSERT INTO `call` (operator_id,respondent_id,case_id,contact_phone_id,call_attempt_id,start,end,outcome_id,state)
+                                  VALUES (1,$resp_id,$case_id,0,$call_attempt_id,CONVERT_TZ(NOW(),'System','UTC'),CONVERT_TZ(NOW(),'System','UTC'),40,5)"; //self completed online
+                          $db->Execute($sql);
+
+                          $call_id = $db->Insert_ID();
+
+                          $sql = "UPDATE `case`
+                                  SET last_call_id = $call_id, current_outcome_id = 40
+                                  WHERE case_id = $case_id";
+
+                          $db->Execute($sql);
+                    }
+                }
+            }
+        }
+    }
 
 	//Delete all completed call attempts with no call in them
 	$sql = "SELECT ca.call_attempt_id FROM call_attempt as ca 
@@ -350,6 +407,8 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
     
     $time_end = microtime(true);
     $timer = $time_end - $time_start;
+
+    limerpc_close();
 
     if ($result)
       print T_("Completed sort") . ". " . T_("This task took") . ": $timer " . T_("seconds");
