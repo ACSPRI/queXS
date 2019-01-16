@@ -29,6 +29,9 @@
  * 
  */
 
+
+include_once(dirname(__FILE__).'/config.inc.php');
+
 /**
  * The phpgettext package
  */
