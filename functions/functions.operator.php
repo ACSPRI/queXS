@@ -2251,7 +2251,7 @@ function end_case($operator_id)
                   AND o.eligible = 1
                   AND c.case_id = '$case_id'";
 
-        if ($l['tryanother'] == 1 && $cm['call_attempt_max'] > 0 && $callattempts >= $cm['call_attempt_max']) //max call attempts reached AND last call to be tried again
+        if (isset($l['tryanother']) && $l['tryanother'] == 1 && $cm['call_attempt_max'] > 0 && $callattempts >= $cm['call_attempt_max']) //max call attempts reached AND last call to be tried again
         {
           //if ever eligible, code as eligible
           if ($db->GetOne($eligsql) > 0)
@@ -2259,7 +2259,7 @@ function end_case($operator_id)
           else
             $outcome = 42;
         }
-        else if ($l['tryanother'] == 1 && $cm['call_max'] > 0 && $calls >= $cm['call_max']) //max calls reached AND last call to be tried again
+        else if (isset($l['tryanother']) && $l['tryanother'] == 1 && $cm['call_max'] > 0 && $calls >= $cm['call_max']) //max calls reached AND last call to be tried again
         {
           //if ever eligible, code as eligible
           if ($db->GetOne($eligsql) > 0)
