@@ -315,7 +315,7 @@ $availability = is_using_availability($case_id);
      <div class="tabbertab <?php  if ((DEFAULT_TAB == 'myappointmentlist' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'myappointmentlist' && $appointment)) 
 					print "tabbertabdefault"; ?>">
 	  <h2><?php  echo T_("My appointments"); ?></h2>
-	  <div id="div-myappointmentlist" class="tabberdiv"><?php xhtml_object("myappointments.php","main-myappointmentlist");?></div>
+	  <div id="div-myappointmentlist" class="tabberdiv"><?php xhtml_object("myappointments.php","main-myappointmentlist","col-sm-12");?></div>
      </div>
 <?php  }?>
 
