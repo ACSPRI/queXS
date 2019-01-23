@@ -1,3 +1,8 @@
+queXS 1.16.1 - Changes since 1.16.0
+
+Fixed bug: incompatibility with PHP 7.2
+Fixed bug: My appointments table obscured in alternate interface
+
 queXS 1.16.0 - Changes since 1.15.10
 
 Fixed issue: Extension column not wide enough for long extensions
