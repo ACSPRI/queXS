@@ -1,3 +1,8 @@
+queXS 2.2.2 - Changes since 2.2.1
+
+Fixed bug: incompatibility with PHP 7.2
+Fixed bug: My appointments table obscured in alternate interface
+
 queXS 2.2.1 - Changes since 2.2.0
 
 New feature: Mark cases completed online in Limesuvey as completed in queXS during system sort process
