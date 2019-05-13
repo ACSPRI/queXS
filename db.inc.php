@@ -68,6 +68,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__).'/inclu
 
 //global database variable
 $db = newADOConnection(DB_TYPE);
+$db->ssl_ca = DB_SSL;
 $db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
 if (DEBUG == true) $db->debug = true;
