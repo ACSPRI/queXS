@@ -55,7 +55,7 @@ function get_CPH_by_shift($qid,$sid)
 		FROM operator as o
 		JOIN (  SELECT count(*) as completions,a.operator_id
 			FROM `call` as a, `case` as b, `shift` as s
-			WHERE a.outcome_id = '10'
+			WHERE a.outcome_id in (10,40)
 			AND a.case_id = b.case_id
 			AND b.questionnaire_id = '$qid'
 			AND s.shift_id = '$sid'
@@ -96,7 +96,7 @@ function get_CPH_by_questionnaire($qid)
 		FROM operator as o
 		JOIN (  SELECT count(*) as completions,a.operator_id
 			FROM `call` as a, `case` as b
-			WHERE a.outcome_id = '10'
+			WHERE a.outcome_id in (10,40)
 			AND a.case_id = b.case_id
 			AND b.questionnaire_id = '$qid'
 			GROUP BY a.operator_id) as c on (c.operator_id = o.operator_id)
@@ -155,7 +155,7 @@ function get_stats_by_shift($questionnaire_id,$shift_id)
 		) AS callattempttime ON ( callattempttime.operator_id = o.operator_id )
 		JOIN (  SELECT count(*) as completions,a.operator_id
 			FROM `call` as a, `case` as b, `shift` as s
-			WHERE a.outcome_id = '10'
+			WHERE a.outcome_id in (10,40)
 			AND s.shift_id = '$shift_id'
 			AND s.`start` <= a.`start`
 			AND s.`end` >= a.`start`
@@ -227,7 +227,7 @@ function get_stats_by_time($start,$end,$byoperator = true)
 
     JOIN (  SELECT count(*) as completions,a.operator_id,b.questionnaire_id
       FROM `call` as a, `case` as b
-      WHERE a.outcome_id = '10'
+      WHERE a.outcome_id in (10,40)
       AND a.`start` >= $start
       AND a.`end` <= $end
       AND a.case_id = b.case_id
@@ -400,7 +400,7 @@ function get_stats()
 		) AS callattempttime ON ( callattempttime.operator_id = o.operator_id )
 		JOIN (  SELECT count(*) as completions,a.operator_id
 			FROM `call` as a
-			WHERE a.outcome_id = '10'
+			WHERE a.outcome_id in (10,40)
 			GROUP BY a.operator_id) as c on (c.operator_id = o.operator_id)
 		JOIN (  SELECT count(*) as calls,a.operator_id
 			FROM `call` as a
@@ -451,7 +451,7 @@ function get_stats_by_questionnaire($questionnaire_id)
 		) AS callattempttime ON ( callattempttime.operator_id = o.operator_id )
 		JOIN (  SELECT count(*) as completions,a.operator_id
 			FROM `call` as a, `case` as b
-			WHERE a.outcome_id = '10'
+			WHERE a.outcome_id in (10,40)
 			AND a.case_id = b.case_id
 			AND b.questionnaire_id = '$questionnaire_id'
 			GROUP BY a.operator_id) as c on (c.operator_id = o.operator_id)
@@ -488,7 +488,7 @@ function get_CPH()
 		FROM operator as o
 		JOIN (  SELECT count(*) as completions,operator_id
 			FROM `call`
-			WHERE outcome_id = '10'
+			WHERE outcome_id in (10,40)
 			GROUP BY operator_id) as c on (c.operator_id = o.operator_id)
 		JOIN (  SELECT SUM( TIMESTAMPDIFF(SECOND , start, IFNULL(end,start))) as time, operator_id
 			FROM `call_attempt`
@@ -650,7 +650,7 @@ function display_total_completions($qid)
 
 	$sql = "SELECT count(case_id) as c
 		FROM `case`
-		WHERE current_outcome_id = 10
+		WHERE current_outcome_id in (10,40)
 		AND questionnaire_id = '$qid'";
 
 	$rs = $db->GetRow($sql);
@@ -674,7 +674,7 @@ function display_completions_this_shift($qid,$sid)
 
 	$sql = "SELECT count(ca.call_id) as c
 		FROM `call` as ca, `case` as cs, `shift` as s
-		WHERE ca.outcome_id = 10
+		WHERE ca.outcome_id in (10,40)
 		AND ca.case_id = cs.case_id
 		AND cs.questionnaire_id = '$qid'
 		AND s.questionnaire_id = '$qid'
@@ -717,7 +717,7 @@ function display_completions_last_shift($qid,$sid)
 
 		$sql = "SELECT count(ca.call_id) as c
 			FROM `call` as ca, `case` as cs, `shift` as s
-			WHERE ca.outcome_id = 10
+			WHERE ca.outcome_id in (10,40)
 			AND ca.case_id = cs.case_id
 			AND cs.questionnaire_id = '$qid'
 			AND s.questionnaire_id = '$qid'
@@ -764,7 +764,7 @@ function display_completions_same_time_last_shift($qid,$sid)
 		$sql = "SELECT count(ca.call_id) as c
 			FROM `call` as ca, `case` as cs, `shift` as s
 			JOIN `shift` as s2 on (s2.shift_id = '$sid')
-			WHERE ca.outcome_id = 10
+			WHERE ca.outcome_id in (10,40)
 			AND ca.case_id = cs.case_id
 			AND cs.questionnaire_id = '$qid'
 			AND s.questionnaire_id = '$qid'

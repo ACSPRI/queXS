@@ -1825,7 +1825,7 @@ function update_single_row_quota($qsqri,$case_id = false)
       }
 
       $sql2 .= "  WHERE c.questionnaire_id = '$questionnaire_id'
-                  AND c.current_outcome_id = 10"; //check completions by outcome
+                  AND c.current_outcome_id in (10,40)"; //check completions by outcome
 
       $completions = $db->GetOne($sql2);
     }
@@ -2253,7 +2253,7 @@ function end_case($operator_id)
 			$lastcall = $a['call_id'];
 
 			//if the outcome is complete, then update the quota's for this questionnaire (if any)
-			if ($outcome == 10)
+			if ($outcome == 10 || $outcome == 40)
 				update_quotas($questionnaire_id,$case_id);
 		}
 		
