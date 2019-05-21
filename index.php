@@ -108,14 +108,65 @@ if (isset($_GET['endcase']))
 			VALUES (NULL,'$case_id','$operator_id',$note,CONVERT_TZ(NOW(),'System','UTC'))";
 		$db->Execute($sql);
 	}
-	end_call_attempt($operator_id);
-	end_case($operator_id);
+	
+	$endthecase = true;
 
-	$db->CompleteTrans(); //need to complete here otherwise getting the case later will fail
+	if (isset($_GET['outcome']))
+	{
+		$outcome_id = intval($_GET['outcome']);
+		end_call($operator_id,$outcome_id);
 
-  //redirect back here
-  header('Location: index.php');
-  exit();
+		$sql = "SELECT tryanother
+			FROM outcome
+			WHERE outcome_id = '$outcome_id'";
+
+		$rs = $db->GetRow($sql);
+
+		if (!empty($rs) && $rs['tryanother'] == 1)
+		{
+			//we can try another number... 
+
+			$case_id = get_case_id($operator_id,false);
+			$call_attempt_id = get_call_attempt($operator_id,false);
+			//check if there is another number to try...
+                        $sql = "SELECT c. *
+                                FROM contact_phone AS c
+                                LEFT JOIN (
+                                                SELECT contact_phone.contact_phone_id
+                                                FROM contact_phone
+                                                LEFT JOIN `call` ON ( call.contact_phone_id = contact_phone.contact_phone_id )
+                                                LEFT JOIN outcome ON ( call.outcome_id = outcome.outcome_id )
+                                                WHERE contact_phone.case_id = '$case_id'
+                                                AND outcome.tryagain =0
+                                          ) AS l ON l.contact_phone_id = c.contact_phone_id
+                                LEFT JOIN
+                                (
+                                 SELECT contact_phone_id
+                                 FROM `call`
+                                 WHERE call_attempt_id = '$call_attempt_id'
+                                 AND outcome_id != 18
+                                ) as ca on ca.contact_phone_id = c.contact_phone_id
+                                WHERE c.case_id = '$case_id'
+                                AND l.contact_phone_id IS NULL
+                                AND ca.contact_phone_id IS NULL"; //only select numbers that should be tried again and have not been tried in this attempt which are not the accidental hang up outcome
+
+                        $rs = $db->GetAll($sql);
+
+			if (!empty($rs))			
+				$endthecase = false;
+		}
+	}
+
+  	if ($endthecase) {
+		end_call_attempt($operator_id);
+		end_case($operator_id);
+
+		$db->CompleteTrans(); //need to complete here otherwise getting the case later will fail
+
+		//redirect back here
+		header('Location: index.php');
+		exit();
+	}
 
 	//$db->StartTrans();
 	//if ($db->HasFailedTrans()) {print "<p>FAILED AT ENDCASE</p>"; exit();}

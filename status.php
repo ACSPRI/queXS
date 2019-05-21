@@ -71,7 +71,13 @@ $state = is_on_call($operator_id);
 $btext = false;
 
 if ($state == 4 && AUTO_POPUP)
-	$btext = "onload=\"poptastic('call.php')\"";
+	$btext = "onload=\"parent.poptastic('call.php')\"";
+
+if ($state == 6 && AUTO_CLOSE_NO_ANSWER)
+    $btext = "onload=\"parent.location.href = 'index.php?outcome=2&amp;endcase=endcase&amp;note=AutoCloseNoAnswer'\"";
+
+if ($state == 7 && AUTO_CLOSE_NO_ANSWER)
+    $btext = "onload=\"parent.location.href = 'index.php?outcome=14&amp;endcase=endcase&amp;note=AutoCloseDisconnect'\"";
 
 $js = array("js/popupkeep.js");
 if (AUTO_LOGOUT_MINUTES !== false)
@@ -80,7 +86,7 @@ if (AUTO_LOGOUT_MINUTES !== false)
         $js[] = "js/childnap.js";
 }
 
-xhtml_head(T_("Status"),true,array("css/status.css"),$js,$btext,60,false,false,false,false);
+xhtml_head(T_("Status"),true,array("css/status.css"),$js,$btext,5,false,false,false,false);
 
 print "<div class='text'>" . get_operator_time($operator_id,DATE_TIME_FORMAT) ."</div>";
 
@@ -111,6 +117,10 @@ if (!$state || $state == 5)
 {
 	print("<div class='offline statusbutton'>" . T_("No call") . "</div>");
 }
+else if ($state == 6)
+{
+	print("<div class='online statusbutton'>" . T_("No answer") . "</div>");
+} 
 else if ($state == 4)
 {
 	print("<div class='tobecoded statusbutton'>" . T_("To be coded") . "</div>");

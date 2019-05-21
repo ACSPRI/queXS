@@ -470,6 +470,7 @@ switch($state)
 	case 2: //ringing
 	case 3: //answered
 	case 4: //requires coding
+    case 6: //no answer
 	//	print "<div class='status'>" . T_("Requires coding") . "</div>";
 		print "<form action='?' method='post'><div class=\" \">";
 		display_outcomes(false,$call_attempt_id,$case_id);

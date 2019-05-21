@@ -545,7 +545,7 @@ class voipWatch extends voip {
 				/**
 				 * The call is ringing
 				 */
-				if (preg_match("{Event: Dial.*SubEvent: Begin.*Channel: ((SIP/|IAX2/)[0-9]+)}is",$line,$regs))
+				if (preg_match("{Event: DialBegin.*Channel: ((SIP/|IAX2/)[0-9]+)}is",$line,$regs))
         {
           list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -569,13 +569,22 @@ class voipWatch extends voip {
 				/**
 				 * The call has been hung up
 				 */
-				else if (preg_match("{Event: Hangup.*Channel: ((SIP/|IAX2/)[0-9]+)}is",$line,$regs))
+				else if (preg_match("{Event: Hangup.*Channel: ((SIP/|IAX2/)[0-9]+).*Cause: ([0-9]+)}is",$line,$regs))
         {
 					list($call_id,$case_id) = $this->getCallId($regs[1]);
+//					print_r($regs);
 					if ($call_id != 0)
 					{
-						print T_("Hangup") . T_(" Extension ") . $regs[1] . " " . T_("Case id") . ": <a href=\"supervisor.php?case_id=$case_id\">$case_id</a>\n"; 
-						$this->setState($call_id,4,true);
+						if ($regs[3] == 16)  { //Cause 16 - was ringing so this is an auto no-answer hangup
+							print T_("No Answer - Auto Hangup") . T_(" Extension ") . $regs[1] . " " . T_("Case id") . ": <a href=\"supervisor.php?case_id=$case_id\">$case_id</a>\n"; 
+							$this->setState($call_id,6,true);
+						} else if ($regs[3] == 19)  { //Cause 19 - Disconnected
+							print T_("Disconnected - Auto Hangup") . T_(" Extension ") . $regs[1] . " " . T_("Case id") . ": <a href=\"supervisor.php?case_id=$case_id\">$case_id</a>\n"; 
+							$this->setState($call_id,7,true);
+						} else {
+							print T_("Hangup") . T_(" Extension ") . $regs[1] . " " . T_("Case id") . ": <a href=\"supervisor.php?case_id=$case_id\">$case_id</a>\n"; 
+							$this->setState($call_id,4,true);
+						}
 					}
 				}
 

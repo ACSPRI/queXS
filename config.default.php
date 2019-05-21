@@ -115,6 +115,11 @@ if (!defined('MEET_ME_ROOM')) define('MEET_ME_ROOM','5000');
 if (!defined('AUTO_POPUP')) define('AUTO_POPUP',false);
 
 /**
+ * Whether to automatically code a no answer
+ */
+if (!defined('AUTO_CLOSE_NO_ANSWER')) define('AUTO_CLOSE_NO_ANSWER',false);
+
+/**
  * The extension of the supervisor for dialing the supervisor
  */
 if (!defined('SUPERVISOR_EXTENSION')) define('SUPERVISOR_EXTENSION',"1000");
