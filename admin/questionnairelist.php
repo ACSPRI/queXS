@@ -612,7 +612,7 @@ else
 		ELSE
 			CONCAT('<a href=\'casestatus.php?questionnaire_id=',questionnaire_id,'\' class=\'btn\' title=\'" . TQ_("Case status and assignment"). "\' data-toggle=\'tooltip\'><i class=\'fa fa-question-circle fa-2x\'></i></a>')
 		END as casestatus
-		FROM questionnaire";
+		FROM questionnaire ORDER BY questionnaire_id DESC";
 	$rs = $db->GetAll($sql);
 
 	$columns = array("qid","description","status","enabledisable","outcomes","calls","casestatus","shifts","assample","quotareport","dataout","modify","setoutcomes","inlime","prefill","deletee");

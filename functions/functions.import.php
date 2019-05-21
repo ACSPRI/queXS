@@ -281,8 +281,9 @@ function import_file($file, $description, $fields, $firstrow = 2)
 	$db->StartTrans();
 
 	$sql = "INSERT INTO sample_import
-		(sample_import_id, description)
-		VALUES (NULL, '$description')";
+   (sample_import_id, description,call_restrict)
+   VALUES (NULL, '$description',0)";
+
 
 //	print("$sql<br/>");
 //	if ($db->HasFailedTrans()) { print "FAILED"; exit(); }
