@@ -71,6 +71,7 @@ $db = newADOConnection(DB_TYPE);
 $db->ssl_ca = DB_SSL;
 $db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
+$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 if (DEBUG == true) $db->debug = true;
 
 $db->Execute("set names 'utf8'");
