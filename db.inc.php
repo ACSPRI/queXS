@@ -70,6 +70,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__).'/inclu
 $db = newADOConnection(DB_TYPE);
 $db->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
+$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 if (DEBUG == true) $db->debug = true;
 
 $db->Execute("set names 'utf8'");
