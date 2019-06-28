@@ -32,9 +32,9 @@ function injectglobalsettings()
         foreach  ($dbvaluearray as $setting)
         {
             global ${$setting['stg_name']};
-            if (isset($$setting['stg_name']))
+            if (isset(${$setting['stg_name']}))
             {
-                $$setting['stg_name']=$setting['stg_value'];
+                ${$setting['stg_name']}=$setting['stg_value'];
             }
             $registry->set($setting['stg_name'],$setting['stg_value']);
         }
@@ -441,7 +441,7 @@ end queXS Removal */
 		    $thisforce_ssl = 'neither';
 	    };
 	    $this_opt = 'opt_force_ssl_'.$thisforce_ssl;
-	    $$this_opt = ' selected="selected"';
+	    ${$this_opt} = ' selected="selected"';
 	    $editsurvey .= '<li><label for="force_ssl">'.$clang->gT('Force HTTPS:')."</label>\n"
 	    . "<select name=\"force_ssl\" id=\"force_ssl\">\n\t"
             . '<option value="on" '.$opt_force_ssl_on.'>'.$clang->gT('On')."</option>\n\t"
@@ -556,7 +556,7 @@ end queXS Removal */
 
 function getGlobalSetting($settingname)
 {
-    global $connect, $$settingname;
+    global $connect, ${$settingname};
     $registry = SettingsStorage::getInstance();
     if (!$registry->isRegistered($settingname)) {
         $usquery = "SELECT stg_value FROM ".db_table_name("settings_global")." where stg_name='$settingname'";
@@ -564,11 +564,11 @@ function getGlobalSetting($settingname)
         if (!is_null($dbvalue))
         {
             $registry->set($settingname,$dbvalue);
-        } elseif (isset($$settingname)) {
+        } elseif (isset(${$settingname})) {
             // If the setting was not found in the setting table but exists as a variable (from config.php)
             // get it and save it to the table
-            setGlobalSetting($settingname,$$settingname);
-            $dbvalue=$$settingname;
+            setGlobalSetting($settingname,${$settingname});
+            $dbvalue=${$settingname};
         }
     } else {
         $dbvalue=$registry->get($settingname);
@@ -579,7 +579,7 @@ function getGlobalSetting($settingname)
 
 function setGlobalSetting($settingname,$settingvalue)
 {
-    global $connect, $$settingname, $demoModeOnly;
+    global $connect, ${$settingname}, $demoModeOnly;
     if ($demoModeOnly==true && ($settingname=='sitename' || $settingname=='defaultlang' || $settingname=='defaulthtmleditormode' || $settingname=='filterxsshtml'))
     {
         return; //don't save
@@ -593,7 +593,7 @@ function setGlobalSetting($settingname,$settingvalue)
     }
     $registry = SettingsStorage::getInstance();
     $registry->set($settingname,$settingvalue);
-    if (isset($$settingname)) $$settingname=$settingvalue;
+    if (isset(${$settingname})) ${$settingname}=$settingvalue;
 }
 
 
