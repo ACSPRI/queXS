@@ -254,7 +254,8 @@ if ( (isset($_GET['appointment_id']) && isset($_GET['case_id'])) ||(isset($_GET[
 			$ops = $db->GetAll("SELECT o.operator_id as value,
 						CONCAT(o.firstName, ' ', o.lastName) as description,
 						CASE WHEN o.operator_id = '$require_operator_id' THEN 'selected=\'selected\'' ELSE '' END as selected
-						FROM operator as o");
+                        FROM operator as o
+                        WHERE o.enabled = 1");
 			$selected = "selected=\'selected\'";
 			foreach($ops as $o)
 			{
