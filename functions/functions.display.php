@@ -129,7 +129,8 @@ function display_sample_chooser($questionnaire_id, $sample_import_id = false, $d
 		FROM questionnaire_sample as s, sample_import as si $qr
 		WHERE s.questionnaire_id = '$questionnaire_id'
 		AND s.sample_import_id = si.sample_import_id $s $qrq
-		GROUP BY s.sample_import_id";
+        GROUP BY s.sample_import_id
+        ORDER BY s.sample_import_id ASC";
 		
 	$rs = $db->GetAll($sql);
 
