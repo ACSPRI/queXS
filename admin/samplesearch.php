@@ -231,7 +231,7 @@ xhtml_head(T_("Search the sample"),true,$css,$js_head);
 echo "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left' ><i class='fa fa-chevron-left text-primary'></i>&emsp;" . T_("Go back") . "</a>";
 
 $sql = "SELECT sample_import_id as value,description, CASE WHEN sample_import_id = '$sample_import_id' THEN 'selected=\'selected\'' ELSE '' END AS selected
-	FROM sample_import ORDER BY description ASC";
+	FROM sample_import ORDER BY sample_import_id DESC";
 $r = $db->GetAll($sql);
 
 if(!empty($r))
