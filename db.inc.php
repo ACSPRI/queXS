@@ -76,6 +76,9 @@ if (DEBUG == true) $db->debug = true;
 
 $db->Execute("set names 'utf8'");
 
+//make sure sql_mode is right
+$sqlSet = "SET SESSION sql_mode = '';";
+$db->Execute($sqlSet);
 
 /**
  * Get a setting from the database
