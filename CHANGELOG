@@ -1,3 +1,11 @@
+queXS 1.16.3 - Changes since 1.16.2
+
+Fixed bug:  make sure sql_mode is set the way queXS expects it
+Fixed bug: Set standard order for samples and questionnaires
+Fixed bug: Order sample list the same way as for other items (most recent first)
+Fixed bug: Only display active interviewers when creating an appointment
+Fixed bug: Global settings in LimeSurvey being ignored on PHP7
+
 queXS 1.16.2 - Changes since 1.16.1
 
 Fixed bug: Make compatible with Adodb 5.21
