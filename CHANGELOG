@@ -1,3 +1,7 @@
+queXS 2.2.4 - Changse since 2.2.3
+
+Fixed bug: Set sql_mode the way queXS expects it
+
 queXS 2.2.3 - Changes since 2.2.2
 
 Fixed bug: Make compatible with Adodb 5.21
