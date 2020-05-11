@@ -1,21 +1,21 @@
 # Galician translation for quexs
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Copyright (c) 2017 Rosetta Contributors and Canonical Ltd 2017
 # This file is distributed under the same license as the quexs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-11-23 12:26+1100\n"
-"PO-Revision-Date: 2013-03-08 01:20+0000\n"
+"POT-Creation-Date: 2017-11-23 12:29+1100\n"
+"PO-Revision-Date: 2017-04-03 01:50+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-03-16 04:04+0000\n"
-"X-Generator: Launchpad (build 18571)\n"
+"X-Launchpad-Export-Date: 2020-05-11 02:24+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -799,115 +799,6 @@ msgstr "A deter a gravación..."
 msgid "Stop the manual recording now..."
 msgstr "Deter a gravación manual agora..."
 
-#: admin/databasestrings.php:90
-msgid "Self completed online"
-msgstr ""
-
-#: include/limesurvey/quexs.php:682 include/limesurvey/quexs.php:761
-msgid "Not on an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:684 include/limesurvey/quexs.php:763
-msgid "On an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:995
-msgid "All samples"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6295
-msgid "queXS: Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6296
-msgid "queXS: On appointment?"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6297
-msgid "queXS: Percentage complete"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6298
-msgid "queXS: Number of answering machine messages left"
-msgstr ""
-
-#: include/limesurvey/optout.php:83
-msgid "Self completion refused via opt out function"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:110
-#: include/limesurvey/admin/statistics.php:268
-#: include/limesurvey/admin/browse.php:791
-#: include/limesurvey/admin/vvexport.php:69
-msgid "Questionnaire and Sample selection:"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:111
-#: include/limesurvey/admin/statistics.php:269
-#: include/limesurvey/admin/browse.php:792
-#: include/limesurvey/admin/vvexport.php:70
-msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr ""
-
-#: admin/supervisor.php:331
-msgid "Token"
-msgstr ""
-
-#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
-#: admin/dataoutput.php:85 admin/extensionstatus.php:266
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
-msgid "Case ID"
-msgstr "ID de caso"
-
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
-#: admin/dataoutput.php:93
-msgid "Outcome ID"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:260
-#: include/limesurvey/admin/exportresults.php:661
-#: include/limesurvey/admin/exportresults.php:662
-#: include/limesurvey/admin/exportresults.php:986
-msgid "Case outcome"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:262
-#: include/limesurvey/admin/exportresults.php:616
-#: include/limesurvey/admin/exportresults.php:617
-#: include/limesurvey/admin/exportresults.php:992
-msgid "Number of answering machine messages left"
-msgstr ""
-
-#: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/supervisor.php:429 admin/dataoutput.php:93
-msgid "Case notes"
-msgstr "Notas do caso"
-
-#: admin/dataoutput.php:93
-msgid "Total interview time over all calls (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Interview time for last call (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Last number dialled"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Operator username for last call"
-msgstr ""
-
-#: admin/outcomes.php:306 admin/dataoutput.php:93
-msgid "Shift report"
-msgstr "Informe da quenda"
-
 #: voip/downloadvoipclient.php:59
 msgid "Error: Cannot write to temporary directory"
 msgstr ""
@@ -1098,6 +989,46 @@ msgstr "Listaxe do Hitorial de Casos"
 #: callhistory.php:84 admin/callhistory.php:114
 msgid "No calls ever made"
 msgstr "Non se fixeron chamadas"
+
+#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
+#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
+#: admin/dataoutput.php:85 admin/extensionstatus.php:266
+#: admin/displayappointments.php:316 admin/displayappointments.php:341
+msgid "Case ID"
+msgstr "ID de caso"
+
+#: usercontrol.php:96 usercontrol.php:163
+msgid "Incorrect username and/or password!"
+msgstr ""
+
+#: usercontrol.php:98 usercontrol.php:165 usercontrol.php:174
+#: login_check.php:103
+msgid ""
+"You have exceeded you maximum login attempts. Please wait %d minutes before "
+"trying again"
+msgstr ""
+
+#: usercontrol.php:99 usercontrol.php:166 usercontrol.php:175
+msgid "Continue"
+msgstr ""
+
+#: usercontrol.php:113
+msgid ""
+"Warning: You are still using the default password ('password'). Please "
+"change your password and re-login again."
+msgstr ""
+
+#: usercontrol.php:130
+msgid "Logged in"
+msgstr ""
+
+#: usercontrol.php:131
+msgid "Welcome %s!"
+msgstr ""
+
+#: usercontrol.php:183
+msgid "Logout successful."
+msgstr ""
 
 #: availability.php:61 index.php:240 index_interface2.php:261
 msgid "Availability"
@@ -1741,6 +1672,69 @@ msgstr ""
 msgid "Update priorities"
 msgstr ""
 
+#: admin/remote.php:80
+msgid "Questionnaire services"
+msgstr ""
+
+#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
+#: admin/availabilitygroup.php:133
+msgid "Modify"
+msgstr ""
+
+#: admin/remote.php:121
+msgid ""
+"Questionnaire services available. Services include Limesurvey remote control."
+msgstr ""
+
+#: admin/remote.php:124
+msgid "Service not added/updated. Error: "
+msgstr ""
+
+#: admin/remote.php:129
+msgid "No questionnaire services defined"
+msgstr ""
+
+#: admin/remote.php:132
+msgid "Service"
+msgstr ""
+
+#: admin/remote.php:148
+msgid "Update questionnaire service"
+msgstr ""
+
+#: admin/remote.php:154
+msgid "Update questionnaire serivce"
+msgstr ""
+
+#: admin/remote.php:164
+msgid "Add new questionnaire service"
+msgstr ""
+
+#: admin/remote.php:165
+msgid "Questionnaire service description"
+msgstr ""
+
+#: admin/remote.php:166
+msgid ""
+"RPC Url (eg: http://localhost/limesurvey/index.php/admin/remotecontrol)"
+msgstr ""
+
+#: admin/remote.php:167
+msgid "Username (eg: admin)"
+msgstr ""
+
+#: admin/remote.php:168
+msgid "Password (eg: password)"
+msgstr ""
+
+#: admin/remote.php:169
+msgid "Questionnaire entry Url (eg: http://localhost/limesurvey/index.php/)"
+msgstr ""
+
+#: admin/remote.php:170
+msgid "Add questionnaire serivce"
+msgstr ""
+
 #: admin/assigntimeslots.php:161 admin/index.php:140
 msgid "Assign Time slots"
 msgstr ""
@@ -1914,11 +1908,6 @@ msgstr ""
 msgid "Time slots"
 msgstr ""
 
-#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
-#: admin/availabilitygroup.php:133
-msgid "Modify"
-msgstr ""
-
 #: admin/availabilitygroup.php:127
 msgid ""
 "Time slots define periods of time during particular days of the week. These "
@@ -2022,6 +2011,10 @@ msgstr "Non se definiron quendas neste cuestionario"
 #: admin/outcomes.php:306
 msgid "Shift time"
 msgstr ""
+
+#: admin/outcomes.php:306 admin/dataoutput.php:93
+msgid "Shift report"
+msgstr "Informe da quenda"
 
 #: admin/outcomes.php:306 admin/operatorlist.php:428 admin/index.php:160
 msgid "Operator performance"
@@ -2353,30 +2346,6 @@ msgstr ""
 msgid "Allow for respondent self completion via email invitation?"
 msgstr ""
 
-#: admin/questionnairelist.php:409 admin/new.php:254
-msgid "Questionnaire display mode for respondent"
-msgstr ""
-
-#: admin/questionnairelist.php:412 admin/new.php:257
-msgid "All in one"
-msgstr ""
-
-#: admin/questionnairelist.php:413 admin/new.php:258
-msgid "Question by question"
-msgstr ""
-
-#: admin/questionnairelist.php:414 admin/new.php:259
-msgid "Group at a time"
-msgstr ""
-
-#: admin/questionnairelist.php:419 admin/new.php:264
-msgid "Limesurvey template for respondent"
-msgstr ""
-
-#: admin/questionnairelist.php:448 admin/new.php:294
-msgid "URL to forward respondents on self completion (required)"
-msgstr ""
-
 #: admin/questionnairelist.php:399 admin/questionnairelist.php:409
 #: admin/questionnairelist.php:419 admin/questionnairelist.php:429
 #: admin/questionnairelist.php:443 admin/questionnairelist.php:453
@@ -2401,10 +2370,6 @@ msgstr ""
 #: admin/questionnairelist.php:430 admin/new.php:291
 msgid "Message to leave on an answering machine:"
 msgstr "Mensaxe a deixar no contestador automático:"
-
-#: admin/questionnairelist.php:500
-msgid "Edit respondent selection instrument in Limesurvey"
-msgstr ""
 
 #: admin/questionnairelist.php:444 admin/new.php:303
 msgid "Project end text (thank you screen):"
@@ -2506,6 +2471,11 @@ msgstr "Listaxe do Historial de Chamadas"
 #: admin/supervisor.php:417 admin/databasestrings.php:82
 msgid "Phone number"
 msgstr "Número de teléfono"
+
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:429 admin/dataoutput.php:93
+msgid "Case notes"
+msgstr "Notas do caso"
 
 #: admin/callhistory.php:150
 msgid "NO Call history records for Your query"
@@ -2787,16 +2757,8 @@ msgstr ""
 msgid "Questionnairies"
 msgstr ""
 
-#: admin/index.php:122 admin/new.php:199 admin/new.php:405
-msgid "Create an instrument in Limesurvey"
-msgstr ""
-
 #: admin/index.php:124 admin/set_outcomes.php:161
 msgid "Set questionnaire outcomes"
-msgstr ""
-
-#: admin/index.php:126 admin/new.php:407
-msgid "Administer instruments with Limesurvey"
 msgstr ""
 
 #: admin/index.php:128
@@ -2899,6 +2861,10 @@ msgstr "Asignar estados a casos"
 #: admin/index.php:188
 msgid "System settings"
 msgstr "Configuración do sistema"
+
+#: admin/index.php:190
+msgid "Questionnaire service (RPC)"
+msgstr ""
 
 #: admin/index.php:191 admin/set_outcomes.php:160
 msgid "Set default outcomes"
@@ -3075,6 +3041,11 @@ msgstr "Valor"
 msgid "Save custom Outcome"
 msgstr ""
 
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
+#: admin/dataoutput.php:93
+msgid "Outcome ID"
+msgstr ""
+
 #: admin/set_outcomes.php:250 admin/quotarow.php:591
 msgid "Select"
 msgstr ""
@@ -3208,6 +3179,18 @@ msgstr ""
 msgid "Allow new numbers to be drawn?"
 msgstr ""
 
+#: admin/assignsample.php:322 admin/assignsample.php:571
+msgid "Sample variables to copy to Limesurvey participant table"
+msgstr ""
+
+#: admin/assignsample.php:324 admin/assignsample.php:573
+msgid "Limesurvey participant variable"
+msgstr ""
+
+#: admin/assignsample.php:328 admin/assignsample.php:577
+msgid "Do not copy to Limesurvey"
+msgstr ""
+
 #: admin/assignsample.php:413
 msgid "List & Add Sample"
 msgstr ""
@@ -3227,6 +3210,12 @@ msgstr ""
 #: admin/assignsample.php:495
 msgid "Add a sample to this questionnaire:"
 msgstr "Escolla a mostra para este cuestionario:"
+
+#: admin/assignsample.php:516
+msgid ""
+"Unable to access token/participants table in Limesurvey. Please confirm that "
+"this survey has a participant table created."
+msgstr ""
 
 #: admin/assignsample.php:527
 msgid "Select sample:"
@@ -3276,6 +3265,10 @@ msgstr "Establecer o estado"
 
 #: admin/supervisor.php:320
 msgid "Sample details"
+msgstr ""
+
+#: admin/supervisor.php:331
+msgid "Token"
 msgstr ""
 
 #: admin/supervisor.php:331 admin/casestatus.php:126
@@ -3558,19 +3551,35 @@ msgid "Current Outcome"
 msgstr ""
 
 #: admin/dataoutput.php:93
+msgid "Number of call attempts"
+msgstr ""
+
+#: admin/dataoutput.php:93
 msgid "Number of calls"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Total interview time over all calls (mins)"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Interview time for last call (mins)"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Last number dialled"
 msgstr ""
 
 #: admin/dataoutput.php:93
 msgid "DATE/TIME Last number dialled"
 msgstr ""
 
-#: admin/dataoutput.php:217
-msgid "Download data for this questionnaire via Limesurvey"
+#: admin/dataoutput.php:93
+msgid "Operator username for last call"
 msgstr ""
 
-#: admin/dataoutput.php:225
-msgid "Download data for this sample via Limesurvey"
+#: admin/dataoutput.php:217
+msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
 #: admin/dataoutput.php:233
@@ -3915,10 +3924,6 @@ msgstr ""
 msgid "Select limesurvey instrument:"
 msgstr ""
 
-#: admin/new.php:194 admin/new.php:211
-msgid "Survey"
-msgstr ""
-
 #: admin/new.php:188
 msgid "Respondent selection type:"
 msgstr ""
@@ -4157,6 +4162,10 @@ msgstr ""
 
 #: admin/databasestrings.php:89
 msgid "Self completion email invitation sent"
+msgstr ""
+
+#: admin/databasestrings.php:90
+msgid "Self completed online"
 msgstr ""
 
 #: admin/databasestrings.php:91
@@ -4409,424 +4418,14 @@ msgstr ""
 msgid "Case"
 msgstr ""
 
+#: login_check.php:86
+msgid "You have to login first."
+msgstr ""
+
+#: login_check.php:100
+msgid "Login"
+msgstr ""
+
 #: rs_quota_end.php:64
 msgid "Project Quota End"
 msgstr ""
-
-#~ msgid "Call restrictions:"
-#~ msgstr "Restricións de chamada:"
-
-#~ msgid ""
-#~ "ERROR: There are no cases available that fall within call restrictions"
-#~ msgstr ""
-#~ "ERRO: Non hai casos dispoñíbeis que coincidan coas restricións de chamada"
-
-#~ msgid "There are "
-#~ msgstr "Hai "
-
-#~ msgid " unassigned case(s) available within the specified call restrictions"
-#~ msgstr ""
-#~ " casos sen asignar dispoñíbeis para as restricións de chamada especificadas"
-
-#~ msgid "POSSIBLE ERROR: Row quota reached for this question"
-#~ msgstr "POSÍBEL ERRO: Atinxiuse a cota de fila para esta pregunta"
-
-#~ msgid "Respondent Selection - Project Quota End"
-#~ msgstr "Selección do/a Entrevistado - Fin da Cota do Proxecto"
-
-#~ msgid "End call with outcome: Quota filled"
-#~ msgstr "Finallizar a chamada co estado: Cota completa"
-
-#~ msgid "Respondent Selection - Business answers"
-#~ msgstr "Selección do/a entrevistado/a - Respostas de negocios"
-
-#~ msgid "End call with outcome: Business number"
-#~ msgstr "Finallizar a chamada co estado: Número dun negocio"
-
-#~ msgid "Respondent Selection - Call back"
-#~ msgstr "Selección do/a Entrevistado/a - Volver chamar"
-
-#~ msgid "You are: "
-#~ msgstr "Vostede é: "
-
-#~ msgid "% complete"
-#~ msgstr "% completado"
-
-#~ msgid "End call with outcome: Refusal by respondent"
-#~ msgstr "Finallizar a chamada co estado: Rexeitada polo/a entrevistado/a"
-
-#~ msgid "None"
-#~ msgstr "Ningún"
-
-#~ msgid "Appointment:"
-#~ msgstr "Rechamada:"
-
-#~ msgid "Respondent Selection - Project Introduction"
-#~ msgstr "Selección do/a entrevistado/a - Introdución do Proxecto"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person not available on this "
-#~ "number)"
-#~ msgstr ""
-#~ "Finallizar a chamada co estado: Non hai persoas elixíbeis (persoa non "
-#~ "dispoñíbel neste número)"
-
-#~ msgid ""
-#~ "End call with outcome: Out of sample (already completed in another mode)"
-#~ msgstr ""
-#~ "Finallizar a chamada co estado: Fóra da mostra (xa completada noutro modo)"
-
-#~ msgid "Respondent Selection - Introduction"
-#~ msgstr "Selección do/a entrevistado/a - Introdución"
-
-#~ msgid "Business number"
-#~ msgstr "Número do traballo"
-
-#~ msgid "End call with outcome: No answer (ring out or busy) "
-#~ msgstr ""
-#~ "Finallizar a chamada co estado: Sen resposta (acaba de soar ou ocupado) "
-
-#~ msgid "End call with outcome: Accidental hang up"
-#~ msgstr "Finallizar a chamada co estado: Corte accidental"
-
-#~ msgid "End call with outcome: Refusal by unknown person"
-#~ msgstr ""
-#~ "Finallizar a chamada co estado: Rexeitada por unha persoa descoñecida"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person never available on "
-#~ "this number)"
-#~ msgstr ""
-#~ "Finallizar a chamada co estado: Non hai entrevistados/as elixíbeis (persoa "
-#~ "nunca dispoñíbel neste número)"
-
-#~ msgid ""
-#~ "End call with outcome: Non contact (person not currently available on this "
-#~ "number: no appointment made)"
-#~ msgstr ""
-#~ "Finallizar a chamada co estado: Sen contacto (persoa actualmente non "
-#~ "dispoñíbel neste número: sen rechamada concertada)"
-
-#~ msgid "Respondent Selection - Answering machine"
-#~ msgstr "Selección do/a entrevistado/a - Contestador automático"
-
-#~ msgid "End call with outcome: Business answering machine"
-#~ msgstr "Finalizar a chamada co estado: Contestador automático de negocio"
-
-#~ msgid "End call with outcome: Answering machine Message left"
-#~ msgstr ""
-#~ "Finalizar a chamada co estado: Contestador automático (deixouse mensaxe)"
-
-#~ msgid "End call with outcome: Answering machine No message left"
-#~ msgstr ""
-#~ "Finalizar a chamada co estado: Contestador automático (non se deixou mensaxe)"
-
-#~ msgid "End call with outcome: Complete"
-#~ msgstr "Finaliza r a chamada co estado: Completado"
-
-#~ msgid ""
-#~ "ERROR: You do not have server side authentication enabled therefore queXS "
-#~ "cannot determine which user is accessing the system."
-#~ msgstr ""
-#~ "ERRO: Non ten activada a autenticación do lado do servidor, por iso queXS "
-#~ "non pode determinar que usuario/a está a acceder ao sistema."
-
-#~ msgid "Duplicate name"
-#~ msgstr "Nome duplicado"
-
-#~ msgid "Import?"
-#~ msgstr "Importar?"
-
-#~ msgid "Type"
-#~ msgstr "Clase"
-
-#~ msgid "New: Create new questionnaire"
-#~ msgstr "Novo: Crear un cuestionario novo"
-
-#~ msgid "as questionnaire"
-#~ msgstr "como cuestionario"
-
-#~ msgid "linked to"
-#~ msgstr "ligado a"
-
-#~ msgid "Select a questionnaire from the list below"
-#~ msgstr "Escolla un cuestionario da lista inferior"
-
-#~ msgid "Outcomes"
-#~ msgstr "Estados"
-
-#~ msgid "Shift"
-#~ msgstr "Quenda"
-
-#~ msgid "Assign Sample: Select sample to assign"
-#~ msgstr "Asignar unha Mostra: Escolla a mostra para asignar"
-
-#~ msgid "Sequentially selected"
-#~ msgstr "Seleccionados secuencialmente"
-
-#~ msgid "Randomly selected"
-#~ msgstr "Selecciados aleatoriamente"
-
-#~ msgid "Max calls:"
-#~ msgstr "Nº máximo de chamadas:"
-
-#~ msgid "Max call attempts:"
-#~ msgstr "Nº máximo de intentos de chamada:"
-
-#~ msgid "Max calls (0 for unlimited)"
-#~ msgstr "Máximo de chamadas (0 para non limitalas)"
-
-#~ msgid "Max call attempts (0 for unlimited)"
-#~ msgstr "Máximo de intentos de chamada (0 para non limitalos)"
-
-#~ msgid "Number of answering machine messages to leave per case (0 for never)"
-#~ msgstr ""
-#~ "Máximo de mensaxes de contestador a deixar por caso (0 para non limitalas)"
-
-#~ msgid "Select from sample randomly? (otherwise sequentially)"
-#~ msgstr ""
-#~ "Escoller aleatoriamente da mostra? (secuencialmente en caso contrario)"
-
-#~ msgid ""
-#~ "Kill signal sent: Please wait... (Note: Process will be stalled until there "
-#~ "is activity on the VoIP Server)"
-#~ msgstr ""
-#~ "Sinal de remate enviada: Por favor, espere... (Nota: O proceso permancerá "
-#~ "até que haxa actividade no Servidor VoIP)"
-
-#~ msgid "Adding an operator here will give the user the ability to call cases"
-#~ msgstr ""
-#~ "Engadir aquí un/unha operador/a outorgaralle a capacidade de chamar aos casos"
-
-#~ msgid "Assign Operator to Questionnaire"
-#~ msgstr "Asignar un/unha Operador ao Cuestionario"
-
-#~ msgid "tool"
-#~ msgstr "ferramenta"
-
-#~ msgid ""
-#~ "Use this form to enter the username of a user based on your directory "
-#~ "security system. For example, if you have secured the base directory of "
-#~ "queXS using Apache file based security, enter the usernames of the users "
-#~ "here."
-#~ msgstr ""
-#~ "Use este formulario para introducir o nome de usuario/a baseado no seu "
-#~ "sistema de seguranza de directorio. Por exemplo, se segurou o directorio "
-#~ "base de queXS coa seguranza baseada en ficheiros de Apache, introduza aquí "
-#~ "os nomes de usuarios/as."
-
-#~ msgid "Enter the username of an operator to add:"
-#~ msgstr "Introduza o nome de usuario/a do/a operador/a a engadir:"
-
-#~ msgid "Enter the first name of an operator to add:"
-#~ msgstr "Introduza o nome de pía do/a operador/a a engadir:"
-
-#~ msgid "Enter the surname of an operator to add:"
-#~ msgstr "Introduza os apelidos do/a operador/a a engadir:"
-
-#~ msgid "Enter the Time Zone of an operator to add:"
-#~ msgstr "Introduza o Fuso Horario do/a operador/a a engadir:"
-
-#~ msgid "Enter the telephone extension number:"
-#~ msgstr "Introduza o número da extensión telefónica:"
-
-#~ msgid "Will this operator be using VoIP?"
-#~ msgstr "Usará este/a operador/a a VoIP?"
-
-#~ msgid "Is the operator a normal interviewer?"
-#~ msgstr "É este/a operador/a un/unha entrevistador/a normal?"
-
-#~ msgid "Is the operator a supervisor?"
-#~ msgstr "É o/a operador/a un/unha supervisor/a?"
-
-#~ msgid "Is the operator a refusal converter?"
-#~ msgstr "É este/a operador/a un/unha conversor/a de rexeitamentos?"
-
-#~ msgid "Add user"
-#~ msgstr "Engadir un/unha usuario/a"
-
-#~ msgid "Administrative Tools"
-#~ msgstr "Ferramentas Administrativas"
-
-#~ msgid "Questionnaire creation and management"
-#~ msgstr "Xestión e creación de cuestionarios"
-
-#~ msgid "Import a sample file (in CSV form)"
-#~ msgstr "Importar un ficheiro de mostra (na forma CSV)"
-
-#~ msgid "Set values in questionnaire to pre fill"
-#~ msgstr "Establecer os valores do cuestionario a preencher"
-
-#~ msgid "Shift management (add/remove)"
-#~ msgstr "Xestión de quendas (engadir/eliminar)"
-
-#~ msgid "Questionnaire progress"
-#~ msgstr "Progreso do cuestionario"
-
-#~ msgid "Client management"
-#~ msgstr "Xestión de clientes"
-
-#~ msgid "Operator Name"
-#~ msgstr "Nome do/a operador/a"
-
-#~ msgid "Respondent Name"
-#~ msgstr "Nome do/a entrevistado/a"
-
-#~ msgid "No appointments in the future"
-#~ msgstr "Non hai rechamadas previstas"
-
-#~ msgid "Add/Remove Timezones"
-#~ msgstr "Engadir/Eliminar Fusos Horarios"
-
-#~ msgid "Click to remove a Timezone from the default list"
-#~ msgstr "Calque para eliminar un Fuso Horario da listaxe predeterminada"
-
-#~ msgid "Timezone: "
-#~ msgstr "Fuso Horario: "
-
-#~ msgid ""
-#~ "Adding a client here will allow them to access project information in the "
-#~ "client subdirectory. You can assign a client to a particular project using "
-#~ "the"
-#~ msgstr ""
-#~ "Engadir un/unha cliente aquí permitiralle acceder a información do proxecto "
-#~ "no subdirectorio de clientes. Pode asignar un cliente a un proxecto "
-#~ "particular usando o"
-
-#~ msgid "tool."
-#~ msgstr "ferramenta."
-
-#~ msgid "Select a sample from the list below"
-#~ msgstr "Escolla unha mostra da lista inferior"
-
-#~ msgid "Current quotas (click to delete)"
-#~ msgstr "Cotas actuais (prema para borralas)"
-
-#~ msgid "Pre defined values for this question:"
-#~ msgstr "Valores predefinidos para esta pregunta:"
-
-#~ msgid "Modify call restriction times"
-#~ msgstr "Modificar os horarios de restrición de chamadas"
-
-#~ msgid "Copied quotas"
-#~ msgstr "Cotas copiadas"
-
-#~ msgid "Current row quotas (click to delete)"
-#~ msgstr "Cotas de fila acctuais (calque para borrar)"
-
-#~ msgid "Replicate: Where"
-#~ msgstr "Replicar: Onde"
-
-#~ msgid "like"
-#~ msgstr "como"
-
-#~ msgid "Stop calling"
-#~ msgstr "Parar de chamar"
-
-#~ msgid "rows from this sample when:"
-#~ msgstr "filas desta mostra cando:"
-
-#~ msgid "Row quota reached (Closed)"
-#~ msgstr "Atinxiuse a cota de fila (Pechada)"
-
-#~ msgid "Row quota not yet reached (Open)"
-#~ msgstr "Non se atinxiu a cota de fila aínda (Aberta)"
-
-#~ msgid "Copy quotas for this sample to (No error/duplicate checking): "
-#~ msgstr ""
-#~ "Copiar as cotas desta mostra en (Sen comprobación de erros/duplicados): "
-
-#~ msgid "Copy"
-#~ msgstr "Copiar"
-
-#~ msgid "Select a question for the row quota"
-#~ msgstr "Escolla unha pregunta para a cota de fila"
-
-#~ msgid "No question (Replicate)"
-#~ msgstr "Sen pregunta (Replicar)"
-
-#~ msgid "Select the sample variable to exclude"
-#~ msgstr "Escolla a variábel da mostra a excluír"
-
-#~ msgid "Enter the details for creating the row quota:"
-#~ msgstr "Introduza os detalles para crear a cota de fila:"
-
-#~ msgid "Exclude from the sample where the value is like"
-#~ msgstr "Excluír da mostra onde o valor sexa como"
-
-#~ msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
-#~ msgstr ""
-#~ "Preencher o cuestionario: Establecer os valores do cuestionario a preencher"
-
-#~ msgid "Current pre fills (click to delete)"
-#~ msgstr "Predeterminados actuais (calque para borrar)"
-
-#~ msgid "Date/Time call start"
-#~ msgstr "Data/Hora de comezo da chamada"
-
-#~ msgid "Time end"
-#~ msgstr "Hora de finalización"
-
-#~ msgid "Enter a case id or select a case from the list below:"
-#~ msgstr "Introduza un id de caso ou escolla un caso da listaxe inferior:"
-
-#~ msgid "Create appointment for this case"
-#~ msgstr "Crear unha rechamada para este caso"
-
-#~ msgid "Modify shift template"
-#~ msgstr "Modificar o modelo de quendas"
-
-#~ msgid "Submit changes"
-#~ msgstr "Enviar os cambios"
-
-#~ msgid "Import: Validating and uploading"
-#~ msgstr "Importar: A validar e cargar"
-
-#~ msgid "Successfully imported file"
-#~ msgstr "Ficheiro importado con suceso"
-
-#~ msgid "Please go back in your browser and fix the problem"
-#~ msgstr "Por favor, retroceda no seu navegador e arranxe o problema"
-
-#~ msgid "Import: Select columns to import"
-#~ msgstr "Importar: Escolla as columnas a importar"
-
-#~ msgid "Choose the CSV sample file to upload:"
-#~ msgstr "Escoller o ficheiro de mostra CSV a cargar:"
-
-#~ msgid "Description for file:"
-#~ msgstr "Descrición do ficheiro:"
-
-#~ msgid "Search sample"
-#~ msgstr "Buscar na mostra"
-
-#~ msgid "No cases yet assigned: Delete this sample record"
-#~ msgstr "Non se asignaron casos aínda: Borrar este rexistro da mostra"
-
-#~ msgid "Assigned to questionnaire: "
-#~ msgstr "Asignado/a ao cuestionario: "
-
-#~ msgid "No records in this sample match this search criteria"
-#~ msgstr "Non hai rexistros na mostra que coincidan cos criterios de busca"
-
-#~ msgid "Link"
-#~ msgstr "Ligazón"
-
-#~ msgid "Use the % character as a wildcard"
-#~ msgstr "Usar o carácter % como comodín"
-
-#~ msgid "Search for:"
-#~ msgstr "Buscar por:"
-
-#~ msgid "Start search"
-#~ msgstr "Comezar a busca"
-
-#~ msgid "Display"
-#~ msgstr "Pantalla"
-
-#~ msgid ""
-#~ "This is how the story goes.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Así é como funciona isto.\n"
-#~ "\n"

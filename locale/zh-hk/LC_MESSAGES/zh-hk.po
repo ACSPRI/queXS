@@ -7,51 +7,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-11-23 12:26+1100\n"
-"PO-Revision-Date: 2020-04-29 14:43+0800\n"
-"Last-Translator: Kevin <Unknown>\n"
+"POT-Creation-Date: 2017-11-23 12:29+1100\n"
+"PO-Revision-Date: 2020-01-21 05:08+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese (Hong Kong) <zh_HK@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-04-28 10:00+0000\n"
-"X-Generator: Poedit 2.3\n"
-"Language: zh_TW\n"
+"X-Launchpad-Export-Date: 2020-05-11 02:24+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
-msgstr ""
+msgstr "預約錯誤"
 
 #: appointment.php:77
 msgid ""
 "You have not been assigned a case therefore cannot create an appointment"
-msgstr ""
+msgstr "您尚未分配訪問，因此無法建立預約"
 
 #: appointment.php:116
 msgid "Appointment made"
-msgstr ""
+msgstr "預約成功"
 
 #: appointment.php:128 admin/supervisor.php:398
 msgid "Create appointment"
-msgstr ""
+msgstr "建立預約"
 
 #: appointment.php:131 appointmentlist.php:95 callhistory.php:88
-#: admin/callhistory.php:132 admin/callhistory.php:157 admin/supervisor.php:390
-#: admin/displayappointments.php:210 admin/displayappointments.php:316
-#: admin/displayappointments.php:341
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:390 admin/displayappointments.php:210
+#: admin/displayappointments.php:316 admin/displayappointments.php:341
 msgid "Respondent"
 msgstr "受訪者"
 
 #: appointment.php:140
 msgid "Create new respondent:"
-msgstr ""
+msgstr "建立新受訪者："
 
 #: appointment.php:143
 msgid "Add this respondent"
-msgstr ""
+msgstr "添加此受訪者"
 
 #: appointment.php:153 admin/operators.php:256 admin/clients.php:245
-#: admin/operatorlist.php:240 admin/supervisor.php:331 admin/casestatus.php:126
+#: admin/operatorlist.php:240 admin/supervisor.php:331
+#: admin/casestatus.php:126
 msgid "Timezone"
 msgstr "時區"
 
@@ -115,28 +115,28 @@ msgstr "我的預約"
 
 #: myappointments.php:75
 msgid "Already calling case"
-msgstr ""
+msgstr "已經聯絡的個案"
 
 #: myappointments.php:75 myappointments.php:80 myappointments.php:90
 msgid "next"
-msgstr ""
+msgstr "下一頁"
 
 #: myappointments.php:80
 msgid "Will call case"
-msgstr ""
+msgstr "將會聯絡的個案"
 
 #: myappointments.php:89 appointmentlist.php:75
 #: admin/displayappointments.php:267 admin/displayappointments.php:300
 msgid "Any operator"
-msgstr ""
+msgstr "任何訪問員"
 
 #: myappointments.php:90 myappointments.php:118
 msgid "Call next"
-msgstr ""
+msgstr "下一個個案"
 
 #: myappointments.php:90
 msgid "Calling case"
-msgstr ""
+msgstr "訪問中的個案"
 
 #: myappointments.php:113 appointmentlist.php:90
 msgid "No future appointments scheduled"
@@ -148,32 +148,32 @@ msgstr "無預約"
 #: admin/systemsortprocess.php:184 admin/bulkappointment.php:215
 #: admin/bulkappointment.php:237 admin/casestatus.php:126
 msgid "Case id"
-msgstr ""
+msgstr "個案ID"
 
 #: myappointments.php:118 appointmentlist.php:95 admin/callrestrict.php:140
 #: admin/addshift.php:243 admin/availability.php:165 admin/supervisor.php:390
 #: admin/shifttemplate.php:136 admin/displayappointments.php:316
 #: admin/displayappointments.php:341 shifts.php:88 shifts.php:109
 msgid "Start"
-msgstr ""
+msgstr "啟動"
 
 #: myappointments.php:118 nocaseavailable.php:147 admin/samplesearch.php:358
-#: admin/sortsample.php:139 admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/callhistory.php:162 admin/set_outcomes.php:200 admin/quota.php:115
-#: admin/assignsample.php:277 admin/quotarow.php:293
-#: admin/overallreport.php:134 admin/casestatus.php:241
+#: admin/sortsample.php:139 admin/callhistory.php:132
+#: admin/callhistory.php:157 admin/callhistory.php:162
+#: admin/set_outcomes.php:200 admin/quota.php:115 admin/assignsample.php:277
+#: admin/quotarow.php:293 admin/overallreport.php:134 admin/casestatus.php:241
 #: admin/displayappointments.php:316 admin/displayappointments.php:341
 #: admin/new.php:137 admin/new.php:145 shifts.php:109
 msgid "Questionnaire"
-msgstr ""
+msgstr "問卷"
 
 #: myappointments.php:118
 msgid "Last Note"
-msgstr ""
+msgstr "上一項備注"
 
 #: info.php:62
 msgid "Information"
-msgstr ""
+msgstr "資料"
 
 #: rs_project_end.php:65 rs_callback.php:68 rs_intro.php:73 rs_intro.php:133
 #: rs_answeringmachine.php:69 rs_business.php:58 rs_project_intro.php:63
@@ -187,7 +187,7 @@ msgstr "訪問結束"
 
 #: rs_project_end.php:85
 msgid "Call automatically ended with outcome:"
-msgstr ""
+msgstr "按訪問結果自動結束通話："
 
 #: rs_project_end.php:85 rs_project_end.php:99 admin/databasestrings.php:41
 msgid "Complete"
@@ -196,7 +196,7 @@ msgstr "完成訪問"
 #: rs_project_end.php:88 call_interface2.php:299 call.php:287 call.php:403
 #: call.php:408 call.php:424 call.php:430
 msgid "End case"
-msgstr ""
+msgstr "結束個案"
 
 #: rs_project_end.php:92 rs_callback.php:94 rs_intro.php:83
 #: rs_answeringmachine.php:96 rs_business.php:66 rs_project_intro.php:90
@@ -210,35 +210,35 @@ msgstr ""
 
 #: functions/functions.import.php:129
 msgid "Duplicate column name"
-msgstr ""
+msgstr "複製列名稱"
 
 #: functions/functions.import.php:147
 msgid "No more than one field may be a token field"
-msgstr ""
+msgstr "代號字段不得超過一個字段"
 
 #: functions/functions.import.php:163
 msgid "You must select one and one only Primary Phone number"
-msgstr ""
+msgstr "您必須選擇一個主要電話號碼"
 
 #: functions/functions.import.php:179
 msgid "Selected file column name"
-msgstr ""
+msgstr "選擇文件列名稱"
 
 #: functions/functions.import.php:179
 msgid "Import ?"
-msgstr ""
+msgstr "上傳?"
 
 #: functions/functions.import.php:179
 msgid "New Sample Variable Name"
-msgstr ""
+msgstr "新樣本變量名稱"
 
 #: functions/functions.import.php:179
 msgid "Variable Type"
-msgstr ""
+msgstr "變量類型"
 
 #: functions/functions.import.php:179
 msgid "Show to operator?"
-msgstr ""
+msgstr "顯示給訪問員？"
 
 #: functions/functions.import.php:196 functions/functions.import.php:208
 #: waitnextcase_interface2.php:142 admin/samplelist.php:310
@@ -268,7 +268,7 @@ msgstr ""
 #: admin/new.php:200 admin/new.php:207 admin/new.php:214 admin/new.php:221
 #: admin/new.php:228
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: functions/functions.import.php:196 functions/functions.import.php:208
 #: admin/samplelist.php:310 admin/samplelist.php:311 admin/operators.php:266
@@ -297,28 +297,28 @@ msgstr ""
 #: admin/new.php:200 admin/new.php:207 admin/new.php:214 admin/new.php:221
 #: admin/new.php:228
 msgid "No"
-msgstr ""
+msgstr "否"
 
 #: functions/functions.operator.php:146
 msgid "morning"
-msgstr ""
+msgstr "早上"
 
 #: functions/functions.operator.php:147
 msgid "afternoon"
-msgstr ""
+msgstr "下午"
 
 #: functions/functions.operator.php:148
 msgid "evening"
-msgstr ""
+msgstr "晚間"
 
 #: functions/functions.operator.php:941
 msgid "ERROR: You are not logged in."
-msgstr ""
+msgstr "錯誤：您尚未登錄。"
 
 #: functions/functions.performance.php:304
 #: functions/functions.performance.php:306
 msgid "Total"
-msgstr ""
+msgstr "全部"
 
 #: functions/functions.performance.php:638
 msgid "No shift"
@@ -326,7 +326,7 @@ msgstr ""
 
 #: functions/functions.performance.php:661
 msgid "Total completions"
-msgstr ""
+msgstr "完成總數"
 
 #: functions/functions.performance.php:690
 msgid "Completions this shift"
@@ -363,25 +363,25 @@ msgstr ""
 
 #: functions/functions.calendar.php:193
 msgid "Select a respondent"
-msgstr ""
+msgstr "選擇受訪者"
 
 #: functions/functions.calendar.php:202 functions/functions.calendar.php:204
 #: respondent.php:99 respondent.php:137 contactdetails.php:98
 #: contactdetails.php:136
 msgid "Add respondent"
-msgstr ""
+msgstr "添加受訪者"
 
 #: functions/functions.calendar.php:256
 msgid "First name:"
-msgstr ""
+msgstr "名字:"
 
 #: functions/functions.calendar.php:257
 msgid "Last  name:"
-msgstr ""
+msgstr "姓氏:"
 
 #: functions/functions.calendar.php:262
 msgid "Time Zone:"
-msgstr ""
+msgstr "時區："
 
 #: functions/functions.calendar.php:313
 msgid "Shift from:"
@@ -427,28 +427,28 @@ msgstr "日"
 #: admin/operators.php:270 admin/operatorlist.php:255
 #: admin/operatorlist.php:408 admin/extensionstatus.php:266
 msgid "Extension"
-msgstr ""
+msgstr "延伸"
 
 #: functions/functions.voip.php:449
 msgid "online"
-msgstr ""
+msgstr "線上"
 
 #: functions/functions.voip.php:449
 msgid "offline"
-msgstr ""
+msgstr "離線"
 
 #: functions/functions.voip.php:528
 msgid "Disconnected"
-msgstr ""
+msgstr "斷線"
 
 #: functions/functions.voip.php:530
 msgid "Reconnected"
-msgstr ""
+msgstr "重新連線"
 
 #: functions/functions.voip.php:553 status.php:124
 #: admin/extensionstatus.php:233 call.php:444
 msgid "Ringing"
-msgstr ""
+msgstr "致電中"
 
 #: functions/functions.voip.php:553 functions/functions.voip.php:565
 #: functions/functions.voip.php:577 functions/functions.voip.php:587
@@ -459,104 +459,104 @@ msgstr ""
 #: functions/functions.voip.php:565 status.php:128
 #: admin/extensionstatus.php:233 call.php:451
 msgid "Answered"
-msgstr ""
+msgstr "已接線"
 
 #: functions/functions.voip.php:577 call.php:441 call.php:448 call.php:455
 msgid "Hangup"
-msgstr ""
+msgstr "掛斷"
 
 #: functions/functions.voip.php:587
 msgid "Unregistered"
-msgstr ""
+msgstr "已取消註冊"
 
 #: functions/functions.voip.php:596
 msgid "Registered"
-msgstr ""
+msgstr "已註冊"
 
 #: rs_callback.php:68
 msgid "Call back"
-msgstr ""
+msgstr "回撥"
 
 #: rs_callback.php:82
 msgid "Survey is"
-msgstr ""
+msgstr "訪問是"
 
 #: rs_callback.php:82
 msgid "complete"
-msgstr ""
+msgstr "完成"
 
 #: rs_callback.php:85 rs_answeringmachine.php:87 rs_business.php:63
 #: rs_project_intro.php:79
 msgid "Go Back"
-msgstr ""
+msgstr "返回"
 
 #: rs_callback.php:103
 msgid "Yes - Continue where we left off"
-msgstr ""
+msgstr "是的 - 從我們中斷的地方繼續"
 
 #: selectextension.php:94 index.php:154
 msgid "queXS"
-msgstr ""
+msgstr "queXS"
 
 #: selectextension.php:105
 msgid ""
 "There are no extensions available, please contact the supervisor or click "
 "below to try again for an available extension"
-msgstr ""
+msgstr "沒有可用的擴展，請與主管聯繫或單擊下面的內容再次嘗試可用的擴展"
 
 #: selectextension.php:106 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:277
 msgid "Try again"
-msgstr ""
+msgstr "再試一次"
 
 #: selectextension.php:110
 msgid "Select extension"
-msgstr ""
+msgstr "選擇擴展"
 
 #: selectextension.php:111
 msgid ""
 "Please select your extension from the list below then click on 'Choose "
 "extension'"
-msgstr ""
+msgstr "請從下面的列表中選擇您的擴展，然後單擊“選擇擴展”"
 
 #: selectextension.php:116
 msgid "Choose extension"
-msgstr ""
+msgstr "選擇擴展"
 
 #: status.php:64 status.php:83 status_interface2.php:76
 #: admin/quotareport.php:263 admin/outcomes.php:88 admin/outcomes.php:200
 #: admin/quotarow.php:591
 msgid "Status"
-msgstr ""
+msgstr "狀態"
 
 #: status.php:65 callhistory.php:92 admin/callhistory.php:192
 #: admin/casesbyoutcome.php:124
 msgid "No operator"
-msgstr ""
+msgstr "沒有訪問員"
 
 #: status.php:101
 msgid "VoIP On"
-msgstr ""
+msgstr "VoIP 開"
 
 #: status.php:103
 msgid "VoIP Off"
-msgstr ""
+msgstr "VoIP 關"
 
 #: status.php:108
 msgid "No VoIP"
-msgstr ""
+msgstr "沒有VoIP"
 
 #: status.php:112
 msgid "No call"
-msgstr ""
+msgstr "沒有電話"
 
 #: status.php:116
 msgid "To be coded"
-msgstr ""
+msgstr "待編碼"
 
 #: status.php:120
 msgid "Requesting"
-msgstr ""
+msgstr "請求中"
 
 #: status.php:136
 msgid "APPT"
@@ -569,43 +569,44 @@ msgstr ""
 #: status.php:140 casenote.php:119 status_interface2.php:239 calllist.php:93
 #: project_info.php:88
 msgid "No case"
-msgstr ""
+msgstr "沒有個案"
 
 #: referral.php:189
 msgid "Generated referral to case id"
-msgstr ""
+msgstr "產生轉介個案至個案ID"
 
 #: referral.php:195
 msgid "Generated as referral from case id"
-msgstr ""
+msgstr "從個案ID產生轉介個案"
 
 #: referral.php:201
 msgid "Created referral case - you may now close this window"
-msgstr ""
+msgstr "已產生轉介個案 - 您現在可以關閉此窗口"
 
 #: referral.php:205
-msgid "Failed to create referral case - please check your input and try again"
-msgstr ""
+msgid ""
+"Failed to create referral case - please check your input and try again"
+msgstr "無法產生轉介個案 - 請檢查您的輸入，然後重試"
 
 #: referral.php:211
 msgid "You must supply a primary phone number"
-msgstr ""
+msgstr "您必須提供主要電話號碼"
 
 #: referral.php:220 index.php:176 index_interface2.php:231
 msgid "Referral"
-msgstr ""
+msgstr "轉介個案"
 
 #: referral.php:231 referral.php:268
 msgid "Create referral"
-msgstr ""
+msgstr "建立轉介個案"
 
 #: referral.php:266
 msgid "Call this new referral immediately after this case?"
-msgstr ""
+msgstr "完成此個案後，立即致電此新轉介個案嗎？"
 
 #: referral.php:275
 msgid "Referrals not available for this questionnaire"
-msgstr ""
+msgstr "轉介個案無法進行此問卷"
 
 #: performance.php:67 index.php:286 index_interface2.php:301
 msgid "Performance"
@@ -644,21 +645,22 @@ msgstr "此項目"
 
 #: casenote.php:62
 msgid "Case Notes"
-msgstr ""
+msgstr "個案備註"
 
 #: casenote.php:72 casenote.php:111 admin/supervisor.php:441
 msgid "Add note"
 msgstr "新增備註"
 
 #: casenote.php:75 admin/updatesample.php:48 admin/updatesample.php:80
-#: admin/samplelist.php:289 admin/samplelist.php:499 admin/samplesearch.php:231
-#: admin/sortsample.php:94 admin/questionnairelist.php:361
-#: admin/questionnairelist.php:461 admin/questionnairelist.php:483
-#: admin/questionnairelist.php:491 admin/callhistory.php:145
-#: admin/availability.php:127 admin/operatorlist.php:198 admin/import.php:48
-#: admin/import.php:86 admin/import.php:117 admin/casesbyoutcome.php:59
-#: admin/assignsample.php:276 admin/assignsample.php:416
-#: admin/casestatus.php:215 respondent.php:101 contactdetails.php:100
+#: admin/samplelist.php:289 admin/samplelist.php:499
+#: admin/samplesearch.php:231 admin/sortsample.php:94
+#: admin/questionnairelist.php:361 admin/questionnairelist.php:461
+#: admin/questionnairelist.php:483 admin/questionnairelist.php:491
+#: admin/callhistory.php:145 admin/availability.php:127
+#: admin/operatorlist.php:198 admin/import.php:48 admin/import.php:86
+#: admin/import.php:117 admin/casesbyoutcome.php:59 admin/assignsample.php:276
+#: admin/assignsample.php:416 admin/casestatus.php:215 respondent.php:101
+#: contactdetails.php:100
 msgid "Go back"
 msgstr "返回"
 
@@ -666,34 +668,34 @@ msgstr "返回"
 msgid "No notes"
 msgstr "無備註"
 
-#: casenote.php:116 callhistory.php:88 calllist.php:89 admin/supervisor.php:417
-#: admin/supervisor.php:434
+#: casenote.php:116 callhistory.php:88 calllist.php:89
+#: admin/supervisor.php:417 admin/supervisor.php:434
 msgid "Date/Time"
 msgstr "日期/時間"
 
 #: casenote.php:116 admin/bulkappointment.php:237 admin/supervisor.php:434
 msgid "Note"
-msgstr ""
+msgstr "備註"
 
 #: waitnextcase_interface2.php:49
 msgid "Standby"
-msgstr ""
+msgstr "待機"
 
 #: waitnextcase_interface2.php:60
 msgid "Operator Automatically logged out after: "
-msgstr ""
+msgstr "訪問員在以下時間自動登出： "
 
 #: waitnextcase_interface2.php:60
 msgid " minutes"
-msgstr ""
+msgstr " 分鐘"
 
 #: waitnextcase_interface2.php:63 endwork.php:55
 msgid "You have been automatically logged out of work due to inactivity"
-msgstr ""
+msgstr "由於您長時間待機，系統已自動退出"
 
 #: waitnextcase_interface2.php:90 nocaseavailable.php:101
 msgid "ERROR: No questionnaires assigned to you"
-msgstr ""
+msgstr "錯誤：沒有分配問卷"
 
 #: waitnextcase_interface2.php:95 nocaseavailable.php:95
 msgid "Assigned questionnaires:"
@@ -748,17 +750,17 @@ msgstr "已接觸"
 
 #: rs_intro.php:107
 msgid "No eligible respondent (person never available on this number)"
-msgstr ""
+msgstr "沒有合資格的受訪者（此號碼無法聯絡受訪者）"
 
 #: rs_intro.php:117
 msgid ""
 "Non contact (person not currently available on this number: no appointment "
 "made)"
-msgstr ""
+msgstr "未接觸（此號碼暫時焦法按通；未進行預約）"
 
 #: rs_intro.php:129 rs_answeringmachine.php:69
 msgid "Answering machine"
-msgstr ""
+msgstr "電話錄音"
 
 #: rs_intro.php:156 rs_project_intro.php:114
 msgid "Yes - Continue"
@@ -766,145 +768,36 @@ msgstr "是 - 繼續訪問"
 
 #: record.php:61
 msgid "Stop REC"
-msgstr ""
+msgstr "暫停錄音"
 
 #: record.php:62 record.php:85 record.php:102
 msgid "Record"
-msgstr ""
+msgstr "錄音"
 
 #: record.php:72
 msgid "Beginning recording..."
-msgstr ""
+msgstr "開始錄音"
 
 #: record.php:75 record.php:103
 msgid "Not on a call, so not beginning a recording"
-msgstr ""
+msgstr "不在通話中，因此不會開始錄音"
 
 #: record.php:79
 msgid "Begin the manual recording now..."
-msgstr ""
+msgstr "即將開始手動錄音..."
 
 #: record.php:84 email.php:111 call_interface2.php:215 call.php:216
 #: call.php:234 index.php:177
 msgid "Start REC"
-msgstr ""
+msgstr "開始錄音"
 
 #: record.php:92
 msgid "Stopping recording..."
-msgstr ""
+msgstr "停止錄音"
 
 #: record.php:96
 msgid "Stop the manual recording now..."
-msgstr ""
-
-#: admin/databasestrings.php:90
-msgid "Self completed online"
-msgstr "已完成網上問卷"
-
-#: include/limesurvey/quexs.php:682 include/limesurvey/quexs.php:761
-msgid "Not on an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:684 include/limesurvey/quexs.php:763
-msgid "On an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:995
-msgid "All samples"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6295
-msgid "queXS: Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6296
-msgid "queXS: On appointment?"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6297
-msgid "queXS: Percentage complete"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6298
-msgid "queXS: Number of answering machine messages left"
-msgstr ""
-
-#: include/limesurvey/optout.php:83
-msgid "Self completion refused via opt out function"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:110
-#: include/limesurvey/admin/statistics.php:268
-#: include/limesurvey/admin/browse.php:791
-#: include/limesurvey/admin/vvexport.php:69
-msgid "Questionnaire and Sample selection:"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:111
-#: include/limesurvey/admin/statistics.php:269
-#: include/limesurvey/admin/browse.php:792
-#: include/limesurvey/admin/vvexport.php:70
-msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr ""
-
-#: admin/supervisor.php:331
-msgid "Token"
-msgstr ""
-
-#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
-#: admin/dataoutput.php:85 admin/extensionstatus.php:266
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
-msgid "Case ID"
-msgstr "問卷編號"
-
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
-#: admin/dataoutput.php:93
-msgid "Outcome ID"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:260
-#: include/limesurvey/admin/exportresults.php:661
-#: include/limesurvey/admin/exportresults.php:662
-#: include/limesurvey/admin/exportresults.php:986
-msgid "Case outcome"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:262
-#: include/limesurvey/admin/exportresults.php:616
-#: include/limesurvey/admin/exportresults.php:617
-#: include/limesurvey/admin/exportresults.php:992
-msgid "Number of answering machine messages left"
-msgstr ""
-
-#: admin/callhistory.php:132 admin/callhistory.php:157 admin/supervisor.php:429
-#: admin/dataoutput.php:93
-msgid "Case notes"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Total interview time over all calls (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Interview time for last call (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Last number dialled"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Operator username for last call"
-msgstr ""
-
-#: admin/outcomes.php:306 admin/dataoutput.php:93
-msgid "Shift report"
-msgstr ""
+msgstr "馬上停止手動錄音..."
 
 #: voip/downloadvoipclient.php:59
 msgid "Error: Cannot write to temporary directory"
@@ -924,16 +817,16 @@ msgstr "撥號"
 
 #: status_interface2.php:233 status_interface2.php:236
 msgid "No more numbers to call"
-msgstr ""
+msgstr "沒有電話號碼"
 
 #: appointmentlist.php:61
 msgid "Appointment List"
-msgstr ""
+msgstr "預約名單"
 
 #: appointmentlist.php:75 admin/supervisor.php:370
 #: admin/displayappointments.php:297
 msgid "Not yet called"
-msgstr ""
+msgstr "尚未致電"
 
 #: appointmentlist.php:88
 msgid "No appointments made"
@@ -942,55 +835,56 @@ msgstr "無預約"
 #: appointmentlist.php:95 admin/callrestrict.php:140 admin/addshift.php:243
 #: admin/availability.php:165 admin/supervisor.php:390
 #: admin/shifttemplate.php:136 admin/displayappointments.php:316
-#: admin/displayappointments.php:341 index.php:171 shifts.php:88 shifts.php:109
+#: admin/displayappointments.php:341 index.php:171 shifts.php:88
+#: shifts.php:109
 msgid "End"
-msgstr ""
+msgstr "結束"
 
 #: appointmentlist.php:95 admin/displayappointments.php:253
 #: admin/displayappointments.php:316
 msgid "Appointment with"
-msgstr ""
+msgstr "預約"
 
 #: appointmentlist.php:95 client/index.php:99 client/index.php:118
 #: callhistory.php:88 calllist.php:89 admin/outcomes.php:147
 #: admin/outcomes.php:169 admin/outcomes.php:220 admin/outcomes.php:262
-#: admin/callhistory.php:132 admin/callhistory.php:157 admin/supervisor.php:417
-#: admin/casestatus.php:126 index_interface2.php:225
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:417 admin/casestatus.php:126 index_interface2.php:225
 msgid "Outcome"
 msgstr "訪問結果"
 
 #: client/index.php:65 admin/outcomes.php:71
 msgid "Questionnaire Outcomes"
-msgstr ""
+msgstr "問卷結果"
 
 #: client/index.php:78
 msgid "There are no questionnaires assigned to you"
-msgstr ""
+msgstr "沒有問卷分配給您"
 
 #: client/index.php:99 admin/outcomes.php:147
 msgid "Rate"
-msgstr ""
+msgstr "比率"
 
 #: client/index.php:100 admin/outcomes.php:148
 msgid "Response Rate 1"
-msgstr ""
+msgstr "回應率1"
 
 #: client/index.php:101 admin/outcomes.php:149
 msgid "Refusal Rate 1"
-msgstr ""
+msgstr "拒絕率1"
 
 #: client/index.php:102 admin/outcomes.php:150
 msgid "Cooperation Rate 1"
-msgstr ""
+msgstr "合作率1"
 
 #: client/index.php:103 admin/outcomes.php:151
 msgid "Contact Rate 1"
-msgstr ""
+msgstr "聯絡率1"
 
 #: client/index.php:118 admin/outcomes.php:169 admin/outcomes.php:220
 #: admin/outcomes.php:262
 msgid "Count"
-msgstr ""
+msgstr "總數"
 
 #: client/index.php:120 admin/outcomes.php:269
 msgid "No outcomes recorded for this questionnaire"
@@ -1094,6 +988,46 @@ msgstr ""
 
 #: callhistory.php:84 admin/callhistory.php:114
 msgid "No calls ever made"
+msgstr ""
+
+#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
+#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
+#: admin/dataoutput.php:85 admin/extensionstatus.php:266
+#: admin/displayappointments.php:316 admin/displayappointments.php:341
+msgid "Case ID"
+msgstr "問卷編號"
+
+#: usercontrol.php:96 usercontrol.php:163
+msgid "Incorrect username and/or password!"
+msgstr ""
+
+#: usercontrol.php:98 usercontrol.php:165 usercontrol.php:174
+#: login_check.php:103
+msgid ""
+"You have exceeded you maximum login attempts. Please wait %d minutes before "
+"trying again"
+msgstr ""
+
+#: usercontrol.php:99 usercontrol.php:166 usercontrol.php:175
+msgid "Continue"
+msgstr ""
+
+#: usercontrol.php:113
+msgid ""
+"Warning: You are still using the default password ('password'). Please "
+"change your password and re-login again."
+msgstr ""
+
+#: usercontrol.php:130
+msgid "Logged in"
+msgstr ""
+
+#: usercontrol.php:131
+msgid "Welcome %s!"
+msgstr ""
+
+#: usercontrol.php:183
+msgid "Logout successful."
 msgstr ""
 
 #: availability.php:61 index.php:240 index_interface2.php:261
@@ -1244,8 +1178,8 @@ msgstr ""
 msgid "Choose the CSV sample file to upload"
 msgstr ""
 
-#: admin/updatesample.php:97 admin/bulkappointment.php:284 admin/import.php:134
-#: admin/quotarow.php:618
+#: admin/updatesample.php:97 admin/bulkappointment.php:284
+#: admin/import.php:134 admin/quotarow.php:618
 msgid "Select file"
 msgstr ""
 
@@ -1438,8 +1372,8 @@ msgstr ""
 msgid "Add to the sample"
 msgstr ""
 
-#: admin/samplelist.php:489 admin/questionnairelist.php:531 admin/index.php:167
-#: index.php:259 index_interface2.php:277
+#: admin/samplelist.php:489 admin/questionnairelist.php:531
+#: admin/index.php:167 index.php:259 index_interface2.php:277
 msgid "Call history"
 msgstr "通話紀錄"
 
@@ -1597,11 +1531,13 @@ msgid "Added operator :"
 msgstr ""
 
 #: admin/operators.php:148
-msgid "FreePBX needs to be reloaded for the new VoIP extension to take effect"
+msgid ""
+"FreePBX needs to be reloaded for the new VoIP extension to take effect"
 msgstr ""
 
 #: admin/operators.php:162
-msgid "Could not add operator. There may already be an operator of this name:"
+msgid ""
+"Could not add operator. There may already be an operator of this name:"
 msgstr ""
 
 #: admin/operators.php:168 admin/operators.php:308 admin/operatorlist.php:424
@@ -1729,6 +1665,69 @@ msgstr ""
 
 #: admin/quotareport.php:267
 msgid "Update priorities"
+msgstr ""
+
+#: admin/remote.php:80
+msgid "Questionnaire services"
+msgstr ""
+
+#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
+#: admin/availabilitygroup.php:133
+msgid "Modify"
+msgstr ""
+
+#: admin/remote.php:121
+msgid ""
+"Questionnaire services available. Services include Limesurvey remote control."
+msgstr ""
+
+#: admin/remote.php:124
+msgid "Service not added/updated. Error: "
+msgstr ""
+
+#: admin/remote.php:129
+msgid "No questionnaire services defined"
+msgstr ""
+
+#: admin/remote.php:132
+msgid "Service"
+msgstr ""
+
+#: admin/remote.php:148
+msgid "Update questionnaire service"
+msgstr ""
+
+#: admin/remote.php:154
+msgid "Update questionnaire serivce"
+msgstr ""
+
+#: admin/remote.php:164
+msgid "Add new questionnaire service"
+msgstr ""
+
+#: admin/remote.php:165
+msgid "Questionnaire service description"
+msgstr ""
+
+#: admin/remote.php:166
+msgid ""
+"RPC Url (eg: http://localhost/limesurvey/index.php/admin/remotecontrol)"
+msgstr ""
+
+#: admin/remote.php:167
+msgid "Username (eg: admin)"
+msgstr ""
+
+#: admin/remote.php:168
+msgid "Password (eg: password)"
+msgstr ""
+
+#: admin/remote.php:169
+msgid "Questionnaire entry Url (eg: http://localhost/limesurvey/index.php/)"
+msgstr ""
+
+#: admin/remote.php:170
+msgid "Add questionnaire serivce"
 msgstr ""
 
 #: admin/assigntimeslots.php:161 admin/index.php:140
@@ -1904,11 +1903,6 @@ msgstr ""
 msgid "Time slots"
 msgstr ""
 
-#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
-#: admin/availabilitygroup.php:133
-msgid "Modify"
-msgstr ""
-
 #: admin/availabilitygroup.php:127
 msgid ""
 "Time slots define periods of time during particular days of the week. These "
@@ -2011,6 +2005,10 @@ msgstr ""
 
 #: admin/outcomes.php:306
 msgid "Shift time"
+msgstr ""
+
+#: admin/outcomes.php:306 admin/dataoutput.php:93
+msgid "Shift report"
 msgstr ""
 
 #: admin/outcomes.php:306 admin/operatorlist.php:428 admin/index.php:160
@@ -2157,8 +2155,8 @@ msgid ""
 "within"
 msgstr ""
 
-#: admin/callrestrict.php:140 admin/addshift.php:243 admin/availability.php:165
-#: admin/shifttemplate.php:136
+#: admin/callrestrict.php:140 admin/addshift.php:243
+#: admin/availability.php:165 admin/shifttemplate.php:136
 msgid "Day"
 msgstr ""
 
@@ -2250,10 +2248,10 @@ msgstr ""
 msgid "Samples selected for this questionnaire"
 msgstr ""
 
-#: admin/sortsample.php:101 admin/sortsample.php:102 admin/assignsample.php:307
-#: admin/assignsample.php:310 admin/assignsample.php:439
-#: admin/assignsample.php:440 admin/assignsample.php:533
-#: admin/assignsample.php:537
+#: admin/sortsample.php:101 admin/sortsample.php:102
+#: admin/assignsample.php:307 admin/assignsample.php:310
+#: admin/assignsample.php:439 admin/assignsample.php:440
+#: admin/assignsample.php:533 admin/assignsample.php:537
 msgid "Unlimited"
 msgstr ""
 
@@ -2341,30 +2339,6 @@ msgstr ""
 msgid "Allow for respondent self completion via email invitation?"
 msgstr ""
 
-#: admin/questionnairelist.php:409 admin/new.php:254
-msgid "Questionnaire display mode for respondent"
-msgstr ""
-
-#: admin/questionnairelist.php:412 admin/new.php:257
-msgid "All in one"
-msgstr ""
-
-#: admin/questionnairelist.php:413 admin/new.php:258
-msgid "Question by question"
-msgstr ""
-
-#: admin/questionnairelist.php:414 admin/new.php:259
-msgid "Group at a time"
-msgstr ""
-
-#: admin/questionnairelist.php:419 admin/new.php:264
-msgid "Limesurvey template for respondent"
-msgstr ""
-
-#: admin/questionnairelist.php:448 admin/new.php:294
-msgid "URL to forward respondents on self completion (required)"
-msgstr ""
-
 #: admin/questionnairelist.php:399 admin/questionnairelist.php:409
 #: admin/questionnairelist.php:419 admin/questionnairelist.php:429
 #: admin/questionnairelist.php:443 admin/questionnairelist.php:453
@@ -2387,10 +2361,6 @@ msgstr ""
 
 #: admin/questionnairelist.php:430 admin/new.php:291
 msgid "Message to leave on an answering machine:"
-msgstr ""
-
-#: admin/questionnairelist.php:500
-msgid "Edit respondent selection instrument in Limesurvey"
 msgstr ""
 
 #: admin/questionnairelist.php:444 admin/new.php:303
@@ -2471,7 +2441,8 @@ msgstr ""
 msgid "Set outcomes"
 msgstr ""
 
-#: admin/questionnairelist.php:536 admin/index.php:172 admin/dataoutput.php:200
+#: admin/questionnairelist.php:536 admin/index.php:172
+#: admin/dataoutput.php:200
 msgid "Data output"
 msgstr ""
 
@@ -2479,7 +2450,8 @@ msgstr ""
 msgid "Assigned samples"
 msgstr ""
 
-#: admin/questionnairelist.php:551 admin/index.php:184 admin/casestatus.php:214
+#: admin/questionnairelist.php:551 admin/index.php:184
+#: admin/casestatus.php:214
 msgid "Case status and assignment"
 msgstr ""
 
@@ -2487,10 +2459,15 @@ msgstr ""
 msgid "Call History List"
 msgstr ""
 
-#: admin/callhistory.php:132 admin/callhistory.php:157 admin/supervisor.php:417
-#: admin/databasestrings.php:82
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:417 admin/databasestrings.php:82
 msgid "Phone number"
 msgstr ""
+
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:429 admin/dataoutput.php:93
+msgid "Case notes"
+msgstr "個案備註"
 
 #: admin/callhistory.php:150
 msgid "NO Call history records for Your query"
@@ -2716,7 +2693,8 @@ msgid "Successfully imported sample"
 msgstr ""
 
 #: admin/import.php:73
-msgid "Please check imported file, go back in your browser and fix the problem"
+msgid ""
+"Please check imported file, go back in your browser and fix the problem"
 msgstr ""
 
 #: admin/import.php:84
@@ -2771,16 +2749,8 @@ msgstr ""
 msgid "Questionnairies"
 msgstr ""
 
-#: admin/index.php:122 admin/new.php:199 admin/new.php:405
-msgid "Create an instrument in Limesurvey"
-msgstr ""
-
 #: admin/index.php:124 admin/set_outcomes.php:161
 msgid "Set questionnaire outcomes"
-msgstr ""
-
-#: admin/index.php:126 admin/new.php:407
-msgid "Administer instruments with Limesurvey"
 msgstr ""
 
 #: admin/index.php:128
@@ -2882,6 +2852,10 @@ msgstr ""
 
 #: admin/index.php:188
 msgid "System settings"
+msgstr ""
+
+#: admin/index.php:190
+msgid "Questionnaire service (RPC)"
 msgstr ""
 
 #: admin/index.php:191 admin/set_outcomes.php:160
@@ -3059,6 +3033,11 @@ msgstr ""
 msgid "Save custom Outcome"
 msgstr ""
 
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
+#: admin/dataoutput.php:93
+msgid "Outcome ID"
+msgstr "結果ID"
+
 #: admin/set_outcomes.php:250 admin/quotarow.php:591
 msgid "Select"
 msgstr ""
@@ -3192,6 +3171,18 @@ msgstr ""
 msgid "Allow new numbers to be drawn?"
 msgstr ""
 
+#: admin/assignsample.php:322 admin/assignsample.php:571
+msgid "Sample variables to copy to Limesurvey participant table"
+msgstr ""
+
+#: admin/assignsample.php:324 admin/assignsample.php:573
+msgid "Limesurvey participant variable"
+msgstr ""
+
+#: admin/assignsample.php:328 admin/assignsample.php:577
+msgid "Do not copy to Limesurvey"
+msgstr ""
+
 #: admin/assignsample.php:413
 msgid "List & Add Sample"
 msgstr ""
@@ -3210,6 +3201,12 @@ msgstr ""
 
 #: admin/assignsample.php:495
 msgid "Add a sample to this questionnaire:"
+msgstr ""
+
+#: admin/assignsample.php:516
+msgid ""
+"Unable to access token/participants table in Limesurvey. Please confirm that "
+"this survey has a participant table created."
 msgstr ""
 
 #: admin/assignsample.php:527
@@ -3261,6 +3258,10 @@ msgstr "設定訪問結果"
 #: admin/supervisor.php:320
 msgid "Sample details"
 msgstr ""
+
+#: admin/supervisor.php:331
+msgid "Token"
+msgstr "代號"
 
 #: admin/supervisor.php:331 admin/casestatus.php:126
 msgid "Time NOW"
@@ -3421,7 +3422,8 @@ msgid "This sample will be limited to number of completions set in quota"
 msgstr ""
 
 #: admin/quotarow.php:508
-msgid "Caling cases for this sample will be stopped when the quota is reached"
+msgid ""
+"Caling cases for this sample will be stopped when the quota is reached"
 msgstr ""
 
 #: admin/quotarow.php:512
@@ -3541,19 +3543,35 @@ msgid "Current Outcome"
 msgstr ""
 
 #: admin/dataoutput.php:93
+msgid "Number of call attempts"
+msgstr "嘗試通話次數"
+
+#: admin/dataoutput.php:93
 msgid "Number of calls"
 msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Total interview time over all calls (mins)"
+msgstr "所有訪問的總時間 (分鐘)"
+
+#: admin/dataoutput.php:93
+msgid "Interview time for last call (mins)"
+msgstr "上次訪問的時間 (分鐘)"
+
+#: admin/dataoutput.php:93
+msgid "Last number dialled"
+msgstr "上次撥打的號碼"
 
 #: admin/dataoutput.php:93
 msgid "DATE/TIME Last number dialled"
 msgstr ""
 
+#: admin/dataoutput.php:93
+msgid "Operator username for last call"
+msgstr "上次通話的訪問員用戶名"
+
 #: admin/dataoutput.php:217
 msgid "Download data for this questionnaire via Limesurvey"
-msgstr ""
-
-#: admin/dataoutput.php:225
-msgid "Download data for this sample via Limesurvey"
 msgstr ""
 
 #: admin/dataoutput.php:233
@@ -3679,7 +3697,8 @@ msgid "Save changes to shifts"
 msgstr ""
 
 #: admin/extensionstatus.php:106
-msgid "Failed to add extension. There already may be an extension of this name"
+msgid ""
+"Failed to add extension. There already may be an extension of this name"
 msgstr ""
 
 #: admin/extensionstatus.php:138
@@ -3787,7 +3806,8 @@ msgid "Now modify case outcome"
 msgstr ""
 
 #: admin/displayappointments.php:135
-msgid "The appointment has been deleted. Now you must modify the case outcome"
+msgid ""
+"The appointment has been deleted. Now you must modify the case outcome"
 msgstr ""
 
 #: admin/displayappointments.php:136
@@ -3892,10 +3912,6 @@ msgstr ""
 
 #: admin/new.php:178
 msgid "Select limesurvey instrument:"
-msgstr ""
-
-#: admin/new.php:194 admin/new.php:211
-msgid "Survey"
 msgstr ""
 
 #: admin/new.php:188
@@ -4138,6 +4154,10 @@ msgstr ""
 msgid "Self completion email invitation sent"
 msgstr "已收到網上問卷電郵"
 
+#: admin/databasestrings.php:90
+msgid "Self completed online"
+msgstr "已完成網上問卷"
+
 #: admin/databasestrings.php:91
 msgid "Max call attempts reached (Eligible)"
 msgstr "達到嘗試通話次數上限 (符合訪問條件)"
@@ -4299,7 +4319,8 @@ msgid "Calling the supervisor, you may close this window"
 msgstr ""
 
 #: supervisor.php:121
-msgid "Click here to call the supervisor's phone. Otherwise close this window"
+msgid ""
+"Click here to call the supervisor's phone. Otherwise close this window"
 msgstr ""
 
 #: supervisor.php:122
@@ -4379,6 +4400,14 @@ msgstr ""
 
 #: index_interface2.php:203
 msgid "Case"
+msgstr ""
+
+#: login_check.php:86
+msgid "You have to login first."
+msgstr ""
+
+#: login_check.php:100
+msgid "Login"
 msgstr ""
 
 #: rs_quota_end.php:64

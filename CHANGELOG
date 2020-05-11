@@ -1,4 +1,8 @@
-queXS 2.2.4 - Changse since 2.2.3
+queXS 2.2.5 - Changes since 2.2.4
+
+Updated translations - thank you to all those that contributed!
+
+queXS 2.2.4 - Changes since 2.2.3
 
 Fixed bug: Set sql_mode the way queXS expects it
 

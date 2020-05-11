@@ -1,22 +1,21 @@
 # Chinese (Simplified) translation for quexs
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Copyright (c) 2017 Rosetta Contributors and Canonical Ltd 2017
 # This file is distributed under the same license as the quexs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-11-23 12:26+1100\n"
-"PO-Revision-Date: 2014-09-01 03:16+0000\n"
-"Last-Translator: Daniel lee <liding@ruc.edu.cn>\n"
+"POT-Creation-Date: 2017-11-23 12:29+1100\n"
+"PO-Revision-Date: 2017-04-03 01:50+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-03-16 04:04+0000\n"
-"X-Generator: Launchpad (build 18571)\n"
-"Language: zh\n"
+"X-Launchpad-Export-Date: 2020-05-11 02:24+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -800,115 +799,6 @@ msgstr "正在停止录音..."
 msgid "Stop the manual recording now..."
 msgstr "停止手动录音..."
 
-#: admin/databasestrings.php:90
-msgid "Self completed online"
-msgstr "在线自助完成"
-
-#: include/limesurvey/quexs.php:682 include/limesurvey/quexs.php:761
-msgid "Not on an appointment"
-msgstr "无预约"
-
-#: include/limesurvey/quexs.php:684 include/limesurvey/quexs.php:763
-msgid "On an appointment"
-msgstr "预约中"
-
-#: include/limesurvey/quexs.php:995
-msgid "All samples"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6295
-msgid "queXS: Number of call attempts"
-msgstr "queXS：呼叫尝试数量"
-
-#: include/limesurvey/common_functions.php:6296
-msgid "queXS: On appointment?"
-msgstr "queXS：有预约？"
-
-#: include/limesurvey/common_functions.php:6297
-msgid "queXS: Percentage complete"
-msgstr "queXS：完成百分数"
-
-#: include/limesurvey/common_functions.php:6298
-msgid "queXS: Number of answering machine messages left"
-msgstr "queXS：电话答录机留言数量"
-
-#: include/limesurvey/optout.php:83
-msgid "Self completion refused via opt out function"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:110
-#: include/limesurvey/admin/statistics.php:268
-#: include/limesurvey/admin/browse.php:791
-#: include/limesurvey/admin/vvexport.php:69
-msgid "Questionnaire and Sample selection:"
-msgstr "问卷及样本选择："
-
-#: include/limesurvey/admin/exportresults.php:111
-#: include/limesurvey/admin/statistics.php:269
-#: include/limesurvey/admin/browse.php:792
-#: include/limesurvey/admin/vvexport.php:70
-msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr "所有与该主问卷相关的queXS问卷和样本"
-
-#: admin/supervisor.php:331
-msgid "Token"
-msgstr "标志符"
-
-#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
-#: admin/dataoutput.php:85 admin/extensionstatus.php:266
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
-msgid "Case ID"
-msgstr "访问编号"
-
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
-#: admin/dataoutput.php:93
-msgid "Outcome ID"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:260
-#: include/limesurvey/admin/exportresults.php:661
-#: include/limesurvey/admin/exportresults.php:662
-#: include/limesurvey/admin/exportresults.php:986
-msgid "Case outcome"
-msgstr "访问结果"
-
-#: admin/dataoutput.php:93
-msgid "Number of call attempts"
-msgstr "呼叫尝试数量"
-
-#: include/limesurvey/admin/exportresults.php:262
-#: include/limesurvey/admin/exportresults.php:616
-#: include/limesurvey/admin/exportresults.php:617
-#: include/limesurvey/admin/exportresults.php:992
-msgid "Number of answering machine messages left"
-msgstr "电话答录机留言数量"
-
-#: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/supervisor.php:429 admin/dataoutput.php:93
-msgid "Case notes"
-msgstr "访问备注"
-
-#: admin/dataoutput.php:93
-msgid "Total interview time over all calls (mins)"
-msgstr "所有呼叫的总体访问时间（分钟）"
-
-#: admin/dataoutput.php:93
-msgid "Interview time for last call (mins)"
-msgstr "最后呼叫的访问时间（分钟）"
-
-#: admin/dataoutput.php:93
-msgid "Last number dialled"
-msgstr "最后拨叫号码"
-
-#: admin/dataoutput.php:93
-msgid "Operator username for last call"
-msgstr "最后一次呼叫的电话调查员的用户名"
-
-#: admin/outcomes.php:306 admin/dataoutput.php:93
-msgid "Shift report"
-msgstr "时段报告"
-
 #: voip/downloadvoipclient.php:59
 msgid "Error: Cannot write to temporary directory"
 msgstr "错误：无法写入临时目录"
@@ -1099,6 +989,46 @@ msgstr "访问历史记录"
 #: callhistory.php:84 admin/callhistory.php:114
 msgid "No calls ever made"
 msgstr "没有打过电话"
+
+#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
+#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
+#: admin/dataoutput.php:85 admin/extensionstatus.php:266
+#: admin/displayappointments.php:316 admin/displayappointments.php:341
+msgid "Case ID"
+msgstr "访问编号"
+
+#: usercontrol.php:96 usercontrol.php:163
+msgid "Incorrect username and/or password!"
+msgstr ""
+
+#: usercontrol.php:98 usercontrol.php:165 usercontrol.php:174
+#: login_check.php:103
+msgid ""
+"You have exceeded you maximum login attempts. Please wait %d minutes before "
+"trying again"
+msgstr ""
+
+#: usercontrol.php:99 usercontrol.php:166 usercontrol.php:175
+msgid "Continue"
+msgstr ""
+
+#: usercontrol.php:113
+msgid ""
+"Warning: You are still using the default password ('password'). Please "
+"change your password and re-login again."
+msgstr ""
+
+#: usercontrol.php:130
+msgid "Logged in"
+msgstr ""
+
+#: usercontrol.php:131
+msgid "Welcome %s!"
+msgstr ""
+
+#: usercontrol.php:183
+msgid "Logout successful."
+msgstr ""
 
 #: availability.php:61 index.php:240 index_interface2.php:261
 msgid "Availability"
@@ -1740,6 +1670,69 @@ msgstr "自动优先级"
 msgid "Update priorities"
 msgstr "更新优先级"
 
+#: admin/remote.php:80
+msgid "Questionnaire services"
+msgstr ""
+
+#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
+#: admin/availabilitygroup.php:133
+msgid "Modify"
+msgstr "修改"
+
+#: admin/remote.php:121
+msgid ""
+"Questionnaire services available. Services include Limesurvey remote control."
+msgstr ""
+
+#: admin/remote.php:124
+msgid "Service not added/updated. Error: "
+msgstr ""
+
+#: admin/remote.php:129
+msgid "No questionnaire services defined"
+msgstr ""
+
+#: admin/remote.php:132
+msgid "Service"
+msgstr ""
+
+#: admin/remote.php:148
+msgid "Update questionnaire service"
+msgstr ""
+
+#: admin/remote.php:154
+msgid "Update questionnaire serivce"
+msgstr ""
+
+#: admin/remote.php:164
+msgid "Add new questionnaire service"
+msgstr ""
+
+#: admin/remote.php:165
+msgid "Questionnaire service description"
+msgstr ""
+
+#: admin/remote.php:166
+msgid ""
+"RPC Url (eg: http://localhost/limesurvey/index.php/admin/remotecontrol)"
+msgstr ""
+
+#: admin/remote.php:167
+msgid "Username (eg: admin)"
+msgstr ""
+
+#: admin/remote.php:168
+msgid "Password (eg: password)"
+msgstr ""
+
+#: admin/remote.php:169
+msgid "Questionnaire entry Url (eg: http://localhost/limesurvey/index.php/)"
+msgstr ""
+
+#: admin/remote.php:170
+msgid "Add questionnaire serivce"
+msgstr ""
+
 #: admin/assigntimeslots.php:161 admin/index.php:140
 msgid "Assign Time slots"
 msgstr ""
@@ -1913,11 +1906,6 @@ msgstr ""
 msgid "Time slots"
 msgstr ""
 
-#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
-#: admin/availabilitygroup.php:133
-msgid "Modify"
-msgstr "修改"
-
 #: admin/availabilitygroup.php:127
 msgid ""
 "Time slots define periods of time during particular days of the week. These "
@@ -2021,6 +2009,10 @@ msgstr "该问卷没有设置可用调查时段"
 #: admin/outcomes.php:306
 msgid "Shift time"
 msgstr ""
+
+#: admin/outcomes.php:306 admin/dataoutput.php:93
+msgid "Shift report"
+msgstr "时段报告"
 
 #: admin/outcomes.php:306 admin/operatorlist.php:428 admin/index.php:160
 msgid "Operator performance"
@@ -2352,30 +2344,6 @@ msgstr "允许电话调查员生成被引荐的受访者吗？"
 msgid "Allow for respondent self completion via email invitation?"
 msgstr "允许受访者通过邮件邀请自助完成访问吗？"
 
-#: admin/questionnairelist.php:409 admin/new.php:254
-msgid "Questionnaire display mode for respondent"
-msgstr "受访者问卷显示模式"
-
-#: admin/questionnairelist.php:412 admin/new.php:257
-msgid "All in one"
-msgstr "在一页中显示所有问题"
-
-#: admin/questionnairelist.php:413 admin/new.php:258
-msgid "Question by question"
-msgstr "按问题显示"
-
-#: admin/questionnairelist.php:414 admin/new.php:259
-msgid "Group at a time"
-msgstr "按组显示"
-
-#: admin/questionnairelist.php:419 admin/new.php:264
-msgid "Limesurvey template for respondent"
-msgstr "受访者LimeSurvey模板"
-
-#: admin/questionnairelist.php:448 admin/new.php:294
-msgid "URL to forward respondents on self completion (required)"
-msgstr "受访者自助完成问卷后的跳转链接（必要）"
-
 #: admin/questionnairelist.php:399 admin/questionnairelist.php:409
 #: admin/questionnairelist.php:419 admin/questionnairelist.php:429
 #: admin/questionnairelist.php:443 admin/questionnairelist.php:453
@@ -2399,10 +2367,6 @@ msgstr "受访者筛选回叫（已开始的问卷）："
 #: admin/questionnairelist.php:430 admin/new.php:291
 msgid "Message to leave on an answering machine:"
 msgstr "电话答录机留言："
-
-#: admin/questionnairelist.php:500
-msgid "Edit respondent selection instrument in Limesurvey"
-msgstr "在LimeSurvey中编辑受访者筛选工具"
 
 #: admin/questionnairelist.php:444 admin/new.php:303
 msgid "Project end text (thank you screen):"
@@ -2504,6 +2468,11 @@ msgstr "呼叫历史列表"
 #: admin/supervisor.php:417 admin/databasestrings.php:82
 msgid "Phone number"
 msgstr "电话号码"
+
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:429 admin/dataoutput.php:93
+msgid "Case notes"
+msgstr "访问备注"
 
 #: admin/callhistory.php:150
 msgid "NO Call history records for Your query"
@@ -2787,17 +2756,9 @@ msgstr ""
 msgid "Questionnairies"
 msgstr ""
 
-#: admin/index.php:122 admin/new.php:199 admin/new.php:405
-msgid "Create an instrument in Limesurvey"
-msgstr "在LimeSurvey中创建主问卷"
-
 #: admin/index.php:124 admin/set_outcomes.php:161
 msgid "Set questionnaire outcomes"
 msgstr ""
-
-#: admin/index.php:126 admin/new.php:407
-msgid "Administer instruments with Limesurvey"
-msgstr "用LimeSurvey管理主问卷"
 
 #: admin/index.php:128
 msgid "Samples"
@@ -2899,6 +2860,10 @@ msgstr "给访问分派结果"
 #: admin/index.php:188
 msgid "System settings"
 msgstr "系统设置"
+
+#: admin/index.php:190
+msgid "Questionnaire service (RPC)"
+msgstr ""
 
 #: admin/index.php:191 admin/set_outcomes.php:160
 msgid "Set default outcomes"
@@ -3075,6 +3040,11 @@ msgstr "值"
 msgid "Save custom Outcome"
 msgstr ""
 
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
+#: admin/dataoutput.php:93
+msgid "Outcome ID"
+msgstr ""
+
 #: admin/set_outcomes.php:250 admin/quotarow.php:591
 msgid "Select"
 msgstr ""
@@ -3208,6 +3178,18 @@ msgstr ""
 msgid "Allow new numbers to be drawn?"
 msgstr ""
 
+#: admin/assignsample.php:322 admin/assignsample.php:571
+msgid "Sample variables to copy to Limesurvey participant table"
+msgstr ""
+
+#: admin/assignsample.php:324 admin/assignsample.php:573
+msgid "Limesurvey participant variable"
+msgstr ""
+
+#: admin/assignsample.php:328 admin/assignsample.php:577
+msgid "Do not copy to Limesurvey"
+msgstr ""
+
 #: admin/assignsample.php:413
 msgid "List & Add Sample"
 msgstr ""
@@ -3227,6 +3209,12 @@ msgstr "该问卷未选择样本"
 #: admin/assignsample.php:495
 msgid "Add a sample to this questionnaire:"
 msgstr "给该问卷添加样本："
+
+#: admin/assignsample.php:516
+msgid ""
+"Unable to access token/participants table in Limesurvey. Please confirm that "
+"this survey has a participant table created."
+msgstr ""
 
 #: admin/assignsample.php:527
 msgid "Select sample:"
@@ -3277,6 +3265,10 @@ msgstr "设置结果"
 #: admin/supervisor.php:320
 msgid "Sample details"
 msgstr ""
+
+#: admin/supervisor.php:331
+msgid "Token"
+msgstr "标志符"
 
 #: admin/supervisor.php:331 admin/casestatus.php:126
 msgid "Time NOW"
@@ -3558,20 +3550,36 @@ msgid "Current Outcome"
 msgstr ""
 
 #: admin/dataoutput.php:93
+msgid "Number of call attempts"
+msgstr "呼叫尝试数量"
+
+#: admin/dataoutput.php:93
 msgid "Number of calls"
 msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Total interview time over all calls (mins)"
+msgstr "所有呼叫的总体访问时间（分钟）"
+
+#: admin/dataoutput.php:93
+msgid "Interview time for last call (mins)"
+msgstr "最后呼叫的访问时间（分钟）"
+
+#: admin/dataoutput.php:93
+msgid "Last number dialled"
+msgstr "最后拨叫号码"
 
 #: admin/dataoutput.php:93
 msgid "DATE/TIME Last number dialled"
 msgstr ""
 
+#: admin/dataoutput.php:93
+msgid "Operator username for last call"
+msgstr "最后一次呼叫的电话调查员的用户名"
+
 #: admin/dataoutput.php:217
 msgid "Download data for this questionnaire via Limesurvey"
 msgstr "使用LimeSurvey下载该问卷数据"
-
-#: admin/dataoutput.php:225
-msgid "Download data for this sample via Limesurvey"
-msgstr "使用LimeSurvey下载该样本数据"
 
 #: admin/dataoutput.php:233
 msgid "Download key file: select sample var"
@@ -3913,10 +3921,6 @@ msgstr ""
 msgid "Select limesurvey instrument:"
 msgstr "选择LimeSurvey主问卷："
 
-#: admin/new.php:194 admin/new.php:211
-msgid "Survey"
-msgstr ""
-
 #: admin/new.php:188
 msgid "Respondent selection type:"
 msgstr "受访者筛选方式"
@@ -4156,6 +4160,10 @@ msgstr "电子邮箱地址"
 #: admin/databasestrings.php:89
 msgid "Self completion email invitation sent"
 msgstr "自助完成邮件邀请已发送"
+
+#: admin/databasestrings.php:90
+msgid "Self completed online"
+msgstr "在线自助完成"
 
 #: admin/databasestrings.php:91
 msgid "Max call attempts reached (Eligible)"
@@ -4401,548 +4409,14 @@ msgstr "自动拨号不可用，您已经连线中"
 msgid "Case"
 msgstr ""
 
+#: login_check.php:86
+msgid "You have to login first."
+msgstr ""
+
+#: login_check.php:100
+msgid "Login"
+msgstr ""
+
 #: rs_quota_end.php:64
 msgid "Project Quota End"
 msgstr ""
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person not available on this "
-#~ "number)"
-#~ msgstr "结束电话：没有符合条件的调查对象（此号码无人接听）"
-
-#~ msgid "End call with outcome: Business answering machine"
-#~ msgstr "结束电话：业务电话答录机"
-
-#~ msgid "None"
-#~ msgstr "无"
-
-#~ msgid "Appointment:"
-#~ msgstr "预约："
-
-#~ msgid "You are: "
-#~ msgstr "您是： "
-
-#~ msgid "Business number"
-#~ msgstr "业务电话号码"
-
-#~ msgid "End call with outcome: No answer (ring out or busy) "
-#~ msgstr "结束电话：无应答（无人接听或线路繁忙） "
-
-#~ msgid "End call with outcome: Accidental hang up"
-#~ msgstr "结束电话：掉线"
-
-#~ msgid "End call with outcome: Refusal by unknown person"
-#~ msgstr "结束电话：非受访者本人拒绝接受访问"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person never available on "
-#~ "this number)"
-#~ msgstr "结束电话：无合适的受访者（此电话号码联系人没时间参与调查）"
-
-#~ msgid ""
-#~ "End call with outcome: Non contact (person not currently available on this "
-#~ "number: no appointment made)"
-#~ msgstr "结束电话：无法联系（此电话号码联系人目前没空：没有进行预约）"
-
-#~ msgid ""
-#~ "End call with outcome: Out of sample (already completed in another mode)"
-#~ msgstr "结束电话：样本用尽（样本已经采用其他方式访问完成）"
-
-#~ msgid "Call restrictions:"
-#~ msgstr "呼叫限制："
-
-#~ msgid ""
-#~ "ERROR: There are no cases available that fall within call restrictions"
-#~ msgstr "错误：呼叫限制内无可用访问"
-
-#~ msgid "There are "
-#~ msgstr "有 "
-
-#~ msgid " unassigned case(s) available within the specified call restrictions"
-#~ msgstr " 特定呼叫限制内可用的未分派访问"
-
-#~ msgid "POSSIBLE ERROR: Row quota reached for this question"
-#~ msgstr "可能错误：该问题达到行指标"
-
-#~ msgid "Call automatically ended with outcome: Complete"
-#~ msgstr "自动结束电话：完成"
-
-#~ msgid "End call with outcome: Complete"
-#~ msgstr "结束电话：完成"
-
-#~ msgid "Call automatically ended with outcome: Complete - End case"
-#~ msgstr "自动结束电话：完成 - 结束访问"
-
-#~ msgid "End call with outcome: Business number"
-#~ msgstr "结束电话：业务号码"
-
-#~ msgid "End call with outcome: Quota filled"
-#~ msgstr "结束电话：配额已满"
-
-#~ msgid "Reload failed because retrieve_conf encountered an error: %s"
-#~ msgstr "重新加载失败，retrieve_conf 文件遇到错误：%s"
-
-#~ msgid "retrieve_conf failed, config not applied"
-#~ msgstr "retrieve_conf 失败，配置未应用"
-
-#~ msgid ""
-#~ "Reload failed because FreePBX could not connect to the asterisk manager "
-#~ "interface."
-#~ msgstr "重新加载失败，FreePBX无法连接到asterisk管理员界面"
-
-#~ msgid "Exit code was %s and output was: %s"
-#~ msgstr "退出编码是 %s ，输出是：%s"
-
-#~ msgid "Duplicate name"
-#~ msgstr "副本名"
-
-#~ msgid "Import?"
-#~ msgstr "导入吗？"
-
-#~ msgid "Type"
-#~ msgstr "类型"
-
-#~ msgid ""
-#~ "ERROR: You do not have server side authentication enabled therefore queXS "
-#~ "cannot determine which user is accessing the system."
-#~ msgstr "错误：您没有服务器登陆认证，因此queXS无法判断哪位使用者在登录系统。"
-
-#~ msgid ""
-#~ "This is how the story goes.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "事情是这样的。\n"
-#~ "\n"
-
-#~ msgid "Sorting cases"
-#~ msgstr "访问排序"
-
-#~ msgid "Select a questionnaire from the list below"
-#~ msgstr "从下列列表中选择一张问卷"
-
-#~ msgid "Select a sample from the list below"
-#~ msgstr "从下列列表中选择一批样本"
-
-#~ msgid "Added:"
-#~ msgstr "添加："
-
-#~ msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
-#~ msgstr "FreePBX已重新加载以启用新的VoIP分机"
-
-#~ msgid "Assign Operator to Questionnaire"
-#~ msgstr "给问卷分派电话调查员"
-
-#~ msgid "tool"
-#~ msgstr "工具"
-
-#~ msgid ""
-#~ "Use this form to enter the username of a user based on your directory "
-#~ "security system. For example, if you have secured the base directory of "
-#~ "queXS using Apache file based security, enter the usernames of the users "
-#~ "here."
-#~ msgstr "基于您的目录安全系统，使用该表单输入用户的用户名。例如，如果您使用Apache基于文件的安全设置来保护根目录，就在本页输入用户的用户名。"
-
-#~ msgid "Enter the username of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的用户名："
-
-#~ msgid "Enter the password of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的密码："
-
-#~ msgid "Enter the first name of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的名："
-
-#~ msgid "Enter the surname of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的姓："
-
-#~ msgid "Enter the Time Zone of an operator to add:"
-#~ msgstr "输入要添加的电话调查员的时区："
-
-#~ msgid "Enter the telephone extension number:"
-#~ msgstr "输入要添加的电话调查员的分机号："
-
-#~ msgid "Enter the telephone extension password:"
-#~ msgstr "输入要添加的电话调查员的分机密码："
-
-#~ msgid "Will this operator be using VoIP?"
-#~ msgstr "该电话调查员使用VoIP吗？"
-
-#~ msgid "Is the operator a normal interviewer?"
-#~ msgstr "该调查员是普通的访问员吗？"
-
-#~ msgid "Is the operator a supervisor?"
-#~ msgstr "该调查员是调查督导员吗？"
-
-#~ msgid "Is the operator a refusal converter?"
-#~ msgstr "该调查员可以转接拒绝访问的样本吗？"
-
-#~ msgid "Add user"
-#~ msgstr "添加电话调查员"
-
-#~ msgid ""
-#~ "Provide a headered CSV file containing at least 3 columns - caseid, "
-#~ "starttime and endtime. Optionally you can include a note column to attach a "
-#~ "note to the case in addition to setting an appointment. Only cases that have "
-#~ "temporary (non final) outcomes will have appointments generated, and the "
-#~ "outcome of the case will be updated to an appointment outcome."
-#~ msgstr ""
-#~ "提交一份至少包含访问编号caseid、开始时间starttime和结束时间endtime这三列的带标头的CSV文件。您可以选择性地加入备注列note，用来"
-#~ "记录除了预约之外的访问信息。只有有临时结果（非最终结果）的访问才可以生成预约，而且访问的结果将在预约结果中更新。"
-
-#~ msgid "Choose the CSV file to upload:"
-#~ msgstr "选择要上传的CSV文件："
-
-#~ msgid "Load bulk appointment CSV"
-#~ msgstr "加载批量预约CSV"
-
-#~ msgid "Operator Name"
-#~ msgstr "电话调查员姓名"
-
-#~ msgid "Respondent Name"
-#~ msgstr "受访者姓名"
-
-#~ msgid "No appointments in the future"
-#~ msgstr "未来无预约"
-
-#~ msgid "Date/Time call start"
-#~ msgstr "日期/时间呼叫开始"
-
-#~ msgid "Time end"
-#~ msgstr "时间结束"
-
-#~ msgid "Outcomes"
-#~ msgstr "结果"
-
-#~ msgid "Assign availability group to questionnaire"
-#~ msgstr "给问卷分派有效组"
-
-#~ msgid "There are no availability groups selected for this questionnaire"
-#~ msgstr "该问卷没有选择有效组"
-
-#~ msgid "Availability groups selected for this questionnaire"
-#~ msgstr "该问卷选择的有效组"
-
-#~ msgid "Add an availability group to this questionnaire:"
-#~ msgstr "给该问卷添加有效组："
-
-#~ msgid "Select availability group:"
-#~ msgstr "选择有效组："
-
-#~ msgid "Current quotas (click to delete)"
-#~ msgstr "当前配额（点击删除）"
-
-#~ msgid "Pre defined values for this question:"
-#~ msgstr "该问卷预先定义值："
-
-#~ msgid "Enter a case id or select a case from the list below:"
-#~ msgstr "输入一个访问编号或从下列列表中选择一个访问："
-
-#~ msgid "Create appointment for this case"
-#~ msgstr "给该访问创建预约"
-
-#~ msgid "There may already be a client of this name"
-#~ msgstr "可能客户姓名已存在"
-
-#~ msgid ""
-#~ "Adding a client here will allow them to access project information in the "
-#~ "client subdirectory. You can assign a client to a particular project using "
-#~ "the"
-#~ msgstr "在本页添加一个客户会允许其在客户子目录下查看项目信息。您可以给客户分派指定的项目，用"
-
-#~ msgid "tool."
-#~ msgstr "工具。"
-
-#~ msgid "Enter the username of a client to add:"
-#~ msgstr "输入要添加的客户用户名："
-
-#~ msgid "Enter the password of a client to add:"
-#~ msgstr "输入要添加的客户密码："
-
-#~ msgid "Enter the first name of a client to add:"
-#~ msgstr "输入要添加的客户的名："
-
-#~ msgid "Enter the surname of a client to add:"
-#~ msgstr "输入要添加的客户的姓："
-
-#~ msgid "Enter the Time Zone of a client to add:"
-#~ msgstr "输入要添加的客户的时区："
-
-#~ msgid "No availability groups"
-#~ msgstr "无有效组"
-
-#~ msgid "Availablity group"
-#~ msgstr "有效组"
-
-#~ msgid "Add availability group"
-#~ msgstr "添加有效组"
-
-#~ msgid "Windows bat file"
-#~ msgstr "Windows下的bat文件"
-
-#~ msgid "Enable/Disable"
-#~ msgstr "启用/禁用"
-
-#~ msgid "Enable/Disable VoIP"
-#~ msgstr "启用/禁用VoIP"
-
-#~ msgid "Copied quotas"
-#~ msgstr "复制的配额"
-
-#~ msgid "Current row quotas (click to delete)"
-#~ msgstr "当前行配额（点击删除）"
-
-#~ msgid "Replicate: Where"
-#~ msgstr "复制：在"
-
-#~ msgid "like"
-#~ msgstr "像"
-
-#~ msgid "Sample only. Stop calling where"
-#~ msgstr "仅样本。停止呼叫于"
-
-#~ msgid "rows from this sample when:"
-#~ msgstr "行在该样本中当："
-
-#~ msgid "Stop calling"
-#~ msgstr "停止呼叫"
-
-#~ msgid "Row quota reached (Closed)"
-#~ msgstr "行配额达标（已关闭）"
-
-#~ msgid "Row quota not yet reached (Open)"
-#~ msgstr "行配额尚未达标（开启中）"
-
-#~ msgid "Copy quotas for this sample to (No error/duplicate checking): "
-#~ msgstr "复制该样本的配额给（无错误/重复检查）： "
-
-#~ msgid "Copy"
-#~ msgstr "复制"
-
-#~ msgid ""
-#~ "Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
-#~ msgstr "复制并调整该样本的配额给（无错误/重复检查）： "
-
-#~ msgid "Copy adjustments"
-#~ msgstr "复制调整"
-
-#~ msgid "Select a question for the row quota"
-#~ msgstr "给行配额选择一个问题"
-
-#~ msgid "No question (Replicate)"
-#~ msgstr "没有问题（复本）"
-
-#~ msgid "Sample only quota"
-#~ msgstr "仅样本配额"
-
-#~ msgid "Select the sample variable to exclude"
-#~ msgstr "选择要排除的样本变量"
-
-#~ msgid "Enter the details for creating the row quota:"
-#~ msgstr "输入详细信息创建行配额："
-
-#~ msgid "Exclude from the sample where the value is like"
-#~ msgstr "从样本中排除此类变量"
-
-#~ msgid "Add/Remove Timezones"
-#~ msgstr "添加/移除时区"
-
-#~ msgid "Click to remove a Timezone from the default list"
-#~ msgstr "点击从默认列表中移除一个时区"
-
-#~ msgid "Timezone: "
-#~ msgstr "时区： "
-
-#~ msgid "Display extension status"
-#~ msgstr "显示分机状态"
-
-#~ msgid "No operators"
-#~ msgstr "无电话调查员"
-
-#~ msgid "No availability group set"
-#~ msgstr "未设立有效组"
-
-#~ msgid "Modify availability"
-#~ msgstr "修改有效时间"
-
-#~ msgid "Save changes to availabilities"
-#~ msgstr "保存对有效时间的修改"
-
-#~ msgid "Modify call restriction times"
-#~ msgstr "修改呼叫限定时间"
-
-#~ msgid "Search sample"
-#~ msgstr "查询样本"
-
-#~ msgid "No cases yet assigned: Delete this sample record"
-#~ msgstr "尚未分派访问：删除该样本记录"
-
-#~ msgid "Assigned to questionnaire: "
-#~ msgstr "分派给问卷： "
-
-#~ msgid "No records in this sample match this search criteria"
-#~ msgstr "样本中无记录符合本次查询条件"
-
-#~ msgid "Link"
-#~ msgstr "连接"
-
-#~ msgid "Search for:"
-#~ msgstr "查询："
-
-#~ msgid "Start search"
-#~ msgstr "开始查询"
-
-#~ msgid "New: Create new questionnaire"
-#~ msgstr "新建：创建新问卷"
-
-#~ msgid "as questionnaire"
-#~ msgstr "作为问卷"
-
-#~ msgid "linked to"
-#~ msgstr "连接到"
-
-#~ msgid "Submit changes"
-#~ msgstr "提交修改"
-
-#~ msgid "Administrative Tools"
-#~ msgstr "管理工具"
-
-#~ msgid "Questionnaire creation and management"
-#~ msgstr "问卷创建及管理"
-
-#~ msgid "Sample/List management"
-#~ msgstr "样本/列表管理"
-
-#~ msgid "Set values in questionnaire to pre fill"
-#~ msgstr "问卷预设值"
-
-#~ msgid "Manage availablity groups"
-#~ msgstr "管理可用组"
-
-#~ msgid "Assign availabilities to questionnaires"
-#~ msgstr "给问卷分派有效时间"
-
-#~ msgid "Questionnaire progress"
-#~ msgstr "问卷进度"
-
-#~ msgid "Client management"
-#~ msgstr "客户管理"
-
-#~ msgid "Import: Validating and uploading"
-#~ msgstr "导入：验证并上传"
-
-#~ msgid "Successfully imported file"
-#~ msgstr "成功导入文件"
-
-#~ msgid "Please go back in your browser and fix the problem"
-#~ msgstr "请回到您的浏览器修正问题"
-
-#~ msgid "Import: Select columns to import"
-#~ msgstr "导入：选择要导入的列"
-
-#~ msgid "Choose the CSV sample file to upload:"
-#~ msgstr "选择要上传的CSV样本文件："
-
-#~ msgid "Description for file:"
-#~ msgstr "文件描述："
-
-#~ msgid "Current pre fills (click to delete)"
-#~ msgstr "当前预设（点击删除）"
-
-#~ msgid "Assign Sample: Select sample to assign"
-#~ msgstr "分派样本：选择要分派的样本"
-
-#~ msgid "Max calls (0 for unlimited)"
-#~ msgstr "最多呼叫次数（0表示无限制）"
-
-#~ msgid "Max call attempts (0 for unlimited)"
-#~ msgstr "最多呼叫尝试（0表示无限制）"
-
-#~ msgid "Number of answering machine messages to leave per case (0 for never)"
-#~ msgstr "每个访问电话答录机的留言数量（0表示从不留言）"
-
-#~ msgid "Select from sample randomly? (otherwise sequentially)"
-#~ msgstr "从样本中随机选择？（否则按顺序选择）"
-
-#~ msgid "Set centre information: "
-#~ msgstr "设置中心信息： "
-
-#~ msgid "Display"
-#~ msgstr "显示"
-
-#~ msgid "End call with outcome: Answering machine Message left"
-#~ msgstr "结束电话：已给答录机留言"
-
-#~ msgid "End call with outcome: Answering machine No message left"
-#~ msgstr "结束电话：未给答录机留言"
-
-#~ msgid "Respondent Selection - Business answers"
-#~ msgstr "受访者筛选-商业电话"
-
-#~ msgid "Respondent Selection - Call back"
-#~ msgstr "受访者筛选-稍后回拨"
-
-#~ msgid "Respondent Selection - Project Introduction"
-#~ msgstr "受访者筛选-项目介绍"
-
-#~ msgid "End call with outcome: Refusal by respondent"
-#~ msgstr "结束电话：受访者拒访"
-
-#~ msgid "Availability and shift management"
-#~ msgstr "受访对象可及性及访问员电访时段管理"
-
-#~ msgid "Shift management (add/remove)"
-#~ msgstr "调查时段管理（添加/移除）"
-
-#~ msgid "Shift"
-#~ msgstr "调查时段（访问员轮班）"
-
-#~ msgid "Modify shift template"
-#~ msgstr "修改调查时段模板"
-
-#~ msgid ""
-#~ "Could not reload the FOP operator panel server using the bounce_op.sh "
-#~ "script. Configuration changes may not be reflected in the panel display."
-#~ msgstr "无法用bounce_op.sh脚本重新加载FOP电话调查员控制面板。面板可能没有反映系统配置修改。"
-
-#~ msgid "Respondent Selection - Project Quota End"
-#~ msgstr "受访者筛选 - 项目配额结束"
-
-#~ msgid "Respondent Selection - Project end"
-#~ msgstr "受访者筛选 - 项目结束"
-
-#~ msgid "Respondent Selection - Answering machine"
-#~ msgstr "受访者筛选 - 电话答录机"
-
-#~ msgid "Respondent Selection - Introduction"
-#~ msgstr "受访者筛选 - 介绍"
-
-#~ msgid ""
-#~ "Kill signal sent: Please wait... (Note: Process will be stalled until there "
-#~ "is activity on the VoIP Server)"
-#~ msgstr "终止信号发送：请等待...（注意：进程将直到VoIP服务器有反应才会停止）"
-
-#~ msgid "Download Windows VoIP Executable"
-#~ msgstr "VoIP客户端(Windows)"
-
-#~ msgid "Download Linux VoIP Executable"
-#~ msgstr "VoIP客户端(Linux)"
-
-#~ msgid "Windows VoIP"
-#~ msgstr "VoIP Windows客户端"
-
-#~ msgid "*nix VoIP"
-#~ msgstr "VoIP L/Unix等客户端"
-
-#~ msgid "Import a sample file (in CSV form)"
-#~ msgstr "导入样本（CSV格式）"
-
-#~ msgid "Start and monitor system wide case sorting"
-#~ msgstr "开始并监控全系统访问排序"
-
-#~ msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
-#~ msgstr "加载问卷预填字段：设置问卷预填信息"
-
-#~ msgid "Adding an operator here will give the user the ability to call cases"
-#~ msgstr "在此添加电话调查员，将允许新调查员呼叫受访者"
-
-#~ msgid "Existing instrument:"
-#~ msgstr "已有问卷工具："

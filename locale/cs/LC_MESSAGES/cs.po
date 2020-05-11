@@ -1,21 +1,21 @@
 # Czech translation for quexs
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Copyright (c) 2017 Rosetta Contributors and Canonical Ltd 2017
 # This file is distributed under the same license as the quexs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-11-23 12:26+1100\n"
-"PO-Revision-Date: 2013-12-24 14:41+0000\n"
-"Last-Translator: Zbyněk Schwarz <Unknown>\n"
+"POT-Creation-Date: 2017-11-23 12:29+1100\n"
+"PO-Revision-Date: 2017-04-03 01:50+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-03-16 04:04+0000\n"
-"X-Generator: Launchpad (build 18571)\n"
+"X-Launchpad-Export-Date: 2020-05-11 02:24+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -799,115 +799,6 @@ msgstr "Nahrávání zastaveno..."
 msgid "Stop the manual recording now..."
 msgstr "Zastavit ruční nahrávání nyní..."
 
-#: admin/databasestrings.php:90
-msgid "Self completed online"
-msgstr "Samodokončeno online"
-
-#: include/limesurvey/quexs.php:682 include/limesurvey/quexs.php:761
-msgid "Not on an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:684 include/limesurvey/quexs.php:763
-msgid "On an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:995
-msgid "All samples"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6295
-msgid "queXS: Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6296
-msgid "queXS: On appointment?"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6297
-msgid "queXS: Percentage complete"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6298
-msgid "queXS: Number of answering machine messages left"
-msgstr ""
-
-#: include/limesurvey/optout.php:83
-msgid "Self completion refused via opt out function"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:110
-#: include/limesurvey/admin/statistics.php:268
-#: include/limesurvey/admin/browse.php:791
-#: include/limesurvey/admin/vvexport.php:69
-msgid "Questionnaire and Sample selection:"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:111
-#: include/limesurvey/admin/statistics.php:269
-#: include/limesurvey/admin/browse.php:792
-#: include/limesurvey/admin/vvexport.php:70
-msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr ""
-
-#: admin/supervisor.php:331
-msgid "Token"
-msgstr ""
-
-#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
-#: admin/dataoutput.php:85 admin/extensionstatus.php:266
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
-msgid "Case ID"
-msgstr "ID případu"
-
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
-#: admin/dataoutput.php:93
-msgid "Outcome ID"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:260
-#: include/limesurvey/admin/exportresults.php:661
-#: include/limesurvey/admin/exportresults.php:662
-#: include/limesurvey/admin/exportresults.php:986
-msgid "Case outcome"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:262
-#: include/limesurvey/admin/exportresults.php:616
-#: include/limesurvey/admin/exportresults.php:617
-#: include/limesurvey/admin/exportresults.php:992
-msgid "Number of answering machine messages left"
-msgstr ""
-
-#: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/supervisor.php:429 admin/dataoutput.php:93
-msgid "Case notes"
-msgstr "Poznámky případu"
-
-#: admin/dataoutput.php:93
-msgid "Total interview time over all calls (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Interview time for last call (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Last number dialled"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Operator username for last call"
-msgstr ""
-
-#: admin/outcomes.php:306 admin/dataoutput.php:93
-msgid "Shift report"
-msgstr "Hlášení směny"
-
 #: voip/downloadvoipclient.php:59
 msgid "Error: Cannot write to temporary directory"
 msgstr "Chyba: nelze zapisovat do dočasného adresáře"
@@ -1098,6 +989,46 @@ msgstr "Seznam historie případů"
 #: callhistory.php:84 admin/callhistory.php:114
 msgid "No calls ever made"
 msgstr "Žádný hovor nebyl proveden"
+
+#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
+#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
+#: admin/dataoutput.php:85 admin/extensionstatus.php:266
+#: admin/displayappointments.php:316 admin/displayappointments.php:341
+msgid "Case ID"
+msgstr "ID případu"
+
+#: usercontrol.php:96 usercontrol.php:163
+msgid "Incorrect username and/or password!"
+msgstr ""
+
+#: usercontrol.php:98 usercontrol.php:165 usercontrol.php:174
+#: login_check.php:103
+msgid ""
+"You have exceeded you maximum login attempts. Please wait %d minutes before "
+"trying again"
+msgstr ""
+
+#: usercontrol.php:99 usercontrol.php:166 usercontrol.php:175
+msgid "Continue"
+msgstr ""
+
+#: usercontrol.php:113
+msgid ""
+"Warning: You are still using the default password ('password'). Please "
+"change your password and re-login again."
+msgstr ""
+
+#: usercontrol.php:130
+msgid "Logged in"
+msgstr ""
+
+#: usercontrol.php:131
+msgid "Welcome %s!"
+msgstr ""
+
+#: usercontrol.php:183
+msgid "Logout successful."
+msgstr ""
 
 #: availability.php:61 index.php:240 index_interface2.php:261
 msgid "Availability"
@@ -1749,6 +1680,69 @@ msgstr "Autopriorita"
 msgid "Update priorities"
 msgstr "Aktualizovat priority"
 
+#: admin/remote.php:80
+msgid "Questionnaire services"
+msgstr ""
+
+#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
+#: admin/availabilitygroup.php:133
+msgid "Modify"
+msgstr "Změnit"
+
+#: admin/remote.php:121
+msgid ""
+"Questionnaire services available. Services include Limesurvey remote control."
+msgstr ""
+
+#: admin/remote.php:124
+msgid "Service not added/updated. Error: "
+msgstr ""
+
+#: admin/remote.php:129
+msgid "No questionnaire services defined"
+msgstr ""
+
+#: admin/remote.php:132
+msgid "Service"
+msgstr ""
+
+#: admin/remote.php:148
+msgid "Update questionnaire service"
+msgstr ""
+
+#: admin/remote.php:154
+msgid "Update questionnaire serivce"
+msgstr ""
+
+#: admin/remote.php:164
+msgid "Add new questionnaire service"
+msgstr ""
+
+#: admin/remote.php:165
+msgid "Questionnaire service description"
+msgstr ""
+
+#: admin/remote.php:166
+msgid ""
+"RPC Url (eg: http://localhost/limesurvey/index.php/admin/remotecontrol)"
+msgstr ""
+
+#: admin/remote.php:167
+msgid "Username (eg: admin)"
+msgstr ""
+
+#: admin/remote.php:168
+msgid "Password (eg: password)"
+msgstr ""
+
+#: admin/remote.php:169
+msgid "Questionnaire entry Url (eg: http://localhost/limesurvey/index.php/)"
+msgstr ""
+
+#: admin/remote.php:170
+msgid "Add questionnaire serivce"
+msgstr ""
+
 #: admin/assigntimeslots.php:161 admin/index.php:140
 msgid "Assign Time slots"
 msgstr ""
@@ -1922,11 +1916,6 @@ msgstr ""
 msgid "Time slots"
 msgstr ""
 
-#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
-#: admin/availabilitygroup.php:133
-msgid "Modify"
-msgstr "Změnit"
-
 #: admin/availabilitygroup.php:127
 msgid ""
 "Time slots define periods of time during particular days of the week. These "
@@ -2030,6 +2019,10 @@ msgstr "Pro tento dotazník nejsou určeny žádné směny"
 #: admin/outcomes.php:306
 msgid "Shift time"
 msgstr ""
+
+#: admin/outcomes.php:306 admin/dataoutput.php:93
+msgid "Shift report"
+msgstr "Hlášení směny"
 
 #: admin/outcomes.php:306 admin/operatorlist.php:428 admin/index.php:160
 msgid "Operator performance"
@@ -2371,30 +2364,6 @@ msgstr ""
 msgid "Allow for respondent self completion via email invitation?"
 msgstr "Umožnit respondentům dotazník vyplnit pomocí e-mailové pozvánky?"
 
-#: admin/questionnairelist.php:409 admin/new.php:254
-msgid "Questionnaire display mode for respondent"
-msgstr "Režim zobrazení dotazníku pro respondenta"
-
-#: admin/questionnairelist.php:412 admin/new.php:257
-msgid "All in one"
-msgstr "Vše v jednom"
-
-#: admin/questionnairelist.php:413 admin/new.php:258
-msgid "Question by question"
-msgstr "Otázka za otázkou"
-
-#: admin/questionnairelist.php:414 admin/new.php:259
-msgid "Group at a time"
-msgstr "Skupina najednou"
-
-#: admin/questionnairelist.php:419 admin/new.php:264
-msgid "Limesurvey template for respondent"
-msgstr "Šablona Limesurvey pro respondenta"
-
-#: admin/questionnairelist.php:448 admin/new.php:294
-msgid "URL to forward respondents on self completion (required)"
-msgstr "URL pro přesměrování respondentů při samo-dokončení (vyžadováno)"
-
 #: admin/questionnairelist.php:399 admin/questionnairelist.php:409
 #: admin/questionnairelist.php:419 admin/questionnairelist.php:429
 #: admin/questionnairelist.php:443 admin/questionnairelist.php:453
@@ -2418,10 +2387,6 @@ msgstr "Zpětné vrácení výběru respondenta (dotazník již zahájen):"
 #: admin/questionnairelist.php:430 admin/new.php:291
 msgid "Message to leave on an answering machine:"
 msgstr "Zprávu, kterou zanechat na záznamníku:"
-
-#: admin/questionnairelist.php:500
-msgid "Edit respondent selection instrument in Limesurvey"
-msgstr "Upravit nástroj výběru respondenta v Limesurvey"
 
 #: admin/questionnairelist.php:444 admin/new.php:303
 msgid "Project end text (thank you screen):"
@@ -2526,6 +2491,11 @@ msgstr "Seznam historie volání"
 #: admin/supervisor.php:417 admin/databasestrings.php:82
 msgid "Phone number"
 msgstr "Telefonní číslo"
+
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:429 admin/dataoutput.php:93
+msgid "Case notes"
+msgstr "Poznámky případu"
 
 #: admin/callhistory.php:150
 msgid "NO Call history records for Your query"
@@ -2810,17 +2780,9 @@ msgstr ""
 msgid "Questionnairies"
 msgstr ""
 
-#: admin/index.php:122 admin/new.php:199 admin/new.php:405
-msgid "Create an instrument in Limesurvey"
-msgstr "Vytvořit nástroj v limesurvey:"
-
 #: admin/index.php:124 admin/set_outcomes.php:161
 msgid "Set questionnaire outcomes"
 msgstr ""
-
-#: admin/index.php:126 admin/new.php:407
-msgid "Administer instruments with Limesurvey"
-msgstr "Správa nástrojů Limesurvey"
 
 #: admin/index.php:128
 msgid "Samples"
@@ -2922,6 +2884,10 @@ msgstr "Přidělit výsledky k případům"
 #: admin/index.php:188
 msgid "System settings"
 msgstr "Nastavení systému"
+
+#: admin/index.php:190
+msgid "Questionnaire service (RPC)"
+msgstr ""
 
 #: admin/index.php:191 admin/set_outcomes.php:160
 msgid "Set default outcomes"
@@ -3098,6 +3064,11 @@ msgstr "Hodnota"
 msgid "Save custom Outcome"
 msgstr ""
 
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
+#: admin/dataoutput.php:93
+msgid "Outcome ID"
+msgstr ""
+
 #: admin/set_outcomes.php:250 admin/quotarow.php:591
 msgid "Select"
 msgstr ""
@@ -3231,6 +3202,18 @@ msgstr ""
 msgid "Allow new numbers to be drawn?"
 msgstr ""
 
+#: admin/assignsample.php:322 admin/assignsample.php:571
+msgid "Sample variables to copy to Limesurvey participant table"
+msgstr ""
+
+#: admin/assignsample.php:324 admin/assignsample.php:573
+msgid "Limesurvey participant variable"
+msgstr ""
+
+#: admin/assignsample.php:328 admin/assignsample.php:577
+msgid "Do not copy to Limesurvey"
+msgstr ""
+
 #: admin/assignsample.php:413
 msgid "List & Add Sample"
 msgstr ""
@@ -3250,6 +3233,12 @@ msgstr "Pro tento dotazník nejsou zvoleny žádné vzorky"
 #: admin/assignsample.php:495
 msgid "Add a sample to this questionnaire:"
 msgstr "Přidejte vzorek k tomuto dotazníku:"
+
+#: admin/assignsample.php:516
+msgid ""
+"Unable to access token/participants table in Limesurvey. Please confirm that "
+"this survey has a participant table created."
+msgstr ""
 
 #: admin/assignsample.php:527
 msgid "Select sample:"
@@ -3299,6 +3288,10 @@ msgstr "Nastavit výsledek"
 
 #: admin/supervisor.php:320
 msgid "Sample details"
+msgstr ""
+
+#: admin/supervisor.php:331
+msgid "Token"
 msgstr ""
 
 #: admin/supervisor.php:331 admin/casestatus.php:126
@@ -3584,20 +3577,36 @@ msgid "Current Outcome"
 msgstr ""
 
 #: admin/dataoutput.php:93
+msgid "Number of call attempts"
+msgstr ""
+
+#: admin/dataoutput.php:93
 msgid "Number of calls"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Total interview time over all calls (mins)"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Interview time for last call (mins)"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Last number dialled"
 msgstr ""
 
 #: admin/dataoutput.php:93
 msgid "DATE/TIME Last number dialled"
 msgstr ""
 
+#: admin/dataoutput.php:93
+msgid "Operator username for last call"
+msgstr ""
+
 #: admin/dataoutput.php:217
 msgid "Download data for this questionnaire via Limesurvey"
 msgstr "Stáhnout data pro tento dotazník přes Limesurvey"
-
-#: admin/dataoutput.php:225
-msgid "Download data for this sample via Limesurvey"
-msgstr "Stáhnout data pro tento vzorek přes Limesurvey"
 
 #: admin/dataoutput.php:233
 msgid "Download key file: select sample var"
@@ -3940,10 +3949,6 @@ msgstr ""
 msgid "Select limesurvey instrument:"
 msgstr "Výběr nástroje limesurvey:"
 
-#: admin/new.php:194 admin/new.php:211
-msgid "Survey"
-msgstr ""
-
 #: admin/new.php:188
 msgid "Respondent selection type:"
 msgstr "Typ výběru respondenta:"
@@ -4183,6 +4188,10 @@ msgstr "E-mailová adresa"
 #: admin/databasestrings.php:89
 msgid "Self completion email invitation sent"
 msgstr "Pozvánka samodokončení e-mailu odeslána"
+
+#: admin/databasestrings.php:90
+msgid "Self completed online"
+msgstr "Samodokončeno online"
 
 #: admin/databasestrings.php:91
 msgid "Max call attempts reached (Eligible)"
@@ -4435,598 +4444,14 @@ msgstr "Automatické vytáčení nedostupné protože již voláte"
 msgid "Case"
 msgstr ""
 
+#: login_check.php:86
+msgid "You have to login first."
+msgstr ""
+
+#: login_check.php:100
+msgid "Login"
+msgstr ""
+
 #: rs_quota_end.php:64
 msgid "Project Quota End"
 msgstr ""
-
-#~ msgid "None"
-#~ msgstr "Žádné"
-
-#~ msgid "Appointment:"
-#~ msgstr "Schůzka:"
-
-#~ msgid "Respondent Selection - Call back"
-#~ msgstr "Výběr respondenta - zpětné volání"
-
-#~ msgid "You are: "
-#~ msgstr "Jste: "
-
-#~ msgid "Business number"
-#~ msgstr "Pracovní číslo"
-
-#~ msgid "Respondent Selection - Introduction"
-#~ msgstr "Výběr respondenta - Úvod"
-
-#~ msgid "End call with outcome: No answer (ring out or busy) "
-#~ msgstr ""
-#~ "Ukončit hovor s výsledkem: Bez odpovědi (nezvednuto nebo zaneprázdněno) "
-
-#~ msgid "End call with outcome: Accidental hang up"
-#~ msgstr "Ukončit hovor s výsledkem: Zavěšení omylem"
-
-#~ msgid "End call with outcome: Refusal by respondent"
-#~ msgstr "Ukončit volání s výsledkem: Odmítnutí respondentem"
-
-#~ msgid ""
-#~ "End call with outcome: Non contact (person not currently available on this "
-#~ "number: no appointment made)"
-#~ msgstr ""
-#~ "Ukončit hovor s výsledkem: Bez kontaktu (osoba není v současnosti na tomto "
-#~ "číslo dostupná: nebyla zřízena žádná schůzka)"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person never available on "
-#~ "this number)"
-#~ msgstr ""
-#~ "Ukončit hovor s výsledkem: Žádný vhodný respondent (osoba není na tomto "
-#~ "čísle nikdy dostupná)"
-
-#~ msgid "End call with outcome: Refusal by unknown person"
-#~ msgstr "Ukončit hovor s výsledkem: Odmítnutí neznámou osobou"
-
-#~ msgid ""
-#~ "End call with outcome: Out of sample (already completed in another mode)"
-#~ msgstr ""
-#~ "Ukončit hovor s výsledkem: Mimo vzorek (již dokončeno v jiném režimu)"
-
-#~ msgid "Respondent Selection - Project Introduction"
-#~ msgstr "Výběr respondenta - Úvod projektu"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person not available on this "
-#~ "number)"
-#~ msgstr ""
-#~ "Ukončit hovor s výsledkem: Žádný vhodný respondent (osoba není na tomto "
-#~ "čísle dostupná)"
-
-#~ msgid "Respondent Selection - Answering machine"
-#~ msgstr "Výběr respondenta - Záznamník"
-
-#~ msgid "End call with outcome: Business answering machine"
-#~ msgstr "Ukončit hovor s výsledkem: Firemní záznamník"
-
-#~ msgid "End call with outcome: Answering machine Message left"
-#~ msgstr "Ukončit hovor s výsledkem: Záznamník - zanechána zpráva"
-
-#~ msgid "End call with outcome: Answering machine No message left"
-#~ msgstr "Ukončit hovor s výsledkem: Záznamník - zpráva nezanechána"
-
-#~ msgid "% complete"
-#~ msgstr "% c dokončeno"
-
-#~ msgid " unassigned case(s) available within the specified call restrictions"
-#~ msgstr " dostupných nepřidělených případů patřící do zadaných omezení"
-
-#~ msgid "There are "
-#~ msgstr "Existuje "
-
-#~ msgid ""
-#~ "ERROR: There are no cases available that fall within call restrictions"
-#~ msgstr "CHYBA: Nejsou dostupné žádné případy, které spadají pod tyto omezení"
-
-#~ msgid "Call restrictions:"
-#~ msgstr "Omezení volání:"
-
-#~ msgid "POSSIBLE ERROR: Row quota reached for this question"
-#~ msgstr "MOŽNÁ CHYBA: Dosažena kvóta řádku pro tuto otázku"
-
-#~ msgid "Call automatically ended with outcome: Complete"
-#~ msgstr "Hovor automaticky dokončen s výsledkem: Dokončeno"
-
-#~ msgid "Respondent Selection - Project end"
-#~ msgstr "Výběr respondenta - Konec projektu"
-
-#~ msgid "End call with outcome: Complete"
-#~ msgstr "Ukončit hovor s výsledkem: Dokončeno"
-
-#~ msgid "Call automatically ended with outcome: Complete - End case"
-#~ msgstr "Hovor automaticky ukončen s výsledkem: Dokončeno - Ukončit případ"
-
-#~ msgid "End call with outcome: Business number"
-#~ msgstr "Ukončit hovor s výsledkem: Firemní číslo"
-
-#~ msgid "Respondent Selection - Business answers"
-#~ msgstr "Výběr respondenta - Firemní odpovědi"
-
-#~ msgid "Respondent Selection - Project Quota End"
-#~ msgstr "Výběr respondenta - Konec kvóty projektu"
-
-#~ msgid "End call with outcome: Quota filled"
-#~ msgstr "Ukončit hovor s výsledkem: Kvóta naplněna"
-
-#~ msgid ""
-#~ "Could not reload the FOP operator panel server using the bounce_op.sh "
-#~ "script. Configuration changes may not be reflected in the panel display."
-#~ msgstr ""
-#~ "Nelze znovu načíst server panelu operátora FOP, pomocí skriptu bounce_op.sh. "
-#~ "ZMěny nastavení se nemusí na zobrazení panelu projevit."
-
-#~ msgid ""
-#~ "Reload failed because FreePBX could not connect to the asterisk manager "
-#~ "interface."
-#~ msgstr ""
-#~ "Znovu načtení selhalo protože FreePBX se nemohlo připojit ke správcovskému "
-#~ "rozhraní asterisk."
-
-#~ msgid "retrieve_conf failed, config not applied"
-#~ msgstr "retrieve_conf selhalo, nastavení není použito"
-
-#~ msgid "Reload failed because retrieve_conf encountered an error: %s"
-#~ msgstr "Znovu načtení selhalo protože retrieve_conf narazilo na chybu: %s"
-
-#~ msgid "Exit code was %s and output was: %s"
-#~ msgstr "Kód ukončení byl %s a výstup byl: %s"
-
-#~ msgid "Duplicate name"
-#~ msgstr "Duplicitní název"
-
-#~ msgid "Import?"
-#~ msgstr "Import?"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
-#~ msgid "Sorting cases"
-#~ msgstr "Řazení případů"
-
-#~ msgid ""
-#~ "ERROR: You do not have server side authentication enabled therefore queXS "
-#~ "cannot determine which user is accessing the system."
-#~ msgstr ""
-#~ "CHYBA: Nemáte povoleno ověření na straně serveru a proto queXS nemůže "
-#~ "zjistit kteří uživatelé vstupují do systému"
-
-#~ msgid ""
-#~ "This is how the story goes.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "A ten příběh je vyprávěn takto.\n"
-#~ "\n"
-
-#~ msgid "Select a sample from the list below"
-#~ msgstr "Vyberte vzorek ze seznamu níže"
-
-#~ msgid "Select a questionnaire from the list below"
-#~ msgstr "Vyberte dotazník ze seznamu níže"
-
-#~ msgid "FreePBX has been reloaded for the new VoIP extension to take effect"
-#~ msgstr "FreePBX byl znovu načten, aby nové rozšíření VoIP mohlo být použito"
-
-#~ msgid "Added:"
-#~ msgstr "Přidáno:"
-
-#~ msgid "Enter the username of an operator to add:"
-#~ msgstr "Zadejte uživatelské jméno operátora pro přidání:"
-
-#~ msgid ""
-#~ "Use this form to enter the username of a user based on your directory "
-#~ "security system. For example, if you have secured the base directory of "
-#~ "queXS using Apache file based security, enter the usernames of the users "
-#~ "here."
-#~ msgstr ""
-#~ "Použijte tento formulář k zadání uživatelského jména uživatele na základě "
-#~ "vašeho adresáře bezpečnostního systému. Například, pokud jste zabezpečili "
-#~ "základní adresář queXS pomocí Apache souboru zabezpečení, zadejte "
-#~ "uživatelská jména zde."
-
-#~ msgid "tool"
-#~ msgstr "nástroj"
-
-#~ msgid "Assign Operator to Questionnaire"
-#~ msgstr "Přidělit operátora k dotazníku"
-
-#~ msgid "Adding an operator here will give the user the ability to call cases"
-#~ msgstr "Po přidání operátora zde bude mít uživatel možnost vytáčet případy"
-
-#~ msgid "Enter the surname of an operator to add:"
-#~ msgstr "Zadejte příjmení operátora pro přidání:"
-
-#~ msgid "Enter the password of an operator to add:"
-#~ msgstr "Zadejte heslo operátora pro přidání:"
-
-#~ msgid "Enter the first name of an operator to add:"
-#~ msgstr "Zadejte jméno operátora pro přidání:"
-
-#~ msgid "Enter the Time Zone of an operator to add:"
-#~ msgstr "Zadejte časové pásmo operátora pro přidání:"
-
-#~ msgid "Will this operator be using VoIP?"
-#~ msgstr "Bude tento operátor používat VoIP?"
-
-#~ msgid "Is the operator a normal interviewer?"
-#~ msgstr "Je operátor normální tazatel?"
-
-#~ msgid "Is the operator a supervisor?"
-#~ msgstr "Je operátor vedoucí?"
-
-#~ msgid "Is the operator a refusal converter?"
-#~ msgstr "Je operátor určen pro odmítavé respondenty?"
-
-#~ msgid "Add user"
-#~ msgstr "Přidat uživatele"
-
-#~ msgid "Enter the telephone extension password:"
-#~ msgstr "Zadejte heslo telefonní linky:"
-
-#~ msgid "Load bulk appointment CSV"
-#~ msgstr "Načíst CSV hromadných schůzek"
-
-#~ msgid "Choose the CSV file to upload:"
-#~ msgstr "Zvolte soubor CSV k nahrání:"
-
-#~ msgid ""
-#~ "Provide a headered CSV file containing at least 3 columns - caseid, "
-#~ "starttime and endtime. Optionally you can include a note column to attach a "
-#~ "note to the case in addition to setting an appointment. Only cases that have "
-#~ "temporary (non final) outcomes will have appointments generated, and the "
-#~ "outcome of the case will be updated to an appointment outcome."
-#~ msgstr ""
-#~ "Zadejte soubor CSV s hlavičkou obsahující alespoň 3 sloupce - caseid, "
-#~ "starttime a endtime. Můžete také zahrnout sloupec note pro přidání poznámky "
-#~ "k případu spolu s vytvořením schůzky."
-
-#~ msgid "No appointments in the future"
-#~ msgstr "V budoucnu nejsou žádné schůzky"
-
-#~ msgid "Operator Name"
-#~ msgstr "Jméno operátora"
-
-#~ msgid "Respondent Name"
-#~ msgstr "Jméno respondenta"
-
-#~ msgid "Date/Time call start"
-#~ msgstr "Datum/Čas zahájení volání"
-
-#~ msgid "Time end"
-#~ msgstr "Čas ukončení"
-
-#~ msgid "Outcomes"
-#~ msgstr "Výsledky"
-
-#~ msgid "Shift"
-#~ msgstr "Směna"
-
-#~ msgid "Assign availability group to questionnaire"
-#~ msgstr "Přidělit dostupnost skupiny k dotazníku"
-
-#~ msgid "There are no availability groups selected for this questionnaire"
-#~ msgstr "Pro tento dotazník nejsou vybrány žádné skupiny dostupnosti"
-
-#~ msgid "Availability groups selected for this questionnaire"
-#~ msgstr "Skupiny dostupnosti vybrané pro tento dotazník"
-
-#~ msgid "Current quotas (click to delete)"
-#~ msgstr "Současné kvóty (klikněte pro smazání)"
-
-#~ msgid "Select availability group:"
-#~ msgstr "Vyberte skupinu dostupnosti:"
-
-#~ msgid "Add an availability group to this questionnaire:"
-#~ msgstr "Přidat skupinu dostupnosti pro tento dotazník:"
-
-#~ msgid "Pre defined values for this question:"
-#~ msgstr "Předurčené hodnoty pro tuto otázku:"
-
-#~ msgid "Enter a case id or select a case from the list below:"
-#~ msgstr "Zadejte ID případu nebo ho vyberte ze seznamu níže:"
-
-#~ msgid "Create appointment for this case"
-#~ msgstr "Vytvořit schůzku pro tento případ"
-
-#~ msgid ""
-#~ "Adding a client here will allow them to access project information in the "
-#~ "client subdirectory. You can assign a client to a particular project using "
-#~ "the"
-#~ msgstr ""
-#~ "Když tady přidáte klienta, umožníte jim přístup k informacím o projektu v "
-#~ "podadresáři klienta. Klienta můžete přidělit ke konkrétnímu projektu pomocí"
-
-#~ msgid "Enter the username of a client to add:"
-#~ msgstr "Zadejte uživatelské jméno klienta klienta, který bude přidán:"
-
-#~ msgid "There may already be a client of this name"
-#~ msgstr "Je možné že již existuje klient s tímto názvem"
-
-#~ msgid "tool."
-#~ msgstr "nástroje."
-
-#~ msgid "No availability groups"
-#~ msgstr "Žádné skupiny dostupnosti"
-
-#~ msgid "Availablity group"
-#~ msgstr "Skupina dostupnosti"
-
-#~ msgid "Add availability group"
-#~ msgstr "Přidat skupinu dostupnosti"
-
-#~ msgid "Enter the first name of a client to add:"
-#~ msgstr "Zadejte jméno klienta k přidání:"
-
-#~ msgid "Enter the surname of a client to add:"
-#~ msgstr "Zadejte příjmení klienta k přidání:"
-
-#~ msgid "Enter the password of a client to add:"
-#~ msgstr "Zadejte heslo klienta k přidání:"
-
-#~ msgid "Enter the Time Zone of a client to add:"
-#~ msgstr "Zadejte časové pásmo klienta k přidání:"
-
-#~ msgid "Update timezone"
-#~ msgstr "Aktualizovat časové pásmo"
-
-#~ msgid "Windows bat file"
-#~ msgstr "Soubor dávky Windows"
-
-#~ msgid "Update password"
-#~ msgstr "Aktualizovat heslo"
-
-#~ msgid "Download Windows VoIP Executable"
-#~ msgstr "Stáhnout spustitelný soubor VoIP pro Windows"
-
-#~ msgid "Download Linux VoIP Executable"
-#~ msgstr "Stáhnout spustitelný soubor VoIP pro Linux"
-
-#~ msgid "Enable/Disable"
-#~ msgstr "Povolit/Zakázat"
-
-#~ msgid "Windows VoIP"
-#~ msgstr "Windows VoIP"
-
-#~ msgid "*nix VoIP"
-#~ msgstr "*nix VoIP"
-
-#~ msgid "like"
-#~ msgstr "jako"
-
-#~ msgid "Enable/Disable VoIP"
-#~ msgstr "Povolit/Zakázat VoIP"
-
-#~ msgid "Copied quotas"
-#~ msgstr "Kopírované kvóty"
-
-#~ msgid "Replicate: Where"
-#~ msgstr "Replikace: Kde"
-
-#~ msgid "Sample only. Stop calling where"
-#~ msgstr "Pouze vzorek. Přestat volat tam kde"
-
-#~ msgid "Current row quotas (click to delete)"
-#~ msgstr "Současné kvóty řádku (klikněte pro smazání)"
-
-#~ msgid "No question (Replicate)"
-#~ msgstr "Žádná otázka (Replikovat)"
-
-#~ msgid "Copy adjustments"
-#~ msgstr "Kopírovat úpravy"
-
-#~ msgid ""
-#~ "Copy quotas for this sample to (No error/duplicate checking) with adjusting: "
-#~ msgstr ""
-#~ "Kopírovat kvóty z tohoto vzorku do (Žádná kontrola chyb/duplicity) s "
-#~ "úpravou: "
-
-#~ msgid "Stop calling"
-#~ msgstr "Přestat volat"
-
-#~ msgid "rows from this sample when:"
-#~ msgstr "řádků z tohoto vzorku když:"
-
-#~ msgid "Select a question for the row quota"
-#~ msgstr "Vyberte otázku pro kvótu řádku"
-
-#~ msgid "Copy quotas for this sample to (No error/duplicate checking): "
-#~ msgstr "Kopírovat kvóty z tohoto vzorku do (Žádná kontrola chyb/duplicity): "
-
-#~ msgid "Copy"
-#~ msgstr "Kopírovat"
-
-#~ msgid "Row quota reached (Closed)"
-#~ msgstr "Kvóta řádku dosažena (Uzavřeno)"
-
-#~ msgid "Row quota not yet reached (Open)"
-#~ msgstr "Kvóta řádku zatím nedosažena (Otevřeno)"
-
-#~ msgid "Add/Remove Timezones"
-#~ msgstr "Přidat/Odstranit časové pásmo"
-
-#~ msgid "Sample only quota"
-#~ msgstr "Kvóta pouze pro vzorek"
-
-#~ msgid "Exclude from the sample where the value is like"
-#~ msgstr "Vynechat ze vzorku kde hodnota se podobá"
-
-#~ msgid "Select the sample variable to exclude"
-#~ msgstr "Vyberte proměnnou vzorku pro vynechání"
-
-#~ msgid "Enter the details for creating the row quota:"
-#~ msgstr "Zadejte údaje pro vytvoření kvóty řádku:"
-
-#~ msgid "Timezone: "
-#~ msgstr "Časové pásmo: "
-
-#~ msgid "Click to remove a Timezone from the default list"
-#~ msgstr "Klikněte pro odstranění časového pásmu z výchozího seznamu"
-
-#~ msgid "No operators"
-#~ msgstr "Žádní operátoři"
-
-#~ msgid "Display extension status"
-#~ msgstr "Zobrazit stav rozšíření"
-
-#~ msgid "Save changes to availabilities"
-#~ msgstr "Uložit změny dostupnosti"
-
-#~ msgid "Modify availability"
-#~ msgstr "Změnit dostupnost"
-
-#~ msgid "No availability group set"
-#~ msgstr "Není nastavena žádná skupina dostupnosti"
-
-#~ msgid "Modify shift template"
-#~ msgstr "Změnit šablonu směny"
-
-#~ msgid "Modify call restriction times"
-#~ msgstr "Změnit časy omezení volání"
-
-#~ msgid "Link"
-#~ msgstr "Odkaz"
-
-#~ msgid "Search sample"
-#~ msgstr "Hledat vzorek"
-
-#~ msgid "No records in this sample match this search criteria"
-#~ msgstr "Žádné záznamy v tomto vzorku neodpovídají kritériím hledání"
-
-#~ msgid "No cases yet assigned: Delete this sample record"
-#~ msgstr "Zatím žádné případy nepřiděleny: Smazat tento záznam vzorku"
-
-#~ msgid "Assigned to questionnaire: "
-#~ msgstr "Přiděleno k dotazníku: "
-
-#~ msgid "Search for:"
-#~ msgstr "Hledat:"
-
-#~ msgid "Use the % character as a wildcard"
-#~ msgstr "Použit znak % cjako zástupný znak"
-
-#~ msgid "New: Create new questionnaire"
-#~ msgstr "Nový: Vytvořit nový dotazník"
-
-#~ msgid "Start search"
-#~ msgstr "Spustit hledání"
-
-#~ msgid "as questionnaire"
-#~ msgstr "jako dotazník"
-
-#~ msgid "linked to"
-#~ msgstr "propojeno s"
-
-#~ msgid "Existing instrument:"
-#~ msgstr "Existující nástroj:"
-
-#~ msgid "Submit changes"
-#~ msgstr "Odeslat změny"
-
-#~ msgid "Questionnaire creation and management"
-#~ msgstr "Vytvoření dotazníku a správa"
-
-#~ msgid "Administrative Tools"
-#~ msgstr "Nástroje správce"
-
-#~ msgid "Import a sample file (in CSV form)"
-#~ msgstr "Importovat vzorkový soubor (ve formátu CSV)"
-
-#~ msgid "Set values in questionnaire to pre fill"
-#~ msgstr "Nastavit hodnoty v dotazníku pro předvyplnění"
-
-#~ msgid "Sample/List management"
-#~ msgstr "Správa vzorků/seznamu"
-
-#~ msgid "Availability and shift management"
-#~ msgstr "Dostupnost a správa směny"
-
-#~ msgid "Questionnaire progress"
-#~ msgstr "Postup dotazníku"
-
-#~ msgid "Shift management (add/remove)"
-#~ msgstr "Správa směn (přidat/odstranit)"
-
-#~ msgid "Client management"
-#~ msgstr "Správa klientů"
-
-#~ msgid "Manage availablity groups"
-#~ msgstr "Správa skupin dostupnosti"
-
-#~ msgid "Assign availabilities to questionnaires"
-#~ msgstr "Přidělit dostupnosti k dotazníkům"
-
-#~ msgid "Start and monitor system wide case sorting"
-#~ msgstr "Spustit a sledovat celosystémové řazení případů"
-
-#~ msgid "Import: Validating and uploading"
-#~ msgstr "Import: Ověřování a nahrávání"
-
-#~ msgid "Successfully imported file"
-#~ msgstr "Soubor úspěšně importován"
-
-#~ msgid "Please go back in your browser and fix the problem"
-#~ msgstr "Prosím vraťte se ve svém prohlížeči a problém opravte"
-
-#~ msgid "Import: Select columns to import"
-#~ msgstr "Import: Vyberte sloupce pro import"
-
-#~ msgid "Choose the CSV sample file to upload:"
-#~ msgstr "Zvolte vzorový soubor CSV pro nahrání:"
-
-#~ msgid "Description for file:"
-#~ msgstr "Popis souboru:"
-
-#~ msgid "Current pre fills (click to delete)"
-#~ msgstr "Současná předvyplnění (klikněte pro podrobnosti)"
-
-#~ msgid "Pre fill questionnaire: Set values for questionnaire to prefill"
-#~ msgstr "Předvyplnit dotazník: Nastavte hodnoty dotazníku pro předvyplnění"
-
-#~ msgid ""
-#~ "Kill signal sent: Please wait... (Note: Process will be stalled until there "
-#~ "is activity on the VoIP Server)"
-#~ msgstr ""
-#~ "Signál ukončení zaslán: Prosím čekejte... (Poznámka: Proces bude pozastaven "
-#~ "dokud nebude na serveru VoIP aktivita)"
-
-#~ msgid "Max calls (0 for unlimited)"
-#~ msgstr "Max volání (0 pro neomezeně)"
-
-#~ msgid "Max call attempts:"
-#~ msgstr "Max pokusů o volání:"
-
-#~ msgid "Max calls:"
-#~ msgstr "MAx volání:"
-
-#~ msgid "Randomly selected"
-#~ msgstr "Vybrány náhodně"
-
-#~ msgid "Sequentially selected"
-#~ msgstr "Vybrány popořadě"
-
-#~ msgid "Assign Sample: Select sample to assign"
-#~ msgstr "Přidělit vzorek: Zvolte vzorek pro přidělení"
-
-#~ msgid "Set centre information: "
-#~ msgstr "Nastavit informační centrum "
-
-#~ msgid "Max call attempts (0 for unlimited)"
-#~ msgstr "Max pokusů o volání (0 pro neomezeně)"
-
-#~ msgid "Number of answering machine messages to leave per case (0 for never)"
-#~ msgstr ""
-#~ "Počet zpráv na záznamníku které zanechat na jeden případ (0 pro nikdy)"
-
-#~ msgid "Select from sample randomly? (otherwise sequentially)"
-#~ msgstr "Vybrat ze vzorku náhodně? (jinak popořadě)"
-
-#~ msgid "Display"
-#~ msgstr "Zobrazit"
-
-#~ msgid "Enter the telephone extension number:"
-#~ msgstr "Zadejte číslo telefonní linky:"

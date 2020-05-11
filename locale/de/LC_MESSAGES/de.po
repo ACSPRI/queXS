@@ -1,21 +1,21 @@
 # German translation for quexs
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# Copyright (c) 2017 Rosetta Contributors and Canonical Ltd 2017
 # This file is distributed under the same license as the quexs package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-11-23 12:26+1100\n"
-"PO-Revision-Date: 2014-03-18 17:48+0000\n"
-"Last-Translator: Daniel <weber@politik.uni-mainz.de>\n"
+"POT-Creation-Date: 2017-11-23 12:29+1100\n"
+"PO-Revision-Date: 2017-04-03 01:50+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-03-16 04:04+0000\n"
-"X-Generator: Launchpad (build 18571)\n"
+"X-Launchpad-Export-Date: 2020-05-11 02:24+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -799,115 +799,6 @@ msgstr "Beende Aufzeichnung..."
 msgid "Stop the manual recording now..."
 msgstr "Beende manuele Aufzeichnung...."
 
-#: admin/databasestrings.php:90
-msgid "Self completed online"
-msgstr ""
-
-#: include/limesurvey/quexs.php:682 include/limesurvey/quexs.php:761
-msgid "Not on an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:684 include/limesurvey/quexs.php:763
-msgid "On an appointment"
-msgstr ""
-
-#: include/limesurvey/quexs.php:995
-msgid "All samples"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6295
-msgid "queXS: Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6296
-msgid "queXS: On appointment?"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6297
-msgid "queXS: Percentage complete"
-msgstr ""
-
-#: include/limesurvey/common_functions.php:6298
-msgid "queXS: Number of answering machine messages left"
-msgstr ""
-
-#: include/limesurvey/optout.php:83
-msgid "Self completion refused via opt out function"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:110
-#: include/limesurvey/admin/statistics.php:268
-#: include/limesurvey/admin/browse.php:791
-#: include/limesurvey/admin/vvexport.php:69
-msgid "Questionnaire and Sample selection:"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:111
-#: include/limesurvey/admin/statistics.php:269
-#: include/limesurvey/admin/browse.php:792
-#: include/limesurvey/admin/vvexport.php:70
-msgid "All queXS questionnaires and samples associated with this instrument"
-msgstr ""
-
-#: admin/supervisor.php:331
-msgid "Token"
-msgstr ""
-
-#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
-#: admin/dataoutput.php:85 admin/extensionstatus.php:266
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
-msgid "Case ID"
-msgstr "Fall ID"
-
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
-#: admin/dataoutput.php:93
-msgid "Outcome ID"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:260
-#: include/limesurvey/admin/exportresults.php:661
-#: include/limesurvey/admin/exportresults.php:662
-#: include/limesurvey/admin/exportresults.php:986
-msgid "Case outcome"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Number of call attempts"
-msgstr ""
-
-#: include/limesurvey/admin/exportresults.php:262
-#: include/limesurvey/admin/exportresults.php:616
-#: include/limesurvey/admin/exportresults.php:617
-#: include/limesurvey/admin/exportresults.php:992
-msgid "Number of answering machine messages left"
-msgstr ""
-
-#: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/supervisor.php:429 admin/dataoutput.php:93
-msgid "Case notes"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Total interview time over all calls (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Interview time for last call (mins)"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Last number dialled"
-msgstr ""
-
-#: admin/dataoutput.php:93
-msgid "Operator username for last call"
-msgstr ""
-
-#: admin/outcomes.php:306 admin/dataoutput.php:93
-msgid "Shift report"
-msgstr ""
-
 #: voip/downloadvoipclient.php:59
 msgid "Error: Cannot write to temporary directory"
 msgstr ""
@@ -1097,6 +988,46 @@ msgstr ""
 
 #: callhistory.php:84 admin/callhistory.php:114
 msgid "No calls ever made"
+msgstr ""
+
+#: callhistory.php:88 admin/samplesearch.php:293 admin/callhistory.php:132
+#: admin/callhistory.php:157 admin/casesbyoutcome.php:117
+#: admin/dataoutput.php:85 admin/extensionstatus.php:266
+#: admin/displayappointments.php:316 admin/displayappointments.php:341
+msgid "Case ID"
+msgstr "Fall ID"
+
+#: usercontrol.php:96 usercontrol.php:163
+msgid "Incorrect username and/or password!"
+msgstr ""
+
+#: usercontrol.php:98 usercontrol.php:165 usercontrol.php:174
+#: login_check.php:103
+msgid ""
+"You have exceeded you maximum login attempts. Please wait %d minutes before "
+"trying again"
+msgstr ""
+
+#: usercontrol.php:99 usercontrol.php:166 usercontrol.php:175
+msgid "Continue"
+msgstr ""
+
+#: usercontrol.php:113
+msgid ""
+"Warning: You are still using the default password ('password'). Please "
+"change your password and re-login again."
+msgstr ""
+
+#: usercontrol.php:130
+msgid "Logged in"
+msgstr ""
+
+#: usercontrol.php:131
+msgid "Welcome %s!"
+msgstr ""
+
+#: usercontrol.php:183
+msgid "Logout successful."
 msgstr ""
 
 #: availability.php:61 index.php:240 index_interface2.php:261
@@ -1737,6 +1668,69 @@ msgstr ""
 msgid "Update priorities"
 msgstr ""
 
+#: admin/remote.php:80
+msgid "Questionnaire services"
+msgstr ""
+
+#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
+#: admin/availabilitygroup.php:133
+msgid "Modify"
+msgstr ""
+
+#: admin/remote.php:121
+msgid ""
+"Questionnaire services available. Services include Limesurvey remote control."
+msgstr ""
+
+#: admin/remote.php:124
+msgid "Service not added/updated. Error: "
+msgstr ""
+
+#: admin/remote.php:129
+msgid "No questionnaire services defined"
+msgstr ""
+
+#: admin/remote.php:132
+msgid "Service"
+msgstr ""
+
+#: admin/remote.php:148
+msgid "Update questionnaire service"
+msgstr ""
+
+#: admin/remote.php:154
+msgid "Update questionnaire serivce"
+msgstr ""
+
+#: admin/remote.php:164
+msgid "Add new questionnaire service"
+msgstr ""
+
+#: admin/remote.php:165
+msgid "Questionnaire service description"
+msgstr ""
+
+#: admin/remote.php:166
+msgid ""
+"RPC Url (eg: http://localhost/limesurvey/index.php/admin/remotecontrol)"
+msgstr ""
+
+#: admin/remote.php:167
+msgid "Username (eg: admin)"
+msgstr ""
+
+#: admin/remote.php:168
+msgid "Password (eg: password)"
+msgstr ""
+
+#: admin/remote.php:169
+msgid "Questionnaire entry Url (eg: http://localhost/limesurvey/index.php/)"
+msgstr ""
+
+#: admin/remote.php:170
+msgid "Add questionnaire serivce"
+msgstr ""
+
 #: admin/assigntimeslots.php:161 admin/index.php:140
 msgid "Assign Time slots"
 msgstr ""
@@ -1910,11 +1904,6 @@ msgstr ""
 msgid "Time slots"
 msgstr ""
 
-#: admin/remote.php:116 admin/remote.php:132 admin/availabilitygroup.php:122
-#: admin/availabilitygroup.php:133
-msgid "Modify"
-msgstr ""
-
 #: admin/availabilitygroup.php:127
 msgid ""
 "Time slots define periods of time during particular days of the week. These "
@@ -2017,6 +2006,10 @@ msgstr ""
 
 #: admin/outcomes.php:306
 msgid "Shift time"
+msgstr ""
+
+#: admin/outcomes.php:306 admin/dataoutput.php:93
+msgid "Shift report"
 msgstr ""
 
 #: admin/outcomes.php:306 admin/operatorlist.php:428 admin/index.php:160
@@ -2347,30 +2340,6 @@ msgstr ""
 msgid "Allow for respondent self completion via email invitation?"
 msgstr ""
 
-#: admin/questionnairelist.php:409 admin/new.php:254
-msgid "Questionnaire display mode for respondent"
-msgstr ""
-
-#: admin/questionnairelist.php:412 admin/new.php:257
-msgid "All in one"
-msgstr ""
-
-#: admin/questionnairelist.php:413 admin/new.php:258
-msgid "Question by question"
-msgstr ""
-
-#: admin/questionnairelist.php:414 admin/new.php:259
-msgid "Group at a time"
-msgstr ""
-
-#: admin/questionnairelist.php:419 admin/new.php:264
-msgid "Limesurvey template for respondent"
-msgstr ""
-
-#: admin/questionnairelist.php:448 admin/new.php:294
-msgid "URL to forward respondents on self completion (required)"
-msgstr ""
-
 #: admin/questionnairelist.php:399 admin/questionnairelist.php:409
 #: admin/questionnairelist.php:419 admin/questionnairelist.php:429
 #: admin/questionnairelist.php:443 admin/questionnairelist.php:453
@@ -2393,10 +2362,6 @@ msgstr ""
 
 #: admin/questionnairelist.php:430 admin/new.php:291
 msgid "Message to leave on an answering machine:"
-msgstr ""
-
-#: admin/questionnairelist.php:500
-msgid "Edit respondent selection instrument in Limesurvey"
 msgstr ""
 
 #: admin/questionnairelist.php:444 admin/new.php:303
@@ -2499,6 +2464,11 @@ msgstr ""
 #: admin/supervisor.php:417 admin/databasestrings.php:82
 msgid "Phone number"
 msgstr "Telefonnummer"
+
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/supervisor.php:429 admin/dataoutput.php:93
+msgid "Case notes"
+msgstr ""
 
 #: admin/callhistory.php:150
 msgid "NO Call history records for Your query"
@@ -2780,16 +2750,8 @@ msgstr ""
 msgid "Questionnairies"
 msgstr ""
 
-#: admin/index.php:122 admin/new.php:199 admin/new.php:405
-msgid "Create an instrument in Limesurvey"
-msgstr ""
-
 #: admin/index.php:124 admin/set_outcomes.php:161
 msgid "Set questionnaire outcomes"
-msgstr ""
-
-#: admin/index.php:126 admin/new.php:407
-msgid "Administer instruments with Limesurvey"
 msgstr ""
 
 #: admin/index.php:128
@@ -2891,6 +2853,10 @@ msgstr ""
 
 #: admin/index.php:188
 msgid "System settings"
+msgstr ""
+
+#: admin/index.php:190
+msgid "Questionnaire service (RPC)"
 msgstr ""
 
 #: admin/index.php:191 admin/set_outcomes.php:160
@@ -3068,6 +3034,11 @@ msgstr ""
 msgid "Save custom Outcome"
 msgstr ""
 
+#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
+#: admin/dataoutput.php:93
+msgid "Outcome ID"
+msgstr ""
+
 #: admin/set_outcomes.php:250 admin/quotarow.php:591
 msgid "Select"
 msgstr ""
@@ -3201,6 +3172,18 @@ msgstr ""
 msgid "Allow new numbers to be drawn?"
 msgstr ""
 
+#: admin/assignsample.php:322 admin/assignsample.php:571
+msgid "Sample variables to copy to Limesurvey participant table"
+msgstr ""
+
+#: admin/assignsample.php:324 admin/assignsample.php:573
+msgid "Limesurvey participant variable"
+msgstr ""
+
+#: admin/assignsample.php:328 admin/assignsample.php:577
+msgid "Do not copy to Limesurvey"
+msgstr ""
+
 #: admin/assignsample.php:413
 msgid "List & Add Sample"
 msgstr ""
@@ -3219,6 +3202,12 @@ msgstr ""
 
 #: admin/assignsample.php:495
 msgid "Add a sample to this questionnaire:"
+msgstr ""
+
+#: admin/assignsample.php:516
+msgid ""
+"Unable to access token/participants table in Limesurvey. Please confirm that "
+"this survey has a participant table created."
 msgstr ""
 
 #: admin/assignsample.php:527
@@ -3269,6 +3258,10 @@ msgstr ""
 
 #: admin/supervisor.php:320
 msgid "Sample details"
+msgstr ""
+
+#: admin/supervisor.php:331
+msgid "Token"
 msgstr ""
 
 #: admin/supervisor.php:331 admin/casestatus.php:126
@@ -3551,19 +3544,35 @@ msgid "Current Outcome"
 msgstr ""
 
 #: admin/dataoutput.php:93
+msgid "Number of call attempts"
+msgstr ""
+
+#: admin/dataoutput.php:93
 msgid "Number of calls"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Total interview time over all calls (mins)"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Interview time for last call (mins)"
+msgstr ""
+
+#: admin/dataoutput.php:93
+msgid "Last number dialled"
 msgstr ""
 
 #: admin/dataoutput.php:93
 msgid "DATE/TIME Last number dialled"
 msgstr ""
 
-#: admin/dataoutput.php:217
-msgid "Download data for this questionnaire via Limesurvey"
+#: admin/dataoutput.php:93
+msgid "Operator username for last call"
 msgstr ""
 
-#: admin/dataoutput.php:225
-msgid "Download data for this sample via Limesurvey"
+#: admin/dataoutput.php:217
+msgid "Download data for this questionnaire via Limesurvey"
 msgstr ""
 
 #: admin/dataoutput.php:233
@@ -3906,10 +3915,6 @@ msgstr ""
 msgid "Select limesurvey instrument:"
 msgstr ""
 
-#: admin/new.php:194 admin/new.php:211
-msgid "Survey"
-msgstr ""
-
 #: admin/new.php:188
 msgid "Respondent selection type:"
 msgstr ""
@@ -4148,6 +4153,10 @@ msgstr ""
 
 #: admin/databasestrings.php:89
 msgid "Self completion email invitation sent"
+msgstr ""
+
+#: admin/databasestrings.php:90
+msgid "Self completed online"
 msgstr ""
 
 #: admin/databasestrings.php:91
@@ -4401,114 +4410,14 @@ msgstr ""
 msgid "Case"
 msgstr ""
 
+#: login_check.php:86
+msgid "You have to login first."
+msgstr ""
+
+#: login_check.php:100
+msgid "Login"
+msgstr ""
+
 #: rs_quota_end.php:64
 msgid "Project Quota End"
 msgstr ""
-
-#~ msgid "End call with outcome: Business answering machine"
-#~ msgstr "Beende Anruf mit Ergebnis: geschäftlicher Anrufbeantworter"
-
-#~ msgid "Enable/Disable VoIP"
-#~ msgstr "VoIP an/aus"
-
-#~ msgid "Respondent Selection - Answering machine"
-#~ msgstr "Auswahl der Zielperson - Anrufbeantworter"
-
-#~ msgid "End call with outcome: Answering machine No message left"
-#~ msgstr ""
-#~ "Beende Anruf mit Ergebnis: Anrufbeantworter, keine Nachricht hinterlassen"
-
-#~ msgid "End call with outcome: Answering machine Message left"
-#~ msgstr "Beende Anruf mit Ergbnis: Anrufbeantworter, Nachricht hinterlassen"
-
-#~ msgid "End call with outcome: Business number"
-#~ msgstr "Beende Anruf mit Ergebnis: geschäftliche Nummer"
-
-#~ msgid "Respondent Selection - Business answers"
-#~ msgstr "Auswahl der zielperson - Büro, Behörde etc. am Telefon"
-
-#~ msgid "Respondent Selection - Call back"
-#~ msgstr "Auswahl der Zielperson - Rückruf"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person not available on this "
-#~ "number)"
-#~ msgstr ""
-#~ "Beende Anruf mit Ergebnis: keine geeignete Zielperson (Zielperson nicht "
-#~ "unter dieser Nummer erreichbar)"
-
-#~ msgid "End call with outcome: Refusal by respondent"
-#~ msgstr "Beende Anruf mit Ergebnis: Verweigerung durch Zielperson"
-
-#~ msgid ""
-#~ "End call with outcome: Out of sample (already completed in another mode)"
-#~ msgstr ""
-#~ "Beende Anruf mit Ergbenis: Nicht in Stichprobe (Fragebogen bereits in "
-#~ "anderem Modus beendet)"
-
-#~ msgid "Respondent Selection - Project Introduction"
-#~ msgstr "Auswahl der Zielperson - Vorstellung des Projekts"
-
-#~ msgid "Appointment:"
-#~ msgstr "Terminvereinbarung:"
-
-#~ msgid "Business number"
-#~ msgstr "geschäftliche Nummer"
-
-#~ msgid "Respondent Selection - Introduction"
-#~ msgstr "Auswahl der Zielperson - Einführung"
-
-#~ msgid "End call with outcome: No answer (ring out or busy) "
-#~ msgstr "Beende Anruf mit Ergebnis: keine Antwort (klingeln oder besetzt) "
-
-#~ msgid "End call with outcome: Accidental hang up"
-#~ msgstr "Beende Anruf mit Ergebnis: Versehentlich aufgelegt"
-
-#~ msgid ""
-#~ "End call with outcome: No eligible respondent (person never available on "
-#~ "this number)"
-#~ msgstr ""
-#~ "Beende Anruf mit Ergebnis: keine geeignte Zielperson (Zielperson nie unter "
-#~ "dieser Nummer erreichbar)"
-
-#~ msgid "End call with outcome: Refusal by unknown person"
-#~ msgstr "Beende Anruf mit Ergebnis: Verweigerung durch unbekannte Person"
-
-#~ msgid "Call automatically ended with outcome: Complete - End case"
-#~ msgstr "Anruf automatisch beendet mit Ergebnis: Fertig - Beende Fall"
-
-#~ msgid "Respondent Selection - Project end"
-#~ msgstr "Auswahl der Zielperson - Projekt beendet"
-
-#~ msgid "End call with outcome: Complete"
-#~ msgstr "Beende Anruf mit Ergbnis: Fertig"
-
-#~ msgid " unassigned case(s) available within the specified call restrictions"
-#~ msgstr ""
-#~ " nicht zugeordnete/r Fall/Fälle innerhalb der Anrufbeschränkungen verfügbar"
-
-#~ msgid "There are "
-#~ msgstr "Es sind "
-
-#~ msgid ""
-#~ "ERROR: There are no cases available that fall within call restrictions"
-#~ msgstr "Fehler: Keine Fälle innerhalb der Anrufbeschränkungen verfügbar"
-
-#~ msgid "Call restrictions:"
-#~ msgstr "Anrufbeschränkungen:"
-
-#~ msgid "Call automatically ended with outcome: Complete"
-#~ msgstr "Anruf endete automatisch mit Ergbnis: Fertig"
-
-#~ msgid "No appointments in the future"
-#~ msgstr "Keine zukünftigen Terminvereinbarungen"
-
-#~ msgid "Create appointment for this case"
-#~ msgstr "Erstelle Terminvereinbarung für diesen Fall"
-
-#~ msgid ""
-#~ "End call with outcome: Non contact (person not currently available on this "
-#~ "number: no appointment made)"
-#~ msgstr ""
-#~ "Beende Anruf mit Ergebnis: Zielperson derzeit nicht anwesend (Rückruf zu "
-#~ "späterem Zeitpunkt)"
