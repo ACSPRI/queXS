@@ -1318,7 +1318,7 @@ function get_limesurvey_url($operator_id)
 		$token = $db->GetOne($sql);
 
 		$sid = get_limesurvey_id($operator_id);
-		$url = get_lime_url($case_id) .  "/$sid/token/$token/lang/" . DEFAULT_LOCALE;
+		$url = get_lime_url($case_id) .  "/$sid/token/$token/lang/" . DEFAULT_LOCALE . "/newtest/Y";
 		$questionnaire_id = get_questionnaire_id($operator_id);
 		
 		//get prefills
