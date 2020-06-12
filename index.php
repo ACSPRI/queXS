@@ -380,6 +380,15 @@ xhtml_object($data,"main-content");
      </div>
 <?php  }?>
 
+<?php  if (TAB_SEARCHSAMPLE) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'sample' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'sample' && $appointment)) 
+					print "tabbertabdefault"; ?>">
+	  <h2><?php  echo T_("Search sample"); ?></h2>
+	  <div id="div-sample" class="tabberdiv"><?php xhtml_object("searchsample.php","main-sample");?></div>
+     </div>
+<?php  }?>
+
+
 
 </div>
 

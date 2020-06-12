@@ -338,6 +338,15 @@ $availability = is_using_availability($case_id);
 				 </div>
 			<?php  }?>
 
+			<?php  if (TAB_SEARCHSAMPLE) { ?>
+     <div class="tabbertab <?php  if ((DEFAULT_TAB == 'sample' && !$appointment) || (DEFAULT_TAB_APPOINTMENT == 'sample' && $appointment)) 
+					print "tabbertabdefault"; ?>">
+	  <h2><?php  echo T_("Search sample"); ?></h2>
+	  <div id="div-sample" class="tabberdiv"><?php xhtml_object("searchsample.php","main-sample","col-sm-12");?></div>
+     </div>
+<?php  }?>
+
+
 			</div>
 			
 		</div>	

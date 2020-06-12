@@ -205,6 +205,7 @@ if (!defined('TAB_PERFORMANCE')) define('TAB_PERFORMANCE', true);
 if (!defined('TAB_CALLHISTORY')) define('TAB_CALLHISTORY', true);
 if (!defined('TAB_PROJECTINFO')) define('TAB_PROJECTINFO', true);
 if (!defined('TAB_INFO')) define('TAB_INFO', true);
+if (!defined('TAB_SEARCHSAMPLE')) define('TAB_SEARCHSAMPLE', false);
 
 /**
  * Enable a header expander for the main page to shrink/expand when not in use?
