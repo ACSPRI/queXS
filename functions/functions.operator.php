@@ -343,20 +343,20 @@ function add_case($sample_id,$questionnaire_id,$operator_id = "NULL",$testing = 
   $dtoken = $db->GetOne($sql);
 
 	$ttries = 0;
-	
-	do {
-    if (empty($dtoken)) {
-      $token = sRandomChars();
-    } else {
-      $token = $dtoken;
-    }
+        if (empty($dtoken)) {
+		
+		do {
+	      $token = sRandomChars();
 
-		$sql = "SELECT count(*) as c
-			FROM `case`
-			WHERE token = '$token'";
+			$sql = "SELECT count(*) as c
+				FROM `case`
+				WHERE token = '$token'";
 
-		$ttries++;
-	} while ($db->GetOne($sql) > 0 && $ttries < 10);
+			$ttries++;
+		} while ($db->GetOne($sql) > 0 && $ttries < 10);
+	} else {
+		$token = $dtoken;
+	}
 
   if ($ttries >= 10)  //failed to get a token
     return false;

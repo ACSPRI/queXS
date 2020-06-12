@@ -226,10 +226,10 @@ CREATE TABLE `case` (
   `token` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`case_id`),
   UNIQUE KEY `onecasepersample` (`sample_id`,`questionnaire_id`),
-  UNIQUE KEY `token` (`token`),
   UNIQUE KEY `current_operator_id` (`current_operator_id`),
   UNIQUE KEY `current_call_id` (`current_call_id`),
   KEY `sample_id` (`sample_id`),
+  KEY `token` (`token`),
   KEY `questionnaire_id` (`questionnaire_id`),
   KEY `sortorder` (`sortorder`),
   KEY `last_call_id` (`last_call_id`)
