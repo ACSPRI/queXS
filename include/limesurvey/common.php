@@ -220,6 +220,9 @@ if ($databasetype=='mysql' || $databasetype=='mysqli') {
     }
     @$connect->Execute("SET CHARACTER SET 'utf8'");  //Checked
     @$connect->Execute("SET NAMES 'utf8'");  //Checked
+    //make sure sql_mode is right for queXS
+    $sqlSet = "SET SESSION sql_mode = '';";
+    @$connect->Execute($sqlSet);
 }
 
 // Setting dateformat for mssql driver. It seems if you don't do that the in- and output format could be different
