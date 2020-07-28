@@ -1,3 +1,7 @@
+queXS 1.16.5 - Changes since 1.16.4
+
+Fixed bug: queXS sample download via LimeSurvey not available with MySQL Strict Mode enabled
+
 queXS 1.16.4 - Changes since 1.16.3
 
 Updated translations - thank you!
