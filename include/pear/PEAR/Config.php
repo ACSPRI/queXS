@@ -970,7 +970,7 @@ class PEAR_Config extends PEAR
             return $this->raiseError("PEAR_Config::readConfigFile fopen('$file','r') failed");
         }
         $size = filesize($file);
-        $rt = get_magic_quotes_runtime();
+        $rt = 0;
         set_magic_quotes_runtime(0);
         if (function_exists('file_get_contents')) {
             fclose($fp);

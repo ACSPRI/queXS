@@ -72,7 +72,7 @@ if (isset($_GET['time_zone']))
 {
 	//need to add sample to questionnaire
 	
-	$tz = $db->qstr($_GET['time_zone'],get_magic_quotes_gpc());
+	$tz = $db->qstr($_GET['time_zone'],0);
 
 	$sql = "INSERT INTO timezone_template(Time_zone_name)
 		VALUES($tz)";
@@ -85,7 +85,7 @@ if (isset($_GET['tz']))
 {
 	//need to remove rsid from questionnaire
 
-	$tz = $db->qstr($_GET['tz'],get_magic_quotes_gpc());
+	$tz = $db->qstr($_GET['tz'],0);
 
 	$sql = "DELETE FROM timezone_template
 		WHERE Time_zone_name = $tz";

@@ -290,7 +290,7 @@ class HTML_QuickForm extends HTML_Common
         $attributes = array('action'=>$action, 'method'=>$method, 'name'=>$formName, 'id'=>$formName) + $target;
         $this->updateAttributes($attributes);
         if (!$trackSubmit || isset($_REQUEST['_qf__' . $formName])) {
-            if (1 == get_magic_quotes_gpc()) {
+            if (1 == 0) {
                 $this->_submitValues = $this->_recursiveFilter('stripslashes', 'get' == $method? $_GET: $_POST);
                 foreach ($_FILES as $keyFirst => $valFirst) {
                     foreach ($valFirst as $keySecond => $valSecond) {
