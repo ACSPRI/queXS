@@ -547,6 +547,10 @@ ALTER TABLE  `sample_import_var_restrict` ADD  `type` SMALLINT( 10 ) UNSIGNED NO
 
 ALTER TABLE  `sample_var` ADD  `var_id` BIGINT( 20 ) UNSIGNED NOT NULL AFTER  `sample_id`;
 
+insert into sample_import_var_restrict (sample_import_id,var,type) select s.import_id,sv.var,sv.type from sample_var as sv, sample as s where sv.sample_id = s.sample_id  and not exists (select * from sample_import_var_restrict as si where si.sample_import_id = s.import_id and si.var = sv.var and si.type = sv.type) group by import_id,var;
+
+
+
 UPDATE `sample_var` as sv ,`sample`as s, `sample_import_var_restrict` as sivr  SET sv.`var_id`=sivr.`var_id`  WHERE sv.`var` LIKE sivr.`var`  AND sv.`sample_id`=s.`sample_id` AND   s.`import_id`=sivr.`sample_import_id`;
 
 UPDATE  `sample_import_var_restrict` ,
@@ -623,13 +627,13 @@ CREATE TABLE `qsqr_sample` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
-INSERT INTO qsqr_question (questionnaire_sample_quota_row_id,lime_sgqa,value,comparison)
-SELECT questionnaire_sample_quota_row_id, lime_sgqa, value, comparison
+INSERT INTO qsqr_question (questionnaire_sample_quota_row_id,lime_sgqa,value,comparison,description)
+SELECT questionnaire_sample_quota_row_id, lime_sgqa, value, comparison, 'auto'
 FROM questionnaire_sample_quota_row
 WHERE lime_sgqa != -1 AND lime_sgqa != -2;
 
-INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var,exclude_val,comparison)
-SELECT questionnaire_sample_quota_row_id, exclude_var,exclude_val, 'LIKE'
+INSERT INTO qsqr_sample (questionnaire_sample_quota_row_id,exclude_var,exclude_val,comparison,description)
+SELECT questionnaire_sample_quota_row_id, exclude_var,exclude_val, 'LIKE','auto'
 FROM questionnaire_sample_quota_row;
 
 ALTER TABLE `questionnaire_sample_quota_row`
