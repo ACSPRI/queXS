@@ -1,3 +1,9 @@
+queXS 2.3.1 - Changes since 2.3.0
+
+Fixed bug: Remove deprecated functions for php 7.4F
+Fixed bug: Fix update to 1.13.0 procedure in CHANGELOG
+New feature: Update search sample function
+
 queXS 2.3.0 - Changes since 2.2.6
 
 New feature: Allow operators to search the sample (visible fields only) and assign cases to themselves
