@@ -1,3 +1,8 @@
+queXS 1.16.6 - Changes since 1.16.5
+
+Fixed bug:  Fix for warnings/notices/deprecated messages on PHP 7.4
+Fixed bug: Updates to upgrade procedure for 1.13.0 in CHANGELOG
+
 queXS 1.16.5 - Changes since 1.16.4
 
 Fixed bug: queXS sample download via LimeSurvey not available with MySQL Strict Mode enabled
