@@ -311,9 +311,9 @@ if (isset($_POST['update']) && isset($_GET['modify']))
 
 	if ($respsc == 1)
 	{
-		$lime_mode = $db->qstr($_POST['lime_mode'],get_magic_quotes_gpc());
-		$lime_template = $db->qstr($_POST['lime_template'],get_magic_quotes_gpc());
-		$lime_endurl = $db->qstr($_POST['lime_endurl'],get_magic_quotes_gpc());
+		$lime_mode = $db->qstr($_POST['lime_mode'],0);
+		$lime_template = $db->qstr($_POST['lime_template'],0);
+		$lime_endurl = $db->qstr($_POST['lime_endurl'],0);
 
 		$sql = "UPDATE questionnaire
 			SET lime_mode = $lime_mode, lime_template = $lime_template, lime_endurl = $lime_endurl

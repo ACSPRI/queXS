@@ -20,12 +20,7 @@ include_once("login_check.php");  //Login Check dies also if the script is start
 // Do not stripslashes on POSted fields because labels.php uses db_quoteall($str, $ispostvariable) that checks for magic_quotes_gpc
 // However We need to stripslashes from $_POST['method'] compared to
 // unescaped strings in switch case
-//if (get_magic_quotes_gpc())
 //$_POST  = array_map('stripslashes', $_POST);
-if (isset($_POST['method']) && get_magic_quotes_gpc())
-{
-    $_POST['method']  = stripslashes($_POST['method']);
-}
 
 $labelsoutput='';
 if($_SESSION['USER_RIGHT_SUPERADMIN'] == 1 || $_SESSION['USER_RIGHT_MANAGE_LABEL'] == 1)
@@ -600,14 +595,7 @@ function modlabelsetanswers($lid)
 
     $sPostData=html_entity_decode($_POST['dataToSend'], ENT_QUOTES, "UTF-8");
     $sPostData=str_replace("\t", '', $sPostData); 
-    if (get_magic_quotes_gpc())
-    {
-        $data = json_decode(stripslashes($sPostData));    
-    }
-    else
-    {
         $data = json_decode($sPostData);
-    }
 
 
     if ($ajax){
@@ -656,11 +644,6 @@ function modlabelsetanswers($lid)
                 $sort_order = db_quoteall($index);
                 $lang = db_quoteall($lang);
                 $title = trim($title, "'");
-
-                if (get_magic_quotes_gpc())
-                {
-                    $title = str_replace("'","\'",$title);
-                }
 
                 $query = "INSERT INTO ".db_table_name('labels')." (lid,code,title,sortorder, assessment_value, language)
                     VALUES({$lid},{$actualcode},'".$title."',{$sort_order},{$assessmentvalue},{$lang})";

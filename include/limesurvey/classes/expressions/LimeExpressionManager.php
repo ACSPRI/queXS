@@ -1010,7 +1010,7 @@
                     }
                     $questionNum = $qinfo['qid'];
                 $type = $qinfo['type'];
-                $hasSubqs = (isset($qinfo['subqs']) && count($qinfo['subqs'] > 0));
+                $hasSubqs = (isset($qinfo['subqs']) && is_array($qinfo['subqs']) && count($qinfo['subqs']) > 0);
                 $qattr = isset($this->qattr[$questionNum]) ? $this->qattr[$questionNum] : array();
 
                 if (isset($qattr['input_boxes']) && $qattr['input_boxes'] == '1')
@@ -4727,12 +4727,6 @@
                             }
                             // otherwise will already be in yyyy-mm-dd format after ProcessCurrentResponses()
                             break;
-                        case '|': //File upload
-                            // This block can be removed once we require 5.3 or later
-                            if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-                                $val=addslashes($val);
-                            }
-                            break;
                         case 'N': //NUMERICAL QUESTION TYPE
                         case 'K': //MULTIPLE NUMERICAL QUESTION
                             if (trim($val)=='') {
@@ -7184,7 +7178,7 @@ EOT;
             foreach(explode("\n",$tests) as $test)
             {
                 $args = explode("~",$test);
-                $type = (($args[1]=='expr') ? '*' : ($args[1]=='message') ? 'X' : 'S');
+                $type = ((($args[1]=='expr') ? '*' : ($args[1]=='message')) ? 'X' : 'S');
                 $vars[$args[0]] = array('sgqa'=>$args[0], 'code'=>'', 'jsName'=>'java' . $args[0], 'jsName_on'=>'java' . $args[0], 'readWrite'=>'Y', 'type'=>$type, 'relevanceStatus'=>'1', 'gid'=>1, 'gseq'=>1, 'qseq'=>$i, 'qid'=>$i);
                 $varSeq[] = $args[0];
                 $testArgs[] = $args;
@@ -7896,7 +7890,7 @@ EOD;
                     || ($this->surveyMode=='group' && $gseq != -1 && isset($var['gseq']) && $gseq == $var['gseq'])
                     || ($this->surveyMode=='question' && $qseq != -1 && isset($var['qseq']) && $qseq == $var['qseq']))
                     {
-                        return (isset($var['jsName_on']) ? $var['jsName_on'] : (isset($var['jsName'])) ? $var['jsName'] : $default);
+                        return ((isset($var['jsName_on']) ? $var['jsName_on'] : (isset($var['jsName']))) ? $var['jsName'] : $default);
                     }
                     else {
                         return (isset($var['jsName']) ? $var['jsName'] : $default);

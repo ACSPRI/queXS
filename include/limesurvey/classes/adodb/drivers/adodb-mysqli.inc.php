@@ -226,10 +226,10 @@ class ADODB_mysqli extends ADOConnection {
 	 * @param string $s The string to quote
 	 * @param boolean $magic_quotes If false, use mysqli_real_escape_string()
 	 *     if you are quoting a string extracted from a POST/GET variable,
-	 *     then pass get_magic_quotes_gpc() as the second parameter. This will
+	 *     then pass 0 as the second parameter. This will
 	 *     ensure that the variable is not quoted twice, once by qstr() and
 	 *     once by the magic_quotes_gpc.
-	 *     Eg. $s = $db->qstr(_GET['name'],get_magic_quotes_gpc());
+	 *     Eg. $s = $db->qstr(_GET['name'],0);
 	 * @return string Quoted string
 	 */
 	function qstr($s, $magic_quotes = false)

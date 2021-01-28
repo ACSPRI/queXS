@@ -2536,8 +2536,7 @@ function UpdateFieldArray()
 
     if (isset($_SESSION['fieldarray']))
     {
-        reset($_SESSION['fieldarray']);
-        while ( list($key) = each($_SESSION['fieldarray']) )
+        foreach($_SESSION['fieldarray'] as $key => $value)
         {
             $questionarray =& $_SESSION['fieldarray'][$key];
 

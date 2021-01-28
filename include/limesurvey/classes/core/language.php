@@ -31,7 +31,7 @@ class limesurvey_lang {
     var $gettextclass;
     var $langcode;
 
-    function limesurvey_lang($langcode){
+    function __construct($langcode){
         global $rootdir;
         $langcode=sanitize_languagecode($langcode);
         $streamer = new FileReader($rootdir.'/locale/'.$langcode.'/LC_MESSAGES/'.$langcode.'.mo');

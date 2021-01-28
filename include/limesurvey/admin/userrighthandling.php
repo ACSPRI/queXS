@@ -18,9 +18,6 @@ if (!isset($dbprefix) || isset($_REQUEST['dbprefix'])) {die("Cannot run this scr
 if (isset($_POST['uid'])) {$postuserid=intval($_POST['uid']);}
 if (isset($_POST['ugid'])) {$postusergroupid=intval($_POST['ugid']);}
 
-if (get_magic_quotes_gpc())
-{$_POST  = array_map('recursive_stripslashes', $_POST);}
-
 $js_admin_includes[]='../scripts/jquery/jquery.tablesorter.min.js';
 $js_admin_includes[]='scripts/users.js';
 

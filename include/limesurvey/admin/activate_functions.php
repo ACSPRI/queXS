@@ -241,8 +241,8 @@ function checkQuestions($postsid, $surveyid, $qtypes)
         }
         $fieldlist=array_reverse($fieldlist); //let's always change the later duplicate, not the earlier one
     }
-    $checkKeysUniqueComparison = create_function('$value','if ($value > 1) return true;');
-    @$duplicates = array_keys (array_filter (array_count_values($fieldlist), $checkKeysUniqueComparison));
+    //$checkKeysUniqueComparison = create_function('$value','if ($value > 1) return true;');
+    @$duplicates = array_keys (array_filter (array_count_values($fieldlist), function($k) { if ($k > 1) return true; }));
     if (isset($duplicates))
     {
         foreach ($duplicates as $dup)

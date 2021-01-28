@@ -164,19 +164,11 @@ else  {$codelanguage='en';}
 if (isset ($_POST['changes'])) {
    $changedtext=$_POST['changes'];
    $changedtext=str_replace ('<?','',$changedtext);
-   if(get_magic_quotes_gpc())
-   {
-       $changedtext = stripslashes($changedtext);
-   }
 }
 
 if (isset ($_POST['changes_cp'])) {
    $changedtext=$_POST['changes_cp'];
    $changedtext=str_replace ('<?','',$changedtext);
-   if(get_magic_quotes_gpc())
-   {
-       $changedtext = stripslashes($changedtext);
-   }
 }
 
 

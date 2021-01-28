@@ -23,9 +23,6 @@ $postgid=returnglobal('gid');
 $postqid=returnglobal('qid');
 $postqaid=returnglobal('qaid');
 
-if (get_magic_quotes_gpc())
-{$_POST  = array_map('recursive_stripslashes', $_POST);}
-
 
 
 /**
@@ -1131,7 +1128,7 @@ if(isset($surveyid))
                             'tokenlength'=>$_POST['tokenlength']
         );
 
-        $usquery=$connect->GetUpdateSQL($rs, $updatearray, false, get_magic_quotes_gpc());
+        $usquery=$connect->GetUpdateSQL($rs, $updatearray, false, 0);
         if ($usquery) {
             $usresult = $connect->Execute($usquery) or safe_die("Error updating<br />".$usquery."<br /><br /><strong>".$connect->ErrorMsg());  // Checked
         }

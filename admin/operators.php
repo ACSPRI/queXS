@@ -56,14 +56,14 @@ $a = false;
 
 if (isset($_POST['operator']) && isset($_POST['adduser']))
 {
-	$operator = $db->qstr($_POST['operator'],get_magic_quotes_gpc());
-	$email= $db->qstr($_POST['email'],get_magic_quotes_gpc());
-	$password = $db->qstr($_POST['password'],get_magic_quotes_gpc());
-	$firstname = $db->qstr($_POST['firstname'],get_magic_quotes_gpc());
-	$lastname = $db->qstr($_POST['lastname'],get_magic_quotes_gpc());
-	$chat_user = $db->qstr($_POST['chat_user'],get_magic_quotes_gpc());
-	$chat_password = $db->qstr($_POST['chat_password'],get_magic_quotes_gpc());
-	$time_zone_name = $db->qstr($_POST['Time_zone_name'],get_magic_quotes_gpc());
+	$operator = $db->qstr($_POST['operator'],0);
+	$email= $db->qstr($_POST['email'],0);
+	$password = $db->qstr($_POST['password'],0);
+	$firstname = $db->qstr($_POST['firstname'],0);
+	$lastname = $db->qstr($_POST['lastname'],0);
+	$chat_user = $db->qstr($_POST['chat_user'],0);
+	$chat_password = $db->qstr($_POST['chat_password'],0);
+	$time_zone_name = $db->qstr($_POST['Time_zone_name'],0);
 	$extension = "";
 	if (FREEPBX_PATH != false)
 	{

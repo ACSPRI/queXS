@@ -801,7 +801,7 @@
             $fieldvalue['bounceaccounthost']=$_POST['bounceaccounthost'];
         }
 
-        $connect->AutoExecute("{$dbprefix}surveys", $fieldvalue, 2,"sid=$surveyid",get_magic_quotes_gpc());
+        $connect->AutoExecute("{$dbprefix}surveys", $fieldvalue, 2,"sid=$surveyid",0);
         $tokenoutput .= "<div class='header ui-widget-header'>".$clang->gT("Bounce settings")."</div>\n"
         ."<div class='messagebox ui-corner-all'>"
         ."\t<div class='successheader'>".$clang->gT("Bounce settings have been saved.")."</div>\n"

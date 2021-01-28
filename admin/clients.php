@@ -61,11 +61,11 @@ $client =""; $firstname="";$lastname="";$email=""; $time_zone_name="";
 
 if (isset($_POST['client']) && !empty($_POST['client']))
 {
-	$client = $db->qstr($_POST['client'],get_magic_quotes_gpc());
-	$firstname = $db->qstr($_POST['firstname'],get_magic_quotes_gpc());
-	$email = $db->qstr($_POST['email'],get_magic_quotes_gpc());
-	$lastname = $db->qstr($_POST['lastname'],get_magic_quotes_gpc());
-	$time_zone_name = $db->qstr($_POST['Time_zone_name'],get_magic_quotes_gpc());
+	$client = $db->qstr($_POST['client'],0);
+	$firstname = $db->qstr($_POST['firstname'],0);
+	$email = $db->qstr($_POST['email'],0);
+	$lastname = $db->qstr($_POST['lastname'],0);
+	$time_zone_name = $db->qstr($_POST['Time_zone_name'],0);
 	
 	/* check if there'a record with this username*/
 	$sql = "SELECT `username`,`client_id` from client WHERE `username` LIKE $client";

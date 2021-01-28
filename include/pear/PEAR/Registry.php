@@ -696,7 +696,7 @@ class PEAR_Registry extends PEAR
             return $this->raiseError('PEAR_Registry: could not open filemap "' . $this->filemap . '"', PEAR_REGISTRY_ERROR_FILE, null, null, $php_errormsg);
         }
         clearstatcache();
-        $rt = get_magic_quotes_runtime();
+        $rt = 0;
         set_magic_quotes_runtime(0);
         $fsize = filesize($this->filemap);
         if (function_exists('file_get_contents')) {
@@ -998,7 +998,7 @@ class PEAR_Registry extends PEAR
         if ($fp === null) {
             return null;
         }
-        $rt = get_magic_quotes_runtime();
+        $rt = 0;
         set_magic_quotes_runtime(0);
         clearstatcache();
         if (function_exists('file_get_contents')) {
@@ -1040,7 +1040,7 @@ class PEAR_Registry extends PEAR
         if ($fp === null) {
             return null;
         }
-        $rt = get_magic_quotes_runtime();
+        $rt = 0;
         set_magic_quotes_runtime(0);
         clearstatcache();
         if (function_exists('file_get_contents')) {

@@ -501,7 +501,7 @@ class PEAR_DependencyDB
             $err = PEAR::raiseError("Could not open dependencies file `".$this->_depdb."'");
             return $err;
         }
-        $rt = get_magic_quotes_runtime();
+        $rt = 0;
         set_magic_quotes_runtime(0);
         clearstatcache();
         if (function_exists('file_get_contents')) {
@@ -531,7 +531,7 @@ class PEAR_DependencyDB
             $this->_unlock();
             return PEAR::raiseError("Could not open dependencies file `".$this->_depdb."' for writing");
         }
-        $rt = get_magic_quotes_runtime();
+        $rt = 0;
         set_magic_quotes_runtime(0);
         fwrite($fp, serialize($deps));
         set_magic_quotes_runtime($rt);

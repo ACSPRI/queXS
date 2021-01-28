@@ -94,8 +94,8 @@ if (isset($_POST['day']))
 			$val = intval($val);
 			$key = intval($key);
 
-			$start = $db->qstr($_POST['start'][$key],get_magic_quotes_gpc());
-			$end = $db->qstr($_POST['end'][$key],get_magic_quotes_gpc());
+			$start = $db->qstr($_POST['start'][$key],0);
+			$end = $db->qstr($_POST['end'][$key],0);
 
 			$sql = "INSERT INTO availability (day_of_week,start,end,availability_group_id)
 				VALUES ('$val',$start,$end,$availability_group)";

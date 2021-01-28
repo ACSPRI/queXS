@@ -46,7 +46,11 @@ final class SettingsStorage extends ArrayObject
      */
     public function offsetExists($index)
     {
-        return array_key_exists($index, $this);
+        if (is_array($this)) {
+            return array_key_exists($index, $this);
+        } else if (is_object($this)) {
+            return property_exists('SettingsStorage', $index);
+        } else return false;
     }
 
 

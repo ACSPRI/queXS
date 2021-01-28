@@ -1495,7 +1495,7 @@ SELECT /*+ RULE */ distinct b.column_name
 	 * An example is  $db->qstr("Don't bother",magic_quotes_runtime());
 	 *
 	 * @param string $s the string to quote
-	 * @param bool $magic_quotes if $s is GET/POST var, set to get_magic_quotes_gpc().
+	 * @param bool $magic_quotes if $s is GET/POST var, set to 0.
 	 *             This undoes the stupidity of magic quotes for GPC.
 	 *
 	 * @return string quoted string to be sent back to database

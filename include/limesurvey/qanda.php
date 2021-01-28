@@ -912,8 +912,8 @@ function return_array_filter_strings($ia, $qidattributes, $thissurvey, $ansrow, 
 
 // ==================================================================
 // setting constants for 'checked' and 'selected' inputs
-define('CHECKED' , ' checked="checked"' , true);
-define('SELECTED' , ' selected="selected"' , true);
+define('CHECKED' , ' checked="checked"');
+define('SELECTED' , ' selected="selected"');
 
 // ==================================================================
 // QUESTION METHODS =================================================

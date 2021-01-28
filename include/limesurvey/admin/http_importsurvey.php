@@ -76,10 +76,7 @@ elseif ($action == 'copysurvey')
 {
     $surveyid = sanitize_int($_POST['copysurveylist']);
     $exclude = array();
-    if (get_magic_quotes_gpc()) {$sNewSurveyName = stripslashes($_POST['copysurveyname']);}
-    else{
-        $sNewSurveyName=$_POST['copysurveyname'];
-    }
+    $sNewSurveyName=$_POST['copysurveyname'];
 
     require_once("../classes/inputfilter/class.inputfilter_clean.php");
     $myFilter = new InputFilter('','',1,1,1);

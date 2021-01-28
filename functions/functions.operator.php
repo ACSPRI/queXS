@@ -57,9 +57,9 @@ function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
     for($i=0;$i<$length;$i++)
     {   
         if(isset($key))
-            $key .= $pattern{mt_rand(0,$patternlength)};
+            $key .= $pattern[mt_rand(0,$patternlength)];
         else
-            $key = $pattern{mt_rand(0,$patternlength)};
+            $key = $pattern[mt_rand(0,$patternlength)];
     }
     return $key;
 }
@@ -2577,10 +2577,10 @@ function add_respondent($case_id,$firstName,$lastName,$Time_zone_name)
 {
 	global $db;
 
-	$case_id = $db->qstr($case_id,get_magic_quotes_gpc());
-	$firstName = $db->qstr($firstName,get_magic_quotes_gpc());
-	$lastName = $db->qstr($lastName,get_magic_quotes_gpc());
-	$Time_zone_name = $db->qstr($Time_zone_name,get_magic_quotes_gpc());
+	$case_id = $db->qstr($case_id,0);
+	$firstName = $db->qstr($firstName,0);
+	$lastName = $db->qstr($lastName,0);
+	$Time_zone_name = $db->qstr($Time_zone_name,0);
 
 	$sql = "INSERT INTO respondent (respondent_id,case_id,firstName,lastName,Time_zone_name)
 		VALUES (NULL,$case_id,$firstName,$lastName,$Time_zone_name)";

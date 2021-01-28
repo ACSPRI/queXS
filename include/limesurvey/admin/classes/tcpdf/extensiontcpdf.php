@@ -4,7 +4,7 @@ require_once('tcpdf.php');
 
 class PDF extends TCPDF
 {
-    function PDF($orientation='L', $unit='mm', $format='A4')
+    function __construct($orientation='L', $unit='mm', $format='A4')
     {
         parent::__construct($orientation,$unit,$format);
         $this->SetAutoPageBreak(true,10);

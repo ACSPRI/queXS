@@ -59,7 +59,7 @@ if ($action == "assessmentadd" && bHasSurveyPermission($surveyid, 'assessments',
             $datarray['id']=$aid;
         }
 
-        $query = $connect->GetInsertSQL($inserttable, $datarray, get_magic_quotes_gpc());
+        $query = $connect->GetInsertSQL($inserttable, $datarray, 0);
         $result=$connect->Execute($query) or safe_die("Error inserting<br />$query<br />".$connect->ErrorMsg());
         if ($first==true)
         {

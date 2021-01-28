@@ -436,7 +436,7 @@ function db_quote($str,$ispostvar=false)
 // This functions escapes the string only inside
 {
     global $connect;
-    if ($ispostvar) { return $connect->escape($str, get_magic_quotes_gpc());}
+    if ($ispostvar) { return $connect->escape($str, 0);}
     else {return $connect->escape($str);}
 }
 
@@ -445,7 +445,7 @@ function db_quoteall($str,$ispostvar=false)
 // IF you are quoting a variable from a POST/GET then set $ispostvar to true so it doesnt get quoted twice.
 {
     global $connect;
-    if ($ispostvar) { return $connect->qstr($str, get_magic_quotes_gpc());}
+    if ($ispostvar) { return $connect->qstr($str, 0);}
     else {return $connect->qstr($str);}
 
 }
@@ -4161,27 +4161,11 @@ function CategorySort($a, $b)
     return $result;
 }
 
-if (!function_exists('get_magic_quotes_gpc')) {
-    /**
-    * Gets the current configuration setting of magic_quotes_gpc
-    * NOTE: Compat variant for PHP 6+ versions
-    *
-    * @link http://www.php.net/manual/en/function.get-magic-quotes-gpc.php
-    * @return int 0 if magic_quotes_gpc is off, 1 otherwise.
-    */
-    function get_magic_quotes_gpc() {
-        return 0;
-    }
-}
-
 // make sure the given string (which comes from a POST or GET variable)
 // is safe to use in MySQL.  This does nothing if gpc_magic_quotes is on.
 function auto_escape($str) {
     global $connect;
-    if (!get_magic_quotes_gpc()) {
-        return $connect->escape($str);
-    }
-    return $str;
+    return $connect->escape($str);
 }
 // the opposite of the above: takes a POST or GET variable which may or
 // may not have been 'auto-quoted', and return the *unquoted* version.
@@ -4189,10 +4173,7 @@ function auto_escape($str) {
 // a SQL query.
 function auto_unescape($str) {
     if (!isset($str)) {return null;};
-    if (!get_magic_quotes_gpc()) {
-        return $str;
-    }
-    return stripslashes($str);
+    return $str;
 }
 // make a string safe to include in an HTML 'value' attribute.
 function html_escape($str) {
@@ -4235,7 +4216,7 @@ function getHeader($meta = false)
   if (!isset($_SESSION['interviewer'])) {
     $_SESSION['interviewer'] = $interviewer;
   }
-     if ($SESSION['interviewer'])
+     if ($_SESSION['interviewer'])
     {
     	$js_header_includes[] = '/../../js/popup.js'; //queXS Addition
 	    include_once("quexs.php");
@@ -4565,7 +4546,6 @@ function SendEmailMessage($mail, $body, $subject, $to, $from, $sitename, $ishtml
         }
     }
     $mail->AddCustomHeader("X-Surveymailer: $sitename Emailer (LimeSurvey.sourceforge.net)");
-    if (get_magic_quotes_gpc() != "0")	{$body = stripcslashes($body);}
     if ($ishtml) {
         $mail->IsHTML(true);
         $mail->Body = $body;
@@ -4704,7 +4684,7 @@ function modify_database($sqlfile='', $sqlstring='')
         }
     } else {
         $sqlstring = trim($sqlstring);
-        if ($sqlstring{strlen($sqlstring)-1} != ";") {
+        if ($sqlstring[strlen($sqlstring)-1] != ";") {
             $sqlstring .= ";"; // add it in if it's not there.
         }
         $lines[] = $sqlstring;
@@ -5964,9 +5944,9 @@ function sRandomChars($length,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
     for($i=0;$i<$length;$i++)
     {
         if(isset($key))
-            $key .= $pattern{rand(0,$patternlength)};
+            $key .= $pattern[rand(0,$patternlength)];
         else
-            $key = $pattern{rand(0,$patternlength)};
+            $key = $pattern[rand(0,$patternlength)];
     }
     return $key;
 }
@@ -6365,7 +6345,7 @@ function GetAttributeValue($surveyid,$attrName,$token)
     {
         return null;
     }
-    $sanitized_token=$connect->qstr($token,get_magic_quotes_gpc());
+    $sanitized_token=$connect->qstr($token,0);
     $surveyid=sanitize_int($surveyid);
 
     $query="SELECT $attrName FROM {$dbprefix}tokens_$surveyid WHERE token=$sanitized_token";

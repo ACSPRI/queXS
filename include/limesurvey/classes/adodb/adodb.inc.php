@@ -834,7 +834,7 @@ if (!defined('_ADODB_LAYER')) {
 	 * Requested by "Karsten Dambekalns" <k.dambekalns@fishfarm.de>
 	 */
 	function QMagic($s) {
-		return $this->qstr($s,get_magic_quotes_gpc());
+		return $this->qstr($s,0);
 	}
 
 	function q(&$s) {
@@ -2034,9 +2034,6 @@ if (!defined('_ADODB_LAYER')) {
 		if (!$rs) {
 		// no cached rs found
 			if ($this->debug) {
-				if (get_magic_quotes_runtime() && !$this->memCache) {
-					ADOConnection::outp("Please disable magic_quotes_runtime - it corrupts cache files :(");
-				}
 				if ($this->debug !== -1) {
 					ADOConnection::outp( " $md5file cache failure: $err (this is a notice and not an error)");
 				}
@@ -2941,7 +2938,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	 * An example is  $db->qstr("Don't bother",magic_quotes_runtime());
 	 *
 	 * @param s			the string to quote
-	 * @param [magic_quotes]	if $s is GET/POST var, set to get_magic_quotes_gpc().
+	 * @param [magic_quotes]	if $s is GET/POST var, set to 0.
 	 *				This undoes the stupidity of magic quotes for GPC.
 	 *
 	 * @return  quoted string to be sent back to database

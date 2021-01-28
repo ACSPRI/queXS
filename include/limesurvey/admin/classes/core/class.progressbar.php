@@ -63,7 +63,7 @@ class ProgressBar
 
     // constructor
 
-    function ProgressBar($width=0,$height=0)
+    function __construct($width=0,$height=0)
     {
         $this->code = substr(md5(microtime()), 0, 6);
         if ($width>0) {$this->width = $width;}

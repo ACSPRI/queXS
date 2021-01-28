@@ -5955,7 +5955,7 @@ class PclZip
         }
 
         // ----- Get and memorize the magic_quote value
-        $this->magic_quotes_status = @get_magic_quotes_runtime();
+        $this->magic_quotes_status = @0;
         PclTraceFctMessage(__FILE__, __LINE__, 3, "Current magic_quotes_runtime status is '".($this->magic_quotes_status==0?'disable':'enable')."'");
 
         // ----- Disable magic_quotes

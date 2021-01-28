@@ -206,12 +206,12 @@ function templatereplace($line, $replacements=array(), $anonymized=false, $quest
         $_question_text = '<div class="em_equation">' .$_question_text. '</div>';
     }
 
-    if (
+    if ((
         $showqnumcode == 'both' ||
 	    $showqnumcode == 'number' ||
 	    ($showqnumcode == 'choose' && !isset($thissurvey['showqnumcode'])) ||
 	    ($showqnumcode == 'choose' && $thissurvey['showqnumcode'] == 'B') ||
-	    ($showqnumcode == 'choose' && $thissurvey['showqnumcode'] == 'N')
+	    ($showqnumcode == 'choose' && $thissurvey['showqnumcode'] == 'N')) && is_array($question)
     )
     {
         $_question_number = $question['number'];
@@ -220,12 +220,12 @@ function templatereplace($line, $replacements=array(), $anonymized=false, $quest
     {
         $_question_number = '';
     };
-    if (
+    if ((
         $showqnumcode == 'both' ||
 	    $showqnumcode == 'code' ||
 	    ($showqnumcode == 'choose' && !isset($thissurvey['showqnumcode'])) ||
 	    ($showqnumcode == 'choose' && $thissurvey['showqnumcode'] == 'B') ||
-	    ($showqnumcode == 'choose' && $thissurvey['showqnumcode'] == 'C')
+	    ($showqnumcode == 'choose' && $thissurvey['showqnumcode'] == 'C')) && is_array($question)
     )
     {
         $_question_code = $question['code'];
@@ -708,7 +708,7 @@ EOD;
 	$coreReplacements['LOADHEADING'] = $clang->gT("Load A Previously Saved Survey");
 	$coreReplacements['LOADMESSAGE'] = $clang->gT("You can load a survey that you have previously saved from this screen.")."<br />".$clang->gT("Type in the 'name' you used to save the survey, and the password.")."<br />";
 	$coreReplacements['NAVIGATOR'] = $navigator;    // global
-	$coreReplacements['NOSURVEYID'] = $surveylist['nosid']; // global
+	if (is_array($surveylist)) { $coreReplacements['NOSURVEYID'] = $surveylist['nosid'];} // global
 	$coreReplacements['NUMBEROFQUESTIONS'] = $_totalquestionsAsked;
     $coreReplacements['PASSTHRULABEL'] = '';
     $coreReplacements['PASSTHRUVALUE'] = '';
@@ -756,9 +756,13 @@ EOD;
 	$coreReplacements['SURVEYFORMAT'] = $surveyformat;  // global
 	$coreReplacements['SURVEYLANGAGE'] = $clang->langcode;  // this misspelling is kept for legacy reasons
 	$coreReplacements['SURVEYLANGUAGE'] = $clang->langcode;
-	$coreReplacements['SURVEYLIST'] = $surveylist['list'];  // global
-	$coreReplacements['SURVEYLISTHEADING'] =  $surveylist['listheading'];   // global
-	$coreReplacements['SURVEYNAME'] = $thissurvey['name'];  // global
+    if (is_array($surveylist)) { 
+        $coreReplacements['SURVEYLIST'] = $surveylist['list'];  // global
+        $coreReplacements['SURVEYLISTHEADING'] =  $surveylist['listheading'];   // global
+    }
+    if (is_array($thissurvey)) {
+    	$coreReplacements['SURVEYNAME'] = $thissurvey['name'];  // global
+    }
 	$coreReplacements['TEMPLATECSS'] = $_templatecss;
 	$coreReplacements['TEMPLATEURL'] = $_templateurl;
 	$coreReplacements['THEREAREXQUESTIONS'] = $_therearexquestions;

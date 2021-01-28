@@ -10,20 +10,6 @@
  */
 
 // work around magic quotes
-  if (get_magic_quotes_gpc())
-  {
-    function stripslashes_deep($value)
-    {
-        $value = is_array($value) ?
-                    array_map('stripslashes_deep', $value) :
-                    stripslashes($value);
-
-        return $value;
-    }
-    $_GET = array_map('stripslashes_deep', $_GET);
-  }
-
-
   if ( isset( $_GET['usepost'] ) && $_GET['usepost'] === 'true' )
   {
       $_GET = $_POST;

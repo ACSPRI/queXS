@@ -170,7 +170,7 @@ class ADODB_mssql extends ADOConnection {
 	* An example is  $db->qstr("Don't bother",magic_quotes_runtime());
 	*
 	* @param s         the string to quote
-	* @param [magic_quotes]    if $s is GET/POST var, set to get_magic_quotes_gpc().
+	* @param [magic_quotes]    if $s is GET/POST var, set to 0.
 	*              This undoes the stupidity of magic quotes for GPC.
 	*
 	* @return  quoted string to be sent back to database

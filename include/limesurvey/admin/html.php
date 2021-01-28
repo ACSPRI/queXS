@@ -280,8 +280,12 @@ $action!='vvimport' && $action!='vvexport' && $action!='exportresults')
         rsort($tmp_survlangs);
         if (count($tmp_survlangs) == 1)
         {
+			$interviewer = "";
+            if (isset($_SESSION['interviewer'])) {
+			    $interviewer =  "interviewer=" . $_SESSION['interviewer'] . "&amp";
+			}
             $surveysummary .= "<li><a href='#' accesskey='d' onclick=\"window.open('"
-            . $publicurl."/index.php?sid={$surveyid}&amp;interviewer=" . $_SESSION['interviewer'] . "&amp;newtest=Y&amp;lang={$baselang}', '_blank')\" title=\"{$icontext2}\" >"
+            . $publicurl."/index.php?sid={$surveyid}&amp;" . $interviewer . "newtest=Y&amp;lang={$baselang}', '_blank')\" title=\"{$icontext2}\" >"
             . "<img src='{$imageurl}/do.png' alt='{$icontext}' />"
             . "</a></li>\n";
 
