@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: quexs\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-11-23 12:26+1100\n"
-"PO-Revision-Date: 2019-10-31 09:47+0000\n"
+"PO-Revision-Date: 2020-09-29 20:36+0000\n"
 "Last-Translator: Ignacio Suarez <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-05-11 02:20+0000\n"
-"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+"X-Launchpad-Export-Date: 2021-02-22 01:04+0000\n"
+"X-Generator: Launchpad (build bbfee60eef9f7fd8d30b24b3f53e75656e4d5fb0)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -191,7 +191,7 @@ msgstr "Llamada finalizada automáticamente con resultado:"
 
 #: rs_project_end.php:85 rs_project_end.php:99 admin/databasestrings.php:41
 msgid "Complete"
-msgstr "Completar"
+msgstr "Terminado"
 
 #: rs_project_end.php:88 call_interface2.php:299 call.php:287 call.php:403
 #: call.php:408 call.php:424 call.php:430
@@ -1481,7 +1481,7 @@ msgstr "muestra"
 
 #: admin/samplelist.php:496
 msgid "Sample list"
-msgstr "Lista de muestra"
+msgstr "Listado de muestras"
 
 #: admin/samplelist.php:500 admin/index.php:130
 msgid "Import a sample file"
@@ -4044,7 +4044,7 @@ msgstr "Ingrese el nuevo nombre del cuestionario."
 
 #: admin/new.php:178
 msgid "Select limesurvey instrument:"
-msgstr "Seleccione el instrumento de limesurvey"
+msgstr "Seleccione la encuesta de limesurvey"
 
 #: admin/new.php:194 admin/new.php:211
 msgid "Survey"

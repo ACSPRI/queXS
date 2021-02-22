@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-05-11 02:20+0000\n"
-"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+"X-Launchpad-Export-Date: 2021-02-22 01:04+0000\n"
+"X-Generator: Launchpad (build bbfee60eef9f7fd8d30b24b3f53e75656e4d5fb0)\n"
 
 #: appointment.php:76
 msgid "Appointment error"
@@ -39,7 +39,7 @@ msgstr "建立預約"
 #: admin/supervisor.php:390 admin/displayappointments.php:210
 #: admin/displayappointments.php:316 admin/displayappointments.php:341
 msgid "Respondent"
-msgstr "被訪者"
+msgstr "受訪者"
 
 #: appointment.php:140
 msgid "Create new respondent:"
@@ -61,53 +61,53 @@ msgstr "現在時間"
 
 #: appointment.php:171
 msgid "Select phone number:"
-msgstr "選擇電話號碼："
+msgstr "選擇電話號碼:"
 
 #: appointment.php:185 admin/displayappointments.php:232
 msgid "Add new phone number"
-msgstr "新增電話號碼"
+msgstr "致電其他電話號碼"
 
 #: appointment.php:198
 msgid "Add new phone number (with area code, eg 0398761234):"
-msgstr "新增電話號碼（帶區號，例如0398761234）："
+msgstr "致電其他電話號碼 (請於電話號碼前加上 9, eg 923456789)"
 
 #: appointment.php:201
 msgid "Add this phone number"
-msgstr "添加此電話號碼"
+msgstr "致電此電話號碼"
 
 #: appointment.php:221
 msgid "Accept appointment from "
-msgstr "接受約會來自 "
+msgstr "確認預約訪問由 "
 
 #: appointment.php:221 functions/functions.calendar.php:313
 msgid " till "
-msgstr ""
+msgstr " 至 "
 
 #: appointment.php:221
 msgid " on "
-msgstr ""
+msgstr " 於 "
 
 #: appointment.php:221
 msgid "on"
-msgstr ""
+msgstr "於"
 
 #: appointment.php:222
 msgid "Appointment with myself only?"
-msgstr "為自己預約？"
+msgstr "預約訪問員指定是我嗎?"
 
 #: appointment.php:231
 msgid "Schedule Appointment"
-msgstr "安排預約"
+msgstr "預約訪問"
 
 #: appointment.php:248
 msgid "Clear"
-msgstr "清除"
+msgstr "重設"
 
 #: appointment.php:248 referral.php:269 email.php:191 admin/samplelist.php:474
 #: admin/samplelist.php:485 admin/operators.php:304 admin/clients.php:254
 #: admin/supervisor.php:181 admin/extensionstatus.php:207 admin/new.php:322
 msgid "Cancel"
-msgstr "İptal"
+msgstr "取消"
 
 #: myappointments.php:61 index.php:302 index_interface2.php:317
 msgid "My appointments"
@@ -140,7 +140,7 @@ msgstr "訪問中的個案"
 
 #: myappointments.php:113 appointmentlist.php:90
 msgid "No future appointments scheduled"
-msgstr "沒有安排預約"
+msgstr "無預約"
 
 #: myappointments.php:118 functions/functions.voip.php:553
 #: functions/functions.voip.php:565 functions/functions.voip.php:577
@@ -179,11 +179,11 @@ msgstr "資料"
 #: rs_answeringmachine.php:69 rs_business.php:58 rs_project_intro.php:63
 #: rs_quota_end.php:64
 msgid "Respondent Selection"
-msgstr "選擇受訪者"
+msgstr "所選被訪者"
 
 #: rs_project_end.php:65
 msgid "Project end"
-msgstr "項目結束"
+msgstr "訪問結束"
 
 #: rs_project_end.php:85
 msgid "Call automatically ended with outcome:"
@@ -191,7 +191,7 @@ msgstr "按訪問結果自動結束通話："
 
 #: rs_project_end.php:85 rs_project_end.php:99 admin/databasestrings.php:41
 msgid "Complete"
-msgstr "完整"
+msgstr "完成訪問"
 
 #: rs_project_end.php:88 call_interface2.php:299 call.php:287 call.php:403
 #: call.php:408 call.php:424 call.php:430
@@ -202,7 +202,7 @@ msgstr "結束個案"
 #: rs_answeringmachine.php:96 rs_business.php:66 rs_project_intro.php:90
 #: rs_quota_end.php:74
 msgid "End call with outcome:"
-msgstr "按訪問結果結束通話："
+msgstr "選擇接觸情況並結束訪問:"
 
 #: functions/functions.xhtml.php:93
 msgid "UP"
@@ -385,11 +385,11 @@ msgstr "時區："
 
 #: functions/functions.calendar.php:313
 msgid "Shift from:"
-msgstr ""
+msgstr "調查時段由:"
 
 #: functions/functions.calendar.php:317
 msgid "Start Time"
-msgstr ""
+msgstr "開始時間"
 
 #: functions/functions.calendar.php:360
 msgid "End Time"
@@ -397,31 +397,31 @@ msgstr "結束時間"
 
 #: functions/functions.calendar.php:462
 msgid "Mon"
-msgstr "星期一"
+msgstr "一"
 
 #: functions/functions.calendar.php:463
 msgid "Tue"
-msgstr "星期二"
+msgstr "二"
 
 #: functions/functions.calendar.php:464
 msgid "Wed"
-msgstr "星期三"
+msgstr "三"
 
 #: functions/functions.calendar.php:465
 msgid "Thu"
-msgstr "星期四"
+msgstr "四"
 
 #: functions/functions.calendar.php:466
 msgid "Fri"
-msgstr "星期五"
+msgstr "五"
 
 #: functions/functions.calendar.php:467
 msgid "Sat"
-msgstr "星期六"
+msgstr "六"
 
 #: functions/functions.calendar.php:468
 msgid "Sun"
-msgstr "星期日"
+msgstr "日"
 
 #: functions/functions.voip.php:449 selectextension.php:114 status.php:105
 #: admin/operators.php:270 admin/operatorlist.php:255
@@ -610,7 +610,7 @@ msgstr "轉介個案無法進行此問卷"
 
 #: performance.php:67 index.php:286 index_interface2.php:301
 msgid "Performance"
-msgstr "表現"
+msgstr "工作表現"
 
 #: performance.php:83 admin/operatorperformance.php:108
 msgid "This shift"
@@ -666,7 +666,7 @@ msgstr "返回"
 
 #: casenote.php:114 admin/supervisor.php:432
 msgid "No notes"
-msgstr "沒有備註"
+msgstr "無備註"
 
 #: casenote.php:116 callhistory.php:88 calllist.php:89
 #: admin/supervisor.php:417 admin/supervisor.php:434
@@ -699,7 +699,7 @@ msgstr "錯誤：沒有分配問卷"
 
 #: waitnextcase_interface2.php:95 nocaseavailable.php:95
 msgid "Assigned questionnaires:"
-msgstr "已分配的問卷"
+msgstr "已分配問卷:"
 
 #: waitnextcase_interface2.php:121 nocaseavailable.php:125
 msgid "ERROR: No samples assigned to the questionnaires"
@@ -707,46 +707,46 @@ msgstr "錯誤：問卷沒有分配樣本"
 
 #: waitnextcase_interface2.php:123 nocaseavailable.php:119
 msgid "Assigned samples:"
-msgstr "已分配的樣本"
+msgstr "分配樣本:"
 
 #: waitnextcase_interface2.php:139 nocaseavailable.php:150
 msgid "ERROR: No shifts at this time"
-msgstr ""
+msgstr "錯誤：目前沒有調查時段"
 
 #: waitnextcase_interface2.php:142 nocaseavailable.php:144
 msgid "Current shifts available:"
-msgstr ""
+msgstr "當前可用調查時段:"
 
 #: waitnextcase_interface2.php:162 waitnextcase_interface2.php:165
 #: admin/outcomes.php:128
 msgid "Cases currently available to call"
-msgstr "目前可致電的個案"
+msgstr "目前可致電的受訪者"
 
 #: waitnextcase_interface2.php:181 waitnextcase_interface2.php:184
 msgid "New samples available to call"
-msgstr "目前可致電的新樣本"
+msgstr "目前可致電的新受訪者"
 
 #: waitnextcase_interface2.php:197
 msgid "Get a new case"
-msgstr "取得新個案"
+msgstr "開始新訪問"
 
 #: waitnextcase_interface2.php:200 call_interface2.php:303
 #: call_interface2.php:321 call.php:286 call.php:288 call.php:404 call.php:409
 #: call.php:425 call.php:431 index_interface2.php:233
 msgid "End work"
-msgstr "結束工作"
+msgstr "結束訪問"
 
 #: rs_intro.php:73 rs_intro.php:133
 msgid "Introduction"
-msgstr "簡介"
+msgstr "介紹"
 
 #: rs_intro.php:84
 msgid "Not Contacted"
-msgstr "未能聯絡"
+msgstr "未接觸"
 
 #: rs_intro.php:94 admin/set_outcomes.php:177 admin/set_outcomes.php:277
 msgid "Contacted"
-msgstr "已聯絡"
+msgstr "已接觸"
 
 #: rs_intro.php:107
 msgid "No eligible respondent (person never available on this number)"
@@ -764,7 +764,7 @@ msgstr "電話錄音"
 
 #: rs_intro.php:156 rs_project_intro.php:114
 msgid "Yes - Continue"
-msgstr "14/5000 是-繼續"
+msgstr "是 - 繼續訪問"
 
 #: record.php:61
 msgid "Stop REC"
@@ -801,7 +801,7 @@ msgstr "馬上停止手動錄音..."
 
 #: admin/databasestrings.php:90
 msgid "Self completed online"
-msgstr "自行於網上完成"
+msgstr "已完成網上問卷"
 
 #: include/limesurvey/quexs.php:682 include/limesurvey/quexs.php:761
 msgid "Not on an appointment"
@@ -858,7 +858,7 @@ msgstr "代號"
 #: admin/dataoutput.php:85 admin/extensionstatus.php:266
 #: admin/displayappointments.php:316 admin/displayappointments.php:341
 msgid "Case ID"
-msgstr "個案ID"
+msgstr "問卷編號"
 
 #: admin/set_outcomes.php:250 admin/set_outcomes.php:277
 #: admin/dataoutput.php:93
@@ -914,11 +914,11 @@ msgstr ""
 
 #: status_interface2.php:85
 msgid "Name"
-msgstr "名稱"
+msgstr "姓名"
 
 #: status_interface2.php:182 index.php:172 index_interface2.php:226
 msgid "Appointment"
-msgstr "預約"
+msgstr "預約訪問"
 
 #: status_interface2.php:224
 msgid "Dial"
@@ -939,7 +939,7 @@ msgstr "尚未致電"
 
 #: appointmentlist.php:88
 msgid "No appointments made"
-msgstr "沒有預約"
+msgstr "無預約"
 
 #: appointmentlist.php:95 admin/callrestrict.php:140 admin/addshift.php:243
 #: admin/availability.php:165 admin/supervisor.php:390
@@ -960,7 +960,7 @@ msgstr "預約"
 #: admin/callhistory.php:132 admin/callhistory.php:157
 #: admin/supervisor.php:417 admin/casestatus.php:126 index_interface2.php:225
 msgid "Outcome"
-msgstr "結果"
+msgstr "訪問結果"
 
 #: client/index.php:65 admin/outcomes.php:71
 msgid "Questionnaire Outcomes"
@@ -1118,7 +1118,7 @@ msgstr ""
 
 #: calllist.php:85 admin/supervisor.php:413
 msgid "No calls made"
-msgstr ""
+msgstr "無紀錄"
 
 #: calllist.php:89
 msgid "Number called"
@@ -1444,7 +1444,7 @@ msgstr ""
 #: admin/samplelist.php:489 admin/questionnairelist.php:531
 #: admin/index.php:167 index.php:259 index_interface2.php:277
 msgid "Call history"
-msgstr ""
+msgstr "通話紀錄"
 
 #: admin/samplelist.php:489
 msgid "sample"
@@ -1996,7 +1996,7 @@ msgstr ""
 #: admin/outcomes.php:274 admin/questionnairelist.php:514 index.php:268
 #: index_interface2.php:285
 msgid "Shifts"
-msgstr ""
+msgstr "調查時段"
 
 #: admin/outcomes.php:278
 msgid "No shift reports: Add report"
@@ -3264,7 +3264,7 @@ msgstr ""
 
 #: admin/supervisor.php:182 admin/supervisor.php:556 call_interface2.php:294
 msgid "Set outcome"
-msgstr ""
+msgstr "設定訪問結果"
 
 #: admin/supervisor.php:320
 msgid "Sample details"
@@ -3281,7 +3281,7 @@ msgstr ""
 #: admin/supervisor.php:364 admin/displayappointments.php:293
 #: admin/databasestrings.php:68 index.php:277 index_interface2.php:293
 msgid "Appointments"
-msgstr ""
+msgstr "預約"
 
 #: admin/supervisor.php:390 admin/displayappointments.php:316
 msgid "Current outcome"
@@ -3931,123 +3931,123 @@ msgstr ""
 
 #: admin/databasestrings.php:32
 msgid "Not attempted or worked"
-msgstr ""
+msgstr "未嘗試或未開始訪問"
 
 #: admin/databasestrings.php:33
 msgid "No answer"
-msgstr ""
+msgstr "無人接聽"
 
 #: admin/databasestrings.php:34
 msgid "Technical phone problems"
-msgstr ""
+msgstr "電話技術問題"
 
 #: admin/databasestrings.php:35
 msgid "Other, Referred to Supervisor (Eligible)"
-msgstr ""
+msgstr "其他,轉交主管(確認是目標受訪者)"
 
 #: admin/databasestrings.php:36
 msgid "Other, Referred to Supervisor (Unknown eligibility)"
-msgstr ""
+msgstr "其他,轉交主管(未確認是否目標受訪者)"
 
 #: admin/databasestrings.php:37
 msgid "Soft Refusal, Other"
-msgstr ""
+msgstr "婉拒, 其他"
 
 #: admin/databasestrings.php:38
 msgid "Hard Refusal, Other"
-msgstr ""
+msgstr "強烈拒絕, 其他"
 
 #: admin/databasestrings.php:39
 msgid "Soft Refusal, Respondent"
-msgstr ""
+msgstr "受訪者婉拒訪問"
 
 #: admin/databasestrings.php:40
 msgid "Hard Refusal, Respondent"
-msgstr ""
+msgstr "受訪者強烈拒絕訪問"
 
 #: admin/databasestrings.php:42
 msgid "Known respondent refusal"
-msgstr ""
+msgstr "受訪者拒訪"
 
 #: admin/databasestrings.php:43
 msgid "Household-level refusal"
-msgstr ""
+msgstr "接線者拒訪"
 
 #: admin/databasestrings.php:44
 msgid "Broken appointment (Implicit refusal)"
-msgstr ""
+msgstr "預約失敗 (即拒訪)"
 
 #: admin/databasestrings.php:45
 msgid "Disconnected number"
-msgstr ""
+msgstr "電話已經停止使用"
 
 #: admin/databasestrings.php:46
 msgid "Fax/data line"
-msgstr ""
+msgstr "FAX 機"
 
 #: admin/databasestrings.php:47
 msgid "Business, government office, other organization"
-msgstr ""
+msgstr "商業/政府/其他機構電話"
 
 #: admin/databasestrings.php:48
 msgid "No eligible respondent"
-msgstr ""
+msgstr "無合適受訪者"
 
 #: admin/databasestrings.php:49
 msgid "Accidental hang up or temporary phone problem"
-msgstr ""
+msgstr "中途斷線"
 
 #: admin/databasestrings.php:50
 msgid "Definite Appointment - Respondent"
-msgstr ""
+msgstr "與受訪者預約訪問 (已預約)"
 
 #: admin/databasestrings.php:51
 msgid "Definite Appointment - Other"
-msgstr ""
+msgstr "預約訪問 - 其他 (已預約)"
 
 #: admin/databasestrings.php:52
 msgid "Unspecified Appointment - Respondent"
-msgstr ""
+msgstr "與受訪者預約訪問 (未預約)"
 
 #: admin/databasestrings.php:53
 msgid "Unspecified Appointment - Other"
-msgstr ""
+msgstr "預約訪問 - 其他 (未預約)"
 
 #: admin/databasestrings.php:54
 msgid "Household answering machine - Message left"
-msgstr ""
+msgstr "住宅電話留言信箱 - 已留言"
 
 #: admin/databasestrings.php:55
 msgid "Household answering machine - No message left"
-msgstr ""
+msgstr "住宅電話留言信箱 - 沒有留言"
 
 #: admin/databasestrings.php:56
 msgid "Respondent Dead"
-msgstr ""
+msgstr "受訪者去世"
 
 #: admin/databasestrings.php:57
 msgid "Physically or mentally unable/incompetent"
-msgstr ""
+msgstr "身體或精神上未能受訪"
 
 #: admin/databasestrings.php:58
 msgid "Household level language problem"
-msgstr ""
+msgstr "接線者言語不通"
 
 #: admin/databasestrings.php:59
 msgid "Respondent language problem"
-msgstr ""
+msgstr "受訪者言語不通"
 
 #: admin/databasestrings.php:60
 msgid "Answering machine - Not a household"
-msgstr ""
+msgstr "非住宅電話 - 留言信箱"
 
 #: admin/databasestrings.php:61
 msgid "Out of sample"
-msgstr ""
+msgstr "非目標受訪者"
 
 #: admin/databasestrings.php:62
 msgid "Non contact"
-msgstr ""
+msgstr "未接觸"
 
 #: admin/databasestrings.php:63
 msgid "Temporary Outcomes (normal cases)"
@@ -4067,39 +4067,39 @@ msgstr ""
 
 #: admin/databasestrings.php:67
 msgid "Miscellaneous - Unavailable for a week"
-msgstr ""
+msgstr "其他-暫時沒空"
 
 #: admin/databasestrings.php:69
 msgid "Monday"
-msgstr ""
+msgstr "星期一"
 
 #: admin/databasestrings.php:70
 msgid "Tuesday"
-msgstr ""
+msgstr "星期二"
 
 #: admin/databasestrings.php:71
 msgid "Wednesday"
-msgstr ""
+msgstr "星期三"
 
 #: admin/databasestrings.php:72
 msgid "Thursday"
-msgstr ""
+msgstr "星期四"
 
 #: admin/databasestrings.php:73
 msgid "Friday"
-msgstr ""
+msgstr "星期五"
 
 #: admin/databasestrings.php:74
 msgid "Saturday"
-msgstr ""
+msgstr "星期六"
 
 #: admin/databasestrings.php:75
 msgid "Sunday"
-msgstr ""
+msgstr "星期日"
 
 #: admin/databasestrings.php:76
 msgid "Quota filled"
-msgstr ""
+msgstr "配額已滿"
 
 #: admin/databasestrings.php:77
 msgid "Weekday mornings (Before 12pm)"
@@ -4147,31 +4147,31 @@ msgstr ""
 
 #: admin/databasestrings.php:89
 msgid "Self completion email invitation sent"
-msgstr ""
+msgstr "已收到網上問卷電郵"
 
 #: admin/databasestrings.php:91
 msgid "Max call attempts reached (Eligible)"
-msgstr ""
+msgstr "達到嘗試通話次數上限 (符合訪問條件)"
 
 #: admin/databasestrings.php:92
 msgid "Max calls reached (Eligible)"
-msgstr ""
+msgstr "達到通話次數上限 (符合訪問條件)"
 
 #: admin/databasestrings.php:93
 msgid "Max call attempts reached (Unknown eligibility)"
-msgstr ""
+msgstr "達到嘗試通話次數上限 (不確認訪問條件)"
 
 #: admin/databasestrings.php:94
 msgid "Max calls reached (Unknown eligibility)"
-msgstr ""
+msgstr "達到通話次數上限 (不確認訪問條件)"
 
 #: call_interface2.php:124
 msgid "CONTACTED"
-msgstr ""
+msgstr "己接觸"
 
 #: call_interface2.php:125
 msgid "NOT CONTACTED"
-msgstr ""
+msgstr "未接觸"
 
 #: call_interface2.php:267 call_interface2.php:352 call_interface2.php:423
 #: call.php:201 call.php:221 call.php:237 call.php:268 call.php:316
@@ -4211,7 +4211,7 @@ msgstr ""
 
 #: call_interface2.php:477 call.php:461
 msgid "Assign outcome"
-msgstr ""
+msgstr "儲存結果"
 
 #: call_interface2.php:482 call.php:465
 msgid "Error: Close window"
@@ -4251,7 +4251,7 @@ msgstr ""
 
 #: index.php:232 index_interface2.php:253
 msgid "Notes"
-msgstr ""
+msgstr "備註"
 
 #: index.php:250 index_interface2.php:269 contactdetails.php:78
 msgid "Contact details"
@@ -4259,15 +4259,15 @@ msgstr ""
 
 #: index.php:294 index_interface2.php:309
 msgid "Work history"
-msgstr ""
+msgstr "工作紀錄"
 
 #: index.php:311 index_interface2.php:327 project_info.php:67
 msgid "Project information"
-msgstr ""
+msgstr "專案資訊信息"
 
 #: index.php:327 index_interface2.php:336
 msgid "Info"
-msgstr ""
+msgstr "信息"
 
 #: respondent.php:76
 msgid "Respondent Selector"
@@ -4291,7 +4291,7 @@ msgstr ""
 
 #: shifts.php:86
 msgid "No shifts for this project"
-msgstr ""
+msgstr "無可用的調查時段"
 
 #: shifts.php:107
 msgid "No future shifts scheduled"
