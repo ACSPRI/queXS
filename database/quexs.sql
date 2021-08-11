@@ -504,6 +504,7 @@ INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_m
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(43, '3.90', 'Max calls reached (Unknown eligibility)', 0, 1, 0, 1, 1, 0, 0, 'UH', 1, 0);
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(44, '2.30', 'Max call attempts reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O', 1, 0);
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(45, '2.30', 'Max calls reached (Eligible)', 0, 1, 0, 1, 1, 1, 0, 'O', 1, 0);
+INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(46, '2.112b', 'Opted out online', 10080, 3, 0, 1, 1, 1, 1, 'R', 1, 1);
 
 -- Auto increment start from 100 for manual entries
 

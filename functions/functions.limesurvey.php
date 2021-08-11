@@ -50,24 +50,47 @@ include_once(dirname(__FILE__).'/../include/JsonRPCClient.php');
 
 $limeRPC = "";
 $limeKey = "";
+$limeTime = 0;
 
 function limerpc_init ($url,$user,$pass)
 {
   global $limeRPC;
   global $limeKey;
+  global $limeTime;
 
-  $limeRPC = new \org\jsonrpcphp\JsonRPCClient($url);
+  if ($limeKey == "" || (time() - $limeTime) > 600) {
+		if ($limeKey != "") {
+			limerpc_close();	
+		}
+	$limeTime = time();
 
-  try {
-    $limeKey = $limeRPC->get_session_key($user,$pass);  
-  } catch (Exception $e) {
-    die($e->getMessage());  
+	  $limeRPC = new \org\jsonrpcphp\JsonRPCClient($url);
+
+	$connected = true;
+
+	  try {
+	    $limeKey = $limeRPC->get_session_key($user,$pass);  
+	$connected = true;
+	  } catch (Exception $e) {
+	    $connected = false;
+	    //die($e->getMessage());  
+	  }
+	
+	  if (!$connected) {
+			usleep(100000);
+		  try {
+		    $limeKey = $limeRPC->get_session_key($user,$pass);  
+		  } catch (Exception $e) {
+		    die($e->getMessage());  
+		  }
+	
+	}
+
+	 if (is_array($limeKey) && isset($limeKey['status'])) {
+	   die($limeKey['status']);
+	 }
   }
-
-  if (is_array($limeKey) && isset($limeKey['status'])) {
-    die($limeKey['status']);
-  }
-  return true;
+return true;
 }
 
 function limerpc_close()
@@ -77,6 +100,8 @@ function limerpc_close()
 
     if (!empty($limeRPC) && !empty($limeKey))
         $limeRPC->release_session_key($limeKey);
+
+    $limeKey = "";
 }
 
 function limerpc_init_qid($qid)
@@ -115,7 +140,6 @@ function lime_list_questions($qid)
       }
   } 
 
-  limerpc_close();
   return $ret;
 }
 
@@ -144,7 +168,6 @@ function lime_list_answeroptions($qid,$qcode)
     }
   }
 
-  limerpc_close();
   return $ret;
 
 }
@@ -168,18 +191,25 @@ function lime_send_email($case_id,$email,$firstname,$lastname)
 
   $ret = false;
 
-  if ($lime_id !== false) {
-    $q = $limeRPC->set_participant_properties($limeKey,$lime_id,array('token' => $token),array('firstname' => $firstname, 'email' => $email, 'lastname' => $lastname));
-    if (!isset($q['status'])) {
-      //send email
-      $q2 = $limeRPC->invite_participants($limeKey, $lime_id, array($q['tid']));
-      if (!isset($q['status'])) {
-        $ret = true;
-      }
-    }
-  } 
 
-  limerpc_close();
+    if ($lime_id !== false) {
+        $q = $limeRPC->set_participant_properties($limeKey,$lime_id,array('token' => $token),array('firstname' => $firstname, 'email' => $email, 'lastname' => $lastname));
+        if (!isset($q['status'])) {
+            //send email
+            $q2 = $limeRPC->invite_participants($limeKey, $lime_id, array($q['tid']));
+            if (isset($q2['status']) && $q2['status'] == "0 left to send") {
+                $ret = true;
+            } else {
+                //try reminding
+                $q3= $limeRPC->remind_participants($limeKey, $lime_id, null, null, array($q['tid']));
+                if (isset($q3['status']) && $q3['status'] == "0 left to send") {
+                    $ret = true;
+                }
+            }
+        }
+    }
+
+
 
 	return $ret;
 }
@@ -210,7 +240,6 @@ function lime_set_token_properties($case_id,$params = array('emailstatus' => 'Op
     }
   }
 
-  limerpc_close();
 
 	return $ret;
 }
@@ -244,12 +273,33 @@ function lime_get_responses_by_case($case_id,$fields = null)
       }
     } 
 
-  limerpc_close();
 
 	return $ret;
 
 
 }
+
+function lime_get_optout_by_questionnaire($qid)
+{
+    global $limeRPC;
+    global $limeKey;
+
+    $lime_id = limerpc_init_qid($qid);
+
+    $ret = false;
+
+    if ($lime_id !== false) {
+      $q = $limeRPC->list_participants($limeKey,$lime_id,0,10000000,true,array('emailstatus'),array('emailstatus'=>'OptOut'));
+      if (!isset($q['status'])) {
+          $ret = $q;
+      }
+    } 
+
+	return $ret;
+
+
+}
+
 
 /** Get completd responses as an array based on the questionnaire
  * indexed by token 
@@ -270,7 +320,6 @@ function lime_get_responses_by_questionnaire($qid,$fields = null)
       }
     } 
 
-    limerpc_close();
 
 	return $ret;
 }
@@ -303,7 +352,6 @@ function lime_get_token_attributes($qid)
     }
   }
 
-  limerpc_close();
   return $ret;
 }
 
@@ -316,13 +364,25 @@ function lime_add_token($qid,$params)
   $lime_id = limerpc_init_qid($qid);
 
   if ($lime_id !== false) {
-    $l = $limeRPC->add_participants($limeKey,$lime_id,array($params),false); //don't create token
-    if (!isset($l['status'])) {
-        $ret = $l; //array of data
-    } 
+	//check if record with token already exists
+	try {
+	   $l = $limeRPC->get_participant_properties($limeKey,$lime_id,array('token'=>$params['token']),array('tid'));
+	} catch (Exception $e) {
+		usleep(100000);
+	   	$l = $limeRPC->get_participant_properties($limeKey,$lime_id,array('token'=>$params['token']),array('tid'));
+
+	}
+    if (isset($l['tid'])) {
+	$ret = $l['tid'];
+    } else {
+ 	    $l = $limeRPC->add_participants($limeKey,$lime_id,array($params),false); //don't create token
+	    if (!isset($l['status'])) {
+        	$ret = $l; //array of data
+	    } 
+	}
   }
 
-  limerpc_close();
+
   return $ret;
 }
 
@@ -341,7 +401,6 @@ function get_token_value($questionnaire_id,$token, $value = 'sent')
     }
   }
 
-  limerpc_close();
   return $ret;
 }
 
@@ -376,7 +435,6 @@ function get_survey_list ()
           }
         }
       }
-      limerpc_close();
     }
   }
 
@@ -735,7 +793,6 @@ function get_lime_id($case_id)
       }
     } 
 
-    limerpc_close();
 
 	return $ret;
 }

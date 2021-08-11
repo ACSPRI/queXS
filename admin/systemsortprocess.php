@@ -80,7 +80,6 @@ function disable_systemsort()
 	set_setting('systemsort',false);
 }
 
-
 //get the arguments from the command line (this process_id)
 if ($argc != 2) exit();
 
@@ -104,6 +103,13 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
 {
 	//Make sure that the system knows we are system sorting 
 	set_setting('systemsort',true);	
+
+	$rs = "";
+	$qs = "";
+	$lcompleted = "";
+	$loptout = "";
+
+
 
   if ($closecasescounter == 0 || $closecasescounter > $closecasesinterval)
   {
@@ -275,6 +281,59 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
         }
     }
 
+	$lcompleted = false;
+unset($lcompleted);
+
+    $loptout = lime_get_optout_by_questionnaire($questionnaire_id);
+
+    if ($loptout !== false) {
+        $sql = "SELECT c.token, c.token as tok, c.case_id as case_id
+                FROM `case` as c
+                WHERE c.questionnaire_id = $questionnaire_id
+                AND c.current_outcome_id not in (10,46)";
+
+        $rs = $db->GetAssoc($sql);
+
+        foreach($loptout as $l) {
+                    if (isset($l['token']) && isset($rs[$l['token']])) {
+                        //not already completed in queXS but is in Limesurvey
+                        //insert a case and call record
+                          $resp_id = 0;
+            						  $case_id = $rs[$l['token']]['case_id'];
+
+                          $sql = "SELECT respondent_id
+                                  FROM respondent
+                                  WHERE case_id = $case_id";
+                          $rsp = $db->GetOne($sql);
+
+                          if (!empty($rsp)) {
+                            $resp_id = $rsp;
+                          }
+
+                          $sql = "INSERT INTO call_attempt (case_id,operator_id,respondent_id,start,end)
+                                  VALUES ($case_id, 1, $resp_id, CONVERT_TZ(NOW(),'System','UTC'), CONVERT_TZ(NOW(),'System','UTC'))";
+                          $db->Execute($sql);
+
+                          $call_attempt_id = $db->Insert_ID();
+
+                          $sql = "INSERT INTO `call` (operator_id,respondent_id,case_id,contact_phone_id,call_attempt_id,start,end,outcome_id,state)
+                                  VALUES (1,$resp_id,$case_id,0,$call_attempt_id,CONVERT_TZ(NOW(),'System','UTC'),CONVERT_TZ(NOW(),'System','UTC'),46,5)"; //opted out online
+                          $db->Execute($sql);
+
+                          $call_id = $db->Insert_ID();
+
+                          $sql = "UPDATE `case`
+                                  SET last_call_id = $call_id, current_outcome_id = 46
+                                  WHERE case_id = $case_id";
+
+                          $db->Execute($sql);
+
+                          print T_("Updating case as opted out online") . " - " . T_("Case id") . ": $case_id";
+                    }
+        }
+    }
+	$loptout = false;
+
 	//Delete all completed call attempts with no call in them
 	$sql = "SELECT ca.call_attempt_id FROM call_attempt as ca 
 		JOIN `case` as cs ON (cs.case_id = ca.case_id and cs.questionnaire_id = '$questionnaire_id')
@@ -360,7 +419,6 @@ while (!is_process_killed($process_id)) //check if process killed every $sleepin
   		$i++;
   	}
 	
-
     //First set all sample records as unavailable
     $sql = "UPDATE `questionnaire_sample_exclude_priority`
       SET sortorder = NULL
