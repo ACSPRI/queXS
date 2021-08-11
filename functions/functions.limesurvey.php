@@ -197,12 +197,12 @@ function lime_send_email($case_id,$email,$firstname,$lastname)
         if (!isset($q['status'])) {
             //send email
             $q2 = $limeRPC->invite_participants($limeKey, $lime_id, array($q['tid']));
-            if (isset($q2['status']) && $q2['status'] == "0 left to send") {
+            if (isset($q2['status']) && substr($q2['status'],-12) == "left to send") {
                 $ret = true;
             } else {
                 //try reminding
                 $q3= $limeRPC->remind_participants($limeKey, $lime_id, null, null, array($q['tid']));
-                if (isset($q3['status']) && $q3['status'] == "0 left to send") {
+                if (isset($q3['status']) && substr($q3['status'],-12) == "left to send") {
                     $ret = true;
                 }
             }
