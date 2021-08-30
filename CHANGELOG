@@ -6,6 +6,8 @@ Fixed bug: Not detecting sent emails via LimeSurvey in some instances
 Fixed Bug: LimeSurvey RPC functions memory leak
 Fixed Bug: If participants already email invited, couldn't be sent an email again using queXS interface (now will send LimeSurvey reminder message)
 
+Updated translations - thank you!
+
 Database update required:
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(46, '2.112b', 'Opted out online', 10080, 3, 0, 1, 1, 1, 1, 'R', 1, 1);
 
