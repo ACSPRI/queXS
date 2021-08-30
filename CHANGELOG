@@ -1,5 +1,12 @@
+queXS 2.4.0 - Changes since 2.3.1
 
+New Feature: Search for opt outs in LimeSurvey and mark as refused (new outcome: opted out online) on queXS using system sort process
 
+Fixed bug: Not detecting sent emails via LimeSurvey in some instances
+Fixed Bug: LimeSurvey RPC functions memory leak
+Fixed Bug: If participants already email invited, couldn't be sent an email again using queXS interface (now will send LimeSurvey reminder message)
+
+Database update required:
 INSERT INTO `outcome` (`outcome_id`, `aapor_id`, `description`, `default_delay_minutes`, `outcome_type_id`, `tryanother`, `contacted`, `tryagain`, `eligible`, `require_note`, `calc`, `default`, `permanent`) VALUES(46, '2.112b', 'Opted out online', 10080, 3, 0, 1, 1, 1, 1, 'R', 1, 1);
 
 queXS 2.3.1 - Changes since 2.3.0
