@@ -258,7 +258,7 @@ if (!defined('ALTERNATE_INTERFACE')) define ('ALTERNATE_INTERFACE',false);
 /**
  * Alow to choose the start part of the link for alternate interface, before phone
  */
-if (!defined('ALTERNATE_INTERFACE_CALLSTARTURL')) define ('ALTERNATE_INTERFACE_CALLSTARTURL','callto:://');
+if (!defined('ALTERNATE_INTERFACE_CALLSTARTURL')) define ('ALTERNATE_INTERFACE_CALLSTARTURL','callto:');
 /**
  * Alow to choose the end part of the link for alternate interface, after phone
  */
