@@ -231,7 +231,7 @@ function get_first_row($file)
 /** 
  * Add records to an existing sample
  */
-function update_file($file,$import_id)
+function update_file($file,$import_id, $deduplicate= false)
 {
   global $db;
 
@@ -256,7 +256,7 @@ function update_file($file,$import_id)
     $count++;
   }
 
-  add_to_sample($file,$import_id,$selected_type,$selected_name,$sirv_id,2);
+  add_to_sample($file,$import_id,$selected_type,$selected_name,$sirv_id,2, $deduplicate);
 
   return $db->CompleteTrans();
 }
@@ -267,12 +267,14 @@ function update_file($file,$import_id)
  * @param string $file File name to open
  * @param string $description A description of the sample
  * @param array $fields Which fields to import and what type they are assigned to
+ * @param integer $firstrow 
+ * @param boolean $deduplicate 
  *
  * @see verify_fields()
  * @see display_table()
  *
  */
-function import_file($file, $description, $fields, $firstrow = 2)
+function import_file($file, $description, $fields, $firstrow = 2, $deduplicate = false)
 {
 	//import into database
 
@@ -315,18 +317,25 @@ function import_file($file, $description, $fields, $firstrow = 2)
 		}
 	}
 
-  add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstrow);
+  add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstrow,$deduplicate);
 
   return $db->CompleteTrans();	
 }
 
 /**
  * add_to_sample
- *
+ * @param $file
+ * @param $id
+ * @param $selected_type
+ * @param $selected_name
+ * @param $sirv_id
+ * @param $firstrow
+ * @param boolean $deduplicate check primary phone before import
+ * 
  * Add records to the sample file
  *
  */
-function add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstrow) 
+function add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstrow, $deduplicate = false) 
 {
   global $db;
 
@@ -353,6 +362,7 @@ function add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstro
 		{
 			//determine if there is a phone number - if not - do not import
 			$numberavail = 0;
+			$duplicate = 0;
 			foreach($selected_type as $key => $val)
 			{
 				if ($val == 2 || $val == 3)
@@ -365,7 +375,7 @@ function add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstro
 					}
 				}
 			}
-	
+
 			if ($numberavail == 1)
 			{
 				//insert into sample field
@@ -396,33 +406,42 @@ function add_to_sample($file,$id,$selected_type,$selected_name,$sirv_id,$firstro
 				$ppid = array_search('3', $selected_type);
 		
 				$dppid = only_numbers($data[$ppid - 1]);
-		
-				$sql = "INSERT INTO sample (sample_id,import_id,Time_zone_name,phone)
-					VALUES (NULL,'$id','$tzone','$dppid')";
-		
-				$db->Execute($sql);
-
-				$sid = $db->Insert_Id();
-			
-		
-				/**
-				 * insert into sample_var field
-				 */
-				foreach($selected_name as $key => $val)
-        {
-          if (isset($data[$key -1 ]))
-  					$dkey = $db->Quote($data[$key - 1]);			
-          else
-            $dkey = $db->Quote("");
-		
-					$sql = "INSERT INTO sample_var (sample_id,var_id,val)
-						VALUES ('$sid','{$sirv_id[$key]}',{$dkey})";
-		
-					$db->Execute($sql);
-					
+				$duplicate = false;
+				if($deduplicate) {
+					$countSql = "SELECT COUNT(*) as count FROM sample WHERE import_id='$id' and phone='$dppid'";
+					$count = $db->GetRow($countSql);
+					if(!empty($count) && $count['count']) {
+						$duplicate = true;
+					}
 				}
+				if(!$duplicate) {
+					$sql = "INSERT INTO sample (sample_id,import_id,Time_zone_name,phone)
+						VALUES (NULL,'$id','$tzone','$dppid')";
+			
+					$db->Execute($sql);
 
-				$imported++;
+					$sid = $db->Insert_Id();
+				
+			
+					/**
+					 * insert into sample_var field
+					 */
+					foreach($selected_name as $key => $val)
+					{
+						if (isset($data[$key -1 ]))
+							$dkey = $db->Quote($data[$key - 1]);			
+						else
+							$dkey = $db->Quote("");
+
+						$sql = "INSERT INTO sample_var (sample_id,var_id,val)
+							VALUES ('$sid','{$sirv_id[$key]}',{$dkey})";
+			
+						$db->Execute($sql);
+						
+					}
+
+					$imported++;
+				}
 			}
 		}
 
