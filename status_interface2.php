@@ -215,13 +215,16 @@ if ($ca)
 			//By default, the selected radio button should have a "call" started for it
 		 	//When then next one clicked, it should bring up call screen if no outcome otherwise start new call
 			//print "<div>";print "</div>";
+			$callstarturl = ALTERNATE_INTERFACE_CALLSTARTURL;
+			$callendurl = ALTERNATE_INTERFACE_CALLENDURL;
+			$extraattributes = ALTERNATE_INTERFACE_ATTRIBUTEURL;
 			foreach($rs as $r)
 			{
 				print "<form method='post' action='?'>
 						<p>
 						<input onclick='this.form.submit();' type='radio' name='contactphone' value='{$r['contact_phone_id']}' id='contactphone{$r['contact_phone_id']}' {$r['checked']}/>&ensp;
 						<label for='contactphone{$r['contact_phone_id']}'>{$r['phone']}";
-						if ($r['checked']) print "&emsp;<a href='callto:{$r['phone']}' class='btn btn-primary btn-xs'><i class='fa fa-phone fa-fw'></i>&ensp;" . T_('Dial') . "</a>";
+						if ($r['checked']) print "<br>&emsp;<a href='{$callstarturl}{$r['phone']}{$callendurl}' {$extraattributes} class='btn btn-primary btn-xs'><i class='fa fa-phone fa-fw'></i>&ensp;" . T_('Dial') . " {$r['phone']}</a>";
 						if (!empty($r['description'])) print " - " . $r['description'];
 						print "</label>
 						</p>

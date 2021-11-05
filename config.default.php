@@ -257,6 +257,21 @@ if (!defined('ALLOW_RESPONDENT_SELECTOR')) define ('ALLOW_RESPONDENT_SELECTOR',t
 if (!defined('ALTERNATE_INTERFACE')) define ('ALTERNATE_INTERFACE',false);
 
 /**
+ * Allow to choose the start part of the link for alternate interface, before phone
+ */
+if (!defined('ALTERNATE_INTERFACE_CALLSTARTURL')) define ('ALTERNATE_INTERFACE_CALLSTARTURL','callto:');
+
+/**
+ * Allow to choose the end part of the link for alternate interface, after phone
+ */
+if (!defined('ALTERNATE_INTERFACE_CALLENDURL')) define ('ALTERNATE_INTERFACE_CALLENDURL','');
+
+/**
+ * Allow to set some specific attributes (for example target='_blank') to call url
+ */
+if (!defined('ALTERNATE_INTERFACE_ATTRIBUTEURL')) define ('ALTERNATE_INTERFACE_ATTRIBUTEURL','');
+
+/**
  * Number of log records to display
  */
 if (!defined('PROCESS_LOG_LIMIT')) define('PROCESS_LOG_LIMIT', 500);
