@@ -57,10 +57,10 @@ if (isset($_POST['import_form']))
 	$error = verify_fields($sfields);
 
 	$description = $_POST['description'];
-
+	$deduplicate = !empty($_POST['deduplicate']);
 	if ($error == "")
 	{	//verified so upload
-		if (import_file($_POST['filename'],$description,$sfields))
+		if (import_file($_POST['filename'],$description,$sfields, 2, $deduplicate))
 		{
 			print "<div class='well text-primary col-md-offset-2'><p>" . T_("Successfully imported sample") . "&emsp;<h3>$description</h3></p></div>";
 		}
@@ -86,7 +86,7 @@ else if (isset($_POST['import_file']))
 	echo "<a href='' onclick='history.back();return false;' class='btn btn-default pull-left' ><i class='fa fa-chevron-left fa-lg text-primary'></i>&emsp;" . T_("Go back") . "</a>";
 	
 	
-	print "<form action='' method='post' class='col-md-10 form-group col-md-offset-1'>"; 
+	print "<form action='' method='post' class='col-md-10 form-horizontal col-md-offset-1'>"; 
 
 	$tmpfname = tempnam(TEMPORARY_DIRECTORY, "FOO");
 	move_uploaded_file($_FILES['file']['tmp_name'],$tmpfname);
@@ -97,7 +97,13 @@ else if (isset($_POST['import_file']))
 	<input type="hidden" name="description" value="<?php  if (isset($_POST['description'])) print($_POST['description']); ?>"/>
 	<input type="hidden" name="filename" value="<?php  echo $tmpfname; ?>"/>
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="submit"></label>
+		<label class="col-sm-4 control-label" for="deduplicate"><?php  echo T_("Filter out duplicates on primary phone number? "); ?></label>
+		<div class="col-sm-4" style="height: 30px;">
+			<input name="deduplicate" id="deduplicate" type="checkbox" checked="checked" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80" />
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-4 control-label"></div>
 		<div class="col-md-4">
 			<button id="submit" type="submit" name="import_form" class="btn btn-primary"><i class="fa fa-plus-square-o fa-lg"></i>&emsp;<?php  echo T_("Add sample"); ?></button>
 		</div>

@@ -51,12 +51,12 @@ if (isset($_POST['import_file']))
 
   $tmpfname = tempnam(TEMPORARY_DIRECTORY, "FOO");                              
   move_uploaded_file($_FILES['file']['tmp_name'],$tmpfname);   
-
+	$deduplicate = !empty($_POST['deduplicate']);
 	$valid = verify_file($tmpfname,$import_id);
 
 	if ($valid)
 	{	//verified so upload
-		if (update_file($tmpfname,$import_id))
+		if (update_file($tmpfname,$import_id, $deduplicate))
 		{
 			print "<div class='well text-primary col-md-offset-2'><p>" . T_("Successfully updated sample") . "&emsp;<h3>$description</h3></p></div>";
 		}
@@ -122,7 +122,12 @@ else
     
 		</div>
 	</div>
-	
+	<div class="form-group">
+		<label class="col-sm-4 control-label" for="deduplicate"><?php  echo T_("Filter out duplicates on primary phone number? "); ?></label>
+		<div class="col-sm-4" style="height: 30px;">
+			<input name="deduplicate" id="deduplicate" type="checkbox" checked="checked" data-toggle="toggle" data-on="<?php echo T_("Yes"); ?>" data-off="<?php echo T_("No"); ?>" data-width="80" />
+		</div>
+	</div>
 	<!-- Button -->
 	<div class="form-group">
 		<label class="col-md-4 control-label" for="submit"></label>
