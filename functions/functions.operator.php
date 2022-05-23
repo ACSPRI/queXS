@@ -57,9 +57,9 @@ function sRandomChars($length = 15,$pattern="23456789abcdefghijkmnpqrstuvwxyz")
     for($i=0;$i<$length;$i++)
     {   
         if(isset($key))
-            $key .= $pattern[mt_rand(0,$patternlength)];
+            $key .= $pattern[random_int(0,$patternlength)];
         else
-            $key = $pattern[mt_rand(0,$patternlength)];
+            $key = $pattern[random_int(0,$patternlength)];
     }
     return $key;
 }
