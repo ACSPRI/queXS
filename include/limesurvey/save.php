@@ -130,22 +130,28 @@
             //INSERT BLANK RECORD INTO "survey_x" if one doesn't already exist
             if (!isset($_SESSION['srid']))
             {
-                $today = date_shift(date("Y-m-d H:i:s"), "Y-m-d H:i:s", $timeadjust);
-                $sdata = array("datestamp"=>$today,
-                "ipaddr"=>getIPAddress(),
-                "startlanguage"=>$_SESSION['s_lang'],
-                "refurl"=>getenv("HTTP_REFERER"),
-		"token" => $_POST['token']);
-                //One of the strengths of ADOdb's AutoExecute() is that only valid field names for $table are updated
-                if ($connect->AutoExecute($thissurvey['tablename'], $sdata,'INSERT'))    // Checked
-                {
-                    $srid = $connect->Insert_ID($thissurvey['tablename'],"sid");
-                    $_SESSION['srid'] = $srid;
-                }
-                else
-                {
-                    safe_die("Unable to insert record into survey table.<br /><br />".$connect->ErrorMsg());
-                }
+                $result = $connect->GetOne("SELECT id FROM ".$thissurvey['tablename']." WHERE token='{$_POST['token']}'"); 
+				if (is_null($result)) {
+
+	                $today = date_shift(date("Y-m-d H:i:s"), "Y-m-d H:i:s", $timeadjust);
+	                $sdata = array("datestamp"=>$today,
+	                "ipaddr"=>getIPAddress(),
+	                "startlanguage"=>$_SESSION['s_lang'],
+	                "refurl"=>getenv("HTTP_REFERER"),
+					"token" => $_POST['token']);
+		                //One of the strengths of ADOdb's AutoExecute() is that only valid field names for $table are updated
+	                if ($connect->AutoExecute($thissurvey['tablename'], $sdata,'INSERT'))    // Checked
+	                {
+	                    $srid = $connect->Insert_ID($thissurvey['tablename'],"sid");
+	                    $_SESSION['srid'] = $srid;
+	                }
+	                else
+	                {
+	                    safe_die("Unable to insert record into survey table.<br /><br />".$connect->ErrorMsg());
+	                }
+				} else {
+					$_SESSION['srid'] = $result;
+				}
             }
             //CREATE ENTRY INTO "saved_control"
             $today = date_shift(date("Y-m-d H:i:s"), "Y-m-d H:i:s", $timeadjust);

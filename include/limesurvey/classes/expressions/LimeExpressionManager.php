@@ -4646,44 +4646,49 @@
             $_SESSION['datestamp']=$datestamp;
             if ($this->surveyOptions['active'] && !isset($_SESSION['srid']))
             {
-                // Create initial insert row for this record
-                $sdata = array(
-                "datestamp"=>$datestamp,
-                "ipaddr"=>(($this->surveyOptions['ipaddr']) ? getIPAddress() : ''),
-                "startlanguage"=>$this->surveyOptions['startlanguage'],
-                "token"=>($this->surveyOptions['token']),
-                "refurl"=>(($this->surveyOptions['refurl']) ? getenv("HTTP_REFERER") : NULL),
-                "startdate"=>$datestamp,
-                );
-                //One of the strengths of ADOdb's AutoExecute() is that only valid field names for $table are updated
-                if ($connect->AutoExecute($this->surveyOptions['tablename'], $sdata,'INSERT'))    // Checked
-                {
-                    $srid = $connect->Insert_ID($this->surveyOptions['tablename'],"id");
-                    $_SESSION['srid'] = $srid;
-                }
-                else
-                {
-                    $message .= $this->gT("Unable to insert record into survey table: ") .$connect->ErrorMsg() . "<br/>";
-                    $_SESSION['flashmessage'] = $message;
-                    echo $message;
-                }
-                //Insert Row for Timings, if needed
-                if ($this->surveyOptions['savetimings']) {
-                    $tdata = array(
-                    'id'=>$srid,
-                    'interviewtime'=>0
-                    );
-                    if ($connect->AutoExecute($this->surveyOptions['tablename_timings'], $tdata,'INSERT'))    // Checked
-                    {
-                        $trid = $connect->Insert_ID($this->surveyOptions['tablename_timings'],"sid");
+                $srid = $connect->GetOne("SELECT id FROM ".$this->surveyOptions['tablename']." WHERE token='".$this->surveyOptions['token']."'");
+                if (is_null($srid)) {
+	                // Create initial insert row for this record
+	                $sdata = array(
+	                "datestamp"=>$datestamp,
+	                "ipaddr"=>(($this->surveyOptions['ipaddr']) ? getIPAddress() : ''),
+	                "startlanguage"=>$this->surveyOptions['startlanguage'],
+		                "token"=>($this->surveyOptions['token']),
+	                "refurl"=>(($this->surveyOptions['refurl']) ? getenv("HTTP_REFERER") : NULL),
+	                "startdate"=>$datestamp,
+	                );
+	                //One of the strengths of ADOdb's AutoExecute() is that only valid field names for $table are updated
+	                if ($connect->AutoExecute($this->surveyOptions['tablename'], $sdata,'INSERT'))    // Checked
+	                {
+	                    $srid = $connect->Insert_ID($this->surveyOptions['tablename'],"id");
+	                    $_SESSION['srid'] = $srid;
+                	}
+	                else
+	                {
+	                    $message .= $this->gT("Unable to insert record into survey table: ") .$connect->ErrorMsg() . "<br/>";
+	                    $_SESSION['flashmessage'] = $message;
+	                    echo $message;
                     }
-                    else
-                    {
-                        $message .= $this->gT("Unable to insert record into timings table "). $connect->ErrorMsg() . "<br/>";
-                        $_SESSION['flashmessage'] = $message;
-                        echo $message;
-                    }
-                }
+	                //Insert Row for Timings, if needed
+        	        if ($this->surveyOptions['savetimings']) {
+	                    $tdata = array(
+	                    'id'=>$srid,
+	                    'interviewtime'=>0
+	                    );
+	                    if ($connect->AutoExecute($this->surveyOptions['tablename_timings'], $tdata,'INSERT'))    // Checked
+	                    {
+	                        $trid = $connect->Insert_ID($this->surveyOptions['tablename_timings'],"sid");
+	                    }
+	                    else
+	                    {
+	                        $message .= $this->gT("Unable to insert record into timings table "). $connect->ErrorMsg() . "<br/>";
+	                        $_SESSION['flashmessage'] = $message;
+    	                    echo $message;
+	                    }
+	                }
+				} else {
+	    			$_SESSION['srid'] = $srid;
+				}
             }
 
             if (count($updatedValues) > 0 || $finished)

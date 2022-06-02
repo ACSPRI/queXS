@@ -408,8 +408,8 @@ function activateSurvey($postsid,$surveyid, $scriptname='admin.php')
 
     $execresult=$dict->ExecuteSQLArray($sqlarray,1);
 
-    //queXS Addition - add an index on the token
-    $createtokenindex = $dict->CreateIndexSQL("{$tabname}_idx", $tabname, array('token'));
+    //queXS Addition - add a UNIQUE index on the token
+    $createtokenindex = $dict->CreateIndexSQL("{$tabname}_idx", $tabname, array('token'),array('UNIQUE'));
     $dict->ExecuteSQLArray($createtokenindex, false) or safe_die ("Failed to create token index<br />$createtokenindex<br /><br />".$connect->ErrorMsg());
 
     if ($execresult==0 || $execresult==1)
