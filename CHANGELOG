@@ -1,3 +1,11 @@
+queXS 1.16.7 - Changes since 1.16.6
+
+Fixed bug: Ensure only one data record per token. Applies to newly activated surveys
+Fixed bug: Avoid random token colissions
+New Feature: Allow calltourl to be configured
+New feature: Deduplicate sample import on primary phone number
+Updated translations (Thank you!)
+
 queXS 1.16.6 - Changes since 1.16.5
 
 Fixed bug:  Fix for warnings/notices/deprecated messages on PHP 7.4
