@@ -115,11 +115,9 @@ if (isset($_POST['operator']) && isset($_POST['adduser']))
     {
       $oid = $db->Insert_ID();
 
-      include_once("../include/sha256.php");
-
       //Insert into users
       $sql = "INSERT INTO users (`users_name`,`password`,`full_name`,`superadmin`,`email`)
-              VALUES ($operator, '" . SHA256::hashing($_POST['password']) . "',$firstname,$admin,$email)";
+              VALUES ($operator, '" . hash('sha256',$_POST['password']) . "',$firstname,$admin,$email)";
       $db->Execute($sql);
 
 			if (FREEPBX_PATH !== false)

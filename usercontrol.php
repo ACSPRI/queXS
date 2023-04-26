@@ -27,7 +27,6 @@ include_once ("db.inc.php");
 
 
 include_once("login_check.php");  //Login Check dies also if the script is started directly
-require_once("include/sha256.php");
 
 $maxLoginAttempt = 10;
 $timeOutTime = 600; // 10 minutes
@@ -104,7 +103,7 @@ if (!isset($_SESSION['loginID']))
                 else
                 {
                     $fields = $result->FetchRow();
-                    if (SHA256::hashing($_POST['password']) == $fields['password'])
+                    if (hash('sha256',$_POST['password']) == $fields['password'])
                     {
                         // Anmeldung ERFOLGREICH
                         if (strtolower($_POST['password'])=='password')

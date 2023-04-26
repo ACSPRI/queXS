@@ -93,8 +93,7 @@ if (isset($_POST['client']) && !empty($_POST['client']))
 				/* rewrite 'password' only if not blank in edit mode */
 				if (isset($_GET['edit']) && $_GET['edit'] >0 && isset($_POST['password']) && !empty($_POST['password'])) {
 					
-					include_once("../include/sha256.php");
-					$sql .=",`password` = '" . SHA256::hashing($_POST['password']) . "'";
+					$sql .=",`password` = '" . hash('sha256',$_POST['password']) . "'";
 				}
 				
 				$sql .= "WHERE `uid` = $uid";
@@ -111,11 +110,9 @@ if (isset($_POST['client']) && !empty($_POST['client']))
 		
 			if ($db->Execute($sql)) {
 						
-				include_once("../include/sha256.php");
-
 				//Insert into lime_users 
 				$sql = "INSERT INTO users (`users_name`,`password`,`full_name`,`superadmin`,`email`) 
-						VALUES ($client, '" . SHA256::hashing($_POST['password']) . "', $firstname ,0,$email)";
+						VALUES ($client, '" . hash('sha256',$_POST['password']) . "', $firstname ,0,$email)";
 
 				if ($db->Execute($sql)) $a = T_("Added") . ": " . $client; else $a =  T_("Error adding client");	
 			}

@@ -76,8 +76,7 @@ if (isset($_POST['submit']))
 
   if (!empty($_POST['password']))
   {
-    include_once("../include/sha256.php");
-    $sql .= ", password = '" . SHA256::hashing($_POST['password']) . "' ";
+    $sql .= ", password = '" . hash('sha256',$_POST['password']) . "' ";
   }
 
   $sql .= " WHERE users_name = '$uname'";
