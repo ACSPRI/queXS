@@ -326,7 +326,7 @@ class HTTP
                 $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF'];
         }
         
-        if ($url{0} == '/') {
+        if ($url[0] == '/') {
             return $server . $url;
         }
         

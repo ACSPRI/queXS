@@ -254,17 +254,17 @@ class SHA256 extends hash
         {
             //      initialize the registers
             for($j = 0; $j < 8; $j++)
-            ${$vars{$j}} = $hashData->hash[$j];
+            ${$vars[$j]} = $hashData->hash[$j];
 
             //      the SHA-256 compression function
             for($j = 0; $j < 64; $j++)
             {
                 if($j < 16)
                 {
-                    $T1  = ord($hashData->chunks[$i]{$j*4  }) & 0xFF; $T1 <<= 8;
-                    $T1 |= ord($hashData->chunks[$i]{$j*4+1}) & 0xFF; $T1 <<= 8;
-                    $T1 |= ord($hashData->chunks[$i]{$j*4+2}) & 0xFF; $T1 <<= 8;
-                    $T1 |= ord($hashData->chunks[$i]{$j*4+3}) & 0xFF;
+                    $T1  = ord($hashData->chunks[$i][$j*4  ]) & 0xFF; $T1 <<= 8;
+                    $T1 |= ord($hashData->chunks[$i][$j*4+1]) & 0xFF; $T1 <<= 8;
+                    $T1 |= ord($hashData->chunks[$i][$j*4+2]) & 0xFF; $T1 <<= 8;
+                    $T1 |= ord($hashData->chunks[$i][$j*4+3]) & 0xFF;
                     $W[$j] = $T1;
                 }
                 else
@@ -286,7 +286,7 @@ class SHA256 extends hash
 
             //      compute the next hash set
             for($j = 0; $j < 8; $j++)
-            $hashData->hash[$j] = SHA256::sum(${$vars{$j}}, $hashData->hash[$j]);
+            $hashData->hash[$j] = SHA256::sum(${$vars[$j]}, $hashData->hash[$j]);
         }
     }
 
@@ -351,7 +351,7 @@ function hexerize($str)
         $o = 'string(' . strlen($str) . ')' . "::\n";
         for($i = 0, $j = strlen($str); $i < $j; $i++, $b = $i % 4)
         {
-            $o .= sprintf('%02X', ord($str{$i}));
+            $o .= sprintf('%02X', ord($str[$i]));
             //      only process when 32-bits have passed through
             if($i != 0 && $b == 3)
             {
