@@ -79,9 +79,9 @@ class Calendar_Decorator_Textual extends Calendar_Decorator
      *
      * @access public
      */
-    function Calendar_Decorator_Textual(&$Calendar)
+    function __construct(&$Calendar)
     {
-        parent::Calendar_Decorator($Calendar);
+        parent::__construct($Calendar);
     }
 
     /**

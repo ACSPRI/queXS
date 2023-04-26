@@ -203,7 +203,7 @@ class Calendar
      *
      * @access protected
      */
-    function Calendar($y = 2000, $m = 1, $d = 1, $h = 0, $i = 0, $s = 0)
+    function __construct($y = 2000, $m = 1, $d = 1, $h = 0, $i = 0, $s = 0)
     {
         static $cE = null;
         if (!isset($cE)) {
@@ -392,6 +392,19 @@ class Calendar
         return false;
     }
 
+    function legacy_each($array){
+        $key = key($array);
+        $value = current($array);
+        $each = is_null($key) ? false : [
+            1        => $value,
+            'value'    => $value,
+            0        => $key,
+            'key'    => $key,
+        ];
+        next($array);
+        return $each;
+    }
+
     /**
      * Iterator method for fetching child Calendar subclass objects
      * (e.g. a minute from an hour object). On reaching the end of
@@ -403,7 +416,7 @@ class Calendar
      */
     function fetch()
     {
-        $child = each($this->children);
+        $child = $this->legacy_each($this->children);
         if ($child) {
             return $child['value'];
         } else {

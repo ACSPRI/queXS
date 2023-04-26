@@ -89,7 +89,7 @@ class Calendar_Validator
      *
      * @access public
      */
-    function Calendar_Validator(&$calendar)
+    function __construct(&$calendar)
     {
         $this->calendar = & $calendar;
         $this->cE       = & $calendar->getEngine();
@@ -261,6 +261,19 @@ class Calendar_Validator
         return true;
     }
 
+    function legacy_each($array){
+        $key = key($array);
+        $value = current($array);
+        $each = is_null($key) ? false : [
+            1        => $value,
+            'value'    => $value,
+            0        => $key,
+            'key'    => $key,
+        ];
+        next($array);
+        return $each;
+    }
+
     /**
      * Iterates over any validation errors
      *
@@ -269,7 +282,7 @@ class Calendar_Validator
      */
     function fetch()
     {
-        $error = each($this->errors);
+        $error = $this->legacy_each($this->errors);
         if ($error) {
             return $error['value'];
         } else {
@@ -323,7 +336,7 @@ class Calendar_Validation_Error
      *
      * @access protected
      */
-    function Calendar_Validation_Error($unit, $value, $message)
+    function __construct($unit, $value, $message)
     {
         $this->unit    = $unit;
         $this->value   = $value;

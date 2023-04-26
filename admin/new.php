@@ -94,7 +94,7 @@ if (isset($_POST['import_file']))
 		}	
 	}
 
-	$do = implode($do,",");
+	$do = implode(",",$do);
 	
 //** - end 
 	

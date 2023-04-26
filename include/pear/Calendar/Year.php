@@ -77,9 +77,9 @@ class Calendar_Year extends Calendar
      *
      * @access public
      */
-    function Calendar_Year($y)
+    function __construct($y)
     {
-        parent::Calendar($y);
+        parent::__construct($y);
     }
 
     /**

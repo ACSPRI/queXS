@@ -88,9 +88,9 @@ class Calendar_Decorator_Weekday extends Calendar_Decorator
      *
      * @access public
      */
-    function Calendar_Decorator_Weekday(&$Calendar)
+    function __construct(&$Calendar)
     {
-        parent::Calendar_Decorator($Calendar);
+        parent::__construct($Calendar);
     }
 
     /**

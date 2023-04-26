@@ -135,7 +135,7 @@ class Calendar_Week extends Calendar
      *
      * @access public
      */
-    function Calendar_Week($y, $m, $d, $firstDay = null)
+    function __construct($y, $m, $d, $firstDay = null)
     {
         include_once CALENDAR_ROOT.'Table/Helper.php';
         parent::Calendar($y, $m, $d);

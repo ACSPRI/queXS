@@ -60,7 +60,7 @@ if (isset($_POST['default']) && isset($_POST['save'])){
 			{
 				$sel[] = $val;
 			}
-		$sel=implode($sel,",");
+		$sel=implode(",",$sel);
 
 		$sql = "UPDATE `outcome` as o
 				SET `default` = 1
@@ -108,7 +108,7 @@ if (isset($_POST['qid']) && $_POST['qid'] > 0 && isset($_POST['save'])){
 		}
 	}
 	
-	$sel=implode($sel,",");
+	$sel=implode(",",$sel);
 	
 	$qid = intval($_POST['qid']);
 	$sql = "UPDATE questionnaire
@@ -225,7 +225,7 @@ if (isset($_GET['qid'])) {
 					$do[] = $val;
 				}
 			}
-			$qoutc = implode($do,",");
+			$qoutc = implode(",",$do);
 			
 			$sql = "UPDATE questionnaire
 					SET outcomes = '$qoutc'

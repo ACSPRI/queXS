@@ -272,8 +272,8 @@ if (isset($_GET['delete_sample'])){
 	
 		$db->CompleteTrans();
 		
-		if (mysql_errno() == 0){echo "<div class='alert alert-warning'>", T_("Sample $sample_import_id was deleted."), "</div>";	}
-		else {echo "<div class='alert alert-warning'>ERROR ".mysql_errno()." ".mysql_error()."\n</div>";}
+		if (mysqli_errno() == 0){echo "<div class='alert alert-warning'>", T_("Sample $sample_import_id was deleted."), "</div>";	}
+		else {echo "<div class='alert alert-warning'>ERROR ".mysqli_errno()." ".mysqli_error()."\n</div>";}
 	}
 	
 	unset($_GET['delete_sample']);
