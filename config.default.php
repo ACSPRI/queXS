@@ -137,7 +137,7 @@ if (!defined('QUEXS_PORT')) define('QUEXS_PORT', '');
 
 $protocol = "http://";
 
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) 
+if (isset($_SERVER['SERVER_PORT']) && (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)) 
 {
 	$protocol = "https://";
 }
@@ -145,7 +145,14 @@ if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER
 /**
  * The complete URL to this copy of queXS
  */
-if (!defined('QUEXS_URL')) define('QUEXS_URL', $protocol . $_SERVER['SERVER_NAME'] . QUEXS_PORT . QUEXS_PATH);
+
+$servername = "localhost";
+
+if (isset($_SERVER['SERVER_NAME'])) {
+	$servername = $_SERVER['SERVER_NAME'];
+}
+
+if (!defined('QUEXS_URL')) define('QUEXS_URL', $protocol . $servername . QUEXS_PORT . QUEXS_PATH);
 
 /**
  * The default locale (language)
