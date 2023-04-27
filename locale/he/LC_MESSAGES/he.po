@@ -14,25 +14,25 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2021-08-30 02:04+0000\n"
-"X-Generator: Launchpad (build 76ef73296f01d64cdfe5c48bfc4daf35cdfde808)\n"
+"X-Launchpad-Export-Date: 2023-04-27 02:36+0000\n"
+"X-Generator: Launchpad (build 90e2150bef31b411d7bae5c4032c7e320fcaaec8)\n"
 
 #: casenote.php:62
 msgid "Case Notes"
-msgstr ""
+msgstr "הערות מקרה"
 
 #: casenote.php:72 casenote.php:111 admin/supervisor.php:441
 msgid "Add note"
-msgstr ""
+msgstr "הוספת הערה"
 
 #: casenote.php:75 respondent.php:101 admin/casestatus.php:264
-#: admin/sortsample.php:94 admin/callhistory.php:145 admin/assignsample.php:276
-#: admin/assignsample.php:416 admin/samplelist.php:289 admin/samplelist.php:499
-#: admin/import.php:48 admin/import.php:86 admin/import.php:117
+#: admin/sortsample.php:94 admin/callhistory.php:145 admin/assignsample.php:258
+#: admin/assignsample.php:356 admin/samplelist.php:289 admin/samplelist.php:499
+#: admin/import.php:48 admin/import.php:86 admin/import.php:123
 #: admin/updatesample.php:48 admin/updatesample.php:80
-#: admin/questionnairelist.php:361 admin/questionnairelist.php:461
-#: admin/questionnairelist.php:483 admin/questionnairelist.php:491
-#: admin/operatorlist.php:198 admin/samplesearch.php:231
+#: admin/questionnairelist.php:375 admin/questionnairelist.php:523
+#: admin/questionnairelist.php:545 admin/questionnairelist.php:553
+#: admin/operatorlist.php:202 admin/samplesearch.php:231
 #: admin/availability.php:127 admin/casesbyoutcome.php:59
 #: contactdetails.php:100
 msgid "Go back"
@@ -40,82 +40,81 @@ msgstr "חזור"
 
 #: casenote.php:114 admin/supervisor.php:432
 msgid "No notes"
-msgstr ""
+msgstr "אין הערות"
 
 #: casenote.php:116 callhistory.php:88 admin/supervisor.php:417
 #: admin/supervisor.php:434 calllist.php:89
 msgid "Date/Time"
 msgstr "תאריך/שעה"
 
-#: casenote.php:116 appointmentlist.php:95 searchsample.php:94
-#: admin/operatorquestionnaire.php:247 admin/supervisor.php:390
-#: admin/supervisor.php:417 admin/supervisor.php:434
+#: casenote.php:116 appointmentlist.php:95 admin/operatorquestionnaire.php:247
+#: admin/supervisor.php:390 admin/supervisor.php:417 admin/supervisor.php:434
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 #: admin/overallreport.php:134 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/extensionstatus.php:266
 #: admin/operatorskill.php:251 admin/shiftreport.php:110
-#: admin/operatorlist.php:200 admin/operatorlist.php:408 admin/outcomes.php:240
+#: admin/operatorlist.php:204 admin/operatorlist.php:412 admin/outcomes.php:240
 #: admin/casesbyoutcome.php:95 calllist.php:89 performance.php:84
 #: performance.php:91
 msgid "Operator"
-msgstr ""
+msgstr "מפעיל"
 
 #: casenote.php:116 admin/supervisor.php:434 admin/bulkappointment.php:237
 msgid "Note"
-msgstr ""
+msgstr "הערה"
 
-#: casenote.php:119 status_interface2.php:239 project_info.php:88
+#: casenote.php:119 status_interface2.php:242 project_info.php:88
 #: status.php:150 calllist.php:93
 msgid "No case"
-msgstr ""
+msgstr "אין מקרה"
 
 #: call_interface2.php:124
 msgid "CONTACTED"
-msgstr ""
+msgstr "נוצר קשר"
 
 #: call_interface2.php:125
 msgid "NOT CONTACTED"
-msgstr ""
+msgstr "לא נוצר קשר"
 
-#: call_interface2.php:215 call.php:216 call.php:234 email.php:111
+#: call_interface2.php:211 call.php:212 call.php:230 email.php:280
 #: record.php:84 index.php:228
 msgid "Start REC"
 msgstr "התחל הקלטה"
 
-#: call_interface2.php:267 call_interface2.php:352 call_interface2.php:423
-#: call.php:201 call.php:221 call.php:237 call.php:268 call.php:316
-#: call.php:387
+#: call_interface2.php:263 call_interface2.php:348 call_interface2.php:419
+#: call.php:197 call.php:217 call.php:233 call.php:264 call.php:312
+#: call.php:383
 msgid "Call"
 msgstr "שיחה"
 
-#: call_interface2.php:294 admin/supervisor.php:182 admin/supervisor.php:556
+#: call_interface2.php:290 admin/supervisor.php:182 admin/supervisor.php:554
 msgid "Set outcome"
-msgstr ""
+msgstr "קבע תוצאה"
 
-#: call_interface2.php:299 call.php:287 call.php:403 call.php:408 call.php:424
-#: call.php:430 rs_project_end.php:88
+#: call_interface2.php:295 call.php:283 call.php:399 call.php:404 call.php:420
+#: call.php:426 rs_project_end.php:88
 msgid "End case"
 msgstr "סיום מקרה"
 
-#: call_interface2.php:303 call_interface2.php:321 call.php:286 call.php:288
-#: call.php:404 call.php:409 call.php:425 call.php:431
+#: call_interface2.php:299 call_interface2.php:317 call.php:282 call.php:284
+#: call.php:400 call.php:405 call.php:421 call.php:427
 #: waitnextcase_interface2.php:200 index_interface2.php:233
 msgid "End work"
 msgstr "סיום עבודה"
 
-#: call_interface2.php:310 call.php:275
+#: call_interface2.php:306 call.php:271
 msgid "Not on a call"
-msgstr ""
+msgstr "לא בשיחה"
 
-#: call_interface2.php:347 call.php:312
+#: call_interface2.php:343 call.php:308
 msgid "Press the call button to dial the number for this appointment:"
 msgstr "לחץ על כפתור החיוג על מנת להתקשר למספר עבור פגישה זו"
 
-#: call_interface2.php:350 call.php:315
+#: call_interface2.php:346 call.php:311
 msgid "Number to call:"
 msgstr "מספר לחיוג"
 
-#: call_interface2.php:356 call_interface2.php:426 call.php:319 call.php:390
+#: call_interface2.php:352 call_interface2.php:422 call.php:315 call.php:386
 msgid ""
 "Your VoIP extension is not enabled. Please close this window and enable VoIP "
 "by clicking once on the red button that says 'VoIP Off'"
@@ -123,68 +122,68 @@ msgstr ""
 "הרחבת VoIP איננה מופעלת, נא לסגור חלון זה ולהפעיל את הרחבת VoIP ע\"י לחיצה "
 "אחת על הכפתור האדום אשר רשום עליו \"VoIP כבוי\""
 
-#: call_interface2.php:416 call.php:380
+#: call_interface2.php:412 call.php:376
 msgid "Select phone number to dial:"
 msgstr "בחר מספר טלפון לחיוג"
 
-#: call_interface2.php:431 call_interface2.php:462 call.php:395 call.php:429
+#: call_interface2.php:427 call_interface2.php:458 call.php:391 call.php:425
 msgid "The last call completed this call attempt"
-msgstr ""
+msgstr "השיחה האחרונה השלימה את ניסיון החיוג הזה"
 
-#: call_interface2.php:435 call_interface2.php:455 call.php:399 call.php:422
+#: call_interface2.php:431 call_interface2.php:451 call.php:395 call.php:418
 msgid "Enter a reason for this outcome before completing this case:"
 msgstr "הכנס סיבה לתוצאה זו לפני השלמת המקרה"
 
-#: call_interface2.php:478 call.php:462
+#: call_interface2.php:474 call.php:458
 msgid "Assign outcome"
 msgstr "הקצה תוצאה"
 
-#: call_interface2.php:483 call.php:466
+#: call_interface2.php:479 call.php:462
 msgid "Error: Close window"
 msgstr "תקלה: סגור חלון"
 
 #: shifts.php:63
 msgid "Shift List"
-msgstr ""
+msgstr "רשימת משמרות"
 
 #: shifts.php:86
 msgid "No shifts for this project"
-msgstr ""
+msgstr "אין משמרות לפרויקט הזה"
 
 #: shifts.php:88 shifts.php:109 appointmentlist.php:95 admin/addshift.php:243
-#: admin/supervisor.php:390 admin/displayappointments.php:316
-#: admin/displayappointments.php:341 admin/callrestrict.php:140
+#: admin/supervisor.php:390 admin/displayappointments.php:317
+#: admin/displayappointments.php:342 admin/callrestrict.php:140
 #: admin/availability.php:165 admin/shifttemplate.php:136
 #: myappointments.php:118
 msgid "Start"
-msgstr ""
+msgstr "התחלה"
 
 #: shifts.php:88 shifts.php:109 appointmentlist.php:95 admin/addshift.php:243
-#: admin/supervisor.php:390 admin/displayappointments.php:316
-#: admin/displayappointments.php:341 admin/callrestrict.php:140
+#: admin/supervisor.php:390 admin/displayappointments.php:317
+#: admin/displayappointments.php:342 admin/callrestrict.php:140
 #: admin/availability.php:165 admin/shifttemplate.php:136 index.php:222
 msgid "End"
 msgstr "סיום"
 
 #: shifts.php:107
 msgid "No future shifts scheduled"
-msgstr ""
+msgstr "לא נקבעו משמרות עתידיות"
 
 #: shifts.php:109 nocaseavailable.php:147 admin/casestatus.php:290
-#: admin/sortsample.php:139 admin/quota.php:115 admin/new.php:137
-#: admin/new.php:145 admin/displayappointments.php:316
-#: admin/displayappointments.php:341 admin/overallreport.php:134
+#: admin/sortsample.php:139 admin/quota.php:115 admin/new.php:148
+#: admin/new.php:156 admin/displayappointments.php:317
+#: admin/displayappointments.php:342 admin/overallreport.php:134
 #: admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/callhistory.php:162 admin/assignsample.php:277
+#: admin/callhistory.php:162 admin/assignsample.php:259
 #: admin/set_outcomes.php:200 admin/quotarow.php:293 admin/samplesearch.php:358
 #: myappointments.php:118
 msgid "Questionnaire"
-msgstr ""
+msgstr "שאלון"
 
-#: status_interface2.php:76 admin/quotareport.php:263 admin/outcomes.php:88
-#: admin/outcomes.php:200 admin/quotarow.php:591 status.php:64 status.php:89
+#: status_interface2.php:76 admin/quotareport.php:310 admin/outcomes.php:88
+#: admin/outcomes.php:200 admin/quotarow.php:586 status.php:64 status.php:89
 msgid "Status"
-msgstr "סטאטוס"
+msgstr "סטטוס"
 
 #: status_interface2.php:85
 msgid "Name"
@@ -192,17 +191,17 @@ msgstr "שם"
 
 #: status_interface2.php:181 status.php:147
 msgid "MISSED"
-msgstr ""
+msgstr "פספס"
 
 #: status_interface2.php:182 index.php:223 index_interface2.php:226
 msgid "Appointment"
 msgstr "פגישה"
 
-#: status_interface2.php:224
+#: status_interface2.php:227
 msgid "Dial"
-msgstr ""
+msgstr "חייג"
 
-#: status_interface2.php:233 status_interface2.php:236
+#: status_interface2.php:236 status_interface2.php:239
 msgid "No more numbers to call"
 msgstr "אין יותר מספרים לחיוג"
 
@@ -210,7 +209,7 @@ msgstr "אין יותר מספרים לחיוג"
 #: rs_intro.php:133 rs_callback.php:68 rs_business.php:58 rs_quota_end.php:64
 #: rs_project_intro.php:63
 msgid "Respondent Selection"
-msgstr ""
+msgstr "בחירת המשיב"
 
 #: rs_answeringmachine.php:69 rs_intro.php:129
 msgid "Answering machine"
@@ -229,87 +228,89 @@ msgstr "חזרה"
 #: rs_callback.php:94 rs_business.php:66 rs_quota_end.php:74
 #: rs_project_intro.php:90
 msgid "End call with outcome:"
-msgstr ""
+msgstr "סיום השיחה עם התוצאה:"
 
 #: referral.php:189
 msgid "Generated referral to case id"
-msgstr ""
+msgstr "הפניה שנוצרה למזהה של המקרה"
 
 #: referral.php:195
 msgid "Generated as referral from case id"
-msgstr ""
+msgstr "הפניה שנוצרה מהמזהה של המקרה"
 
 #: referral.php:201
 msgid "Created referral case - you may now close this window"
-msgstr ""
+msgstr "נוצר מקרה הפניה - כעת תוכל לסגור חלון זה"
 
 #: referral.php:205
 msgid ""
 "Failed to create referral case - please check your input and try again"
-msgstr ""
+msgstr "נכשל בייצור הפנייה - אנא בדוק את השדות שלך שוב"
 
 #: referral.php:211
 msgid "You must supply a primary phone number"
-msgstr ""
+msgstr "עליך לספק מספר טלפון ראשי"
 
 #: referral.php:220 index.php:227 index_interface2.php:231
 msgid "Referral"
-msgstr ""
+msgstr "הפנייה"
 
 #: referral.php:231 referral.php:268
 msgid "Create referral"
-msgstr ""
+msgstr "יצור הפנייה"
 
 #: referral.php:266
 msgid "Call this new referral immediately after this case?"
-msgstr ""
+msgstr "קרא להפניה החדשה הזו מיד לאחר המקרה הזה?"
 
-#: referral.php:269 appointment.php:248 admin/clients.php:254 admin/new.php:322
-#: admin/operators.php:304 admin/supervisor.php:181 admin/samplelist.php:474
-#: admin/samplelist.php:485 admin/extensionstatus.php:207 email.php:191
+#: referral.php:269 appointment.php:248 admin/clients.php:254 admin/new.php:392
+#: admin/operators.php:305 admin/supervisor.php:181 admin/samplelist.php:474
+#: admin/samplelist.php:485 admin/extensionstatus.php:207 email.php:360
 msgid "Cancel"
-msgstr ""
+msgstr "ביטול"
 
 #: referral.php:275
 msgid "Referrals not available for this questionnaire"
-msgstr ""
+msgstr "הפנייה לא זמינה לשאלון זה"
 
 #: selectextension.php:94 index.php:205
 msgid "queXS"
-msgstr ""
+msgstr "queXS"
 
 #: selectextension.php:105
 msgid ""
 "There are no extensions available, please contact the supervisor or click "
 "below to try again for an available extension"
 msgstr ""
+"אין שלוחות זמינות , אנא צור קשר עם הממונה לכך או לחץ למטה כדי לחפש שוב שלוחה "
+"זמינה"
 
 #: selectextension.php:106 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:277
 msgid "Try again"
-msgstr ""
+msgstr "נסה שוב"
 
 #: selectextension.php:110
 msgid "Select extension"
-msgstr ""
+msgstr "בחר שלוחה"
 
 #: selectextension.php:111
 msgid ""
 "Please select your extension from the list below then click on 'Choose "
 "extension'"
-msgstr ""
+msgstr "בחר שלוחה מהרשימה ולאחר מכן לחץ על \"בחר שלוחה\""
 
 #: selectextension.php:114 functions/functions.voip.php:449
-#: admin/operators.php:270 admin/extensionstatus.php:266
-#: admin/operatorlist.php:255 admin/operatorlist.php:408 status.php:111
+#: admin/operators.php:271 admin/extensionstatus.php:266
+#: admin/operatorlist.php:259 admin/operatorlist.php:412 status.php:111
 msgid "Extension"
-msgstr ""
+msgstr "שלוחה"
 
 #: selectextension.php:116
 msgid "Choose extension"
-msgstr ""
+msgstr "בחר שלוחה"
 
-#: supervisorchat.php:62 admin/supervisorchat.php:66 admin/index.php:197
+#: supervisorchat.php:62 admin/supervisorchat.php:66 admin/index.php:198
 #: index.php:370
 msgid "Supervisor chat"
 msgstr "שיחה עם מפקח"
@@ -320,124 +321,122 @@ msgstr "מפקח"
 
 #: supervisorchat.php:86
 msgid "Me"
-msgstr ""
+msgstr "אני"
 
 #: supervisorchat.php:88 functions/functions.voip.php:553
 #: functions/functions.voip.php:565 functions/functions.voip.php:579
 #: functions/functions.voip.php:582 functions/functions.voip.php:585
-#: searchsample.php:133 admin/casestatus.php:130
-#: admin/systemsortprocess.php:157 admin/systemsortprocess.php:195
-#: admin/systemsortprocess.php:277 admin/systemsortprocess.php:331
-#: admin/bulkappointment.php:215 admin/bulkappointment.php:237
-#: myappointments.php:118
+#: admin/casestatus.php:130 admin/systemsortprocess.php:146
+#: admin/systemsortprocess.php:184 admin/bulkappointment.php:215
+#: admin/bulkappointment.php:237 myappointments.php:118
 msgid "Case id"
-msgstr ""
+msgstr "מספר מזהה מקרה"
 
 #: supervisorchat.php:93
 msgid "Supervisor is available"
-msgstr ""
+msgstr "מפקח זמין"
 
 #: supervisorchat.php:94
 msgid "Supervisor not available"
-msgstr ""
+msgstr "מפקח לא זמין"
 
 #: supervisorchat.php:96 supervisorchat.php:99
 msgid "Message"
-msgstr ""
+msgstr "הודעה"
 
 #: supervisorchat.php:96
 msgid "Send"
-msgstr ""
+msgstr "שליחה"
 
 #: supervisorchat.php:99
 msgid "From"
-msgstr ""
+msgstr "מ"
 
 #: supervisorchat.php:102
 msgid "Supervisor chat is not enabled"
-msgstr ""
+msgstr "צ'אט מפקח אינו מופעל"
 
-#: call.php:437 admin/extensionstatus.php:233
+#: call.php:433 admin/extensionstatus.php:233
 msgid "Requesting call"
 msgstr "מבקש שיחה"
 
-#: call.php:438 call.php:445
+#: call.php:434 call.php:441
 msgid "Call Answered"
 msgstr "שיחה נענתה"
 
-#: call.php:441 call.php:448 call.php:455 functions/functions.voip.php:585
+#: call.php:437 call.php:444 call.php:451 functions/functions.voip.php:585
 msgid "Hangup"
-msgstr "נתק"
+msgstr "התנתק"
 
-#: call.php:444 functions/functions.voip.php:553 admin/extensionstatus.php:233
+#: call.php:440 functions/functions.voip.php:553 admin/extensionstatus.php:233
 #: status.php:134
 msgid "Ringing"
 msgstr "מצלצל"
 
-#: call.php:451 functions/functions.voip.php:565 admin/extensionstatus.php:233
+#: call.php:447 functions/functions.voip.php:565 admin/extensionstatus.php:233
 #: status.php:138
 msgid "Answered"
 msgstr "נענה"
 
-#: call.php:452
+#: call.php:448
 msgid "Not Answered"
 msgstr "לא נענה"
 
-#: call.php:459 admin/extensionstatus.php:233
+#: call.php:455 admin/extensionstatus.php:233
 msgid "Requires coding"
 msgstr "מצריך קידוד"
 
 #: waitnextcase_interface2.php:49
 msgid "Standby"
-msgstr ""
+msgstr "המתנה"
 
 #: waitnextcase_interface2.php:60
 msgid "Operator Automatically logged out after: "
-msgstr ""
+msgstr "המפעיל אוטומטי יתנתק לאחר: "
 
 #: waitnextcase_interface2.php:60
 msgid " minutes"
-msgstr ""
+msgstr " דקות"
 
 #: waitnextcase_interface2.php:63 endwork.php:55
 msgid "You have been automatically logged out of work due to inactivity"
-msgstr ""
+msgstr "הוצאת אוטומטית מהעבודה עקב חוסר פעילות"
 
 #: waitnextcase_interface2.php:90 nocaseavailable.php:101
 msgid "ERROR: No questionnaires assigned to you"
-msgstr ""
+msgstr "שגיאה: לא הוקצו לך שאלונים"
 
 #: waitnextcase_interface2.php:95 nocaseavailable.php:95
 msgid "Assigned questionnaires:"
-msgstr ""
+msgstr "הוקצה שאלונים"
 
 #: waitnextcase_interface2.php:121 nocaseavailable.php:125
 msgid "ERROR: No samples assigned to the questionnaires"
-msgstr ""
+msgstr "שגיאה: לא הוקצו מדגמים לשאלונים"
 
 #: waitnextcase_interface2.php:123 nocaseavailable.php:119
 msgid "Assigned samples:"
-msgstr ""
+msgstr "מדגמים שהוקצו:"
 
 #: waitnextcase_interface2.php:139 nocaseavailable.php:150
 msgid "ERROR: No shifts at this time"
-msgstr ""
+msgstr "שגיאה: אין משמרות פתוחות בשעה זו"
 
 #: waitnextcase_interface2.php:142 nocaseavailable.php:144
 msgid "Current shifts available:"
-msgstr ""
+msgstr "קיימות משמרות נוכחיות:"
 
 #: waitnextcase_interface2.php:142 functions/functions.import.php:196
 #: functions/functions.import.php:208 admin/supervisorchat.php:79
-#: admin/addshift.php:261 admin/new.php:200 admin/new.php:207 admin/new.php:214
-#: admin/new.php:221 admin/new.php:228 admin/operators.php:266
-#: admin/operators.php:282 admin/operators.php:298 admin/supervisor.php:200
+#: admin/addshift.php:261 admin/new.php:220 admin/new.php:227 admin/new.php:234
+#: admin/new.php:241 admin/new.php:248 admin/operators.php:267
+#: admin/operators.php:283 admin/operators.php:299 admin/supervisor.php:200
 #: admin/supervisor.php:374 admin/supervisor.php:422
-#: admin/displayappointments.php:299 admin/displayappointments.php:324
-#: admin/assignsample.php:315 admin/assignsample.php:318
-#: admin/assignsample.php:443 admin/assignsample.php:445
-#: admin/assignsample.php:544 admin/assignsample.php:548
-#: admin/assignsample.php:552 admin/assignsample.php:564
+#: admin/displayappointments.php:300 admin/displayappointments.php:325
+#: admin/assignsample.php:281 admin/assignsample.php:284
+#: admin/assignsample.php:380 admin/assignsample.php:382
+#: admin/assignsample.php:458 admin/assignsample.php:462
+#: admin/assignsample.php:468 admin/assignsample.php:480
 #: admin/samplelist.php:310 admin/samplelist.php:311 admin/samplelist.php:474
 #: admin/samplelist.php:485 admin/set_outcomes.php:177
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
@@ -446,240 +445,242 @@ msgstr ""
 #: admin/set_outcomes.php:242 admin/set_outcomes.php:262
 #: admin/set_outcomes.php:264 admin/set_outcomes.php:265
 #: admin/set_outcomes.php:266 admin/set_outcomes.php:267
-#: admin/set_outcomes.php:268 admin/set_outcomes.php:269
-#: admin/questionnairelist.php:376 admin/questionnairelist.php:379
-#: admin/questionnairelist.php:383 admin/questionnairelist.php:387
-#: admin/questionnairelist.php:391 admin/questionnairelist.php:507
-#: admin/operatorlist.php:251 admin/operatorlist.php:269
-#: admin/operatorlist.php:286 admin/operatorlist.php:291 admin/quotarow.php:396
-#: admin/quotarow.php:575 admin/quotarow.php:605 admin/samplesearch.php:225
+#: admin/set_outcomes.php:268 admin/set_outcomes.php:269 admin/import.php:102
+#: admin/updatesample.php:128 admin/questionnairelist.php:390
+#: admin/questionnairelist.php:393 admin/questionnairelist.php:397
+#: admin/questionnairelist.php:401 admin/questionnairelist.php:405
+#: admin/questionnairelist.php:569 admin/operatorlist.php:255
+#: admin/operatorlist.php:273 admin/operatorlist.php:290
+#: admin/operatorlist.php:295 admin/quotarow.php:396 admin/quotarow.php:570
+#: admin/quotarow.php:600 admin/samplesearch.php:225
 msgid "Yes"
-msgstr ""
+msgstr "כן"
 
 #: waitnextcase_interface2.php:162 waitnextcase_interface2.php:165
 #: admin/outcomes.php:128
 msgid "Cases currently available to call"
-msgstr ""
+msgstr "קיימים מקרים זמינים להתקשרות כרגע"
 
 #: waitnextcase_interface2.php:181 waitnextcase_interface2.php:184
 msgid "New samples available to call"
-msgstr ""
+msgstr "מדגמים חדשים הזמינים להתקשרות"
 
 #: waitnextcase_interface2.php:197
 msgid "Get a new case"
-msgstr ""
+msgstr "קבל מקרה חדש"
 
 #: supervisor.php:67
 msgid "Please wait till you have ended this call to call the supervisor"
-msgstr ""
+msgstr "אנא המתן עד שתסיים את השיחה כדי להתקשר לממונה"
 
 #: supervisor.php:111
 msgid "You may now close this window"
-msgstr ""
+msgstr "כעת תוכל לסגור חלון זה"
 
 #: supervisor.php:116
 msgid "Calling the supervisor, you may close this window"
-msgstr ""
+msgstr "מחייג לממונה, אתה ראשי לסגור חלון זה"
 
 #: supervisor.php:121
 msgid ""
 "Click here to call the supervisor's phone. Otherwise close this window"
-msgstr ""
+msgstr "לחצו כאן להתקשר לטלפון של הממונה. אחרת סגור חלון זה"
 
 #: supervisor.php:122
 msgid "Hangup when calling the supervisor"
-msgstr ""
+msgstr "נתק השיחה כאשר מתקשרים לממונה"
 
 #: supervisor.php:127
 msgid "Try calling the supervisor"
-msgstr ""
+msgstr "נסה להתקשר לממונה"
 
 #: supervisor.php:134
 msgid ""
 "Please wait for this call to answer before attempting to call the supervisor"
-msgstr ""
+msgstr "אנא המתן עד ששיחה זו תענה לפני שתנסה להתקשר לממונה"
 
 #: nocaseavailable.php:69
 msgid "No case available"
-msgstr ""
+msgstr "אין מקרה זמין"
 
 #: nocaseavailable.php:74
 msgid "There is no case currently available"
-msgstr ""
+msgstr "כרגע אין מקרה זמין"
 
 #: nocaseavailable.php:75
 msgid "Reasons:"
-msgstr ""
+msgstr "סיבות:"
 
 #: nocaseavailable.php:86 nocaseavailable.php:98 admin/samplelist.php:469
-#: admin/questionnairelist.php:502 admin/operatorlist.php:290
+#: admin/questionnairelist.php:564 admin/operatorlist.php:294
 msgid "Enabled"
-msgstr ""
+msgstr "מופעל"
 
 #: nocaseavailable.php:86 admin/samplelist.php:467
-#: admin/questionnairelist.php:500 admin/index.php:213
+#: admin/questionnairelist.php:562 admin/index.php:214
 msgid "Disabled"
-msgstr ""
+msgstr "מכובה"
 
 #: nocaseavailable.php:98 nocaseavailable.php:122
 #: admin/availabilitygroup.php:133 admin/samplelist.php:346
-#: admin/outcomes.php:169 admin/outcomes.php:220 admin/remote.php:132
+#: admin/outcomes.php:169 admin/outcomes.php:220
 msgid "ID"
-msgstr ""
+msgstr "מזהה"
 
-#: nocaseavailable.php:98 nocaseavailable.php:122 admin/quota.php:259
+#: nocaseavailable.php:98 nocaseavailable.php:122 admin/quota.php:256
 #: admin/samplelist.php:333 admin/set_outcomes.php:146
 #: admin/set_outcomes.php:189 admin/set_outcomes.php:250
-#: admin/set_outcomes.php:277 admin/quotarow.php:422 admin/quotarow.php:461
-#: admin/quotarow.php:487 admin/quotarow.php:513 admin/quotarow.php:560
-#: admin/quotarow.php:591
+#: admin/set_outcomes.php:277 admin/quotarow.php:422 admin/quotarow.php:460
+#: admin/quotarow.php:482 admin/quotarow.php:508 admin/quotarow.php:555
+#: admin/quotarow.php:586
 msgid "Description"
-msgstr ""
+msgstr "תיאור"
 
 #: nocaseavailable.php:122 admin/casestatus.php:130 admin/casestatus.php:297
 #: admin/sortsample.php:139 admin/quota.php:137 admin/assigntimeslots.php:274
-#: admin/supervisor.php:313 admin/displayappointments.php:316
-#: admin/displayappointments.php:341 admin/callhistory.php:132
+#: admin/supervisor.php:313 admin/displayappointments.php:317
+#: admin/displayappointments.php:342 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/callhistory.php:168
-#: admin/assignsample.php:278 admin/assignsample.php:479
+#: admin/assignsample.php:260 admin/assignsample.php:416
 #: admin/samplelist.php:323 admin/updatesample.php:103
-#: admin/quotareport.php:263 admin/outcomes.php:128 admin/outcomes.php:184
+#: admin/quotareport.php:310 admin/outcomes.php:128 admin/outcomes.php:184
 #: admin/quotarow.php:312
 msgid "Sample"
-msgstr ""
+msgstr "מדגם"
 
 #: nocaseavailable.php:147
 msgid "Shift start"
-msgstr ""
+msgstr "תחילת משמרת"
 
 #: nocaseavailable.php:147
 msgid "Shift end"
-msgstr ""
+msgstr "סיום משמרת"
 
 #: nocaseavailable.php:185
 msgid "Limesurvey links:"
-msgstr ""
+msgstr "קישור לסקר:"
 
-#: nocaseavailable.php:206
+#: nocaseavailable.php:204
 msgid "ERROR: No tokens table defined for LimeSurvey questionnaire"
-msgstr ""
+msgstr "שגיאה: לא הוגדרה טבלת אסימונים (Tokens) לשאלון LimeSurvey"
+
+#: nocaseavailable.php:204
+msgid "from questionnaire:"
+msgstr "מהשאלון"
 
 #: nocaseavailable.php:206
-msgid "from questionnaire:"
-msgstr ""
-
-#: nocaseavailable.php:208
 msgid "Tokens table exists for Limesurvey questionnaire:"
-msgstr ""
+msgstr "טבלת אסימונים (Tokens) קיימת עבור שאלון Limesurvey:"
 
-#: nocaseavailable.php:213
+#: nocaseavailable.php:211
 msgid "ERROR: Cannot find questionnaires with LimeSurvey ID's"
-msgstr ""
+msgstr "שגיאה: לא ניתן למצוא שאלונים עם מזהי LimeSurvey"
 
-#: nocaseavailable.php:233
+#: nocaseavailable.php:231
 msgid "ERROR: Quota reached for this question"
-msgstr ""
+msgstr "שגיאה: המכסה הגיעה לשאלה זו"
 
-#: nocaseavailable.php:252
+#: nocaseavailable.php:250
 msgid "POSSIBLE ERROR: Row quota reached for this quota"
-msgstr ""
+msgstr "שגיאה אפשרית: מכסת שורה הושגה עבור מכסה זו"
 
 #: rs_project_end.php:65
 msgid "Project end"
-msgstr ""
+msgstr "סיום פרוייקט"
 
 #: rs_project_end.php:85
 msgid "Call automatically ended with outcome:"
-msgstr ""
+msgstr "השיחה הסתיימה אוטומטית עם התוצאה:"
 
 #: rs_project_end.php:85 rs_project_end.php:99 admin/databasestrings.php:41
 msgid "Complete"
-msgstr ""
+msgstr "בוצע"
 
 #: appointment.php:76
 msgid "Appointment error"
-msgstr ""
+msgstr "טעות בפגישה"
 
 #: appointment.php:77
 msgid ""
 "You have not been assigned a case therefore cannot create an appointment"
-msgstr ""
+msgstr "לא הוקצה לך מקרה ולכן אינך יכול ליצור פגישה"
 
 #: appointment.php:116
 msgid "Appointment made"
-msgstr ""
+msgstr "פגישה נקבעה"
 
 #: appointment.php:128 admin/supervisor.php:398
 msgid "Create appointment"
-msgstr ""
+msgstr "צור פגישה"
 
 #: appointment.php:131 callhistory.php:88 appointmentlist.php:95
 #: admin/supervisor.php:390 admin/displayappointments.php:210
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
+#: admin/displayappointments.php:317 admin/displayappointments.php:342
 #: admin/callhistory.php:132 admin/callhistory.php:157
 msgid "Respondent"
-msgstr ""
+msgstr "המשיב"
 
 #: appointment.php:140
 msgid "Create new respondent:"
-msgstr ""
+msgstr "צור משיב חדש"
 
 #: appointment.php:143
 msgid "Add this respondent"
-msgstr ""
+msgstr "הוסף משיב זה"
 
 #: appointment.php:153 admin/clients.php:245 admin/casestatus.php:130
-#: admin/operators.php:256 admin/supervisor.php:331 admin/operatorlist.php:240
+#: admin/operators.php:257 admin/supervisor.php:331 admin/operatorlist.php:244
 msgid "Timezone"
-msgstr ""
+msgstr "אזור זמן"
 
 #: appointment.php:153
 msgid "Current Time"
-msgstr ""
+msgstr "זמן נוכחי"
 
 #: appointment.php:171
 msgid "Select phone number:"
-msgstr ""
+msgstr "בחר מספר טלפון:"
 
 #: appointment.php:185 admin/displayappointments.php:232
 msgid "Add new phone number"
-msgstr ""
+msgstr "הוסף מספר טלפון חדש"
 
 #: appointment.php:198
 msgid "Add new phone number (with area code, eg 0398761234):"
-msgstr ""
+msgstr "הוסף מספר טלפון חדש (עם אזור חיוג, למשל 0398761234):"
 
 #: appointment.php:201
 msgid "Add this phone number"
-msgstr ""
+msgstr "הוסף את מספר הטלפון הזה"
 
 #: appointment.php:221
 msgid "Accept appointment from "
-msgstr ""
+msgstr "קבל פגישה מ "
 
 #: appointment.php:221 functions/functions.calendar.php:313
 msgid " till "
-msgstr ""
+msgstr " עד "
 
 #: appointment.php:221
 msgid " on "
-msgstr ""
+msgstr " ב "
 
 #: appointment.php:221
 msgid "on"
-msgstr ""
+msgstr "ב"
 
 #: appointment.php:222
 msgid "Appointment with myself only?"
-msgstr ""
+msgstr "פגישה עם עצמי בלבד?"
 
-#: appointment.php:231
+#: appointment.php:231 include/limesurvey/qanda.php:1700
+#: include/limesurvey/qanda.php:1920
 msgid "Schedule Appointment"
-msgstr ""
+msgstr "קבע פגישה"
 
 #: appointment.php:248
 msgid "Clear"
-msgstr ""
+msgstr "ניקוי"
 
 #: callhistory.php:61
 msgid "Case History List"
@@ -689,11 +690,14 @@ msgstr "רשימת התקשרויות קודמות"
 msgid "No calls ever made"
 msgstr "לא בוצעו שיחות בעבר"
 
-#: callhistory.php:88 admin/displayappointments.php:316
-#: admin/displayappointments.php:341 admin/callhistory.php:132
-#: admin/callhistory.php:157 admin/extensionstatus.php:266
-#: admin/dataoutput.php:85 admin/samplesearch.php:293
-#: admin/casesbyoutcome.php:117
+#: callhistory.php:88 include/limesurvey/admin/exportresults.php:258
+#: include/limesurvey/admin/exportresults.php:651
+#: include/limesurvey/admin/exportresults.php:652
+#: include/limesurvey/admin/exportresults.php:980
+#: admin/displayappointments.php:317 admin/displayappointments.php:342
+#: admin/callhistory.php:132 admin/callhistory.php:157
+#: admin/extensionstatus.php:266 admin/dataoutput.php:85
+#: admin/samplesearch.php:293 admin/casesbyoutcome.php:117
 msgid "Case ID"
 msgstr "קוד מקרה"
 
@@ -708,79 +712,79 @@ msgstr "תוצאה"
 #: callhistory.php:92 admin/callhistory.php:192 admin/casesbyoutcome.php:124
 #: status.php:65
 msgid "No operator"
-msgstr ""
+msgstr "אין מפעיל"
 
 #: appointmentlist.php:61
 msgid "Appointment List"
-msgstr ""
+msgstr "רשימת פגישות"
 
-#: appointmentlist.php:75 searchsample.php:118 admin/supervisor.php:370
-#: admin/displayappointments.php:297
+#: appointmentlist.php:75 admin/supervisor.php:370
+#: admin/displayappointments.php:298
 msgid "Not yet called"
-msgstr ""
+msgstr "עדיין לא התקשרו"
 
 #: appointmentlist.php:75 admin/casestatus.php:92 admin/casestatus.php:142
-#: admin/displayappointments.php:267 admin/displayappointments.php:300
+#: admin/displayappointments.php:268 admin/displayappointments.php:301
 #: myappointments.php:89
 msgid "Any operator"
-msgstr ""
+msgstr "כל מפעיל"
 
 #: appointmentlist.php:88
 msgid "No appointments made"
-msgstr ""
+msgstr "לא נוצר פגישה"
 
 #: appointmentlist.php:90 myappointments.php:113
 msgid "No future appointments scheduled"
-msgstr ""
+msgstr "אין פגישות שנקבעו לעתיד"
 
 #: appointmentlist.php:95 admin/displayappointments.php:253
-#: admin/displayappointments.php:316
+#: admin/displayappointments.php:317
 msgid "Appointment with"
-msgstr ""
+msgstr "פגישה עם"
 
 #: functions/functions.import.php:129
 msgid "Duplicate column name"
-msgstr ""
+msgstr "שם עמודה כפולה"
 
 #: functions/functions.import.php:147
 msgid "No more than one field may be a token field"
-msgstr ""
+msgstr "לא יותר משדה אחד עשוי להיות שדה סמלי"
 
 #: functions/functions.import.php:163
 msgid "You must select one and one only Primary Phone number"
-msgstr ""
+msgstr "עליך לבחור מספר טלפון ראשי אחד ואחד בלבד"
 
 #: functions/functions.import.php:179
 msgid "Selected file column name"
-msgstr ""
+msgstr "שם עמודת הקובץ שנבחר"
 
 #: functions/functions.import.php:179
 msgid "Import ?"
-msgstr ""
+msgstr "יבוא?"
 
 #: functions/functions.import.php:179
 msgid "New Sample Variable Name"
-msgstr ""
+msgstr "שם משתנה חדש למדגם"
 
 #: functions/functions.import.php:179
 msgid "Variable Type"
-msgstr ""
+msgstr "סוג משתנה"
 
 #: functions/functions.import.php:179
 msgid "Show to operator?"
-msgstr ""
+msgstr "להציג למפעיל"
 
 #: functions/functions.import.php:196 functions/functions.import.php:208
-#: admin/supervisorchat.php:79 admin/addshift.php:261 admin/new.php:200
-#: admin/new.php:207 admin/new.php:214 admin/new.php:221 admin/new.php:228
-#: admin/operators.php:266 admin/operators.php:282 admin/operators.php:298
+#: admin/supervisorchat.php:79 admin/addshift.php:261 admin/new.php:220
+#: admin/new.php:227 admin/new.php:234 admin/new.php:241 admin/new.php:248
+#: admin/operators.php:267 admin/operators.php:283 admin/operators.php:299
 #: admin/supervisor.php:374 admin/supervisor.php:422
-#: admin/displayappointments.php:299 admin/displayappointments.php:324
-#: admin/assignsample.php:315 admin/assignsample.php:316
-#: admin/assignsample.php:318 admin/assignsample.php:443
-#: admin/assignsample.php:445 admin/assignsample.php:544
-#: admin/assignsample.php:545 admin/assignsample.php:548
-#: admin/assignsample.php:552 admin/assignsample.php:564
+#: admin/displayappointments.php:300 admin/displayappointments.php:325
+#: admin/assignsample.php:281 admin/assignsample.php:282
+#: admin/assignsample.php:284 admin/assignsample.php:380
+#: admin/assignsample.php:382 admin/assignsample.php:458
+#: admin/assignsample.php:459 admin/assignsample.php:462
+#: admin/assignsample.php:468 admin/assignsample.php:480
 #: admin/samplelist.php:310 admin/samplelist.php:311 admin/set_outcomes.php:177
 #: admin/set_outcomes.php:178 admin/set_outcomes.php:179
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:181
@@ -788,85 +792,86 @@ msgstr ""
 #: admin/set_outcomes.php:242 admin/set_outcomes.php:262
 #: admin/set_outcomes.php:264 admin/set_outcomes.php:265
 #: admin/set_outcomes.php:266 admin/set_outcomes.php:267
-#: admin/set_outcomes.php:268 admin/set_outcomes.php:269
-#: admin/questionnairelist.php:376 admin/questionnairelist.php:379
-#: admin/questionnairelist.php:383 admin/questionnairelist.php:387
-#: admin/questionnairelist.php:391 admin/questionnairelist.php:507
-#: admin/operatorlist.php:251 admin/operatorlist.php:269
-#: admin/operatorlist.php:286 admin/operatorlist.php:291 admin/quotarow.php:396
-#: admin/quotarow.php:575 admin/quotarow.php:605
+#: admin/set_outcomes.php:268 admin/set_outcomes.php:269 admin/import.php:102
+#: admin/updatesample.php:128 admin/questionnairelist.php:390
+#: admin/questionnairelist.php:393 admin/questionnairelist.php:397
+#: admin/questionnairelist.php:401 admin/questionnairelist.php:405
+#: admin/questionnairelist.php:569 admin/operatorlist.php:255
+#: admin/operatorlist.php:273 admin/operatorlist.php:290
+#: admin/operatorlist.php:295 admin/quotarow.php:396 admin/quotarow.php:570
+#: admin/quotarow.php:600
 msgid "No"
-msgstr ""
+msgstr "לא"
 
 #: functions/functions.xhtml.php:93
 msgid "UP"
-msgstr ""
+msgstr "למעלה"
 
 #: functions/functions.performance.php:304
 #: functions/functions.performance.php:306
 msgid "Total"
-msgstr ""
+msgstr "סך הכול"
 
 #: functions/functions.performance.php:638
 msgid "No shift"
-msgstr ""
+msgstr "אין משמרת"
 
 #: functions/functions.performance.php:661
 msgid "Total completions"
-msgstr ""
+msgstr "סה\"כ השלמות"
 
 #: functions/functions.performance.php:690
 msgid "Completions this shift"
-msgstr ""
+msgstr "משלים את השינוי"
 
 #: functions/functions.performance.php:713
 #: functions/functions.performance.php:759
 msgid "No previous shift"
-msgstr ""
+msgstr "אין משמרת קודמת"
 
 #: functions/functions.performance.php:733
 msgid "Completions on the previous shift"
-msgstr ""
+msgstr "השלם את השינוי הקודם"
 
 #: functions/functions.performance.php:780
 msgid "Completions this time on the previous shift"
-msgstr ""
+msgstr "השלמות ממשמרת הקודמת"
 
 #: functions/functions.performance.php:798
 msgid "No calls made for this shift"
-msgstr ""
+msgstr "לא בוצעו שיחות למשמרת זו"
 
 #: functions/functions.performance.php:800
 msgid "Top CPH for this shift"
-msgstr ""
+msgstr "הכי הרבה שיחות פר שעה במשמרת"
 
 #: functions/functions.performance.php:817
 msgid "No calls made for this project"
-msgstr ""
+msgstr "לא נעשות שיחות בפרוייקט זה"
 
 #: functions/functions.performance.php:819
 msgid "Top CPH"
-msgstr ""
+msgstr "הכי הרבה שיחות פר לשעה"
 
-#: functions/functions.operator.php:146
+#: include/limesurvey/quexs.php:368 functions/functions.operator.php:167
 msgid "morning"
-msgstr ""
+msgstr "בוקר"
 
-#: functions/functions.operator.php:147
+#: include/limesurvey/quexs.php:369 functions/functions.operator.php:168
 msgid "afternoon"
-msgstr ""
+msgstr "אחר הצהריים"
 
-#: functions/functions.operator.php:148
+#: include/limesurvey/quexs.php:370 functions/functions.operator.php:169
 msgid "evening"
-msgstr ""
+msgstr "ערב"
 
-#: functions/functions.operator.php:941
+#: functions/functions.operator.php:1003
 msgid "ERROR: You are not logged in."
-msgstr ""
+msgstr "שגיאה: אינך מחובר"
 
 #: functions/functions.calendar.php:193
 msgid "Select a respondent"
-msgstr ""
+msgstr "בחר השבה"
 
 #: functions/functions.calendar.php:202 functions/functions.calendar.php:204
 #: respondent.php:99 respondent.php:137 contactdetails.php:98
@@ -876,78 +881,78 @@ msgstr "הוסף משיב"
 
 #: functions/functions.calendar.php:256
 msgid "First name:"
-msgstr ""
+msgstr "שם פרטי:"
 
 #: functions/functions.calendar.php:257
 msgid "Last  name:"
-msgstr ""
+msgstr "שם משפחה:"
 
 #: functions/functions.calendar.php:262
 msgid "Time Zone:"
-msgstr ""
+msgstr "אזור זמן:"
 
 #: functions/functions.calendar.php:313
 msgid "Shift from:"
-msgstr ""
+msgstr "מעבר מ:"
 
 #: functions/functions.calendar.php:317
 msgid "Start Time"
-msgstr ""
+msgstr "זמן התחלה"
 
 #: functions/functions.calendar.php:360
 msgid "End Time"
-msgstr ""
+msgstr "זמן סיום"
 
 #: functions/functions.calendar.php:462
 msgid "Mon"
-msgstr ""
+msgstr "שני"
 
 #: functions/functions.calendar.php:463
 msgid "Tue"
-msgstr ""
+msgstr "שלישי"
 
 #: functions/functions.calendar.php:464
 msgid "Wed"
-msgstr ""
+msgstr "רביעי"
 
 #: functions/functions.calendar.php:465
 msgid "Thu"
-msgstr ""
+msgstr "חמישי"
 
 #: functions/functions.calendar.php:466
 msgid "Fri"
-msgstr ""
+msgstr "שישי"
 
 #: functions/functions.calendar.php:467
 msgid "Sat"
-msgstr ""
+msgstr "שבת"
 
 #: functions/functions.calendar.php:468
 msgid "Sun"
-msgstr ""
+msgstr "ראשון"
 
 #: functions/functions.voip.php:449
 msgid "online"
-msgstr ""
+msgstr "מחובר"
 
 #: functions/functions.voip.php:449
 msgid "offline"
-msgstr ""
+msgstr "לא מחובר"
 
 #: functions/functions.voip.php:528
 msgid "Disconnected"
-msgstr ""
+msgstr "מנותק"
 
 #: functions/functions.voip.php:530
 msgid "Reconnected"
-msgstr ""
+msgstr "מחובר מחדש"
 
 #: functions/functions.voip.php:553 functions/functions.voip.php:565
 #: functions/functions.voip.php:579 functions/functions.voip.php:582
 #: functions/functions.voip.php:585 functions/functions.voip.php:596
 #: functions/functions.voip.php:605
 msgid " Extension "
-msgstr ""
+msgstr " שלוחה "
 
 #: functions/functions.voip.php:579
 msgid "No Answer - Auto Hangup"
@@ -959,11 +964,11 @@ msgstr ""
 
 #: functions/functions.voip.php:596
 msgid "Unregistered"
-msgstr ""
+msgstr "לא רשום"
 
 #: functions/functions.voip.php:605
 msgid "Registered"
-msgstr ""
+msgstr "רשום"
 
 #: usercontrol.php:96 usercontrol.php:163
 msgid "Incorrect username and/or password!"
@@ -1004,25 +1009,25 @@ msgstr "פרטי הפרוייקט"
 
 #: rs_intro.php:73 rs_intro.php:133
 msgid "Introduction"
-msgstr ""
+msgstr "מבוא"
 
 #: rs_intro.php:84
 msgid "Not Contacted"
-msgstr ""
+msgstr "לא יצרו קשר"
 
 #: rs_intro.php:94 admin/set_outcomes.php:177 admin/set_outcomes.php:277
 msgid "Contacted"
-msgstr ""
+msgstr "יצרו קשר"
 
 #: rs_intro.php:107
 msgid "No eligible respondent (person never available on this number)"
-msgstr ""
+msgstr "אין משיב כשיר (אדם מעולם לא זמין במספר זה)"
 
 #: rs_intro.php:117
 msgid ""
 "Non contact (person not currently available on this number: no appointment "
 "made)"
-msgstr ""
+msgstr "אין קשר (אדם אינו זמין כעת במספר זה: לא נקבע פגישה)"
 
 #: rs_intro.php:156 rs_project_intro.php:114
 msgid "Yes - Continue"
@@ -1030,59 +1035,55 @@ msgstr "כן - המשך"
 
 #: rs_callback.php:68
 msgid "Call back"
-msgstr ""
+msgstr "התקשר בחזרה"
 
 #: rs_callback.php:82
 msgid "Survey is"
-msgstr ""
+msgstr "סקר הוא"
 
 #: rs_callback.php:82
 msgid "complete"
-msgstr ""
+msgstr "הושלם"
 
 #: rs_callback.php:103
 msgid "Yes - Continue where we left off"
-msgstr ""
+msgstr "כן - תמשיך מהיכן שהפסקנו"
 
 #: searchsample.php:62 searchsample.php:141 searchsample.php:143 index.php:386
 #: index_interface2.php:344
 msgid "Search sample"
 msgstr ""
 
-#: searchsample.php:75 myappointments.php:75
+#: myappointments.php:75
 msgid "Already calling case"
-msgstr ""
+msgstr "כבר קורא למקרה"
 
-#: searchsample.php:75 searchsample.php:87 searchsample.php:102
-#: searchsample.php:118 myappointments.php:75 myappointments.php:80
-#: myappointments.php:90
+#: myappointments.php:75 myappointments.php:80 myappointments.php:90
 msgid "next"
-msgstr ""
+msgstr "הבא"
 
-#: searchsample.php:87 searchsample.php:102 myappointments.php:80
+#: myappointments.php:80
 msgid "Will call case"
-msgstr ""
+msgstr "יתקשר למקרה"
 
 #: searchsample.php:94
 msgid "is already working on this case"
 msgstr ""
 
-#: searchsample.php:118 searchsample.php:133 myappointments.php:90
-#: myappointments.php:118
+#: myappointments.php:90 myappointments.php:118
 msgid "Call next"
-msgstr ""
+msgstr "התקשר להבא"
 
-#: searchsample.php:118 myappointments.php:90
+#: myappointments.php:90
 msgid "Calling case"
-msgstr ""
+msgstr "מתקשר למקרה"
 
-#: searchsample.php:133 respondent.php:175 contactdetails.php:171
+#: respondent.php:175 contactdetails.php:171
 msgid "Var"
-msgstr ""
+msgstr "משתנה"
 
-#: searchsample.php:133 respondent.php:175 admin/set_outcomes.php:189
-#: admin/quotarow.php:422 admin/quotarow.php:513 admin/quotarow.php:545
-#: contactdetails.php:171
+#: respondent.php:175 admin/set_outcomes.php:189 admin/quotarow.php:422
+#: admin/quotarow.php:508 admin/quotarow.php:540 contactdetails.php:171
 msgid "Value"
 msgstr "ערך"
 
@@ -1092,7 +1093,7 @@ msgstr ""
 
 #: rs_business.php:58
 msgid "Business answers"
-msgstr ""
+msgstr "תשובות עסקיות"
 
 #: rs_business.php:60
 msgid "Sorry to bother you, I have called the wrong number"
@@ -1100,80 +1101,80 @@ msgstr "מתנצל על ההטרדה, חייגתי למספר שגוי"
 
 #: endwork.php:51
 msgid "End of work"
-msgstr ""
+msgstr "סיום העבודה"
 
 #: endwork.php:58
 msgid "Work has ended. That is it"
-msgstr ""
+msgstr "העבודה הסתיימה. זהו זה"
 
 #: endwork.php:76
 msgid "You have been unassigned from your extension"
-msgstr ""
+msgstr "בוטלה ההקצאה שלך מהשלוחה שלך"
 
 #: endwork.php:81
 msgid "Go back to work"
-msgstr ""
+msgstr "חזרה לעבודה"
 
 #: endwork.php:82 admin/auth-admin.php:62 admin/index.php:105
 msgid "Logout"
-msgstr ""
+msgstr "התנתק"
 
 #: client/index.php:65 admin/outcomes.php:71
 msgid "Questionnaire Outcomes"
-msgstr ""
+msgstr "תוצאות שאלון"
 
 #: client/index.php:78
 msgid "There are no questionnaires assigned to you"
-msgstr ""
+msgstr "לא מוקצים לך שאלונים"
 
 #: client/index.php:99 admin/outcomes.php:147
 msgid "Rate"
-msgstr ""
+msgstr "דירוג"
 
 #: client/index.php:100 admin/outcomes.php:148
 msgid "Response Rate 1"
-msgstr ""
+msgstr "דירוג תגובה 1"
 
 #: client/index.php:101 admin/outcomes.php:149
 msgid "Refusal Rate 1"
-msgstr ""
+msgstr "סירוב דירוג 1"
 
 #: client/index.php:102 admin/outcomes.php:150
 msgid "Cooperation Rate 1"
-msgstr ""
+msgstr "שיעור שיתוף פעולה 1"
 
 #: client/index.php:103 admin/outcomes.php:151
 msgid "Contact Rate 1"
-msgstr ""
+msgstr "תעריף קשר 1"
 
 #: client/index.php:118 admin/outcomes.php:169 admin/outcomes.php:220
 #: admin/outcomes.php:262
 msgid "Count"
-msgstr ""
+msgstr "ספירה"
 
 #: client/index.php:120 admin/outcomes.php:269
 msgid "No outcomes recorded for this questionnaire"
-msgstr ""
+msgstr "לא נרשמו תוצאות לשאלון זה"
 
 #: client/index.php:122
 msgid "View summary results"
-msgstr ""
+msgstr "צפה בתוצאות סיכום"
 
-#: client/index.php:145
+#: client/index.php:141
 msgid "You are not a valid client"
-msgstr ""
+msgstr "איך תקף כלקוח"
 
 #: voip/downloadvoipclient.php:59
 msgid "Error: Cannot write to temporary directory"
-msgstr ""
+msgstr "שגיאה: לא ניתן לכתוב לספרייה זמנית"
 
 #: rs_quota_end.php:64
 msgid "Project Quota End"
-msgstr ""
+msgstr "סיום מכסת הפרויקט"
 
 #: respondent.php:76
 msgid "Respondent Selector"
-msgstr ""
+msgstr "בורר משיב"
 
 #: respondent.php:107 admin/supervisor.php:131 contactdetails.php:106
 msgid "Case id:"
@@ -1185,184 +1186,182 @@ msgstr "משיב"
 
 #: respondent.php:171
 msgid "Show details"
-msgstr ""
+msgstr "הצג פרטים"
 
 #: admin/clients.php:102
 msgid "Updated"
-msgstr ""
+msgstr "עדכון"
 
 #: admin/clients.php:102
 msgid "Update error"
-msgstr ""
+msgstr "שגיאת עדכון"
 
 #: admin/clients.php:105
 msgid "Could not update"
-msgstr ""
+msgstr "לא ניתן היה לבצע עדכן"
 
 #: admin/clients.php:120 admin/samplesearch.php:280
 msgid "Added"
-msgstr ""
+msgstr "נוסף"
 
 #: admin/clients.php:120
 msgid "Error adding client"
-msgstr ""
+msgstr "שגיאה בהוספת לקוח"
 
 #: admin/clients.php:123
 msgid "Could not add"
-msgstr ""
+msgstr "לא ניתן להוסיף"
 
 #: admin/clients.php:126 admin/clients.php:221
-#: admin/operatorquestionnaire.php:247 admin/operators.php:232
-#: admin/operatorskill.php:251 admin/clientquestionnaire.php:260
-#: admin/operatorlist.php:216 admin/operatorlist.php:408 login_check.php:93
-#: login_check.php:94
+#: admin/operatorquestionnaire.php:247 admin/operators.php:233
+#: admin/operatorskill.php:251 admin/clientquestionnaire.php:293
+#: admin/operatorlist.php:220 admin/operatorlist.php:412
 msgid "Username"
-msgstr ""
+msgstr "שם משתמש"
 
 #: admin/clients.php:126
 msgid "is already in use"
-msgstr ""
+msgstr "כבר נמצא בשימוש"
 
 #: admin/clients.php:132
 msgid "Add a client"
-msgstr ""
+msgstr "הוסף לקוח"
 
 #: admin/clients.php:133
 msgid "Add new client"
-msgstr ""
+msgstr "הוסף לקוח חדש"
 
 #: admin/clients.php:138
 msgid "Edit client data"
-msgstr ""
+msgstr "ערוך נתוני לקוח"
 
 #: admin/clients.php:148
 msgid "NO such client"
-msgstr ""
+msgstr "אין לקוח כזה"
 
 #: admin/clients.php:157
 msgid "Update client data"
-msgstr ""
+msgstr "עדכן נתוני לקוח"
 
 #: admin/clients.php:211
 msgid ""
 "Adding a client here will allow them to access project information in the "
 "client subdirectory."
-msgstr ""
+msgstr "הוספת לקוח לכאן תאפשר להם לגשת למידע הפרויקט בספריית המשנה של הלקוח."
 
 #: admin/clients.php:214
 msgid "You can assign a client to a particular project with"
-msgstr ""
+msgstr "אתה יכול להקצות לקוח לפרויקט מסוים עם"
 
 #: admin/clients.php:214
 msgid "Assign client to Questionnaire"
-msgstr ""
+msgstr "הקצה את הלקוח לשאלון"
 
-#: admin/clients.php:225 admin/operators.php:236 admin/operatorlist.php:220
-#: login_check.php:95 login_check.php:96
+#: admin/clients.php:225 admin/operators.php:237 admin/operatorlist.php:224
 msgid "Password"
-msgstr ""
+msgstr "סיסמא"
 
 #: admin/clients.php:226
 msgid "Leave this blank to keep current password"
-msgstr ""
+msgstr "השאר את זה ריק כדי לשמור את הסיסמה הנוכחית"
 
-#: admin/clients.php:228 admin/operators.php:239 admin/extensionstatus.php:201
-#: admin/operatorlist.php:223
+#: admin/clients.php:228 admin/operators.php:240 admin/extensionstatus.php:201
+#: admin/operatorlist.php:227
 msgid "Generate"
-msgstr ""
+msgstr "ליצור"
 
-#: admin/clients.php:228 admin/operators.php:239 admin/operatorlist.php:223
+#: admin/clients.php:228 admin/operators.php:240 admin/operatorlist.php:227
 msgid "Password with"
-msgstr ""
+msgstr "סיסמא עם"
 
-#: admin/clients.php:229 admin/operators.php:240 admin/operatorlist.php:224
+#: admin/clients.php:229 admin/operators.php:241 admin/operatorlist.php:228
 msgid "characters"
-msgstr ""
+msgstr "תווים"
 
-#: admin/clients.php:233 admin/operators.php:244 admin/operatorlist.php:228
-#: email.php:178
+#: admin/clients.php:233 admin/operators.php:245 admin/operatorlist.php:232
+#: email.php:347
 msgid "First name"
-msgstr ""
+msgstr "שם פרטי"
 
 #: admin/clients.php:237
 msgid "Surname"
-msgstr ""
+msgstr "שם משפחה"
 
-#: admin/clients.php:241 admin/operators.php:252 admin/operatorlist.php:236
-#: email.php:184 index.php:226
+#: admin/clients.php:241 admin/operators.php:253 admin/operatorlist.php:240
+#: email.php:353 index.php:226
 msgid "Email"
 msgstr "דוא\"ל"
 
 #: admin/casestatus.php:87 admin/casestatus.php:88
 msgid "Available"
-msgstr ""
+msgstr "זמין"
 
 #: admin/casestatus.php:89
 msgid "minutes"
-msgstr ""
+msgstr "דקות"
 
 #: admin/casestatus.php:103 admin/assigntimeslots.php:173
 #: admin/assigntimeslots.php:222 admin/assigntimeslots.php:283
-#: admin/assignsample.php:445
+#: admin/assignsample.php:382
 msgid "Click to unassign"
-msgstr ""
+msgstr "לחץ כדי לבטל את ההקצאה"
 
 #: admin/casestatus.php:105
 msgid "Not assigned, select to assign"
-msgstr ""
+msgstr "לא מוקצה, בחר להקצות"
 
 #: admin/casestatus.php:130 admin/supervisor.php:331
 msgid "Time NOW"
-msgstr ""
+msgstr "זמן עכשיו"
 
 #: admin/casestatus.php:130 admin/supervisor.php:466
 msgid "Call attempts"
-msgstr ""
+msgstr "ניסיונות שיחה"
 
 #: admin/casestatus.php:130 admin/operatorperformance.php:86
 #: admin/operatorperformance.php:109 admin/overallreport.php:134
 msgid "Calls"
-msgstr ""
+msgstr "שיחות"
 
 #: admin/casestatus.php:130
 msgid "Available in"
-msgstr ""
+msgstr "זמין ב"
 
 #: admin/casestatus.php:130
 msgid "Assigned to"
-msgstr ""
+msgstr "שהוקצה ל"
 
 #: admin/casestatus.php:130
 msgid "Order"
-msgstr ""
+msgstr "סדר"
 
 #: admin/casestatus.php:146
 msgid "Assign selected cases to"
-msgstr ""
+msgstr "הקצה מקרים שנבחרו ל"
 
 #: admin/casestatus.php:146
 msgid "operator"
-msgstr ""
+msgstr "מפעיל"
 
 #: admin/casestatus.php:149
 msgid "Assign cases to operator queue"
-msgstr ""
+msgstr "הקצה מקרים שנבחרו לתור המפעיל"
 
 #: admin/casestatus.php:149
 msgid "Assign"
-msgstr ""
+msgstr "הקצה"
 
 #: admin/casestatus.php:152
 msgid "Unassign all cases from the operator queue"
 msgstr ""
 
-#: admin/casestatus.php:263 admin/questionnairelist.php:551 admin/index.php:184
+#: admin/casestatus.php:263 admin/questionnairelist.php:613 admin/index.php:186
 msgid "Case status and assignment"
-msgstr ""
+msgstr "סטטוס המקרה והקצאות"
 
 #: admin/casestatus.php:271
 msgid "INFORMATION"
-msgstr ""
+msgstr "מידע"
 
 #: admin/casestatus.php:274
 msgid ""
@@ -1371,470 +1370,473 @@ msgid ""
 "an operator, it will override the normal scheduling process and call them as "
 "soon as the operator is available."
 msgstr ""
+"רשום מקרים לפי שאלון ומדגם עם היכולת להקצות אותם להיקרא הבא בתור על ידי "
+"מפעיל מסוים. <br/> אם תקצה מקרים למפעיל, הם ידרסו את תהליך התזמון הרגיל "
+"ותבוצע אליהם שיחה ברגע שהמפעיל יהיה זמין."
 
 #: admin/casestatus.php:277
 msgid "OK"
-msgstr ""
+msgstr "אישור"
 
 #: admin/sortsample.php:91
 msgid "List and sort samples"
-msgstr ""
+msgstr "רשום ומיין מדגמים"
 
-#: admin/sortsample.php:92 admin/index.php:135
+#: admin/sortsample.php:92 admin/index.php:137
 msgid "Sort questionnaire samples"
-msgstr ""
+msgstr "מיין דוגמאות לשאלונים"
 
 #: admin/sortsample.php:96
 msgid "Sort order for questionnaire samples"
-msgstr ""
+msgstr "מיין סדר השאלונים לדוגמא"
 
 #: admin/sortsample.php:100
 msgid "Samples selected for this questionnaire"
-msgstr ""
+msgstr "מדגמים אשר נבחרו עבור סקר זה"
 
-#: admin/sortsample.php:101 admin/sortsample.php:102 admin/assignsample.php:307
-#: admin/assignsample.php:310 admin/assignsample.php:439
-#: admin/assignsample.php:440 admin/assignsample.php:533
-#: admin/assignsample.php:537
+#: admin/sortsample.php:101 admin/sortsample.php:102 admin/assignsample.php:273
+#: admin/assignsample.php:276 admin/assignsample.php:376
+#: admin/assignsample.php:377 admin/assignsample.php:447
+#: admin/assignsample.php:451
 msgid "Unlimited"
-msgstr ""
+msgstr "ללא הגבלה"
 
-#: admin/sortsample.php:103 admin/assignsample.php:441
+#: admin/sortsample.php:103 admin/assignsample.php:378
 msgid "Sequential"
-msgstr ""
+msgstr "סדרתי"
 
-#: admin/sortsample.php:103 admin/assignsample.php:441
+#: admin/sortsample.php:103 admin/assignsample.php:378
 msgid "Random"
-msgstr ""
+msgstr "אקראי"
 
-#: admin/sortsample.php:104 admin/assignsample.php:313
-#: admin/assignsample.php:442 admin/assignsample.php:541
+#: admin/sortsample.php:104 admin/assignsample.php:279
+#: admin/assignsample.php:379 admin/assignsample.php:455
 msgid "Never"
-msgstr ""
+msgstr "לעולם לא"
 
-#: admin/sortsample.php:105 admin/sortsample.php:139 admin/operators.php:259
-#: admin/operators.php:273 admin/supervisor.php:375
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
-#: admin/assignsample.php:444 admin/assignsample.php:479
+#: admin/sortsample.php:105 admin/sortsample.php:139 admin/operators.php:260
+#: admin/operators.php:274 admin/supervisor.php:375
+#: admin/displayappointments.php:317 admin/displayappointments.php:342
+#: admin/assignsample.php:381 admin/assignsample.php:416
 #: admin/samplelist.php:478 admin/shiftreport.php:102 admin/shiftreport.php:110
-#: admin/questionnairelist.php:371 admin/clientquestionnaire.php:275
-#: admin/operatorlist.php:243 admin/operatorlist.php:259
-#: admin/operatorlist.php:399 admin/quotarow.php:591
+#: admin/questionnairelist.php:385 admin/clientquestionnaire.php:308
+#: admin/operatorlist.php:247 admin/operatorlist.php:263
+#: admin/operatorlist.php:403 admin/quotarow.php:586
 msgid "Edit"
-msgstr ""
+msgstr "ערוך"
 
-#: admin/sortsample.php:120 admin/assignsample.php:459
+#: admin/sortsample.php:120 admin/assignsample.php:396
 msgid "Pull step Down"
-msgstr ""
+msgstr "הזז צעד למטה"
 
-#: admin/sortsample.php:121 admin/assignsample.php:460
+#: admin/sortsample.php:121 admin/assignsample.php:397
 msgid "Push step Up"
-msgstr ""
+msgstr "הזז צעד למעלה"
 
-#: admin/sortsample.php:139 admin/assignsample.php:479
+#: admin/sortsample.php:139 admin/assignsample.php:416
 msgid "Sort order"
-msgstr ""
+msgstr "סדר מיון"
 
-#: admin/sortsample.php:139 admin/assignsample.php:305
-#: admin/assignsample.php:479 admin/assignsample.php:531
+#: admin/sortsample.php:139 admin/assignsample.php:271
+#: admin/assignsample.php:416 admin/assignsample.php:445
 msgid "Max calls"
-msgstr ""
+msgstr "מקסימום שיחות"
 
-#: admin/sortsample.php:139 admin/assignsample.php:308
-#: admin/assignsample.php:479 admin/assignsample.php:535
+#: admin/sortsample.php:139 admin/assignsample.php:274
+#: admin/assignsample.php:416 admin/assignsample.php:449
 msgid "Max call attempts"
-msgstr ""
+msgstr "מקסימים ניסיונות חיוג"
 
-#: admin/sortsample.php:139 admin/assignsample.php:479
+#: admin/sortsample.php:139 admin/assignsample.php:416
 msgid "Answering machine messages"
-msgstr ""
+msgstr "הודעות למשיבון"
 
-#: admin/sortsample.php:139 admin/assignsample.php:479
+#: admin/sortsample.php:139 admin/assignsample.php:416
 msgid "Selection type"
-msgstr ""
+msgstr "סוג בחירה"
 
 #: admin/sortsample.php:142
 msgid "No samples assigned to questionnaires"
-msgstr ""
+msgstr "לא הוקצו דוגמאות לשאלונים"
 
 #: admin/operatorquestionnaire.php:157 admin/operatorquestionnaire.php:272
-#: admin/index.php:158
+#: admin/index.php:160
 msgid "Assign operators to questionnaires"
-msgstr ""
+msgstr "הקצה מפעילים לשאלונים"
 
-#: admin/centreinfo.php:68 admin/index.php:196
+#: admin/centreinfo.php:68 admin/index.php:197
 msgid "Set centre information"
-msgstr ""
+msgstr "הגדר מידע במרכז"
 
 #: admin/centreinfo.php:73
 msgid "Update centre information"
-msgstr ""
+msgstr "עדכון מידע במרכז"
 
-#: admin/quota.php:114 admin/index.php:149
+#: admin/quota.php:114 admin/index.php:151
 msgid "Quota management"
-msgstr ""
+msgstr "ניהול מכסות"
 
 #: admin/quota.php:141 admin/quotarow.php:316
 msgid "No samples assigned to this questionnaire."
-msgstr ""
+msgstr "לא הוקצו דוגמאות לשאלון זה."
 
 #: admin/quota.php:149
 msgid "Current quotas"
-msgstr ""
+msgstr "מכסות שוטפות"
 
 #: admin/quota.php:161
 msgid "Currently no quotas"
-msgstr ""
+msgstr "כרגע אין מכסות"
 
 #: admin/quota.php:167
 msgid "Stop calling this sample when:"
-msgstr ""
+msgstr "הפסק לתקשר לדוגמא זו כאשר:"
 
 #: admin/quota.php:167
 msgid "for"
-msgstr ""
+msgstr "עבור"
 
 #: admin/quota.php:167
 msgid "completions"
-msgstr ""
+msgstr "השלמות"
 
 #: admin/quota.php:170
 msgid "Quota reached"
-msgstr ""
+msgstr "המכסה הגיעה"
 
 #: admin/quota.php:172
 msgid "Quota not yet reached"
-msgstr ""
+msgstr "המכסה עדיין לא הושגה"
 
 #: admin/quota.php:174
 msgid "Current completions: "
-msgstr ""
+msgstr "השלמות נוכחיות: "
 
 #: admin/quota.php:182
 msgid "Select a question for the quota"
-msgstr ""
+msgstr "בחר שאלה למכסה"
 
 #: admin/quota.php:211
 msgid "Enter the details for creating the quota:"
-msgstr ""
+msgstr "הזן את הפרטים ליצירת המכסה:"
 
-#: admin/quota.php:216 admin/quotarow.php:459 admin/quotarow.php:544
+#: admin/quota.php:216 admin/quotarow.php:458 admin/quotarow.php:539
 msgid "The type of comparison"
-msgstr ""
+msgstr "סוג ההשוואה"
 
-#: admin/quota.php:226 admin/quotarow.php:460
+#: admin/quota.php:226 admin/quotarow.php:459
 msgid "The code value to compare"
-msgstr ""
+msgstr "ערך הקוד להשוואה"
 
-#: admin/quota.php:229 admin/quotarow.php:395 admin/quotarow.php:604
+#: admin/quota.php:229 admin/quotarow.php:395 admin/quotarow.php:599
 msgid "The number of completions to stop calling at"
-msgstr ""
+msgstr "מספר ההשלמות שיש להפסיק להתקשר אליהן"
 
 #: admin/quota.php:236
 msgid "Add quota"
-msgstr ""
+msgstr "הוסף מכסה"
 
-#: admin/quota.php:242 admin/quotarow.php:466
+#: admin/quota.php:242 admin/quotarow.php:465
 msgid "Code values for this question"
-msgstr ""
+msgstr "ערכי קוד לשאלה זו"
 
-#: admin/quota.php:257 admin/quotarow.php:485
+#: admin/quota.php:254 admin/quotarow.php:480
 msgid "No labels defined for this question"
-msgstr ""
+msgstr "לא הוגדרו תוויות לשאלה זו"
 
-#: admin/quota.php:259 admin/quotarow.php:487
+#: admin/quota.php:256 admin/quotarow.php:482
 msgid "Code value"
-msgstr ""
+msgstr "ערך קוד"
 
 #: admin/auth-admin.php:61
 msgid "You do not have permission to access this area"
-msgstr ""
+msgstr "אין לך הרשאה לגשת לאזור זה"
 
 #: admin/databasestrings.php:32
 msgid "Not attempted or worked"
-msgstr ""
+msgstr "לא ניסיתי ולא עבד"
 
 #: admin/databasestrings.php:33 status.php:122
 msgid "No answer"
-msgstr ""
+msgstr "ללא מענה"
 
 #: admin/databasestrings.php:34
 msgid "Technical phone problems"
-msgstr ""
+msgstr "בעיות טכניות בטלפון"
 
 #: admin/databasestrings.php:35
 msgid "Other, Referred to Supervisor (Eligible)"
-msgstr ""
+msgstr "אחר, מופנה לממונה (כשיר)"
 
 #: admin/databasestrings.php:36
 msgid "Other, Referred to Supervisor (Unknown eligibility)"
-msgstr ""
+msgstr "אחר, מופנה לממונה (זכאות לא ידועה)"
 
 #: admin/databasestrings.php:37
 msgid "Soft Refusal, Other"
-msgstr ""
+msgstr "סירוב רך, אחר"
 
 #: admin/databasestrings.php:38
 msgid "Hard Refusal, Other"
-msgstr ""
+msgstr "סירוב קשה, אחר"
 
 #: admin/databasestrings.php:39
 msgid "Soft Refusal, Respondent"
-msgstr ""
+msgstr "סירוב רך, המשיב"
 
 #: admin/databasestrings.php:40
 msgid "Hard Refusal, Respondent"
-msgstr ""
+msgstr "סירוב קשה, המשיב"
 
 #: admin/databasestrings.php:42
 msgid "Known respondent refusal"
-msgstr ""
+msgstr "סירוב משיב מוכר"
 
 #: admin/databasestrings.php:43
 msgid "Household-level refusal"
-msgstr ""
+msgstr "סירוב ברמה הביתית"
 
 #: admin/databasestrings.php:44
 msgid "Broken appointment (Implicit refusal)"
-msgstr ""
+msgstr "פגישה שבורה (סירוב מרומז)"
 
 #: admin/databasestrings.php:45
 msgid "Disconnected number"
-msgstr ""
+msgstr "מספר מנותק"
 
 #: admin/databasestrings.php:46
 msgid "Fax/data line"
-msgstr ""
+msgstr "פקס/קו נתונים"
 
 #: admin/databasestrings.php:47
 msgid "Business, government office, other organization"
-msgstr ""
+msgstr "עסקים, משרד ממשלתי, ארגון אחר"
 
 #: admin/databasestrings.php:48
 msgid "No eligible respondent"
-msgstr ""
+msgstr "משיב לא מתאים"
 
 #: admin/databasestrings.php:49
 msgid "Accidental hang up or temporary phone problem"
-msgstr ""
+msgstr "נותק בטעות או בעיית טלפון זמנית"
 
 #: admin/databasestrings.php:50
 msgid "Definite Appointment - Respondent"
-msgstr ""
+msgstr "פגישה מוחלטת - משיב"
 
 #: admin/databasestrings.php:51
 msgid "Definite Appointment - Other"
-msgstr ""
+msgstr "פגישה מוחלטת - אחר"
 
 #: admin/databasestrings.php:52
 msgid "Unspecified Appointment - Respondent"
-msgstr ""
+msgstr "פגישה לא צוינה - משיב"
 
 #: admin/databasestrings.php:53
 msgid "Unspecified Appointment - Other"
-msgstr ""
+msgstr "פגישה לא צוינה - אחר"
 
 #: admin/databasestrings.php:54
 msgid "Household answering machine - Message left"
-msgstr ""
+msgstr "משיבון ביתי - השארתי הודעה"
 
 #: admin/databasestrings.php:55
 msgid "Household answering machine - No message left"
-msgstr ""
+msgstr "משיבון ביתי - לא השארתי הודעה"
 
 #: admin/databasestrings.php:56
 msgid "Respondent Dead"
-msgstr ""
+msgstr "המשיב נפטר"
 
 #: admin/databasestrings.php:57
 msgid "Physically or mentally unable/incompetent"
-msgstr ""
+msgstr "לא מסוגל/לא כשיר מבחינה פיזית או נפשית"
 
 #: admin/databasestrings.php:58
 msgid "Household level language problem"
-msgstr ""
+msgstr "בעיית שפה ברמה הביתית"
 
 #: admin/databasestrings.php:59
 msgid "Respondent language problem"
-msgstr ""
+msgstr "בעיית שפה אצל המשיב"
 
 #: admin/databasestrings.php:60
 msgid "Answering machine - Not a household"
-msgstr ""
+msgstr "משיבון - לא משק בית"
 
 #: admin/databasestrings.php:61
 msgid "Out of sample"
-msgstr ""
+msgstr "מחוץ למדגם"
 
 #: admin/databasestrings.php:62
 msgid "Non contact"
-msgstr ""
+msgstr "לא איש קשר"
 
 #: admin/databasestrings.php:63
 msgid "Temporary Outcomes (normal cases)"
-msgstr ""
+msgstr "תוצאות זמניות (מקרים רגילים)"
 
 #: admin/databasestrings.php:64
 msgid "Supervisor Outcomes (referred to supervisor)"
-msgstr ""
+msgstr "תוצאות ממונה (מופנה לממונה)"
 
 #: admin/databasestrings.php:65
 msgid "Refusal Outcomes (respondent refused)"
-msgstr ""
+msgstr "תוצאות סירוב (המשיב סירב)"
 
 #: admin/databasestrings.php:66
 msgid "Final Outcomes (completed, final refusal, etc)"
-msgstr ""
+msgstr "התוצאות הסופיות (הושלמו, סירוב סופי וכו ')"
 
 #: admin/databasestrings.php:67
 msgid "Miscellaneous - Unavailable for a week"
-msgstr ""
+msgstr "שונות - לא זמין למשך שבוע"
 
 #: admin/databasestrings.php:68 admin/supervisor.php:364
-#: admin/displayappointments.php:293 index.php:328 index_interface2.php:293
+#: admin/displayappointments.php:294 index.php:328 index_interface2.php:293
 msgid "Appointments"
 msgstr "פגישות"
 
 #: admin/databasestrings.php:69
 msgid "Monday"
-msgstr ""
+msgstr "שני"
 
 #: admin/databasestrings.php:70
 msgid "Tuesday"
-msgstr ""
+msgstr "שלישי"
 
 #: admin/databasestrings.php:71
 msgid "Wednesday"
-msgstr ""
+msgstr "רביעי"
 
 #: admin/databasestrings.php:72
 msgid "Thursday"
-msgstr ""
+msgstr "חמישי"
 
 #: admin/databasestrings.php:73
 msgid "Friday"
-msgstr ""
+msgstr "שישי"
 
 #: admin/databasestrings.php:74
 msgid "Saturday"
-msgstr ""
+msgstr "שבת"
 
 #: admin/databasestrings.php:75
 msgid "Sunday"
-msgstr ""
+msgstr "ראשון"
 
 #: admin/databasestrings.php:76
 msgid "Quota filled"
-msgstr ""
+msgstr "המכסה מלאה"
 
 #: admin/databasestrings.php:77
 msgid "Weekday mornings (Before 12pm)"
-msgstr ""
+msgstr "בבוקר בימי חול (לפני 12:00)"
 
 #: admin/databasestrings.php:78
 msgid "Weekday afternoons (After 12pm but before 6pm)"
-msgstr ""
+msgstr "אחר הצהריים בימי חול (אחרי 12:00 אבל לפני 18:00)"
 
 #: admin/databasestrings.php:79
 msgid "Evenings (After 6pm)"
-msgstr ""
+msgstr "ערבים (אחרי 18:00)"
 
 #: admin/databasestrings.php:80
 msgid "Saturdays"
-msgstr ""
+msgstr "שבתות"
 
 #: admin/databasestrings.php:81
 msgid "String"
-msgstr ""
+msgstr "מחרוזת"
 
 #: admin/databasestrings.php:82 admin/supervisor.php:417
 #: admin/callhistory.php:132 admin/callhistory.php:157
 msgid "Phone number"
-msgstr ""
+msgstr "מספר טלפון"
 
 #: admin/databasestrings.php:83
 msgid "Primary phone number"
-msgstr ""
+msgstr "מספר טלפון ראשי"
 
 #: admin/databasestrings.php:84
 msgid "State"
-msgstr ""
+msgstr "מדינה"
 
 #: admin/databasestrings.php:85
 msgid "Postcode"
-msgstr ""
+msgstr "מיקוד"
 
 #: admin/databasestrings.php:86
 msgid "Respondent first name"
-msgstr ""
+msgstr "שם פרטי של המשיב"
 
 #: admin/databasestrings.php:87
 msgid "Respondent last name"
-msgstr ""
+msgstr "שם משפחה של המשיב"
 
 #: admin/databasestrings.php:88
 msgid "Email address"
-msgstr ""
+msgstr "כתובת דוא\"ל"
 
 #: admin/databasestrings.php:89
 msgid "Self completion email invitation sent"
-msgstr ""
+msgstr "נשלחה הזמנה בדוא\"ל להשלמה עצמית"
 
-#: admin/databasestrings.php:90
+#: include/limesurvey/quexs.php:177 admin/databasestrings.php:90
 msgid "Self completed online"
-msgstr ""
+msgstr "הושלם התחברות עצמית"
 
 #: admin/databasestrings.php:91
 msgid "Max call attempts reached (Eligible)"
-msgstr ""
+msgstr "הסתיים מספר ניסיונות  השיחות המקסימאלי (כשירים)"
 
 #: admin/databasestrings.php:92
 msgid "Max calls reached (Eligible)"
-msgstr ""
+msgstr "הגעת למספר ניסיונות השיחה המקסימאלי"
 
 #: admin/databasestrings.php:93
 msgid "Max call attempts reached (Unknown eligibility)"
-msgstr ""
+msgstr "הסתיים מספר ניסיונות  השיחות המקסימאלי (כשירות לא ידועה)"
 
 #: admin/databasestrings.php:94
 msgid "Max calls reached (Unknown eligibility)"
-msgstr ""
+msgstr "הגעת למספר ניסיונות השיחה המקסימאלי (כשירות לא ידועה)"
 
-#: admin/systemsortprocess.php:97
+#: admin/systemsortprocess.php:93
 msgid "Sorting cases process starting"
-msgstr ""
+msgstr "תהליך מיון המקרים מתחיל"
 
-#: admin/systemsortprocess.php:117
+#: admin/systemsortprocess.php:106
 msgid "Checking for cases open for more than 24 hours"
-msgstr ""
+msgstr "בדיקת מקרים פתוחים ליותר מ -24 שעות"
 
-#: admin/systemsortprocess.php:145 admin/systemsortprocess.php:157
-#: admin/systemsortprocess.php:183 admin/systemsortprocess.php:195
+#: admin/systemsortprocess.php:134 admin/systemsortprocess.php:146
+#: admin/systemsortprocess.php:172 admin/systemsortprocess.php:184
 msgid "System automatically closed case as not closed for more than 24 hours"
-msgstr ""
+msgstr "המערכת נסגרת באופן אוטומטי כיוון שלא נסגר במשך יותר מ 24 שעות"
 
-#: admin/systemsortprocess.php:204
+#: admin/systemsortprocess.php:193
 msgid "Completed case closing"
-msgstr ""
+msgstr "סגירת המקרה הושלמה"
 
-#: admin/systemsortprocess.php:204 admin/systemsortprocess.php:206
-#: admin/systemsortprocess.php:474 admin/systemsortprocess.php:476
+#: admin/systemsortprocess.php:193 admin/systemsortprocess.php:195
+#: admin/systemsortprocess.php:355 admin/systemsortprocess.php:357
 msgid "This task took"
-msgstr ""
+msgstr "משימה זאת נלקחה"
 
-#: admin/systemsortprocess.php:204 admin/systemsortprocess.php:206
-#: admin/systemsortprocess.php:474 admin/systemsortprocess.php:476
+#: admin/systemsortprocess.php:193 admin/systemsortprocess.php:195
+#: admin/systemsortprocess.php:355 admin/systemsortprocess.php:357
 #: nocallavailable.php:208
 msgid "seconds"
-msgstr ""
+msgstr "שניות"
 
-#: admin/systemsortprocess.php:206
+#: admin/systemsortprocess.php:195
 msgid "Failed to complete case closing"
-msgstr ""
+msgstr "סגירת המקרה נכשלה"
 
-#: admin/systemsortprocess.php:221
+#: admin/systemsortprocess.php:210
 msgid "Sorting cases for "
-msgstr ""
+msgstr "מיון מקרים עבור "
 
 #: admin/systemsortprocess.php:277
 msgid "Updating case as self completed online"
@@ -1844,25 +1846,25 @@ msgstr ""
 msgid "Updating case as opted out online"
 msgstr ""
 
-#: admin/systemsortprocess.php:356 admin/samplesearch.php:262
+#: admin/systemsortprocess.php:238 admin/samplesearch.php:262
 msgid "Deleted"
-msgstr ""
+msgstr "נמחק"
 
-#: admin/systemsortprocess.php:356
+#: admin/systemsortprocess.php:238
 msgid "call attempts with no calls"
-msgstr ""
+msgstr "ניסיונות שיחה ללא שיחות"
 
-#: admin/systemsortprocess.php:360
+#: admin/systemsortprocess.php:242
 msgid "No call attempts without calls"
-msgstr ""
+msgstr "אין ניסיונות שיחה ללא שיחות"
 
-#: admin/systemsortprocess.php:474
+#: admin/systemsortprocess.php:355
 msgid "Completed sort"
-msgstr ""
+msgstr "מיון הושלם"
 
-#: admin/systemsortprocess.php:476
+#: admin/systemsortprocess.php:357
 msgid "Failed to complete sort"
-msgstr ""
+msgstr "המיון נכשל"
 
 #: admin/supervisorchat.php:68
 msgid ""
@@ -1870,212 +1872,216 @@ msgid ""
 "is a BOSH enabled XMPP/Jabber server. The operators and the supervisor will "
 "need XMPP/Jabber accounts."
 msgstr ""
+"אפשר למראיינים לשוחח עם הממונה על XMPP (ג'אבר). נדרש שרת XMPP/Jabber המופעל "
+"על ידי BOSH. המפעילים והממונה  יזדקקו לחשבונות XMPP/Jabber."
 
 #: admin/supervisorchat.php:78
 msgid "Enable supervisor chat?"
-msgstr ""
+msgstr "לאפשר צ'אט ממונה?"
 
 #: admin/supervisorchat.php:82
 msgid "Set BOSH URL"
-msgstr ""
+msgstr "הגדר כתובת רשת של BOSH"
 
 #: admin/supervisorchat.php:86
 msgid "Supervisor XMPP/Jabber id"
-msgstr ""
+msgstr "מזהה XMPP/Jabber של הממונה"
 
 #: admin/supervisorchat.php:90
 msgid "Update"
-msgstr ""
+msgstr "עדכון"
 
 #: admin/addshift.php:92
 msgid "Add shifts"
-msgstr ""
+msgstr "הוסף משמרות"
 
 #: admin/addshift.php:93
 msgid ""
 "You must be an operator (as well as have administrator access) to add/edit "
 "shifts"
-msgstr ""
+msgstr "עליך להיות מפעיל (כמו גם בעל גישת מנהל) כדי להוסיף/לערוך משמרות"
 
-#: admin/addshift.php:145 admin/index.php:144
+#: admin/addshift.php:145 admin/index.php:146
 msgid "Shift management"
-msgstr ""
+msgstr "ניהול משמרות"
 
 #: admin/addshift.php:156 admin/timezonetemplate.php:109
 #: admin/callrestrict.php:115 admin/availability.php:124
 #: admin/shifttemplate.php:106
 msgid ""
 "Your database does not have timezones installed, please see here for details"
-msgstr ""
+msgstr "למסד הנתונים שלך לא מותקנים אזורי זמן, אנא ראה כאן לפרטים"
 
 #: admin/addshift.php:168
 msgid "Add shifts in your Time Zone"
-msgstr ""
+msgstr "הוסף משמרות באזור הזמן שלך"
 
 #: admin/addshift.php:171
 msgid ""
 "Shifts allow you to restrict appointments being made, and interviewers to "
 "working on a particlar project at defined times."
 msgstr ""
+"משמרות מאפשרות לך להגביל את קביעת הפגישות, ומראיינים לעבודה על פרויקט מסוים "
+"בזמנים מוגדרים."
 
 #: admin/addshift.php:173 admin/assigntimeslots.php:163
-#: admin/assignsample.php:425 admin/quotareport.php:116 admin/outcomes.php:74
+#: admin/assignsample.php:365 admin/quotareport.php:116 admin/outcomes.php:74
 #: admin/questionnaireprefill.php:107
 msgid "Select a questionnaire"
-msgstr ""
+msgstr "בחר שאלון"
 
 #: admin/addshift.php:179
 msgid "Select year"
-msgstr ""
+msgstr "בחר שנה"
 
 #: admin/addshift.php:190
 msgid "Select week"
-msgstr ""
+msgstr "בחר שבוע"
 
 #: admin/addshift.php:243 admin/callrestrict.php:140 admin/availability.php:165
 #: admin/shifttemplate.php:136
 msgid "Day"
-msgstr ""
+msgstr "יום"
 
 #: admin/addshift.php:243
 msgid "Use shift?"
-msgstr ""
+msgstr "השתמש במשמרת?"
 
-#: admin/addshift.php:268 admin/displayappointments.php:283
-#: admin/assignsample.php:347 admin/samplelist.php:350
+#: admin/addshift.php:268 admin/displayappointments.php:284
+#: admin/assignsample.php:287 admin/samplelist.php:350
 #: admin/extensionstatus.php:210 admin/quotarow.php:398
 msgid "Save changes"
-msgstr ""
+msgstr "שמור שינויים"
 
-#: admin/new.php:52 admin/questionnairelist.php:492 admin/index.php:122
+#: admin/new.php:47 admin/questionnairelist.php:554 admin/index.php:123
 msgid "Create a new questionnaire"
-msgstr ""
+msgstr "צור שאלון חדש"
 
-#: admin/new.php:110
+#: admin/new.php:121
 msgid "Successfully inserted"
-msgstr ""
+msgstr "הוכנס בהצלחה"
 
-#: admin/new.php:110
+#: admin/new.php:121
 msgid "with ID"
-msgstr ""
+msgstr "עם קוד מזהה"
 
-#: admin/new.php:110
+#: admin/new.php:121
 msgid "linked to survey"
-msgstr ""
+msgstr "מקושר לסקר"
 
-#: admin/new.php:115
+#: admin/new.php:126
 msgid "Error: Failed to insert questionnaire"
-msgstr ""
-
-#: admin/new.php:145
-msgid "Create another ?"
-msgstr ""
-
-#: admin/new.php:146
-msgid "No, Thank you, go to"
-msgstr ""
-
-#: admin/new.php:146 admin/new.php:156 admin/questionnairelist.php:489
-#: admin/index.php:123
-msgid "Questionnaire management"
-msgstr ""
+msgstr "שגיאה: הכנסת השאלון נכשלה"
 
 #: admin/new.php:156
+msgid "Create another ?"
+msgstr "ליצור נוסף?"
+
+#: admin/new.php:157
+msgid "No, Thank you, go to"
+msgstr "לא, תודה לך, לך ל"
+
+#: admin/new.php:157 admin/new.php:167 admin/questionnairelist.php:551
+#: admin/index.php:124
+msgid "Questionnaire management"
+msgstr "ניהול שאלונים"
+
+#: admin/new.php:167
 msgid "Go to"
-msgstr ""
+msgstr "לך ל"
 
-#: admin/new.php:171 admin/new.php:173 admin/questionnairelist.php:371
-#: admin/questionnairelist.php:372
+#: admin/new.php:183 admin/new.php:185 admin/questionnairelist.php:385
+#: admin/questionnairelist.php:386
 msgid "Name for questionnaire:"
-msgstr ""
+msgstr "שם השאלון:"
 
-#: admin/new.php:173
+#: admin/new.php:185
 msgid "Enter New questionnaire name.."
-msgstr ""
+msgstr "הזן את שם השאלון החדש .."
 
-#: admin/new.php:178
+#: admin/new.php:190
 msgid "Select limesurvey instrument:"
-msgstr ""
+msgstr "בחר כלי מערכת הסקרים של ליים"
 
-#: admin/new.php:188
+#: admin/new.php:204
 msgid "Respondent selection type:"
-msgstr ""
+msgstr "בחירת סוג המשיב:"
 
-#: admin/new.php:191
+#: admin/new.php:207
 msgid "No respondent selection (go straight to questionnaire)"
-msgstr ""
+msgstr "אין בחירת משיבים (עבור ישר לשאלון)"
 
-#: admin/new.php:192
+#: admin/new.php:208
 msgid "Use basic respondent selection text (below)"
-msgstr ""
+msgstr "השתמש בטקסט בחירת המשיב הבסיסי (להלן)"
 
-#: admin/new.php:198 admin/questionnairelist.php:375
+#: admin/new.php:218 admin/questionnairelist.php:389
 msgid "Restrict appointments to shifts?"
-msgstr ""
+msgstr "הגבל האפשרות לקביעת פגישה רק לשעות המשמרת המוגדרת?"
 
-#: admin/new.php:205 admin/questionnairelist.php:378
+#: admin/new.php:225 admin/questionnairelist.php:392
 msgid "Restrict work to shifts?"
-msgstr ""
+msgstr "הגבל שעות העבודה למשמרות?"
 
-#: admin/new.php:212 admin/questionnairelist.php:382
+#: admin/new.php:232 admin/questionnairelist.php:396
 msgid "Questionnaire for testing only?"
-msgstr ""
+msgstr "האם שאלון זה לדוגמא ובדיקות בלבד?"
 
-#: admin/new.php:219 admin/questionnairelist.php:386
+#: admin/new.php:239 admin/questionnairelist.php:400
 msgid "Allow operators to generate referrals?"
-msgstr ""
+msgstr "לאפשר למפעילים ליצור הפניות?"
 
-#: admin/new.php:226 admin/questionnairelist.php:390
+#: admin/new.php:246 admin/questionnairelist.php:404
 msgid "Allow for respondent self completion via email invitation?"
-msgstr ""
+msgstr "לאפשר למשיב השלמה עצמית של השאלון באמצעות הזמנה בדוא\"ל?"
 
-#: admin/new.php:260 admin/new.php:270 admin/new.php:280 admin/new.php:290
-#: admin/new.php:302 admin/new.php:312 admin/questionnairelist.php:399
-#: admin/questionnairelist.php:409 admin/questionnairelist.php:419
-#: admin/questionnairelist.php:429 admin/questionnairelist.php:443
-#: admin/questionnairelist.php:453
+#: admin/new.php:330 admin/new.php:340 admin/new.php:350 admin/new.php:360
+#: admin/new.php:372 admin/new.php:382 admin/questionnairelist.php:459
+#: admin/questionnairelist.php:469 admin/questionnairelist.php:479
+#: admin/questionnairelist.php:489 admin/questionnairelist.php:505
+#: admin/questionnairelist.php:515
 msgid "Expand/Collapse"
-msgstr ""
+msgstr "להרחיב/לצמצם"
 
-#: admin/new.php:261 admin/questionnairelist.php:400
+#: admin/new.php:331 admin/questionnairelist.php:460
 msgid "Respondent selection introduction:"
-msgstr ""
+msgstr "מבוא בחירת המשיב:"
 
-#: admin/new.php:271 admin/questionnairelist.php:410
+#: admin/new.php:341 admin/questionnairelist.php:470
 msgid "Respondent selection project introduction:"
-msgstr ""
+msgstr "מבוא פרויקט בחירת המשיבים:"
 
-#: admin/new.php:281 admin/questionnairelist.php:420
+#: admin/new.php:351 admin/questionnairelist.php:480
 msgid "Respondent selection callback (already started questionnaire):"
-msgstr ""
+msgstr "התקשרות חוזרת לבחירת המשיבים (שאלון שכבר התחיל):"
 
-#: admin/new.php:291 admin/questionnairelist.php:430
+#: admin/new.php:361 admin/questionnairelist.php:490
 msgid "Message to leave on an answering machine:"
-msgstr ""
+msgstr "ההודעה להשארה במשיבון:"
 
-#: admin/new.php:303 admin/questionnairelist.php:444
+#: admin/new.php:373 admin/questionnairelist.php:506
 msgid "Project end text (thank you screen):"
-msgstr ""
+msgstr "טקסט סיום הפרויקט (מסך תודה):"
 
-#: admin/new.php:313 admin/questionnairelist.php:454
+#: admin/new.php:383 admin/questionnairelist.php:516
 msgid "Project information for interviewers/operators:"
-msgstr ""
+msgstr "פרטי הסקר למראיינים/מפעילים:"
 
-#: admin/new.php:325
+#: admin/new.php:395
 msgid "Create Questionnaire"
-msgstr ""
+msgstr "צור שאלון"
 
-#: admin/new.php:334
+#: admin/new.php:404
 msgid "NO active Lime surveys available"
-msgstr ""
+msgstr "אין סקר זמן ופעיל של מערכת הסקרים ליים"
 
-#: admin/assigntimeslots.php:161 admin/index.php:140
+#: admin/assigntimeslots.php:161 admin/index.php:142
 msgid "Assign Time slots"
-msgstr ""
+msgstr "הקצה משבצות זמן"
 
 #: admin/assigntimeslots.php:170
 msgid "Time slot groups"
-msgstr ""
+msgstr "קבוצות משבצות זמן"
 
 #: admin/assigntimeslots.php:171
 msgid ""
@@ -2083,22 +2089,24 @@ msgid ""
 "to select from those groups to restrict calls to a particular case to the "
 "times within the group"
 msgstr ""
+"הקצאת קבוצת זמינות לשאלון תאפשר למראיינים לבחור מבין אותן קבוצות להגביל "
+"שיחות למקרה מסוים לזמנים בתוך הקבוצה."
 
 #: admin/assigntimeslots.php:183
 msgid "There are no time slots groups selected for this questionnaire"
-msgstr ""
+msgstr "לא נבחרו קבוצות משבצות זמן לשאלון זה"
 
 #: admin/assigntimeslots.php:187
 msgid "Time slots groups selected for this questionnaire"
-msgstr ""
+msgstr "קבוצות משבצות זמן שנבחרו לשאלון זה"
 
 #: admin/assigntimeslots.php:209
 msgid "Add time slot group"
-msgstr ""
+msgstr "קבוצות משבצות זמן שנבחרו לשאלון זה"
 
 #: admin/assigntimeslots.php:218
 msgid "Call attempt time slots"
-msgstr ""
+msgstr "זמן ניסיון שיחה"
 
 #: admin/assigntimeslots.php:219 admin/assigntimeslots.php:272
 msgid ""
@@ -2108,61 +2116,64 @@ msgid ""
 "all possible time periods otherwise no cases will be available during "
 "missing timeslots."
 msgstr ""
+"הקצאת משבצות זמן לניסיונות שיחה מאפשרת ניסיון של מקרים בלבד בתוך משבצת זמן "
+"בפעם n + 1 שבה היא ניסתה לפחות n פעמים בכל חלקי הזמן שהוקצו. אנא שימו לב כי "
+"חלקי זמן חייבים לכסות את כל פרקי הזמן האפשריים אחרת לא יהיו מקרים זמינים "
+"במהלך חלקי זמן חסרים."
 
 #: admin/assigntimeslots.php:232
 msgid "There are no call attempt time slots selected for this questionnaire"
-msgstr ""
+msgstr "לא נבחרו משבצות זמן לניסיון שיחה לשאלון זה"
 
 #: admin/assigntimeslots.php:236
 msgid "Call attempt time slots selected for this questionnaire"
-msgstr ""
+msgstr "קבוצת משבצות זמן ניסיונות לשיחה שנבחרו לשאלון זה"
 
 #: admin/assigntimeslots.php:237 admin/assigntimeslots.php:299
 msgid "Availability group"
-msgstr ""
+msgstr "נבחרות זמן שיחה לשיחות שנבחרו לשאלון זה"
 
 #: admin/assigntimeslots.php:237 admin/assigntimeslots.php:299
 msgid "Weight"
-msgstr ""
+msgstr "משקל"
 
 #: admin/assigntimeslots.php:237 admin/assigntimeslots.php:299
 #: admin/extensionstatus.php:231
 msgid "Unassign"
-msgstr ""
+msgstr "בטל את ההקצאה"
 
 #: admin/assigntimeslots.php:260 admin/assigntimeslots.php:321
 msgid "Weighting (relative number of calls in this slot)"
-msgstr ""
+msgstr "שקלול (מספר יחסי של שיחות בחריץ זה)"
 
 #: admin/assigntimeslots.php:265
 msgid "Add call attempt time slot"
-msgstr ""
+msgstr "הוסף משבצת זמן לניסיון שיחה"
 
 #: admin/assigntimeslots.php:271
 msgid "Call attempt time slots for sample"
-msgstr ""
+msgstr "משבשי זמן לניסיון להתקשר לדוגמא"
 
 #: admin/assigntimeslots.php:294
 msgid ""
 "There are no call attempt time slots selected for this questionnaire sample"
-msgstr ""
+msgstr "לא נבחרו משבצות זמן לניסיון שיחה למדגם שאלון זו"
 
 #: admin/assigntimeslots.php:298
 msgid "Call attempt time slots selected for this sample"
-msgstr ""
+msgstr "קבוצת זמן שנבחרה עבור ביצוע ניסיון לשיחות במדגם זה"
 
 #: admin/assigntimeslots.php:327
 msgid "Add call attempt time slot for sample"
-msgstr ""
+msgstr "הוסף חריץ זמן לניסיון שיחה לדגימה"
 
 #: admin/availabilitygroup.php:85
 msgid "Time slots"
-msgstr ""
+msgstr "חריצי זמן"
 
 #: admin/availabilitygroup.php:122 admin/availabilitygroup.php:133
-#: admin/remote.php:116 admin/remote.php:132
 msgid "Modify"
-msgstr ""
+msgstr "עריכה"
 
 #: admin/availabilitygroup.php:127
 msgid ""
@@ -2170,474 +2181,480 @@ msgid ""
 "are used for the availability function and also the call attempt time slot "
 "function."
 msgstr ""
+"משבצות זמן מגדירות פרקי זמן במהלך ימים מסוימים בשבוע. אלה משמשים לפונקציית "
+"הזמינות וגם לפונקציית חריץ הזמן לניסיון שיחה."
 
 #: admin/availabilitygroup.php:130
 msgid "No time slots"
-msgstr ""
+msgstr "אין משבצות זמן"
 
 #: admin/availabilitygroup.php:133 admin/availabilitygroup.php:141
 msgid "Time slot name"
-msgstr ""
+msgstr "אין משבצות זמן"
 
 #: admin/availabilitygroup.php:140
 msgid "Add new time slot"
-msgstr ""
+msgstr "הוסף משבצת זמן חדשה"
 
 #: admin/availabilitygroup.php:141 admin/samplelist.php:333
-#: admin/remote.php:165
 msgid "Enter"
-msgstr ""
+msgstr "כנס"
 
 #: admin/availabilitygroup.php:141 admin/samplelist.php:333
-#: admin/remote.php:165
 msgid "new"
-msgstr ""
+msgstr "חדש"
 
 #: admin/availabilitygroup.php:142
 msgid "Add time slot"
-msgstr ""
+msgstr "הוסף משבצת זמן"
 
-#: admin/operators.php:145
+#: admin/operators.php:146
 msgid "Added operator :"
-msgstr ""
+msgstr "נוסף מפעיל:"
 
-#: admin/operators.php:148
+#: admin/operators.php:149
 msgid ""
 "FreePBX needs to be reloaded for the new VoIP extension to take effect"
-msgstr ""
+msgstr "צריך לטעון מחדש את FreePBX כדי שתוסף ה- VoIP החדש ייכנס לתוקף"
 
-#: admin/operators.php:162
+#: admin/operators.php:163
 msgid ""
 "Could not add operator. There may already be an operator of this name:"
-msgstr ""
+msgstr "לא ניתן להוסיף אופרטור. ייתכן שכבר יש מפעיל בשם זה:"
 
-#: admin/operators.php:168 admin/operators.php:308 admin/operatorlist.php:424
+#: admin/operators.php:169 admin/operators.php:309 admin/operatorlist.php:428
 msgid "Add an operator"
-msgstr ""
+msgstr "הוסף מפעיל"
 
-#: admin/operators.php:177
+#: admin/operators.php:178
 msgid "The username and extension must be unique for each operator."
-msgstr ""
+msgstr "שם המשתמש והתוסף חייבים להיות ייחודיים עבור כל מפעיל."
 
-#: admin/operators.php:248 admin/operatorlist.php:232 email.php:181
+#: admin/operators.php:249 admin/operatorlist.php:236 email.php:350
 msgid "Last name"
-msgstr ""
+msgstr "שם משפחה"
 
-#: admin/operators.php:260 admin/operatorlist.php:244
+#: admin/operators.php:261 admin/operatorlist.php:248
 msgid "TimeZones list"
-msgstr ""
+msgstr "רשימת אזורי זמן"
 
-#: admin/operators.php:265 admin/operatorlist.php:250
+#: admin/operators.php:266 admin/operatorlist.php:254
 msgid "Uses VoIP"
-msgstr ""
+msgstr "משתמש ב- VoIP"
 
-#: admin/operators.php:274 admin/operatorlist.php:261
-#: admin/operatorlist.php:425
+#: admin/operators.php:275 admin/operatorlist.php:265
+#: admin/operatorlist.php:429
 msgid "Extensions"
-msgstr ""
+msgstr "הרחבות"
 
-#: admin/operators.php:281 admin/operatorlist.php:268
+#: admin/operators.php:282 admin/operatorlist.php:272
 msgid "Uses chat"
-msgstr ""
+msgstr "משתמש בצ'אט"
 
-#: admin/operators.php:287 admin/operatorlist.php:274
+#: admin/operators.php:288 admin/operatorlist.php:278
 msgid "Jabber/XMPP chat user"
-msgstr ""
+msgstr "משתמש צ'אט Jabber/XMPP"
 
-#: admin/operators.php:291 admin/operatorlist.php:278
+#: admin/operators.php:292 admin/operatorlist.php:282
 msgid "Jabber/XMPP chat password"
-msgstr ""
+msgstr "סיסמת צ'אט של Jabber/XMPP"
 
-#: admin/operators.php:297 admin/operatorlist.php:285
+#: admin/operators.php:298 admin/operatorlist.php:289
 msgid "Is the operator a system administrator?"
-msgstr ""
+msgstr "האם המפעיל הוא מנהל מערכת?"
 
-#: admin/supervisor.php:125 admin/index.php:183
+#: admin/supervisor.php:125 admin/index.php:185
 msgid "Assign outcomes to cases"
-msgstr ""
+msgstr "הקצה תוצאות למקרים"
 
 #: admin/supervisor.php:132
 msgid "Enter a case id"
-msgstr ""
+msgstr "הקלד קוד מזהה מקרה"
 
 #: admin/supervisor.php:133
 msgid "Select case"
-msgstr ""
+msgstr "בחר מקרה"
 
-#: admin/supervisor.php:157 admin/timezonetemplate.php:109
+#: admin/new.php:198 admin/new.php:406 admin/supervisor.php:157
+#: admin/timezonetemplate.php:109
 msgid "or"
-msgstr ""
+msgstr "או"
 
 #: admin/supervisor.php:157
 msgid "Select case from list of cases referred to the supervisor:"
-msgstr ""
+msgstr "בחר מקרה מרשימת המקרים המופנים לממונה:"
 
 #: admin/supervisor.php:167
 msgid "Set an outcome for this call"
-msgstr ""
+msgstr "קבע תוצאה לשיחה זו"
 
 #: admin/supervisor.php:193 admin/samplesearch.php:218
 msgid "WARNING !"
-msgstr ""
+msgstr "אַזהָרָה"
 
 #: admin/supervisor.php:196 admin/samplesearch.php:221
 msgid "Are you sure you want to delete"
-msgstr ""
+msgstr "אתה בטוח שאתה רוצה למחוק?"
 
 #: admin/supervisor.php:196 admin/samplesearch.php:221
 #: admin/samplesearch.php:262
 msgid "Sample ID"
-msgstr ""
+msgstr "מזהה לדוגמא"
 
 #: admin/supervisor.php:199 admin/samplesearch.php:224
 msgid "NOOOO..."
-msgstr ""
+msgstr "לאאאא...."
 
 #: admin/supervisor.php:200 admin/supervisor.php:374 admin/supervisor.php:422
-#: admin/displayappointments.php:316 admin/displayappointments.php:341
-#: admin/set_outcomes.php:278 admin/clientquestionnaire.php:274
-#: admin/quotarow.php:422 admin/quotarow.php:513 admin/samplesearch.php:225
+#: admin/displayappointments.php:317 admin/displayappointments.php:342
+#: admin/set_outcomes.php:278 admin/clientquestionnaire.php:307
+#: admin/quotarow.php:422 admin/quotarow.php:508 admin/samplesearch.php:225
 #: admin/questionnaireprefill.php:134
 msgid "Delete"
-msgstr ""
+msgstr "מחיקה"
 
 #: admin/supervisor.php:312 admin/casesbyoutcome.php:77
 msgid "Project"
-msgstr ""
+msgstr "פרויקט"
 
 #: admin/supervisor.php:314 admin/casesbyoutcome.php:100
 msgid "Current outcome:"
-msgstr ""
+msgstr "התוצאה הנוכחית:"
 
 #: admin/supervisor.php:320
 msgid "Sample details"
-msgstr ""
+msgstr "פרטי מדגם"
 
 #: admin/supervisor.php:331 admin/samplesearch.php:290
 msgid "Sample id"
-msgstr ""
+msgstr "מזהה דוגמא"
 
-#: admin/supervisor.php:331
+#: include/limesurvey/admin/exportresults.php:257 admin/supervisor.php:331
 msgid "Token"
-msgstr ""
+msgstr "סימן(Token)"
 
 #: admin/supervisor.php:359
 msgid "No sample data for this case"
-msgstr ""
+msgstr "אין נתוני מדגם למקרה זה"
 
 #: admin/supervisor.php:374 admin/supervisor.php:422
-#: admin/displayappointments.php:299 admin/displayappointments.php:324
-#: admin/assignsample.php:445 admin/samplelist.php:474 admin/samplelist.php:485
-#: admin/questionnairelist.php:507
+#: admin/displayappointments.php:300 admin/displayappointments.php:325
+#: admin/assignsample.php:382 admin/samplelist.php:474 admin/samplelist.php:485
+#: admin/questionnairelist.php:569
 msgid "ARE YOU SURE?"
-msgstr ""
+msgstr "אתה בטוח?"
 
-#: admin/supervisor.php:390 admin/displayappointments.php:316
+#: admin/supervisor.php:390 admin/displayappointments.php:317
 msgid "Current outcome"
-msgstr ""
+msgstr "התוצאה הנוכחית"
 
-#: admin/supervisor.php:390 admin/displayappointments.php:316
+#: admin/supervisor.php:390 admin/displayappointments.php:317
 msgid "Operator who called"
-msgstr ""
+msgstr "מפעיל שהתקשר"
 
 #: admin/supervisor.php:393
 msgid "No appointments for this case"
-msgstr ""
+msgstr "אין פגישות למקרה זה"
 
 #: admin/supervisor.php:404
 msgid "Change outcome"
-msgstr ""
+msgstr "שינוי התוצאה"
 
 #: admin/supervisor.php:411
 msgid "Call list"
-msgstr ""
+msgstr "רשימת שיחות"
 
 #: admin/supervisor.php:413 calllist.php:85
 msgid "No calls made"
-msgstr ""
+msgstr "לא בוצעו שיחות"
 
-#: admin/supervisor.php:429 admin/callhistory.php:132 admin/callhistory.php:157
-#: admin/dataoutput.php:93
+#: include/limesurvey/admin/exportresults.php:263
+#: include/limesurvey/admin/exportresults.php:621
+#: include/limesurvey/admin/exportresults.php:622
+#: include/limesurvey/admin/exportresults.php:995 admin/supervisor.php:429
+#: admin/callhistory.php:132 admin/callhistory.php:157 admin/dataoutput.php:93
 msgid "Case notes"
-msgstr ""
+msgstr "מקרי הערות"
 
 #: admin/supervisor.php:465
 msgid "Call attempts by timeslot"
-msgstr ""
+msgstr "ניסיונות שיחה לפי חותמת זמן"
 
 #: admin/supervisor.php:466 admin/availability.php:138
 msgid "Time slot"
-msgstr ""
+msgstr "מרווח זמן"
 
 #: admin/supervisor.php:469
 msgid "Time slots NOT defined"
-msgstr ""
+msgstr "משבצות זמן לא מוגדרות"
 
 #: admin/supervisor.php:476
 msgid "Assign this case to operator (will appear as next case for them)"
-msgstr ""
+msgstr "הקצה מקרה זה למפעיל (יופיע כמקרה הבא עבורם)"
 
 #: admin/supervisor.php:487
 msgid "Assign this case to operator"
-msgstr ""
+msgstr "הקצה מקרה זה למפעיל"
+
+#: admin/supervisor.php:497
+msgid "Modify responses for this case"
+msgstr "שנה את התגובות למקרה זה"
 
 #: admin/supervisor.php:499
-msgid "Modify responses for this case"
-msgstr ""
-
-#: admin/supervisor.php:501
 msgid "Case not yet started in Limesurvey"
-msgstr ""
+msgstr "המקרה עדיין לא התחיל ב- Limesurvey"
 
-#: admin/supervisor.php:506
+#: admin/supervisor.php:504
 msgid "Availability groups"
-msgstr ""
+msgstr "קבוצות זמינות"
 
-#: admin/supervisor.php:521 availability.php:128
+#: admin/supervisor.php:519 availability.php:128
 msgid ""
 "Select groups to limit availability (Selecting none means always available)"
-msgstr ""
+msgstr "בחר קבוצות כדי להגביל את הזמינות (בחירה באחת מהאמצעים תמיד זמינה)"
 
-#: admin/supervisor.php:533
+#: admin/supervisor.php:531
 msgid "Update case availability"
-msgstr ""
+msgstr "עדכן את זמינות המקרים"
 
-#: admin/supervisor.php:539 availability.php:148
+#: admin/supervisor.php:537 availability.php:148
 msgid "Availability groups not defined for this questionnaire"
-msgstr ""
+msgstr "קבוצות זמינות לא מוגדרות עבור שאלון זה"
 
-#: admin/supervisor.php:544
+#: admin/supervisor.php:542
 msgid "Set a case outcome"
-msgstr ""
+msgstr "קבעו תוצאת מקרה"
 
-#: admin/supervisor.php:562 admin/supervisor.php:566
+#: admin/supervisor.php:560 admin/supervisor.php:564
 msgid "Deidentify"
-msgstr ""
+msgstr "לזהות"
 
-#: admin/supervisor.php:563
+#: admin/supervisor.php:561
 msgid "Remove all sample details and contact numbers from this case"
-msgstr ""
+msgstr "הסר את כל פרטי המדגם ומספרי אנשי הקשר מהמקרה הזה"
 
-#: admin/supervisor.php:572
+#: admin/supervisor.php:570
 msgid "Case does not exist"
-msgstr ""
+msgstr "מקרה לא קיים"
 
 #: admin/operatorperformance.php:71
 msgid "Operator Performance"
-msgstr ""
+msgstr "ביצועי מפעיל"
 
 #: admin/operatorperformance.php:78 admin/dataoutput.php:202
 #: admin/shiftreport.php:71 admin/samplecallattempts.php:190
 msgid "Please select a questionnaire"
-msgstr ""
+msgstr "אנא בחר שאלון"
 
 #: admin/operatorperformance.php:85 performance.php:90
 msgid "This project"
-msgstr ""
+msgstr "פרוייקט הזה"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
-#: admin/overallreport.php:134 admin/quotareport.php:263 admin/outcomes.php:306
-#: admin/quotarow.php:591 performance.php:84 performance.php:91
+#: admin/overallreport.php:134 admin/quotareport.php:310 admin/outcomes.php:306
+#: admin/quotarow.php:586 performance.php:84 performance.php:91
 msgid "Completions"
-msgstr ""
+msgstr "השלמות"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 #: admin/overallreport.php:134
 msgid "Total time"
-msgstr ""
+msgstr "זמן כולל"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 #: admin/overallreport.php:134
 msgid "Call time"
-msgstr ""
+msgstr "זמן שיחה"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 #: admin/overallreport.php:134
 msgid "Completions p/h"
-msgstr ""
+msgstr "השלמות פר שעה"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 #: admin/overallreport.php:134
 msgid "Calls p/h"
-msgstr ""
+msgstr "שיחות פר שעה"
 
 #: admin/operatorperformance.php:86 admin/operatorperformance.php:109
 #: admin/overallreport.php:134
 msgid "Effectiveness"
-msgstr ""
+msgstr "יְעִילוּת"
 
 #: admin/operatorperformance.php:93
 msgid "till"
-msgstr ""
+msgstr "עד"
 
 #: admin/operatorperformance.php:101 admin/shiftreport.php:78
 msgid "Please select a shift"
-msgstr ""
+msgstr "אנא בחר משמרת"
 
 #: admin/operatorperformance.php:108 performance.php:83
 msgid "This shift"
-msgstr ""
+msgstr "השינוי הזה"
 
 #: admin/displayappointments.php:133
 msgid "Now modify case outcome"
-msgstr ""
+msgstr "כעת שנה את תוצאות המקרה"
 
 #: admin/displayappointments.php:135
 msgid ""
 "The appointment has been deleted. Now you must modify the case outcome"
-msgstr ""
+msgstr "המקרה נמחק. כעת עליך לשנות את תוצאת המקרה."
 
 #: admin/displayappointments.php:136
 msgid "Modify case outcome"
-msgstr ""
+msgstr "שנה את תוצאות המקרה"
 
 #: admin/displayappointments.php:157
 msgid "Create NEW appointment"
-msgstr ""
+msgstr "צור פגישה חדשה"
 
 #: admin/displayappointments.php:165
 msgid "Edit appointment"
-msgstr ""
+msgstr "ערוך פגישה"
 
 #: admin/displayappointments.php:184
 msgid ""
 "ERROR in DB records, Check tables 'appointment' and 'respondent' and Time "
 "zone settings"
 msgstr ""
+"שגיאה ברשומות הדאטה בייס, בדוק טבלאות 'פגישה' ו'משיב 'והגדרות אזור זמן"
 
 #: admin/displayappointments.php:217
 msgid "Contact phone"
-msgstr ""
+msgstr "טלפון איש הקשר"
 
 #: admin/displayappointments.php:241
 msgid ""
 "ATTENTION!    Keep in mind that you're setting 'Start' & 'End' appoinment "
 "times in RESPONDENT LOCAL TIME !!!"
 msgstr ""
+"שים לב! זכור כי אתה מגדיר את זמני הפגישה 'התחל' ו'סיום 'בהתאם לזמן המקורי של "
+"המשיב"
 
 #: admin/displayappointments.php:245
 msgid "Respondent TimeZone"
-msgstr ""
+msgstr "אזור הזמן של המשיב"
 
 #: admin/displayappointments.php:247
 msgid "Respondent Time"
-msgstr ""
+msgstr "זמן המשיב"
 
 #: admin/displayappointments.php:249 admin/overallreport.php:109
 #: admin/callhistory.php:132 admin/callhistory.php:157
 #: admin/bulkappointment.php:237
 msgid "Start time"
-msgstr ""
+msgstr "שעת התחלה"
 
 #: admin/displayappointments.php:251 admin/overallreport.php:111
 #: admin/callhistory.php:132 admin/callhistory.php:157
 #: admin/bulkappointment.php:237
 msgid "End time"
-msgstr ""
+msgstr "שעת סיום"
 
-#: admin/displayappointments.php:280
+#: admin/displayappointments.php:281
 msgid "Cancel edit"
-msgstr ""
+msgstr "בטל עריכה"
 
-#: admin/displayappointments.php:286
+#: admin/displayappointments.php:287
 msgid "Delete this appointment"
-msgstr ""
-
-#: admin/displayappointments.php:294
-msgid "Display Appointments"
-msgstr ""
+msgstr "מחר את הפגישה"
 
 #: admin/displayappointments.php:295
+msgid "Display Appointments"
+msgstr "הצג הפגישות"
+
+#: admin/displayappointments.php:296
 msgid "All appointments (with times displayed in your time zone)"
-msgstr ""
+msgstr "כל הפגישות (כאשר השעות מוצגות באזור הזמן שלך)"
 
-#: admin/displayappointments.php:316
+#: admin/displayappointments.php:317
 msgid "Created by"
-msgstr ""
+msgstr "נוצר על ידי"
 
-#: admin/displayappointments.php:318
+#: admin/displayappointments.php:319
 msgid "No future appointments"
-msgstr ""
+msgstr "אין פגישות עתידיות"
 
-#: admin/displayappointments.php:320
+#: admin/displayappointments.php:321
 msgid "Missed appointments (with times displayed in your time zone)"
-msgstr ""
+msgstr "פגישות שהוחמצו (כאשר השעות מוצגות באזור הזמן שלך)"
 
-#: admin/displayappointments.php:343
+#: admin/displayappointments.php:344
 msgid "No missed appointments"
-msgstr ""
+msgstr "אין פגישות שהוחמצו"
 
-#: admin/overallreport.php:86 admin/index.php:171
+#: admin/overallreport.php:86 admin/index.php:173
 msgid "Overall performance report"
-msgstr ""
+msgstr "דו\"ח ביצועים כולל"
 
 #: admin/overallreport.php:117
 msgid "Report type"
-msgstr ""
+msgstr "סוג דוח"
 
 #: admin/overallreport.php:118
 msgid "by Operator"
-msgstr ""
+msgstr "על פי מפעיל"
 
 #: admin/overallreport.php:118
 msgid "by Questionnaire"
-msgstr ""
+msgstr "על פי שאלון"
 
 #: admin/overallreport.php:123
 msgid "Generate report"
-msgstr ""
+msgstr "צור דוח"
 
 #: admin/callhistory.php:113 admin/callhistory.php:144
 msgid "Call History List"
-msgstr ""
+msgstr "רשימת היסטוריית שיחות"
 
 #: admin/callhistory.php:132 admin/callhistory.php:157
 #: admin/shiftreport.php:110 admin/systemsort.php:97 admin/systemsort.php:111
 #: admin/outcomes.php:306 admin/voipmonitor.php:95 admin/voipmonitor.php:107
 msgid "Date"
-msgstr ""
+msgstr "תאריך"
 
 #: admin/callhistory.php:150
 msgid "NO Call history records for Your query"
-msgstr ""
+msgstr "אין רשומות שיחות היסטוריית עבור השאילתה שלך"
 
 #: admin/callhistory.php:181
 msgid "Download Call History List"
-msgstr ""
+msgstr "הורד רשימת היסטוריית שיחות"
 
-#: admin/assignsample.php:257
+#: admin/assignsample.php:239
 msgid "Edit assignment parameters"
-msgstr ""
+msgstr "ערוך פרמטרי הקצאה"
 
-#: admin/assignsample.php:258
+#: admin/assignsample.php:240
 msgid "Assign samples to questionnaire: "
-msgstr ""
+msgstr "הקצה מדגמים לשאלון: "
 
-#: admin/assignsample.php:311 admin/assignsample.php:539
+#: admin/assignsample.php:277 admin/assignsample.php:453
 msgid "Number of answering machine messages to leave per case"
-msgstr ""
+msgstr "מספר הודעות בתא הקולי שיש להשאיר לכל מקרה"
 
-#: admin/assignsample.php:314 admin/assignsample.php:543
+#: admin/assignsample.php:280 admin/assignsample.php:457
 msgid "Select from sample randomly?"
-msgstr ""
+msgstr "לבחור מתוך המדגם באופן אקראי?"
 
-#: admin/assignsample.php:316 admin/assignsample.php:545
+#: admin/assignsample.php:282 admin/assignsample.php:459
 msgid "Sequentially"
-msgstr ""
+msgstr "רציף"
 
-#: admin/assignsample.php:317 admin/assignsample.php:479
-#: admin/assignsample.php:547
+#: admin/assignsample.php:283 admin/assignsample.php:416
+#: admin/assignsample.php:461
 msgid "Allow new numbers to be drawn?"
-msgstr ""
+msgstr "האם אפשר לדגום  מספרים חדשים?"
 
 #: admin/assignsample.php:322 admin/assignsample.php:571
 msgid "Sample variables to copy to Limesurvey participant table"
 msgstr ""
 
-#: admin/assignsample.php:324 admin/assignsample.php:573 admin/quotarow.php:513
-#: admin/questionnaireprefill.php:134
+#: admin/quotarow.php:508 admin/questionnaireprefill.php:134
 msgid "Sample variable"
-msgstr ""
+msgstr "משתנה לדוגמא"
 
 #: admin/assignsample.php:324 admin/assignsample.php:573
 msgid "Limesurvey participant variable"
@@ -2647,29 +2664,29 @@ msgstr ""
 msgid "Do not copy to Limesurvey"
 msgstr ""
 
-#: admin/assignsample.php:413
+#: admin/assignsample.php:353
 msgid "List & Add Sample"
-msgstr ""
+msgstr "רשום והוסף מדגם"
 
-#: admin/assignsample.php:414 admin/index.php:134
+#: admin/assignsample.php:354 admin/index.php:136
 msgid "Assign samples to questionnaires"
-msgstr ""
+msgstr "הקצה דוגמאות לשאלונים"
 
-#: admin/assignsample.php:436
+#: admin/assignsample.php:373
 msgid "Samples assigned to questionnaire"
-msgstr ""
+msgstr "מדגמים שהוקצו לשאלון"
 
-#: admin/assignsample.php:479
+#: admin/assignsample.php:416
 msgid "Unassign sample"
-msgstr ""
+msgstr "בטל את הקצאת המדגם"
 
-#: admin/assignsample.php:482
+#: admin/assignsample.php:419
 msgid "No samples selected for this questionnaire"
-msgstr ""
+msgstr "לא נבחרו מדגמים עבור שאלון זה"
 
-#: admin/assignsample.php:495
+#: admin/assignsample.php:438
 msgid "Add a sample to this questionnaire:"
-msgstr ""
+msgstr "הוסף מדגם לשאלון זה:"
 
 #: admin/assignsample.php:516
 msgid ""
@@ -2677,293 +2694,301 @@ msgid ""
 "this survey has a participant table created."
 msgstr ""
 
-#: admin/assignsample.php:527
+#: admin/assignsample.php:441
 msgid "Select sample:"
-msgstr ""
+msgstr "בחר מדגם:"
 
-#: admin/assignsample.php:551
+#: admin/assignsample.php:467
 msgid "Generate cases for all sample records?"
-msgstr ""
+msgstr "האם ליצור מקרים לכל הרשומות במדגם?"
 
-#: admin/assignsample.php:553
+#: admin/assignsample.php:469
 msgid ""
 "Ideal if you intend to send an email invitation to sample members before "
 "attempting to call using queXS"
 msgstr ""
+"אידיאלי אם אתה מתכוון לשלוח הזמנה בדוא\"ל לחברים למדגם לפני שתנסה להתקשר "
+"באמצעות queXS"
 
-#: admin/assignsample.php:558
+#: admin/assignsample.php:474
 msgid "Select an outcome to assign generated cases to"
-msgstr ""
+msgstr "בחר תוצאה שאליה תקצה מקרים שנוצרו"
 
-#: admin/assignsample.php:563
+#: admin/assignsample.php:479
 msgid "Only generate cases where there is a valid email attached?"
-msgstr ""
+msgstr "צור רק מקרים שבהם מצורף מייל תקף?"
 
-#: admin/assignsample.php:598 admin/import.php:102 admin/import.php:150
+#: admin/assignsample.php:488 admin/import.php:108 admin/import.php:156
 msgid "Add sample"
-msgstr ""
+msgstr "הוסף דוגמא"
 
 #: admin/timezonetemplate.php:97
 msgid "Set Timezones"
-msgstr ""
+msgstr "הגדר אזורי זמן"
 
 #: admin/timezonetemplate.php:109
 msgid ""
 "Check that you have granted relevant permissions on 'time_zone_...' tables "
 "in database named 'mysql'."
 msgstr ""
+"בדוק שהענקת הרשאות רלוונטיות בטבלאות 'אזור_זמן _...' במסד הנתונים בשם "
+"'mysql'."
 
 #: admin/timezonetemplate.php:112
 msgid "Default Timezone: "
-msgstr ""
+msgstr "אזור זמן ברירת מחדל: "
 
 #: admin/timezonetemplate.php:116
 msgid "Set default timezone"
-msgstr ""
+msgstr "הגדר אזור זמן ברירת מחדל"
 
 #: admin/timezonetemplate.php:121
 msgid "Timezone list"
-msgstr ""
+msgstr "רשימת אזור זמן"
 
 #: admin/timezonetemplate.php:124
 msgid "Remove Timezone"
-msgstr ""
+msgstr "הסר אזור זמן"
 
 #: admin/timezonetemplate.php:124 admin/timezonetemplate.php:128
 msgid "Remove"
-msgstr ""
+msgstr "הסרה"
 
 #: admin/timezonetemplate.php:128
 msgid "Timezone name"
-msgstr ""
+msgstr "שם אזור זמן"
 
 #: admin/timezonetemplate.php:128
 msgid "Time diff to Default Time zone"
-msgstr ""
+msgstr "הפרש זמן לאזור הזמן המוגדר כברירת מחדל"
 
 #: admin/timezonetemplate.php:128
 msgid "Current time"
-msgstr ""
+msgstr "זמן נוכחי"
 
 #: admin/timezonetemplate.php:131
 msgid "Add a Timezone:"
-msgstr ""
+msgstr "הוסף אזור זמן:"
 
 #: admin/timezonetemplate.php:135
 msgid "Add Timezone"
-msgstr ""
+msgstr "הוסף אזור זמן"
 
 #: admin/samplelist.php:168
 msgid ""
 "Smth wrong with selected field types. </br>Please check again var types "
 "selection and/or  fields that you supposed to delete."
 msgstr ""
+"טעות בשני סוגי השדות שנבחרו. </br> אנא בדוק שוב את מבחר סוגי השדות ו/או שדות "
+"שאתה אמור למחוק."
 
 #: admin/samplelist.php:286
 msgid "Rename, Set viewing permissions & Manage sample variables"
-msgstr ""
+msgstr "שנה שם, הגדר הרשאות צפייה ונהל משתני דוגמה"
 
-#: admin/samplelist.php:287 admin/samplelist.php:497 admin/index.php:132
+#: admin/samplelist.php:287 admin/samplelist.php:497 admin/index.php:134
 msgid "Sample management"
-msgstr ""
+msgstr "ניהול לדוגמא"
 
 #: admin/samplelist.php:324
 msgid "Search this sample"
-msgstr ""
+msgstr "חפש את הדוגמא הזאת"
 
 #: admin/samplelist.php:325
 msgid "Add to this sample"
-msgstr ""
+msgstr "הוסף את הדוגמא הזאת"
 
 #: admin/samplelist.php:337
 msgid "Rename"
-msgstr ""
+msgstr "שינוי שם"
 
 #: admin/samplelist.php:346
 msgid "Sample variable (Column)"
-msgstr ""
+msgstr "משתנה לדוגמא (עמודה)"
 
 #: admin/samplelist.php:346
 msgid "Visible?"
-msgstr ""
+msgstr "גלוי?"
 
 #: admin/samplelist.php:346
 msgid "Var type"
-msgstr ""
+msgstr "סוג משתנה"
 
 #: admin/samplelist.php:346
 msgid "Example data"
-msgstr ""
+msgstr "דוגמא לנתונים"
 
 #: admin/samplelist.php:346
 msgid "Delete ?"
-msgstr ""
+msgstr "למחוק?"
 
 #: admin/samplelist.php:360
 msgid ""
 "Select which fields from this sample to deidentify. </p> Deidentified fields "
 "will be permanently deleted from the sample."
 msgstr ""
+"בחר אילו שדות מתוך המדגם הזה לזיהוי. </p> שדות לא מזוהים יימחקו לצמיתות "
+"מהמדגם."
 
 #: admin/samplelist.php:364
 msgid "There's no data in this sample.  Probably was deidentified earlier."
-msgstr ""
+msgstr "אין נתונים במדגם זה. כנראה זוהתה קודם לכן."
 
 #: admin/samplelist.php:378
 msgid "Clean it"
-msgstr ""
+msgstr "נקנה את זה"
 
 #: admin/samplelist.php:395
 msgid "Fix  this sample "
-msgstr ""
+msgstr "תקן את הדוגמא הזאת "
 
-#: admin/samplelist.php:472 admin/questionnairelist.php:505
-#: admin/operatorlist.php:390
+#: admin/samplelist.php:472 admin/questionnairelist.php:567
+#: admin/operatorlist.php:394
 msgid "Enable"
-msgstr ""
+msgstr "אפשר"
 
-#: admin/samplelist.php:474 admin/questionnairelist.php:507
-#: admin/operatorlist.php:392
+#: admin/samplelist.php:474 admin/questionnairelist.php:569
+#: admin/operatorlist.php:396
 msgid "Disable"
-msgstr ""
+msgstr "נטרל"
 
 #: admin/samplelist.php:478
 msgid "Viewing permissions"
-msgstr ""
+msgstr "צפייה בהרשאות"
 
 #: admin/samplelist.php:480
 msgid "Edit sample parameters"
-msgstr ""
+msgstr "ערוך פרמטרים לדוגמה"
 
 #: admin/samplelist.php:485
 msgid "DELETE SAMPLE"
-msgstr ""
+msgstr "מחוק דוגמא"
 
-#: admin/samplelist.php:487 admin/index.php:133 admin/samplesearch.php:210
+#: admin/samplelist.php:487 admin/index.php:135 admin/samplesearch.php:210
 msgid "Search the sample"
-msgstr ""
+msgstr "חפש במדגם"
 
 #: admin/samplelist.php:488
 msgid "Add to the sample"
-msgstr ""
+msgstr "להוסיף דוגמא"
 
-#: admin/samplelist.php:489 admin/questionnairelist.php:531 admin/index.php:167
+#: admin/samplelist.php:489 admin/questionnairelist.php:593 admin/index.php:169
 #: index.php:310 index_interface2.php:277
 msgid "Call history"
 msgstr "היסטורית שיחות"
 
 #: admin/samplelist.php:489
 msgid "sample"
-msgstr ""
+msgstr "דוגמא"
 
 #: admin/samplelist.php:496
 msgid "Sample list"
-msgstr ""
+msgstr "רשימת דוגמאות"
 
-#: admin/samplelist.php:500 admin/index.php:130
+#: admin/samplelist.php:500 admin/index.php:132
 msgid "Import a sample file"
-msgstr ""
+msgstr "ייבא קובץ לדוגמא"
 
 #: admin/extensionstatus.php:106
 msgid ""
 "Failed to add extension. There already may be an extension of this name"
-msgstr ""
+msgstr "הוספת שלוחה נכשלה. ייתכן שכבר יש שלוחה עם שם זה"
 
 #: admin/extensionstatus.php:138
 msgid "Extensions & status"
-msgstr ""
+msgstr "שלוחות וסטטוס"
 
 #: admin/extensionstatus.php:192
 msgid "Edit extension"
-msgstr ""
+msgstr "עריכת שלוחה"
 
 #: admin/extensionstatus.php:192
 msgid "Add an extension"
-msgstr ""
+msgstr "הוסף שלוחה"
 
 #: admin/extensionstatus.php:195
 msgid "Extension name: "
-msgstr ""
+msgstr "שם שלוחה: "
 
 #: admin/extensionstatus.php:196
 msgid "such as SIP/1000"
-msgstr ""
+msgstr "לדוגמא spi/6723"
 
 #: admin/extensionstatus.php:199
 msgid "Extension password: "
-msgstr ""
+msgstr "סיסמת שלוחה: "
 
 #: admin/extensionstatus.php:200
 msgid "Enter New Password"
-msgstr ""
+msgstr "הכנס סיסמה חדשה"
 
 #: admin/extensionstatus.php:200
 msgid " or "
-msgstr ""
+msgstr " או "
 
 #: admin/extensionstatus.php:201
 msgid "New password"
-msgstr ""
+msgstr "סיסמה חדשה"
 
 #: admin/extensionstatus.php:202
 msgid "characters long"
-msgstr ""
+msgstr "אורך תווים"
 
 #: admin/extensionstatus.php:210 admin/extensionstatus.php:272
 msgid "Add extension"
-msgstr ""
+msgstr "הוסף שלוחה"
 
 #: admin/extensionstatus.php:218
 msgid "Delete extension"
-msgstr ""
+msgstr "מחק שלוחה"
 
 #: admin/extensionstatus.php:221
 msgid "Unassign the operator from this extension to be able to delete it"
-msgstr ""
+msgstr "בטל את ההקצאה של המפעיל מהשלוחה הזו כדי שתוכל למחוק אותו"
 
 #: admin/extensionstatus.php:231
 msgid "End case to change assignment"
-msgstr ""
+msgstr "סיים המקרה כדי לבצע שינוי הקצאה"
 
 #: admin/extensionstatus.php:232
 msgid "VoIP Offline"
-msgstr ""
+msgstr "VoIP לא מקוון"
 
 #: admin/extensionstatus.php:232
 msgid "VoIP Online"
-msgstr ""
+msgstr "VoIP מקוון"
 
 #: admin/extensionstatus.php:233
 msgid "Not called"
-msgstr ""
+msgstr "לא חויג"
 
 #: admin/extensionstatus.php:233
 msgid "Done"
-msgstr ""
+msgstr "הסתיים"
 
 #: admin/extensionstatus.php:266
 msgid "Assignment"
-msgstr ""
+msgstr "משימה"
 
 #: admin/extensionstatus.php:266
 msgid "VoIP Status"
-msgstr ""
+msgstr "סטטוס VoIP"
 
 #: admin/extensionstatus.php:266
 msgid "Call state"
-msgstr ""
+msgstr "סטטוס שיחה"
 
 #: admin/extensionstatus.php:266
 msgid "Time on call"
-msgstr ""
+msgstr "זמן בשיחה"
 
 #: admin/extensionstatus.php:270
 msgid "No extensions"
-msgstr ""
+msgstr "אין שלוחות"
 
 #: admin/operatorskill.php:152
 msgid "Assign operators to Skills"
-msgstr ""
+msgstr "הקצה את המפעילים לכישורים"
 
 #: admin/operatorskill.php:154
 msgid ""
@@ -2972,337 +2997,363 @@ msgid ""
 "outcomes to a case. This restricts which ones will be assigned to an "
 "operator."
 msgstr ""
+"הגדר אילו סוגי מקרים יהיו זמינים לכל מפעיל. </br> שים לב שכל המפעילים יורשו "
+"להקצות את כל התוצאות האפשריות למקרה. זה מגביל אילו מהם יוקצו למפעיל."
 
-#: admin/operatorskill.php:275 admin/index.php:159
+#: admin/operatorskill.php:275 admin/index.php:161
 msgid "Modify operator skills"
-msgstr ""
+msgstr "שנה את כישורי המפעיל"
 
 #: admin/set_outcomes.php:82
 msgid "Default outcomes updated"
-msgstr ""
+msgstr "תוצאות ברירת המחדל עודכנו"
 
 #: admin/set_outcomes.php:82
 msgid "Default outcomes NOT updated"
-msgstr ""
+msgstr "תוצאות ברירת המחדל לא עודכנו"
 
 #: admin/set_outcomes.php:117
 msgid "Questionnaire outcomes saved"
-msgstr ""
+msgstr "תוצאות ברירת המחדל לא עודכנו"
 
 #: admin/set_outcomes.php:117 admin/set_outcomes.php:143
 #: admin/set_outcomes.php:148 admin/import.php:73 admin/updatesample.php:69
 msgid "Error:"
-msgstr ""
+msgstr "שיאה:"
 
 #: admin/set_outcomes.php:141
 msgid "Custom outcome"
-msgstr ""
+msgstr "תוצאה מותאמת אישית"
 
 #: admin/set_outcomes.php:141
 msgid "saved"
-msgstr ""
+msgstr "נשמר"
 
 #: admin/set_outcomes.php:143
 msgid "New outcome not saved"
-msgstr ""
+msgstr "תוצאה חדשה לא נשמרה"
 
 #: admin/set_outcomes.php:147 admin/set_outcomes.php:175
 #: admin/set_outcomes.php:250 admin/set_outcomes.php:277
 msgid "Outcome type"
-msgstr ""
+msgstr "סוג התוצאה"
 
 #: admin/set_outcomes.php:148
 msgid "is not set"
-msgstr ""
+msgstr "לא מוגדר"
 
-#: admin/set_outcomes.php:160 admin/index.php:191
+#: admin/set_outcomes.php:160 admin/index.php:192
 msgid "Set default outcomes"
-msgstr ""
+msgstr "הגדר תוצאות ברירת מחדל"
 
-#: admin/set_outcomes.php:161 admin/index.php:124
+#: admin/set_outcomes.php:161 admin/index.php:125
 msgid "Set questionnaire outcomes"
-msgstr ""
+msgstr "קבע את תוצאות השאלון"
 
 #: admin/set_outcomes.php:162
 msgid "ADD custom outcome"
-msgstr ""
+msgstr "הוסף תוצאה מותאמת אישית"
 
 #: admin/set_outcomes.php:171
 msgid "Outcome description"
-msgstr ""
+msgstr "תיאור התוצאה"
 
 #: admin/set_outcomes.php:176
 msgid "Default delay, minutes"
-msgstr ""
+msgstr "עיכוב ברירת מחדל, דקות"
 
 #: admin/set_outcomes.php:178
 msgid "Try another number"
-msgstr ""
+msgstr "נסה מספר אחר"
 
 #: admin/set_outcomes.php:180 admin/set_outcomes.php:277
 msgid "Eligible"
-msgstr ""
+msgstr "זכאי"
 
 #: admin/set_outcomes.php:181 admin/set_outcomes.php:277
 msgid "Require note"
-msgstr ""
+msgstr "דורש הערה"
 
 #: admin/set_outcomes.php:182
 msgid "Calculation"
-msgstr ""
+msgstr "חישוב"
 
 #: admin/set_outcomes.php:183
 msgid "AAPOR code"
-msgstr ""
+msgstr "AAPOR code"
 
 #: admin/set_outcomes.php:184
 msgid "Default outcome"
-msgstr ""
+msgstr "תוצאת ברירת מחדל"
 
 #: admin/set_outcomes.php:185
 msgid "Permanent outcome"
-msgstr ""
+msgstr "תוצאה קבועה"
 
 #: admin/set_outcomes.php:190
 msgid "Save custom Outcome"
-msgstr ""
+msgstr "שמור תוצאה מותאמת אישית"
 
-#: admin/set_outcomes.php:250 admin/set_outcomes.php:277
-#: admin/dataoutput.php:93
+#: include/limesurvey/admin/exportresults.php:259
+#: include/limesurvey/admin/exportresults.php:656
+#: include/limesurvey/admin/exportresults.php:657
+#: include/limesurvey/admin/exportresults.php:983 admin/set_outcomes.php:250
+#: admin/set_outcomes.php:277 admin/dataoutput.php:93
 msgid "Outcome ID"
-msgstr ""
+msgstr "מזהה התוצאה"
 
-#: admin/set_outcomes.php:250 admin/quotarow.php:591
+#: admin/set_outcomes.php:250 admin/quotarow.php:586
 msgid "Select"
-msgstr ""
+msgstr "בחירה"
 
 #: admin/set_outcomes.php:251 admin/set_outcomes.php:280
 msgid "Add custom Outcome"
-msgstr ""
+msgstr "הוסף תוצאה מותאמת אישית"
 
 #: admin/set_outcomes.php:252
 msgid "Save questionnaire outcomes"
-msgstr ""
+msgstr "שמור את תוצאות השאלון"
 
 #: admin/set_outcomes.php:262
 msgid "Delete outcome"
-msgstr ""
+msgstr "מחק את התוצאה"
 
 #: admin/set_outcomes.php:277
 msgid "Set default"
-msgstr ""
+msgstr "קביעה כברירת מחדל"
 
 #: admin/set_outcomes.php:277
 msgid "Delay, min"
-msgstr ""
+msgstr "עיכוב, דקות"
 
 #: admin/set_outcomes.php:277
 msgid "Try another"
-msgstr ""
+msgstr "נסה אחרת"
 
 #: admin/set_outcomes.php:281
 msgid "Update default outcomes"
-msgstr ""
+msgstr "עדכן את תוצאות ברירת המחדל"
 
 #: admin/set_outcomes.php:313
 msgid "Reset"
-msgstr ""
+msgstr "איפוס"
 
 #: admin/import.php:46 admin/updatesample.php:46
 msgid "Validating and uploading"
-msgstr ""
+msgstr "אימות והעלאה"
 
-#: admin/import.php:47 admin/import.php:85 admin/import.php:116
+#: admin/import.php:47 admin/import.php:85 admin/import.php:122
 #: admin/updatesample.php:47
 msgid "Import sample"
-msgstr ""
+msgstr "ייבוא קובץ מדגם"
 
 #: admin/import.php:65
 msgid "Successfully imported sample"
-msgstr ""
+msgstr "מדגם מיובא בהצלחה"
 
 #: admin/import.php:69 admin/updatesample.php:65
 msgid "Error importing file. Please try again"
-msgstr ""
+msgstr "שגיאה בייבוא ​​הקובץ. בבקשה נסה שוב"
 
 #: admin/import.php:73
 msgid ""
 "Please check imported file, go back in your browser and fix the problem"
-msgstr ""
+msgstr "בדוק את הקובץ המיובא, חזור לדפדפן ותקן את הבעיה"
 
 #: admin/import.php:84
 msgid "Select columns to import"
-msgstr ""
+msgstr "בחר עמודות לייבוא"
 
-#: admin/import.php:115 admin/updatesample.php:78
+#: admin/import.php:121 admin/updatesample.php:78
 msgid "Select file to upload"
-msgstr ""
+msgstr "בחר קובץ להעלאה"
 
-#: admin/import.php:132 admin/updatesample.php:95
+#: admin/import.php:138 admin/updatesample.php:95
 msgid "Choose the CSV sample file to upload"
-msgstr ""
+msgstr "בחר את קובץ ה- CSV לדוגמא להעלאה"
 
-#: admin/import.php:134 admin/updatesample.php:97 admin/quotarow.php:618
+#: admin/import.php:140 admin/updatesample.php:97 admin/quotarow.php:613
 #: admin/bulkappointment.php:284
 msgid "Select file"
-msgstr ""
+msgstr "בחר קובץ"
 
-#: admin/import.php:140
+#: admin/import.php:146
 msgid "Sample description"
-msgstr ""
+msgstr "תיאור דוגמית"
 
-#: admin/import.php:142
+#: admin/import.php:148
 msgid "Enter new sample name..."
-msgstr ""
+msgstr "הזן שם דוגמה חדש ..."
 
 #: admin/updatesample.php:61
 msgid "Successfully updated sample"
-msgstr ""
+msgstr "המדגם עודכן בהצלחה"
 
 #: admin/updatesample.php:69
 msgid ""
 "Please check imported file matches column count and names from original "
 "sample file, go back in your browser and fix the problem"
 msgstr ""
+"בדוק את התאמת מספר הקבצים המיובאים ושמות מהקובץ לדוגמה המקורי, חזור בדפדפן "
+"ותקן את הבעיה"
 
-#: admin/updatesample.php:79 admin/updatesample.php:130
+#: admin/updatesample.php:79 admin/updatesample.php:135
 msgid "Add to existing sample"
-msgstr ""
+msgstr "הוסף למדגם הקיים"
 
 #: admin/dataoutput.php:76
 msgid "ALL"
-msgstr ""
+msgstr "הכל"
 
 #: admin/dataoutput.php:93
 msgid "Current Outcome"
-msgstr ""
+msgstr "התוצאה הנוכחית"
 
-#: admin/dataoutput.php:93
+#: include/limesurvey/admin/exportresults.php:261
+#: include/limesurvey/admin/exportresults.php:611
+#: include/limesurvey/admin/exportresults.php:612
+#: include/limesurvey/admin/exportresults.php:989 admin/dataoutput.php:93
 msgid "Number of call attempts"
-msgstr ""
+msgstr "מספר ניסיונות השיחה"
 
 #: admin/dataoutput.php:93
 msgid "Number of calls"
-msgstr ""
+msgstr "מספר שיחות"
 
-#: admin/dataoutput.php:93
+#: include/limesurvey/admin/exportresults.php:264
+#: include/limesurvey/admin/exportresults.php:626
+#: include/limesurvey/admin/exportresults.php:627
+#: include/limesurvey/admin/exportresults.php:998 admin/dataoutput.php:93
 msgid "Total interview time over all calls (mins)"
-msgstr ""
+msgstr "זמן ראיון כולל על כל השיחות (דקות)"
 
-#: admin/dataoutput.php:93
+#: include/limesurvey/admin/exportresults.php:265
+#: include/limesurvey/admin/exportresults.php:631
+#: include/limesurvey/admin/exportresults.php:632
+#: include/limesurvey/admin/exportresults.php:1001 admin/dataoutput.php:93
 msgid "Interview time for last call (mins)"
-msgstr ""
+msgstr "זמן ראיון כולל על השיחות האחרונות(דקות)"
 
-#: admin/dataoutput.php:93
+#: include/limesurvey/admin/exportresults.php:266
+#: include/limesurvey/admin/exportresults.php:636
+#: include/limesurvey/admin/exportresults.php:637
+#: include/limesurvey/admin/exportresults.php:1004 admin/dataoutput.php:93
 msgid "Last number dialled"
-msgstr ""
+msgstr "מספר האחרון שחוייג"
 
 #: admin/dataoutput.php:93
 msgid "DATE/TIME Last number dialled"
-msgstr ""
+msgstr "תאריך/שעה בה המספר האחרון חויג"
 
-#: admin/dataoutput.php:93
+#: include/limesurvey/admin/exportresults.php:267
+#: include/limesurvey/admin/exportresults.php:641
+#: include/limesurvey/admin/exportresults.php:642
+#: include/limesurvey/admin/exportresults.php:1007 admin/dataoutput.php:93
 msgid "Operator username for last call"
-msgstr ""
+msgstr "שם המשתמש של המפעיל לשיחה האחרונה"
 
-#: admin/dataoutput.php:93 admin/outcomes.php:306
+#: include/limesurvey/admin/exportresults.php:268
+#: include/limesurvey/admin/exportresults.php:646
+#: include/limesurvey/admin/exportresults.php:647
+#: include/limesurvey/admin/exportresults.php:1010 admin/dataoutput.php:93
+#: admin/outcomes.php:306
 msgid "Shift report"
-msgstr ""
+msgstr "דו\"ח משמרות"
 
-#: admin/dataoutput.php:200 admin/questionnairelist.php:536 admin/index.php:172
+#: admin/dataoutput.php:200 admin/questionnairelist.php:598 admin/index.php:174
 msgid "Data output"
-msgstr ""
+msgstr "פלט נתונים"
 
-#: admin/dataoutput.php:217
+#: admin/dataoutput.php:216
 msgid "Download data for this questionnaire via Limesurvey"
-msgstr ""
+msgstr "הורד נתונים עבור שאלון זה באמצעות Limesurvey"
 
-#: admin/dataoutput.php:219 admin/samplecallattempts.php:202
+#: admin/dataoutput.php:218 admin/samplecallattempts.php:202
 msgid "Please select a sample"
-msgstr ""
+msgstr "אנא בחר דוגמה"
 
 #: admin/dataoutput.php:233
 msgid "Download key file: select sample var"
-msgstr ""
+msgstr "הורדת קובץ מפתח: בחר var. Sample"
 
 #: admin/dataoutput.php:240
 msgid "Download complete key file"
-msgstr ""
+msgstr "הורד קובץ מפתח מלא"
 
 #: admin/dataoutput.php:243
 msgid "Download complete sample file with current outcomes"
-msgstr ""
+msgstr "הורד קובץ מדגם מלא עם התוצאות הנוכחיות"
 
-#: admin/shiftreport.php:67 admin/index.php:168
+#: admin/shiftreport.php:67 admin/index.php:170
 msgid "Shift reports"
-msgstr ""
+msgstr "משמרות דיווחים"
 
 #: admin/shiftreport.php:98
 msgid "Reports for this shift"
-msgstr ""
+msgstr "דוחות עבור משמרת זו"
 
 #: admin/shiftreport.php:110
 msgid "Report"
-msgstr ""
+msgstr "דוח"
 
 #: admin/shiftreport.php:113
 msgid "Create new report for this shift"
-msgstr ""
+msgstr "צור דוח חדש למשמרת זו"
 
 #: admin/shiftreport.php:119
 msgid "Enter report for this shift"
-msgstr ""
+msgstr "הזן דוח למשמרת זו"
 
 #: admin/shiftreport.php:123
 msgid "Add report"
-msgstr ""
+msgstr "הוסף דוח"
 
 #: admin/shiftreport.php:159
 msgid "This report does not exist in the database"
-msgstr ""
+msgstr "דוח זה אינו קיים במסד הנתונים"
 
 #: admin/shiftreport.php:164
 msgid "Edit report for this shift"
-msgstr ""
+msgstr "ערוך את הדוח למשמרת זו"
 
 #: admin/shiftreport.php:169
 msgid "Modify report"
-msgstr ""
+msgstr "שנה את הדוח"
 
 #: admin/systemsort.php:80 admin/systemsort.php:102
 msgid "Monitor system wide case sorting"
-msgstr ""
+msgstr "נטר מקרי סינון רחבים במערכת"
 
 #: admin/systemsort.php:82 admin/voipmonitor.php:80
 msgid "Running process:"
-msgstr ""
+msgstr "תהליך הרצה:"
 
 #: admin/systemsort.php:86
 msgid "Kill signal sent: Please wait..."
-msgstr ""
+msgstr "נשלח אות ההרג: אנא המתן ..."
 
 #: admin/systemsort.php:87
 msgid ""
 "Process is already closed (eg. server was rebooted) - click here to confirm"
-msgstr ""
+msgstr "התהליך כבר סגור (למשל, השרת הופעל מחדש) - לחץ כאן לאישור"
 
 #: admin/systemsort.php:91 admin/voipmonitor.php:89
 msgid "Kill the running process"
-msgstr ""
+msgstr "להפסיק את תהליך הריצה"
 
 #: admin/systemsort.php:97 admin/systemsort.php:111 admin/voipmonitor.php:95
 #: admin/voipmonitor.php:107
 msgid "Log id"
-msgstr ""
+msgstr "קוד מזהה לוג"
 
 #: admin/systemsort.php:97 admin/systemsort.php:111 admin/voipmonitor.php:95
 #: admin/voipmonitor.php:107
 msgid "Log entry"
-msgstr ""
+msgstr "כניסת לוג"
 
 #: admin/systemsort.php:104
 msgid "Click here to enable and begin system wide case sorting"
-msgstr ""
+msgstr "לחץ כאן כדי להפעיל ולהתחיל בניטור אחר מקרי סינון רחבים במערכת"
 
 #: admin/systemsort.php:105
 msgid ""
@@ -3313,632 +3364,646 @@ msgid ""
 "complex quotas in place. If you are not experiencing any performance "
 "problems, it is not recommended to use this feature."
 msgstr ""
+"מיון תיקים רחב במערכת הוא מדי פעם (באמצעות הוראת התצורה SYSTEM_SORT_MINUTES "
+"מיון) תיקי מיון על בסיס כלל המערכת במקום למצוא את המקרה המתאים ביותר בכל פעם "
+"שמפעיל מבקש תיק חדש. הדבר עשוי להגביר את הביצועים כאשר יש מספר רב של מקרים "
+"או מכסות מורכבות. אם אינך נתקל בבעיות ביצועים, לא מומלץ להשתמש בתכונה זו."
 
 #: admin/systemsort.php:110 admin/voipmonitor.php:103
 msgid "Outcome of last process run (if any)"
-msgstr ""
+msgstr "התוצאה של ריצת התהליך האחרונה (אם קיימת)"
 
-#: admin/questionnairelist.php:339
+#: admin/questionnairelist.php:353
 msgid "Modify Questionnaire "
-msgstr ""
+msgstr "שנה שאלון "
 
-#: admin/questionnairelist.php:361
+#: admin/questionnairelist.php:375
 msgid "Assigned survey"
-msgstr ""
+msgstr "סקר שהוקצה"
 
-#: admin/questionnairelist.php:365
+#: admin/questionnairelist.php:379
 msgid "Edit instrument in Limesurvey"
-msgstr ""
+msgstr "ערוך כלי ב- Limesurvey"
 
-#: admin/questionnairelist.php:462
+#: admin/questionnairelist.php:524
 msgid "Update Questionnaire"
-msgstr ""
+msgstr "עדכן שאלון"
 
-#: admin/questionnairelist.php:476
+#: admin/questionnairelist.php:538
 msgid "Delete Questionnaire"
-msgstr ""
+msgstr "מחק שאלון"
 
-#: admin/questionnairelist.php:478
+#: admin/questionnairelist.php:540
 msgid "Any collected data and the limesurvey instrument will NOT be deleted"
-msgstr ""
+msgstr "כל הנתונים שנאספו ומכשיר הסקר לא יימחקו"
 
-#: admin/questionnairelist.php:479
+#: admin/questionnairelist.php:541
 msgid ""
 "The questionnaire will be deleted from queXS including call history, cases, "
 "case notes, respondent details, appointments and the links between "
 "operators, clients and the questionnaire"
 msgstr ""
+"השאלון יימחק מ- queXS כולל היסטוריית שיחות, מקרים, הערות מקרה, פרטי משיב, "
+"פגישות והקישורים בין מפעילים, לקוחות והשאלון"
 
-#: admin/questionnairelist.php:480
+#: admin/questionnairelist.php:542
 msgid "Please confirm you wish to delete the questionnaire"
-msgstr ""
+msgstr "אנא אשר שברצונך למחוק את השאלון"
 
-#: admin/questionnairelist.php:483
+#: admin/questionnairelist.php:545
 msgid "Delete this questionnaire"
-msgstr ""
+msgstr "מחק שאלון זה"
 
-#: admin/questionnairelist.php:489
+#: admin/questionnairelist.php:551
 msgid "Questionnaire list"
-msgstr ""
+msgstr "רשימת שאלונים"
 
-#: admin/questionnairelist.php:509
+#: admin/questionnairelist.php:571
 msgid "Edit Questionnaire"
-msgstr ""
+msgstr "ערוך שאלון"
 
-#: admin/questionnairelist.php:510
+#: admin/questionnairelist.php:572
 msgid "Edit Lime survey"
-msgstr ""
+msgstr "ערוך סקר של תוכנת Lime"
 
-#: admin/questionnairelist.php:514 admin/outcomes.php:274 index.php:319
+#: admin/questionnairelist.php:576 admin/outcomes.php:274 index.php:319
 #: index_interface2.php:285
 msgid "Shifts"
 msgstr "משמרות"
 
-#: admin/questionnairelist.php:514 admin/questionnairelist.php:531
-#: admin/questionnairelist.php:532 admin/questionnairelist.php:536
-#: admin/questionnairelist.php:546
+#: admin/questionnairelist.php:576 admin/questionnairelist.php:593
+#: admin/questionnairelist.php:594 admin/questionnairelist.php:598
+#: admin/questionnairelist.php:608
 msgid "questionnaire"
-msgstr ""
+msgstr "שְׁאֵלוֹן"
 
-#: admin/questionnairelist.php:519 admin/index.php:125
+#: admin/questionnairelist.php:581 admin/index.php:127
 msgid "Pre-fill questionnaire"
-msgstr ""
+msgstr "שאלון מלא מראש"
 
-#: admin/questionnairelist.php:524
+#: admin/questionnairelist.php:586
 msgid "Delete questionnaire"
-msgstr ""
+msgstr "מחק שאלון"
 
-#: admin/questionnairelist.php:529
+#: admin/questionnairelist.php:591
 msgid "Outcomes for questionnaire"
-msgstr ""
+msgstr "תוצאות השאלון"
 
-#: admin/questionnairelist.php:532
+#: admin/questionnairelist.php:594
 msgid "Set outcomes"
-msgstr ""
+msgstr "הגדרת תוצאות"
 
-#: admin/questionnairelist.php:541
+#: admin/questionnairelist.php:603
 msgid "Assigned samples"
-msgstr ""
+msgstr "מקרים שהוקצו"
 
-#: admin/questionnairelist.php:546 admin/quotareport.php:114
-#: admin/index.php:169
+#: admin/questionnairelist.php:608 admin/quotareport.php:114
+#: admin/index.php:171
 msgid "Quota report"
-msgstr ""
+msgstr "דו\"ח מכסה"
 
-#: admin/clientquestionnaire.php:167
+#: admin/clientquestionnaire.php:200
 msgid "Clients and questionnaires"
-msgstr ""
+msgstr "לקוחות ושאלונים"
 
-#: admin/clientquestionnaire.php:260
+#: admin/clientquestionnaire.php:293
 msgid "Client"
-msgstr ""
+msgstr "לקוח"
 
-#: admin/clientquestionnaire.php:263
+#: admin/clientquestionnaire.php:296
 msgid ""
 "NOTICE!  Please, check your user righs to edit client permissions or contact "
 "your superviser."
 msgstr ""
+"הודעה! אנא בדוק את טענות המשתמש שלך לעריכת הרשאות הלקוח או צור קשר עם המפקח "
+"שלך."
 
-#: admin/clientquestionnaire.php:263
+#: admin/clientquestionnaire.php:296
 msgid "Questionnaire permissions"
-msgstr ""
+msgstr "הרשאות שאלון"
 
-#: admin/clientquestionnaire.php:290
+#: admin/clientquestionnaire.php:323
 msgid "Assign clients to questionnaires"
-msgstr ""
+msgstr "הקצה לקוחות לשאלונים"
 
-#: admin/operatorlist.php:127
+#: admin/operatorlist.php:131
 msgid "Successfully updated user"
-msgstr ""
+msgstr "משתמש עודכן בהצלחה"
 
-#: admin/operatorlist.php:131 admin/operatorlist.php:136
+#: admin/operatorlist.php:135 admin/operatorlist.php:140
 msgid "Failed to update user"
-msgstr ""
+msgstr "עדכון המשתמש נכשל"
 
-#: admin/operatorlist.php:131 admin/operatorlist.php:136
+#: admin/operatorlist.php:135 admin/operatorlist.php:140
 msgid "Please make sure the username is unique"
-msgstr ""
+msgstr "אנא ודא כי שם המשתמש הוא ייחודי"
 
-#: admin/operatorlist.php:144
+#: admin/operatorlist.php:148
 msgid "Edit Operator settings"
-msgstr ""
+msgstr "ערוך את הגדרות המפעיל"
 
-#: admin/operatorlist.php:221
+#: admin/operatorlist.php:225
 msgid "leave blank to keep existing password"
-msgstr ""
+msgstr "השאר ריק כדי לשמור את הסיסמה הקיימת"
 
-#: admin/operatorlist.php:260
+#: admin/operatorlist.php:264
 msgid "Add"
-msgstr ""
+msgstr "לְהוֹסִיף"
 
-#: admin/operatorlist.php:296
+#: admin/operatorlist.php:300
 msgid "Update operator"
-msgstr ""
+msgstr "עדכון מפעיל"
 
-#: admin/operatorlist.php:387
+#: admin/operatorlist.php:391
 msgid "Win .bat file"
-msgstr ""
+msgstr "קובץ Win .bat"
 
-#: admin/operatorlist.php:388
+#: admin/operatorlist.php:392
 msgid "*nix script file"
-msgstr ""
+msgstr "קובץ *nix script"
 
-#: admin/operatorlist.php:395
+#: admin/operatorlist.php:399
 msgid "Enable VoIP"
-msgstr ""
+msgstr "אפשר VoIP"
 
-#: admin/operatorlist.php:397
+#: admin/operatorlist.php:401
 msgid "Disable VoIP"
-msgstr ""
+msgstr "השבת VoIP"
 
-#: admin/operatorlist.php:405
+#: admin/operatorlist.php:409
 msgid "Operator list"
-msgstr ""
+msgstr "רשימת מפעילים"
 
-#: admin/operatorlist.php:415
+#: admin/operatorlist.php:419
 msgid "VoIP ON/Off"
-msgstr ""
+msgstr "VoIP הפעלה/כיבוי"
 
-#: admin/operatorlist.php:416
+#: admin/operatorlist.php:420
 msgid "Win file"
-msgstr ""
+msgstr "קובץ Win"
 
-#: admin/operatorlist.php:417
+#: admin/operatorlist.php:421
 msgid "*nix flle"
-msgstr ""
+msgstr "*קובץ nix"
 
-#: admin/operatorlist.php:426
+#: admin/operatorlist.php:430
 msgid "Assign to questionnaire"
-msgstr ""
+msgstr "הקצה לשאלון"
 
-#: admin/operatorlist.php:427
+#: admin/operatorlist.php:431
 msgid "Operator skills"
-msgstr ""
+msgstr "כישורי מפעיל"
 
-#: admin/operatorlist.php:428 admin/index.php:160 admin/outcomes.php:306
+#: admin/operatorlist.php:432 admin/index.php:162 admin/outcomes.php:306
 msgid "Operator performance"
-msgstr ""
+msgstr "ביצועי מפעיל"
 
-#: admin/operatorlist.php:432
+#: admin/operatorlist.php:436
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
+"הורד את הקובץ עבור כל משתמש ושמור באותה תיקייה שבה ניתן להפעיל את voip.exe. "
+"כאשר הקובץ מבוצע, הוא יפעיל את תוכנית voip.exe עם פרטי החיבור הנכונים כדי "
+"לחבר את המפעיל לשרת ה- VoIP."
 
-#: admin/operatorlist.php:434
+#: admin/operatorlist.php:438
 msgid "Download Windows VoIP Client Executable file"
-msgstr ""
+msgstr "הורד קובץ הפעלה של לקוח VoIP של Windows"
 
-#: admin/operatorlist.php:434
+#: admin/operatorlist.php:438
 msgid "Download Win file"
-msgstr ""
+msgstr "הורד קובץ Winהורד קובץ הפעלה לינוקס VoIP"
 
-#: admin/operatorlist.php:435
+#: admin/operatorlist.php:439
 msgid "Download Linux VoIP Executable file"
-msgstr ""
+msgstr "הורד קובץ הפעלה לינוקס VoIP"
 
-#: admin/operatorlist.php:435
+#: admin/operatorlist.php:439
 msgid "Download Linux file"
-msgstr ""
+msgstr "הורד קובץ לינוקס"
 
-#: admin/callrestrict.php:104 admin/index.php:195
+#: admin/callrestrict.php:104 admin/index.php:196
 msgid "Set call restriction times"
-msgstr ""
+msgstr "הגדר זמני הגבלת שיחות"
 
 #: admin/callrestrict.php:118 admin/availability.php:163
 msgid ""
 "Enter the start and end times for each day of the week to restrict calls "
 "within"
-msgstr ""
+msgstr "הזן את זמני ההתחלה והסיום של כל יום בשבוע כדי להגביל שיחות בתוך"
 
 #: admin/callrestrict.php:158 admin/availability.php:181
 #: admin/shifttemplate.php:154
 msgid "Add row"
-msgstr ""
+msgstr "הוספת שורה"
 
 #: admin/callrestrict.php:159
 msgid "Save changes to restriction times"
-msgstr ""
+msgstr "שמור שינויים בזמני ההגבלה"
 
 #: admin/quotareport.php:124
 msgid "Select a sample"
-msgstr ""
+msgstr "בחר דוגמא"
 
-#: admin/quotareport.php:212 admin/quotareport.php:219 admin/quotarow.php:576
+#: admin/quotareport.php:212 admin/quotareport.php:219 admin/quotarow.php:571
 msgid "closed"
-msgstr ""
+msgstr "סגור"
 
 #: admin/quotareport.php:212 admin/quotareport.php:214
-#: admin/quotareport.php:221 admin/quotarow.php:576
+#: admin/quotareport.php:221 admin/quotarow.php:571
 msgid "open"
-msgstr ""
+msgstr "פתוח"
 
 #: admin/quotareport.php:214
 msgid "close"
-msgstr ""
+msgstr "סגור"
 
-#: admin/quotareport.php:260
+#: admin/quotareport.php:307
 msgid "Total sample"
-msgstr ""
+msgstr "סה\"כ דוגמאות"
 
-#: admin/quotareport.php:263
+#: admin/quotareport.php:310
 msgid "Strata"
-msgstr ""
+msgstr "רְבָדִים"
 
-#: admin/quotareport.php:263 admin/quotarow.php:134 admin/quotarow.php:390
-#: admin/quotarow.php:591
+#: admin/quotareport.php:310 admin/quotarow.php:134 admin/quotarow.php:390
+#: admin/quotarow.php:586
 msgid "Quota"
-msgstr ""
+msgstr "מיכסה"
 
-#: admin/quotareport.php:263
+#: admin/quotareport.php:310
 msgid "Sample Used"
-msgstr ""
+msgstr "דוגמה בשימוש"
 
-#: admin/quotareport.php:263
+#: admin/quotareport.php:310
 msgid "Sample Remaining"
-msgstr ""
+msgstr "דוגמא שנותרה"
 
-#: admin/quotareport.php:263
+#: admin/quotareport.php:310
 msgid "% Complete"
-msgstr ""
+msgstr "% שהושלמו"
 
-#: admin/quotareport.php:263
+#: admin/quotareport.php:310
 msgid "Set priority"
-msgstr ""
+msgstr "קבע עדיפות"
 
-#: admin/quotareport.php:263 admin/quotarow.php:591
+#: admin/quotareport.php:310 admin/quotarow.php:586
 msgid "Auto prioritise"
-msgstr ""
+msgstr "תעדוף אוטומטי"
 
-#: admin/quotareport.php:267
+#: admin/quotareport.php:314
 msgid "Update priorities"
-msgstr ""
+msgstr "עדכן סדרי עדיפויות"
 
 #: admin/index.php:64
 msgid "queXS Administration"
-msgstr ""
+msgstr "מנהל queXS"
 
 #: admin/index.php:81
 msgid "Click to Collapse / Expand Sidebar MENU "
-msgstr ""
+msgstr "לחץ כדי לכווץ / להרחיב את תפריט סרגל הצד "
 
 #: admin/index.php:89
 msgid "Operator panel"
-msgstr ""
+msgstr "לוח מפעיל"
 
 #: admin/index.php:94
 msgid "Client panel"
-msgstr ""
+msgstr "פאנל לקוחות"
 
 #: admin/index.php:99
 msgid "Logged as:"
-msgstr ""
+msgstr "נרשם כ:"
 
 #: admin/index.php:103
 msgid "Settings"
-msgstr ""
+msgstr "הגדרות"
 
 #: admin/index.php:104
 msgid "Lock Screen"
-msgstr ""
+msgstr "נעילת המסך"
 
 #: admin/index.php:119
 msgid "Dashboard"
-msgstr ""
+msgstr "תפריט ראשי"
 
 #: admin/index.php:120
 msgid "Questionnairies"
-msgstr ""
+msgstr "שאלונים"
 
-#: admin/index.php:128
+#: admin/index.php:130
 msgid "Samples"
-msgstr ""
+msgstr "דגימות"
 
-#: admin/index.php:131
+#: admin/index.php:133
 msgid "Add to a sample file"
-msgstr ""
+msgstr "הוסף לקובץ לדוגמה"
 
-#: admin/index.php:138
+#: admin/index.php:140
 msgid "Time slots and shifts"
-msgstr ""
+msgstr "משבצות זמן ומשמרות"
 
-#: admin/index.php:147
+#: admin/index.php:149
 msgid "Quotas"
-msgstr ""
+msgstr "מכסות"
 
-#: admin/index.php:150 admin/quotarow.php:292
+#: admin/index.php:152 admin/quotarow.php:292
 msgid "Quota row management"
-msgstr ""
-
-#: admin/index.php:153
-msgid "Operators"
-msgstr ""
+msgstr "ניהול שורות מכסות"
 
 #: admin/index.php:155
-msgid "Add operators to the system"
-msgstr ""
-
-#: admin/index.php:156
-msgid "Operator management"
-msgstr ""
+msgid "Operators"
+msgstr "מפעילים"
 
 #: admin/index.php:157
-msgid "Extension status"
-msgstr ""
+msgid "Add operators to the system"
+msgstr "הוסף מפעילים למערכת"
 
-#: admin/index.php:163
-msgid "Results"
-msgstr ""
+#: admin/index.php:158
+msgid "Operator management"
+msgstr "ניהול מפעיל"
+
+#: admin/index.php:159
+msgid "Extension status"
+msgstr "סטטוס שלוחה"
 
 #: admin/index.php:165
+msgid "Results"
+msgstr "תוצאות"
+
+#: admin/index.php:167
 msgid "Display all future appointments"
-msgstr ""
+msgstr "הצג את כל המינויים העתידיים"
 
-#: admin/index.php:166
+#: admin/index.php:168
 msgid "Sample call attempts report"
-msgstr ""
+msgstr "דוח על ניסיונות שיחה לדוגמה"
 
-#: admin/index.php:170
+#: admin/index.php:172
 msgid "Questionnaire outcomes"
-msgstr ""
-
-#: admin/index.php:175
-msgid "Clients"
-msgstr ""
+msgstr "תוצאות השאלון"
 
 #: admin/index.php:177
+msgid "Clients"
+msgstr "לקוחות"
+
+#: admin/index.php:179
 msgid "Add clients to the system"
-msgstr ""
+msgstr "הוסף לקוחות למערכת"
 
-#: admin/index.php:178
+#: admin/index.php:180
 msgid "Manage clients"
-msgstr ""
+msgstr "נהל לקוחות"
 
-#: admin/index.php:181
+#: admin/index.php:183
 msgid "Supervisor functions"
-msgstr ""
+msgstr "פונקציות של מפקח"
 
-#: admin/index.php:185 admin/bulkappointment.php:134
+#: admin/index.php:187 admin/bulkappointment.php:134
 #: admin/bulkappointment.php:223 admin/bulkappointment.php:259
 msgid "Bulk appointment generator"
-msgstr ""
+msgstr "מחולל פגישות בכמות גדולה"
 
-#: admin/index.php:188
+#: admin/index.php:190
 msgid "System settings"
-msgstr ""
+msgstr "הגדרות המערכת"
 
 #: admin/index.php:190
 msgid "Questionnaire service (RPC)"
 msgstr ""
 
-#: admin/index.php:192
-msgid "Set default timezone list"
-msgstr ""
-
 #: admin/index.php:193
+msgid "Set default timezone list"
+msgstr "הגדר רשימת ברירת מחדל של אזור הזמן"
+
+#: admin/index.php:194
 msgid "Manage Time slots"
-msgstr ""
+msgstr "נהל משבצות זמן"
 
-#: admin/index.php:194 admin/shifttemplate.php:99
+#: admin/index.php:195 admin/shifttemplate.php:99
 msgid "Set default shift times"
-msgstr ""
+msgstr "הגדר זמני משמרות ברירת מחדל"
 
-#: admin/index.php:198
+#: admin/index.php:199
 msgid "System wide case sorting"
-msgstr ""
+msgstr "מיון מקרים בכלל המערכת"
 
-#: admin/index.php:205 admin/index.php:213
+#: admin/index.php:206 admin/index.php:214
 msgid "VoIP"
-msgstr ""
+msgstr "VoIP"
 
-#: admin/index.php:207
+#: admin/index.php:208
 msgid "Start and monitor VoIP"
-msgstr ""
+msgstr "התחל ופקח על VoIP"
 
 #: admin/outcomes.php:80 admin/outcomes.php:190
 msgid "Sample status"
-msgstr ""
+msgstr "סטטוס לדוגמא"
 
 #: admin/outcomes.php:82 admin/outcomes.php:192
 msgid "Drawn from sample"
-msgstr ""
+msgstr "נלקח מהדוגמא"
 
 #: admin/outcomes.php:82 admin/outcomes.php:192
 msgid "Remain in sample"
-msgstr ""
+msgstr "הישאר בדוגמא"
 
 #: admin/outcomes.php:88 admin/outcomes.php:200
 msgid "Number"
-msgstr ""
+msgstr "מספר"
 
 #: admin/outcomes.php:89 admin/outcomes.php:187
 msgid "No samples assigned"
-msgstr ""
+msgstr "לא הוקצו דוגמאות"
 
 #: admin/outcomes.php:92
 msgid "Case availability (cases with temporary or appointment outcomes)"
-msgstr ""
+msgstr "זמינות התיקים (מקרים עם תוצאות זמניות או מינוי)"
 
 #: admin/outcomes.php:124
 msgid "No cases currently available to call"
-msgstr ""
+msgstr "אין כרגע פניות להתקשרות"
 
 #: admin/outcomes.php:136
 msgid "Average time on a completed questionnaire"
-msgstr ""
+msgstr "זמן ממוצע בשאלון שהושלם"
 
 #: admin/outcomes.php:136
 msgid "Min"
-msgstr ""
+msgstr "מינימום"
 
 #: admin/outcomes.php:136
 msgid "Secs"
-msgstr ""
+msgstr "שניות"
 
 #: admin/outcomes.php:169 admin/outcomes.php:220 admin/outcomes.php:262
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: admin/outcomes.php:223
 msgid "No outcomes recorded for this sample"
-msgstr ""
+msgstr "לא נרשמו תוצאות עבור מדגם זה"
 
 #: admin/outcomes.php:243
 msgid "No operators assigned"
-msgstr ""
+msgstr "לא הוקצו אופרטורים"
 
 #: admin/outcomes.php:247
 msgid "Operator call outcomes"
-msgstr ""
+msgstr "תוצאות שיחות המפעיל"
 
 #: admin/outcomes.php:278
 msgid "No shift reports: Add report"
-msgstr ""
+msgstr "תוצאות שיחות המפעיל"
 
 #: admin/outcomes.php:279
 msgid "View shift reports"
-msgstr ""
+msgstr "צפה בדוחות משמרת"
 
 #: admin/outcomes.php:282
 msgid "View operator performance"
-msgstr ""
+msgstr "צפה בביצועי המפעיל"
 
 #: admin/outcomes.php:302
 msgid "No shifts defined for this questionnaire"
-msgstr ""
+msgstr "לא הוגדרו משמרות לשאלון זה"
 
 #: admin/outcomes.php:306
 msgid "Shift time"
-msgstr ""
+msgstr "זמן המשמרת"
 
 #: admin/quotarow.php:319
 msgid "To quota report"
-msgstr ""
+msgstr "לדוח מכסות"
 
 #: admin/quotarow.php:388
 msgid "To Row quotas"
-msgstr ""
+msgstr "למכסות שורה"
 
-#: admin/quotarow.php:395 admin/quotarow.php:602
+#: admin/quotarow.php:395 admin/quotarow.php:597
 msgid "Describe this quota"
-msgstr ""
+msgstr "תאר את המכסה הזו"
 
-#: admin/quotarow.php:396 admin/quotarow.php:603
+#: admin/quotarow.php:396 admin/quotarow.php:598
 msgid "Quota priority (50 is default, 100 highest, 0 lowest)"
-msgstr ""
+msgstr "עדיפות מכסה (50 היא ברירת מחדל, 100 הגבוהה ביותר, 0 הנמוכה ביותר)"
 
-#: admin/quotarow.php:396 admin/quotarow.php:605
+#: admin/quotarow.php:396 admin/quotarow.php:600
 msgid ""
 "Should the priority be automatically updated based on the number of "
 "completions in this quota?"
 msgstr ""
+"האם יש לעדכן את העדיפות באופן אוטומטי בהתבסס על מספר ההשלמות במכסה זו?"
 
 #: admin/quotarow.php:412
 msgid "Restrictions based on answered questions"
-msgstr ""
+msgstr "הגבלות המבוססות על שאלות שנענו"
 
 #: admin/quotarow.php:417
 msgid "Currently NO Restrictions based on answered questions"
-msgstr ""
+msgstr "כרגע אין הגבלות המבוססות על שאלות שנענו"
 
 #: admin/quotarow.php:417
 msgid ""
 "All completed responses that match the sample criteria below will be counted "
 "towards the quota"
-msgstr ""
+msgstr "כל התגובות שהושלמו התואמות את הקריטריונים לדוגמא להלן ייספרו למכסה"
 
 #: admin/quotarow.php:421
 msgid ""
 "Only completed responses that have answered the following will be counted"
-msgstr ""
+msgstr "רק התשובות שהושלמו וענו על הדברים הבאים ייספרו"
 
 #: admin/quotarow.php:422
 msgid "SGQ code"
-msgstr ""
+msgstr "קוד SGQ"
 
-#: admin/quotarow.php:422 admin/quotarow.php:513
+#: admin/quotarow.php:422 admin/quotarow.php:508
 msgid "Comparison"
-msgstr ""
+msgstr "השוואה"
 
-#: admin/quotarow.php:445
+#: admin/quotarow.php:451
 msgid "Add restriction based on answered questions"
-msgstr ""
+msgstr "הוסף הגבלה על סמך שאלות שנענו"
 
-#: admin/quotarow.php:446
+#: admin/quotarow.php:452
 msgid "Select Question"
-msgstr ""
+msgstr "בחר שאלה"
 
-#: admin/quotarow.php:462 admin/quotarow.php:562
+#: admin/quotarow.php:461 admin/quotarow.php:557
 msgid "Add restriction"
-msgstr ""
+msgstr "הוסף הגבלה"
 
-#: admin/quotarow.php:504
+#: admin/quotarow.php:499
 msgid "Restrictions based on sample records"
-msgstr ""
+msgstr "הגבלות המבוססות על רשומות מדגם"
 
-#: admin/quotarow.php:508
+#: admin/quotarow.php:503
 msgid "Currently NO Restrictions based on sample records"
-msgstr ""
+msgstr "כרגע אין הגבלות המבוססות על רשומות המדגם"
 
-#: admin/quotarow.php:508
+#: admin/quotarow.php:503
 msgid "This sample will be limited to number of completions set in quota"
-msgstr ""
+msgstr "מדגם זה יוגבל למספר ההשלמות שנקבע במכסה"
 
-#: admin/quotarow.php:508
+#: admin/quotarow.php:503
 msgid ""
 "Caling cases for this sample will be stopped when the quota is reached"
-msgstr ""
+msgstr "שיחות למקרים  של מדגם זה יופסקו עם הגעת המכסה"
 
-#: admin/quotarow.php:512
+#: admin/quotarow.php:507
 msgid ""
 "Completed responses that have the following sample details will be counted "
 "towards the quota and excluded when the quota is reached"
 msgstr ""
+"תגובות שהושלמו וכוללות את פרטי המדגם הבא ייספרו לקראת הגעה למכסה ולא יכללו "
+"כאשר המסכה תושלם"
 
-#: admin/quotarow.php:513
+#: admin/quotarow.php:508
 msgid "Sample var ID"
-msgstr ""
+msgstr "קוד מזהה משתנה מדגם"
 
-#: admin/quotarow.php:536
+#: admin/quotarow.php:531
 msgid "Add restriction based on sample records"
-msgstr ""
+msgstr "הוסף הגבלה על סמך רשומות לדוגמא"
 
-#: admin/quotarow.php:538
+#: admin/quotarow.php:533
 msgid "Sample record"
-msgstr ""
+msgstr "רשומה לדוגמא"
+
+#: admin/quotarow.php:580
+msgid "Currently no row quotas"
+msgstr "כרגע אין מכסת שורות"
 
 #: admin/quotarow.php:585
-msgid "Currently no row quotas"
-msgstr ""
+msgid "Current row quotas"
+msgstr "מכסת השורות הנוכחיות"
+
+#: admin/quotarow.php:586
+msgid "Priority"
+msgstr "עדיפות"
+
+#: admin/quotarow.php:588
+msgid "Export selected"
+msgstr "ייצוא נבחר"
 
 #: admin/quotarow.php:590
-msgid "Current row quotas"
-msgstr ""
-
-#: admin/quotarow.php:591
-msgid "Priority"
-msgstr ""
-
-#: admin/quotarow.php:593
-msgid "Export selected"
-msgstr ""
-
-#: admin/quotarow.php:595
 msgid "Delete selected"
-msgstr ""
+msgstr "מחק את הנבחרים"
 
-#: admin/quotarow.php:599 admin/quotarow.php:606
+#: admin/quotarow.php:594 admin/quotarow.php:601
 msgid "Add row quota"
-msgstr ""
+msgstr "הוסף שורת מכסות"
 
-#: admin/quotarow.php:611 admin/quotarow.php:619
+#: admin/quotarow.php:606 admin/quotarow.php:614
 msgid "Import row quota"
-msgstr ""
+msgstr "ייבא שורת מכסות"
 
-#: admin/quotarow.php:617
+#: admin/quotarow.php:612
 msgid "Choose the CSV row quota file to import:"
-msgstr ""
+msgstr "בחר את קובץ המכסה של שורת ה- CSV לייבוא:"
 
 #: admin/remote.php:80
 msgid "Questionnaire services"
@@ -4000,41 +4065,46 @@ msgstr ""
 
 #: admin/bulkappointment.php:133 admin/bulkappointment.php:215
 msgid "Result"
-msgstr ""
+msgstr "תוצאה"
 
 #: admin/bulkappointment.php:205
 msgid "Added appointment"
-msgstr ""
+msgstr "נוסף פגישה"
 
 #: admin/bulkappointment.php:209
 msgid ""
 "No such case id, or case set to a final outcome, or case currently assigned "
 "to an operator"
 msgstr ""
+"אין מזהה מקרה כזה, או מקרה שמוגדר לתוצאה סופית, או מקרה שהוקצה כרגע למפעיל"
 
 #: admin/bulkappointment.php:222
 msgid "Check data to submit"
-msgstr ""
+msgstr "בדוק את הנתונים לשליחה"
 
 #: admin/bulkappointment.php:236
 msgid ""
 "Please check the case id's, appointment start and end times and notes are "
 "correct before accepting below"
 msgstr ""
+"אנא בדוק את מזהה של המקרה, זמני ההתחלה והסיום של הפגישה וההערות נכונות לפני "
+"שתקבל להלן"
 
 #: admin/bulkappointment.php:242
 msgid "Accept and generate bulk appointments"
-msgstr ""
+msgstr "קבל וצור פגישות בכמות גדולה"
 
 #: admin/bulkappointment.php:247
 msgid ""
 "The file does not contain at least caseid, starttime and endtime columns. "
 "Please try again."
 msgstr ""
+"הקובץ אינו מכיל לפחות עמודות של קוד מזהה מקרה, התחלה ושעת סיום. בבקשה נסה "
+"שוב."
 
 #: admin/bulkappointment.php:258
 msgid "Import: Select file to upload"
-msgstr ""
+msgstr "ייבוא: בחר קובץ להעלאה"
 
 #: admin/bulkappointment.php:266
 msgid ""
@@ -4045,283 +4115,289 @@ msgid ""
 "generated, and the outcome of the case will be updated to an appointment "
 "outcome."
 msgstr ""
+"ספק קובץ CSV עם כותרת המכילה לפחות 3 עמודות - קוד מזהה מקרה, זמן התחלה וזמן "
+"סיום. </br> אופציונלי תוכל לכלול עמודת הערה לצירוף הערות למקרה בנוסף לקביעת "
+"פגישה. </br> רק במקרים שיש להם תוצאות זמניות (לא סופיות) ייווצרו פגישות, "
+"ותוצאת המקרה תעודכן לתוצאה של נקבעה פגישה."
 
 #: admin/bulkappointment.php:269
 msgid "Example CSV file:"
-msgstr ""
+msgstr "קובץ CSV לדוגמה:"
 
 #: admin/bulkappointment.php:281
 msgid "Select bulk appointment CSV file to upload"
-msgstr ""
+msgstr "בחר קובץ CSV של מינוי בכמות גדולה להעלאה"
 
 #: admin/bulkappointment.php:286
 msgid "Upload file"
-msgstr ""
+msgstr "העלאת קובץ"
 
 #: admin/voipmonitor.php:78 admin/voipmonitor.php:100
 msgid "Monitor VoIP Process"
-msgstr ""
+msgstr "צג תהליך VoIP"
 
 #: admin/voipmonitor.php:84
 msgid ""
 "Kill signal sent: Please wait... </br>(Note: Process will be stalled until "
 "there is activity on the VoIP Server)"
 msgstr ""
+"אבד שליחת האות: אנא המתן ... </br> (הערה: התהליך ייעצר עד שתהיה פעילות בשרת "
+"ה- VoIP)"
 
 #: admin/voipmonitor.php:85
 msgid "Process is already closed (eg. server was rebooted)"
-msgstr ""
+msgstr "התהליך כבר סגור (למשל, השרת הופעל מחדש)"
 
 #: admin/voipmonitor.php:85
 msgid "click here to confirm"
-msgstr ""
+msgstr "לחץ כאן לאישור"
 
 #: admin/voipmonitor.php:89
 msgid "(requires activity on the VoIP Server to take effect)"
-msgstr ""
+msgstr "(דורש פעילות בשרת ה- VoIP כדי להיכנס לתוקף)"
 
 #: admin/voipmonitor.php:102
 msgid "Click here to begin monitoring the VoIP Process"
-msgstr ""
+msgstr "לחץ כאן כדי להתחיל במעקב אחר תהליך ה- VoIP"
 
 #: admin/samplesearch.php:108
 msgid "Delete sample record"
-msgstr ""
+msgstr "ביצועי מפעיל"
 
 #: admin/samplesearch.php:109
 msgid "Assigned to case ID :"
-msgstr ""
+msgstr "מוקצה לקוד מזהה המקרה:"
 
 #: admin/samplesearch.php:208
 msgid "Search within this sample"
-msgstr ""
+msgstr "מוקצה למזהה התיק:"
 
 #: admin/samplesearch.php:239
 msgid "Select sample "
-msgstr ""
+msgstr "בחר דוגמא "
 
 #: admin/samplesearch.php:280
 msgid "Cases"
-msgstr ""
+msgstr "מקרים"
 
 #: admin/samplesearch.php:296
 msgid "Assign Case ID"
-msgstr ""
+msgstr "הקצה מזהה של המקרה"
 
 #: admin/samplesearch.php:368
 msgid "Assign Case IDs to this questionnaire"
-msgstr ""
+msgstr "הקצה מזהה מקרה לשאלון זה"
 
 #: admin/process.php:90
 msgid "Cannot connect to VoIP Server"
-msgstr ""
+msgstr "לא ניתן להתחבר לשרת VoIP"
 
 #: admin/availability.php:79
 msgid "No time slot group set"
-msgstr ""
+msgstr "לא נקבעה קבוצת משבצת זמן"
 
 #: admin/availability.php:113
 msgid "Modify time slots"
-msgstr ""
+msgstr "שנה משבצות זמן"
 
 #: admin/availability.php:159
 msgid "Edit Time slot group name"
-msgstr ""
+msgstr "ערוך את שם קבוצת משבצת הזמן"
 
 #: admin/availability.php:182
 msgid "Save changes to time slot group"
-msgstr ""
+msgstr "שמור שינויים בקבוצת משבצת הזמן"
 
 #: admin/availability.php:186
 msgid "Delete this time slot group"
-msgstr ""
+msgstr "מחק את קבוצת משבצת הזמן הזו"
 
 #: admin/questionnaireprefill.php:104
 msgid "Set values for questionnaire to prefill"
-msgstr ""
+msgstr "הגדר ערכים לשאלון למילוי מוקדם"
 
 #: admin/questionnaireprefill.php:106
 msgid "Prefill questionnaire:"
-msgstr ""
+msgstr "מילוי שאלון מראש:"
 
 #: admin/questionnaireprefill.php:118
 msgid "Current pre fills"
-msgstr ""
+msgstr "מילוי טרום הנוכחי"
 
 #: admin/questionnaireprefill.php:128
 msgid "Currently no pre fills"
-msgstr ""
+msgstr "כרגע אין מילוי מראש"
 
 #: admin/questionnaireprefill.php:134
 msgid "SGQA code"
-msgstr ""
+msgstr "קוד SGQA"
 
 #: admin/questionnaireprefill.php:139
 msgid "Select a question to pre fill"
-msgstr ""
+msgstr "בחר שאלה למילוי מוקדם"
 
-#: admin/questionnaireprefill.php:169
+#: admin/questionnaireprefill.php:172
 msgid "Enter a value to pre fill this question with:"
-msgstr ""
-
-#: admin/questionnaireprefill.php:171
-msgid "Possible uses:"
-msgstr ""
-
-#: admin/questionnaireprefill.php:173
-msgid "{Respondent:firstName} First name of the respondent"
-msgstr ""
+msgstr "הזן ערך למילוי מוקדם של שאלה זו ב:"
 
 #: admin/questionnaireprefill.php:174
+msgid "Possible uses:"
+msgstr "שימושים אפשריים:"
+
+#: admin/questionnaireprefill.php:176
+msgid "{Respondent:firstName} First name of the respondent"
+msgstr "{משיב: firstName} שמו הפרטי של המשיב"
+
+#: admin/questionnaireprefill.php:177
 msgid "{Respondent:lastName} Last name of the respondent"
-msgstr ""
+msgstr "{משיב: lastName} שם המשפחה של המשיב"
 
-#: admin/questionnaireprefill.php:175
+#: admin/questionnaireprefill.php:178
 msgid "{Sample:var} A record from the sample where the column name is 'var'"
-msgstr ""
+msgstr "{Sample: var} רשומה מהמדגם שבה שם העמודה הוא 'var'"
 
-#: admin/questionnaireprefill.php:184
+#: admin/questionnaireprefill.php:187
 msgid "The value to pre fill"
-msgstr ""
+msgstr "הערך למילוי מראש"
 
-#: admin/questionnaireprefill.php:185
+#: admin/questionnaireprefill.php:188
 msgid "or: Select pre fill from sample list"
-msgstr ""
+msgstr "או: בחר מילוי מראש מרשימת הדוגמאות"
 
-#: admin/questionnaireprefill.php:193
+#: admin/questionnaireprefill.php:196
 msgid "Add pre fill"
-msgstr ""
+msgstr "הוסף מילוי מוקדם"
 
 #: admin/samplecallattempts.php:125
 msgid "Call attempts made"
-msgstr ""
+msgstr "בוצעו ניסיונות שיחות"
 
 #: admin/samplecallattempts.php:125
 msgid "Number of cases"
-msgstr ""
+msgstr "מספר מקרים"
 
 #: admin/samplecallattempts.php:188
 msgid "Sample call attempt"
-msgstr ""
+msgstr "ניסיון שיחה לדוגמה"
 
 #: admin/samplecallattempts.php:193
 msgid "Overall"
-msgstr ""
+msgstr "כולל"
 
 #: admin/samplecallattempts.php:213
 msgid "Please select a quota"
-msgstr ""
+msgstr "אנא בחר מכסה"
 
 #: admin/samplecallattempts.php:219
 msgid "No calls for this quota"
-msgstr ""
+msgstr "אין קריאות למכסה זו"
 
 #: admin/samplecallattempts.php:223
 msgid "No calls for this sample"
-msgstr ""
+msgstr "אין שיחות לדוגמא זו"
 
 #: admin/samplecallattempts.php:228
 msgid "No calls for this questionnaire"
-msgstr ""
+msgstr "אין קריאות לשאלון זה"
 
 #: admin/shifttemplate.php:114
 msgid ""
 "Enter standard shift start and end times for each day of the week in local "
 "time"
-msgstr ""
+msgstr "הזן זמני התחלה וסיום משמרת סטנדרטיים עבור כל יום בשבוע בזמן המקומי"
 
 #: admin/shifttemplate.php:155
 msgid "Save changes to shifts"
-msgstr ""
+msgstr "שמור שינויים במשמרות"
 
 #: admin/casesbyoutcome.php:57
 msgid "Cases by outcome"
-msgstr ""
+msgstr "מקרים לפי תוצאה"
 
 #: admin/casesbyoutcome.php:84
 msgid "Sample:"
-msgstr ""
+msgstr "מדגם:"
 
 #: admin/casesbyoutcome.php:114
 msgid "No cases with this outcome"
-msgstr ""
+msgstr "אין מקרים עם תוצאה זו"
 
 #: admin/casesbyoutcome.php:121
 msgid "Error with input"
-msgstr ""
+msgstr "שגיאה בקלט"
 
 #: status.php:107
 msgid "VoIP On"
-msgstr ""
+msgstr "VoIP  - מופעל"
 
 #: status.php:109
 msgid "VoIP Off"
-msgstr ""
+msgstr "VoIP - כבוי"
 
 #: status.php:114
 msgid "No VoIP"
-msgstr ""
+msgstr "VoIP - אין"
 
 #: status.php:118
 msgid "No call"
-msgstr ""
+msgstr "אין שיחות"
 
 #: status.php:126
 msgid "To be coded"
-msgstr ""
+msgstr "להיות מקודד"
 
 #: status.php:130
 msgid "Requesting"
-msgstr ""
+msgstr "מבקש"
 
 #: status.php:146
 msgid "APPT"
-msgstr ""
+msgstr "APPT"
 
 #: calllist.php:61
 msgid "Call List"
-msgstr ""
+msgstr "רשימת שיחות"
 
 #: calllist.php:89
 msgid "Number called"
-msgstr ""
+msgstr "מספר התקשר"
 
 #: rs_project_intro.php:63
 msgid "Project Introduction"
-msgstr ""
+msgstr "הצגת הפרויקט"
 
-#: email.php:96
+#: email.php:248
 msgid "Self completion invitation sent via email to"
-msgstr ""
+msgstr "הזמנה להשלמה עצמית נשלחה בדוא\"ל אל"
 
-#: email.php:118 email.php:122 email.php:128 email.php:149
+#: email.php:287 email.php:291 email.php:297 email.php:318
 #: index_interface2.php:228
 msgid "Invitation Email"
-msgstr ""
+msgstr "מייל הזמנה"
 
-#: email.php:135
+#: email.php:304
 msgid "The email did not send"
-msgstr ""
+msgstr "המייל לא נשלח"
 
-#: email.php:140
+#: email.php:309
 msgid "The email address is not valid"
-msgstr ""
+msgstr "כתובת הדוא\"ל אינה חוקית"
 
-#: email.php:169
+#: email.php:338
 msgid "Email respondent for self completion"
-msgstr ""
+msgstr "מייל להשלמה עצמית עבור המשיב"
 
-#: email.php:188
+#: email.php:357
 msgid "Send invitation"
-msgstr ""
+msgstr "שלח הזמנה"
 
-#: email.php:190
+#: email.php:359
 msgid "Send invitation and Hang up"
-msgstr ""
+msgstr "שלח השמנה ונתק"
 
-#: email.php:196
+#: email.php:365
 msgid "Self completion email not available for this questionnaire"
-msgstr ""
+msgstr "אימייל להשלמה עצמית אינו זמין לשאלון זה"
 
 #: contactdetails.php:78 index.php:301 index_interface2.php:269
 msgid "Contact details"
@@ -4329,31 +4405,31 @@ msgstr "פרטי יצירת־קשר"
 
 #: record.php:61
 msgid "Stop REC"
-msgstr ""
+msgstr "עצור הקלטה"
 
 #: record.php:62 record.php:85 record.php:102
 msgid "Record"
-msgstr ""
+msgstr "הקלטה"
 
 #: record.php:72
 msgid "Beginning recording..."
-msgstr ""
+msgstr "התחלה הקלטה"
 
 #: record.php:75 record.php:103
 msgid "Not on a call, so not beginning a recording"
-msgstr ""
+msgstr "לא בשיחה , אז לא הותחל הקלטה"
 
 #: record.php:79
 msgid "Begin the manual recording now..."
-msgstr ""
+msgstr "התחל את ההקלטה ידנית עכשיו ..."
 
 #: record.php:92
 msgid "Stopping recording..."
-msgstr ""
+msgstr "הפסקה הקלטה"
 
 #: record.php:96
 msgid "Stop the manual recording now..."
-msgstr ""
+msgstr "עצור ידנית את ההקלטה"
 
 #: index.php:224 nocallavailable.php:88
 msgid "Call/Hangup"
@@ -4361,7 +4437,7 @@ msgstr "חיוג/ניתוק"
 
 #: index.php:229 index_interface2.php:241
 msgid "Arrow for expanding or contracting"
-msgstr ""
+msgstr "חץ להרחבה או התכווצות"
 
 #: index.php:230
 msgid "Restart"
@@ -4385,7 +4461,7 @@ msgstr "היסטורית עבודה"
 
 #: index.php:353 myappointments.php:61 index_interface2.php:317
 msgid "My appointments"
-msgstr ""
+msgstr "הפגישות שלי"
 
 #: index.php:378 index_interface2.php:336
 msgid "Info"
@@ -4401,58 +4477,60 @@ msgstr ""
 
 #: myappointments.php:118
 msgid "Last Note"
-msgstr ""
+msgstr "הערה אחרונה"
 
 #: index_interface2.php:203
 msgid "Case"
-msgstr ""
+msgstr "מקרה"
 
 #: performance.php:84 performance.php:91
 msgid "Completions per hour"
-msgstr ""
+msgstr "השלמות פר שעה"
 
 #: info.php:62
 msgid "Information"
-msgstr ""
+msgstr "מידע"
 
 #: nocallavailable.php:85
 msgid "No call available"
-msgstr ""
+msgstr "אין שיחה זמינה"
 
 #: nocallavailable.php:88
 msgid "Please click on:"
-msgstr ""
+msgstr "אנא לחץ על:"
 
 #: nocallavailable.php:88
 msgid "to display call script"
-msgstr ""
+msgstr "להצגת סקריפט שיחה"
 
 #: nocallavailable.php:182
 msgid "Will dial in"
-msgstr ""
+msgstr "יחייג"
 
 #: nocallavailable.php:183
 msgid "Dialling now"
-msgstr ""
+msgstr "מחייג עכשיו"
 
 #: nocallavailable.php:189
 msgid "Will end case in"
-msgstr ""
+msgstr "יסיים את המקרה ב"
 
 #: nocallavailable.php:190
 msgid "Ending case now"
-msgstr ""
+msgstr "מסיים את המקרה עכשיו"
 
 #: nocallavailable.php:221
 msgid ""
 "Your VoIP extension is not active. Please activate VoIP by clicking once on "
 "the red button that says 'VoIP Off'"
 msgstr ""
+"סיומת ה- VoIP שלך אינה פעילה. אנא הפעל את VoIP על ידי לחיצה אחת על הכפתור "
+"האדום שאומר 'VoIP כבוי'"
 
 #: nocallavailable.php:227
 msgid "Auto dialling unavailable as VoIP is not enabled"
-msgstr ""
+msgstr "חיוג אוטומטי אינו זמין מכיוון ש- VoIP אינו מופעל"
 
 #: nocallavailable.php:233
 msgid "Auto dialling unavailable as you are already on a call"
-msgstr ""
+msgstr "חיוג אוטומטי אינו זמין מכיוון שאתה כבר בשיחה"

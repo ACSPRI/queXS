@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: queXS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-30 11:56+1000\n"
+"POT-Creation-Date: 2023-04-27 13:09+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adam Zammit <adam.zammit@acspri.org.au>\n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr ""
 #: admin/updatesample.php:48 admin/updatesample.php:80
 #: admin/questionnairelist.php:361 admin/questionnairelist.php:461
 #: admin/questionnairelist.php:483 admin/questionnairelist.php:491
-#: admin/operatorlist.php:198 admin/samplesearch.php:231
+#: admin/operatorlist.php:197 admin/samplesearch.php:231
 #: admin/availability.php:127 admin/casesbyoutcome.php:59
 #: contactdetails.php:100
 msgid "Go back"
@@ -53,7 +53,7 @@ msgstr ""
 #: admin/overallreport.php:134 admin/callhistory.php:132
 #: admin/callhistory.php:157 admin/extensionstatus.php:266
 #: admin/operatorskill.php:251 admin/shiftreport.php:110
-#: admin/operatorlist.php:200 admin/operatorlist.php:408 admin/outcomes.php:240
+#: admin/operatorlist.php:199 admin/operatorlist.php:407 admin/outcomes.php:240
 #: admin/casesbyoutcome.php:95 calllist.php:89 performance.php:84
 #: performance.php:91
 msgid "Operator"
@@ -260,8 +260,8 @@ msgstr ""
 msgid "Call this new referral immediately after this case?"
 msgstr ""
 
-#: referral.php:269 appointment.php:248 admin/clients.php:254 admin/new.php:322
-#: admin/operators.php:304 admin/supervisor.php:181 admin/samplelist.php:474
+#: referral.php:269 appointment.php:248 admin/clients.php:251 admin/new.php:322
+#: admin/operators.php:302 admin/supervisor.php:181 admin/samplelist.php:474
 #: admin/samplelist.php:485 admin/extensionstatus.php:207 email.php:191
 msgid "Cancel"
 msgstr ""
@@ -296,8 +296,8 @@ msgid ""
 msgstr ""
 
 #: selectextension.php:114 functions/functions.voip.php:449
-#: admin/operators.php:270 admin/extensionstatus.php:266
-#: admin/operatorlist.php:255 admin/operatorlist.php:408 status.php:111
+#: admin/operators.php:268 admin/extensionstatus.php:266
+#: admin/operatorlist.php:254 admin/operatorlist.php:407 status.php:111
 msgid "Extension"
 msgstr ""
 
@@ -426,8 +426,8 @@ msgstr ""
 #: waitnextcase_interface2.php:142 functions/functions.import.php:196
 #: functions/functions.import.php:208 admin/supervisorchat.php:79
 #: admin/addshift.php:261 admin/new.php:200 admin/new.php:207 admin/new.php:214
-#: admin/new.php:221 admin/new.php:228 admin/operators.php:266
-#: admin/operators.php:282 admin/operators.php:298 admin/supervisor.php:200
+#: admin/new.php:221 admin/new.php:228 admin/operators.php:264
+#: admin/operators.php:280 admin/operators.php:296 admin/supervisor.php:200
 #: admin/supervisor.php:374 admin/supervisor.php:422
 #: admin/displayappointments.php:299 admin/displayappointments.php:324
 #: admin/assignsample.php:315 admin/assignsample.php:318
@@ -446,8 +446,8 @@ msgstr ""
 #: admin/questionnairelist.php:376 admin/questionnairelist.php:379
 #: admin/questionnairelist.php:383 admin/questionnairelist.php:387
 #: admin/questionnairelist.php:391 admin/questionnairelist.php:507
-#: admin/operatorlist.php:251 admin/operatorlist.php:269
-#: admin/operatorlist.php:286 admin/operatorlist.php:291 admin/quotarow.php:396
+#: admin/operatorlist.php:250 admin/operatorlist.php:268
+#: admin/operatorlist.php:285 admin/operatorlist.php:290 admin/quotarow.php:396
 #: admin/quotarow.php:575 admin/quotarow.php:605 admin/samplesearch.php:225
 msgid "Yes"
 msgstr ""
@@ -507,7 +507,7 @@ msgid "Reasons:"
 msgstr ""
 
 #: nocaseavailable.php:86 nocaseavailable.php:98 admin/samplelist.php:469
-#: admin/questionnairelist.php:502 admin/operatorlist.php:290
+#: admin/questionnairelist.php:502 admin/operatorlist.php:289
 msgid "Enabled"
 msgstr ""
 
@@ -623,8 +623,8 @@ msgstr ""
 msgid "Add this respondent"
 msgstr ""
 
-#: appointment.php:153 admin/clients.php:245 admin/casestatus.php:130
-#: admin/operators.php:256 admin/supervisor.php:331 admin/operatorlist.php:240
+#: appointment.php:153 admin/clients.php:242 admin/casestatus.php:130
+#: admin/operators.php:254 admin/supervisor.php:331 admin/operatorlist.php:239
 msgid "Timezone"
 msgstr ""
 
@@ -768,7 +768,7 @@ msgstr ""
 #: functions/functions.import.php:196 functions/functions.import.php:208
 #: admin/supervisorchat.php:79 admin/addshift.php:261 admin/new.php:200
 #: admin/new.php:207 admin/new.php:214 admin/new.php:221 admin/new.php:228
-#: admin/operators.php:266 admin/operators.php:282 admin/operators.php:298
+#: admin/operators.php:264 admin/operators.php:280 admin/operators.php:296
 #: admin/supervisor.php:374 admin/supervisor.php:422
 #: admin/displayappointments.php:299 admin/displayappointments.php:324
 #: admin/assignsample.php:315 admin/assignsample.php:316
@@ -787,8 +787,8 @@ msgstr ""
 #: admin/questionnairelist.php:376 admin/questionnairelist.php:379
 #: admin/questionnairelist.php:383 admin/questionnairelist.php:387
 #: admin/questionnairelist.php:391 admin/questionnairelist.php:507
-#: admin/operatorlist.php:251 admin/operatorlist.php:269
-#: admin/operatorlist.php:286 admin/operatorlist.php:291 admin/quotarow.php:396
+#: admin/operatorlist.php:250 admin/operatorlist.php:268
+#: admin/operatorlist.php:285 admin/operatorlist.php:290 admin/quotarow.php:396
 #: admin/quotarow.php:575 admin/quotarow.php:605
 msgid "No"
 msgstr ""
@@ -960,36 +960,36 @@ msgstr ""
 msgid "Registered"
 msgstr ""
 
-#: usercontrol.php:96 usercontrol.php:163
+#: usercontrol.php:95 usercontrol.php:162
 msgid "Incorrect username and/or password!"
 msgstr ""
 
-#: usercontrol.php:98 usercontrol.php:165 usercontrol.php:174
+#: usercontrol.php:97 usercontrol.php:164 usercontrol.php:173
 #: login_check.php:103
 msgid ""
 "You have exceeded you maximum login attempts. Please wait %d minutes before "
 "trying again"
 msgstr ""
 
-#: usercontrol.php:99 usercontrol.php:166 usercontrol.php:175
+#: usercontrol.php:98 usercontrol.php:165 usercontrol.php:174
 msgid "Continue"
 msgstr ""
 
-#: usercontrol.php:113
+#: usercontrol.php:112
 msgid ""
 "Warning: You are still using the default password ('password'). Please "
 "change your password and re-login again."
 msgstr ""
 
-#: usercontrol.php:130
+#: usercontrol.php:129
 msgid "Logged in"
 msgstr ""
 
-#: usercontrol.php:131
+#: usercontrol.php:130
 msgid "Welcome %s!"
 msgstr ""
 
-#: usercontrol.php:183
+#: usercontrol.php:182
 msgid "Logout successful."
 msgstr ""
 
@@ -1182,108 +1182,108 @@ msgstr ""
 msgid "Show details"
 msgstr ""
 
-#: admin/clients.php:102
+#: admin/clients.php:101
 msgid "Updated"
 msgstr ""
 
-#: admin/clients.php:102
+#: admin/clients.php:101
 msgid "Update error"
 msgstr ""
 
-#: admin/clients.php:105
+#: admin/clients.php:104
 msgid "Could not update"
 msgstr ""
 
-#: admin/clients.php:120 admin/samplesearch.php:280
+#: admin/clients.php:117 admin/samplesearch.php:280
 msgid "Added"
 msgstr ""
 
-#: admin/clients.php:120
+#: admin/clients.php:117
 msgid "Error adding client"
 msgstr ""
 
-#: admin/clients.php:123
+#: admin/clients.php:120
 msgid "Could not add"
 msgstr ""
 
-#: admin/clients.php:126 admin/clients.php:221
-#: admin/operatorquestionnaire.php:247 admin/operators.php:232
+#: admin/clients.php:123 admin/clients.php:218
+#: admin/operatorquestionnaire.php:247 admin/operators.php:230
 #: admin/operatorskill.php:251 admin/clientquestionnaire.php:260
-#: admin/operatorlist.php:216 admin/operatorlist.php:408 login_check.php:93
+#: admin/operatorlist.php:215 admin/operatorlist.php:407 login_check.php:93
 #: login_check.php:94
 msgid "Username"
 msgstr ""
 
-#: admin/clients.php:126
+#: admin/clients.php:123
 msgid "is already in use"
 msgstr ""
 
-#: admin/clients.php:132
+#: admin/clients.php:129
 msgid "Add a client"
 msgstr ""
 
-#: admin/clients.php:133
+#: admin/clients.php:130
 msgid "Add new client"
 msgstr ""
 
-#: admin/clients.php:138
+#: admin/clients.php:135
 msgid "Edit client data"
 msgstr ""
 
-#: admin/clients.php:148
+#: admin/clients.php:145
 msgid "NO such client"
 msgstr ""
 
-#: admin/clients.php:157
+#: admin/clients.php:154
 msgid "Update client data"
 msgstr ""
 
-#: admin/clients.php:211
+#: admin/clients.php:208
 msgid ""
 "Adding a client here will allow them to access project information in the "
 "client subdirectory."
 msgstr ""
 
-#: admin/clients.php:214
+#: admin/clients.php:211
 msgid "You can assign a client to a particular project with"
 msgstr ""
 
-#: admin/clients.php:214
+#: admin/clients.php:211
 msgid "Assign client to Questionnaire"
 msgstr ""
 
-#: admin/clients.php:225 admin/operators.php:236 admin/operatorlist.php:220
+#: admin/clients.php:222 admin/operators.php:234 admin/operatorlist.php:219
 #: login_check.php:95 login_check.php:96
 msgid "Password"
 msgstr ""
 
-#: admin/clients.php:226
+#: admin/clients.php:223
 msgid "Leave this blank to keep current password"
 msgstr ""
 
-#: admin/clients.php:228 admin/operators.php:239 admin/extensionstatus.php:201
-#: admin/operatorlist.php:223
+#: admin/clients.php:225 admin/operators.php:237 admin/extensionstatus.php:201
+#: admin/operatorlist.php:222
 msgid "Generate"
 msgstr ""
 
-#: admin/clients.php:228 admin/operators.php:239 admin/operatorlist.php:223
+#: admin/clients.php:225 admin/operators.php:237 admin/operatorlist.php:222
 msgid "Password with"
 msgstr ""
 
-#: admin/clients.php:229 admin/operators.php:240 admin/operatorlist.php:224
+#: admin/clients.php:226 admin/operators.php:238 admin/operatorlist.php:223
 msgid "characters"
 msgstr ""
 
-#: admin/clients.php:233 admin/operators.php:244 admin/operatorlist.php:228
+#: admin/clients.php:230 admin/operators.php:242 admin/operatorlist.php:227
 #: email.php:178
 msgid "First name"
 msgstr ""
 
-#: admin/clients.php:237
+#: admin/clients.php:234
 msgid "Surname"
 msgstr ""
 
-#: admin/clients.php:241 admin/operators.php:252 admin/operatorlist.php:236
+#: admin/clients.php:238 admin/operators.php:250 admin/operatorlist.php:235
 #: email.php:184 index.php:226
 msgid "Email"
 msgstr ""
@@ -1407,14 +1407,14 @@ msgstr ""
 msgid "Never"
 msgstr ""
 
-#: admin/sortsample.php:105 admin/sortsample.php:139 admin/operators.php:259
-#: admin/operators.php:273 admin/supervisor.php:375
+#: admin/sortsample.php:105 admin/sortsample.php:139 admin/operators.php:257
+#: admin/operators.php:271 admin/supervisor.php:375
 #: admin/displayappointments.php:316 admin/displayappointments.php:341
 #: admin/assignsample.php:444 admin/assignsample.php:479
 #: admin/samplelist.php:478 admin/shiftreport.php:102 admin/shiftreport.php:110
 #: admin/questionnairelist.php:371 admin/clientquestionnaire.php:275
-#: admin/operatorlist.php:243 admin/operatorlist.php:259
-#: admin/operatorlist.php:399 admin/quotarow.php:591
+#: admin/operatorlist.php:242 admin/operatorlist.php:258
+#: admin/operatorlist.php:398 admin/quotarow.php:591
 msgid "Edit"
 msgstr ""
 
@@ -2192,56 +2192,56 @@ msgstr ""
 msgid "Add time slot"
 msgstr ""
 
-#: admin/operators.php:145
+#: admin/operators.php:143
 msgid "Added operator :"
 msgstr ""
 
-#: admin/operators.php:148
+#: admin/operators.php:146
 msgid "FreePBX needs to be reloaded for the new VoIP extension to take effect"
 msgstr ""
 
-#: admin/operators.php:162
+#: admin/operators.php:160
 msgid "Could not add operator. There may already be an operator of this name:"
 msgstr ""
 
-#: admin/operators.php:168 admin/operators.php:308 admin/operatorlist.php:424
+#: admin/operators.php:166 admin/operators.php:306 admin/operatorlist.php:423
 msgid "Add an operator"
 msgstr ""
 
-#: admin/operators.php:177
+#: admin/operators.php:175
 msgid "The username and extension must be unique for each operator."
 msgstr ""
 
-#: admin/operators.php:248 admin/operatorlist.php:232 email.php:181
+#: admin/operators.php:246 admin/operatorlist.php:231 email.php:181
 msgid "Last name"
 msgstr ""
 
-#: admin/operators.php:260 admin/operatorlist.php:244
+#: admin/operators.php:258 admin/operatorlist.php:243
 msgid "TimeZones list"
 msgstr ""
 
-#: admin/operators.php:265 admin/operatorlist.php:250
+#: admin/operators.php:263 admin/operatorlist.php:249
 msgid "Uses VoIP"
 msgstr ""
 
-#: admin/operators.php:274 admin/operatorlist.php:261
-#: admin/operatorlist.php:425
+#: admin/operators.php:272 admin/operatorlist.php:260
+#: admin/operatorlist.php:424
 msgid "Extensions"
 msgstr ""
 
-#: admin/operators.php:281 admin/operatorlist.php:268
+#: admin/operators.php:279 admin/operatorlist.php:267
 msgid "Uses chat"
 msgstr ""
 
-#: admin/operators.php:287 admin/operatorlist.php:274
+#: admin/operators.php:285 admin/operatorlist.php:273
 msgid "Jabber/XMPP chat user"
 msgstr ""
 
-#: admin/operators.php:291 admin/operatorlist.php:278
+#: admin/operators.php:289 admin/operatorlist.php:277
 msgid "Jabber/XMPP chat password"
 msgstr ""
 
-#: admin/operators.php:297 admin/operatorlist.php:285
+#: admin/operators.php:295 admin/operatorlist.php:284
 msgid "Is the operator a system administrator?"
 msgstr ""
 
@@ -2810,12 +2810,12 @@ msgid "Fix  this sample "
 msgstr ""
 
 #: admin/samplelist.php:472 admin/questionnairelist.php:505
-#: admin/operatorlist.php:390
+#: admin/operatorlist.php:389
 msgid "Enable"
 msgstr ""
 
 #: admin/samplelist.php:474 admin/questionnairelist.php:507
-#: admin/operatorlist.php:392
+#: admin/operatorlist.php:391
 msgid "Disable"
 msgstr ""
 
@@ -3417,98 +3417,98 @@ msgstr ""
 msgid "Assign clients to questionnaires"
 msgstr ""
 
-#: admin/operatorlist.php:127
+#: admin/operatorlist.php:126
 msgid "Successfully updated user"
 msgstr ""
 
-#: admin/operatorlist.php:131 admin/operatorlist.php:136
+#: admin/operatorlist.php:130 admin/operatorlist.php:135
 msgid "Failed to update user"
 msgstr ""
 
-#: admin/operatorlist.php:131 admin/operatorlist.php:136
+#: admin/operatorlist.php:130 admin/operatorlist.php:135
 msgid "Please make sure the username is unique"
 msgstr ""
 
-#: admin/operatorlist.php:144
+#: admin/operatorlist.php:143
 msgid "Edit Operator settings"
 msgstr ""
 
-#: admin/operatorlist.php:221
+#: admin/operatorlist.php:220
 msgid "leave blank to keep existing password"
 msgstr ""
 
-#: admin/operatorlist.php:260
+#: admin/operatorlist.php:259
 msgid "Add"
 msgstr ""
 
-#: admin/operatorlist.php:296
+#: admin/operatorlist.php:295
 msgid "Update operator"
 msgstr ""
 
-#: admin/operatorlist.php:387
+#: admin/operatorlist.php:386
 msgid "Win .bat file"
 msgstr ""
 
-#: admin/operatorlist.php:388
+#: admin/operatorlist.php:387
 msgid "*nix script file"
 msgstr ""
 
-#: admin/operatorlist.php:395
+#: admin/operatorlist.php:394
 msgid "Enable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:397
+#: admin/operatorlist.php:396
 msgid "Disable VoIP"
 msgstr ""
 
-#: admin/operatorlist.php:405
+#: admin/operatorlist.php:404
 msgid "Operator list"
 msgstr ""
 
-#: admin/operatorlist.php:415
+#: admin/operatorlist.php:414
 msgid "VoIP ON/Off"
 msgstr ""
 
-#: admin/operatorlist.php:416
+#: admin/operatorlist.php:415
 msgid "Win file"
 msgstr ""
 
-#: admin/operatorlist.php:417
+#: admin/operatorlist.php:416
 msgid "*nix flle"
 msgstr ""
 
-#: admin/operatorlist.php:426
+#: admin/operatorlist.php:425
 msgid "Assign to questionnaire"
 msgstr ""
 
-#: admin/operatorlist.php:427
+#: admin/operatorlist.php:426
 msgid "Operator skills"
 msgstr ""
 
-#: admin/operatorlist.php:428 admin/index.php:160 admin/outcomes.php:306
+#: admin/operatorlist.php:427 admin/index.php:160 admin/outcomes.php:306
 msgid "Operator performance"
 msgstr ""
 
-#: admin/operatorlist.php:432
+#: admin/operatorlist.php:431
 msgid ""
 "Download the file for each user and save in the same folder as the voip.exe "
 "executable. When the file is executed, it will run the voip.exe program with "
 "the correct connection details to connect the operator to the VoIP server"
 msgstr ""
 
-#: admin/operatorlist.php:434
+#: admin/operatorlist.php:433
 msgid "Download Windows VoIP Client Executable file"
 msgstr ""
 
-#: admin/operatorlist.php:434
+#: admin/operatorlist.php:433
 msgid "Download Win file"
 msgstr ""
 
-#: admin/operatorlist.php:435
+#: admin/operatorlist.php:434
 msgid "Download Linux VoIP Executable file"
 msgstr ""
 
-#: admin/operatorlist.php:435
+#: admin/operatorlist.php:434
 msgid "Download Linux file"
 msgstr ""
 
