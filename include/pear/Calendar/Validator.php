@@ -261,7 +261,7 @@ class Calendar_Validator
         return true;
     }
 
-    function legacy_each($array){
+    function legacy_each(&$array){
         $key = key($array);
         $value = current($array);
         $each = is_null($key) ? false : [
