@@ -452,6 +452,7 @@ switch($state)
 		break;
 	case 4: //requires coding
     case 6:
+    case 7:
 		print "<div class='status'>" . T_("Requires coding") . "</div>";
 		print "<form action='?' method='post'>";
 		display_outcomes(false,$call_attempt_id,$case_id);
