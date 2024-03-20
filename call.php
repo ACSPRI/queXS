@@ -455,6 +455,7 @@ switch($state)
 		print "<div><input type='submit' value=\"" . T_("Hangup") . "\" name='submit' id='submit'/></div></form>";
 		break;
 	case 4: //requires coding
+    case 7:
     case 6:
 		print "<div class='status'>" . T_("Requires coding") . "</div>";
 		print "<form action='?' method='post'>";
