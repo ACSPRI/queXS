@@ -102,14 +102,14 @@ class voip {
 		$chans = array();
 		foreach ($c as $s)
 		{
-			if(preg_match("{Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+).*BridgedChannel: ((SIP/|IAX2/)[/0-9a-zA-Z-]+)}is",$s,$regs))
+			if(preg_match("{Event: Status.*Channel: ((SIP/|PJSIP/|IAX2/)[0-9a-zA-Z-]+).*BridgedChannel: ((SIP/|PJSIP/|IAX2/)[/0-9a-zA-Z-]+)}is",$s,$regs))
 			{
 				//print T_("Channel: SIP/") . $regs[1] . " BridgedChannel " . $regs[2] . "\n";
 				$ccs = explode('-',$regs[1]);
 				$chan = $ccs[0];
 				$chans[$chan] = array($regs[1],$regs[3]);
 			}
-			else if(preg_match("{Event: Status.*Channel: ((SIP/|IAX2/)[0-9a-zA-Z-]+)}is",$s,$regs))
+			else if(preg_match("{Event: Status.*Channel: ((SIP/|PJSIP/|IAX2/)[0-9a-zA-Z-]+)}is",$s,$regs))
 			{
 				//print T_("Channel: ") . $regs[1] .  "\n";
 				$ccs = explode('-', $regs[1]);
@@ -545,7 +545,7 @@ class voipWatch extends voip {
 				/**
 				 * The call is ringing
 				 */
-				if (preg_match("{Event: DialBegin.*Channel: ((SIP/|IAX2/)[0-9]+)}is",$line,$regs))
+				if (preg_match("{Event: DialBegin.*Channel: ((SIP/|PJSIP/|IAX2/)[0-9]+)}is",$line,$regs))
         {
           list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -557,7 +557,7 @@ class voipWatch extends voip {
 				/**
 				 * The call has been answered
 				 */
-				else if (preg_match("{Event: Bridge.*Channel1: ((SIP/|IAX2/)[0-9]+)}is",$line,$regs))
+				else if (preg_match("{Event: Bridge.*Channel: ((SIP/|PJSIP/|IAX2/)[0-9]+)}is",$line,$regs))
         {
 					list($call_id,$case_id) = $this->getCallId($regs[1]);
 					if ($call_id != 0)
@@ -569,7 +569,7 @@ class voipWatch extends voip {
 				/**
 				 * The call has been hung up
 				 */
-				else if (preg_match("{Event: Hangup.*Channel: ((SIP/|IAX2/)[0-9]+).*Cause: ([0-9]+)}is",$line,$regs))
+				else if (preg_match("{Event: Hangup.*Channel: ((SIP/|PJSIP/|IAX2/)[0-9]+).*Cause: ([0-9]+)}is",$line,$regs))
         {
 					list($call_id,$case_id) = $this->getCallId($regs[1]);
 //					print_r($regs);
@@ -591,18 +591,36 @@ class voipWatch extends voip {
 				/**
 				 * The status of an extension has changed to unregistered
 				 */
-				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Unregistered}is",$line,$regs))
+				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|PJSIP/|IAX2/)[0-9]+).*PeerStatus: Unregistered}is",$line,$regs))
 				{
 					print T_("Unregistered") . T_(" Extension ") . $regs[1] . "\n";
 					$this->setExtensionStatus($regs[1],false);
 				}
 
-				/**
+			/**
+				 * The status of an extension has changed to unreachable
+				 */
+				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|PJSIP/|IAX2/)[0-9]+).*PeerStatus: Unreachable}is",$line,$regs))
+				{
+					print T_("Unreachable") . T_(" Extension ") . $regs[1] . "\n";
+					$this->setExtensionStatus($regs[1],false);
+				}
+
+			/**
 				 * The status of an extension has changed to registered
 				 */
-				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|IAX2/)[0-9]+).*PeerStatus: Registered}is",$line,$regs))
+				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|PJSIP/|IAX2/)[0-9]+).*PeerStatus: Registered}is",$line,$regs))
 				{
 					print T_("Registered") . T_(" Extension ") . $regs[1] . "\n";
+					$this->setExtensionStatus($regs[1],true);
+				}
+
+				/**
+				 * The status of an extension has changed to reachable
+				 */
+				else if (preg_match("{Event: PeerStatus.*Peer: ((SIP/|PJSIP/|IAX2/)[0-9]+).*PeerStatus: Reachable}is",$line,$regs))
+				{
+					print T_("Reachable") . T_(" Extension ") . $regs[1] . "\n";
 					$this->setExtensionStatus($regs[1],true);
 				}
 
