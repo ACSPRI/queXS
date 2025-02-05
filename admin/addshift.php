@@ -205,7 +205,7 @@ if ($questionnaire_id != false)
 				TIME( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) ) AS start,
 				TIME( CONVERT_TZ( s.end, 'UTC', o.Time_zone_name ) ) AS end
 			FROM shift AS s, operator AS o
-			WHERE WEEK( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) , 3 ) = '$woy'
+			WHERE WEEK( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) , 1 ) = '$woy'
 				AND YEAR( CONVERT_TZ( s.start, 'UTC', o.Time_zone_name ) ) = '$year'
 				AND o.operator_id = '$operator_id'
 				AND s.questionnaire_id = '$questionnaire_id'
@@ -216,10 +216,10 @@ if ($questionnaire_id != false)
 		       		STR_TO_DATE( CONCAT( '$year', ' ', '$woy', ' ', day_of_week -1 ) , '%x %v %w' ) AS dta,
 				start,end
 			FROM shift_template
+                        WHERE YEAR(STR_TO_DATE( CONCAT( '$year', ' ', '$woy', ' ', day_of_week -1 ) , '%x %v %w' )) = '$year'
 			) 
 		) AS sb
 		GROUP BY dta,start,end";	
-	
 	
 	$shifts = $db->GetAll($sql);
 	
