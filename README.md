@@ -1,4 +1,4 @@
-#queXS
+# queXS
 
 An Open Source, web based, CATI system
 
@@ -6,17 +6,17 @@ queXS can operate your outbound telephone research centre. It integrates with th
 
 Unless otherwise stated in the code, the code for queXS is licenced under the GPL-v2. All included code has been checked for compatability with this licence.
 
-Development for queXS occurs on Launchpad: https://launchpad.net/quexs
+Development for queXS occurs on GitHub: https://github.com/ACSPRI/queXS
 
-##Upgrades
+## Upgrades
 
 If you have a previous version of queXS installed, please check the CHANGELOG file for details of how to upgrade
 
-##Requirements
+## Requirements
 
 `apt-get install php5 mysql-server php5-mysql unzip php5-mbstring
 
-##Installation (from 1.14.0)
+## Installation (from 1.14.0)
 
 ```
 #Download and extract queXS to your webroot
