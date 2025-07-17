@@ -15,7 +15,7 @@ If you have a previous version of queXS installed, please check the CHANGELOG fi
 
 ## Requirements (Ubuntu/Debian)
 
-`apt-get install php mysql-server php-mysql unzip php-mbstring libphp-adodb
+```apt-get install php mysql-server php-mysql unzip php-mbstring libphp-adodb```
 
 ## Installation (from queXS 2.0.0)
 
